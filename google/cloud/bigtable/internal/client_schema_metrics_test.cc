@@ -52,7 +52,7 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapClient) {
   ClientOutstandingRpcLabels data{TransportType::kDirectPath,
                                   ChannelPoolLbPolicy::kRandomTwoLeastUsed,
                                   RpcType::kStreaming};
-  LabelMap actual = IntoLabelMap(resource, data);
+  LabelMap actual = IntoLabelMap(resource, data, {});
   EXPECT_THAT(actual,
               UnorderedElementsAre(
                   Pair("project_id", "p-1"), Pair("instance", "i-1"),
@@ -72,7 +72,7 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapClientRoundRobinCloudPathUnary) {
   ClientOutstandingRpcLabels data{TransportType::kCloudPath,
                                   ChannelPoolLbPolicy::kRoundRobin,
                                   RpcType::kUnary};
-  LabelMap actual = IntoLabelMap(resource, data);
+  LabelMap actual = IntoLabelMap(resource, data, {});
   EXPECT_THAT(actual,
               UnorderedElementsAre(
                   Pair("project_id", "p-1"), Pair("instance", "i-1"),
@@ -200,7 +200,7 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapDirectAccessCompatibility) {
                                 "uid-1",  "cp-1",      "loc-1", "cloud-1",
                                 "host-1", "hostname-1"};
   DirectAccessCompatibilityLabels data{"ipv4", "test_reason"};
-  LabelMap actual = IntoLabelMap(resource, data);
+  LabelMap actual = IntoLabelMap(resource, data, {});
   EXPECT_THAT(
       actual,
       UnorderedElementsAre(

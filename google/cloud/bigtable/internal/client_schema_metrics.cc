@@ -76,18 +76,19 @@ LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       std::set<std::string> const& filtered_data_labels) {
   LabelMap labels = BaseLabels(r);
 
-  auto emplace_if_not_filtered = [&](std::string key, std::string value) {
-    if (filtered_data_labels.find(key) == filtered_data_labels.end()) {
-      labels.emplace(std::move(key), std::move(value));
+  auto emplace_if_not_filtered = [&](std::string_view key,
+                                     std::string_view value) {
+    if (filtered_data_labels.empty() ||
+        filtered_data_labels.find(std::string(key)) ==
+            filtered_data_labels.end()) {
+      labels.emplace(key, value);
     }
   };
 
-  emplace_if_not_filtered("transport_type",
-                          std::string(ToString(d.transport_type)));
+  emplace_if_not_filtered("transport_type", ToString(d.transport_type));
   emplace_if_not_filtered("channel_pool_lb_policy",
-                          std::string(ToString(d.channel_pool_lb_policy)));
-  emplace_if_not_filtered("streaming",
-                          std::string(IsStreamingAsString(d.streaming)));
+                          ToString(d.channel_pool_lb_policy));
+  emplace_if_not_filtered("streaming", IsStreamingAsString(d.streaming));
 
   return labels;
 }
@@ -97,9 +98,12 @@ LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       std::set<std::string> const& filtered_data_labels) {
   LabelMap labels = BaseLabels(r);
 
-  auto emplace_if_not_filtered = [&](std::string key, std::string value) {
-    if (filtered_data_labels.find(key) == filtered_data_labels.end()) {
-      labels.emplace(std::move(key), std::move(value));
+  auto emplace_if_not_filtered = [&](std::string_view key,
+                                     std::string_view value) {
+    if (filtered_data_labels.empty() ||
+        filtered_data_labels.find(std::string(key)) ==
+            filtered_data_labels.end()) {
+      labels.emplace(key, value);
     }
   };
 
@@ -190,7 +194,7 @@ void OutstandingRpcs::StubSelection(
   ClientOutstandingRpcLabels data_labels{p.transport_type,
                                          p.channel_pool_lb_policy, p.streaming};
   outstanding_rpcs_->Record(static_cast<double>(p.outstanding_rpcs),
-                            IntoLabelMap(resource_labels_, data_labels),
+                            IntoLabelMap(resource_labels_, data_labels, {}),
                             context);
 }
 
@@ -228,10 +232,11 @@ void DirectAccessCompatibility::Record(
     opentelemetry::context::Context const& context, std::int64_t value,
     DirectAccessCompatibilityLabels const& data_labels) {
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  gauge_->Record(value, IntoLabelMap(resource_labels_, data_labels), context);
+  gauge_->Record(value, IntoLabelMap(resource_labels_, data_labels, {}),
+                 context);
 #else
   gauge_->Record(static_cast<double>(value),
-                 IntoLabelMap(resource_labels_, data_labels), context);
+                 IntoLabelMap(resource_labels_, data_labels, {}), context);
 #endif
 }
 

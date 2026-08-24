@@ -54,7 +54,7 @@ struct ClientOutstandingRpcLabels {
 using LabelMap = std::unordered_map<std::string, std::string>;
 LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       ClientOutstandingRpcLabels const& d,
-                      std::set<std::string> const& filtered_data_labels = {});
+                      std::set<std::string> const& filtered_data_labels);
 
 struct DirectAccessCompatibilityLabels {
   std::string ip_preference;
@@ -63,7 +63,7 @@ struct DirectAccessCompatibilityLabels {
 
 LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       DirectAccessCompatibilityLabels const& d,
-                      std::set<std::string> const& filtered_data_labels = {});
+                      std::set<std::string> const& filtered_data_labels);
 
 ClientResourceLabels MakeClientResourceLabels(
     std::string project_id, std::string instance, std::string app_profile,
