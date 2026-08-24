@@ -36,21 +36,17 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl,
                                          std::string bucket_name)
       : ObjectDescriptorReader(std::move(impl)),
-        bucket_name_(
-            std::make_shared<std::string const>(std::move(bucket_name))) {}
+        bucket_name_(std::move(bucket_name)) {}
 
   ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadRange");
     internal::OTelScope scope(span);
-    return ObjectDescriptorReader::Read().then(
-        [span = std::move(span),
-         oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-         bucket_name = bucket_name_,
-         metrics = metrics_](auto f) -> ReadResponse {
+    return ObjectDescriptorReader::Read()
+        .then([span = std::move(span), bucket_name = bucket_name_,
+               metrics = metrics_](auto f) -> ReadResponse {
           ReadResponse result = f.get();
-          internal::DetachOTelContext(oc);
           if (auto const* payload =
                   absl::get_if<storage::ReadPayload>(&result)) {
             span->AddEvent(
@@ -59,8 +55,9 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
                  {sc::thread::kThreadId, internal::CurrentThreadId()},
                  {"message.size",
                   static_cast<std::uint32_t>(payload->size())}});
+
             metrics.RecordRead(*payload, std::chrono::steady_clock::now(),
-                               *bucket_name, span, "gl-cpp.latency.read-range");
+                               bucket_name, span, "gl-cpp.latency.read-range");
           } else {
             span->AddEvent(
                 "gl-cpp.read-range",
@@ -70,11 +67,17 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
                                      absl::get<Status>(std::move(result)));
           }
           return result;
+        })
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](
+                  auto f) {
+          auto t = f.get();
+          internal::DetachOTelContext(oc);
+          return t;
         });
   }
 
  private:
-  std::shared_ptr<std::string const> bucket_name_;
+  std::string bucket_name_;
   ReaderConnectionTelemetry metrics_;
 };
 

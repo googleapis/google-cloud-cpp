@@ -38,8 +38,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
       std::string bucket_name)
       : span_(std::move(span)),
         impl_(std::move(impl)),
-        bucket_name_(
-            std::make_shared<std::string const>(std::move(bucket_name))) {}
+        bucket_name_(std::move(bucket_name)) {}
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
@@ -76,7 +75,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
                   {"message.starting_offset", payload.offset()},
               });
           metrics.RecordRead(payload, std::chrono::steady_clock::now(),
-                             *bucket_name, span);
+                             bucket_name, span);
           return r;
         })
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](
@@ -95,7 +94,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   std::unique_ptr<storage::AsyncReaderConnection> impl_;
   std::int64_t count_ = 0;
-  std::shared_ptr<std::string const> bucket_name_;
+  std::string bucket_name_;
   ReaderConnectionTelemetry metrics_;
 };
 

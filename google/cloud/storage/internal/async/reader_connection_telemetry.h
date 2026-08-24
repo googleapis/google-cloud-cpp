@@ -18,9 +18,6 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-#include <opentelemetry/metrics/meter.h>
-#endif
 #include <chrono>
 #include <string>
 #include <string_view>
@@ -32,8 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ReaderConnectionTelemetry {
  public:
-  ReaderConnectionTelemetry();
-
   void RecordRead(
       storage::ReadPayload const& payload,
       std::chrono::steady_clock::time_point t7, std::string const& bucket_name,
@@ -42,18 +37,10 @@ class ReaderConnectionTelemetry {
 
  private:
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-  void RecordMetrics(std::string const& bucket_name, double p1, double p2,
-                     double p3) const;
-
-  struct ReadLatencyMetrics {
-    opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-        queue_hist;
-    opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-        network_hist;
-    opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-        output_hist;
-  };
-  ReadLatencyMetrics metrics_;
+  void RecordMetrics(
+      std::string const& bucket_name, double p1, double p2, double p3,
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span)
+      const;
 #endif
 };
 
