@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DIRECTPATH_PROBER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DIRECTPATH_PROBER_H
 
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
@@ -47,6 +48,7 @@ class DirectPathProber {
  public:
   static StatusOr<DirectPathProbeResult> Probe(
       std::shared_ptr<internal::GrpcAuthenticationStrategy> const& auth,
+      bigtable::InstanceResource const& instance_resource,
       Options const& options, CompletionQueue const& cq);
 };
 

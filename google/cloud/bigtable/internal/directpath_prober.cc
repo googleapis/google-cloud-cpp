@@ -74,9 +74,9 @@ bool IsDirectPathIp(std::string_view peer_address) {
   if (absl::StartsWith(peer_address, "ipv6:")) return true;
   if (absl::StartsWith(peer_address, "ipv4:")) {
     std::string_view const ip_port = peer_address.substr(5);
-    std::vector<absl::string_view> const parts = absl::StrSplit(ip_port, ':');
+    std::vector<std::string_view> const parts = absl::StrSplit(ip_port, ':');
     if (!parts.empty()) {
-      std::vector<absl::string_view> const octets =
+      std::vector<std::string_view> const octets =
           absl::StrSplit(parts[0], '.');
       // DirectPath IPv4 addresses fall within the 34.126.0.0/18 subnet range
       // (34.126.0.0 to 34.126.63.255), where the first two octets are 34.126
@@ -108,7 +108,8 @@ std::string ToString(IpPreference preference) {
 
 StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> const& auth,
-    Options const& options, CompletionQueue const& cq) {
+    bigtable::InstanceResource const& instance_resource, Options const& options,
+    CompletionQueue const& cq) {
   if (!auth) {
     return internal::InternalError("Auth strategy cannot be null",
                                    GCP_ERROR_INFO());
@@ -147,12 +148,7 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
   client_context.set_deadline(std::chrono::system_clock::now() + timeout);
 
   google::bigtable::v2::PingAndWarmRequest request;
-  if (options.has<InstanceChannelAffinityOption>()) {
-    auto const& instances = options.get<InstanceChannelAffinityOption>();
-    if (!instances.empty()) {
-      request.set_name(instances[0].FullName());
-    }
-  }
+  request.set_name(instance_resource.FullName());
   if (options.has<bigtable::AppProfileIdOption>()) {
     request.set_app_profile_id(options.get<bigtable::AppProfileIdOption>());
   }

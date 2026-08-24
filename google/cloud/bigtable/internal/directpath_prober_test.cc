@@ -78,8 +78,9 @@ TEST(DirectPathProberTest, ToStringIpPreference) {
 }
 
 TEST(DirectPathProberTest, ProbeNullAuthFails) {
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(nullptr, Options{}, CompletionQueue{});
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      nullptr, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      Options{}, CompletionQueue{});
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 }
 
@@ -98,8 +99,9 @@ TEST(DirectPathProberTest, ProbeHonorsTimeoutOption) {
       Options{}.set<bigtable::experimental::DirectPathProbeTimeoutOption>(
           std::chrono::milliseconds(100));
 
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_auth, options, CompletionQueue{});
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
   EXPECT_THAT(result, Not(IsOk()));
 }
 
@@ -118,8 +120,9 @@ TEST(DirectPathProberTest, ProbeDefaultTimeoutWhenZeroOrNegative) {
       Options{}.set<bigtable::experimental::DirectPathProbeTimeoutOption>(
           std::chrono::milliseconds(-10));
 
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_auth, options, CompletionQueue{});
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
   EXPECT_THAT(result, Not(IsOk()));
 }
 
@@ -144,8 +147,9 @@ TEST(DirectPathProberTest, ProbeSucceedsRpcOverInsecureChannel) {
                                          args);
       });
 
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_auth, Options{}, CompletionQueue{});
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      Options{}, CompletionQueue{});
 
   server->Shutdown();
 
@@ -177,13 +181,11 @@ TEST(DirectPathProberTest, ProbePropagatesInstanceAndAppProfileOptions) {
       });
 
   Options const options =
-      Options{}
-          .set<InstanceChannelAffinityOption>(
-              {bigtable::InstanceResource(Project("test-proj"), "test-inst")})
-          .set<bigtable::AppProfileIdOption>("test-app-profile");
+      Options{}.set<bigtable::AppProfileIdOption>("test-app-profile");
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
   StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_auth, options, CompletionQueue{});
+      DirectPathProber::Probe(mock_auth, instance, options, CompletionQueue{});
 
   server->Shutdown();
 
@@ -191,38 +193,6 @@ TEST(DirectPathProberTest, ProbePropagatesInstanceAndAppProfileOptions) {
   EXPECT_THAT(service.last_request.name(),
               Eq("projects/test-proj/instances/test-inst"));
   EXPECT_THAT(service.last_request.app_profile_id(), Eq("test-app-profile"));
-}
-
-TEST(DirectPathProberTest, ProbeEmptyInstanceAffinityLeavesNameEmpty) {
-  FakeBigtableService service;
-  grpc::ServerBuilder builder;
-  int port = 0;
-  builder.AddListeningPort("localhost:0", grpc::InsecureServerCredentials(),
-                           &port);
-  builder.RegisterService(&service);
-  std::unique_ptr<grpc::Server> server = builder.BuildAndStart();
-  ASSERT_THAT(server, testing::NotNull());
-
-  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*mock_auth, RequiresConfigureContext())
-      .WillRepeatedly(testing::Return(false));
-  EXPECT_CALL(*mock_auth, CreateChannel(testing::_, testing::_))
-      .WillRepeatedly([port](std::string const&,
-                             grpc::ChannelArguments const& args) {
-        return grpc::CreateCustomChannel("localhost:" + std::to_string(port),
-                                         grpc::InsecureChannelCredentials(),
-                                         args);
-      });
-
-  Options const options = Options{}.set<InstanceChannelAffinityOption>({});
-
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_auth, options, CompletionQueue{});
-
-  server->Shutdown();
-
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(service.last_request.name(), IsEmpty());
 }
 
 TEST(DirectPathProberTest, ProbeReturnsErrorWhenRpcFails) {
@@ -248,8 +218,9 @@ TEST(DirectPathProberTest, ProbeReturnsErrorWhenRpcFails) {
                                          args);
       });
 
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_auth, Options{}, CompletionQueue{});
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      Options{}, CompletionQueue{});
 
   server->Shutdown();
 
