@@ -56,7 +56,9 @@ ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
 # ```
 
 # #### curl
-
+#
+# Install curl from source to avoid a libcurl bug present in older versions.
+#
 # ```bash
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \

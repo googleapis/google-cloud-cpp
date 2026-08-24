@@ -277,6 +277,12 @@ export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/loca
 
 #### curl
 
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions.
+
+# 
+
 ```bash
 mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
 curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
@@ -595,6 +601,12 @@ ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 
 #### curl
 
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions.
+
+# 
+
 ```bash
 mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
 curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
@@ -753,6 +765,12 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 ```
 
 #### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions.
+
+# 
 
 ```bash
 mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
@@ -942,6 +960,12 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgcon
 
 #### curl
 
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions.
+
+# 
+
 ```bash
 mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
 curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
@@ -1109,6 +1133,12 @@ tar -xzf - --strip-components=1 && \
 ./bootstrap && make -j ${NCPU:-4} && sudo make install
 
 #### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions.
+
+# 
 
 ```bash
 mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
@@ -1316,6 +1346,12 @@ export PATH=/usr/local/bin:${PATH}
 ```
 
 #### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions.
+
+# 
 
 ```bash
 mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl

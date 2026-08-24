@@ -78,6 +78,7 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 # uses /lib/ in contrast to most Fedora-based build that use /lib64/
 ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib/pkgconfig
 
+# Install curl from source to avoid a libcurl bug present in older versions.
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
     tar -xzf - --strip-components=1 && \

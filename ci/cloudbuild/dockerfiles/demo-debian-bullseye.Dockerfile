@@ -34,7 +34,9 @@ RUN curl -fsSL https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
     ./bootstrap && make -j ${NCPU:-4} && make install
 
 # #### curl
-
+#
+# Install curl from source to avoid a libcurl bug present in older versions.
+#
 # ```bash
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \

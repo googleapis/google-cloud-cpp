@@ -54,6 +54,7 @@ RUN curl -fsSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.9
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+# Install curl from source to avoid a libcurl bug present in older versions.
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
     tar -xzf - --strip-components=1 && \

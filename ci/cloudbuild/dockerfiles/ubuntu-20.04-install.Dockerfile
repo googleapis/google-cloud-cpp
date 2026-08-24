@@ -58,6 +58,7 @@ RUN apt update && apt install -y openjdk-13-jre
 # files and any temporary artifacts after a successful build to keep the
 # image smaller (and with fewer layers)
 
+# Install curl from source to avoid a libcurl bug present in older versions.
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
