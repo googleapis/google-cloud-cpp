@@ -26,7 +26,7 @@ RUN apt-get update && \
         git \
         gcc \
         g++ \
-        libcurl4-openssl-dev \
+        libnghttp2-dev \
         libssl-dev \
         libtool \
         lsb-release \
@@ -56,6 +56,21 @@ RUN apt update && apt install -y openjdk-11-jre
 # Use a different directory for each build, and remove the downloaded
 # files and any temporary artifacts after a successful build to keep the
 # image smaller (and with fewer layers)
+
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE="Release" \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/abseil-cpp
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
