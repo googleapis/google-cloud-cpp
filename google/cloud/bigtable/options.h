@@ -253,6 +253,17 @@ struct DirectPathProbeTimeoutOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * Option to configure the timeout for DirectPath diagnostics.
+ *
+ * Defaults to 5 seconds.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DirectPathDiagnosticsTimeoutOption {
+  using Type = std::chrono::milliseconds;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
