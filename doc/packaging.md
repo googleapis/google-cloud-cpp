@@ -1270,6 +1270,7 @@ by gRPC):
 sudo dnf makecache && \
 sudo dnf update -y && \
 sudo dnf install -y epel-release && \
+sudo dnf config-manager --set-enabled crb && \
 sudo dnf makecache && \
 sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libnghttp2-devel c-ares-devel tar wget which \

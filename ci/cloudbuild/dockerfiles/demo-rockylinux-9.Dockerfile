@@ -24,6 +24,7 @@ ARG NCPU=4
 RUN dnf makecache && \
     dnf update -y && \
     dnf install -y epel-release && \
+    dnf config-manager --set-enabled crb && \
     dnf makecache && \
     dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libnghttp2-devel c-ares-devel tar wget which \
