@@ -33,7 +33,7 @@ class ReaderConnectionTelemetry {
       storage::ReadPayload const& payload,
       std::chrono::steady_clock::time_point t7, std::string const& bucket_name,
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-      std::string_view event_name = "gl-cpp.latency.read") const;
+      std::string_view event_name) const;
 
  private:
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS

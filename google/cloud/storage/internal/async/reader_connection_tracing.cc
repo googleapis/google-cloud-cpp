@@ -75,7 +75,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
                   {"message.starting_offset", payload.offset()},
               });
           metrics.RecordRead(payload, std::chrono::steady_clock::now(),
-                             bucket_name, span);
+                             bucket_name, span, "gl-cpp.latency.read");
           return r;
         })
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](

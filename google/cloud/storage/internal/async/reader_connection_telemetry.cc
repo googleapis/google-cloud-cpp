@@ -89,28 +89,30 @@ void ReaderConnectionTelemetry::RecordRead(
   std::chrono::steady_clock::time_point t5 = ReadPayloadImpl::GetT5(payload);
   std::chrono::steady_clock::time_point t6 = ReadPayloadImpl::GetT6(payload);
 
-  if (t4 != std::chrono::steady_clock::time_point{} && t4 <= t5 && t5 <= t6 &&
-      t6 <= t7) {
-    double p1 = std::chrono::duration<double, std::micro>(t5 - t4).count();
-    double p2 = std::chrono::duration<double, std::micro>(t6 - t5).count();
-    double p3 = std::chrono::duration<double, std::micro>(t7 - t6).count();
+  if (t4 == std::chrono::steady_clock::time_point{} || t4 > t5 || t5 > t6 ||
+      t6 > t7) {
+    return;
+  }
+
+  double p1 = std::chrono::duration<double, std::micro>(t5 - t4).count();
+  double p2 = std::chrono::duration<double, std::micro>(t6 - t5).count();
+  double p3 = std::chrono::duration<double, std::micro>(t7 - t6).count();
 
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-    RecordMetrics(bucket_name, p1, p2, p3, span);
+  RecordMetrics(bucket_name, p1, p2, p3, span);
 #else
-    (void)bucket_name;
-    (void)p1;
-    (void)p2;
-    (void)p3;
+  (void)bucket_name;
+  (void)p1;
+  (void)p2;
+  (void)p3;
 #endif
 
-    if (span && span->GetContext().IsValid()) {
-      span->AddEvent(opentelemetry::nostd::string_view{event_name.data(),
-                                                       event_name.size()},
-                     {{"gl-cpp.latency.queue", p1},
-                      {"gl-cpp.latency.network", p2},
-                      {"gl-cpp.latency.internal", p3}});
-    }
+  if (span && span->GetContext().IsValid()) {
+    span->AddEvent(
+        opentelemetry::nostd::string_view{event_name.data(), event_name.size()},
+        {{"gl-cpp.latency.queue", p1},
+         {"gl-cpp.latency.network", p2},
+         {"gl-cpp.latency.internal", p3}});
   }
 }
 
