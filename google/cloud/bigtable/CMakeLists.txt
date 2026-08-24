@@ -188,6 +188,8 @@ add_library(
     internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
+    internal/directpath_prober.cc
+    internal/directpath_prober.h
     internal/dynamic_channel_pool.h
     internal/endpoint_options.h
     internal/google_bytes_traits.cc
@@ -475,6 +477,7 @@ if (BUILD_TESTING)
         internal/data_tracing_connection_test.cc
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
+        internal/directpath_prober_test.cc
         internal/dynamic_channel_pool_test.cc
         internal/google_bytes_traits_test.cc
         internal/grpc_metrics_exporter_test.cc
