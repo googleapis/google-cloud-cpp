@@ -117,7 +117,7 @@ quickstart guides also cover this use-case.
 | --------------------------------- | ----------------: | ---------------------------------------------------------- |
 | [Abseil][abseil-gh]               | 20250814, Patch 1 | Abseil C++ common library [^1]                             |
 | [gRPC][grpc-gh]                   |            1.76.x | An RPC library and framework [^2]                          |
-| [libcurl][libcurl-gh]             |            7.74.0 | HTTP client library [^3]                                   |
+| [libcurl][libcurl-gh]             |             8.7.1 | HTTP client library [^3]                                   |
 | [OpenSSL][openssl-gh]             |            3.0.17 | Crypto functions for [^3]                                  |
 | [nlohmann/json][nlohmann-json-gh] |            3.12.0 | JSON for Modern C++ [^3]                                   |
 | [protobuf][protobuf-gh]           |            6.33.x | Protobuf is needed for any library based on gRPC [^5] [^6] |
