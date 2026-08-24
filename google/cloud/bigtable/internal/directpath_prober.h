@@ -16,12 +16,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DIRECTPATH_PROBER_H
 
 #include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include <grpcpp/grpcpp.h>
 #include <memory>
 #include <string>
 
@@ -50,6 +52,19 @@ class DirectPathProber {
       std::shared_ptr<internal::GrpcAuthenticationStrategy> const& auth,
       bigtable::InstanceResource const& instance_resource,
       Options const& options, CompletionQueue const& cq);
+
+  /// For testing only.
+  static StatusOr<DirectPathProbeResult> Probe(
+      std::shared_ptr<BigtableStub> stub,
+      bigtable::InstanceResource const& instance_resource,
+      Options const& options);
+
+  /// For testing only.
+  static StatusOr<DirectPathProbeResult> Probe(
+      std::shared_ptr<BigtableStub> stub,
+      bigtable::InstanceResource const& instance_resource,
+      Options const& options, std::string const& peer_address,
+      std::shared_ptr<grpc::AuthContext const> auth_context);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

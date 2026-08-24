@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -226,6 +227,313 @@ TEST(DirectPathProberTest, ProbeReturnsErrorWhenRpcFails) {
 
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
                                HasSubstr("service unavailable")));
+}
+
+class FakeAuthPropertyIterator : public grpc::AuthPropertyIterator {
+ public:
+  FakeAuthPropertyIterator() : grpc::AuthPropertyIterator() {}
+};
+
+class FakeAuthContext : public grpc::AuthContext {
+ public:
+  explicit FakeAuthContext(
+      bool is_peer_authenticated,
+      std::vector<std::string> transport_security_types = {})
+      : is_peer_authenticated_(is_peer_authenticated),
+        transport_security_types_(std::move(transport_security_types)) {}
+
+  bool IsPeerAuthenticated() const override { return is_peer_authenticated_; }
+  std::vector<grpc::string_ref> GetPeerIdentity() const override { return {}; }
+  std::string GetPeerIdentityPropertyName() const override { return ""; }
+  std::vector<grpc::string_ref> FindPropertyValues(
+      std::string const& name) const override {
+    if (name == "transport_security_type") {
+      std::vector<grpc::string_ref> res;
+      for (auto const& st : transport_security_types_) {
+        res.emplace_back(st.data(), st.size());
+      }
+      return res;
+    }
+    return {};
+  }
+  grpc::AuthPropertyIterator begin() const override {
+    return FakeAuthPropertyIterator();
+  }
+  grpc::AuthPropertyIterator end() const override {
+    return FakeAuthPropertyIterator();
+  }
+  void AddProperty(std::string const&, grpc::string_ref const&) override {}
+  bool SetPeerIdentityPropertyName(std::string const&) override {
+    return false;
+  }
+
+ private:
+  bool is_peer_authenticated_;
+  std::vector<std::string> transport_security_types_;
+};
+
+TEST(DirectPathProberTest, ProbeWithAltsNegotiatedIpv4) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"alts"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:34.126.1.1:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
+                             ProbeIpPreference(Eq(IpPreference::kIpv4)),
+                             ProbePeerAddress(Eq("ipv4:34.126.1.1:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithAltsNegotiatedIpv6) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"alts"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv6:[2001:db8::1]:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
+                             ProbeIpPreference(Eq(IpPreference::kIpv6)),
+                             ProbePeerAddress(Eq("ipv6:[2001:db8::1]:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithAltsNegotiatedUnknownPeer) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"alts"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(mock_stub, instance, Options{},
+                              "dns:///bigtable.googleapis.com", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(
+      *result,
+      AllOf(ProbeSuccess(Eq(true)), ProbeIpPreference(Eq(IpPreference::kNone)),
+            ProbePeerAddress(Eq("dns:///bigtable.googleapis.com"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv4) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:34.126.0.1:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
+                             ProbeIpPreference(Eq(IpPreference::kIpv4)),
+                             ProbePeerAddress(Eq("ipv4:34.126.0.1:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv4MaxSubnet) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:34.126.63.255:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
+                             ProbeIpPreference(Eq(IpPreference::kIpv4)),
+                             ProbePeerAddress(Eq("ipv4:34.126.63.255:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv6) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(mock_stub, instance, Options{},
+                              "ipv6:[2607:f8b0:4000:800::200a]:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(
+      *result,
+      AllOf(ProbeSuccess(Eq(true)), ProbeIpPreference(Eq(IpPreference::kIpv6)),
+            ProbePeerAddress(Eq("ipv6:[2607:f8b0:4000:800::200a]:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedNonDirectPathIpv4) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:34.126.64.1:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
+                             ProbeIpPreference(Eq(IpPreference::kNone)),
+                             ProbePeerAddress(Eq("ipv4:34.126.64.1:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDifferentOctetIpv4) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:34.125.1.1:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
+                             ProbeIpPreference(Eq(IpPreference::kNone)),
+                             ProbePeerAddress(Eq("ipv4:34.125.1.1:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDifferentFirstOctetIpv4) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:35.126.1.1:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
+                             ProbeIpPreference(Eq(IpPreference::kNone)),
+                             ProbePeerAddress(Eq("ipv4:35.126.1.1:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedInvalidIpv4) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx =
+      std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:invalid:format", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
+                             ProbeIpPreference(Eq(IpPreference::kNone)),
+                             ProbePeerAddress(Eq("ipv4:invalid:format"))));
+}
+
+TEST(DirectPathProberTest, ProbeWithPeerUnauthenticated) {
+  auto mock_stub = std::make_shared<bigtable::testing::MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, PingAndWarm)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::bigtable::v2::PingAndWarmRequest const&,
+                   bigtable_internal::OperationContext&) {
+        google::bigtable::v2::PingAndWarmResponse response;
+        return response;
+      });
+
+  auto auth_ctx = std::make_shared<FakeAuthContext>(
+      false, std::vector<std::string>{"alts"});
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_stub, instance, Options{}, "ipv4:34.126.1.1:443", auth_ctx);
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
+                             ProbeIpPreference(Eq(IpPreference::kNone)),
+                             ProbePeerAddress(Eq("ipv4:34.126.1.1:443"))));
+}
+
+TEST(DirectPathProberTest, ProbeNullStubFails) {
+  bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 }
 
 }  // namespace

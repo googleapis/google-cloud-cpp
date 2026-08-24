@@ -49,15 +49,19 @@ IpPreference ExtractIpPreference(std::string_view peer_address) {
   return IpPreference::kNone;
 }
 
+bool IsAltsNegotiated(grpc::AuthContext const& auth_ctx) {
+  if (!auth_ctx.IsPeerAuthenticated()) return false;
+  std::vector<grpc::string_ref> const sec_types =
+      auth_ctx.FindPropertyValues("transport_security_type");
+  return std::any_of(sec_types.begin(), sec_types.end(),
+                     [](grpc::string_ref const& st) { return st == "alts"; });
+}
+
 bool IsAltsNegotiated(grpc::ClientContext const& context) {
   std::shared_ptr<grpc::AuthContext const> const auth_ctx =
       context.auth_context();
   if (auth_ctx == nullptr) return false;
-  if (!auth_ctx->IsPeerAuthenticated()) return false;
-  std::vector<grpc::string_ref> const sec_types =
-      auth_ctx->FindPropertyValues("transport_security_type");
-  return std::any_of(sec_types.begin(), sec_types.end(),
-                     [](grpc::string_ref const& st) { return st == "alts"; });
+  return IsAltsNegotiated(*auth_ctx);
 }
 
 bool IsPeerAuthenticated(grpc::ClientContext const& context) {
@@ -115,12 +119,6 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
                                    GCP_ERROR_INFO());
   }
 
-  std::chrono::milliseconds timeout =
-      options.get<bigtable::experimental::DirectPathProbeTimeoutOption>();
-  if (timeout <= std::chrono::milliseconds::zero()) {
-    timeout = std::chrono::milliseconds(2000);
-  }
-
   auto constexpr kDirectPathEndpoint = "google-c2p:///bigtable.googleapis.com";
   auto constexpr kAuthority = "bigtable.googleapis.com";
 
@@ -144,6 +142,31 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
   std::shared_ptr<BigtableStub> stub =
       CreateDecoratedStubs(auth, cq, probe_options, stub_factory);
 
+  return Probe(stub, instance_resource, probe_options);
+}
+
+StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
+    std::shared_ptr<BigtableStub> stub,
+    bigtable::InstanceResource const& instance_resource,
+    Options const& options) {
+  return Probe(std::move(stub), instance_resource, options, "", nullptr);
+}
+
+StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
+    std::shared_ptr<BigtableStub> stub,
+    bigtable::InstanceResource const& instance_resource, Options const& options,
+    std::string const& peer_address,
+    std::shared_ptr<grpc::AuthContext const> auth_context) {
+  if (!stub) {
+    return internal::InternalError("Stub cannot be null", GCP_ERROR_INFO());
+  }
+
+  std::chrono::milliseconds timeout =
+      options.get<bigtable::experimental::DirectPathProbeTimeoutOption>();
+  if (timeout <= std::chrono::milliseconds::zero()) {
+    timeout = std::chrono::milliseconds(2000);
+  }
+
   grpc::ClientContext client_context;
   client_context.set_deadline(std::chrono::system_clock::now() + timeout);
 
@@ -154,13 +177,18 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
   }
   OperationContext op_ctx;
   StatusOr<google::bigtable::v2::PingAndWarmResponse> response =
-      stub->PingAndWarm(client_context, probe_options, request, op_ctx);
+      stub->PingAndWarm(client_context, options, request, op_ctx);
   if (!response.ok()) return response.status();
 
   DirectPathProbeResult result;
-  result.peer_address = client_context.peer();
-  bool const is_alts = IsAltsNegotiated(client_context);
-  bool const is_auth = IsPeerAuthenticated(client_context);
+  result.peer_address =
+      peer_address.empty() ? client_context.peer() : peer_address;
+  bool const is_alts = auth_context != nullptr
+                           ? IsAltsNegotiated(*auth_context)
+                           : IsAltsNegotiated(client_context);
+  bool const is_auth = auth_context != nullptr
+                           ? auth_context->IsPeerAuthenticated()
+                           : IsPeerAuthenticated(client_context);
   bool const is_dp_ip = IsDirectPathIp(result.peer_address);
   result.success = is_alts || (is_auth && is_dp_ip);
   result.ip_preference = result.success
