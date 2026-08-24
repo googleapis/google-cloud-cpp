@@ -31,7 +31,7 @@ RUN dnf makecache && dnf debuginfo-install -y glibc
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y json-devel libcurl-devel openssl-devel
+    dnf install -y json-devel libnghttp2-devel openssl-devel
 # ```
 
 # #### Patching pkg-config
@@ -60,6 +60,24 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 
 # ```bash
 ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
+# ```
+
+# #### curl
+
+# ```bash
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 # ```
 
 # #### Protobuf

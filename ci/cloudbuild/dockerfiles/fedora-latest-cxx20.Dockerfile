@@ -16,7 +16,7 @@ FROM fedora:40
 ARG NCPU=4
 ARG ARCH=amd64
 
-# Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
+# Fedora includes packages for gRPC and OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
@@ -25,10 +25,10 @@ RUN dnf makecache && \
         make ninja-build patch python3 \
         python-pip tar unzip wget which zip zlib-devel
 
-# Install the development packages for libcurl and OpenSSL. Neither are affected
+# Install the development packages for OpenSSL and libnghttp2. Neither are affected
 # by the C++ version, so we can use the pre-built binaries.
 RUN dnf makecache && \
-    dnf install -y libcurl-devel openssl-devel
+    dnf install -y libnghttp2-devel openssl-devel
 
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
@@ -66,6 +66,20 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 # default, pkgconf does not search in these directories. We need to explicitly
 # set the search path.
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=20 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 # Download and install direct dependencies of `google-cloud-cpp`. Including
 # development dependencies.  In each case, remove the downloaded files and the

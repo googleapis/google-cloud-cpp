@@ -15,15 +15,7 @@
 # ~~~
 
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(CURL REQUIRED)
-
-if (CURL_VERSION_STRING VERSION_LESS "8.7.1")
-    message(
-        FATAL_ERROR
-            "cURL version ${CURL_VERSION_STRING} is too old and unsupported. "
-            "Minimum required version is 8.7.1.")
-endif ()
-
+find_package(CURL 8.7.1 REQUIRED)
 if (NOT WIN32)
     find_package(OpenSSL REQUIRED)
 endif ()

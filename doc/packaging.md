@@ -244,7 +244,7 @@ dependencies of `google-cloud-cpp`.
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y json-devel libcurl-devel openssl-devel
+sudo dnf install -y json-devel libnghttp2-devel openssl-devel
 ```
 
 #### Patching pkg-config
@@ -273,6 +273,24 @@ the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
+```
+
+#### curl
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf

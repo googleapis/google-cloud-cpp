@@ -23,7 +23,7 @@ RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
         clang clang-analyzer clang-tools-extra \
         cmake diffutils findutils gcc-c++ git \
-        llvm make ninja-build \
+        libnghttp2-devel llvm make ninja-build \
         openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
