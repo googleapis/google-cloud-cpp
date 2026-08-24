@@ -62,6 +62,8 @@ RUN ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 # #### curl
 #
 # Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
 #
 # ```bash
 WORKDIR /var/tmp/build/curl

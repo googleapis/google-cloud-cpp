@@ -279,7 +279,8 @@ export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/loca
 
 # 
 
-Install curl from source to avoid a libcurl bug present in older versions.
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
 
 # 
 
@@ -603,7 +604,8 @@ ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 
 # 
 
-Install curl from source to avoid a libcurl bug present in older versions.
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
 
 # 
 
@@ -768,7 +770,8 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 # 
 
-Install curl from source to avoid a libcurl bug present in older versions.
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
 
 # 
 
@@ -962,7 +965,8 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgcon
 
 # 
 
-Install curl from source to avoid a libcurl bug present in older versions.
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
 
 # 
 
@@ -1136,7 +1140,8 @@ tar -xzf - --strip-components=1 && \
 
 # 
 
-Install curl from source to avoid a libcurl bug present in older versions.
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
 
 # 
 
@@ -1349,7 +1354,8 @@ export PATH=/usr/local/bin:${PATH}
 
 # 
 
-Install curl from source to avoid a libcurl bug present in older versions.
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
 
 # 
 

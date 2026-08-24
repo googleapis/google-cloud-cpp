@@ -65,6 +65,8 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/l
 # #### curl
 #
 # Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
 #
 # ```bash
 WORKDIR /var/tmp/build/curl
