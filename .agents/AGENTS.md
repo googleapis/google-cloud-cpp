@@ -83,3 +83,16 @@ to avoid typing an explicit type.
   - When a reference or pointer is intended, always explicitly qualify as
     `auto const&`, `auto&`, or `auto*` to prevent accidental copies (since bare
     `auto` deduces by value) and to make ownership and mutability unambiguous.
+
+## Default Arguments in Internal Namespaces
+
+- **Avoid Default Parameters in `internal` Namespaces:**
+  - Functions, member functions, and constructors declared in `internal`
+    namespaces (e.g., `google::cloud::*::internal`, `google::cloud::*_internal`)
+    must not specify default parameter values.
+  - Require all internal callers and unit tests to explicitly specify all
+    arguments.
+  - *Why:* Default arguments in internal implementation code obscure
+    dependencies at call sites, make it easy to inadvertently omit required
+    configuration, and can mask untested branches in unit tests. If a simpler
+    calling convention is genuinely needed, provide an explicit overload.

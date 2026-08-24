@@ -32,7 +32,12 @@ https://google.github.io/styleguide/cppguide.html with the following variances:
   files.
 - Encourage duplication of salient setup and expectations in test cases to
   increase readability.
-- Discourage default parameters for functions in an internal namespace.
+- **Disallow Default Parameters in `internal` Namespaces:** Reject default
+  argument values in functions, member functions, and constructors declared in
+  `internal` namespaces (e.g., `google::cloud::*::internal`,
+  `google::cloud::*_internal`). Require all internal callers and unit tests to
+  explicitly supply all arguments. Suggest explicit function overloads if a
+  simpler calling syntax is needed.
 
 Do not make comments of suggestions on ordering of includes as a script formats
 them.
