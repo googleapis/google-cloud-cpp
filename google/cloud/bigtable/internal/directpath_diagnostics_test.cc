@@ -282,6 +282,8 @@ TEST(DirectPathDiagnosticsTest, DefaultNetworkSystemCanConnectTcp) {
                                             std::chrono::milliseconds(500)));
   EXPECT_FALSE(network_system->CanConnectTcp("127.0.0.1", 1,
                                              std::chrono::milliseconds(50)));
+  EXPECT_FALSE(network_system->CanConnectTcp(
+      "invalid.ip.address", listener.port(), std::chrono::milliseconds(50)));
 }
 
 TEST(DirectPathDiagnosticsTest, DefaultNetworkSystemCheckLoopback) {

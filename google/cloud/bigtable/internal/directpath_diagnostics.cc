@@ -96,7 +96,10 @@ class DefaultDirectPathNetworkSystem : public DirectPathNetworkSystem {
     std::memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
-    inet_pton(AF_INET, host.c_str(), &addr.sin_addr);
+    if (inet_pton(AF_INET, host.c_str(), &addr.sin_addr) <= 0) {
+      close(sock);
+      return false;
+    }
 
     int const res =
         connect(sock, reinterpret_cast<struct sockaddr*>(&addr), sizeof(addr));
@@ -113,7 +116,7 @@ class DefaultDirectPathNetworkSystem : public DirectPathNetworkSystem {
 
     for (struct ifaddrs* ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next) {
       if (ifa->ifa_addr == nullptr) continue;
-      if (std::string(ifa->ifa_name) == "lo") {
+      if (ifa->ifa_name != nullptr && std::strcmp(ifa->ifa_name, "lo") == 0) {
         if (ifa->ifa_addr->sa_family == AF_INET) {
           has_ipv4_lo = true;
         } else if (ifa->ifa_addr->sa_family == AF_INET6) {
@@ -172,19 +175,22 @@ DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
 }
 
 DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
-    Options const& options, std::shared_ptr<internal::GcpDetector> detector,
-    std::shared_ptr<DirectPathNetworkSystem> network_system,
+    Options const& options,
+    std::shared_ptr<internal::GcpDetector> const& detector,
+    std::shared_ptr<DirectPathNetworkSystem> const& network_system,
     std::string const& metadata_host, std::uint16_t metadata_port) {
   // Step 1: Check platform (GCP VM)
-  if (detector == nullptr) {
-    detector = internal::MakeGcpDetector();
+  auto effective_detector = detector;
+  if (effective_detector == nullptr) {
+    effective_detector = internal::MakeGcpDetector();
   }
-  if (!detector->IsGoogleCloudBios()) {
+  if (!effective_detector->IsGoogleCloudBios()) {
     return DiagnosticFailureReason::kNotInGcp;
   }
 
-  if (network_system == nullptr) {
-    network_system = MakeDefaultDirectPathNetworkSystem();
+  auto effective_network_system = network_system;
+  if (effective_network_system == nullptr) {
+    effective_network_system = MakeDefaultDirectPathNetworkSystem();
   }
 
   // Step 2: Metadata server reachability
@@ -194,13 +200,14 @@ DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
     timeout = std::chrono::milliseconds(500);
   }
 
-  if (!network_system->CanConnectTcp(metadata_host, metadata_port, timeout)) {
+  if (!effective_network_system->CanConnectTcp(metadata_host, metadata_port,
+                                               timeout)) {
     return DiagnosticFailureReason::kMetadataUnreachable;
   }
 
   // Step 3 & 4: Loopback configuration check
   DiagnosticFailureReason const lo_result =
-      network_system->CheckLoopbackConfiguration();
+      effective_network_system->CheckLoopbackConfiguration();
   if (lo_result != DiagnosticFailureReason::kUnknown) {
     return lo_result;
   }
@@ -210,6 +217,11 @@ DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
 }
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+void DirectPathDiagnostics::RunAsync(CompletionQueue cq,
+                                     Options const& options) {
+  RunAsync(std::move(cq), options, nullptr);
+}
+
 void DirectPathDiagnostics::RunAsync(
     CompletionQueue cq, Options const& options,
     std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility) {
@@ -224,27 +236,30 @@ void DirectPathDiagnostics::RunAsync(
     std::shared_ptr<internal::GcpDetector> detector,
     std::shared_ptr<DirectPathNetworkSystem> network_system,
     std::string const& metadata_host, std::uint16_t metadata_port) {
-  std::chrono::milliseconds timeout =
-      options.get<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>();
-  if (timeout <= std::chrono::milliseconds::zero()) {
-    timeout = std::chrono::milliseconds(5000);
+  auto run_options = options;
+  if (run_options
+          .get<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>() <=
+      std::chrono::milliseconds::zero()) {
+    run_options.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
+        std::chrono::milliseconds(5000));
   }
 
-  cq.RunAsync([options,
-               direct_access_compatibility =
-                   std::move(direct_access_compatibility),
-               detector = std::move(detector),
-               network_system = std::move(network_system), metadata_host,
-               metadata_port]() {
-    DiagnosticFailureReason const reason =
-        DirectPathDiagnostics::RunDiagnostics(options, detector, network_system,
-                                              metadata_host, metadata_port);
-    if (direct_access_compatibility != nullptr) {
-      direct_access_compatibility->Record(
-          opentelemetry::context::RuntimeContext::GetCurrent(), 0,
-          DirectAccessCompatibilityLabels{"", ToString(reason)});
-    }
-  });
+  cq.RunAsync(
+      [run_options,
+       direct_access_compatibility = std::move(direct_access_compatibility),
+       detector = std::move(detector),
+       network_system = std::move(network_system), metadata_host,
+       metadata_port]() {
+        DiagnosticFailureReason const reason =
+            DirectPathDiagnostics::RunDiagnostics(run_options, detector,
+                                                  network_system, metadata_host,
+                                                  metadata_port);
+        if (direct_access_compatibility != nullptr) {
+          direct_access_compatibility->Record(
+              opentelemetry::context::RuntimeContext::GetCurrent(), 0,
+              DirectAccessCompatibilityLabels{"", ToString(reason)});
+        }
+      });
 }
 #endif
 

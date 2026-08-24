@@ -74,14 +74,17 @@ class DirectPathDiagnostics {
 
   /// For testing only.
   static DiagnosticFailureReason RunDiagnostics(
-      Options const& options, std::shared_ptr<internal::GcpDetector> detector,
-      std::shared_ptr<DirectPathNetworkSystem> network_system,
+      Options const& options,
+      std::shared_ptr<internal::GcpDetector> const& detector,
+      std::shared_ptr<DirectPathNetworkSystem> const& network_system,
       std::string const& metadata_host, std::uint16_t metadata_port);
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  static void RunAsync(CompletionQueue cq, Options const& options,
-                       std::shared_ptr<DirectAccessCompatibility>
-                           direct_access_compatibility = nullptr);
+  static void RunAsync(CompletionQueue cq, Options const& options);
+
+  static void RunAsync(
+      CompletionQueue cq, Options const& options,
+      std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility);
 
   /// For testing only.
   static void RunAsync(
