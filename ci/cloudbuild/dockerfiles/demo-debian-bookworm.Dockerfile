@@ -31,7 +31,7 @@ RUN apt-get update && \
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y \
-        libcurl4-openssl-dev libssl-dev nlohmann-json3-dev
+        libnghttp2-dev libssl-dev nlohmann-json3-dev
 # ```
 
 # #### Patching pkg-config
@@ -53,6 +53,28 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
+# ```
+
+# #### curl
+#
+# Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
+#
+# ```bash
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 # ```
 
 # #### Abseil

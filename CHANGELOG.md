@@ -9,6 +9,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.9.0 - TBD
 
+### Dependency version update
+
+- Updated minimum version of libcurl from 7.74.0 to 8.7.1. This was done primarily to avoid a known bug introduced in libcurl 8.5.0. For more information, see [Issue #16343](https://github.com/googleapis/google-cloud-cpp/issues/16343).
+
 ### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,

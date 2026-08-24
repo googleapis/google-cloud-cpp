@@ -17,15 +17,37 @@ ARG NCPU=4
 
 ## [BEGIN packaging.md]
 
-# Install the minimal development tools, libcurl, OpenSSL and libc-ares:
+# Install the minimal development tools, OpenSSL and libc-ares:
 
 # ```bash
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential cmake ca-certificates curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libnghttp2-dev libre2-dev \
         libssl-dev m4 make pkg-config tar wget zlib1g-dev libc6-dbg
+# ```
+
+# #### curl
+#
+# Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
+#
+# ```bash
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 # ```
 
 # #### Abseil

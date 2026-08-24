@@ -29,7 +29,7 @@ RUN dnf makecache && \
         google-benchmark-devel \
         gtest-devel \
         json-devel \
-        libcurl-devel \
+        libnghttp2-devel \
         openssl-devel \
         pugixml-devel
 
@@ -51,6 +51,23 @@ RUN curl -fsSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.9
         -DBUILD_SHARED_LIBS=ON \
         -DBUILD_TESTING=OFF \
         -S . -B cmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+
+# Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 

@@ -117,7 +117,7 @@ quickstart guides also cover this use-case.
 | --------------------------------- | ----------------: | ---------------------------------------------------------- |
 | [Abseil][abseil-gh]               | 20250814, Patch 1 | Abseil C++ common library [^1]                             |
 | [gRPC][grpc-gh]                   |            1.76.x | An RPC library and framework [^2]                          |
-| [libcurl][libcurl-gh]             |            7.74.0 | HTTP client library [^3]                                   |
+| [libcurl][libcurl-gh]             |             8.7.1 | HTTP client library [^3]                                   |
 | [OpenSSL][openssl-gh]             |            3.0.17 | Crypto functions for [^3]                                  |
 | [nlohmann/json][nlohmann-json-gh] |            3.12.0 | JSON for Modern C++ [^3]                                   |
 | [protobuf][protobuf-gh]           |            6.33.x | Protobuf is needed for any library based on gRPC [^5] [^6] |
@@ -244,7 +244,7 @@ dependencies of `google-cloud-cpp`.
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y json-devel libcurl-devel openssl-devel
+sudo dnf install -y json-devel libnghttp2-devel openssl-devel
 ```
 
 #### Patching pkg-config
@@ -273,6 +273,31 @@ the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
+```
+
+#### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
+
+# 
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf
@@ -533,7 +558,7 @@ cmake --build cmake-out --target install
 <summary>Ubuntu (24.04 LTS - Noble Numbat)</summary>
 <br>
 
-Install the minimal development tools, libcurl, OpenSSL and libc-ares:
+Install the minimal development tools, OpenSSL and libc-ares:
 
 ```bash
 export DEBIAN_FRONTEND=noninteractive
@@ -549,7 +574,7 @@ Ubuntu:24 includes packages for most of the direct dependencies of
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y  \
-        libssl-dev libcurl4-openssl-dev nlohmann-json3-dev zlib1g-dev \
+        libssl-dev libnghttp2-dev nlohmann-json3-dev zlib1g-dev \
         libsystemd-dev
 ```
 
@@ -573,6 +598,31 @@ curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
 ln -s /usr/bin/pkgconf /usr/bin/pkg-config
+```
+
+#### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
+
+# 
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Abseil
@@ -705,15 +755,40 @@ cmake --build cmake-out --target install
 <summary>Ubuntu (22.04 LTS - Jammy Jellyfish)</summary>
 <br>
 
-Install the minimal development tools, libcurl, OpenSSL and libc-ares:
+Install the minimal development tools, OpenSSL and libc-ares:
 
 ```bash
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential cmake ca-certificates curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libnghttp2-dev libre2-dev \
         libssl-dev m4 make pkg-config tar wget zlib1g-dev libc6-dbg
+```
+
+#### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
+
+# 
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Abseil
@@ -862,7 +937,7 @@ Install the development packages for direct `google-cloud-cpp` dependencies:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y \
-        libcurl4-openssl-dev libssl-dev nlohmann-json3-dev
+        libnghttp2-dev libssl-dev nlohmann-json3-dev
 ```
 
 #### Patching pkg-config
@@ -884,6 +959,31 @@ curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
+```
+
+#### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
+
+# 
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Abseil
@@ -1019,13 +1119,13 @@ cmake --build cmake-out --target install
 <summary>Debian (11 - Bullseye)</summary>
 <br>
 
-Install the minimal development tools, libcurl, and OpenSSL:
+Install the minimal development tools, OpenSSL, and libnghttp2:
 
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
+        gcc g++ libc-ares-dev libc-ares2 libnghttp2-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev libc6-dbg
 ```
 
@@ -1035,6 +1135,31 @@ mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
 https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
 tar -xzf - --strip-components=1 && \
 ./bootstrap && make -j ${NCPU:-4} && sudo make install
+
+#### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
+
+# 
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+```
 
 #### Abseil
 
@@ -1173,16 +1298,17 @@ cmake --build cmake-out --target install
 <summary>Rocky Linux (9)</summary>
 <br>
 
-Install the minimal development tools, libcurl, OpenSSL, and the c-ares library
-(required by gRPC):
+Install the minimal development tools, OpenSSL, and the c-ares library (required
+by gRPC):
 
 ```bash
 sudo dnf makecache && \
 sudo dnf update -y && \
 sudo dnf install -y epel-release && \
+sudo dnf config-manager --set-enabled crb && \
 sudo dnf makecache && \
 sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
-        patch zlib-devel libcurl-devel c-ares-devel tar wget which \
+        patch zlib-devel libnghttp2-devel c-ares-devel tar wget which \
         autoconf automake libtool binutils dnf-utils
 sudo dnf makecache && sudo dnf debuginfo-install -y glibc
 
@@ -1222,6 +1348,31 @@ are one solution:
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
+```
+
+#### curl
+
+# 
+
+Install curl from source to avoid a libcurl bug present in older versions. See
+https://github.com/googleapis/google-cloud-cpp/issues/16343 for more details.
+
+# 
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Abseil

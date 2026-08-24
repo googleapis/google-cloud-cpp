@@ -38,7 +38,7 @@ RUN dnf makecache && \
         google-benchmark-devel.i686 \
         grpc-devel.i686 \
         gtest-devel.i686 \
-        libcurl-devel.i686 \
+        libnghttp2-devel.i686 \
         libstdc++-devel.i686 \
         openssl-devel.i686 \
         protobuf-devel.i686 \
@@ -77,6 +77,28 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 # default, pkg-config does not search in these directories. Note how this build
 # uses /lib/ in contrast to most Fedora-based build that use /lib64/
 ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib/pkgconfig
+
+# Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_C_FLAGS=-m32 \
+        -DCMAKE_FIND_ROOT_PATH=/usr/ \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 # The project depends on the nlohmann_json library. We use CMake to
 # install it as this installs the necessary CMake configuration files.

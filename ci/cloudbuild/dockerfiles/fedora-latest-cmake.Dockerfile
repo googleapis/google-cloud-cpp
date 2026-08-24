@@ -16,14 +16,14 @@ FROM fedora:40
 ARG NCPU=4
 ARG ARCH=amd64
 
-# Fedora includes packages for libcurl and OpenSSL that are recent enough
+# Fedora includes packages for OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
         clang clang-analyzer clang-tools-extra \
         cmake diffutils findutils gcc-c++ git \
-        libcurl-devel llvm make ninja-build \
+        libnghttp2-devel llvm make ninja-build \
         openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
@@ -80,6 +80,23 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 # default, pkgconf does not search in these directories. We need to explicitly
 # set the search path.
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+
+# Install curl from source to avoid a libcurl bug present in older versions.
+# See https://github.com/googleapis/google-cloud-cpp/issues/16343 for more
+# details.
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 # We disable the inline namespace because otherwise Abseil LTS updates break our
 # `check-api` build.

@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-find_package(CURL REQUIRED)
+find_package(CURL 8.7.1 REQUIRED)
 if (NOT WIN32)
     find_package(OpenSSL REQUIRED)
 endif ()
