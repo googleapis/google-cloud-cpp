@@ -1,0 +1,62 @@
+name: Update Compute Discovery Document
+
+on:
+  schedule:
+    # Runs every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions UI
+
+permissions:
+  contents: read
+
+jobs:
+  update-compute-discovery:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Git user identity
+        run: |
+          git config user.name "cloud-cpp-automation[bot]"
+          git config user.email "cloud-cpp-automation[bot]@users.noreply.github.com"
+
+      - name: Run update_discovery_doc.sh
+        run: |
+          ./generator/discovery/update_discovery_doc.sh --no-create-branch
+
+      - name: Run checkers
+        run: |
+          ci/cloudbuild/build.sh -t checkers-pr
+
+      - name: Push branch and create Pull Request if changes exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if a new commit was made (HEAD differs from origin/main)
+          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
+            echo "Changes detected. Pushing branch automation/update-compute-discovery..."
+            git push origin HEAD:automation/update-compute-discovery --force
+
+            echo "Checking if a PR is already open..."
+            if ! gh pr list --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
+              echo "Opening new PR..."
+              BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
+              gh pr create \
+                --title "feat(compute): update discovery doc and generate new services" \
+                --body "$(printf '%b' "$BODY")" \
+                --base main \
+                --head automation/update-compute-discovery \
+                --label "autorelease: pending"
+            else
+              echo "Pull request already exists for automation/update-compute-discovery. Branch has been updated."
+            fi
+          else
+            echo "No changes committed. Nothing to push or create."
+          fi

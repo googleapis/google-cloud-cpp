@@ -86,11 +86,36 @@ readonly GENERATOR_CONFIG_RELATIVE_PATH="generator/generator_config.textproto"
 readonly COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH="google/cloud/compute/service_dirs.cmake"
 readonly COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH="google/cloud/compute/service_dirs.bzl"
 
-io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
-curl "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
+CURRENT_REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}" 2>/dev/null || echo "")
 
-REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}")
+io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
+TEMP_JSON=$(mktemp)
+if [[ ! -f "${TEMP_JSON}" ]]; then
+  io::log_red "Failed to create temporary file."
+  exit 1
+fi
+trap 'rm -f "${TEMP_JSON}"' EXIT
+
+if ! curl -fsSL "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${TEMP_JSON}"; then
+  io::log_red "Failed to fetch discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
+  exit 1
+fi
+
+REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${TEMP_JSON}")
+if [[ -z "${REVISION}" ]]; then
+  io::log_red "Could not parse revision from fetched discovery document."
+  exit 1
+fi
 readonly REVISION
+
+if [[ -n "${CURRENT_REVISION}" && "${REVISION}" == "${CURRENT_REVISION}" ]]; then
+  io::log_green "Compute discovery document is already up to date (revision ${CURRENT_REVISION}). Nothing to do."
+  exit 0
+fi
+
+io::log_h2 "Updating Discovery Document: ${CURRENT_REVISION:-none} -> ${REVISION}"
+mv "${TEMP_JSON}" "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
+
 if [[ "${CREATE_BRANCH}" == "true" ]]; then
   io::run git checkout -B update_compute_discovery_circa_"${REVISION}"
 fi
