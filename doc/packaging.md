@@ -150,8 +150,8 @@ apk update && \
 
 Alpine's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil, so we use the normal `pkg-config` binary, which seems to not suffer from
-this bottleneck. For more details see
+Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
+from this bottleneck. For more details see
 https://github.com/pkgconf/pkgconf/issues/229 and
 https://github.com/googleapis/google-cloud-cpp/issues/7052
 
@@ -166,8 +166,8 @@ sudo make install && \
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default, pkgconf does not search in these directories. We need to explicitly set
-the search path.
+default, pkgconf does not search in these directories. We need to explicitly
+set the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
@@ -175,9 +175,9 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 
 #### Dependencies
 
-The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included with
-Alpine >= 3.19 meet `google-cloud-cpp`'s requirements. We can simply install the
-development packages
+The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included
+with Alpine >= 3.19 meet `google-cloud-cpp`'s requirements. We can simply
+install the development packages
 
 ```bash
 apk update && \
@@ -239,8 +239,8 @@ sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
 sudo dnf makecache && sudo dnf debuginfo-install -y glibc
 ```
 
-Fedora:40 includes packages, with recent enough versions, for most of the direct
-dependencies of `google-cloud-cpp`.
+Fedora:40 includes packages, with recent enough versions, for most of the
+direct dependencies of `google-cloud-cpp`.
 
 ```bash
 sudo dnf makecache && \
@@ -253,9 +253,9 @@ If you are not planning to use `pkg-config(1)` you can skip these steps.
 
 Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+you may want to use a recent version of the standard `pkg-config` binary. If
+not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -268,8 +268,8 @@ sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default, pkgconf does not search in these directories. We need to explicitly set
-the search path.
+default, pkgconf does not search in these directories. We need to explicitly
+set the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
@@ -405,8 +405,8 @@ sudo zypper install --allow-downgrade -y \
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
-does not search for shared libraries in these directories by default. There are
-multiple ways to solve this problem, the following steps are one solution:
+does not search for shared libraries in these directories by default. There
+are multiple ways to solve this problem, the following steps are one solution:
 
 ```bash
 (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
@@ -415,8 +415,10 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
 ```
 
-Use the following environment variables to configure the compiler used by CMake.
-export CC=gcc export CXX=g++
+Use the following environment variables to configure the compiler used by
+CMake.
+export CC=gcc
+export CXX=g++
 
 #### Abseil
 
@@ -577,9 +579,9 @@ If you are not planning to use `pkg-config(1)` you can skip these steps.
 
 Ubuntu's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+you may want to use a recent version of the standard `pkg-config` binary. If
+not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -774,8 +776,8 @@ sudo ldconfig
 
 #### gRPC
 
-We also need a version of gRPC that is recent enough to support the Google Cloud
-Platform proto files. We install it using:
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -801,10 +803,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
@@ -880,7 +882,7 @@ Install the development packages for direct `google-cloud-cpp` dependencies:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y \
-        libcurl4-openssl-dev libssl-dev nlohmann-json3-dev
+        libnghttp2-dev libssl-dev nlohmann-json3-dev
 ```
 
 #### Patching pkg-config
@@ -889,9 +891,9 @@ If you are not planning to use `pkg-config(1)` you can skip these steps.
 
 Debian's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+you may want to use a recent version of the standard `pkg-config` binary. If
+not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -902,6 +904,24 @@ curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
+```
+
+#### curl
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
 #### Abseil
@@ -1037,22 +1057,39 @@ cmake --build cmake-out --target install
 <summary>Debian (11 - Bullseye)</summary>
 <br>
 
-Install the minimal development tools, libcurl, and OpenSSL:
+Install the minimal development tools, OpenSSL, and libnghttp2:
 
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
+        gcc g++ libc-ares-dev libc-ares2 libnghttp2-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev libc6-dbg
 ```
 
 #### Install CMake v3.22
+mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake
+curl -fsSL https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./bootstrap && make -j ${NCPU:-4} && sudo make install
 
-mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
-https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
-tar -xzf - --strip-components=1 && \
-./bootstrap && make -j ${NCPU:-4} && sudo make install
+#### curl
+
+```bash
+mkdir -p $HOME/Downloads/curl && cd $HOME/Downloads/curl
+curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+```
 
 #### Abseil
 
@@ -1073,8 +1110,7 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-Debian 11 also ships with nlohmann-json==3.9.1, which is recent enough for our
-needs:
+Debian 11 also ships with nlohmann-json==3.9.1, which is recent enough for our needs:
 
 ```bash
 sudo apt-get update && \
@@ -1083,10 +1119,10 @@ sudo apt-get --no-install-recommends install -y nlohmann-json3-dev
 
 #### Protobuf
 
-Unless you are only using the Google Cloud Storage library the project needs
-Protobuf and gRPC. Unfortunately the version of Protobuf that ships with Debian
-11 is not recent enough to support the protos published by Google Cloud. We need
-to build from source:
+Unless you are only using the Google Cloud Storage library the project
+needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
+with Debian 11 is not recent enough to support the protos published by
+Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
@@ -1105,9 +1141,9 @@ sudo ldconfig
 
 #### RE2
 
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. You can skip this build and use the system's package if you are not
-planning to use pkg-config.
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
@@ -1191,8 +1227,8 @@ cmake --build cmake-out --target install
 <summary>Rocky Linux (9)</summary>
 <br>
 
-Install the minimal development tools, libcurl, OpenSSL, and the c-ares library
-(required by gRPC):
+Install the minimal development tools, libcurl, OpenSSL, and the c-ares
+library (required by gRPC):
 
 ```bash
 sudo dnf makecache && \
@@ -1215,10 +1251,10 @@ export CXX=/usr/bin/g++
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
-slow when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+slow when handling `.pc` files with lots of `Requires:` deps, which happens
+with Abseil. If you plan to use `pkg-config` with any of the installed
+artifacts, you may want to use a recent version of the standard `pkg-config`
+binary. If not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -1232,8 +1268,8 @@ sudo ldconfig && cd /var/tmp && rm -fr build
 
 The following steps will install libraries and tools in `/usr/local`. By
 default, Rocky Linux 9 does not search for shared libraries in these
-directories, there are multiple ways to solve this problem, the following steps
-are one solution:
+directories, there are multiple ways to solve this problem, the following
+steps are one solution:
 
 ```bash
 (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
@@ -1261,8 +1297,8 @@ sudo ldconfig
 
 #### Protobuf
 
-Rocky Linux ships with Protobuf 3.14.x. Some of the libraries in
-`google-cloud-cpp` require Protobuf >= 3.15.8. For simplicity, we will just
+Rocky Linux ships with Protobuf 3.14.x.  Some of the libraries in
+`google-cloud-cpp` require Protobuf >= 3.15.8.  For simplicity, we will just
 install Protobuf (and any downstream packages) from source.
 
 ```bash
@@ -1283,9 +1319,9 @@ sudo ldconfig
 
 #### RE2
 
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. You can skip this build and use the system's package if you are not
-planning to use pkg-config.
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
@@ -1302,10 +1338,10 @@ sudo ldconfig
 
 #### gRPC
 
-We also need a version of gRPC that is recent enough to support the Google Cloud
-Platform proto files. Note that gRPC overrides the default C++ standard version
-to C++14, we need to configure it to use the platform's default. We manually
-install it using:
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. Note that gRPC overrides the default C++ standard
+version to C++14, we need to configure it to use the platform's default. We
+manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -1331,10 +1367,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json

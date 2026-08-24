@@ -17,13 +17,13 @@ ARG NCPU=4
 
 ## [BEGIN packaging.md]
 
-# Install the minimal development tools, libcurl, and OpenSSL:
+# Install the minimal development tools, OpenSSL, and libnghttp2:
 
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
+        gcc g++ libc-ares-dev libc-ares2 libnghttp2-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev libc6-dbg
 # ```
 
@@ -32,6 +32,24 @@ WORKDIR /var/tmp/build/cmake
 RUN curl -fsSL https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./bootstrap && make -j ${NCPU:-4} && make install
+
+# #### curl
+
+# ```bash
+WORKDIR /var/tmp/build/curl
+RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCURL_USE_OPENSSL=ON \
+        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_TESTING=OFF \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+# ```
 
 # #### Abseil
 
