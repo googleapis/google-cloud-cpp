@@ -77,72 +77,103 @@ std::string ToString(DiagnosticFailureReason reason) {
 #ifndef _WIN32
 namespace {
 
-bool CanConnectTcp(std::string const& host, std::uint16_t port,
-                   std::chrono::milliseconds timeout) {
-  int const sock = socket(AF_INET, SOCK_STREAM, 0);
-  if (sock < 0) return false;
+class DefaultDirectPathNetworkSystem : public DirectPathNetworkSystem {
+ public:
+  bool CanConnectTcp(std::string const& host, std::uint16_t port,
+                     std::chrono::milliseconds timeout) override {
+    int const sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) return false;
 
-  std::int64_t const total_usec =
-      std::chrono::duration_cast<std::chrono::microseconds>(timeout).count();
-  struct timeval tv;
-  tv.tv_sec = static_cast<time_t>(total_usec / 1000000);
-  tv.tv_usec = static_cast<suseconds_t>(total_usec % 1000000);
-  setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
-  setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
+    std::int64_t const total_usec =
+        std::chrono::duration_cast<std::chrono::microseconds>(timeout).count();
+    struct timeval tv;
+    tv.tv_sec = static_cast<time_t>(total_usec / 1000000);
+    tv.tv_usec = static_cast<suseconds_t>(total_usec % 1000000);
+    setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+    setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
 
-  struct sockaddr_in addr;
-  std::memset(&addr, 0, sizeof(addr));
-  addr.sin_family = AF_INET;
-  addr.sin_port = htons(port);
-  inet_pton(AF_INET, host.c_str(), &addr.sin_addr);
+    struct sockaddr_in addr;
+    std::memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(port);
+    inet_pton(AF_INET, host.c_str(), &addr.sin_addr);
 
-  int const res =
-      connect(sock, reinterpret_cast<struct sockaddr*>(&addr), sizeof(addr));
-  close(sock);
-  return res == 0;
-}
+    int const res =
+        connect(sock, reinterpret_cast<struct sockaddr*>(&addr), sizeof(addr));
+    close(sock);
+    return res == 0;
+  }
 
-DiagnosticFailureReason CheckLoopbackConfiguration() {
-  struct ifaddrs* ifaddr = nullptr;
-  if (getifaddrs(&ifaddr) == -1) return DiagnosticFailureReason::kUnknown;
+  DiagnosticFailureReason CheckLoopbackConfiguration() override {
+    struct ifaddrs* ifaddr = nullptr;
+    if (getifaddrs(&ifaddr) == -1) return DiagnosticFailureReason::kUnknown;
 
-  bool has_ipv4_lo = false;
-  bool has_ipv6_lo = false;
+    bool has_ipv4_lo = false;
+    bool has_ipv6_lo = false;
 
-  for (struct ifaddrs* ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next) {
-    if (ifa->ifa_addr == nullptr) continue;
-    if (std::string(ifa->ifa_name) == "lo") {
-      if (ifa->ifa_addr->sa_family == AF_INET) {
-        has_ipv4_lo = true;
-      } else if (ifa->ifa_addr->sa_family == AF_INET6) {
-        has_ipv6_lo = true;
+    for (struct ifaddrs* ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next) {
+      if (ifa->ifa_addr == nullptr) continue;
+      if (std::string(ifa->ifa_name) == "lo") {
+        if (ifa->ifa_addr->sa_family == AF_INET) {
+          has_ipv4_lo = true;
+        } else if (ifa->ifa_addr->sa_family == AF_INET6) {
+          has_ipv6_lo = true;
+        }
       }
     }
-  }
-  freeifaddrs(ifaddr);
+    freeifaddrs(ifaddr);
 
-  if (!has_ipv4_lo && !has_ipv6_lo) {
-    return DiagnosticFailureReason::kLoopbackMisconfigured;
+    if (!has_ipv4_lo && !has_ipv6_lo) {
+      return DiagnosticFailureReason::kLoopbackMisconfigured;
+    }
+    if (!has_ipv4_lo) {
+      return DiagnosticFailureReason::kLoopbackMisconfiguredIpv4;
+    }
+    if (!has_ipv6_lo) {
+      return DiagnosticFailureReason::kLoopbackMisconfiguredIpv6;
+    }
+    return DiagnosticFailureReason::kUnknown;
   }
-  if (!has_ipv4_lo) {
-    return DiagnosticFailureReason::kLoopbackMisconfiguredIpv4;
-  }
-  if (!has_ipv6_lo) {
-    return DiagnosticFailureReason::kLoopbackMisconfiguredIpv6;
-  }
-  return DiagnosticFailureReason::kUnknown;
-}
+};
 
 }  // namespace
+
+std::shared_ptr<DirectPathNetworkSystem> MakeDefaultDirectPathNetworkSystem() {
+  return std::make_shared<DefaultDirectPathNetworkSystem>();
+}
+
+#else
+
+namespace {
+
+class DefaultDirectPathNetworkSystem : public DirectPathNetworkSystem {
+ public:
+  bool CanConnectTcp(std::string const&, std::uint16_t,
+                     std::chrono::milliseconds) override {
+    return false;
+  }
+  DiagnosticFailureReason CheckLoopbackConfiguration() override {
+    return DiagnosticFailureReason::kUnknown;
+  }
+};
+
+}  // namespace
+
+std::shared_ptr<DirectPathNetworkSystem> MakeDefaultDirectPathNetworkSystem() {
+  return std::make_shared<DefaultDirectPathNetworkSystem>();
+}
 #endif
 
 DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
     Options const& options) {
-  return RunDiagnostics(options, internal::MakeGcpDetector());
+  return RunDiagnostics(options, internal::MakeGcpDetector(),
+                        MakeDefaultDirectPathNetworkSystem(), "169.254.169.254",
+                        80);
 }
 
 DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
     Options const& options, std::shared_ptr<internal::GcpDetector> detector,
+    std::shared_ptr<DirectPathNetworkSystem> network_system,
     std::string const& metadata_host, std::uint16_t metadata_port) {
   // Step 1: Check platform (GCP VM)
   if (detector == nullptr) {
@@ -152,9 +183,10 @@ DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
     return DiagnosticFailureReason::kNotInGcp;
   }
 
-#ifdef _WIN32
-  return DiagnosticFailureReason::kUnknown;
-#else
+  if (network_system == nullptr) {
+    network_system = MakeDefaultDirectPathNetworkSystem();
+  }
+
   // Step 2: Metadata server reachability
   std::chrono::milliseconds timeout =
       options.get<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>();
@@ -162,19 +194,19 @@ DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
     timeout = std::chrono::milliseconds(500);
   }
 
-  if (!CanConnectTcp(metadata_host, metadata_port, timeout)) {
+  if (!network_system->CanConnectTcp(metadata_host, metadata_port, timeout)) {
     return DiagnosticFailureReason::kMetadataUnreachable;
   }
 
   // Step 3 & 4: Loopback configuration check
-  DiagnosticFailureReason const lo_result = CheckLoopbackConfiguration();
+  DiagnosticFailureReason const lo_result =
+      network_system->CheckLoopbackConfiguration();
   if (lo_result != DiagnosticFailureReason::kUnknown) {
     return lo_result;
   }
 
   // Step 5: Route resolution or fallback
   return DiagnosticFailureReason::kUnknown;
-#endif
 }
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -182,13 +214,15 @@ void DirectPathDiagnostics::RunAsync(
     CompletionQueue cq, Options const& options,
     std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility) {
   RunAsync(std::move(cq), options, std::move(direct_access_compatibility),
-           internal::MakeGcpDetector());
+           internal::MakeGcpDetector(), MakeDefaultDirectPathNetworkSystem(),
+           "169.254.169.254", 80);
 }
 
 void DirectPathDiagnostics::RunAsync(
     CompletionQueue cq, Options const& options,
     std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility,
     std::shared_ptr<internal::GcpDetector> detector,
+    std::shared_ptr<DirectPathNetworkSystem> network_system,
     std::string const& metadata_host, std::uint16_t metadata_port) {
   std::chrono::milliseconds timeout =
       options.get<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>();
@@ -199,10 +233,12 @@ void DirectPathDiagnostics::RunAsync(
   cq.RunAsync([options,
                direct_access_compatibility =
                    std::move(direct_access_compatibility),
-               detector = std::move(detector), metadata_host, metadata_port]() {
+               detector = std::move(detector),
+               network_system = std::move(network_system), metadata_host,
+               metadata_port]() {
     DiagnosticFailureReason const reason =
-        DirectPathDiagnostics::RunDiagnostics(options, detector, metadata_host,
-                                              metadata_port);
+        DirectPathDiagnostics::RunDiagnostics(options, detector, network_system,
+                                              metadata_host, metadata_port);
     if (direct_access_compatibility != nullptr) {
       direct_access_compatibility->Record(
           opentelemetry::context::RuntimeContext::GetCurrent(), 0,

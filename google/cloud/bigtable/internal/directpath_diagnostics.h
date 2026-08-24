@@ -24,6 +24,7 @@
 #include "google/cloud/bigtable/internal/client_schema_metrics.h"
 #endif
 #include "google/cloud/internal/detect_gcp.h"
+#include <chrono>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -53,6 +54,20 @@ enum class DiagnosticFailureReason {
 
 std::string ToString(DiagnosticFailureReason reason);
 
+/**
+ * Interface for OS-specific networking and system operations used by
+ * DirectPath diagnostics.
+ */
+class DirectPathNetworkSystem {
+ public:
+  virtual ~DirectPathNetworkSystem() = default;
+  virtual bool CanConnectTcp(std::string const& host, std::uint16_t port,
+                             std::chrono::milliseconds timeout) = 0;
+  virtual DiagnosticFailureReason CheckLoopbackConfiguration() = 0;
+};
+
+std::shared_ptr<DirectPathNetworkSystem> MakeDefaultDirectPathNetworkSystem();
+
 class DirectPathDiagnostics {
  public:
   static DiagnosticFailureReason RunDiagnostics(Options const& options);
@@ -60,8 +75,8 @@ class DirectPathDiagnostics {
   /// For testing only.
   static DiagnosticFailureReason RunDiagnostics(
       Options const& options, std::shared_ptr<internal::GcpDetector> detector,
-      std::string const& metadata_host = "169.254.169.254",
-      std::uint16_t metadata_port = 80);
+      std::shared_ptr<DirectPathNetworkSystem> network_system,
+      std::string const& metadata_host, std::uint16_t metadata_port);
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   static void RunAsync(CompletionQueue cq, Options const& options,
@@ -69,12 +84,12 @@ class DirectPathDiagnostics {
                            direct_access_compatibility = nullptr);
 
   /// For testing only.
-  static void RunAsync(CompletionQueue cq, Options const& options,
-                       std::shared_ptr<DirectAccessCompatibility>
-                           direct_access_compatibility,
-                       std::shared_ptr<internal::GcpDetector> detector,
-                       std::string const& metadata_host = "169.254.169.254",
-                       std::uint16_t metadata_port = 80);
+  static void RunAsync(
+      CompletionQueue cq, Options const& options,
+      std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility,
+      std::shared_ptr<internal::GcpDetector> detector,
+      std::shared_ptr<DirectPathNetworkSystem> network_system,
+      std::string const& metadata_host, std::uint16_t metadata_port);
 #endif
 };
 

@@ -21,6 +21,7 @@
 #include <cstring>
 #include <future>
 #include <memory>
+#include <string>
 #include <thread>
 #include <utility>
 
@@ -69,6 +70,16 @@ class MockGcpDetector : public internal::GcpDetector {
  public:
   MOCK_METHOD(bool, IsGoogleCloudBios, (), (override));
   MOCK_METHOD(bool, IsGoogleCloudServerless, (), (override));
+};
+
+class MockDirectPathNetworkSystem : public DirectPathNetworkSystem {
+ public:
+  MOCK_METHOD(bool, CanConnectTcp,
+              (std::string const& host, std::uint16_t port,
+               std::chrono::milliseconds timeout),
+              (override));
+  MOCK_METHOD(DiagnosticFailureReason, CheckLoopbackConfiguration, (),
+              (override));
 };
 
 TEST(DirectPathDiagnosticsTest, ToString) {
@@ -130,11 +141,91 @@ TEST(DirectPathDiagnosticsTest, RunDiagnosticsWithTimeoutOption) {
 
 TEST(DirectPathDiagnosticsTest, RunDiagnosticsNotInGcp) {
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios).WillOnce(testing::Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(false));
 
-  DiagnosticFailureReason const reason =
-      DirectPathDiagnostics::RunDiagnostics(Options{}, mock_detector);
+  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
+      Options{}, mock_detector, nullptr, "127.0.0.1", 80);
   EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kNotInGcp));
+}
+
+TEST(DirectPathDiagnosticsTest, RunDiagnosticsMetadataUnreachable) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(false));
+
+  Options const options =
+      Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
+          std::chrono::milliseconds(50));
+  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
+      options, mock_detector, mock_network, "127.0.0.1", 80);
+  EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kMetadataUnreachable));
+}
+
+TEST(DirectPathDiagnosticsTest, RunDiagnosticsLoopbackMisconfigured) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(true));
+  EXPECT_CALL(*mock_network, CheckLoopbackConfiguration)
+      .WillOnce(
+          testing::Return(DiagnosticFailureReason::kLoopbackMisconfigured));
+
+  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
+      Options{}, mock_detector, mock_network, "127.0.0.1", 80);
+  EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kLoopbackMisconfigured));
+}
+
+TEST(DirectPathDiagnosticsTest, RunDiagnosticsLoopbackMisconfiguredIpv4) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(true));
+  EXPECT_CALL(*mock_network, CheckLoopbackConfiguration)
+      .WillOnce(
+          testing::Return(DiagnosticFailureReason::kLoopbackMisconfiguredIpv4));
+
+  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
+      Options{}, mock_detector, mock_network, "127.0.0.1", 80);
+  EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kLoopbackMisconfiguredIpv4));
+}
+
+TEST(DirectPathDiagnosticsTest, RunDiagnosticsLoopbackMisconfiguredIpv6) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(true));
+  EXPECT_CALL(*mock_network, CheckLoopbackConfiguration)
+      .WillOnce(
+          testing::Return(DiagnosticFailureReason::kLoopbackMisconfiguredIpv6));
+
+  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
+      Options{}, mock_detector, mock_network, "127.0.0.1", 80);
+  EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kLoopbackMisconfiguredIpv6));
+}
+
+TEST(DirectPathDiagnosticsTest, RunDiagnosticsHealthyLoopbackReturnsUnknown) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(true));
+  EXPECT_CALL(*mock_network, CheckLoopbackConfiguration)
+      .WillOnce(testing::Return(DiagnosticFailureReason::kUnknown));
+
+  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
+      Options{}, mock_detector, mock_network, "127.0.0.1", 80);
+  EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kUnknown));
 }
 
 #ifndef _WIN32
@@ -180,31 +271,25 @@ class ScopedTcpListener {
   std::uint16_t port_ = 0;
 };
 
-TEST(DirectPathDiagnosticsTest, RunDiagnosticsMetadataUnreachable) {
-  auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios).WillOnce(testing::Return(true));
-
-  Options const options =
-      Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
-          std::chrono::milliseconds(50));
-  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
-      options, mock_detector, "127.0.0.1", static_cast<std::uint16_t>(1));
-  EXPECT_THAT(reason, Eq(DiagnosticFailureReason::kMetadataUnreachable));
-}
-
-TEST(DirectPathDiagnosticsTest,
-     RunDiagnosticsMetadataReachableExecutesLoopbackCheck) {
+TEST(DirectPathDiagnosticsTest, DefaultNetworkSystemCanConnectTcp) {
   ScopedTcpListener listener;
   ASSERT_TRUE(listener.is_valid());
 
-  auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios).WillOnce(testing::Return(true));
+  auto network_system = MakeDefaultDirectPathNetworkSystem();
+  ASSERT_THAT(network_system, testing::NotNull());
 
-  Options const options =
-      Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
-          std::chrono::milliseconds(500));
-  DiagnosticFailureReason const reason = DirectPathDiagnostics::RunDiagnostics(
-      options, mock_detector, "127.0.0.1", listener.port());
+  EXPECT_TRUE(network_system->CanConnectTcp("127.0.0.1", listener.port(),
+                                            std::chrono::milliseconds(500)));
+  EXPECT_FALSE(network_system->CanConnectTcp("127.0.0.1", 1,
+                                             std::chrono::milliseconds(50)));
+}
+
+TEST(DirectPathDiagnosticsTest, DefaultNetworkSystemCheckLoopback) {
+  auto network_system = MakeDefaultDirectPathNetworkSystem();
+  ASSERT_THAT(network_system, testing::NotNull());
+
+  DiagnosticFailureReason const reason =
+      network_system->CheckLoopbackConfiguration();
   EXPECT_THAT(reason,
               AnyOf(Eq(DiagnosticFailureReason::kUnknown),
                     Eq(DiagnosticFailureReason::kLoopbackMisconfigured),
@@ -341,7 +426,11 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
   auto recorded_future = recorded_promise.get_future();
 
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios).WillOnce(testing::Return(true));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(false));
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   auto mock_gauge = std::make_unique<MockGauge<std::int64_t>>();
@@ -425,8 +514,117 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
   std::thread t([&cq] { cq.Run(); });
 
   DirectPathDiagnostics::RunAsync(cq, options, direct_access, mock_detector,
-                                  "127.0.0.1",
-                                  static_cast<std::uint16_t>(1));
+                                  mock_network, "127.0.0.1",
+                                  static_cast<std::uint16_t>(80));
+
+  ASSERT_THAT(recorded_future.wait_for(std::chrono::seconds(10)),
+              Eq(std::future_status::ready));
+
+  cq.CancelAll();
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
+  std::promise<void> recorded_promise;
+  auto recorded_future = recorded_promise.get_future();
+
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios)
+      .WillOnce(testing::Return(true));
+
+  auto mock_network = std::make_shared<MockDirectPathNetworkSystem>();
+  EXPECT_CALL(*mock_network, CanConnectTcp).WillOnce(testing::Return(true));
+  EXPECT_CALL(*mock_network, CheckLoopbackConfiguration)
+      .WillOnce(
+          testing::Return(DiagnosticFailureReason::kLoopbackMisconfiguredIpv6));
+
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  auto mock_gauge = std::make_unique<MockGauge<std::int64_t>>();
+  EXPECT_CALL(*mock_gauge,
+              Record(A<std::int64_t>(),
+                     A<opentelemetry::common::KeyValueIterable const&>(),
+                     A<opentelemetry::context::Context const&>()))
+      .WillOnce([&recorded_promise](
+                    std::int64_t value,
+                    opentelemetry::common::KeyValueIterable const& attrs,
+                    opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(0));
+        auto const map = MakeAttributesMap(attrs);
+        EXPECT_THAT(map,
+                    Contains(Pair("reason", "loopback_misconfigured_ipv6")));
+        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
+        recorded_promise.set_value();
+      });
+
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateInt64Gauge)
+      .WillOnce([mock = std::move(mock_gauge)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("direct_access/compatible"));
+        return std::move(mock);
+      });
+#else
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .WillOnce([&recorded_promise](
+                    double value,
+                    opentelemetry::common::KeyValueIterable const& attrs,
+                    opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(0.0));
+        auto const map = MakeAttributesMap(attrs);
+        EXPECT_THAT(map,
+                    Contains(Pair("reason", "loopback_misconfigured_ipv6")));
+        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
+        recorded_promise.set_value();
+      });
+
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("direct_access/compatible"));
+        return std::move(mock);
+      });
+#endif
+
+  auto mock_provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
+                              opentelemetry::nostd::string_view,
+                              opentelemetry::nostd::string_view,
+                              opentelemetry::common::KeyValueIterable const*) {
+        return mock_meter;
+      });
+#else
+      .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
+                              opentelemetry::nostd::string_view,
+                              opentelemetry::nostd::string_view) {
+        return mock_meter;
+      });
+#endif
+
+  auto direct_access = std::make_shared<DirectAccessCompatibility>(
+      "test-instrumentation-scope", mock_provider);
+
+  Options const options =
+      Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
+          std::chrono::milliseconds(50));
+
+  google::cloud::CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  DirectPathDiagnostics::RunAsync(cq, options, direct_access, mock_detector,
+                                  mock_network, "127.0.0.1",
+                                  static_cast<std::uint16_t>(80));
 
   ASSERT_THAT(recorded_future.wait_for(std::chrono::seconds(10)),
               Eq(std::future_status::ready));
