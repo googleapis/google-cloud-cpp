@@ -54,7 +54,16 @@ struct ClientOutstandingRpcLabels {
 using LabelMap = std::unordered_map<std::string, std::string>;
 LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       ClientOutstandingRpcLabels const& d,
-                      std::set<std::string> const& filtered_data_labels = {});
+                      std::set<std::string> const& filtered_data_labels);
+
+struct DirectAccessCompatibilityLabels {
+  std::string ip_preference;
+  std::string reason;
+};
+
+LabelMap IntoLabelMap(ClientResourceLabels const& r,
+                      DirectAccessCompatibilityLabels const& d,
+                      std::set<std::string> const& filtered_data_labels);
 
 ClientResourceLabels MakeClientResourceLabels(
     std::string project_id, std::string instance, std::string app_profile,
@@ -82,6 +91,31 @@ class OutstandingRpcs : public ClientSchemaMetric {
   ClientResourceLabels resource_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       outstanding_rpcs_;
+};
+
+class DirectAccessCompatibility : public ClientSchemaMetric {
+ public:
+  DirectAccessCompatibility(
+      std::string const& instrumentation_scope,
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::MeterProvider> const& provider);
+
+  void Record(opentelemetry::context::Context const& context,
+              std::int64_t value,
+              DirectAccessCompatibilityLabels const& data_labels);
+
+  std::unique_ptr<ClientSchemaMetric> clone(
+      ClientResourceLabels const& resource_labels) const override;
+
+ private:
+  ClientResourceLabels resource_labels_;
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Gauge<std::int64_t>>
+      gauge_;
+#else
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      gauge_;
+#endif
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
