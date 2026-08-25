@@ -39,9 +39,13 @@ using ::google::cloud::testing_util::MockGauge;
 using ::google::cloud::testing_util::MockHistogram;
 using ::google::cloud::testing_util::MockMeter;
 using ::google::cloud::testing_util::MockMeterProvider;
+using ::google::cloud::testing_util::MockObservableInstrument;
+using ::google::cloud::testing_util::MockObserverResult;
 using ::testing::A;
+using ::testing::AnyNumber;
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::NotNull;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
@@ -58,8 +62,8 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapClient) {
                   Pair("project_id", "p-1"), Pair("instance", "i-1"),
                   Pair("app_profile", "app-1"), Pair("client_name", "client-1"),
                   Pair("client_uid", "uid-1"), Pair("client_project", "cp-1"),
-                  Pair("location", "loc-1"), Pair("cloud_platform", "cloud-1"),
-                  Pair("host_id", "host-1"), Pair("hostname", "hostname-1"),
+                  Pair("region", "loc-1"), Pair("cloud_platform", "cloud-1"),
+                  Pair("host_id", "host-1"), Pair("host_name", "hostname-1"),
                   Pair("transport_type", "DirectPath"),
                   Pair("channel_pool_lb_policy", "RANDOM_TWO_LEAST_USED"),
                   Pair("streaming", "true")));
@@ -78,8 +82,8 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapClientRoundRobinCloudPathUnary) {
                   Pair("project_id", "p-1"), Pair("instance", "i-1"),
                   Pair("app_profile", "app-1"), Pair("client_name", "client-1"),
                   Pair("client_uid", "uid-1"), Pair("client_project", "cp-1"),
-                  Pair("location", "loc-1"), Pair("cloud_platform", "cloud-1"),
-                  Pair("host_id", "host-1"), Pair("hostname", "hostname-1"),
+                  Pair("region", "loc-1"), Pair("cloud_platform", "cloud-1"),
+                  Pair("host_id", "host-1"), Pair("host_name", "hostname-1"),
                   Pair("transport_type", "CloudPath"),
                   Pair("channel_pool_lb_policy", "ROUND_ROBIN"),
                   Pair("streaming", "false")));
@@ -98,8 +102,8 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapFilteredDataLabels) {
                   Pair("project_id", "p-1"), Pair("instance", "i-1"),
                   Pair("app_profile", "app-1"), Pair("client_name", "client-1"),
                   Pair("client_uid", "uid-1"), Pair("client_project", "cp-1"),
-                  Pair("location", "loc-1"), Pair("cloud_platform", "cloud-1"),
-                  Pair("host_id", "host-1"), Pair("hostname", "hostname-1"),
+                  Pair("region", "loc-1"), Pair("cloud_platform", "cloud-1"),
+                  Pair("host_id", "host-1"), Pair("host_name", "hostname-1"),
                   Pair("transport_type", "DirectPath"),
                   Pair("channel_pool_lb_policy", "RANDOM_TWO_LEAST_USED")));
 }
@@ -123,10 +127,9 @@ TEST(ClientSchemaMetricsTest, OutstandingRpcsMetric) {
                 Pair("client_name", "my-client-name"),
                 Pair("client_uid", "my-uid"),
                 Pair("client_project", "my-client-project"),
-                Pair("location", "us-east1"), Pair("cloud_platform", "gcp"),
-                Pair("host_id", "my-host"), Pair("hostname", "my-hostname"),
+                Pair("region", "us-east1"), Pair("cloud_platform", "gcp"),
+                Pair("host_id", "my-host"), Pair("host_name", "my-hostname"),
                 Pair("transport_type", "DirectPath"),
-                Pair("channel_pool_lb_policy", "RANDOM_TWO_LEAST_USED"),
                 Pair("streaming", "false")));
       });
 
@@ -189,10 +192,10 @@ TEST(ClientSchemaMetricsTest, MakeClientResourceLabels) {
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.client_uid, Eq("test-client-uid"));
   EXPECT_THAT(labels.client_project, Eq("test-project"));
-  EXPECT_THAT(labels.location, Eq("global"));
+  EXPECT_THAT(labels.region, Eq("global"));
   EXPECT_THAT(labels.cloud_platform, Eq("unknown"));
   EXPECT_THAT(labels.host_id, Eq("unknown"));
-  EXPECT_THAT(labels.hostname, IsEmpty());
+  EXPECT_THAT(labels.host_name, IsEmpty());
 }
 
 TEST(ClientSchemaMetricsTest, IntoLabelMapDirectAccessCompatibility) {
@@ -207,8 +210,8 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapDirectAccessCompatibility) {
           Pair("project_id", "p-1"), Pair("instance", "i-1"),
           Pair("app_profile", "app-1"), Pair("client_name", "client-1"),
           Pair("client_uid", "uid-1"), Pair("client_project", "cp-1"),
-          Pair("location", "loc-1"), Pair("cloud_platform", "cloud-1"),
-          Pair("host_id", "host-1"), Pair("hostname", "hostname-1"),
+          Pair("region", "loc-1"), Pair("cloud_platform", "cloud-1"),
+          Pair("host_id", "host-1"), Pair("host_name", "hostname-1"),
           Pair("ip_preference", "ipv4"), Pair("reason", "test_reason")));
 }
 
@@ -223,18 +226,18 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapDirectAccessCompatibilityFiltered) {
                   Pair("project_id", "p-1"), Pair("instance", "i-1"),
                   Pair("app_profile", "app-1"), Pair("client_name", "client-1"),
                   Pair("client_uid", "uid-1"), Pair("client_project", "cp-1"),
-                  Pair("location", "loc-1"), Pair("cloud_platform", "cloud-1"),
-                  Pair("host_id", "host-1"), Pair("hostname", "hostname-1"),
+                  Pair("region", "loc-1"), Pair("cloud_platform", "cloud-1"),
+                  Pair("host_id", "host-1"), Pair("host_name", "hostname-1"),
                   Pair("ip_preference", "ipv6")));
 }
 
-TEST(ClientSchemaMetricsTest, DirectAccessCompatibilityMetric) {
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
+TEST(ClientSchemaMetricsTest, DirectAccessCompatibilityMetric) {
   auto mock_gauge = std::make_unique<MockGauge<std::int64_t>>();
-  EXPECT_CALL(*mock_gauge,
-              Record(A<std::int64_t>(),
-                     A<opentelemetry::common::KeyValueIterable const&>(),
-                     A<opentelemetry::context::Context const&>()))
+  auto* mock_gauge_ptr = mock_gauge.get();
+  EXPECT_CALL(
+      *mock_gauge_ptr,
+      Record(Eq(1), A<opentelemetry::common::KeyValueIterable const&>(), _))
       .WillOnce([](std::int64_t value,
                    opentelemetry::common::KeyValueIterable const& attrs,
                    opentelemetry::context::Context const&) {
@@ -248,13 +251,12 @@ TEST(ClientSchemaMetricsTest, DirectAccessCompatibilityMetric) {
                 Pair("client_name", "my-client-name"),
                 Pair("client_uid", "my-uid"),
                 Pair("client_project", "my-client-project"),
-                Pair("location", "us-east1"), Pair("cloud_platform", "gcp"),
-                Pair("host_id", "my-host"), Pair("hostname", "my-hostname"),
+                Pair("region", "us-east1"), Pair("cloud_platform", "gcp"),
+                Pair("host_id", "my-host"), Pair("host_name", "my-hostname"),
                 Pair("ip_preference", "ipv4"), Pair("reason", "")));
       });
 
-  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
-      std::make_shared<MockMeter>();
+  auto mock_meter = std::make_shared<MockMeter>();
   EXPECT_CALL(*mock_meter, CreateInt64Gauge)
       .WillOnce([mock = std::move(mock_gauge)](
                     opentelemetry::nostd::string_view name,
@@ -263,61 +265,20 @@ TEST(ClientSchemaMetricsTest, DirectAccessCompatibilityMetric) {
         EXPECT_THAT(name, Eq("direct_access/compatible"));
         return std::move(mock);
       });
-#else
-  auto mock_histogram = std::make_unique<MockHistogram<double>>();
-  EXPECT_CALL(
-      *mock_histogram,
-      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
-             A<opentelemetry::context::Context const&>()))
-      .WillOnce([](double value,
-                   opentelemetry::common::KeyValueIterable const& attrs,
-                   opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(1.0));
-        EXPECT_THAT(
-            MakeAttributesMap(attrs),
-            UnorderedElementsAre(
-                Pair("project_id", "my-project"),
-                Pair("instance", "my-instance"),
-                Pair("app_profile", "my-app-profile"),
-                Pair("client_name", "my-client-name"),
-                Pair("client_uid", "my-uid"),
-                Pair("client_project", "my-client-project"),
-                Pair("location", "us-east1"), Pair("cloud_platform", "gcp"),
-                Pair("host_id", "my-host"), Pair("hostname", "my-hostname"),
-                Pair("ip_preference", "ipv4"), Pair("reason", "")));
-      });
 
-  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
-      std::make_shared<MockMeter>();
-  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
-      .WillOnce([mock = std::move(mock_histogram)](
-                    opentelemetry::nostd::string_view name,
-                    opentelemetry::nostd::string_view,
-                    opentelemetry::nostd::string_view) mutable {
-        EXPECT_THAT(name, Eq("direct_access/compatible"));
-        return std::move(mock);
-      });
-#endif
-
-  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
-      std::make_shared<MockMeterProvider>();
+  auto mock_provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view,
                     opentelemetry::common::KeyValueIterable const*) mutable {
-#else
-      .WillOnce([&](opentelemetry::nostd::string_view scope,
-                    opentelemetry::nostd::string_view scope_version,
-                    opentelemetry::nostd::string_view) mutable {
-#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
       });
 
-  DirectAccessCompatibility compatibility("my-instrument-scope", mock_provider);
+  DirectAccessCompatibility compatibility("my-instrument-scope", mock_provider,
+                                          ClientResourceLabels{});
   ClientResourceLabels resource_labels{
       "my-project", "my-instance",       "my-app-profile", "my-client-name",
       "my-uid",     "my-client-project", "us-east1",       "gcp",
@@ -329,6 +290,80 @@ TEST(ClientSchemaMetricsTest, DirectAccessCompatibilityMetric) {
   static_cast<DirectAccessCompatibility*>(clone.get())
       ->Record(otel_context, 1, DirectAccessCompatibilityLabels{"ipv4", ""});
 }
+#else
+TEST(ClientSchemaMetricsTest, DirectAccessCompatibilityMetric) {
+  auto mock_observable_gauge = std::make_shared<MockObservableInstrument>();
+  opentelemetry::metrics::ObservableCallbackPtr saved_callback = nullptr;
+  void* saved_state = nullptr;
+  EXPECT_CALL(*mock_observable_gauge, AddCallback)
+      .WillRepeatedly(
+          [&](opentelemetry::metrics::ObservableCallbackPtr cb, void* state) {
+            saved_callback = cb;
+            saved_state = state;
+          });
+  EXPECT_CALL(*mock_observable_gauge, RemoveCallback).Times(AnyNumber());
+
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateInt64ObservableGauge)
+      .WillOnce([mock = mock_observable_gauge](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("direct_access/compatible"));
+        return mock;
+      });
+
+  auto mock_provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  DirectAccessCompatibility compatibility("my-instrument-scope", mock_provider,
+                                          ClientResourceLabels{});
+  ClientResourceLabels resource_labels{
+      "my-project", "my-instance",       "my-app-profile", "my-client-name",
+      "my-uid",     "my-client-project", "us-east1",       "gcp",
+      "my-host",    "my-hostname"};
+  auto clone = compatibility.clone(resource_labels);
+
+  auto const otel_context =
+      opentelemetry::context::RuntimeContext::GetCurrent();
+  static_cast<DirectAccessCompatibility*>(clone.get())
+      ->Record(otel_context, 1, DirectAccessCompatibilityLabels{"ipv4", ""});
+
+  auto mock_observer = std::make_shared<MockObserverResult<std::int64_t>>();
+  EXPECT_CALL(
+      *mock_observer,
+      Observe(Eq(1), A<opentelemetry::common::KeyValueIterable const&>()))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs) {
+        EXPECT_THAT(value, Eq(1));
+        EXPECT_THAT(
+            MakeAttributesMap(attrs),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project"),
+                Pair("instance", "my-instance"),
+                Pair("app_profile", "my-app-profile"),
+                Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-uid"),
+                Pair("client_project", "my-client-project"),
+                Pair("region", "us-east1"), Pair("cloud_platform", "gcp"),
+                Pair("host_id", "my-host"), Pair("host_name", "my-hostname"),
+                Pair("ip_preference", "ipv4"), Pair("reason", "")));
+      });
+
+  ASSERT_THAT(saved_callback, NotNull());
+  opentelemetry::metrics::ObserverResult observer_result =
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::ObserverResultT<std::int64_t>>(mock_observer);
+  saved_callback(observer_result, saved_state);
+}
+#endif
 
 TEST(ClientSchemaMetricsTest, MakeClientResourceLabelsExtractsFromOptions) {
   Options options;
