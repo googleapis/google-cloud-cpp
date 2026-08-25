@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/directpath_diagnostics.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/internal/make_status.h"
@@ -170,8 +171,9 @@ std::shared_ptr<DirectPathNetworkSystem> MakeDefaultDirectPathNetworkSystem() {
 DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
     Options const& options) {
   return RunDiagnostics(options, internal::MakeGcpDetector(),
-                        MakeDefaultDirectPathNetworkSystem(), "169.254.169.254",
-                        80);
+                        MakeDefaultDirectPathNetworkSystem(),
+                        DefaultDirectPathMetadataHost(),
+                        DefaultDirectPathMetadataPort());
 }
 
 DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
@@ -197,7 +199,7 @@ DiagnosticFailureReason DirectPathDiagnostics::RunDiagnostics(
   std::chrono::milliseconds timeout =
       options.get<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>();
   if (timeout <= std::chrono::milliseconds::zero()) {
-    timeout = std::chrono::milliseconds(500);
+    timeout = bigtable::internal::DefaultDirectPathDiagnosticsTimeout();
   }
 
   if (!effective_network_system->CanConnectTcp(metadata_host, metadata_port,
@@ -227,7 +229,7 @@ void DirectPathDiagnostics::RunAsync(
     std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility) {
   RunAsync(std::move(cq), options, std::move(direct_access_compatibility),
            internal::MakeGcpDetector(), MakeDefaultDirectPathNetworkSystem(),
-           "169.254.169.254", 80);
+           DefaultDirectPathMetadataHost(), DefaultDirectPathMetadataPort());
 }
 
 void DirectPathDiagnostics::RunAsync(
@@ -241,7 +243,7 @@ void DirectPathDiagnostics::RunAsync(
           .get<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>() <=
       std::chrono::milliseconds::zero()) {
     run_options.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
-        std::chrono::milliseconds(5000));
+        bigtable::internal::DefaultDirectPathDiagnosticsTimeout());
   }
 
   cq.RunAsync(

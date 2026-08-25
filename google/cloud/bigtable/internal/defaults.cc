@@ -127,10 +127,10 @@ int DefaultConnectionPoolSize() {
 }
 
 bool IsDirectPath(Options const& options) {
-  auto const direct_path =
+  std::optional<std::string> const direct_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   // Bigtable specific env var for Direct Path support used by all clients.
-  auto const cbt_direct_path =
+  std::optional<std::string> const cbt_direct_path =
       google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
   if (direct_path.has_value() || cbt_direct_path.has_value()) {
     return absl::c_any_of(
@@ -190,8 +190,8 @@ Options DefaultOptions(Options opts) {
   // Set the specific data endpoints if Direct Path is enabled.
   if (IsDirectPath(opts)) {
     opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-            "google-c2p:///bigtable.googleapis.com")
-        .set<AuthorityOption>("bigtable.googleapis.com");
+            DefaultDirectPathDataEndpoint())
+        .set<AuthorityOption>(DefaultDirectPathAuthority());
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
@@ -248,6 +248,15 @@ Options DefaultOptions(Options opts) {
         (opts.get<MetricsPeriodOption>() < std::chrono::seconds(5))) {
       opts.set<MetricsPeriodOption>(std::chrono::seconds(60));
     }
+  }
+
+  if (!opts.has<experimental::DirectPathProbeTimeoutOption>()) {
+    opts.set<experimental::DirectPathProbeTimeoutOption>(
+        DefaultDirectPathProbeTimeout());
+  }
+  if (!opts.has<experimental::DirectPathDiagnosticsTimeoutOption>()) {
+    opts.set<experimental::DirectPathDiagnosticsTimeoutOption>(
+        DefaultDirectPathDiagnosticsTimeout());
   }
 
   return opts;
