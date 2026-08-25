@@ -201,7 +201,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(range)));
     }
-    return MakeTracingObjectDescriptorReader(std::move(range));
+    return MakeTracingObjectDescriptorReader(std::move(range),
+                                             read_object_spec_.bucket());
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
@@ -217,8 +218,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     return std::unique_ptr<storage::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
   }
-
-  return MakeTracingObjectDescriptorReader(std::move(range));
+  return MakeTracingObjectDescriptorReader(std::move(range),
+                                           read_object_spec_.bucket());
 }
 
 std::shared_ptr<storage::internal::HashFunction>

@@ -56,19 +56,17 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
       OpenParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::Open");
     internal::OTelScope scope(span);
-    return impl_->Open(std::move(p))
-        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f)
-                  -> StatusOr<
-                      std::shared_ptr<storage::ObjectDescriptorConnection>> {
-          auto result = f.get();
-          internal::DetachOTelContext(oc);
-          if (!result) {
-            return internal::EndSpan(*span, std::move(result).status());
-          }
-          return MakeTracingObjectDescriptorConnection(std::move(span),
-                                                       *std::move(result));
-        });
+    auto wrap = [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+                 bucket = p.read_spec.bucket(), span = std::move(span)](auto f)
+        -> StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>> {
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>> result =
+          f.get();
+      internal::DetachOTelContext(oc);
+      if (!result) return internal::EndSpan(*span, std::move(result).status());
+      return MakeTracingObjectDescriptorConnection(
+          std::move(span), *std::move(result), std::move(bucket));
+    };
+    return impl_->Open(std::move(p)).then(std::move(wrap));
   }
 
   future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>> ReadObject(
@@ -76,12 +74,14 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadObject");
     internal::OTelScope scope(span);
     auto wrap = [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-                 span = std::move(span)](auto f)
+                 bucket = p.request.bucket(), span = std::move(span)](auto f)
         -> StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> {
-      auto reader = f.get();
+      StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> reader =
+          f.get();
       internal::DetachOTelContext(oc);
       if (!reader) return internal::EndSpan(*span, std::move(reader).status());
-      return MakeTracingReaderConnection(std::move(span), *std::move(reader));
+      return MakeTracingReaderConnection(std::move(span), *std::move(reader),
+                                         std::move(bucket));
     };
     return impl_->ReadObject(std::move(p)).then(std::move(wrap));
   }
