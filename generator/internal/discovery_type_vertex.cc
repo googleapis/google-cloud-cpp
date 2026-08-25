@@ -110,8 +110,13 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   }
 
   if (type == "any") {
-    return TypeInfo{"google.protobuf.Any", compare_package_name,
-                    properties_for_synthesis, false, false};
+    if (v.contains("format")) {
+      type = v["format"];
+    } else {
+      type = "google.protobuf.Value";
+    }
+    return TypeInfo{type, compare_package_name, properties_for_synthesis, false,
+                    false};
   }
 
   if (type == "object" &&
@@ -146,7 +151,14 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
         properties_for_synthesis = &additional_properties;
         is_message = true;
       } else if (map_type == "any") {
-        return TypeInfo{"google.protobuf.Struct", compare_package_name,
+        if (additional_properties.contains("format")) {
+          map_type = additional_properties["format"];
+        } else if (v.contains("format")) {
+          map_type = v["format"];
+        } else {
+          map_type = "google.protobuf.Struct";
+        }
+        return TypeInfo{map_type, compare_package_name,
                         properties_for_synthesis, true, is_message};
       } else {
         return internal::InvalidArgumentError(
@@ -181,13 +193,26 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       scalar_type = CheckForScalarType(items);
       if (scalar_type) {
         type = *scalar_type;
+      } else if (type == "any") {
+        if (items.contains("format")) {
+          type = items["format"];
+        } else {
+          type = "google.protobuf.Value";
+        }
+        return TypeInfo{type, compare_package_name, nullptr, false, false};
       } else if (type == "object" && items.contains("properties")) {
         // Synthesize a nested type for this array.
         type = CapitalizeFirstLetter(field_name + "Item");
         return TypeInfo{type, compare_package_name, &items, false, true};
       } else if (type == "object" && items.contains("additionalProperties") &&
                  (items["additionalProperties"]).value("type", "") == "any") {
-        type = "google.protobuf.Any";
+        if (items.contains("format")) {
+          type = items["format"];
+        } else if (items["additionalProperties"].contains("format")) {
+          type = items["additionalProperties"]["format"];
+        } else {
+          type = "google.protobuf.Struct";
+        }
         return TypeInfo{type, compare_package_name, nullptr, false, false};
       } else {
         return internal::InvalidArgumentError(
@@ -544,6 +569,13 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
     }
 
     if (field_descriptor->name() == field_name && type_name != field_type) {
+      // Allow migration of google.protobuf.Any to google.protobuf.Struct or
+      // google.protobuf.Value.
+      if (absl::StrContains(type_name, "google.protobuf.Any") &&
+          (absl::StrContains(field_type, "google.protobuf.Struct") ||
+           absl::StrContains(field_type, "google.protobuf.Value"))) {
+        return field_descriptor->number();
+      }
       // Existing field type has changed. This is a breaking change.
       return internal::InvalidArgumentError(absl::StrFormat(
           "Message: %s has field: %s whose type has changed "

@@ -1276,7 +1276,7 @@ TEST(FindAllTypesToImportTest, SimpleAnyField) {
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
   auto result = FindAllTypesToImport(parsed_json);
-  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Any"));
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Value"));
 }
 
 TEST(FindAllTypesToImportTest, MultipleSimpleRefFields) {
@@ -1345,7 +1345,7 @@ TEST(FindAllTypesToImportTest, ArrayRefAnyFields) {
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
   auto result = FindAllTypesToImport(parsed_json);
-  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Any", "Bar"));
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Struct", "Bar"));
 }
 
 TEST(FindAllTypesToImportTest, MapRefFields) {
@@ -1387,7 +1387,67 @@ TEST(FindAllTypesToImportTest, MapAnyFields) {
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
   auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Struct"));
+}
+
+TEST(FindAllTypesToImportTest, StatusDetailsField) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "details": {
+      "type": "array",
+      "items": {
+        "format": "google.protobuf.Any",
+        "type": "object",
+        "additionalProperties": {
+          "type": "any"
+        }
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Any"));
+}
+
+TEST(FindAllTypesToImportTest, ArrayAnyWithFormat) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_1": {
+      "type": "array",
+      "items": {
+        "type": "any",
+        "format": "google.protobuf.Struct"
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Struct"));
+}
+
+TEST(FindAllTypesToImportTest, MapAnyWithFormat) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "map_1": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "any",
+        "format": "google.protobuf.Value"
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Value"));
 }
 
 TEST(FindAllTypesToImportTest, SingleNestedRefField) {
@@ -2586,6 +2646,7 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
       "properties": {
         "permissions": {
           "items": {
+            "format": "google.protobuf.Any",
             "type": "object",
             "additionalProperties": {
               "type": "any"

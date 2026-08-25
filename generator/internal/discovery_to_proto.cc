@@ -108,7 +108,10 @@ StatusOr<std::string> GetImportForProtobufType(
     std::string const& protobuf_type) {
   static auto const* const kProtobufTypeImports =
       new std::unordered_map<std::string, std::string>{
-          {"google.protobuf.Any", "google/protobuf/any.proto"}};
+          {"google.protobuf.Any", "google/protobuf/any.proto"},
+          {"google.protobuf.ListValue", "google/protobuf/struct.proto"},
+          {"google.protobuf.Struct", "google/protobuf/struct.proto"},
+          {"google.protobuf.Value", "google/protobuf/struct.proto"}};
 
   auto iter = kProtobufTypeImports->find(protobuf_type);
   if (iter == kProtobufTypeImports->end()) {
@@ -353,11 +356,23 @@ std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
     auto const* current = worklist.back();
     worklist.pop_back();
 
-    if (current->contains("type") && (*current)["type"] == "any") {
-      types_to_import.insert("google.protobuf.Any");
-    }
     if (current->contains("$ref")) {
       types_to_import.insert((*current)["$ref"]);
+    }
+
+    if (current->contains("format")) {
+      std::string const format = (*current)["format"];
+      if (absl::StartsWith(format, "google.protobuf.")) {
+        types_to_import.insert(format);
+        // This node is resolved as a protobuf message (e.g. google.protobuf.Any
+        // on Status.details items), so do not traverse into its internal
+        // additionalProperties or properties.
+        continue;
+      }
+    }
+
+    if (current->contains("type") && (*current)["type"] == "any") {
+      types_to_import.insert("google.protobuf.Value");
     }
 
     if (IsDiscoveryNestedType(*current) || current->contains("properties")) {
@@ -365,11 +380,30 @@ std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
         worklist.push_back(&f);
       }
     }
+
     if (IsDiscoveryArrayType(*current)) {
-      worklist.push_back(&(*current)["items"]);
+      auto const& items = (*current)["items"];
+      if (items.contains("type") && items["type"] == "object" &&
+          items.contains("additionalProperties") &&
+          items["additionalProperties"].value("type", "") == "any" &&
+          !items.contains("format") &&
+          !items["additionalProperties"].contains("format")) {
+        types_to_import.insert("google.protobuf.Struct");
+      } else {
+        worklist.push_back(&items);
+      }
     }
+
     if (IsDiscoveryMapType(*current)) {
-      worklist.push_back(&(*current)["additionalProperties"]);
+      auto const& additional_properties = (*current)["additionalProperties"];
+      if (additional_properties.contains("type") &&
+          additional_properties["type"] == "any" &&
+          !additional_properties.contains("format") &&
+          !current->contains("format")) {
+        types_to_import.insert("google.protobuf.Struct");
+      } else {
+        worklist.push_back(&additional_properties);
+      }
     }
   }
 
