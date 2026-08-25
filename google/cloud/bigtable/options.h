@@ -245,7 +245,7 @@ struct DirectPathMetricsModeOption {
 /**
  * Option to configure the timeout for DirectPath startup compatibility probing.
  *
- * Defaults to 2 seconds.
+ * Defaults to 10 seconds.
  *
  * @ingroup google-cloud-bigtable-options
  */
@@ -254,9 +254,10 @@ struct DirectPathProbeTimeoutOption {
 };
 
 /**
- * Option to configure the timeout for DirectPath diagnostics.
+ * Option to configure the overall timeout for DirectPath environmental
+ * diagnostics.
  *
- * Defaults to 5 seconds.
+ * Defaults to 60 seconds.
  *
  * @ingroup google-cloud-bigtable-options
  */

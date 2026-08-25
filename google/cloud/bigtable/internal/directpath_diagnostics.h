@@ -66,6 +66,11 @@ class DirectPathNetworkSystem {
   virtual DiagnosticFailureReason CheckLoopbackConfiguration() = 0;
 };
 
+constexpr char const* DefaultDirectPathMetadataHost() {
+  return "169.254.169.254";
+}
+constexpr std::uint16_t DefaultDirectPathMetadataPort() { return 80; }
+
 std::shared_ptr<DirectPathNetworkSystem> MakeDefaultDirectPathNetworkSystem();
 
 class DirectPathDiagnostics {

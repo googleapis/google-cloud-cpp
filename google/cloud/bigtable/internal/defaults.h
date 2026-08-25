@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DEFAULTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DEFAULTS_H
 
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/options.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -25,6 +27,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 int DefaultConnectionPoolSize();
+
+constexpr char const* DefaultDirectPathDataEndpoint() {
+  return "google-c2p:///bigtable.googleapis.com";
+}
+
+constexpr char const* DefaultDirectPathAuthority() {
+  return "bigtable.googleapis.com";
+}
+
+constexpr experimental::DirectPathMode DefaultDirectPathMode() {
+  return experimental::DirectPathMode::kDisabled;
+}
+
+constexpr experimental::DirectPathMetricsMode DefaultDirectPathMetricsMode() {
+  return experimental::DirectPathMetricsMode::kEnabled;
+}
+
+constexpr std::chrono::milliseconds DefaultDirectPathProbeTimeout() {
+  return std::chrono::seconds(10);
+}
+
+constexpr std::chrono::milliseconds DefaultDirectPathDiagnosticsTimeout() {
+  return std::chrono::seconds(60);
+}
 
 /**
  * Returns true if Direct Path is enabled for Bigtable.

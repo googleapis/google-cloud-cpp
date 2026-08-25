@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
@@ -130,15 +131,13 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
                                      GCP_ERROR_INFO());
     }
 
-    auto constexpr kDirectPathEndpoint =
-        "google-c2p:///bigtable.googleapis.com";
-    auto constexpr kAuthority = "bigtable.googleapis.com";
-
     Options probe_options = options;
     probe_options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-        kDirectPathEndpoint);
-    probe_options.set<EndpointOption>(kDirectPathEndpoint);
-    probe_options.set<AuthorityOption>(kAuthority);
+        bigtable::internal::DefaultDirectPathDataEndpoint());
+    probe_options.set<EndpointOption>(
+        bigtable::internal::DefaultDirectPathDataEndpoint());
+    probe_options.set<AuthorityOption>(
+        bigtable::internal::DefaultDirectPathAuthority());
     probe_options.set<bigtable::experimental::DirectPathModeOption>(
         bigtable::experimental::DirectPathMode::kEnabled);
     probe_options.set<GrpcNumChannelsOption>(1);
@@ -158,7 +157,7 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
   std::chrono::milliseconds timeout =
       options.get<bigtable::experimental::DirectPathProbeTimeoutOption>();
   if (timeout <= std::chrono::milliseconds::zero()) {
-    timeout = std::chrono::milliseconds(2000);
+    timeout = bigtable::internal::DefaultDirectPathProbeTimeout();
   }
 
   grpc::ClientContext client_context;
