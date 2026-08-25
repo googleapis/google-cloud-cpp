@@ -14,6 +14,7 @@
 
 #ifndef _WIN32
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/credentials.h"
@@ -46,6 +47,7 @@ namespace {
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::AllOf;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Each;
 using ::testing::Eq;
@@ -451,6 +453,160 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
           HasMetricLabel("channel_pool_lb_policy", "RANDOM_TWO_LEAST_USED"),
           HasMetricLabel("transport_type", Not(IsEmpty())),
           HasMetricLabel("streaming", Not(IsEmpty()))))));
+}
+
+TEST_F(ObservabilityIntegrationTest,
+       VerifyDirectAccessCompatibleMetricOnDirectPath) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP() << "Metrics export integration test runs against production";
+  }
+
+  std::string const disable_direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_DISABLE_DIRECT_PATH")
+          .value_or("");
+  if (disable_direct_path == "true" || !IsDirectPathReachable()) {
+    GTEST_SKIP() << "DirectPath is disabled or network is unreachable in this "
+                    "test environment";
+  }
+
+  bool const is_dynamic = google::cloud::internal::GetEnv(
+                              "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
+                              .value_or("") == "dynamic";
+  if (!is_dynamic) {
+    GTEST_SKIP()
+        << "DirectPath compatibility metrics test is only supported for "
+           "dynamic channel pools";
+  }
+
+  // Redirect Cloud Monitoring metric export to local otel_collector
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT",
+                        server_address_);
+  ScopedEnvironment env_otel("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
+
+  Options options = Options{}
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kEnabled)
+                        .set<MetricsPeriodOption>(std::chrono::seconds(5))
+                        .set<MinConnectionRefreshOption>(std::chrono::hours(1))
+                        .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
+
+  std::string const& table_id = TableTestEnvironment::table_id();
+
+  collector_service_.Clear();
+  {
+    std::shared_ptr<DataConnection> conn = MakeDataConnection(
+        {InstanceResource(Project(project_id()), instance_id())}, options);
+    Table table(std::move(conn),
+                TableResource(project_id(), instance_id(), table_id));
+
+    std::string const row_key = "observability-directpath-compatible-row-1";
+    std::vector<Cell> expected{
+        {row_key, "family4", "c0", 1000, "v1000"},
+        {row_key, "family4", "c1", 2000, "v2000"},
+    };
+
+    Apply(table, row_key, expected);
+    std::vector<Cell> actual = ReadRows(table, Filter::RowKeysRegex(row_key));
+    CheckEqualUnordered(expected, actual);
+
+    // Wait for the periodic 5-second exporter background thread to flush
+    // metrics while conn is active
+    std::this_thread::sleep_for(std::chrono::seconds(6));
+  }
+
+  std::vector<google::monitoring::v3::CreateTimeSeriesRequest> recorded =
+      collector_service_.recorded_metrics();
+  ASSERT_THAT(recorded, Not(IsEmpty()));
+  EXPECT_THAT(
+      recorded,
+      Each(Property(&google::monitoring::v3::CreateTimeSeriesRequest::name,
+                    Eq(absl::StrCat("projects/", project_id())))));
+
+  EXPECT_THAT(
+      recorded,
+      Contains(HasTimeSeries(AllOf(
+          MetricType(HasSubstr("direct_access/compatible")),
+          ResourceType("bigtable_client_raw"),
+          HasResourceLabel("project_id", project_id()),
+          HasResourceLabel("instance", instance_id()),
+          HasMetricLabel("reason", IsEmpty()),
+          HasMetricLabel("ip_preference", AnyOf(Eq("ipv4"), Eq("ipv6")))))));
+}
+
+TEST_F(ObservabilityIntegrationTest,
+       VerifyDirectAccessFallbackAndDiagnosticsMetric) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP() << "Metrics export integration test runs against production";
+  }
+
+  if (IsDirectPathReachable()) {
+    GTEST_SKIP()
+        << "DirectPath is reachable; fallback test runs on non-DirectPath "
+           "hosts";
+  }
+
+  bool const is_dynamic = google::cloud::internal::GetEnv(
+                              "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
+                              .value_or("") == "dynamic";
+  if (!is_dynamic) {
+    GTEST_SKIP()
+        << "DirectPath fallback metrics test is only supported for dynamic "
+           "channel pools";
+  }
+
+  // Redirect Cloud Monitoring metric export to local otel_collector
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT",
+                        server_address_);
+  ScopedEnvironment env_otel("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
+
+  Options options = Options{}
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kEnabled)
+                        .set<MetricsPeriodOption>(std::chrono::seconds(5))
+                        .set<MinConnectionRefreshOption>(std::chrono::hours(1))
+                        .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
+
+  std::string const& table_id = TableTestEnvironment::table_id();
+
+  collector_service_.Clear();
+  {
+    std::shared_ptr<DataConnection> conn = MakeDataConnection(
+        {InstanceResource(Project(project_id()), instance_id())}, options);
+    Table table(std::move(conn),
+                TableResource(project_id(), instance_id(), table_id));
+
+    std::string const row_key = "observability-directpath-fallback-row-1";
+    std::vector<Cell> expected{
+        {row_key, "family4", "c0", 1000, "v1000"},
+        {row_key, "family4", "c1", 2000, "v2000"},
+    };
+
+    Apply(table, row_key, expected);
+    std::vector<Cell> actual = ReadRows(table, Filter::RowKeysRegex(row_key));
+    CheckEqualUnordered(expected, actual);
+
+    // Wait for the periodic 5-second exporter background thread to flush
+    // metrics while conn is active
+    std::this_thread::sleep_for(std::chrono::seconds(6));
+  }
+
+  std::vector<google::monitoring::v3::CreateTimeSeriesRequest> recorded =
+      collector_service_.recorded_metrics();
+  ASSERT_THAT(recorded, Not(IsEmpty()));
+  EXPECT_THAT(
+      recorded,
+      Each(Property(&google::monitoring::v3::CreateTimeSeriesRequest::name,
+                    Eq(absl::StrCat("projects/", project_id())))));
+
+  EXPECT_THAT(recorded, Contains(HasTimeSeries(AllOf(
+                            MetricType(HasSubstr("direct_access/compatible")),
+                            ResourceType("bigtable_client_raw"),
+                            HasResourceLabel("project_id", project_id()),
+                            HasResourceLabel("instance", instance_id()),
+                            HasMetricLabel("reason", Not(IsEmpty())),
+                            HasMetricLabel("ip_preference", IsEmpty())))));
 }
 
 }  // namespace

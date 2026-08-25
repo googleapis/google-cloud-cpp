@@ -132,11 +132,13 @@ bool IsDirectPath(Options const& options) {
   // Bigtable specific env var for Direct Path support used by all clients.
   std::optional<std::string> const cbt_direct_path =
       google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
-  if (direct_path.has_value() || cbt_direct_path.has_value()) {
-    return absl::c_any_of(
-               absl::StrSplit(direct_path.value_or(""), ','),
-               [](absl::string_view v) { return v == "bigtable"; }) ||
-           cbt_direct_path.value_or("") == "true";
+  if (cbt_direct_path.has_value()) {
+    if (*cbt_direct_path == "false") return false;
+    if (*cbt_direct_path == "true") return true;
+  }
+  if (direct_path.has_value()) {
+    return absl::c_any_of(absl::StrSplit(*direct_path, ','),
+                          [](absl::string_view v) { return v == "bigtable"; });
   }
   return options.get<experimental::DirectPathModeOption>() ==
          experimental::DirectPathMode::kEnabled;

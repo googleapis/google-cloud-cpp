@@ -36,7 +36,9 @@ mapfile -t integration_args < <(integration::bazel_args)
 observability_key_base="observability-key-$(date +"%Y-%m")"
 readonly KEY_DIR="/dev/shm"
 readonly SECRETS_BUCKET="gs://cloud-cpp-testing-resources-secrets"
-gcloud storage cp --quiet "${SECRETS_BUCKET}/${observability_key_base}.json" "${KEY_DIR}/${observability_key_base}.json" >/dev/null 2>&1 || true
+gcloud storage cp --quiet \
+  "${SECRETS_BUCKET}/${observability_key_base}.json" \
+  "${KEY_DIR}/${observability_key_base}.json" >/dev/null 2>&1 || true
 if [[ -r "${KEY_DIR}/${observability_key_base}.json" ]]; then
   GOOGLE_CLOUD_CPP_TEST_OBSERVABILITY_KEY_FILE_JSON="${KEY_DIR}/${observability_key_base}.json"
 fi
@@ -175,6 +177,18 @@ gcloud storage cp --quiet /tmp/startup.log /tmp/*.log /tmp/*.xml /tmp/exit_code.
 EOF
 )
 
+io::log_h2 "Running DirectPath fallback and diagnostics test on the build machine"
+(
+  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="${BIGTABLE_INSTANCE_ID}"
+  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID="${BIGTABLE_CLUSTER_ID}"
+  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="${BIGTABLE_ZONE_A}"
+  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="${BIGTABLE_ZONE_B}"
+  export GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL=dynamic
+  io::run "${TEST_DYNAMIC_BIN}" \
+    --gtest_filter="*VerifyDirectAccessFallbackAndDiagnosticsMetric*"
+)
+
 for candidate_zone in "${ZONES[@]}"; do
   ZONE="${candidate_zone}"
   io::log_h2 "Creating ephemeral DirectPath VM instance: ${VM_NAME} in zone ${ZONE}"
@@ -205,7 +219,7 @@ fi
 
 io::log_h2 "Waiting for test execution to complete on VM ${VM_NAME}..."
 TEST_COMPLETED="false"
-for i in {1..90}; do
+for i in {1..180}; do
   if gcloud storage cp --quiet "${GCS_PATH}/results/exit_code.txt" /tmp/exit_code.txt >/dev/null 2>&1; then
     TEST_COMPLETED="true"
     io::log_yellow "Test execution on VM ${VM_NAME} finished."
