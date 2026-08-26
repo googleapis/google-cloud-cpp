@@ -343,9 +343,12 @@ TEST(ToMetric, ResourceFilter) {
   auto resource = opentelemetry::sdk::resource::Resource::Create({});
 
   auto resource_filter_fn =
-      [resource_labels = std::set<std::string>{
-           sc::service::kServiceName, sc::service::kServiceNamespace,
-           sc::service::kServiceInstanceId}](std::string const& l) {
+      [resource_labels =
+           std::set<std::string>{sc::service::kServiceName,
+                                 sc::service::kServiceNamespace,
+                                 sc::service::kServiceInstanceId}](
+          std::string const& l,
+          opentelemetry::sdk::metrics::PointAttributes const&) {
         return internal::Contains(resource_labels, l);
       };
 

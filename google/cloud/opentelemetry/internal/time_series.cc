@@ -144,8 +144,8 @@ google::api::Metric ToMetric(
     opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& name_formatter,
     ResourceFilterDataFn const& resource_filter_fn) {
-  auto add_label = [&resource_filter_fn](auto& labels, auto key,
-                                         auto const& value) {
+  auto add_label = [&resource_filter_fn, &attributes](auto& labels, auto key,
+                                                      auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
     if (key.empty()) return;
     if (!std::isalpha(key[0]) && key[0] != '_') {
@@ -157,7 +157,7 @@ google::api::Metric ToMetric(
     for (auto& c : key) {
       if (!std::isalnum(c)) c = '_';
     }
-    if (resource_filter_fn && resource_filter_fn(key)) return;
+    if (resource_filter_fn && resource_filter_fn(key, attributes)) return;
     labels[std::move(key)] = AsString(value);
   };
 

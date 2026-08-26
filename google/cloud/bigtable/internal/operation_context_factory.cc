@@ -246,7 +246,8 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
 void MetricsOperationContextFactory::InitializeProvider(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options) {
-  auto constexpr kResourceType = "bigtable_client_raw";
+  auto constexpr kTableResourceType = "bigtable_client_raw";
+  auto constexpr kClientResourceType = "bigtable_client";
   auto constexpr kBigtableMetricNamePath =
       "bigtable.googleapis.com/internal/client/";
   auto constexpr kProjectLabel = "project_id";
@@ -259,10 +260,10 @@ void MetricsOperationContextFactory::InitializeProvider(
   auto constexpr kClientUidAttribute = "client_uid";
   auto constexpr kUuidLabel = "uuid";
   auto constexpr kClientProjectLabel = "client_project";
-  auto constexpr kLocationLabel = "location";
+  auto constexpr kRegionLabel = "region";
   auto constexpr kCloudPlatformLabel = "cloud_platform";
   auto constexpr kHostIdLabel = "host_id";
-  auto constexpr kHostnameLabel = "hostname";
+  auto constexpr kHostNameLabel = "host_name";
 
   auto dynamic_resource_fn =
       [=](opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
@@ -278,18 +279,19 @@ void MetricsOperationContextFactory::InitializeProvider(
         };
 
         google::api::MonitoredResource resource;
-        resource.set_type(kResourceType);
         auto& labels = *resource.mutable_labels();
         labels[kProjectLabel] = get_attr(kProjectLabel);
         labels[kInstanceLabel] = get_attr(kInstanceLabel);
 
         if (attributes.find(kTableLabel) != attributes.end()) {
+          resource.set_type(kTableResourceType);
           labels[kTableLabel] = get_attr(kTableLabel);
           labels[kClusterLabel] = get_attr(kClusterLabel);
           labels[kZoneLabel] = get_attr(kZoneLabel);
           return std::make_pair(labels[kProjectLabel], resource);
         }
 
+        resource.set_type(kClientResourceType);
         labels[kAppProfileLabel] = get_attr(kAppProfileLabel);
         labels[kClientNameLabel] = get_attr(kClientNameLabel);
         labels[kUuidLabel] = get_attr(kClientUidAttribute);
@@ -297,24 +299,33 @@ void MetricsOperationContextFactory::InitializeProvider(
         if (!client_project.empty()) {
           labels[kClientProjectLabel] = std::move(client_project);
         }
-        labels[kLocationLabel] = get_attr(kLocationLabel);
+        labels[kRegionLabel] = get_attr(kRegionLabel);
         labels[kCloudPlatformLabel] = get_attr(kCloudPlatformLabel);
         labels[kHostIdLabel] = get_attr(kHostIdLabel);
-        std::string hostname = get_attr(kHostnameLabel);
-        if (!hostname.empty()) {
-          labels[kHostnameLabel] = std::move(hostname);
+        std::string host_name = get_attr(kHostNameLabel);
+        if (!host_name.empty()) {
+          labels[kHostNameLabel] = std::move(host_name);
         }
         return std::make_pair(labels[kProjectLabel], resource);
       };
 
-  std::set<std::string> resource_labels{
-      kProjectLabel, kInstanceLabel,      kTableLabel,      kClusterLabel,
-      kZoneLabel,    kAppProfileLabel,    kClientNameLabel, kClientUidAttribute,
-      kUuidLabel,    kClientProjectLabel, kLocationLabel,   kCloudPlatformLabel,
-      kHostIdLabel,  kHostnameLabel};
+  std::set<std::string> table_resource_labels{
+      kProjectLabel, kInstanceLabel, kTableLabel, kClusterLabel, kZoneLabel};
+  std::set<std::string> client_resource_labels{
+      kProjectLabel,       kInstanceLabel,      kAppProfileLabel,
+      kClientNameLabel,    kClientUidAttribute, kUuidLabel,
+      kClientProjectLabel, kRegionLabel,        kCloudPlatformLabel,
+      kHostIdLabel,        kHostNameLabel};
+
   auto resource_filter_fn =
-      [resource_labels = std::move(resource_labels)](std::string const& key) {
-        return internal::Contains(resource_labels, key);
+      [table_resource_labels = std::move(table_resource_labels),
+       client_resource_labels = std::move(client_resource_labels)](
+          std::string const& key,
+          opentelemetry::sdk::metrics::PointAttributes const& attributes) {
+        if (attributes.find(kTableLabel) != attributes.end()) {
+          return internal::Contains(table_resource_labels, key);
+        }
+        return internal::Contains(client_resource_labels, key);
       };
 
   auto reader_options =
