@@ -21,5 +21,5 @@ source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 
 mapfile -t args < <(bazel::common_args)
-args+=("--config=otel1")
+args+=("--config=otel1" "--@opentelemetry-cpp//api:abi_version_no=1")
 io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
