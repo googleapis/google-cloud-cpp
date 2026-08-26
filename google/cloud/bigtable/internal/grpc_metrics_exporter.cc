@@ -323,7 +323,9 @@ GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
       "service.instance.id",
   };
   auto resource_filter_fn =
-      [excluded_labels = std::move(excluded_labels)](std::string const& key) {
+      [excluded_labels = std::move(excluded_labels)](
+          std::string const& key,
+          opentelemetry::sdk::metrics::PointAttributes const&) {
         return internal::Contains(excluded_labels, key);
       };
 
@@ -367,6 +369,7 @@ GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
   };
 
   auto disable_metrics = std::vector<std::string_view>{
+      std::string_view{"grpc.client.attempt.started"},
       std::string_view{
           "grpc.client.attempt.sent_total_compressed_message_size"},
       std::string_view{
