@@ -171,6 +171,22 @@ config_setting(
     flag_values = {":otel_abi_version_no": "2"},
 )
 
+config_setting(
+    name = "otel_abi_mismatch_2_1",
+    flag_values = {
+        ":otel_abi_version_no": "2",
+        "@opentelemetry-cpp//api:abi_version_no": "1",
+    },
+)
+
+config_setting(
+    name = "otel_abi_mismatch_1_2",
+    flag_values = {
+        ":otel_abi_version_no": "1",
+        "@opentelemetry-cpp//api:abi_version_no": "2",
+    },
+)
+
 cc_library(
     name = "storage_grpc",
     hdrs = ["//google/cloud/storage:public_grpc_hdrs"],

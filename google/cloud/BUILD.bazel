@@ -58,6 +58,10 @@ cc_library(
         "//:otel_abi_v1": ["OPENTELEMETRY_ABI_VERSION_NO=1"],
         "//:otel_abi_v2": ["OPENTELEMETRY_ABI_VERSION_NO=2"],
         "//conditions:default": ["OPENTELEMETRY_ABI_VERSION_NO=2"],
+    }) + select({
+        "//:otel_abi_mismatch_2_1": ["GOOGLE_CLOUD_CPP_OTEL_ABI_MISMATCH_2_1"],
+        "//:otel_abi_mismatch_1_2": ["GOOGLE_CLOUD_CPP_OTEL_ABI_MISMATCH_1_2"],
+        "//conditions:default": [],
     }),
     linkopts = select({
         "@platforms//os:windows": [
