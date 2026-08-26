@@ -156,6 +156,10 @@ class ClusterManagerTracingConnection
       google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
       override;
 
+  StatusOr<google::container::v1::Operation> CompleteControlPlaneUpgrade(
+      google::container::v1::CompleteControlPlaneUpgradeRequest const& request)
+      override;
+
  private:
   std::shared_ptr<container_v1::ClusterManagerConnection> child_;
 };

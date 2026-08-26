@@ -355,6 +355,15 @@ ClusterManagerTracingConnection::FetchNodePoolUpgradeInfo(
   return internal::EndSpan(*span, child_->FetchNodePoolUpgradeInfo(request));
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerTracingConnection::CompleteControlPlaneUpgrade(
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "container_v1::ClusterManagerConnection::CompleteControlPlaneUpgrade");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CompleteControlPlaneUpgrade(request));
+}
+
 std::shared_ptr<container_v1::ClusterManagerConnection>
 MakeClusterManagerTracingConnection(
     std::shared_ptr<container_v1::ClusterManagerConnection> conn) {

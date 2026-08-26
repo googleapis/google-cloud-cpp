@@ -234,6 +234,13 @@ class MockReservationServiceConnection
       (google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>,
+      UpdateReservationGroup,
+      (google::cloud::bigquery::reservation::v1::
+           UpdateReservationGroupRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

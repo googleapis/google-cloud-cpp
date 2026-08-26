@@ -441,6 +441,21 @@ ReservationServiceTracingStub::ListReservationGroups(
       context, *span, child_->ListReservationGroups(context, options, request));
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceTracingStub::UpdateReservationGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.reservation.v1.ReservationService",
+      "UpdateReservationGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateReservationGroup(context, options, request));
+}
+
 std::shared_ptr<ReservationServiceStub> MakeReservationServiceTracingStub(
     std::shared_ptr<ReservationServiceStub> stub) {
   return std::make_shared<ReservationServiceTracingStub>(std::move(stub));

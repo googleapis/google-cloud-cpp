@@ -90,6 +90,10 @@ class ModelServiceClient {
   ///
   /// Gets the specified model resource by model ID.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.getMetadata` permission on the model.
+  ///
   /// @param project_id  Required. Project ID of the requested model.
   /// @param dataset_id  Required. Dataset ID of the requested model.
   /// @param model_id  Required. Model ID of the requested model.
@@ -106,8 +110,8 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2063}
-  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L150}
+  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2079}
+  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L166}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Model> GetModel(
@@ -117,6 +121,10 @@ class ModelServiceClient {
   // clang-format off
   ///
   /// Gets the specified model resource by model ID.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.getMetadata` permission on the model.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -137,8 +145,8 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2063}
-  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L150}
+  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2079}
+  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L166}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Model> GetModel(
@@ -150,6 +158,10 @@ class ModelServiceClient {
   /// Lists all models in the specified dataset. Requires the READER dataset
   /// role. After retrieving the list of models, you can get information about a
   /// particular model by calling the models.get method.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.list` permission on the dataset.
   ///
   /// @param project_id  Required. Project ID of the models to list.
   /// @param dataset_id  Required. Dataset ID of the models to list.
@@ -177,8 +189,8 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2103}
-  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L150}
+  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2119}
+  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L166}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::Model> ListModels(
@@ -190,6 +202,10 @@ class ModelServiceClient {
   /// Lists all models in the specified dataset. Requires the READER dataset
   /// role. After retrieving the list of models, you can get information about a
   /// particular model by calling the models.get method.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.list` permission on the dataset.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -219,8 +235,8 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2103}
-  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L150}
+  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2119}
+  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L166}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::Model> ListModels(
@@ -230,6 +246,10 @@ class ModelServiceClient {
   // clang-format off
   ///
   /// Patch specific fields in the specified model.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.updateMetadata` permission on the model.
   ///
   /// @param project_id  Required. Project ID of the model to patch.
   /// @param dataset_id  Required. Dataset ID of the model to patch.
@@ -250,8 +270,8 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L150}
-  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2074}
+  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L166}
+  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2090}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
@@ -262,6 +282,10 @@ class ModelServiceClient {
   // clang-format off
   ///
   /// Patch specific fields in the specified model.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.updateMetadata` permission on the model.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -282,8 +306,8 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L150}
-  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2074}
+  /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L166}
+  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2090}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
@@ -293,6 +317,10 @@ class ModelServiceClient {
   // clang-format off
   ///
   /// Deletes the model specified by modelId from the dataset.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.delete` permission on the model.
   ///
   /// @param project_id  Required. Project ID of the model to delete.
   /// @param dataset_id  Required. Dataset ID of the model to delete.
@@ -308,7 +336,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2091}
+  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2107}
   ///
   // clang-format on
   Status DeleteModel(std::string const& project_id,
@@ -318,6 +346,10 @@ class ModelServiceClient {
   // clang-format off
   ///
   /// Deletes the model specified by modelId from the dataset.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.models.delete` permission on the model.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -336,7 +368,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2091}
+  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2107}
   ///
   // clang-format on
   Status DeleteModel(

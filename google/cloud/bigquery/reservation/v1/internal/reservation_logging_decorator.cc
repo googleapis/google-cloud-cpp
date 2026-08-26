@@ -437,6 +437,20 @@ ReservationServiceLogging::ListReservationGroups(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceLogging::UpdateReservationGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 UpdateReservationGroupRequest const& request) {
+        return child_->UpdateReservationGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud

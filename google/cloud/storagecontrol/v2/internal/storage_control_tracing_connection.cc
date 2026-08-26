@@ -353,6 +353,36 @@ StorageControlTracingConnection::UpdateRapidCache(
                            child_->UpdateRapidCache(operation));
 }
 
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlTracingConnection::DisableRapidCache(
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DisableRapidCache");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DisableRapidCache(request));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingConnection::DisableRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DisableRapidCache");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DisableRapidCache(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlTracingConnection::DisableRapidCache(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DisableRapidCache");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DisableRapidCache(operation));
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 StorageControlTracingConnection::GetRapidCache(
     google::storage::control::v2::GetRapidCacheRequest const& request) {

@@ -760,6 +760,65 @@ StorageControlMetadata::UpdateRapidCache(
   return child_->UpdateRapidCache(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+StorageControlMetadata::AsyncDisableRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::DisableRapidCacheRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::DisableRapidCacheRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context, *options);
+  } else {
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncDisableRapidCache(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlMetadata::DisableRapidCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::DisableRapidCacheRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::DisableRapidCacheRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->DisableRapidCache(context, options, request);
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 StorageControlMetadata::GetRapidCache(
     grpc::ClientContext& context, Options const& options,

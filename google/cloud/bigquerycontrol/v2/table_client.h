@@ -93,6 +93,10 @@ class TableServiceClient {
   /// This method does not return the data in the table, it only returns the
   /// table resource, which describes the structure of this table.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.tables.get` permission on the table.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -112,8 +116,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L561}
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L284}
+  /// [google.cloud.bigquery.v2.GetTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L588}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L311}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> GetTable(
@@ -123,6 +127,10 @@ class TableServiceClient {
   // clang-format off
   ///
   /// Creates a new, empty table in the dataset.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.tables.create` permission on the dataset.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -143,8 +151,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L608}
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L284}
+  /// [google.cloud.bigquery.v2.InsertTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L635}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L311}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
@@ -158,6 +166,13 @@ class TableServiceClient {
   /// are provided in the submitted table resource.
   /// This method supports RFC5789 patch semantics.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) on the table:
+  ///
+  ///  - `bigquery.tables.update`
+  ///  - `bigquery.tables.get`
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -177,8 +192,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L284}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L619}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L311}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L646}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
@@ -191,6 +206,10 @@ class TableServiceClient {
   /// entire Table resource, whereas the patch method only replaces fields that
   /// are provided in the submitted Table resource.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.tables.update` permission on the table.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -210,8 +229,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L284}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L619}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L311}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L646}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
@@ -222,6 +241,10 @@ class TableServiceClient {
   ///
   /// Deletes the table specified by tableId from the dataset.
   /// If the table contains data, all the data will be deleted.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.tables.delete` permission on the table.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -240,7 +263,7 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L637}
+  /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L664}
   ///
   // clang-format on
   Status DeleteTable(
@@ -251,6 +274,10 @@ class TableServiceClient {
   ///
   /// Lists all tables in the specified dataset. Requires the READER dataset
   /// role.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.tables.list` permission on the dataset.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -280,8 +307,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListFormatTable]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L675}
-  /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L649}
+  /// [google.cloud.bigquery.v2.ListFormatTable]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L702}
+  /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L676}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(

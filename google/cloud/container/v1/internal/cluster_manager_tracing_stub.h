@@ -195,6 +195,11 @@ class ClusterManagerTracingStub : public ClusterManagerStub {
       google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
       override;
 
+  StatusOr<google::container::v1::Operation> CompleteControlPlaneUpgrade(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::CompleteControlPlaneUpgradeRequest const& request)
+      override;
+
  private:
   std::shared_ptr<ClusterManagerStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

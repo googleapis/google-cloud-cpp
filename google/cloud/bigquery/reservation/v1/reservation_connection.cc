@@ -230,6 +230,13 @@ ReservationServiceConnection::ListReservationGroups(
       google::cloud::bigquery::reservation::v1::ReservationGroup>>();
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnection::UpdateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -271,6 +271,29 @@ StorageControlConnection::UpdateRapidCache(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnection::DisableRapidCache(
+    google::storage::control::v2::DisableRapidCacheRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::RapidCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnection::DisableRapidCache(
+    NoAwaitTag, google::storage::control::v2::DisableRapidCacheRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnection::DisableRapidCache(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::RapidCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 StorageControlConnection::GetRapidCache(
     google::storage::control::v2::GetRapidCacheRequest const&) {

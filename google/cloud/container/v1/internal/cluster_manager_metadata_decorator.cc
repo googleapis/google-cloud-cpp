@@ -364,6 +364,15 @@ ClusterManagerMetadata::FetchNodePoolUpgradeInfo(
   return child_->FetchNodePoolUpgradeInfo(context, options, request);
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerMetadata::CompleteControlPlaneUpgrade(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CompleteControlPlaneUpgrade(context, options, request);
+}
+
 void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context,
                                          Options const& options,
                                          std::string const& request_params) {
