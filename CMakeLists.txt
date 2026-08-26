@@ -198,6 +198,13 @@ set(GOOGLE_CLOUD_CPP_ENABLE
     CACHE STRING "The list of libraries to build.")
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
 
+set(GOOGLE_CLOUD_CPP_OPENTELEMETRY_ABI_VERSION
+    "2"
+    CACHE STRING
+          "The OpenTelemetry ABI version to use (1 or 2). Defaults to 2.")
+set_property(CACHE GOOGLE_CLOUD_CPP_OPENTELEMETRY_ABI_VERSION PROPERTY STRINGS
+                                                                       "1" "2")
+
 # We use some functions to enable the features configured in
 # `GOOGLE_CLOUD_CPP_ENABLE`. Using functions makes it easier to keep the code
 # structured, and documents what some of these things are doing.

@@ -220,6 +220,11 @@ target_include_directories(google_cloud_cpp_common SYSTEM
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>)
 target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+target_compile_definitions(
+    google_cloud_cpp_common
+    PUBLIC
+        "OPENTELEMETRY_ABI_VERSION_NO=${GOOGLE_CLOUD_CPP_OPENTELEMETRY_ABI_VERSION}"
+)
 
 set_target_properties(
     google_cloud_cpp_common

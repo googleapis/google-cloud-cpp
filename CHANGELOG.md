@@ -15,7 +15,12 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ### OpenTelemetry default ABI version
 
-- Updated the default OpenTelemetry C++ ABI version to 2 for Bazel builds (`OPENTELEMETRY_ABI_VERSION_NO=2`). Downstream consumers requiring ABI version 1 can configure `--//:otel_abi_version_no=1` (or use `--config=otel1` when building in this repository).
+* Updated the default OpenTelemetry C++ ABI version to 2 (`OPENTELEMETRY_ABI_VERSION_NO=2`)
+  * In Bazel builds, downstream consumers requiring ABI version 1 can configure
+    `--//:otel_abi_version_no=1` (or use `--config=otel1` when building in this
+    repository).
+  * In CMake builds, downstream consumers requiring ABI version 1 can configure
+    `-DGOOGLE_CLOUD_CPP_OPENTELEMETRY_ABI_VERSION=1`.
 
 ### New Libraries
 
