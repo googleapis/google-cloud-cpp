@@ -220,7 +220,16 @@ INSTANTIATE_TEST_SUITE_P(
         DetermineTypesSuccess{"string", R"""({"type":"string"})""", "string",
                               true, false, false, false},
         DetermineTypesSuccess{"any", R"""({"type":"any"})""",
-                              "google.protobuf.Any", true, false, false, false},
+                              "google.protobuf.Value", true, false, false,
+                              false},
+        DetermineTypesSuccess{
+            "any_with_format",
+            R"""({"type":"any","format":"google.protobuf.Value"})""",
+            "google.protobuf.Value", true, false, false, false},
+        DetermineTypesSuccess{
+            "any_with_struct_format",
+            R"""({"type":"any","format":"google.protobuf.Struct"})""",
+            "google.protobuf.Struct", true, false, false, false},
         DetermineTypesSuccess{"boolean", R"""({"type":"boolean"})""", "bool",
                               true, false, false, false},
         DetermineTypesSuccess{"integer_no_format", R"""({"type":"integer"})""",
@@ -246,6 +255,21 @@ INSTANTIATE_TEST_SUITE_P(
         DetermineTypesSuccess{
             "array_any",
             R"""({"type":"array","items":{"type":"object","additionalProperties":{"type":"any"}}})""",
+            "google.protobuf.Struct", true, false, false, false},
+        DetermineTypesSuccess{
+            "array_any_with_format",
+            R"""({"type":"array","items":{"type":"object","additionalProperties":{"type":"any","format":"google.protobuf.Value"}}})""",
+            "google.protobuf.Value", true, false, false, false},
+        DetermineTypesSuccess{
+            "array_items_any", R"""({"type":"array","items":{"type":"any"}})""",
+            "google.protobuf.Value", true, false, false, false},
+        DetermineTypesSuccess{
+            "array_items_any_with_format",
+            R"""({"type":"array","items":{"type":"any","format":"google.protobuf.Struct"}})""",
+            "google.protobuf.Struct", true, false, false, false},
+        DetermineTypesSuccess{
+            "status_details_any",
+            R"""({"type":"array","items":{"type":"object","format":"google.protobuf.Any","additionalProperties":{"type":"any"}}})""",
             "google.protobuf.Any", true, false, false, false},
         DetermineTypesSuccess{
             "array_nested_message",
@@ -266,6 +290,14 @@ INSTANTIATE_TEST_SUITE_P(
             "any_to_struct",
             R"""({"type":"object","additionalProperties":{"type":"any"}})""",
             "google.protobuf.Struct", true, true, false, false},
+        DetermineTypesSuccess{
+            "map_any_with_format",
+            R"""({"type":"object","additionalProperties":{"type":"any","format":"google.protobuf.Value"}})""",
+            "google.protobuf.Value", true, true, false, false},
+        DetermineTypesSuccess{
+            "map_any_with_outer_format",
+            R"""({"type":"object","format":"google.protobuf.Value","additionalProperties":{"type":"any"}})""",
+            "google.protobuf.Value", true, true, false, false},
         DetermineTypesSuccess{
             "map_nested_message",
             R"""({"type":"object","additionalProperties":{"type":"object", "properties":{}}})""",
@@ -846,6 +878,7 @@ message Bar {}
 syntax = "proto3";
 package generator.test;
 
+import "google/protobuf/any.proto";
 import "imported.proto";
 
 message Foo {}
@@ -857,6 +890,8 @@ message FieldsOnly {
   int32 field4 = 4;
   repeated generator.imported.Bar field5 = 5;
   map<string, generator.imported.Bar> field6 = 6;
+  google.protobuf.Any field7 = 7;
+  google.protobuf.Any field8 = 8;
 }
 
 )""";
@@ -878,7 +913,7 @@ message FieldsOnly {
   ASSERT_STATUS_OK(field_number);
   EXPECT_THAT(*field_number, Eq(1));
 
-  int const candidate_field_number = 7;
+  int const candidate_field_number = 9;
   message_descriptor = file_descriptor->FindMessageTypeByName("FieldsOnly");
 
   ASSERT_THAT(message_descriptor, NotNull());
@@ -922,6 +957,19 @@ message FieldsOnly {
                                           candidate_field_number);
   ASSERT_STATUS_OK(existing_map_different_package_field_number);
   EXPECT_THAT(*existing_map_different_package_field_number, Eq(6));
+
+  auto existing_any_to_struct_field_number =
+      DiscoveryTypeVertex::GetFieldNumber(message_descriptor, "field7",
+                                          "google.protobuf.Struct",
+                                          candidate_field_number);
+  ASSERT_STATUS_OK(existing_any_to_struct_field_number);
+  EXPECT_THAT(*existing_any_to_struct_field_number, Eq(7));
+
+  auto existing_any_to_value_field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "field8", "google.protobuf.Value",
+      candidate_field_number);
+  ASSERT_STATUS_OK(existing_any_to_value_field_number);
+  EXPECT_THAT(*existing_any_to_value_field_number, Eq(8));
 
   auto field_type_changed = DiscoveryTypeVertex::GetFieldNumber(
       message_descriptor, "field6", "map<string, generator.test.Bar>",
