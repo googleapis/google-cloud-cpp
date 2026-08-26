@@ -137,10 +137,10 @@ add_library(
     internal/async/reader_connection_factory.h
     internal/async/reader_connection_impl.cc
     internal/async/reader_connection_impl.h
-    internal/async/reader_connection_telemetry.cc
-    internal/async/reader_connection_telemetry.h
     internal/async/reader_connection_resume.cc
     internal/async/reader_connection_resume.h
+    internal/async/reader_connection_telemetry.cc
+    internal/async/reader_connection_telemetry.h
     internal/async/reader_connection_tracing.cc
     internal/async/reader_connection_tracing.h
     internal/async/rewriter_connection_impl.cc
@@ -247,31 +247,26 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_storage_grpc
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 target_compile_definitions(google_cloud_cpp_storage_grpc
-                           PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-                                  GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+                           PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
 if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
     target_compile_definitions(
         google_cloud_cpp_storage_grpc
         PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
 endif ()
-if (GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+if ((TARGET google-cloud-cpp::opentelemetry) AND (TARGET
+                                                  opentelemetry-cpp::metrics))
     target_compile_definitions(
         google_cloud_cpp_storage_grpc
-        PRIVATE GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
-endif ()
-if ((TARGET gRPC::grpcpp_otel_plugin)
-    AND (TARGET google-cloud-cpp::opentelemetry)
-    AND (TARGET opentelemetry-cpp::metrics))
-    target_compile_definitions(
-        google_cloud_cpp_storage_grpc
-        PRIVATE GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-                GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+        PUBLIC GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+               GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
     target_link_libraries(
-        google_cloud_cpp_storage_grpc
-        PUBLIC google-cloud-cpp::opentelemetry gRPC::grpcpp_otel_plugin
-               opentelemetry-cpp::metrics)
-    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "grpcpp_otel_plugin"
-                      "opentelemetry_metrics")
+        google_cloud_cpp_storage_grpc PUBLIC google-cloud-cpp::opentelemetry
+                                             opentelemetry-cpp::metrics)
+endif ()
+if (TARGET gRPC::grpcpp_otel_plugin)
+    target_link_libraries(google_cloud_cpp_storage_grpc
+                          PUBLIC gRPC::grpcpp_otel_plugin)
+    set(EXTRA_MODULES "grpcpp_otel_plugin")
 endif ()
 set_target_properties(
     google_cloud_cpp_storage_grpc

@@ -19,6 +19,7 @@
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/metrics/provider.h>
+#include <opentelemetry/trace/context.h>
 #endif
 #include <chrono>
 
@@ -41,7 +42,7 @@ struct ReadLatencyMetrics {
     static ReadLatencyMetrics const metrics = [] {
       opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter> meter =
           opentelemetry::metrics::Provider::GetMeterProvider()->GetMeter(
-              "google-cloud-cpp", version::version_string());
+              "google-cloud-cpp", version_string());
       return ReadLatencyMetrics{
           meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.queue",
                                        "Read Range Queue Latency", "us"),
