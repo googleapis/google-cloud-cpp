@@ -291,8 +291,10 @@ std::shared_ptr<bigtable::DataConnection> MakeDirectPathDataConnection(
   if (probe_result.ok() && probe_result->success) {
     std::unique_ptr<bigtable_internal::StubManager> stub_manager =
         directpath_future.get();
-    components.background->cq().RunAsync(
-        [f = std::move(cloudpath_future)]() mutable { (void)f.get(); });
+    std::move(cloudpath_future)
+        .then([](future<std::unique_ptr<bigtable_internal::StubManager>> f) {
+          (void)f.get();
+        });
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
     if (components.direct_access_compatibility != nullptr) {
       components.direct_access_compatibility->Record(
@@ -313,8 +315,10 @@ std::shared_ptr<bigtable::DataConnection> MakeDirectPathDataConnection(
   // the failure reason.
   std::unique_ptr<bigtable_internal::StubManager> stub_manager =
       cloudpath_future.get();
-  components.background->cq().RunAsync(
-      [f = std::move(directpath_future)]() mutable { (void)f.get(); });
+  std::move(directpath_future)
+      .then([](future<std::unique_ptr<bigtable_internal::StubManager>> f) {
+        (void)f.get();
+      });
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   bigtable_internal::DirectPathDiagnostics::RunAsync(
       components.background->cq(), directpath_options,
