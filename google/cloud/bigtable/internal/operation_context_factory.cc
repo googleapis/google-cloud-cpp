@@ -318,8 +318,12 @@ void MetricsOperationContextFactory::InitializeProvider(
       kHostIdLabel,        kHostNameLabel};
 
   auto resource_filter_fn =
-      [table_resource_labels = std::move(table_resource_labels),
-       client_resource_labels = std::move(client_resource_labels)](
+      [
+#ifdef _WIN32
+          kTableLabel,
+#endif
+          table_resource_labels = std::move(table_resource_labels),
+          client_resource_labels = std::move(client_resource_labels)](
           std::string const& key,
           opentelemetry::sdk::metrics::PointAttributes const& attributes) {
         if (attributes.find(kTableLabel) != attributes.end()) {

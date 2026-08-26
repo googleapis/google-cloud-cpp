@@ -156,9 +156,9 @@ ClientResourceLabels MakeClientResourceLabels(
     client_project = project_id;
   }
 
-  auto region = by_name(sc::cloud::kCloudRegion);
+  std::string region = by_name(sc::cloud::kCloudRegion);
   if (region.empty()) {
-    auto zone = by_name(sc::cloud::kCloudAvailabilityZone);
+    std::string zone = by_name(sc::cloud::kCloudAvailabilityZone);
     std::vector<std::string_view> parts = absl::StrSplit(zone, '-');
     if (parts.size() >= 3 && parts.back().size() == 1) {
       parts.pop_back();
@@ -245,7 +245,7 @@ void DirectAccessCompatibility::Record(
     opentelemetry::context::Context const& context, std::int64_t value,
     DirectAccessCompatibilityLabels const& data_labels) {
   if (gauge_ == nullptr) return;
-  auto const labels = IntoLabelMap(resource_labels_, data_labels, {});
+  LabelMap const labels = IntoLabelMap(resource_labels_, data_labels, {});
   gauge_->Record(value, labels, context);
 }
 #else
@@ -304,9 +304,10 @@ DirectAccessCompatibility::DirectAccessCompatibility(
 void DirectAccessCompatibility::Record(
     opentelemetry::context::Context const&, std::int64_t value,
     DirectAccessCompatibilityLabels const& data_labels) {
+  LabelMap labels = IntoLabelMap(resource_labels_, data_labels, {});
   std::lock_guard<std::mutex> lk(state_->mu);
   state_->value = value;
-  state_->labels = IntoLabelMap(resource_labels_, data_labels, {});
+  state_->labels = std::move(labels);
   state_->has_value = true;
 }
 #endif
