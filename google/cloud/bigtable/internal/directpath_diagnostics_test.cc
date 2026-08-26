@@ -55,6 +55,7 @@ using ::testing::Eq;
 using ::google::cloud::testing_util::MakeAttributesMap;
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
 using ::google::cloud::testing_util::MockGauge;
+using ::testing::_;
 #endif
 using ::google::cloud::testing_util::MockMeter;
 using ::google::cloud::testing_util::MockMeterProvider;
