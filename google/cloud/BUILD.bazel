@@ -54,6 +54,11 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    defines = select({
+        "//:otel_abi_v1": ["OPENTELEMETRY_ABI_VERSION_NO=1"],
+        "//:otel_abi_v2": ["OPENTELEMETRY_ABI_VERSION_NO=2"],
+        "//conditions:default": ["OPENTELEMETRY_ABI_VERSION_NO=2"],
+    }),
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",

@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,14 +16,13 @@ filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
-  pullRequest:
+  push:
     branch: main
-    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-otel-abi-2-pr
+name: bazel-otel-abi-ci
 substitutions:
-  _BUILD_NAME: bazel-otel-abi-2
+  _BUILD_NAME: bazel-otel-abi
   _DISTRO: fedora-latest-bazel
-  _TRIGGER_TYPE: pr
+  _TRIGGER_TYPE: ci
 tags:
-- pr
+- ci
