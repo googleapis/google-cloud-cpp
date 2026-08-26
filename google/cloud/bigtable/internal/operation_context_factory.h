@@ -135,6 +135,11 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& instance_name,
       std::string const& app_profile) override;
 
+  std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility()
+      const {
+    return direct_access_compatibility_;
+  }
+
  private:
   void InitializeProvider(
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
@@ -144,6 +149,7 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<OperationContext::Clock> clock_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   ClientResourceLabels client_resource_labels_;
+  std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility_;
 
   // These vectors are initialized exactly once and the initialization is
   // delayed until the first time the corresponding method is called.
