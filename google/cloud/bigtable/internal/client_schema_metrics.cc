@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_split.h"
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/faas_attributes.h>
@@ -66,8 +68,8 @@ LabelMap BaseLabels(ClientResourceLabels const& r) {
   return {{"project_id", r.project_id},   {"instance", r.instance},
           {"app_profile", r.app_profile}, {"client_name", r.client_name},
           {"client_uid", r.client_uid},   {"client_project", r.client_project},
-          {"location", r.location},       {"cloud_platform", r.cloud_platform},
-          {"host_id", r.host_id},         {"hostname", r.hostname}};
+          {"region", r.region},           {"cloud_platform", r.cloud_platform},
+          {"host_id", r.host_id},         {"host_name", r.host_name}};
 }
 }  // namespace
 
@@ -154,6 +156,21 @@ ClientResourceLabels MakeClientResourceLabels(
     client_project = project_id;
   }
 
+  std::string region = by_name(sc::cloud::kCloudRegion);
+  if (region.empty()) {
+    std::string zone = by_name(sc::cloud::kCloudAvailabilityZone);
+    std::vector<std::string_view> parts = absl::StrSplit(zone, '-');
+    if (parts.size() >= 3 && parts.back().size() == 1) {
+      parts.pop_back();
+      region = absl::StrJoin(parts, "-");
+    } else {
+      region = std::move(zone);
+    }
+  }
+  if (region.empty()) {
+    region = "global";
+  }
+
   ClientResourceLabels labels;
   labels.project_id = std::move(project_id);
   labels.instance = std::move(instance);
@@ -161,16 +178,13 @@ ClientResourceLabels MakeClientResourceLabels(
   labels.client_name = "cpp.Bigtable/" + bigtable::version_string();
   labels.client_uid = client_uid;
   labels.client_project = std::move(client_project);
-  labels.location = by_name(sc::cloud::kCloudAvailabilityZone);
-  if (labels.location.empty()) {
-    labels.location = by_name(sc::cloud::kCloudRegion, "global");
-  }
+  labels.region = std::move(region);
   labels.cloud_platform = by_name(sc::cloud::kCloudPlatform, "unknown");
   labels.host_id = by_name("faas.id");
   if (labels.host_id.empty()) {
     labels.host_id = by_name(sc::host::kHostId, "unknown");
   }
-  labels.hostname = by_name(sc::host::kHostName);
+  labels.host_name = by_name(sc::host::kHostName);
   return labels;
 }
 
@@ -193,9 +207,16 @@ void OutstandingRpcs::StubSelection(
     StubSelectionParams const& p) {
   ClientOutstandingRpcLabels data_labels{p.transport_type,
                                          p.channel_pool_lb_policy, p.streaming};
-  outstanding_rpcs_->Record(static_cast<double>(p.outstanding_rpcs),
-                            IntoLabelMap(resource_labels_, data_labels, {}),
-                            context);
+  // `channel_pool_lb_policy` is filtered out because the Cloud Monitoring
+  // metric descriptor for
+  // `bigtable.googleapis.com/internal/client/connection_pool/outstanding_rpcs`
+  // does not recognize this label.
+  static auto const* const kFilteredDataLabels =
+      new std::set<std::string>{"channel_pool_lb_policy"};
+  outstanding_rpcs_->Record(
+      static_cast<double>(p.outstanding_rpcs),
+      IntoLabelMap(resource_labels_, data_labels, *kFilteredDataLabels),
+      context);
 }
 
 std::unique_ptr<ClientSchemaMetric> OutstandingRpcs::clone(
@@ -205,40 +226,91 @@ std::unique_ptr<ClientSchemaMetric> OutstandingRpcs::clone(
   return m;
 }
 
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
 DirectAccessCompatibility::DirectAccessCompatibility(
     std::string const& instrumentation_scope,
     opentelemetry::nostd::shared_ptr<
-        opentelemetry::metrics::MeterProvider> const& provider)
-    : gauge_(
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-          provider
-              ->GetMeter(instrumentation_scope,
-                         kMeterInstrumentationScopeVersion)
-              ->CreateInt64Gauge(
-                  "direct_access/compatible",
-                  "Compatibility check result for Bigtable DirectPath.", "1")
-#else
-          provider
-              ->GetMeter(instrumentation_scope,
-                         kMeterInstrumentationScopeVersion)
-              ->CreateDoubleHistogram(
-                  "direct_access/compatible",
-                  "Compatibility check result for Bigtable DirectPath.", "1")
-#endif
-      ) {
-}
+        opentelemetry::metrics::MeterProvider> const& provider,
+    ClientResourceLabels resource_labels)
+    : resource_labels_(std::move(resource_labels)),
+      gauge_(provider
+                 ->GetMeter(instrumentation_scope,
+                            kMeterInstrumentationScopeVersion)
+                 ->CreateInt64Gauge(
+                     "direct_access/compatible",
+                     "Compatibility check result for Bigtable DirectPath.",
+                     "1")) {}
 
 void DirectAccessCompatibility::Record(
     opentelemetry::context::Context const& context, std::int64_t value,
     DirectAccessCompatibilityLabels const& data_labels) {
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  gauge_->Record(value, IntoLabelMap(resource_labels_, data_labels, {}),
-                 context);
-#else
-  gauge_->Record(static_cast<double>(value),
-                 IntoLabelMap(resource_labels_, data_labels, {}), context);
-#endif
+  if (gauge_ == nullptr) return;
+  LabelMap const labels = IntoLabelMap(resource_labels_, data_labels, {});
+  gauge_->Record(value, labels, context);
 }
+#else
+void DirectAccessCompatibility::ObserveCallback(
+    opentelemetry::metrics::ObserverResult observer_result, void* state_ptr) {
+  auto* state = static_cast<State*>(state_ptr);
+  if (state == nullptr) return;
+  std::lock_guard<std::mutex> lk(state->mu);
+  if (!state->has_value) return;
+
+  if (opentelemetry::nostd::holds_alternative<opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::ObserverResultT<std::int64_t> > >(
+          observer_result)) {
+    auto observer = opentelemetry::nostd::get<opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::ObserverResultT<std::int64_t> > >(
+        observer_result);
+    observer->Observe(state->value, state->labels);
+  }
+}
+
+DirectAccessCompatibility::DirectAccessCompatibility(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider,
+    ClientResourceLabels resource_labels)
+    : resource_labels_(std::move(resource_labels)),
+      state_(std::make_shared<State>()),
+      gauge_(provider
+                 ->GetMeter(instrumentation_scope,
+                            kMeterInstrumentationScopeVersion)
+                 ->CreateInt64ObservableGauge(
+                     "direct_access/compatible",
+                     "Compatibility check result for Bigtable DirectPath.",
+                     "1")) {
+  if (gauge_ != nullptr) {
+    gauge_->AddCallback(ObserveCallback, state_.get());
+  }
+}
+
+DirectAccessCompatibility::~DirectAccessCompatibility() {
+  if (gauge_ != nullptr) {
+    gauge_->RemoveCallback(ObserveCallback, state_.get());
+  }
+}
+
+DirectAccessCompatibility::DirectAccessCompatibility(
+    DirectAccessCompatibility const& other)
+    : resource_labels_(other.resource_labels_),
+      state_(std::make_shared<State>()),
+      gauge_(other.gauge_) {
+  if (gauge_ != nullptr) {
+    gauge_->AddCallback(ObserveCallback, state_.get());
+  }
+}
+
+void DirectAccessCompatibility::Record(
+    opentelemetry::context::Context const&, std::int64_t value,
+    DirectAccessCompatibilityLabels const& data_labels) {
+  LabelMap labels = IntoLabelMap(resource_labels_, data_labels, {});
+  std::lock_guard<std::mutex> lk(state_->mu);
+  state_->value = value;
+  state_->labels = std::move(labels);
+  state_->has_value = true;
+}
+#endif
 
 std::unique_ptr<ClientSchemaMetric> DirectAccessCompatibility::clone(
     ClientResourceLabels const& resource_labels) const {

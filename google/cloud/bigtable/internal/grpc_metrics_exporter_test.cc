@@ -434,7 +434,8 @@ TEST(GrpcMetricsExporterTest, ValidatePluginConfigArguments) {
 
   EXPECT_THAT(
       config.disabled_metrics,
-      ElementsAre("grpc.client.attempt.sent_total_compressed_message_size",
+      ElementsAre("grpc.client.attempt.started",
+                  "grpc.client.attempt.sent_total_compressed_message_size",
                   "grpc.client.attempt.rcvd_total_compressed_message_size"));
 
   ASSERT_TRUE(config.generic_method_filter);

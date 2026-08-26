@@ -309,7 +309,7 @@ TEST(MetricsOperationContextFactoryTest, CloneMetricsWithClientResourceLabels) {
                               "uid",    "profile",   "status"};
   ClientResourceLabels client_labels{
       "project",     "instance", "profile", "client", "uid",
-      "client-proj", "location", "gcp",     "host",   "hostname"};
+      "client-proj", "region",   "gcp",     "host",   "hostname"};
 
   std::vector<std::shared_ptr<Metric const>> metrics = {table_metric,
                                                         client_metric};
@@ -339,15 +339,16 @@ TEST(MetricsOperationContextFactoryTest,
           [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
             EXPECT_THAT(request.name(), Eq("projects/my-project"));
             for (auto const& ts : request.time_series()) {
-              EXPECT_THAT(ts.resource().type(), Eq("bigtable_client_raw"));
               if (ts.resource().labels().find("table") !=
                   ts.resource().labels().end()) {
+                EXPECT_THAT(ts.resource().type(), Eq("bigtable_client_raw"));
                 EXPECT_THAT(ts.resource().labels().at("project_id"),
                             Eq("my-project"));
                 EXPECT_THAT(ts.resource().labels().at("instance"),
                             Eq("my-instance"));
                 EXPECT_THAT(ts.resource().labels().at("table"), Eq("my-table"));
               } else {
+                EXPECT_THAT(ts.resource().type(), Eq("bigtable_client"));
                 EXPECT_THAT(ts.resource().labels().at("project_id"),
                             Eq("my-project"));
                 EXPECT_THAT(ts.resource().labels().at("instance"),
@@ -364,12 +365,20 @@ TEST(MetricsOperationContextFactoryTest,
                           ts.metric().labels().end());
               EXPECT_TRUE(ts.metric().labels().find("instance") ==
                           ts.metric().labels().end());
-              EXPECT_TRUE(ts.metric().labels().find("table") ==
-                          ts.metric().labels().end());
-              EXPECT_TRUE(ts.metric().labels().find("app_profile") ==
-                          ts.metric().labels().end());
-              EXPECT_TRUE(ts.metric().labels().find("uuid") ==
-                          ts.metric().labels().end());
+              if (ts.resource().labels().find("table") !=
+                  ts.resource().labels().end()) {
+                EXPECT_TRUE(ts.metric().labels().find("table") ==
+                            ts.metric().labels().end());
+                EXPECT_TRUE(ts.metric().labels().find("app_profile") !=
+                            ts.metric().labels().end());
+                EXPECT_TRUE(ts.metric().labels().find("client_uid") !=
+                            ts.metric().labels().end());
+              } else {
+                EXPECT_TRUE(ts.metric().labels().find("app_profile") ==
+                            ts.metric().labels().end());
+                EXPECT_TRUE(ts.metric().labels().find("client_uid") ==
+                            ts.metric().labels().end());
+              }
             }
             return Status();
           });

@@ -43,7 +43,8 @@ using MonitoredResourceFromDataFn =
 // For use with dynamic monitored resources, this function is used in ToMetric
 // to indicate which labels should be skipped when populating the labels field
 // of the google::api::Metric proto.
-using ResourceFilterDataFn = std::function<bool(std::string const&)>;
+using ResourceFilterDataFn = std::function<bool(
+    std::string const&, opentelemetry::sdk::metrics::PointAttributes const&)>;
 
 // Filter resource labels. A set of OpenTelemetry resource attribute keys to
 // exclude from metric labels when exporting metrics.
