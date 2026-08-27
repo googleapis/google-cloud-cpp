@@ -29,7 +29,8 @@ bazel_dep(name = "abseil-cpp", version = "20250814.2")
 # The name "com_google_protobuf" is internally used by @bazel_tools,
 # a native repository we cannot override.
 # See https://github.com/googleapis/google-cloud-cpp/issues/15393
-bazel_dep(name = "protobuf", version = "36.0-rc2", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "36.0.bcr.1", repo_name = "com_google_protobuf")
+
 #git_override(
 #    module_name = "protobuf",
 #    commit = "d65ed10e49acbee0e7d14277ab3e0330a0dd2838",

@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include "google/protobuf/timestamp.pb.h"
 #include <gmock/gmock.h>
 
@@ -74,6 +75,21 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithInvalidContent) {
                                      HasSubstr("invalid metadata type"))));
 }
 
+TEST(ExtractLongRunningResultTest, MetadataDoneWithUnpackError) {
+  google::longrunning::Operation op;
+  op.set_done(true);
+  op.mutable_metadata()->set_type_url(absl::StrCat(
+      "type.googleapis.com/", Response::descriptor()->full_name()));
+  op.mutable_metadata()->set_value("invalid protobuf payload");
+  auto const actual =
+      ExtractLongRunningResultMetadata<Response>(op, "test-function");
+  EXPECT_THAT(
+      actual,
+      StatusIs(StatusCode::kInternal,
+               AllOf(HasSubstr("test-function"),
+                     HasSubstr("failed to unpack operation metadata"))));
+}
+
 TEST(ExtractLongRunningResultTest, MetadataError) {
   auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
   auto const actual =
@@ -122,6 +138,21 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithInvalidContent) {
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal,
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("invalid response type"))));
+}
+
+TEST(ExtractLongRunningResultTest, ResponseDoneWithUnpackError) {
+  google::longrunning::Operation op;
+  op.set_done(true);
+  op.mutable_response()->set_type_url(absl::StrCat(
+      "type.googleapis.com/", Response::descriptor()->full_name()));
+  op.mutable_response()->set_value("invalid protobuf payload");
+  auto const actual =
+      ExtractLongRunningResultResponse<Response>(op, "test-function");
+  EXPECT_THAT(
+      actual,
+      StatusIs(StatusCode::kInternal,
+               AllOf(HasSubstr("test-function"),
+                     HasSubstr("failed to unpack operation response"))));
 }
 
 TEST(ExtractLongRunningResultTest, ResponseError) {

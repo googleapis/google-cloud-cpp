@@ -44,7 +44,11 @@ Status ExtractOperationResultMetadataImpl(
                                        op->name(),
                                    GCP_ERROR_INFO());
   }
-  (void)any.UnpackTo(&result);
+  if (!any.UnpackTo(&result)) {
+    return internal::InternalError(
+        location + "() failed to unpack operation metadata, name=" + op->name(),
+        GCP_ERROR_INFO());
+  }
   return Status{};
 }
 
@@ -71,7 +75,11 @@ Status ExtractOperationResultResponseImpl(
                                        op->name(),
                                    GCP_ERROR_INFO());
   }
-  (void)any.UnpackTo(&result);
+  if (!any.UnpackTo(&result)) {
+    return internal::InternalError(
+        location + "() failed to unpack operation response, name=" + op->name(),
+        GCP_ERROR_INFO());
+  }
   return Status{};
 }
 
