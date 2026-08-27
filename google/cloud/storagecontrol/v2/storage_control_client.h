@@ -118,8 +118,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L624}
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
+  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L640}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
@@ -151,8 +151,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L624}
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
+  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L640}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
@@ -177,7 +177,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L661}
+  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L677}
   ///
   // clang-format on
   Status DeleteFolder(std::string const& name, Options opts = {});
@@ -204,7 +204,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L661}
+  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L677}
   ///
   // clang-format on
   Status DeleteFolder(
@@ -231,8 +231,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
-  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L598}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
+  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L614}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> GetFolder(
@@ -262,8 +262,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
-  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L598}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
+  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L614}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> GetFolder(
@@ -299,8 +299,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
-  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L687}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
+  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L703}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::Folder> ListFolders(
@@ -339,8 +339,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
-  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L687}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
+  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L703}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::Folder> ListFolders(
@@ -377,8 +377,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
-  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L746}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
+  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L762}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
@@ -433,8 +433,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L563}
-  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L746}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L579}
+  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L762}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
@@ -497,8 +497,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRecursiveMetadata]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L844}
-  /// [google.storage.control.v2.DeleteFolderRecursiveRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L775}
+  /// [google.storage.control.v2.DeleteFolderRecursiveMetadata]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L860}
+  /// [google.storage.control.v2.DeleteFolderRecursiveRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L791}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
@@ -549,8 +549,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRecursiveMetadata]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L844}
-  /// [google.storage.control.v2.DeleteFolderRecursiveRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L775}
+  /// [google.storage.control.v2.DeleteFolderRecursiveMetadata]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L860}
+  /// [google.storage.control.v2.DeleteFolderRecursiveRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L791}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
@@ -606,8 +606,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L909}
-  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L853}
+  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L925}
+  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L869}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -636,8 +636,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L909}
-  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L853}
+  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L925}
+  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L869}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -668,8 +668,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1026}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
+  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1042}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
@@ -700,8 +700,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1026}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
+  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1042}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
@@ -726,7 +726,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1054}
+  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1070}
   ///
   // clang-format on
   Status DeleteManagedFolder(std::string const& name, Options opts = {});
@@ -752,7 +752,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1054}
+  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1070}
   ///
   // clang-format on
   Status DeleteManagedFolder(
@@ -779,8 +779,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L998}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
+  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1014}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
@@ -809,8 +809,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L998}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
+  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1014}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
@@ -844,8 +844,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1088}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
+  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1104}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
@@ -883,8 +883,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1088}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
+  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1104}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
@@ -920,8 +920,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
-  /// [google.storage.control.v2.UpdateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1128}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
+  /// [google.storage.control.v2.UpdateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1144}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> UpdateManagedFolder(
@@ -952,8 +952,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L932}
-  /// [google.storage.control.v2.UpdateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1128}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L948}
+  /// [google.storage.control.v2.UpdateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1144}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> UpdateManagedFolder(
@@ -990,8 +990,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.CreateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1335}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.CreateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1368}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
@@ -1046,8 +1046,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.CreateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1335}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.CreateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1368}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
@@ -1119,8 +1119,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.UpdateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1361}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.UpdateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1394}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
@@ -1175,8 +1175,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.UpdateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1361}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.UpdateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1394}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
@@ -1235,8 +1235,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.DisableAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1387}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.DisableAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1420}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
@@ -1268,8 +1268,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.DisableAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1387}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.DisableAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1420}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
@@ -1295,8 +1295,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.PauseAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1407}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.PauseAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1440}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
@@ -1325,8 +1325,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.PauseAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1407}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.PauseAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1440}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
@@ -1352,8 +1352,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.ResumeAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1427}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.ResumeAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1460}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
@@ -1382,8 +1382,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.ResumeAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1427}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.ResumeAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1460}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
@@ -1409,8 +1409,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.GetAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1447}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.GetAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1480}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
@@ -1439,8 +1439,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.GetAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1447}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.GetAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1480}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
@@ -1474,8 +1474,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.ListAnywhereCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1466}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.ListAnywhereCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1499}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
@@ -1513,8 +1513,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1282}
-  /// [google.storage.control.v2.ListAnywhereCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1466}
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1315}
+  /// [google.storage.control.v2.ListAnywhereCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1499}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
@@ -1549,8 +1549,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1554}
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
+  /// [google.storage.control.v2.CreateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1587}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::RapidCache>> CreateRapidCache(
@@ -1604,8 +1604,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1554}
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
+  /// [google.storage.control.v2.CreateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1587}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::RapidCache>> CreateRapidCache(
@@ -1674,8 +1674,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
-  /// [google.storage.control.v2.UpdateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1578}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
+  /// [google.storage.control.v2.UpdateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1611}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::RapidCache>> UpdateRapidCache(
@@ -1727,8 +1727,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
-  /// [google.storage.control.v2.UpdateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1578}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
+  /// [google.storage.control.v2.UpdateRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1611}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::RapidCache>> UpdateRapidCache(
@@ -1765,6 +1765,119 @@ class StorageControlClient {
 
   // clang-format off
   ///
+  /// Disables a Rapid Cache instance.
+  ///
+  /// @param name  Required. The name field in the request should be:
+  ///  `projects/{project}/buckets/{bucket}/rapidCaches/{rapid_cache}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storage.control.v2.RapidCache] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.DisableRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1637}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DisableRapidCache
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DisableRapidCache(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Disables a Rapid Cache instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.DisableRapidCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storage.control.v2.RapidCache] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.DisableRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1637}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      google::storage::control::v2::DisableRapidCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DisableRapidCache
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DisableRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::DisableRapidCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DisableRapidCache
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Gets a Rapid Cache instance.
   ///
   /// @param name  Required. The name field in the request should be:
@@ -1782,8 +1895,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1604}
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
+  /// [google.storage.control.v2.GetRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1657}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
@@ -1812,8 +1925,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1604}
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
+  /// [google.storage.control.v2.GetRapidCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1657}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
@@ -1847,8 +1960,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListRapidCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1623}
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
+  /// [google.storage.control.v2.ListRapidCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1676}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::RapidCache> ListRapidCaches(
@@ -1886,8 +1999,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListRapidCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1623}
-  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1502}
+  /// [google.storage.control.v2.ListRapidCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1676}
+  /// [google.storage.control.v2.RapidCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1535}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::RapidCache> ListRapidCaches(
@@ -1915,8 +2028,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1905}
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
+  /// [google.storage.control.v2.GetProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1958}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -1945,8 +2058,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1905}
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
+  /// [google.storage.control.v2.GetProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1958}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -1976,8 +2089,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
-  /// [google.storage.control.v2.UpdateProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1854}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
+  /// [google.storage.control.v2.UpdateProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1907}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2009,8 +2122,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
-  /// [google.storage.control.v2.UpdateProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1854}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
+  /// [google.storage.control.v2.UpdateProjectIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1907}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2040,8 +2153,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1890}
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
+  /// [google.storage.control.v2.GetFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1943}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2070,8 +2183,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1890}
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
+  /// [google.storage.control.v2.GetFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1943}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2101,8 +2214,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
-  /// [google.storage.control.v2.UpdateFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1833}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
+  /// [google.storage.control.v2.UpdateFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1886}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2134,8 +2247,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
-  /// [google.storage.control.v2.UpdateFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1833}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
+  /// [google.storage.control.v2.UpdateFolderIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1886}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2165,8 +2278,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1875}
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
+  /// [google.storage.control.v2.GetOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1928}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2195,8 +2308,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1875}
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
+  /// [google.storage.control.v2.GetOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1928}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2226,8 +2339,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
-  /// [google.storage.control.v2.UpdateOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1812}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
+  /// [google.storage.control.v2.UpdateOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1865}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2259,8 +2372,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1660}
-  /// [google.storage.control.v2.UpdateOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1812}
+  /// [google.storage.control.v2.IntelligenceConfig]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1713}
+  /// [google.storage.control.v2.UpdateOrganizationIntelligenceConfigRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1865}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -2521,8 +2634,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetIntelligenceFindingRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2290}
-  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1920}
+  /// [google.storage.control.v2.GetIntelligenceFindingRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2343}
+  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1973}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceFinding>
@@ -2551,8 +2664,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetIntelligenceFindingRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2290}
-  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1920}
+  /// [google.storage.control.v2.GetIntelligenceFindingRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2343}
+  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1973}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceFinding>
@@ -2590,8 +2703,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1920}
-  /// [google.storage.control.v2.ListIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2305}
+  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1973}
+  /// [google.storage.control.v2.ListIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2358}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::IntelligenceFinding>
@@ -2629,8 +2742,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1920}
-  /// [google.storage.control.v2.ListIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2305}
+  /// [google.storage.control.v2.IntelligenceFinding]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L1973}
+  /// [google.storage.control.v2.ListIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2358}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::IntelligenceFinding>
@@ -2670,8 +2783,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.FindingSummary]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2466}
-  /// [google.storage.control.v2.SummarizeIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2348}
+  /// [google.storage.control.v2.FindingSummary]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2519}
+  /// [google.storage.control.v2.SummarizeIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2401}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::FindingSummary>
@@ -2710,8 +2823,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.FindingSummary]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2466}
-  /// [google.storage.control.v2.SummarizeIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2348}
+  /// [google.storage.control.v2.FindingSummary]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2519}
+  /// [google.storage.control.v2.SummarizeIntelligenceFindingsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2401}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::FindingSummary>
@@ -2741,8 +2854,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetIntelligenceFindingRevisionRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2415}
-  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2265}
+  /// [google.storage.control.v2.GetIntelligenceFindingRevisionRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2468}
+  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2318}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
@@ -2771,8 +2884,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetIntelligenceFindingRevisionRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2415}
-  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2265}
+  /// [google.storage.control.v2.GetIntelligenceFindingRevisionRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2468}
+  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2318}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
@@ -2811,8 +2924,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2265}
-  /// [google.storage.control.v2.ListIntelligenceFindingRevisionsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2430}
+  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2318}
+  /// [google.storage.control.v2.ListIntelligenceFindingRevisionsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2483}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
@@ -2851,8 +2964,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2265}
-  /// [google.storage.control.v2.ListIntelligenceFindingRevisionsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2430}
+  /// [google.storage.control.v2.IntelligenceFindingRevision]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2318}
+  /// [google.storage.control.v2.ListIntelligenceFindingRevisionsRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2483}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
@@ -2889,8 +3002,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ObjectFullContext]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2527}
-  /// [google.storage.control.v2.ViewObjectFullContextRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2560}
+  /// [google.storage.control.v2.ObjectFullContext]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2580}
+  /// [google.storage.control.v2.ViewObjectFullContextRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2613}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ObjectFullContext>
@@ -2927,8 +3040,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ObjectFullContext]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2527}
-  /// [google.storage.control.v2.ViewObjectFullContextRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2560}
+  /// [google.storage.control.v2.ObjectFullContext]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2580}
+  /// [google.storage.control.v2.ViewObjectFullContextRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2613}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ObjectFullContext>
@@ -2966,8 +3079,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ObjectFullContext]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2527}
-  /// [google.storage.control.v2.ViewObjectFullContextRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2560}
+  /// [google.storage.control.v2.ObjectFullContext]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2580}
+  /// [google.storage.control.v2.ViewObjectFullContextRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L2613}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ObjectFullContext>

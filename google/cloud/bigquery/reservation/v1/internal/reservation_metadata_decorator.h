@@ -205,6 +205,12 @@ class ReservationServiceMetadata : public ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::
           ListReservationGroupsRequest const& request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

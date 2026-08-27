@@ -649,6 +649,22 @@ ReservationServiceConnectionImpl::ListReservationGroups(
       });
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnectionImpl::UpdateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateReservationGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 UpdateReservationGroupRequest const& request) {
+        return stub_->UpdateReservationGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud

@@ -55,13 +55,17 @@ using ::testing::Eq;
 using ::google::cloud::testing_util::MakeAttributesMap;
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
 using ::google::cloud::testing_util::MockGauge;
+using ::testing::_;
 #endif
-using ::google::cloud::testing_util::MockHistogram;
 using ::google::cloud::testing_util::MockMeter;
 using ::google::cloud::testing_util::MockMeterProvider;
+using ::google::cloud::testing_util::MockObservableInstrument;
+using ::google::cloud::testing_util::MockObserverResult;
 using ::testing::A;
+using ::testing::AnyNumber;
 using ::testing::Contains;
 using ::testing::Key;
+using ::testing::NotNull;
 using ::testing::Pair;
 #endif
 #endif
@@ -334,19 +338,17 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsDiagnosticMetric) {
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   auto mock_gauge = std::make_unique<MockGauge<std::int64_t>>();
-  EXPECT_CALL(*mock_gauge,
-              Record(A<std::int64_t>(),
-                     A<opentelemetry::common::KeyValueIterable const&>(),
-                     A<opentelemetry::context::Context const&>()))
-      .WillOnce([&recorded_promise](
-                    std::int64_t value,
-                    opentelemetry::common::KeyValueIterable const& attrs,
-                    opentelemetry::context::Context const&) {
+  auto* mock_gauge_ptr = mock_gauge.get();
+  EXPECT_CALL(
+      *mock_gauge_ptr,
+      Record(Eq(0), A<opentelemetry::common::KeyValueIterable const&>(), _))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs,
+                   opentelemetry::context::Context const&) {
         EXPECT_THAT(value, Eq(0));
         auto const map = MakeAttributesMap(attrs);
         EXPECT_THAT(map, Contains(Key("reason")));
         EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
-        recorded_promise.set_value();
       });
 
   auto mock_meter = std::make_shared<MockMeter>();
@@ -358,37 +360,9 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsDiagnosticMetric) {
         EXPECT_THAT(name, Eq("direct_access/compatible"));
         return std::move(mock);
       });
-#else
-  auto mock_histogram = std::make_unique<MockHistogram<double>>();
-  EXPECT_CALL(
-      *mock_histogram,
-      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
-             A<opentelemetry::context::Context const&>()))
-      .WillOnce([&recorded_promise](
-                    double value,
-                    opentelemetry::common::KeyValueIterable const& attrs,
-                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(0.0));
-        auto const map = MakeAttributesMap(attrs);
-        EXPECT_THAT(map, Contains(Key("reason")));
-        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
-        recorded_promise.set_value();
-      });
-
-  auto mock_meter = std::make_shared<MockMeter>();
-  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
-      .WillOnce([mock = std::move(mock_histogram)](
-                    opentelemetry::nostd::string_view name,
-                    opentelemetry::nostd::string_view,
-                    opentelemetry::nostd::string_view) mutable {
-        EXPECT_THAT(name, Eq("direct_access/compatible"));
-        return std::move(mock);
-      });
-#endif
 
   auto mock_provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
       .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
@@ -396,6 +370,29 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsDiagnosticMetric) {
         return mock_meter;
       });
 #else
+  auto mock_observable_gauge = std::make_shared<MockObservableInstrument>();
+  opentelemetry::metrics::ObservableCallbackPtr saved_callback = nullptr;
+  void* saved_state = nullptr;
+  EXPECT_CALL(*mock_observable_gauge, AddCallback)
+      .WillRepeatedly(
+          [&](opentelemetry::metrics::ObservableCallbackPtr cb, void* state) {
+            saved_callback = cb;
+            saved_state = state;
+          });
+  EXPECT_CALL(*mock_observable_gauge, RemoveCallback).Times(AnyNumber());
+
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateInt64ObservableGauge)
+      .WillOnce([mock = mock_observable_gauge](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("direct_access/compatible"));
+        return mock;
+      });
+
+  auto mock_provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
       .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view) {
@@ -404,7 +401,7 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsDiagnosticMetric) {
 #endif
 
   auto direct_access = std::make_shared<DirectAccessCompatibility>(
-      "test-instrumentation-scope", mock_provider);
+      "test-instrumentation-scope", mock_provider, ClientResourceLabels{});
 
   Options const options =
       Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
@@ -414,6 +411,7 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsDiagnosticMetric) {
   std::thread t([&cq] { cq.Run(); });
 
   DirectPathDiagnostics::RunAsync(cq, options, direct_access);
+  cq.RunAsync([&recorded_promise] { recorded_promise.set_value(); });
 
   ASSERT_THAT(recorded_future.wait_for(std::chrono::seconds(10)),
               Eq(std::future_status::ready));
@@ -421,6 +419,26 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsDiagnosticMetric) {
   cq.CancelAll();
   cq.Shutdown();
   t.join();
+
+#if OPENTELEMETRY_ABI_VERSION_NO < 2
+  auto mock_observer = std::make_shared<MockObserverResult<std::int64_t>>();
+  EXPECT_CALL(
+      *mock_observer,
+      Observe(Eq(0), A<opentelemetry::common::KeyValueIterable const&>()))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs) {
+        EXPECT_THAT(value, Eq(0));
+        auto const map = MakeAttributesMap(attrs);
+        EXPECT_THAT(map, Contains(Key("reason")));
+        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
+      });
+
+  ASSERT_THAT(saved_callback, NotNull());
+  opentelemetry::metrics::ObserverResult observer_result =
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::ObserverResultT<std::int64_t>>(mock_observer);
+  saved_callback(observer_result, saved_state);
+#endif
 }
 
 TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
@@ -436,19 +454,17 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   auto mock_gauge = std::make_unique<MockGauge<std::int64_t>>();
-  EXPECT_CALL(*mock_gauge,
-              Record(A<std::int64_t>(),
-                     A<opentelemetry::common::KeyValueIterable const&>(),
-                     A<opentelemetry::context::Context const&>()))
-      .WillOnce([&recorded_promise](
-                    std::int64_t value,
-                    opentelemetry::common::KeyValueIterable const& attrs,
-                    opentelemetry::context::Context const&) {
+  auto* mock_gauge_ptr = mock_gauge.get();
+  EXPECT_CALL(
+      *mock_gauge_ptr,
+      Record(Eq(0), A<opentelemetry::common::KeyValueIterable const&>(), _))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs,
+                   opentelemetry::context::Context const&) {
         EXPECT_THAT(value, Eq(0));
         auto const map = MakeAttributesMap(attrs);
         EXPECT_THAT(map, Contains(Pair("reason", "metadata_unreachable")));
         EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
-        recorded_promise.set_value();
       });
 
   auto mock_meter = std::make_shared<MockMeter>();
@@ -460,37 +476,9 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
         EXPECT_THAT(name, Eq("direct_access/compatible"));
         return std::move(mock);
       });
-#else
-  auto mock_histogram = std::make_unique<MockHistogram<double>>();
-  EXPECT_CALL(
-      *mock_histogram,
-      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
-             A<opentelemetry::context::Context const&>()))
-      .WillOnce([&recorded_promise](
-                    double value,
-                    opentelemetry::common::KeyValueIterable const& attrs,
-                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(0.0));
-        auto const map = MakeAttributesMap(attrs);
-        EXPECT_THAT(map, Contains(Pair("reason", "metadata_unreachable")));
-        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
-        recorded_promise.set_value();
-      });
-
-  auto mock_meter = std::make_shared<MockMeter>();
-  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
-      .WillOnce([mock = std::move(mock_histogram)](
-                    opentelemetry::nostd::string_view name,
-                    opentelemetry::nostd::string_view,
-                    opentelemetry::nostd::string_view) mutable {
-        EXPECT_THAT(name, Eq("direct_access/compatible"));
-        return std::move(mock);
-      });
-#endif
 
   auto mock_provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
       .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
@@ -498,6 +486,29 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
         return mock_meter;
       });
 #else
+  auto mock_observable_gauge = std::make_shared<MockObservableInstrument>();
+  opentelemetry::metrics::ObservableCallbackPtr saved_callback = nullptr;
+  void* saved_state = nullptr;
+  EXPECT_CALL(*mock_observable_gauge, AddCallback)
+      .WillRepeatedly(
+          [&](opentelemetry::metrics::ObservableCallbackPtr cb, void* state) {
+            saved_callback = cb;
+            saved_state = state;
+          });
+  EXPECT_CALL(*mock_observable_gauge, RemoveCallback).Times(AnyNumber());
+
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateInt64ObservableGauge)
+      .WillOnce([mock = mock_observable_gauge](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("direct_access/compatible"));
+        return mock;
+      });
+
+  auto mock_provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
       .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view) {
@@ -506,7 +517,7 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
 #endif
 
   auto direct_access = std::make_shared<DirectAccessCompatibility>(
-      "test-instrumentation-scope", mock_provider);
+      "test-instrumentation-scope", mock_provider, ClientResourceLabels{});
 
   Options const options =
       Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
@@ -518,6 +529,7 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
   DirectPathDiagnostics::RunAsync(cq, options, direct_access, mock_detector,
                                   mock_network, "127.0.0.1",
                                   static_cast<std::uint16_t>(80));
+  cq.RunAsync([&recorded_promise] { recorded_promise.set_value(); });
 
   ASSERT_THAT(recorded_future.wait_for(std::chrono::seconds(10)),
               Eq(std::future_status::ready));
@@ -525,6 +537,26 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsMetadataUnreachableReason) {
   cq.CancelAll();
   cq.Shutdown();
   t.join();
+
+#if OPENTELEMETRY_ABI_VERSION_NO < 2
+  auto mock_observer = std::make_shared<MockObserverResult<std::int64_t>>();
+  EXPECT_CALL(
+      *mock_observer,
+      Observe(Eq(0), A<opentelemetry::common::KeyValueIterable const&>()))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs) {
+        EXPECT_THAT(value, Eq(0));
+        auto const map = MakeAttributesMap(attrs);
+        EXPECT_THAT(map, Contains(Pair("reason", "metadata_unreachable")));
+        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
+      });
+
+  ASSERT_THAT(saved_callback, NotNull());
+  opentelemetry::metrics::ObserverResult observer_result =
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::ObserverResultT<std::int64_t>>(mock_observer);
+  saved_callback(observer_result, saved_state);
+#endif
 }
 
 TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
@@ -543,20 +575,18 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
 
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
   auto mock_gauge = std::make_unique<MockGauge<std::int64_t>>();
-  EXPECT_CALL(*mock_gauge,
-              Record(A<std::int64_t>(),
-                     A<opentelemetry::common::KeyValueIterable const&>(),
-                     A<opentelemetry::context::Context const&>()))
-      .WillOnce([&recorded_promise](
-                    std::int64_t value,
-                    opentelemetry::common::KeyValueIterable const& attrs,
-                    opentelemetry::context::Context const&) {
+  auto* mock_gauge_ptr = mock_gauge.get();
+  EXPECT_CALL(
+      *mock_gauge_ptr,
+      Record(Eq(0), A<opentelemetry::common::KeyValueIterable const&>(), _))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs,
+                   opentelemetry::context::Context const&) {
         EXPECT_THAT(value, Eq(0));
         auto const map = MakeAttributesMap(attrs);
         EXPECT_THAT(map,
                     Contains(Pair("reason", "loopback_misconfigured_ipv6")));
         EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
-        recorded_promise.set_value();
       });
 
   auto mock_meter = std::make_shared<MockMeter>();
@@ -568,38 +598,9 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
         EXPECT_THAT(name, Eq("direct_access/compatible"));
         return std::move(mock);
       });
-#else
-  auto mock_histogram = std::make_unique<MockHistogram<double>>();
-  EXPECT_CALL(
-      *mock_histogram,
-      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
-             A<opentelemetry::context::Context const&>()))
-      .WillOnce([&recorded_promise](
-                    double value,
-                    opentelemetry::common::KeyValueIterable const& attrs,
-                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(0.0));
-        auto const map = MakeAttributesMap(attrs);
-        EXPECT_THAT(map,
-                    Contains(Pair("reason", "loopback_misconfigured_ipv6")));
-        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
-        recorded_promise.set_value();
-      });
-
-  auto mock_meter = std::make_shared<MockMeter>();
-  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
-      .WillOnce([mock = std::move(mock_histogram)](
-                    opentelemetry::nostd::string_view name,
-                    opentelemetry::nostd::string_view,
-                    opentelemetry::nostd::string_view) mutable {
-        EXPECT_THAT(name, Eq("direct_access/compatible"));
-        return std::move(mock);
-      });
-#endif
 
   auto mock_provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
       .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
@@ -607,6 +608,29 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
         return mock_meter;
       });
 #else
+  auto mock_observable_gauge = std::make_shared<MockObservableInstrument>();
+  opentelemetry::metrics::ObservableCallbackPtr saved_callback = nullptr;
+  void* saved_state = nullptr;
+  EXPECT_CALL(*mock_observable_gauge, AddCallback)
+      .WillRepeatedly(
+          [&](opentelemetry::metrics::ObservableCallbackPtr cb, void* state) {
+            saved_callback = cb;
+            saved_state = state;
+          });
+  EXPECT_CALL(*mock_observable_gauge, RemoveCallback).Times(AnyNumber());
+
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateInt64ObservableGauge)
+      .WillOnce([mock = mock_observable_gauge](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("direct_access/compatible"));
+        return mock;
+      });
+
+  auto mock_provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
       .WillOnce([&mock_meter](opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view,
                               opentelemetry::nostd::string_view) {
@@ -615,7 +639,7 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
 #endif
 
   auto direct_access = std::make_shared<DirectAccessCompatibility>(
-      "test-instrumentation-scope", mock_provider);
+      "test-instrumentation-scope", mock_provider, ClientResourceLabels{});
 
   Options const options =
       Options{}.set<bigtable::experimental::DirectPathDiagnosticsTimeoutOption>(
@@ -627,6 +651,7 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
   DirectPathDiagnostics::RunAsync(cq, options, direct_access, mock_detector,
                                   mock_network, "127.0.0.1",
                                   static_cast<std::uint16_t>(80));
+  cq.RunAsync([&recorded_promise] { recorded_promise.set_value(); });
 
   ASSERT_THAT(recorded_future.wait_for(std::chrono::seconds(10)),
               Eq(std::future_status::ready));
@@ -634,6 +659,27 @@ TEST(DirectPathDiagnosticsTest, RunAsyncRecordsLoopbackMisconfiguredReason) {
   cq.CancelAll();
   cq.Shutdown();
   t.join();
+
+#if OPENTELEMETRY_ABI_VERSION_NO < 2
+  auto mock_observer = std::make_shared<MockObserverResult<std::int64_t>>();
+  EXPECT_CALL(
+      *mock_observer,
+      Observe(Eq(0), A<opentelemetry::common::KeyValueIterable const&>()))
+      .WillOnce([](std::int64_t value,
+                   opentelemetry::common::KeyValueIterable const& attrs) {
+        EXPECT_THAT(value, Eq(0));
+        auto const map = MakeAttributesMap(attrs);
+        EXPECT_THAT(map,
+                    Contains(Pair("reason", "loopback_misconfigured_ipv6")));
+        EXPECT_THAT(map, Contains(Pair("ip_preference", "")));
+      });
+
+  ASSERT_THAT(saved_callback, NotNull());
+  opentelemetry::metrics::ObserverResult observer_result =
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::ObserverResultT<std::int64_t>>(mock_observer);
+  saved_callback(observer_result, saved_state);
+#endif
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

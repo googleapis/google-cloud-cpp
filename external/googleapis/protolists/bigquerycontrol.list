@@ -1,3 +1,4 @@
+@googleapis//google/cloud/bigquery/v2:arrow.proto
 @googleapis//google/cloud/bigquery/v2:biglake_config.proto
 @googleapis//google/cloud/bigquery/v2:clustering.proto
 @googleapis//google/cloud/bigquery/v2:data_format_options.proto

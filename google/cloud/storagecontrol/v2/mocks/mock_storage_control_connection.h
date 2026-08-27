@@ -359,6 +359,45 @@ class MockStorageControlConnection
               UpdateRapidCache,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableRapidCache(Matcher<google::storage::control::v2::DisableRapidCacheRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::storage::control::v2::RapidCache>>,
+      DisableRapidCache,
+      (google::storage::control::v2::DisableRapidCacheRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DisableRapidCache(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DisableRapidCache,
+      (NoAwaitTag,
+       google::storage::control::v2::DisableRapidCacheRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableRapidCache(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::storage::control::v2::RapidCache>>,
+              DisableRapidCache,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::storage::control::v2::RapidCache>, GetRapidCache,
       (google::storage::control::v2::GetRapidCacheRequest const& request),

@@ -144,6 +144,9 @@ class ClusterManagerConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FetchNodePoolUpgradeInfo(
       google::container::v1::FetchNodePoolUpgradeInfoRequest const& request);
+
+  virtual google::cloud::Idempotency CompleteControlPlaneUpgrade(
+      google::container::v1::CompleteControlPlaneUpgradeRequest const& request);
 };
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>

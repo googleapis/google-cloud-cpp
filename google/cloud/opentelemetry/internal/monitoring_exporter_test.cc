@@ -146,9 +146,11 @@ TEST(MonitoringExporter, ExportSuccess) {
         return std::make_pair(labels["project_id"], resource);
       };
 
-  auto filter_fn = [resources = std::set<std::string>{
-                        "project_id", "instance", "cluster", "table",
-                        "zone"}](std::string const& l) {
+  auto filter_fn = [resources =
+                        std::set<std::string>{"project_id", "instance",
+                                              "cluster", "table", "zone"}](
+                       std::string const& l,
+                       opentelemetry::sdk::metrics::PointAttributes const&) {
     return internal::Contains(resources, l);
   };
 

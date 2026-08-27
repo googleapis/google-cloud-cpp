@@ -197,6 +197,11 @@ class ClusterManagerMetadata : public ClusterManagerStub {
       google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
       override;
 
+  StatusOr<google::container::v1::Operation> CompleteControlPlaneUpgrade(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::CompleteControlPlaneUpgradeRequest const& request)
+      override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

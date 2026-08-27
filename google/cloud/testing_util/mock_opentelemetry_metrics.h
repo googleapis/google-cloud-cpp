@@ -22,6 +22,7 @@
 #include <opentelemetry/metrics/async_instruments.h>
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/meter_provider.h>
+#include <opentelemetry/metrics/observer_result.h>
 #include <opentelemetry/metrics/sync_instruments.h>
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/span.h>
@@ -90,6 +91,27 @@ class MockCounter : public opentelemetry::metrics::Counter<T> {
   MOCK_METHOD(void, Add,  // NOLINT(bugprone-exception-escape)
               (T value, opentelemetry::common::KeyValueIterable const&,
                opentelemetry::context::Context const&),
+              (noexcept, override));
+};
+
+class MockObservableInstrument
+    : public opentelemetry::metrics::ObservableInstrument {
+ public:
+  MOCK_METHOD(void, AddCallback,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::metrics::ObservableCallbackPtr, void*),
+              (noexcept, override));
+  MOCK_METHOD(void, RemoveCallback,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::metrics::ObservableCallbackPtr, void*),
+              (noexcept, override));
+};
+
+template <typename T>
+class MockObserverResult : public opentelemetry::metrics::ObserverResultT<T> {
+ public:
+  MOCK_METHOD(void, Observe,  // NOLINT(bugprone-exception-escape)
+              (T), (noexcept, override));
+  MOCK_METHOD(void, Observe,  // NOLINT(bugprone-exception-escape)
+              (T, opentelemetry::common::KeyValueIterable const&),
               (noexcept, override));
 };
 

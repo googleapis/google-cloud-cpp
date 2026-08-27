@@ -167,6 +167,10 @@ class ClusterManagerConnectionImpl
       google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
       override;
 
+  StatusOr<google::container::v1::Operation> CompleteControlPlaneUpgrade(
+      google::container::v1::CompleteControlPlaneUpgradeRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<container_v1_internal::ClusterManagerStub> stub_;

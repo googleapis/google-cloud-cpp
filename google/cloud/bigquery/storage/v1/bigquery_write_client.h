@@ -116,7 +116,7 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L403}
+  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L422}
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
@@ -153,7 +153,7 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L403}
+  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L422}
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
@@ -213,8 +213,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.AppendRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L424}
-  /// [google.cloud.bigquery.storage.v1.AppendRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L565}
+  /// [google.cloud.bigquery.storage.v1.AppendRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L443}
+  /// [google.cloud.bigquery.storage.v1.AppendRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L587}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -241,7 +241,7 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L616}
+  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L638}
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
@@ -271,7 +271,7 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L616}
+  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L638}
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
@@ -300,8 +300,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L660}
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L672}
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L682}
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L694}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
@@ -331,8 +331,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L660}
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L672}
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L682}
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L694}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
@@ -365,8 +365,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L632}
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L645}
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L654}
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L667}
   ///
   // clang-format on
   StatusOr<
@@ -401,8 +401,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L632}
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L645}
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L654}
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L667}
   ///
   // clang-format on
   StatusOr<
@@ -436,8 +436,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L678}
-  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L693}
+  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L700}
+  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L715}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
@@ -473,8 +473,8 @@ class BigQueryWriteClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L678}
-  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L693}
+  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L700}
+  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L715}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(

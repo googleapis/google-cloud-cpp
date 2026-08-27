@@ -251,6 +251,12 @@ ClusterManagerConnection::FetchNodePoolUpgradeInfo(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerConnection::CompleteControlPlaneUpgrade(
+    google::container::v1::CompleteControlPlaneUpgradeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

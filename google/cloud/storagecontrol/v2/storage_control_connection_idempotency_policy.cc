@@ -158,6 +158,11 @@ Idempotency StorageControlConnectionIdempotencyPolicy::UpdateRapidCache(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::DisableRapidCache(
+    google::storage::control::v2::DisableRapidCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency StorageControlConnectionIdempotencyPolicy::GetRapidCache(
     google::storage::control::v2::GetRapidCacheRequest const&) {
   return Idempotency::kNonIdempotent;

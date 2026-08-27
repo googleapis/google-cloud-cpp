@@ -185,6 +185,18 @@ class StorageControlTracingStub : public StorageControlStub {
       google::storage::control::v2::UpdateRapidCacheRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncDisableRapidCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::DisableRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DisableRapidCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::DisableRapidCacheRequest const& request)
+      override;
+
   StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetRapidCacheRequest const& request)

@@ -318,6 +318,17 @@ class StorageControlConnection {
   virtual future<StatusOr<google::storage::control::v2::RapidCache>>
   UpdateRapidCache(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::storage::control::v2::RapidCache>>
+  DisableRapidCache(
+      google::storage::control::v2::DisableRapidCacheRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DisableRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::DisableRapidCacheRequest const& request);
+
+  virtual future<StatusOr<google::storage::control::v2::RapidCache>>
+  DisableRapidCache(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
       google::storage::control::v2::GetRapidCacheRequest const& request);
 

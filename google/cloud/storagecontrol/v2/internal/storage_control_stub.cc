@@ -397,6 +397,37 @@ DefaultStorageControlStub::UpdateRapidCache(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultStorageControlStub::AsyncDisableRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::storage::control::v2::DisableRapidCacheRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::storage::control::v2::DisableRapidCacheRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDisableRapidCache(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultStorageControlStub::DisableRapidCache(
+    grpc::ClientContext& context, Options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DisableRapidCache(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 DefaultStorageControlStub::GetRapidCache(
     grpc::ClientContext& context, Options const&,

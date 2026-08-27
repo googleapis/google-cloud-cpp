@@ -124,7 +124,7 @@ class AuditManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L260}
-  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L562}
+  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L573}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
@@ -161,7 +161,7 @@ class AuditManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L260}
-  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L562}
+  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L573}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
@@ -203,7 +203,7 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L586}
+  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L597}
   /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L295}
   ///
   // clang-format on
@@ -244,7 +244,7 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L586}
+  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L597}
   /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L295}
   ///
   // clang-format on
@@ -293,7 +293,7 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
   /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L331}
   ///
   // clang-format on
@@ -355,7 +355,7 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
   /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L331}
   ///
   // clang-format on
@@ -428,8 +428,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
-  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L432}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
+  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L443}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::AuditReport> ListAuditReports(
@@ -468,8 +468,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
-  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L432}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
+  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L443}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::AuditReport> ListAuditReports(
@@ -498,8 +498,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
-  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L472}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
+  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L483}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditReport> GetAuditReport(
@@ -528,8 +528,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
-  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L472}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
+  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L483}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditReport> GetAuditReport(
@@ -559,8 +559,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L377}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
+  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L388}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -589,8 +589,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L377}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
+  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L388}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -631,8 +631,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L394}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
+  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L405}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -671,8 +671,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L394}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
+  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L405}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -713,8 +713,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L793}
-  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L488}
+  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L804}
+  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L499}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::Control> ListControls(
@@ -753,8 +753,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L793}
-  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L488}
+  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L804}
+  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L499}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::Control> ListControls(

@@ -467,6 +467,19 @@ DefaultClusterManagerStub::FetchNodePoolUpgradeInfo(
   return response;
 }
 
+StatusOr<google::container::v1::Operation>
+DefaultClusterManagerStub::CompleteControlPlaneUpgrade(
+    grpc::ClientContext& context, Options const&,
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request) {
+  google::container::v1::Operation response;
+  auto status =
+      grpc_stub_->CompleteControlPlaneUpgrade(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

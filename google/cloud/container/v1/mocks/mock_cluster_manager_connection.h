@@ -208,6 +208,12 @@ class MockClusterManagerConnection
       FetchNodePoolUpgradeInfo,
       (google::container::v1::FetchNodePoolUpgradeInfoRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+              CompleteControlPlaneUpgrade,
+              (google::container::v1::CompleteControlPlaneUpgradeRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
