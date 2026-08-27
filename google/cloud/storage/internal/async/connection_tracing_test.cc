@@ -675,7 +675,7 @@ TEST(ConnectionTracing, OpenSuccessWithInitialReadRanges) {
   EXPECT_THAT(
       spans, ElementsAre(
                  AllOf(SpanNamed("storage::AsyncConnection::Open"),
-                       SpanHasAttributes(OTelAttribute<std::size_t>(
+                       SpanHasAttributes(OTelAttribute<std::uint64_t>(
                            "gl-cpp.initial-read-ranges.ranges-count", 2)),
                        SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
 }
