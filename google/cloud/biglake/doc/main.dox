@@ -1,0 +1,57 @@
+/*!
+
+@mainpage Lakehouse API C++ Client Library
+
+An idiomatic C++ client library for the [Lakehouse API][cloud-service-docs].
+
+The Lakehouse API (formerly BigLake API) provides access to a serverless,
+fully managed, and highly available metastore that provides a single
+source of truth for your data lakehouse. It lets multiple
+engines—including Apache Spark, Google Managed Spark, Apache Flink, Trino
+and BigQuery—share tables and metadata for key open formats (Apache
+Iceberg, Apache Hive), and query the same copy of data. Plus, through the
+Lakehouse runtime catalog federation seamlessly unite your lakehouse
+ecosystem, letting Iceberg compatible engines on Google Cloud (BigQuery,
+Google Managed Spark) discover and analyze enterprise data across
+Snowflake, Databricks, and AWS Glue.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/biglake/quickstart/` directory,
+which should give you a taste of the Lakehouse API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`biglake_hive_v1::HiveMetastoreServiceClient`](@ref google::cloud::biglake_hive_v1::HiveMetastoreServiceClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`biglake_hive_v1::HiveMetastoreServiceClient`](@ref google::cloud::biglake_hive_v1::HiveMetastoreServiceClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref biglake-override-endpoint - describes how to override the default
+  endpoint.
+- @ref biglake-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref biglake-override-retry - describes how to change the default retry
+  policies.
+- @ref biglake-env - describes environment variables that can configure the
+  behavior of the library.
+- @ref biglake-override-universe-domain - describes how to override the default universe domain.
+
+[cloud-service-docs]: https://cloud.google.com/bigquery/docs/iceberg-tables#create-using-biglake-metastore
+
+*/

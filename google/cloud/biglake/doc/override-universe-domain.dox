@@ -1,0 +1,24 @@
+/*!
+@page biglake-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `biglake_hive_v1::HiveMetastoreServiceClient`:
+
+@snippet hive_metastore_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page biglake_hive_v1::HiveMetastoreServiceClient-universe-domain-snippet Override biglake_hive_v1::HiveMetastoreServiceClient Universe Domain
+
+@snippet google/cloud/biglake/hive/v1/samples/hive_metastore_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
