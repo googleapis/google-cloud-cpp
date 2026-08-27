@@ -22,6 +22,7 @@
 #include <condition_variable>
 #include <cstdint>
 #include <functional>
+#include <memory>
 #include <mutex>
 #include <queue>
 #include <thread>
@@ -35,14 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * A lazy, dynamically-scaling thread pool with integrated hedge throttling.
+ * A lazy, dynamically-scaling thread pool for asynchronous background tasks.
  *
- * The pool starts with no threads and spawns workers on demand, up to
- * @p max_threads. Hedged requests are gated by `TryAcquireHedgeToken()`,
- * which enforces two limits: a maximum number of concurrently active hedges,
- * and a maximum rate of new hedges per second (a token bucket).
+ * The pool starts with no threads and spawns workers on demand up to
+ * @p max_threads. Idle workers wait on a condition variable until tasks arrive
+ * or the pool is shut down.
+ *
+ * @p max_threads is clamped to at least 1. A pool that can never spawn a
+ * worker would accept tasks it silently never runs, and callers that block on
+ * a task's side effects would wait forever.
  */
-class HedgingThreadPool {
+class ThreadPool {
  private:
   struct State {
     std::size_t const max_threads;
@@ -52,24 +56,15 @@ class HedgingThreadPool {
     std::condition_variable cv;
     bool stop = false;
 
-    // Concurrency limiter.
-    std::int64_t const max_concurrent_hedges;
-    std::atomic<std::int64_t> active_concurrent_hedges{0};
-
-    explicit State(std::size_t mt, std::int64_t mc)
-        : max_threads(mt), max_concurrent_hedges(mc) {}
+    explicit State(std::size_t mt) : max_threads(mt) {}
   };
 
  public:
-  HedgingThreadPool(std::size_t max_threads, double rate_limit, double capacity,
-                    std::int64_t max_concurrent)
-      : state_(std::make_shared<State>(max_threads, max_concurrent)),
-        rate_limit_(rate_limit),
-        tokens_capacity_((std::max)(1.0, capacity)),
-        tokens_((std::max)(1.0, capacity)),
-        last_refill_(std::chrono::steady_clock::now()) {}
+  explicit ThreadPool(std::size_t max_threads)
+      : state_(
+            std::make_shared<State>((std::max<std::size_t>)(1, max_threads))) {}
 
-  ~HedgingThreadPool() {
+  ~ThreadPool() {
     {
       std::lock_guard<std::mutex> lock(state_->queue_mutex);
       state_->stop = true;
@@ -85,6 +80,11 @@ class HedgingThreadPool {
       }
     }
   }
+
+  ThreadPool(ThreadPool const&) = delete;
+  ThreadPool& operator=(ThreadPool const&) = delete;
+  ThreadPool(ThreadPool&&) = delete;
+  ThreadPool& operator=(ThreadPool&&) = delete;
 
   /**
    * Schedule @p task to run on a pool thread.
@@ -108,44 +108,7 @@ class HedgingThreadPool {
     return true;
   }
 
-  /**
-   * Try to reserve capacity for one hedged request.
-   *
-   * On success the caller *must* eventually call `ReleaseHedgeSlot()`.
-   */
-  bool TryAcquireHedgeToken() {
-    // Gate 1: the ceiling on concurrently active hedges.
-    if (state_->max_concurrent_hedges > 0) {
-      auto current =
-          state_->active_concurrent_hedges.load(std::memory_order_relaxed);
-      do {
-        if (current >= state_->max_concurrent_hedges) return false;
-      } while (!state_->active_concurrent_hedges.compare_exchange_weak(
-          current, current + 1, std::memory_order_relaxed));
-    }
-
-    // Gate 2: the rate limit on new hedges (token bucket).
-    if (rate_limit_ > 0.0) {
-      std::lock_guard<std::mutex> lock(limiter_mutex_);
-      Refill();
-      if (tokens_ < 1.0) {
-        if (state_->max_concurrent_hedges > 0) {
-          state_->active_concurrent_hedges.fetch_sub(1,
-                                                     std::memory_order_relaxed);
-        }
-        return false;
-      }
-      tokens_ -= 1.0;
-    }
-
-    return true;
-  }
-
-  void ReleaseHedgeSlot() {
-    if (state_->max_concurrent_hedges > 0) {
-      state_->active_concurrent_hedges.fetch_sub(1, std::memory_order_relaxed);
-    }
-  }
+  std::size_t max_threads() const { return state_->max_threads; }
 
  private:
   void SpawnWorker() {
@@ -167,9 +130,88 @@ class HedgingThreadPool {
     });
   }
 
+  std::shared_ptr<State> state_;
+  std::vector<std::thread> workers_;
+};
+
+/**
+ * A dedicated thread pool with integrated hedge throttling.
+ *
+ * Hedged requests are gated by `TryAcquireHedgeToken()`, which enforces two
+ * limits: a maximum number of concurrently active hedges, and a maximum rate of
+ * new hedges per second (a token bucket). Task execution is dispatched onto a
+ * dedicated internal `ThreadPool`.
+ */
+class HedgingThreadPool {
+ public:
+  HedgingThreadPool(std::size_t max_threads, double rate_limit, double capacity,
+                    std::int64_t max_concurrent)
+      : rate_limit_(rate_limit),
+        tokens_capacity_((std::max)(1.0, capacity)),
+        tokens_((std::max)(1.0, capacity)),
+        last_refill_(std::chrono::steady_clock::now()),
+        max_concurrent_hedges_(max_concurrent),
+        pool_(max_threads) {}
+
+  ~HedgingThreadPool() = default;
+
+  HedgingThreadPool(HedgingThreadPool const&) = delete;
+  HedgingThreadPool& operator=(HedgingThreadPool const&) = delete;
+  HedgingThreadPool(HedgingThreadPool&&) = delete;
+  HedgingThreadPool& operator=(HedgingThreadPool&&) = delete;
+
+  /**
+   * Schedule @p task to run on a pool thread.
+   *
+   * Returns false if the pool is shutting down.
+   */
+  bool Enqueue(std::function<void()> task) {
+    return pool_.Enqueue(std::move(task));
+  }
+
+  /**
+   * Try to reserve capacity for one hedged request.
+   *
+   * On success the caller *must* eventually call `ReleaseHedgeSlot()`.
+   */
+  bool TryAcquireHedgeToken() {
+    // Gate 1: the ceiling on concurrently active hedges.
+    if (max_concurrent_hedges_ > 0) {
+      std::int64_t current =
+          active_concurrent_hedges_.load(std::memory_order_relaxed);
+      do {
+        if (current >= max_concurrent_hedges_) return false;
+      } while (!active_concurrent_hedges_.compare_exchange_weak(
+          current, current + 1, std::memory_order_relaxed));
+    }
+
+    // Gate 2: the rate limit on new hedges (token bucket).
+    if (rate_limit_ > 0.0) {
+      std::lock_guard<std::mutex> lock(limiter_mutex_);
+      Refill();
+      if (tokens_ < 1.0) {
+        ReleaseHedgeSlot();
+        return false;
+      }
+      tokens_ -= 1.0;
+    }
+
+    return true;
+  }
+
+  void ReleaseHedgeSlot() {
+    if (max_concurrent_hedges_ > 0) {
+      active_concurrent_hedges_.fetch_sub(1, std::memory_order_relaxed);
+    }
+  }
+
+  std::size_t max_threads() const { return pool_.max_threads(); }
+
+ private:
   void Refill() {
-    auto now = std::chrono::steady_clock::now();
-    auto const elapsed =
+    std::chrono::steady_clock::time_point const now =
+        std::chrono::steady_clock::now();
+    double const elapsed =
         std::chrono::duration_cast<std::chrono::duration<double>>(now -
                                                                   last_refill_)
             .count();
@@ -177,16 +219,53 @@ class HedgingThreadPool {
     tokens_ = (std::min)(tokens_capacity_, tokens_ + elapsed * rate_limit_);
   }
 
-  std::shared_ptr<State> state_;
-  std::vector<std::thread> workers_;
-
   // Token bucket rate limiter.
   double rate_limit_;
   double tokens_capacity_;
   double tokens_;
   std::chrono::steady_clock::time_point last_refill_;
   std::mutex limiter_mutex_;
+
+  // Concurrency limiter.
+  std::int64_t const max_concurrent_hedges_;
+  std::atomic<std::int64_t> active_concurrent_hedges_{0};
+
+  // Declared last so the pool (and its worker threads) is destroyed and joined
+  // first, before any other member variables are torn down.
+  ThreadPool pool_;
 };
+
+/**
+ * The automatic size for the pool running primary read attempts.
+ *
+ * These threads block inside a synchronous read, so the pool needs roughly one
+ * thread per concurrent application read. That has little to do with the core
+ * count; the floor is what serves small hosts.
+ *
+ * Used by `StorageConnectionImpl` when `ReadThreadPoolSizeOption` is unset (0).
+ */
+inline std::size_t DefaultReadThreadPoolSize() {
+  static std::size_t const kCores = std::thread::hardware_concurrency();
+  return (std::max<std::size_t>)(64, 4 * kCores);
+}
+
+/**
+ * The automatic size for the pool running speculative hedge attempts.
+ *
+ * When @p max_concurrent_hedges is set it is already a ceiling on how many
+ * hedges can run at once, so a larger pool could never use the extra threads.
+ *
+ * Used by `StorageConnectionImpl` when `HedgingThreadPoolSizeOption` is
+ * unset (0).
+ */
+inline std::size_t DefaultHedgingThreadPoolSize(
+    std::int64_t max_concurrent_hedges) {
+  if (max_concurrent_hedges > 0) {
+    return static_cast<std::size_t>(max_concurrent_hedges);
+  }
+  static std::size_t const kCores = std::thread::hardware_concurrency();
+  return (std::max<std::size_t>)(16, 2 * kCores);
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

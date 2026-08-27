@@ -36,23 +36,53 @@ using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
-using ::testing::Return;
 
 // Large enough that no test read is treated as oversized.
-auto constexpr kUnlimitedBuffer = std::size_t{1} << 30;
+std::size_t constexpr kUnlimitedBuffer = std::size_t{1} << 30;
 
-std::shared_ptr<HedgingThreadPool> MakeUnlimitedPool() {
+std::shared_ptr<ThreadPool> MakeUnlimitedReadPool() {
+  return std::make_shared<ThreadPool>(/*max_threads=*/4);
+}
+
+std::shared_ptr<HedgingThreadPool> MakeUnlimitedHedgePool() {
   return std::make_shared<HedgingThreadPool>(
       /*max_threads=*/4, /*rate_limit=*/0.0, /*capacity=*/0.0,
       /*max_concurrent=*/0);
 }
 
 ReadSourceResult MakeReadResult(std::string const& payload) {
-  auto result =
-      ReadSourceResult{payload.size(), HttpResponse{HttpStatusCode::kOk,
-                                                    /*payload=*/{},
-                                                    /*headers=*/{}}};
-  return result;
+  return ReadSourceResult{payload.size(),
+                          HttpResponse{HttpStatusCode::kOk, {}, {}}};
+}
+
+auto MakeStallingPrimaryFactory(
+    std::shared_ptr<std::promise<void>> const& unblock_primary,
+    std::shared_ptr<std::promise<void>> const& primary_closed,
+    std::shared_ptr<std::atomic<int>> const& calls) {
+  return [unblock_primary, primary_closed,
+          calls]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    auto mock = std::make_unique<MockObjectReadSource>();
+    if (++*calls == 1) {
+      EXPECT_CALL(*mock, Read)
+          .WillOnce([unblock_primary](char* buf, std::size_t) {
+            unblock_primary->get_future().get();
+            std::string const payload = "slow";
+            std::copy(payload.begin(), payload.end(), buf);
+            return MakeReadResult(payload);
+          });
+      EXPECT_CALL(*mock, Close).WillOnce([primary_closed]() {
+        primary_closed->set_value();
+        return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
+      });
+    } else {
+      EXPECT_CALL(*mock, Read).WillOnce([](char* buf, std::size_t) {
+        std::string const payload = "hedge";
+        std::copy(payload.begin(), payload.end(), buf);
+        return MakeReadResult(payload);
+      });
+    }
+    return std::unique_ptr<ObjectReadSource>(std::move(mock));
+  };
 }
 
 TEST(HedgedObjectReadSourceTest, PrimaryWins) {
@@ -66,7 +96,8 @@ TEST(HedgedObjectReadSourceTest, PrimaryWins) {
     return std::unique_ptr<ObjectReadSource>(std::move(mock));
   };
 
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(500),
                                 /*max_hedges=*/2, kUnlimitedBuffer);
 
@@ -88,12 +119,21 @@ TEST(HedgedObjectReadSourceTest, SubsequentReadsContinueOnWinner) {
     ++*factory_calls;
     auto mock = std::make_unique<MockObjectReadSource>();
     EXPECT_CALL(*mock, Read)
-        .WillOnce(Return(MakeReadResult("chunk-1")))
-        .WillOnce(Return(MakeReadResult("chunk-2")));
+        .WillOnce([](char* buf, std::size_t) {
+          std::string const payload = "chunk-1";
+          std::copy(payload.begin(), payload.end(), buf);
+          return MakeReadResult(payload);
+        })
+        .WillOnce([](char* buf, std::size_t) {
+          std::string const payload = "chunk-2";
+          std::copy(payload.begin(), payload.end(), buf);
+          return MakeReadResult(payload);
+        });
     return std::unique_ptr<ObjectReadSource>(std::move(mock));
   };
 
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(500),
                                 /*max_hedges=*/2, kUnlimitedBuffer);
 
@@ -110,32 +150,122 @@ TEST(HedgedObjectReadSourceTest, HedgeWinsWhenPrimaryStalls) {
   auto unblock_primary = std::make_shared<std::promise<void>>();
   auto primary_closed = std::make_shared<std::promise<void>>();
   auto calls = std::make_shared<std::atomic<int>>(0);
-  auto factory = [unblock_primary, primary_closed,
-                  calls]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
-    auto mock = std::make_unique<MockObjectReadSource>();
-    if (++*calls == 1) {
-      EXPECT_CALL(*mock, Read).WillOnce([unblock_primary](char*, std::size_t) {
-        unblock_primary->get_future().get();
-        return MakeReadResult("slow");
-      });
-      EXPECT_CALL(*mock, Close).WillOnce([primary_closed]() {
-        primary_closed->set_value();
-        return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
-      });
-    } else {
-      EXPECT_CALL(*mock, Read).WillOnce(Return(MakeReadResult("hedge")));
-    }
-    return std::unique_ptr<ObjectReadSource>(std::move(mock));
-  };
+  auto factory =
+      MakeStallingPrimaryFactory(unblock_primary, primary_closed, calls);
 
   auto source = std::make_unique<HedgedObjectReadSource>(
-      MakeUnlimitedPool(), factory, std::chrono::milliseconds(1),
+      MakeUnlimitedReadPool(), MakeUnlimitedHedgePool(), factory,
+      std::chrono::milliseconds(1),
       /*max_hedges=*/2, kUnlimitedBuffer);
 
   std::vector<char> buffer(100);
   auto result = source->Read(buffer.data(), buffer.size());
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->bytes_received, Eq(5));
+  EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
+
+  unblock_primary->set_value();
+  primary_closed->get_future().get();
+}
+
+TEST(HedgedObjectReadSourceTest, ReadPoolSaturationDoesNotBlockHedges) {
+  // Verify thread pool isolation: If the read pool is busy with slow reads,
+  // speculative hedge attempts on hedge_pool_ can still execute immediately.
+  auto unblock_primary = std::make_shared<std::promise<void>>();
+  auto primary_closed = std::make_shared<std::promise<void>>();
+  auto calls = std::make_shared<std::atomic<int>>(0);
+  auto factory =
+      MakeStallingPrimaryFactory(unblock_primary, primary_closed, calls);
+
+  HedgedObjectReadSource source(std::make_shared<ThreadPool>(/*max_threads=*/1),
+                                MakeUnlimitedHedgePool(), factory,
+                                std::chrono::milliseconds(1),
+                                /*max_hedges=*/2, kUnlimitedBuffer);
+
+  std::vector<char> buffer(100);
+  auto result = source.Read(buffer.data(), buffer.size());
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(result->bytes_received, Eq(5));
+  EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
+
+  unblock_primary->set_value();
+  primary_closed->get_future().get();
+}
+
+TEST(HedgedObjectReadSourceTest, HedgePoolExhaustionDoesNotBlockPrimary) {
+  // Verify that if the hedge pool is fully exhausted / rate limited (0 tokens),
+  // the primary attempt on read_pool still completes successfully.
+  auto read_pool = MakeUnlimitedReadPool();
+  auto hedge_pool = std::make_shared<HedgingThreadPool>(
+      /*max_threads=*/1, /*rate_limit=*/0.0, /*capacity=*/0.0,
+      /*max_concurrent=*/1);
+  // Acquire the only slot so hedge pool has 0 available capacity.
+  ASSERT_TRUE(hedge_pool->TryAcquireHedgeToken());
+
+  auto calls = std::make_shared<std::atomic<int>>(0);
+  auto factory = [calls]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    ++*calls;
+    auto mock = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*mock, Read).WillOnce([](char* buf, std::size_t) {
+      std::string const payload = "primary_only";
+      std::copy(payload.begin(), payload.end(), buf);
+      return MakeReadResult(payload);
+    });
+    return std::unique_ptr<ObjectReadSource>(std::move(mock));
+  };
+
+  HedgedObjectReadSource source(read_pool, hedge_pool, factory,
+                                std::chrono::milliseconds(10),
+                                /*max_hedges=*/2, kUnlimitedBuffer);
+
+  std::vector<char> buffer(100);
+  auto result = source.Read(buffer.data(), buffer.size());
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(result->bytes_received, Eq(12));
+  EXPECT_THAT(std::string(buffer.data(), result->bytes_received),
+              Eq("primary_only"));
+  EXPECT_THAT(calls->load(), Eq(1));
+
+  hedge_pool->ReleaseHedgeSlot();
+}
+
+TEST(HedgedObjectReadSourceTest,
+     TransientHedgePoolExhaustionDoesNotBurnHedgeAttempt) {
+  // Verify that if TryAcquireHedgeToken() fails on an initial tick due to
+  // transient exhaustion, the hedge attempt slot is not burned and a hedge is
+  // successfully dispatched on a subsequent tick once capacity becomes
+  // available.
+  auto unblock_primary = std::make_shared<std::promise<void>>();
+  auto primary_closed = std::make_shared<std::promise<void>>();
+  auto calls = std::make_shared<std::atomic<int>>(0);
+  auto factory =
+      MakeStallingPrimaryFactory(unblock_primary, primary_closed, calls);
+
+  auto hedge_pool = std::make_shared<HedgingThreadPool>(
+      /*max_threads=*/1, /*rate_limit=*/0.0, /*capacity=*/0.0,
+      /*max_concurrent=*/1);
+  // Acquire the only slot so hedge pool has 0 available capacity initially.
+  ASSERT_TRUE(hedge_pool->TryAcquireHedgeToken());
+
+  // In a background thread, release the slot after a brief delay so it is
+  // available on a subsequent tick.
+  std::thread releaser([hedge_pool] {
+    std::this_thread::sleep_for(std::chrono::milliseconds(25));
+    hedge_pool->ReleaseHedgeSlot();
+  });
+
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(), hedge_pool, factory,
+                                std::chrono::milliseconds(10),
+                                /*max_hedges=*/1, kUnlimitedBuffer);
+
+  std::vector<char> buffer(100);
+  auto result = source.Read(buffer.data(), buffer.size());
+  releaser.join();
+
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(result->bytes_received, Eq(5));
+  EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
+  EXPECT_THAT(calls->load(), Eq(2));
 
   unblock_primary->set_value();
   primary_closed->get_future().get();
@@ -146,7 +276,8 @@ TEST(HedgedObjectReadSourceTest, PrimaryOpenErrorPropagates) {
     return Status(StatusCode::kPermissionDenied, "uh-oh");
   };
 
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(500),
                                 /*max_hedges=*/2, kUnlimitedBuffer);
 
@@ -159,7 +290,8 @@ TEST(HedgedObjectReadSourceTest, CloseWithoutReadSucceeds) {
   auto factory = []() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
     return Status(StatusCode::kUnimplemented, "never called");
   };
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(500),
                                 /*max_hedges=*/2, kUnlimitedBuffer);
   EXPECT_TRUE(source.IsOpen());
@@ -167,19 +299,21 @@ TEST(HedgedObjectReadSourceTest, CloseWithoutReadSucceeds) {
 }
 
 TEST(HedgedObjectReadSourceTest, CloseBeforeRead) {
-  auto pool = std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0);
+  auto read_pool = std::make_shared<ThreadPool>(1);
+  auto hedge_pool = std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0);
   auto factory = []() {
     return std::unique_ptr<ObjectReadSource>(
         std::make_unique<MockObjectReadSource>());
   };
-  HedgedObjectReadSource source(pool, factory, std::chrono::milliseconds(10), 2,
+  HedgedObjectReadSource source(read_pool, hedge_pool, factory,
+                                std::chrono::milliseconds(10), 2,
                                 kUnlimitedBuffer);
   EXPECT_TRUE(source.IsOpen());
-  EXPECT_STATUS_OK(source.Close());
+  EXPECT_THAT(source.Close(), IsOk());
   EXPECT_FALSE(source.IsOpen());
   auto const res = source.Read(nullptr, 1024);
-  EXPECT_TRUE(res.ok());
-  EXPECT_EQ(res->bytes_received, 0);
+  EXPECT_THAT(res, IsOk());
+  EXPECT_THAT(res->bytes_received, Eq(0));
 }
 
 TEST(HedgedObjectReadSourceTest, OversizedReadIsNotHedged) {
@@ -199,7 +333,8 @@ TEST(HedgedObjectReadSourceTest, OversizedReadIsNotHedged) {
 
   // A zero delay would let a hedge start immediately if the limit were not
   // honored, so any race would be observable as extra factory calls.
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(0),
                                 /*max_hedges=*/2, /*max_buffer=*/8);
 
@@ -216,7 +351,8 @@ TEST(HedgedObjectReadSourceTest, OversizedReadPropagatesOpenError) {
     return Status(StatusCode::kPermissionDenied, "uh-oh");
   };
 
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(0),
                                 /*max_hedges=*/2, /*max_buffer=*/8);
 
@@ -233,12 +369,21 @@ TEST(HedgedObjectReadSourceTest, SubsequentReadsIgnoreBufferLimit) {
     ++*calls;
     auto mock = std::make_unique<MockObjectReadSource>();
     EXPECT_CALL(*mock, Read)
-        .WillOnce(Return(MakeReadResult("small")))
-        .WillOnce(Return(MakeReadResult("large")));
+        .WillOnce([](char* buf, std::size_t) {
+          std::string const payload = "small";
+          std::copy(payload.begin(), payload.end(), buf);
+          return MakeReadResult(payload);
+        })
+        .WillOnce([](char* buf, std::size_t) {
+          std::string const payload = "large";
+          std::copy(payload.begin(), payload.end(), buf);
+          return MakeReadResult(payload);
+        });
     return std::unique_ptr<ObjectReadSource>(std::move(mock));
   };
 
-  HedgedObjectReadSource source(MakeUnlimitedPool(), factory,
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), factory,
                                 std::chrono::milliseconds(500),
                                 /*max_hedges=*/2, /*max_buffer=*/64);
 

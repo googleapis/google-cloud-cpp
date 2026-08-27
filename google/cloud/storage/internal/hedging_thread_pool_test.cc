@@ -15,9 +15,13 @@
 #include "google/cloud/storage/internal/hedging_thread_pool.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <atomic>
 #include <chrono>
+#include <cstddef>
 #include <future>
+#include <memory>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -26,6 +30,96 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::testing::Eq;
+using ::testing::Ge;
+
+TEST(ThreadPoolTest, EnqueueAndExecute) {
+  std::promise<void> p1;
+  std::promise<void> p2;
+  std::future<void> f1 = p1.get_future();
+  std::future<void> f2 = p2.get_future();
+
+  ThreadPool pool(2);
+  EXPECT_TRUE(pool.Enqueue([&p1] { p1.set_value(); }));
+  EXPECT_TRUE(pool.Enqueue([&p2] { p2.set_value(); }));
+
+  f1.get();
+  f2.get();
+}
+
+TEST(ThreadPoolTest, ConcurrentTasks) {
+  std::size_t const task_count = 50;
+  std::atomic<int> completed{0};
+  std::vector<std::promise<void>> promises(task_count);
+  std::vector<std::future<void>> futures;
+  futures.reserve(task_count);
+  // Declare the pool after the promises so workers are joined before the
+  // promises and atomic counter they reference go out of scope.
+  ThreadPool pool(8);
+  for (std::size_t i = 0; i != task_count; ++i) {
+    futures.push_back(promises[i].get_future());
+    EXPECT_TRUE(pool.Enqueue([&promises, &completed, i] {
+      ++completed;
+      promises[i].set_value();
+    }));
+  }
+
+  for (auto& f : futures) {
+    f.get();
+  }
+  EXPECT_THAT(completed.load(), Eq(static_cast<int>(task_count)));
+}
+
+TEST(ThreadPoolTest, ZeroThreadsStillRunsTasks) {
+  // A pool that could never spawn a worker would queue the task, report
+  // success, and leave anyone waiting on the task's side effects blocked
+  // forever. The size is clamped to 1 instead.
+  std::promise<void> p;
+  std::future<void> f = p.get_future();
+  ThreadPool pool(0);
+  EXPECT_THAT(pool.max_threads(), Eq(std::size_t{1}));
+  EXPECT_TRUE(pool.Enqueue([&p] { p.set_value(); }));
+  f.get();
+}
+
+TEST(ThreadPoolTest, DefaultSizes) {
+  // `StorageConnectionImpl` sizes its pools with these when the options are
+  // unset (0), so the floors are the contract.
+  EXPECT_THAT(DefaultReadThreadPoolSize(), Ge(std::size_t{64}));
+  EXPECT_THAT(DefaultHedgingThreadPoolSize(0), Ge(std::size_t{16}));
+  // An explicit hedge ceiling already bounds concurrency, so the pool matches
+  // it rather than the (larger) automatic size.
+  EXPECT_THAT(DefaultHedgingThreadPoolSize(3), Eq(std::size_t{3}));
+  EXPECT_THAT(DefaultHedgingThreadPoolSize(1), Eq(std::size_t{1}));
+}
+
+template <typename Pool>
+void TestSafeDestructionOnWorkerThread(std::shared_ptr<Pool> pool) {
+  auto started = std::make_shared<std::promise<void>>();
+  auto destroyed = std::make_shared<std::promise<void>>();
+  auto release = std::make_shared<std::promise<void>>();
+  std::future<void> started_future = started->get_future();
+  std::future<void> destroyed_future = destroyed->get_future();
+  std::shared_future<void> release_future = release->get_future().share();
+
+  ASSERT_TRUE(pool->Enqueue(
+      [pool_copy = pool, started, destroyed, release_future]() mutable {
+        started->set_value();
+        release_future.wait();
+        pool_copy.reset();
+        destroyed->set_value();
+      }));
+
+  started_future.get();
+  pool.reset();
+  release->set_value();
+  destroyed_future.get();
+}
+
+TEST(ThreadPoolTest, SafeDestructionOnWorkerThread) {
+  TestSafeDestructionOnWorkerThread(std::make_shared<ThreadPool>(1));
+}
+
 TEST(HedgingThreadPoolTest, EnqueueAndExecute) {
   // Declare the promises *before* the pool. `get()` returns as soon as the
   // shared state is ready, which may be before the worker has returned from
@@ -33,8 +127,8 @@ TEST(HedgingThreadPoolTest, EnqueueAndExecute) {
   // means the workers are done before the promises they reference go away.
   std::promise<void> p1;
   std::promise<void> p2;
-  auto f1 = p1.get_future();
-  auto f2 = p2.get_future();
+  std::future<void> f1 = p1.get_future();
+  std::future<void> f2 = p2.get_future();
 
   HedgingThreadPool pool(2, 0.0, 0.0, 0);
   EXPECT_TRUE(pool.Enqueue([&p1] { p1.set_value(); }));
@@ -86,38 +180,8 @@ TEST(HedgingThreadPoolTest, FractionalRateLimiter) {
 }
 
 TEST(HedgingThreadPoolTest, SafeDestructionOnWorkerThread) {
-  // Dropping the last reference to the pool from inside a task runs the pool
-  // destructor on one of its own worker threads. It must detach that thread
-  // rather than join itself.
-  //
-  // Every synchronization object is shared and captured by value: this worker
-  // is detached, so it can still be running after this function returns and
-  // must not reference anything on the test's stack.
-  auto started = std::make_shared<std::promise<void>>();
-  auto destroyed = std::make_shared<std::promise<void>>();
-  auto release = std::make_shared<std::promise<void>>();
-  auto started_future = started->get_future();
-  auto destroyed_future = destroyed->get_future();
-  auto release_future = release->get_future().share();
-
-  auto pool = std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0);
-  ASSERT_TRUE(pool->Enqueue(
-      [pool_copy = pool, started, destroyed, release_future]() mutable {
-        started->set_value();
-        release_future.wait();
-        // The test thread has dropped its reference by now, so this is the
-        // last one: the pool destructor runs on this worker thread.
-        pool_copy.reset();
-        destroyed->set_value();
-      }));
-
-  started_future.get();
-  pool.reset();
-  release->set_value();
-  // Wait for the destructor to finish on the worker thread. This replaces a
-  // timing-based sleep: the test cannot return while the pool is still being
-  // destroyed.
-  destroyed_future.get();
+  TestSafeDestructionOnWorkerThread(
+      std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0));
 }
 
 }  // namespace

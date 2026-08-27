@@ -188,6 +188,7 @@ class StorageConnectionImpl
 
   std::unique_ptr<storage_internal::GenericStub> stub_;
   Options options_;
+  std::shared_ptr<ThreadPool> read_pool_;
   std::shared_ptr<HedgingThreadPool> hedge_pool_;
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
