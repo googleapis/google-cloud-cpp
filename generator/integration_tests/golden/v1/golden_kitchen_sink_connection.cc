@@ -84,7 +84,7 @@ StreamRange<google::test::admin::database::v1::Response> GoldenKitchenSinkConnec
     google::test::admin::database::v1::Request const&) {
   return google::cloud::internal::MakeStreamRange<
       google::test::admin::database::v1::Response>(
-      []() -> absl::variant<Status,
+      []() -> std::variant<Status,
       google::test::admin::database::v1::Response>{
         return Status(StatusCode::kUnimplemented, "not implemented");}
       );

@@ -38,7 +38,7 @@ bigtable::RowReader MakeRowReader(std::vector<bigtable::Row> rows,
     /// Skips remaining rows and invalidates current iterator.
     void Cancel() override { iter_ = rows_.cend(); };
 
-    absl::variant<Status, bigtable::Row> Advance() override {
+    std::variant<Status, bigtable::Row> Advance() override {
       if (iter_ == rows_.cend()) return final_status_;
       return *iter_++;
     }

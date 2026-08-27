@@ -21,11 +21,11 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
 #include "google/storage/v2/storage.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -108,7 +108,7 @@ class AsyncWriter {
    * Calling this function on a default-constructed or moved-from `AsyncWriter`
    * results in undefined behavior.
    */
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const;
 
   /// Upload @p payload returning a new token to continue the upload.

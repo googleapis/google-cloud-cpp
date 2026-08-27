@@ -32,6 +32,7 @@
 #include <string>
 #include <tuple>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -378,7 +379,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
   // Incidentally, this shows the value fits into an `int`.
   ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
   // Cast to `int` because otherwise we need to write multiple casts below.
-  auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
+  auto offset = static_cast<int>(std::get<std::int64_t>(persisted));
   if (offset % kBlockSize != 0) {
     auto s = block.substr(offset % kBlockSize);
     auto const size = s.size();
@@ -844,7 +845,7 @@ TEST_F(AsyncClientIntegrationTest, ResumeAppendableObjectUpload) {
   auto const persisted = writer.PersistedState();
   ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
   // Cast to `int` because otherwise we need to write multiple casts below.
-  auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
+  auto offset = static_cast<int>(std::get<std::int64_t>(persisted));
   if (offset % kBlockSize != 0) {
     auto s = block.substr(offset % kBlockSize);
     auto const size = s.size();

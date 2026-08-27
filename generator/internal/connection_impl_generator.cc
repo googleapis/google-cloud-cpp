@@ -363,7 +363,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
           $service_name$$method_name$StreamingUpdater, request);
   return internal::MakeStreamRange<$response_type$>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status,
               $response_type$> {
         $response_type$ response;

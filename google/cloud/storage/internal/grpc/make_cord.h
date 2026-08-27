@@ -17,7 +17,6 @@
 
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/version.h"
-#include "absl/meta/type_traits.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include <cstddef>
@@ -35,7 +34,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 template <typename T>
-using IsPayloadType = absl::disjunction<
+using IsPayloadType = std::disjunction<
 #if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L
     std::is_same<T, std::byte>,
 #endif

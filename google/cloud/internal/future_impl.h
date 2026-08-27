@@ -18,7 +18,6 @@
 #include "google/cloud/internal/future_fwd.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
@@ -26,6 +25,7 @@
 #include <future>
 #include <mutex>
 #include <utility>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -49,7 +49,7 @@ class future_shared_state;
 /**
  * A monostate for `future<void>`.
  *
- * The implementation already uses `absl::monostate` to represent "future<void>
+ * The implementation already uses `std::monostate` to represent "future<void>
  * is **not** set". We need a distinct type to represent "`future<void>` value
  * is set".
  */
@@ -159,7 +159,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
   /**
    * The different states of the shared state.
    *
-   * The shared state is initialized with `absl::monostate`, this represents
+   * The shared state is initialized with `std::monostate`, this represents
    * an unsatisfied future.
    *
    * The future may be satisfied with an exception, stored as a
@@ -171,8 +171,8 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
    * Finally, the value and/or exception may be retrieved as part of invoking
    * any continuation. We store this as a `FutureValueRetrieved`.
    */
-  using ValueType = absl::variant<absl::monostate, std::exception_ptr, T,
-                                  FutureValueRetrieved>;
+  using ValueType =
+      std::variant<std::monostate, std::exception_ptr, T, FutureValueRetrieved>;
 
 #if __clang__
 #elif __GNUC__
@@ -212,7 +212,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
         ThrowFutureError(std::future_errc::no_state,
                          "future<T>::get() - already retrieved");
       }
-      T operator()(absl::monostate) {
+      T operator()(std::monostate) {
         ThrowFutureError(std::future_errc::no_state,
                          "future<T>::get() - not set");
       }
@@ -222,7 +222,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
     // future, so new calls will fail.
     ValueType tmp(FutureValueRetrieved{});
     tmp.swap(value_);
-    return absl::visit(Visitor{}, std::move(tmp));
+    return std::visit(Visitor{}, std::move(tmp));
   }
 
   /**
@@ -421,7 +421,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
 
  protected:
   bool is_ready_unlocked() const {
-    return !absl::holds_alternative<absl::monostate>(value_);
+    return !std::holds_alternative<std::monostate>(value_);
   }
 
   /// Satisfy the shared state using an exception.
@@ -468,7 +468,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
 
   /// Synchronize changes to `value_` and `cv_`.
   mutable std::mutex mu_;
-  /// Used to wait until `value_` does not contain `absl::monostate`.
+  /// Used to wait until `value_` does not contain `std::monostate`.
   std::condition_variable cv_;
   /// The value of the shared state.
   ValueType value_;

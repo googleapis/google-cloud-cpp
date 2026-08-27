@@ -20,7 +20,7 @@
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AsyncReaderConnection {
  public:
   /// The value returned by `Read()`. See the function for more details.
-  using ReadResponse = absl::variant<ReadPayload, Status>;
+  using ReadResponse = std::variant<ReadPayload, Status>;
 
   virtual ~AsyncReaderConnection() = default;
 
@@ -73,7 +73,7 @@ class AsyncReaderConnection {
    *   satisfied with a `ReadResponse` containing an OK `Status`.
    *
    * A `StatusOr<>` cannot represent the last bullet point, so we need an
-   * `absl::variant<>` in this case.  We could have used
+   * `std::variant<>` in this case.  We could have used
    * `StatusOr<std::optional<ReadPayload>>` but that sounds unnecessarily
    * complicated.
    */

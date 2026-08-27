@@ -16,8 +16,6 @@
 #include "google/cloud/version.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
-#include "absl/types/optional.h"
-#include "absl/types/variant.h"
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>

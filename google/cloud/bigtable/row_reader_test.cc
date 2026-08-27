@@ -61,7 +61,7 @@ TEST(RowReaderTest, IteratorPostincrement) {
 class MockRowReader : public bigtable_internal::RowReaderImpl {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, bigtable::Row>), Advance, (), (override));
+  MOCK_METHOD((std::variant<Status, bigtable::Row>), Advance, (), (override));
 };
 
 TEST(RowReaderTest, OptionsSpan) {

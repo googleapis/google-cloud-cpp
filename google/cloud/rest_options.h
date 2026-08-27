@@ -20,6 +20,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <functional>
 #include <string>
 
 namespace google {

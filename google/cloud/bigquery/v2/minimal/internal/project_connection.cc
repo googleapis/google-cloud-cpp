@@ -30,7 +30,7 @@ ProjectConnection::~ProjectConnection() = default;
 StreamRange<Project> ProjectConnection::ListProjects(
     ListProjectsRequest const&) {
   return google::cloud::internal::MakeStreamRange<Project>(
-      []() -> absl::variant<Status, Project> {
+      []() -> std::variant<Status, Project> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

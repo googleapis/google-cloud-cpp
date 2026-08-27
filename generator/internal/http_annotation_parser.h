@@ -17,8 +17,8 @@
 
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
-#include "absl/types/variant.h"
 #include <memory>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -86,7 +86,7 @@ struct PathTemplate {
     std::vector<std::shared_ptr<Segment>> segments;
   };
   struct Segment {
-    absl::variant<Match, MatchRecursive, std::string, Variable> value;
+    std::variant<Match, MatchRecursive, std::string, Variable> value;
   };
   using Segments = std::vector<std::shared_ptr<Segment>>;
 

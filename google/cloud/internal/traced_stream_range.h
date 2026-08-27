@@ -39,7 +39,7 @@ class TracedStreamRange {
     (void)End(Status());
   }
 
-  absl::variant<Status, T> Advance() {
+  std::variant<Status, T> Advance() {
     if (it_ == sr_.end()) return End(Status());
     auto sor = *it_;
     ++it_;

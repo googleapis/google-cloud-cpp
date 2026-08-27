@@ -96,8 +96,8 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
   return internal::MakeStreamRange<google::cloud::osconfig::agentendpoint::v1::
                                        ReceiveTaskNotificationResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<Status, google::cloud::osconfig::agentendpoint::v1::
-                                       ReceiveTaskNotificationResponse> {
+          -> std::variant<Status, google::cloud::osconfig::agentendpoint::v1::
+                                      ReceiveTaskNotificationResponse> {
         google::cloud::osconfig::agentendpoint::v1::
             ReceiveTaskNotificationResponse response;
         auto status = resumable->Read(&response);

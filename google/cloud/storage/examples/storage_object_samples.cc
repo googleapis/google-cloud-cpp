@@ -26,6 +26,7 @@
 #include <string>
 #include <thread>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace {
@@ -92,11 +93,11 @@ void ListObjectsAndPrefixes(google::cloud::storage::Client client,
              bucket_name, gcs::Prefix(bucket_prefix), gcs::Delimiter("/"))) {
       if (!item) throw std::move(item).status();
       auto result = *std::move(item);
-      if (absl::holds_alternative<gcs::ObjectMetadata>(result)) {
+      if (std::holds_alternative<gcs::ObjectMetadata>(result)) {
         std::cout << "object_name="
-                  << absl::get<gcs::ObjectMetadata>(result).name() << "\n";
-      } else if (absl::holds_alternative<std::string>(result)) {
-        std::cout << "prefix     =" << absl::get<std::string>(result) << "\n";
+                  << std::get<gcs::ObjectMetadata>(result).name() << "\n";
+      } else if (std::holds_alternative<std::string>(result)) {
+        std::cout << "prefix     =" << std::get<std::string>(result) << "\n";
       }
     }
   }
@@ -115,11 +116,11 @@ void ListObjectsAndFolders(google::cloud::storage::Client client,
              gcs::IncludeFoldersAsPrefixes(true))) {
       if (!item) throw std::move(item).status();
       auto result = *std::move(item);
-      if (absl::holds_alternative<gcs::ObjectMetadata>(result)) {
+      if (std::holds_alternative<gcs::ObjectMetadata>(result)) {
         std::cout << "object_name="
-                  << absl::get<gcs::ObjectMetadata>(result).name() << "\n";
-      } else if (absl::holds_alternative<std::string>(result)) {
-        std::cout << "prefix     =" << absl::get<std::string>(result) << "\n";
+                  << std::get<gcs::ObjectMetadata>(result).name() << "\n";
+      } else if (std::holds_alternative<std::string>(result)) {
+        std::cout << "prefix     =" << std::get<std::string>(result) << "\n";
       }
     }
   }

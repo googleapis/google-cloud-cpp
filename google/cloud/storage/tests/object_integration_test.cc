@@ -29,6 +29,7 @@
 #include <sstream>
 #include <string>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -162,10 +163,10 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
   std::vector<std::string> objects;
   for (auto& it : reader) {
     auto const& result = it.value();
-    if (absl::holds_alternative<std::string>(result)) {
-      prefixes.push_back(absl::get<std::string>(result));
+    if (std::holds_alternative<std::string>(result)) {
+      prefixes.push_back(std::get<std::string>(result));
     } else {
-      auto const& meta = absl::get<ObjectMetadata>(result);
+      auto const& meta = std::get<ObjectMetadata>(result);
       EXPECT_EQ(bucket_name_, meta.bucket());
       objects.push_back(meta.name());
     }
@@ -196,10 +197,10 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixesWithFolders) {
   std::vector<std::string> objects;
   for (auto& it : reader) {
     auto const& result = it.value();
-    if (absl::holds_alternative<std::string>(result)) {
-      prefixes.push_back(absl::get<std::string>(result));
+    if (std::holds_alternative<std::string>(result)) {
+      prefixes.push_back(std::get<std::string>(result));
     } else {
-      auto const& meta = absl::get<ObjectMetadata>(result);
+      auto const& meta = std::get<ObjectMetadata>(result);
       EXPECT_EQ(bucket_name_, meta.bucket());
       objects.push_back(meta.name());
     }
@@ -230,10 +231,10 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
   std::vector<std::string> objects;
   for (auto& it : reader) {
     auto const& result = it.value();
-    if (absl::holds_alternative<std::string>(result)) {
-      prefixes.push_back(absl::get<std::string>(result));
+    if (std::holds_alternative<std::string>(result)) {
+      prefixes.push_back(std::get<std::string>(result));
     } else {
-      auto const& meta = absl::get<ObjectMetadata>(result);
+      auto const& meta = std::get<ObjectMetadata>(result);
       EXPECT_EQ(bucket_name_, meta.bucket());
       objects.push_back(meta.name());
     }
@@ -286,10 +287,10 @@ TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
   std::vector<std::string> objects;
   for (auto& it : reader) {
     auto const& result = it.value();
-    if (absl::holds_alternative<std::string>(result)) {
-      prefixes.push_back(absl::get<std::string>(result));
+    if (std::holds_alternative<std::string>(result)) {
+      prefixes.push_back(std::get<std::string>(result));
     } else {
-      auto const& meta = absl::get<ObjectMetadata>(result);
+      auto const& meta = std::get<ObjectMetadata>(result);
       EXPECT_EQ(bucket_name_, meta.bucket());
       objects.push_back(meta.name());
     }

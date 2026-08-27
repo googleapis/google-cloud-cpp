@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <string>
 #include <utility>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -48,7 +49,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
     return impl_->Read()
         .then([count = ++count_, span = span_](auto f) -> ReadResponse {
           auto r = f.get();
-          if (absl::holds_alternative<Status>(r)) {
+          if (std::holds_alternative<Status>(r)) {
             span->AddEvent(
                 "gl-cpp.read",
                 {
@@ -56,9 +57,9 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
                     {/*sc::kRpcMessageId=*/"rpc.message.id", count},
                     {sc::thread::kThreadId, internal::CurrentThreadId()},
                 });
-            return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
+            return internal::EndSpan(*span, std::get<Status>(std::move(r)));
           }
-          auto const& payload = absl::get<storage::ReadPayload>(r);
+          auto const& payload = std::get<storage::ReadPayload>(r);
           span->AddEvent(
               "gl-cpp.read",
               {

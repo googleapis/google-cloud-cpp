@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SETENV_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
+#include <optional>
 #include <string>
 
 namespace google {
@@ -50,7 +50,7 @@ void SetEnv(char const* variable, char const* value);
  *   other environment reads and writes, so this should only be used when
  *   we are single-threaded.
  */
-void SetEnv(char const* variable, absl::optional<std::string> value);
+void SetEnv(char const* variable, std::optional<std::string> value);
 
 /**
  * Unset (remove) an environment variable.

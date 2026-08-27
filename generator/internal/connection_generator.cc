@@ -460,7 +460,7 @@ $connection_class_name$::Async$method_name$() {
     "    $request_type$ const&) {\n"
     "  return google::cloud::internal::MakeStreamRange<\n"
     "      $response_type$>(\n"
-    "      []() -> absl::variant<Status,\n"
+    "      []() -> std::variant<Status,\n"
     "      $response_type$>{\n"
     "        return Status(StatusCode::kUnimplemented, \"not implemented\");}\n"
     "      );\n"

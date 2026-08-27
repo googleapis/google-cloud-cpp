@@ -22,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 ScopedEnvironment::ScopedEnvironment(std::string variable,
-                                     absl::optional<std::string> const& value)
+                                     std::optional<std::string> const& value)
     : variable_(std::move(variable)),
       prev_value_(internal::GetEnv(variable_.c_str())) {
   SetEnv(variable_.c_str(), value);

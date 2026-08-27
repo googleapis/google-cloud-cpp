@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROW_READER_IMPL_H
 
 #include "google/cloud/bigtable/row.h"
-#include "absl/types/variant.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -30,7 +30,7 @@ class RowReaderImpl {
 
   virtual void Cancel() = 0;
 
-  virtual absl::variant<Status, bigtable::Row> Advance() = 0;
+  virtual std::variant<Status, bigtable::Row> Advance() = 0;
 };
 
 /**
@@ -45,7 +45,7 @@ class StatusOnlyRowReader : public RowReaderImpl {
 
   void Cancel() override {}
 
-  absl::variant<Status, bigtable::Row> Advance() override { return status_; }
+  std::variant<Status, bigtable::Row> Advance() override { return status_; }
 
  private:
   Status status_;

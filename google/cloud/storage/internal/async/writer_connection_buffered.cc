@@ -24,6 +24,7 @@
 #include <deque>
 #include <memory>
 #include <mutex>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -86,15 +87,15 @@ class AsyncWriterConnectionBufferedState
     finalized_future_ = finalized_.get_future();
     closed_future_ = closed_.get_future();
     auto state = impl_->PersistedState();
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+    if (std::holds_alternative<google::storage::v2::Object>(state)) {
       SetFinalized(std::unique_lock<std::mutex>(mu_),
-                   absl::get<google::storage::v2::Object>(std::move(state)));
+                   std::get<google::storage::v2::Object>(std::move(state)));
       cancelled_ = true;
       resume_status_ = internal::CancelledError("upload already finalized",
                                                 GCP_ERROR_INFO());
       return;
     }
-    buffer_offset_ = absl::get<std::int64_t>(state);
+    buffer_offset_ = std::get<std::int64_t>(state);
   }
 
   void Cancel() {
@@ -113,7 +114,7 @@ class AsyncWriterConnectionBufferedState
     return Impl(std::unique_lock<std::mutex>(mu_))->WriteHandle();
   }
 
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
@@ -319,10 +320,10 @@ class AsyncWriterConnectionBufferedState
     auto impl = Impl(lk);
     auto const& state = impl->PersistedState();
     std::int64_t persisted_size = 0;
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      persisted_size = absl::get<google::storage::v2::Object>(state).size();
+    if (std::holds_alternative<google::storage::v2::Object>(state)) {
+      persisted_size = std::get<google::storage::v2::Object>(state).size();
     } else {
-      persisted_size = absl::get<std::int64_t>(state);
+      persisted_size = std::get<std::int64_t>(state);
     }
     lk.unlock();
     OnQuery(persisted_size);
@@ -462,11 +463,11 @@ class AsyncWriterConnectionBufferedState
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
       // finalized_ promise now, based on the resume attempt's outcome.
-      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+      if (std::holds_alternative<google::storage::v2::Object>(state)) {
         // Resume found the object is finalized. Success.
         return SetFinalized(
             std::move(lk),
-            absl::get<google::storage::v2::Object>(std::move(state)));
+            std::get<google::storage::v2::Object>(std::move(state)));
       }
       // Resume succeeded, but the object is still not finalized.
       // This means the original finalization attempt failed permanently.
@@ -479,7 +480,7 @@ class AsyncWriterConnectionBufferedState
     if (was_closing) {
       // If resuming due to a close error, we must complete the
       // closed_ promise now, based on the resume attempt's outcome.
-      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+      if (std::holds_alternative<google::storage::v2::Object>(state)) {
         // Resume found the object is finalized (which implies closed). Success.
         return SetClosed(std::move(lk), Status{});
       }
@@ -491,13 +492,13 @@ class AsyncWriterConnectionBufferedState
       return SetError(std::move(lk), std::move(original_status));
     }
 
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+    if (std::holds_alternative<google::storage::v2::Object>(state)) {
       // Found finalized object (maybe finalized concurrently or resumed).
-      return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
+      return SetFinalized(std::move(lk), std::get<google::storage::v2::Object>(
                                              std::move(state)));
     }
     // Regular resume succeeded, object not finalized. Continue writing.
-    OnQuery(std::move(lk), absl::get<std::int64_t>(state), /*is_resume=*/true);
+    OnQuery(std::move(lk), std::get<std::int64_t>(state), /*is_resume=*/true);
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,
@@ -810,7 +811,7 @@ class AsyncWriterConnectionBuffered : public storage::AsyncWriterConnection {
     return state_->WriteHandle();
   }
 
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     return state_->PersistedState();
   }
@@ -848,7 +849,7 @@ std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionBuffered(
     WriterConnectionFactory factory,
     std::unique_ptr<storage::AsyncWriterConnection> impl,
     Options const& options) {
-  return absl::make_unique<AsyncWriterConnectionBuffered>(
+  return std::make_unique<AsyncWriterConnectionBuffered>(
       std::move(factory), std::move(impl), options,
       options.get<storage::BufferedUploadLwmOption>(),
       options.get<storage::BufferedUploadHwmOption>());

@@ -19,6 +19,7 @@
 #include "absl/strings/str_cat.h"
 #include <cassert>
 #include <functional>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -246,7 +247,7 @@ StatusOr<PathTemplate> ParsePathTemplate(absl::string_view input) {
     return MakeParseError(input, v->end, " end of input", GCP_ERROR_INFO());
   }
   return PathTemplate{std::move(s->value),
-                      absl::get<std::string>(v->value.value)};
+                      std::get<std::string>(v->value.value)};
 }
 
 std::ostream& operator<<(std::ostream& os, PathTemplate::Segment const& rhs) {
@@ -263,7 +264,7 @@ std::ostream& operator<<(std::ostream& os, PathTemplate::Segment const& rhs) {
     }
   };
   os << "{";
-  absl::visit(Visitor{os}, rhs.value);
+  std::visit(Visitor{os}, rhs.value);
   os << "}";
   return os;
 }

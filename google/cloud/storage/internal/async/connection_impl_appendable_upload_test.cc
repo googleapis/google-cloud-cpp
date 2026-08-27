@@ -29,6 +29,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -290,7 +291,7 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadSuccess) {
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   // Write some data.
   // An empty payload might be a no-op in the implementation, which would
@@ -363,7 +364,7 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadSuccess) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   // Verify the persisted state is correctly reported.
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), kPersistedSize);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), kPersistedSize);
 
   auto w1 = writer->Write(storage::WritePayload("some more data"));
   next = sequencer.PopFrontWithName();
@@ -512,7 +513,7 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirect) {
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 1024);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 1024);
 
   // Write some data.
   auto w1 = writer->Write(storage::WritePayload("some data"));
@@ -612,7 +613,7 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 1024);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 1024);
 
   // Write some data.
   auto w1 = writer->Write(storage::WritePayload("some data"));

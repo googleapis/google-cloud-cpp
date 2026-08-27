@@ -53,7 +53,7 @@ using MockFactory =
 using MockStreamingRpc =
     ::testing::MockFunction<std::unique_ptr<WriteObject::StreamingRpc>()>;
 
-absl::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
+std::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
     std::int64_t persisted_size) {
   return persisted_size;
 }

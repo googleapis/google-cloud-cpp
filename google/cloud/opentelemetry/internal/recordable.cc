@@ -19,7 +19,6 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "absl/time/time.h"
-#include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>
 #include <iterator>
 

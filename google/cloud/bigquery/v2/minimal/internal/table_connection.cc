@@ -33,7 +33,7 @@ StatusOr<Table> TableConnection::GetTable(GetTableRequest const&) {
 StreamRange<ListFormatTable> TableConnection::ListTables(
     ListTablesRequest const&) {
   return google::cloud::internal::MakeStreamRange<ListFormatTable>(
-      []() -> absl::variant<Status, ListFormatTable> {
+      []() -> std::variant<Status, ListFormatTable> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

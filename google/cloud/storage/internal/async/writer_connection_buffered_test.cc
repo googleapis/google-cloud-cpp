@@ -54,7 +54,7 @@ Options TestOptions() {
       .set<storage::BufferedUploadHwmOption>(32 * 1024);
 }
 
-absl::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
+std::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
     std::int64_t persisted_size) {
   return persisted_size;
 }

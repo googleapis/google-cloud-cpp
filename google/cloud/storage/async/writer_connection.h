@@ -22,10 +22,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <string>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -103,7 +103,7 @@ class AsyncWriterConnection {
 
   /// Returns the last known state of the upload. Updated during initialization
   /// and by successful `Query()` or `Finalize()` requests.
-  virtual absl::variant<std::int64_t, google::storage::v2::Object>
+  virtual std::variant<std::int64_t, google::storage::v2::Object>
   PersistedState() const = 0;
 
   /// Uploads some data to the service.

@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_IS_PROTO_EQUAL_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/message.h>
 #include <gmock/gmock.h>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -26,12 +26,12 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
-absl::optional<std::string> CompareProtos(
+std::optional<std::string> CompareProtos(
     google::protobuf::Message const& arg,
     google::protobuf::Message const& value);
 
 MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
-  absl::optional<std::string> delta = CompareProtos(arg, value);
+  std::optional<std::string> delta = CompareProtos(arg, value);
   if (delta.has_value()) {
     *result_listener << "\n" << *delta;
   }
@@ -40,13 +40,13 @@ MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
 
 // Compares float and double fields approximately, using the default
 // google::protobuf::MessageDifferencer tolerances.
-absl::optional<std::string> CompareProtosApproximately(
+std::optional<std::string> CompareProtosApproximately(
     google::protobuf::Message const& arg,
     google::protobuf::Message const& value);
 
 MATCHER_P(IsProtoApproximatelyEqual, value,
           "Checks whether protos are approximately equal") {
-  absl::optional<std::string> delta = CompareProtosApproximately(arg, value);
+  std::optional<std::string> delta = CompareProtosApproximately(arg, value);
   if (delta.has_value()) {
     *result_listener << "\n" << *delta;
   }
@@ -55,13 +55,13 @@ MATCHER_P(IsProtoApproximatelyEqual, value,
 
 // Compares float and double fields approximately, using the given
 // @p fraction and @p margin.
-absl::optional<std::string> CompareProtosApproximately(
+std::optional<std::string> CompareProtosApproximately(
     google::protobuf::Message const& arg,
     google::protobuf::Message const& value, double fraction, double margin);
 
 MATCHER_P3(IsProtoApproximatelyEqual, value, fraction, margin,
            "Checks whether protos are approximately equal") {
-  absl::optional<std::string> delta =
+  std::optional<std::string> delta =
       CompareProtosApproximately(arg, value, fraction, margin);
   if (delta.has_value()) {
     *result_listener << "\n" << *delta;

@@ -22,6 +22,7 @@
 #include "absl/functional/function_ref.h"
 #include <exception>
 #include <type_traits>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -97,14 +98,14 @@ struct FutureThenImpl {
         struct Visitor {
           std::shared_ptr<future_shared_state<U>> output;
 
-          void operator()(absl::monostate) { output->abandon(); }
+          void operator()(std::monostate) { output->abandon(); }
           void operator()(std::exception_ptr e) {
             output->set_exception(std::move(e));
           }
           void operator()(FutureValueRetrieved) { output->abandon(); }
           void operator()(T v) { set_value(*output, std::move(v)); }
         };
-        return absl::visit(Visitor{std::move(output_)}, s.value());
+        return std::visit(Visitor{std::move(output_)}, s.value());
       }
 
      private:
@@ -131,7 +132,7 @@ struct FutureThenImpl {
         struct Visitor {
           std::shared_ptr<future_shared_state<U>> output;
 
-          void operator()(absl::monostate) { output->abandon(); }
+          void operator()(std::monostate) { output->abandon(); }
           void operator()(std::exception_ptr e) {
             output->set_exception(std::move(e));
           }
@@ -140,7 +141,7 @@ struct FutureThenImpl {
             unwrap(std::move(output), std::move(v.shared_state_));
           }
         };
-        return absl::visit(Visitor{std::move(output_)}, s.value());
+        return std::visit(Visitor{std::move(output_)}, s.value());
       }
 
      private:
