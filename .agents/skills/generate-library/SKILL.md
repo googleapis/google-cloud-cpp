@@ -146,7 +146,7 @@ exact gRPC target from Step 2 (e.g., `:hive_cc_grpc` instead of default
    - Call a simple top-level list/get RPC (e.g., `ListCatalogs` or
      `ListResources`).
 1. **`google/cloud/<library>/CMakeLists.txt`**:
-   - Update test arguments in `add_test` for `biglake_quickstart` (e.g.
+   - Update test arguments in add_test for <library>_quickstart (e.g.
      `GOOGLE_CLOUD_PROJECT`).
 1. **`google/cloud/<library>/quickstart/README.md`**:
    - Replace placeholder `[...]` command-line arguments.
