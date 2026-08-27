@@ -345,22 +345,26 @@ std::shared_ptr<bigtable::DataConnection> MakeBlockingDirectPathDataConnection(
           components.auth, instances.front(), directpath_options,
           components.background->cq());
 
-  // Step 2a: If DirectPath probing succeeds, create the DirectPath StubManager
-  // and record successful metrics.
-  if (probe_result.ok() && probe_result->success) {
+  auto create_stub_manager = [&](Options const& options) {
     auto stub_creation_fn =
-        [auth = components.auth, cq = components.background->cq(),
-         directpath_options](std::string_view instance_name,
-                             bigtable_internal::StubManager::Priming priming) {
-          return bigtable_internal::CreateBigtableStub(
-              auth, cq, instance_name, priming, directpath_options);
+        [auth = components.auth, cq = components.background->cq(), options](
+            std::string_view instance_name,
+            bigtable_internal::StubManager::Priming priming) {
+          return bigtable_internal::CreateBigtableStub(auth, cq, instance_name,
+                                                       priming, options);
         };
     absl::flat_hash_map<std::string,
                         std::shared_ptr<bigtable_internal::BigtableStub>>
         affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
             instances, stub_creation_fn);
-    auto stub_manager = std::make_unique<bigtable_internal::StubManager>(
-        std::move(affinity_stubs), stub_creation_fn);
+    return std::make_unique<bigtable_internal::StubManager>(
+        std::move(affinity_stubs), std::move(stub_creation_fn));
+  };
+
+  // Step 2a: If DirectPath probing succeeds, create the DirectPath StubManager
+  // and record successful metrics.
+  if (probe_result.ok() && probe_result->success) {
+    auto stub_manager = create_stub_manager(directpath_options);
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
     if (components.direct_access_compatibility != nullptr) {
@@ -378,19 +382,7 @@ std::shared_ptr<bigtable::DataConnection> MakeBlockingDirectPathDataConnection(
 
   // Step 2b: If DirectPath probing fails, create the CloudPath StubManager,
   // and run environmental diagnostics asynchronously.
-  auto stub_creation_fn = [auth = components.auth,
-                           cq = components.background->cq(), cloudpath_options](
-                              std::string_view instance_name,
-                              bigtable_internal::StubManager::Priming priming) {
-    return bigtable_internal::CreateBigtableStub(auth, cq, instance_name,
-                                                 priming, cloudpath_options);
-  };
-  absl::flat_hash_map<std::string,
-                      std::shared_ptr<bigtable_internal::BigtableStub>>
-      affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
-          instances, stub_creation_fn);
-  auto stub_manager = std::make_unique<bigtable_internal::StubManager>(
-      std::move(affinity_stubs), stub_creation_fn);
+  auto stub_manager = create_stub_manager(cloudpath_options);
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   bigtable_internal::DirectPathDiagnostics::RunAsync(
@@ -406,11 +398,14 @@ std::shared_ptr<bigtable::DataConnection> MakeBlockingDirectPathDataConnection(
 std::shared_ptr<bigtable::DataConnection> MakeDirectPathDataConnection(
     DataConnectionComponents components,
     std::vector<bigtable::InstanceResource> const& instances) {
+  experimental::DirectPathInitializationMode const initialization_mode =
+      components.options
+          .get<bigtable::experimental::DirectPathInitializationModeOption>();
   Options directpath_options = MakeDirectPathOptions(components.options);
-  Options cloudpath_options = MakeCloudPathOptions(components.options);
+  Options cloudpath_options =
+      MakeCloudPathOptions(std::move(components.options));
 
-  if (components.options
-          .get<bigtable::experimental::DirectPathInitializationModeOption>() ==
+  if (initialization_mode ==
       bigtable::experimental::DirectPathInitializationMode::kBlocking) {
     return MakeBlockingDirectPathDataConnection(
         std::move(components), instances, std::move(directpath_options),
