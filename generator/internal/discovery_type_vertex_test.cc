@@ -220,8 +220,8 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayString) {
   auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
   EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("keys", "keys", json),
-      Eq(" [debug_redact = true,json_name=\"keys\"]"));
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayBytes) {
@@ -236,8 +236,30 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayBytes) {
   auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
   EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("keys", "keys", json),
-      Eq(" [debug_redact = true,json_name=\"keys\"]"));
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonMatches) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("monkey", "monkey", json),
+      Eq(" [json_name=\"monkey\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("keyboard", "keyboard", json),
+      Eq(" [json_name=\"keyboard\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("hockey", "hockey", json),
+      Eq(" [json_name=\"hockey\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("keypad", "keypad", json),
+      Eq(" [json_name=\"keypad\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonStringNotRedacted) {

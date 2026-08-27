@@ -360,7 +360,7 @@ std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
       types_to_import.insert((*current)["$ref"]);
     }
 
-    if (current->contains("format")) {
+    if (current->contains("format") && (*current)["format"].is_string()) {
       std::string const format = (*current)["format"];
       if (absl::StartsWith(format, "google.protobuf.")) {
         types_to_import.insert(format);
@@ -383,8 +383,9 @@ std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
 
     if (IsDiscoveryArrayType(*current)) {
       auto const& items = (*current)["items"];
-      if (items.contains("type") && items["type"] == "object" &&
-          items.contains("additionalProperties") &&
+      if (items.is_object() && items.contains("type") &&
+          items["type"] == "object" && items.contains("additionalProperties") &&
+          items["additionalProperties"].is_object() &&
           items["additionalProperties"].value("type", "") == "any" &&
           !items.contains("format") &&
           !items["additionalProperties"].contains("format")) {
@@ -396,7 +397,8 @@ std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
 
     if (IsDiscoveryMapType(*current)) {
       auto const& additional_properties = (*current)["additionalProperties"];
-      if (additional_properties.contains("type") &&
+      if (additional_properties.is_object() &&
+          additional_properties.contains("type") &&
           additional_properties["type"] == "any" &&
           !additional_properties.contains("format") &&
           !current->contains("format")) {
