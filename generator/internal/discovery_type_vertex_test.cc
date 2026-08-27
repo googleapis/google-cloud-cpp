@@ -182,6 +182,92 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
          "REQUIRED,json_name=\"__json_request_body\"]"));
 }
 
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactString) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactBytes) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "bytes"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayString) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "array",
+  "items": {
+    "type": "string"
+  }
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("keys", "keys", json),
+      Eq(" [debug_redact = true,json_name=\"keys\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayBytes) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "array",
+  "items": {
+    "type": "bytes"
+  }
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("keys", "keys", json),
+      Eq(" [debug_redact = true,json_name=\"keys\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonStringNotRedacted) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "integer"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("key_id", "keyId", json),
+      Eq(" [json_name=\"keyId\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactRequired) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string",
+  "required": true
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json),
+      Eq(" [(google.api.field_behavior) = "
+         "REQUIRED,debug_redact = true,json_name=\"rawKey\"]"));
+}
+
 struct DetermineTypesSuccess {
   std::string name;
   std::string json;
@@ -1310,6 +1396,48 @@ message TestSchema {
                        HasSubstr("Message: test.package.TestSchema has field: "
                                  "existing_field whose type has changed from: "
                                  "optional string to: optional double")));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufCustomerEncryptionKey) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "id": "CustomerEncryptionKey",
+  "properties": {
+    "kmsKeyName": {
+      "type": "string"
+    },
+    "rawKey": {
+      "type": "string"
+    },
+    "rsaEncryptedKey": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string"
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message CustomerEncryptionKey {
+  optional string kms_key_name = 1 [debug_redact = true,json_name="kmsKeyName"];
+
+  optional string raw_key = 2 [debug_redact = true,json_name="rawKey"];
+
+  optional string rsa_encrypted_key = 3 [debug_redact = true,json_name="rsaEncryptedKey"];
+
+  optional string sha256 = 4 [json_name="sha256"];
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("CustomerEncryptionKey", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_THAT(result, ::google::cloud::testing_util::IsOk());
+  EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
 }  // namespace

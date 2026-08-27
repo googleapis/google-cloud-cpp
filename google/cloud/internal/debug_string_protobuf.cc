@@ -68,6 +68,7 @@ std::string DebugString(google::protobuf::Message const& m,
                         TracingOptions const& options) {
   std::string str;
   google::protobuf::TextFormat::Printer p;
+  p.SetRedactDebugString(true);
   p.SetSingleLineMode(options.single_line_mode());
   if (!options.single_line_mode()) p.SetInitialIndentLevel(1);
   p.SetUseShortRepeatedPrimitives(options.use_short_repeated_primitives());

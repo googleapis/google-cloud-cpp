@@ -17,6 +17,8 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/ascii.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
@@ -41,6 +43,16 @@ std::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   if (type == "integer") return j.value("format", "int32");
   if (type == "number") return j.value("format", "float");
   return std::nullopt;
+}
+
+bool IsStringOrBytes(nlohmann::json const& field_json) {
+  std::string const type = field_json.value("type", "");
+  if (type == "string" || type == "bytes") return true;
+  if (type == "array" && field_json.contains("items")) {
+    std::string const item_type = field_json["items"].value("type", "");
+    if (item_type == "string" || item_type == "bytes") return true;
+  }
+  return false;
 }
 
 }  // namespace
@@ -495,6 +507,12 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
                                absl::StrCat("\"", field_name, "\""));
   }
 
+  if (IsStringOrBytes(field_json) &&
+      (absl::StrContains(field_name, "key") ||
+       absl::StrContains(absl::AsciiStrToLower(json_field_name), "key"))) {
+    field_options.emplace_back("debug_redact", "true");
+  }
+
   // Discovery doc defined field names that are not always in strict
   // camelCase, leading to translation issue between json and protobuf. Thus,
   // the emitted proto fields need to have their name as it appears in the
@@ -512,6 +530,8 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
                         std::pair<std::string, std::string> const& p) {
       if (p.first == "json_name") {
         *s += absl::StrFormat("%s=\"%s\"", p.first, p.second);
+      } else if (p.first == "debug_redact") {
+        *s += absl::StrFormat("%s = %s", p.first, p.second);
       } else {
         *s += absl::StrFormat("(%s) = %s", p.first, p.second);
       }
