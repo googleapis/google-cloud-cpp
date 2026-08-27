@@ -54,7 +54,7 @@ TEST(LogWrapperHelpers, DefaultOptions) {
   // clang-format off
   std::string const text =
     R"pb(google.iam.v1.Policy { )pb"
-    R"pb(goo.gle/debugproto )pb"
+    R"pb(goo.gle/debugonly )pb"
     R"pb(bindings { )pb"
     R"pb(role: "roles/viewer" )pb"
     R"pb(members: "user:user1@example.com" )pb"
@@ -76,7 +76,7 @@ TEST(LogWrapperHelpers, MultiLine) {
   tracing_options.SetOptions("single_line_mode=off");
   // clang-format off
   std::string const text = R"pb(google.iam.v1.Policy {
-  goo.gle/debugproto 
+  goo.gle/debugonly 
   bindings {
     role: "roles/viewer"
     members: "user:user1@example.com"
@@ -99,7 +99,7 @@ TEST(LogWrapperHelpers, Truncate) {
   // clang-format off
   std::string const text =
     R"pb(google.iam.v1.Policy { )pb"
-    R"pb(goo.gle/debugproto )pb"
+    R"pb(goo.gle/debugonly )pb"
     R"pb(bindings { )pb"
     R"pb(role: "roles/vi...<truncated>..." )pb"
     R"pb(members: "user:use...<truncated>..." )pb"
@@ -121,7 +121,7 @@ TEST(LogWrapperHelpers, Duration) {
   duration.set_seconds((11 * 60 + 22) * 60 + 33);
   duration.set_nanos(123456789);
   std::string const expected =
-      R"(google.protobuf.Duration { goo.gle/debugproto "11h22m33.123456789s" })";
+      R"(google.protobuf.Duration { goo.gle/debugonly "11h22m33.123456789s" })";
   EXPECT_EQ(expected, DebugString(duration, TracingOptions{}.SetOptions(
                                                 "single_line_mode=on")));
 }
@@ -131,7 +131,7 @@ TEST(LogWrapperHelpers, Timestamp) {
   timestamp.set_seconds(1658470436);
   timestamp.set_nanos(123456789);
   std::string const expected = R"(google.protobuf.Timestamp {
-  goo.gle/debugproto 
+  goo.gle/debugonly 
   "2022-07-22T06:13:56.123456789Z"
 })";
   EXPECT_EQ(expected, DebugString(timestamp, TracingOptions{}.SetOptions(

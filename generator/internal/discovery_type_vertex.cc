@@ -48,8 +48,7 @@ std::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
 bool IsStringOrBytes(nlohmann::json const& field_json) {
   std::string const type = field_json.value("type", "");
   if (type == "string" || type == "bytes") return true;
-  if (type == "array" && field_json.contains("items") &&
-      field_json["items"].is_object()) {
+  if (type == "array" && field_json.contains("items")) {
     std::string const item_type = field_json["items"].value("type", "");
     if (item_type == "string" || item_type == "bytes") return true;
   }
@@ -57,11 +56,8 @@ bool IsStringOrBytes(nlohmann::json const& field_json) {
 }
 
 bool ContainsKeyWord(std::string_view s) {
-  for (std::size_t pos = s.find("key"); pos != std::string_view::npos;
-       pos = s.find("key", pos + 1)) {
-    bool const prefix_ok = (pos == 0 || s[pos - 1] == '_');
-    bool const suffix_ok = (pos + 3 == s.size() || s[pos + 3] == '_');
-    if (prefix_ok && suffix_ok) return true;
+  for (auto const& token : absl::StrSplit(s, '_')) {
+    if (token == "key") return true;
   }
   return false;
 }
@@ -133,7 +129,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   }
 
   if (type == "any") {
-    if (v.contains("format") && v["format"].is_string()) {
+    if (v.contains("format")) {
       type = v["format"];
     } else {
       type = "google.protobuf.Value";
@@ -174,11 +170,9 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
         properties_for_synthesis = &additional_properties;
         is_message = true;
       } else if (map_type == "any") {
-        if (additional_properties.is_object() &&
-            additional_properties.contains("format") &&
-            additional_properties["format"].is_string()) {
+        if (additional_properties.contains("format")) {
           map_type = additional_properties["format"];
-        } else if (v.contains("format") && v["format"].is_string()) {
+        } else if (v.contains("format")) {
           map_type = v["format"];
         } else {
           map_type = "google.protobuf.Struct";
@@ -219,26 +213,21 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       if (scalar_type) {
         type = *scalar_type;
       } else if (type == "any") {
-        if (items.is_object() && items.contains("format") &&
-            items["format"].is_string()) {
+        if (items.contains("format")) {
           type = items["format"];
         } else {
           type = "google.protobuf.Value";
         }
         return TypeInfo{type, compare_package_name, nullptr, false, false};
-      } else if (type == "object" && items.is_object() &&
-                 items.contains("properties")) {
+      } else if (type == "object" && items.contains("properties")) {
         // Synthesize a nested type for this array.
         type = CapitalizeFirstLetter(field_name + "Item");
         return TypeInfo{type, compare_package_name, &items, false, true};
-      } else if (type == "object" && items.is_object() &&
-                 items.contains("additionalProperties") &&
-                 items["additionalProperties"].is_object() &&
-                 items["additionalProperties"].value("type", "") == "any") {
-        if (items.contains("format") && items["format"].is_string()) {
+      } else if (type == "object" && items.contains("additionalProperties") &&
+                 (items["additionalProperties"]).value("type", "") == "any") {
+        if (items.contains("format")) {
           type = items["format"];
-        } else if (items["additionalProperties"].contains("format") &&
-                   items["additionalProperties"]["format"].is_string()) {
+        } else if (items["additionalProperties"].contains("format")) {
           type = items["additionalProperties"]["format"];
         } else {
           type = "google.protobuf.Struct";
