@@ -101,6 +101,9 @@ class StorageControlConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateRapidCache(
       google::storage::control::v2::UpdateRapidCacheRequest const& request);
 
+  virtual google::cloud::Idempotency DisableRapidCache(
+      google::storage::control::v2::DisableRapidCacheRequest const& request);
+
   virtual google::cloud::Idempotency GetRapidCache(
       google::storage::control::v2::GetRapidCacheRequest const& request);
 

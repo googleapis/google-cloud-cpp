@@ -467,6 +467,19 @@ ClusterManagerTracingStub::FetchNodePoolUpgradeInfo(
       child_->FetchNodePoolUpgradeInfo(context, options, request));
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerTracingStub::CompleteControlPlaneUpgrade(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
+                                     "CompleteControlPlaneUpgrade");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CompleteControlPlaneUpgrade(context, options, request));
+}
+
 std::shared_ptr<ClusterManagerStub> MakeClusterManagerTracingStub(
     std::shared_ptr<ClusterManagerStub> stub) {
   return std::make_shared<ClusterManagerTracingStub>(std::move(stub));

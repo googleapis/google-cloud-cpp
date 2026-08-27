@@ -415,6 +415,38 @@ StorageControlLogging::UpdateRapidCache(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+StorageControlLogging::AsyncDisableRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::storage::control::v2::DisableRapidCacheRequest const&
+                 request) {
+        return child_->AsyncDisableRapidCache(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlLogging::DisableRapidCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DisableRapidCacheRequest const&
+                 request) {
+        return child_->DisableRapidCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 StorageControlLogging::GetRapidCache(
     grpc::ClientContext& context, Options const& options,

@@ -592,6 +592,21 @@ ClusterManagerConnectionImpl::FetchNodePoolUpgradeInfo(
       *current, request, __func__);
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerConnectionImpl::CompleteControlPlaneUpgrade(
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CompleteControlPlaneUpgrade(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::CompleteControlPlaneUpgradeRequest const&
+                 request) {
+        return stub_->CompleteControlPlaneUpgrade(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

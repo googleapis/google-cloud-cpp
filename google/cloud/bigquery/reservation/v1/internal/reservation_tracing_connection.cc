@@ -356,6 +356,17 @@ ReservationServiceTracingConnection::ListReservationGroups(
       std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceTracingConnection::UpdateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "UpdateReservationGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateReservationGroup(request));
+}
+
 std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
 MakeReservationServiceTracingConnection(
     std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>

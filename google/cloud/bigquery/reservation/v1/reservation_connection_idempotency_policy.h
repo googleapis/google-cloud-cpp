@@ -148,6 +148,10 @@ class ReservationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListReservationGroups(
       google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
           request);
+
+  virtual google::cloud::Idempotency UpdateReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request);
 };
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>

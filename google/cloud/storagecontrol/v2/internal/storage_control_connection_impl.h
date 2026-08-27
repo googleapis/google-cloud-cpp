@@ -184,6 +184,18 @@ class StorageControlConnectionImpl
   future<StatusOr<google::storage::control::v2::RapidCache>> UpdateRapidCache(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      google::storage::control::v2::DisableRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DisableRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::DisableRapidCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
       google::storage::control::v2::GetRapidCacheRequest const& request)
       override;

@@ -338,6 +338,15 @@ ClusterManagerAuth::FetchNodePoolUpgradeInfo(
   return child_->FetchNodePoolUpgradeInfo(context, options, request);
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerAuth::CompleteControlPlaneUpgrade(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CompleteControlPlaneUpgrade(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

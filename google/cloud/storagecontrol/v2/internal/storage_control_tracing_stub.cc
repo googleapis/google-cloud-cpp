@@ -393,6 +393,33 @@ StorageControlTracingStub::UpdateRapidCache(
                            child_->UpdateRapidCache(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+StorageControlTracingStub::AsyncDisableRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "DisableRapidCache");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDisableRapidCache(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingStub::DisableRapidCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "DisableRapidCache");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DisableRapidCache(context, options, request));
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 StorageControlTracingStub::GetRapidCache(
     grpc::ClientContext& context, Options const& options,

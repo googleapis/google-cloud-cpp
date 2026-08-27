@@ -204,6 +204,12 @@ class ReservationServiceLogging : public ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::
           ListReservationGroupsRequest const& request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request) override;
+
  private:
   std::shared_ptr<ReservationServiceStub> child_;
   TracingOptions tracing_options_;

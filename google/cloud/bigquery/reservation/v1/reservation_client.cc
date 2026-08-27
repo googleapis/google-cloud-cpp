@@ -588,6 +588,28 @@ ReservationServiceClient::ListReservationGroups(
   return connection_->ListReservationGroups(std::move(request));
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::UpdateReservationGroup(
+    google::cloud::bigquery::reservation::v1::ReservationGroup const&
+        reservation_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::reservation::v1::UpdateReservationGroupRequest
+      request;
+  *request.mutable_reservation_group() = reservation_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateReservationGroup(request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::UpdateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateReservationGroup(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1
 }  // namespace cloud

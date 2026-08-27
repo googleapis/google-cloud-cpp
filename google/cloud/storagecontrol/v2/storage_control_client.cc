@@ -557,6 +557,47 @@ StorageControlClient::UpdateRapidCache(
   return connection_->UpdateRapidCache(operation);
 }
 
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::DisableRapidCache(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DisableRapidCacheRequest request;
+  request.set_name(name);
+  return connection_->DisableRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::DisableRapidCache(NoAwaitTag, std::string const& name,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DisableRapidCacheRequest request;
+  request.set_name(name);
+  return connection_->DisableRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::DisableRapidCache(
+    google::storage::control::v2::DisableRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::DisableRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::DisableRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::DisableRapidCache(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableRapidCache(operation);
+}
+
 StatusOr<google::storage::control::v2::RapidCache>
 StorageControlClient::GetRapidCache(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
