@@ -260,6 +260,10 @@ Options DefaultOptions(Options opts) {
     opts.set<experimental::DirectPathDiagnosticsTimeoutOption>(
         DefaultDirectPathDiagnosticsTimeout());
   }
+  if (!opts.has<experimental::DirectPathInitializationModeOption>()) {
+    opts.set<experimental::DirectPathInitializationModeOption>(
+        DefaultDirectPathInitializationMode());
+  }
 
   return opts;
 }

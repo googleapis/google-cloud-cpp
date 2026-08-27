@@ -149,6 +149,30 @@ TEST(MakeDataConnection, DirectPathModeOptionDisabledNoGrpcMetrics) {
                             experimental::DirectPathMetricsMode::kEnabled));
   EXPECT_NE(conn, nullptr);
 }
+
+TEST(MakeDataConnection, DirectPathInitializationModeBlocking) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a},
+      TestOptions()
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::kBlocking));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathInitializationModeSpeculative) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kEnabled)
+                        .set<experimental::DirectPathInitializationModeOption>(
+                            experimental::DirectPathInitializationMode::
+                                kAsynchronousSpeculative));
+  EXPECT_NE(conn, nullptr);
+}
 #endif
 
 }  // namespace

@@ -636,6 +636,8 @@ TEST(EndpointEnvTest, DirectPathTimeoutDefaults) {
               Eq(DefaultDirectPathProbeTimeout()));
   EXPECT_THAT(opts.get<experimental::DirectPathDiagnosticsTimeoutOption>(),
               Eq(DefaultDirectPathDiagnosticsTimeout()));
+  EXPECT_THAT(opts.get<experimental::DirectPathInitializationModeOption>(),
+              Eq(DefaultDirectPathInitializationMode()));
 }
 
 TEST(EndpointEnvTest, EmulatorOverridesCloudDirectPath) {
