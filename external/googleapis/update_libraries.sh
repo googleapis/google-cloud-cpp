@@ -64,6 +64,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc" \
       "@googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc"
   )"
+  ["biglake"]="@googleapis//google/cloud/biglake/hive/v1:hive_cc_grpc"
   ["bigquery"]="$(
     # This is long enough that it needs to be kept in alphabetical order
     printf ",%s" \
