@@ -52,6 +52,11 @@ constexpr std::chrono::milliseconds DefaultDirectPathDiagnosticsTimeout() {
   return std::chrono::seconds(60);
 }
 
+constexpr experimental::DirectPathInitializationMode
+DefaultDirectPathInitializationMode() {
+  return experimental::DirectPathInitializationMode::kBlocking;
+}
+
 /**
  * Returns true if Direct Path is enabled for Bigtable.
  */

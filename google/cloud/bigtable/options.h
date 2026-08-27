@@ -265,6 +265,31 @@ struct DirectPathDiagnosticsTimeoutOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * Option to configure the initialization behavior for DirectPath.
+ *
+ * - kBlocking - Channel Pool initialization begins only after
+ *   DirectPath or CloudPath is determined.
+ * - kAsynchronousSpeculative - Both DirectPath and CloudPath channel pools
+ *   are initialized on background threads while the probe runs. The unused
+ *   channel pool is discarded.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+enum class DirectPathInitializationMode {
+  kBlocking,  // Default.
+  kAsynchronousSpeculative,
+};
+
+/**
+ * Option to configure the initialization behavior for DirectPath.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DirectPathInitializationModeOption {
+  using Type = DirectPathInitializationMode;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
@@ -355,7 +380,8 @@ using DataPolicyOptionList =
     OptionList<DataRetryPolicyOption, DataBackoffPolicyOption, DeadlineOption,
                IdempotentMutationPolicyOption, EnableMetricsOption,
                MetricsPeriodOption,
-               experimental::DynamicChannelPoolSizingPolicyOption>;
+               experimental::DynamicChannelPoolSizingPolicyOption,
+               experimental::DirectPathInitializationModeOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

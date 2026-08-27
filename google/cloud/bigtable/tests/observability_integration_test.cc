@@ -159,6 +159,12 @@ class ObservabilityIntegrationTest
 
   void TearDown() override { TableIntegrationTest::TearDown(); }
 
+  static void VerifyDirectAccessCompatibleMetricOnDirectPath(
+      experimental::DirectPathInitializationMode mode);
+
+  static void VerifyDirectAccessFallbackAndDiagnosticsMetric(
+      experimental::DirectPathInitializationMode mode);
+
   static google::cloud::testing_util::OtelCollectorServer collector_service_;
   static std::unique_ptr<grpc::Server> server_;
   static std::string server_address_;
@@ -453,8 +459,9 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
                   HasMetricLabel("streaming", Not(IsEmpty()))))));
 }
 
-TEST_F(ObservabilityIntegrationTest,
-       VerifyDirectAccessCompatibleMetricOnDirectPath) {
+void ObservabilityIntegrationTest::
+    VerifyDirectAccessCompatibleMetricOnDirectPath(
+        experimental::DirectPathInitializationMode mode) {
   if (UsingCloudBigtableEmulator()) {
     GTEST_SKIP() << "Metrics export integration test runs against production";
   }
@@ -481,13 +488,15 @@ TEST_F(ObservabilityIntegrationTest,
                         server_address_);
   ScopedEnvironment env_otel("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
 
-  Options options = Options{}
-                        .set<EnableMetricsOption>(true)
-                        .set<experimental::DirectPathModeOption>(
-                            experimental::DirectPathMode::kEnabled)
-                        .set<MetricsPeriodOption>(std::chrono::seconds(5))
-                        .set<MinConnectionRefreshOption>(std::chrono::hours(1))
-                        .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
+  Options options =
+      Options{}
+          .set<EnableMetricsOption>(true)
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(mode)
+          .set<MetricsPeriodOption>(std::chrono::seconds(5))
+          .set<MinConnectionRefreshOption>(std::chrono::hours(1))
+          .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
 
   std::string const& table_id = TableTestEnvironment::table_id();
 
@@ -498,7 +507,12 @@ TEST_F(ObservabilityIntegrationTest,
     Table table(std::move(conn),
                 TableResource(project_id(), instance_id(), table_id));
 
-    std::string const row_key = "observability-directpath-compatible-row-1";
+    std::string const mode_str =
+        mode == experimental::DirectPathInitializationMode::kBlocking
+            ? "blocking"
+            : "speculative";
+    std::string const row_key = absl::StrCat(
+        "observability-directpath-compatible-", mode_str, "-row-1");
     std::vector<Cell> expected{
         {row_key, "family4", "c0", 1000, "v1000"},
         {row_key, "family4", "c1", 2000, "v2000"},
@@ -532,8 +546,9 @@ TEST_F(ObservabilityIntegrationTest,
           HasMetricLabel("ip_preference", AnyOf(Eq("ipv4"), Eq("ipv6")))))));
 }
 
-TEST_F(ObservabilityIntegrationTest,
-       VerifyDirectAccessFallbackAndDiagnosticsMetric) {
+void ObservabilityIntegrationTest::
+    VerifyDirectAccessFallbackAndDiagnosticsMetric(
+        experimental::DirectPathInitializationMode mode) {
   if (UsingCloudBigtableEmulator()) {
     GTEST_SKIP() << "Metrics export integration test runs against production";
   }
@@ -558,13 +573,15 @@ TEST_F(ObservabilityIntegrationTest,
                         server_address_);
   ScopedEnvironment env_otel("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
 
-  Options options = Options{}
-                        .set<EnableMetricsOption>(true)
-                        .set<experimental::DirectPathModeOption>(
-                            experimental::DirectPathMode::kEnabled)
-                        .set<MetricsPeriodOption>(std::chrono::seconds(5))
-                        .set<MinConnectionRefreshOption>(std::chrono::hours(1))
-                        .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
+  Options options =
+      Options{}
+          .set<EnableMetricsOption>(true)
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(mode)
+          .set<MetricsPeriodOption>(std::chrono::seconds(5))
+          .set<MinConnectionRefreshOption>(std::chrono::hours(1))
+          .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
 
   std::string const& table_id = TableTestEnvironment::table_id();
 
@@ -575,7 +592,12 @@ TEST_F(ObservabilityIntegrationTest,
     Table table(std::move(conn),
                 TableResource(project_id(), instance_id(), table_id));
 
-    std::string const row_key = "observability-directpath-fallback-row-1";
+    std::string const mode_str =
+        mode == experimental::DirectPathInitializationMode::kBlocking
+            ? "blocking"
+            : "speculative";
+    std::string const row_key =
+        absl::StrCat("observability-directpath-fallback-", mode_str, "-row-1");
     std::vector<Cell> expected{
         {row_key, "family4", "c0", 1000, "v1000"},
         {row_key, "family4", "c1", 2000, "v2000"},
@@ -605,6 +627,30 @@ TEST_F(ObservabilityIntegrationTest,
                             HasResourceLabel("instance", instance_id()),
                             HasMetricLabel("reason", Not(IsEmpty())),
                             HasMetricLabel("ip_preference", IsEmpty())))));
+}
+
+TEST_F(ObservabilityIntegrationTest,
+       VerifyDirectAccessCompatibleMetricOnDirectPathBlocking) {
+  VerifyDirectAccessCompatibleMetricOnDirectPath(
+      experimental::DirectPathInitializationMode::kBlocking);
+}
+
+TEST_F(ObservabilityIntegrationTest,
+       VerifyDirectAccessCompatibleMetricOnDirectPathSpeculative) {
+  VerifyDirectAccessCompatibleMetricOnDirectPath(
+      experimental::DirectPathInitializationMode::kAsynchronousSpeculative);
+}
+
+TEST_F(ObservabilityIntegrationTest,
+       VerifyDirectAccessFallbackAndDiagnosticsMetricBlocking) {
+  VerifyDirectAccessFallbackAndDiagnosticsMetric(
+      experimental::DirectPathInitializationMode::kBlocking);
+}
+
+TEST_F(ObservabilityIntegrationTest,
+       VerifyDirectAccessFallbackAndDiagnosticsMetricSpeculative) {
+  VerifyDirectAccessFallbackAndDiagnosticsMetric(
+      experimental::DirectPathInitializationMode::kAsynchronousSpeculative);
 }
 
 }  // namespace
