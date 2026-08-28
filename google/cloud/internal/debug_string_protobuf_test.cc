@@ -134,7 +134,21 @@ TEST(LogWrapperHelpers, Timestamp) {
                                                  "single_line_mode=off")));
 }
 
+template <
+    typename Printer,
+    typename = decltype(std::declval<Printer&>().SetRedactDebugString(true))>
+std::true_type SupportsRedact(int);
+
+template <typename Printer>
+std::false_type SupportsRedact(...);
+
 TEST(LogWrapperHelpers, RedactedField) {
+  if (!decltype(SupportsRedact<google::protobuf::TextFormat::Printer>(
+          0))::value) {
+    GTEST_SKIP()
+        << "SetRedactDebugString is not supported in this Protobuf version";
+  }
+
   google::protobuf::FileDescriptorProto file_proto;
   file_proto.set_name("test_redact.proto");
   file_proto.set_syntax("proto3");
