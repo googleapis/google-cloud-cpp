@@ -63,13 +63,29 @@ class TimestampMessagePrinter
 };
 
 template <typename Printer>
-auto SetRedact(Printer& p, int)
-    -> decltype(p.SetRedactDebugString(true), void()) {
+auto SetRedact(Printer& p, int) -> decltype(p.SetRedactDebugString(true),
+                                            void()) {
   p.SetRedactDebugString(true);
 }
 
 template <typename Printer>
 void SetRedact(Printer&, ...) {}
+
+void RemoveSilentMarker(std::string& str) {
+  auto start = str.find("goo.gle/");
+  if (start != std::string::npos) {
+    auto nl = str.find('\n', start);
+    if (nl != std::string::npos) {
+      str.erase(0, nl + 1);
+    } else {
+      auto end = str.find_first_of(" \t", start);
+      if (end != std::string::npos) {
+        auto next = str.find_first_not_of(" \t", end);
+        str.erase(0, next == std::string::npos ? str.size() : next);
+      }
+    }
+  }
+}
 
 }  // namespace
 
@@ -90,6 +106,7 @@ std::string DebugString(google::protobuf::Message const& m,
   p.RegisterMessagePrinter(google::protobuf::Timestamp::descriptor(),
                            new TimestampMessagePrinter);
   p.PrintToString(m, &str);
+  RemoveSilentMarker(str);
   return absl::StrCat(m.GetTypeName(), " {",
                       (options.single_line_mode() ? " " : "\n"), str, "}");
 }

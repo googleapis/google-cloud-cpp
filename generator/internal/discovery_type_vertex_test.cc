@@ -248,21 +248,19 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonMatches) {
 )""";
   auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("monkey", "monkey", json),
-      Eq(" [json_name=\"monkey\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("monkey", "monkey", json),
+              Eq(" [json_name=\"monkey\"]"));
   EXPECT_THAT(
       DiscoveryTypeVertex::FormatFieldOptions("keyboard", "keyboard", json),
       Eq(" [json_name=\"keyboard\"]"));
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("hockey", "hockey", json),
-      Eq(" [json_name=\"hockey\"]"));
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("keypad", "keypad", json),
-      Eq(" [json_name=\"keypad\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("hockey", "hockey", json),
+              Eq(" [json_name=\"hockey\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("keypad", "keypad", json),
+              Eq(" [json_name=\"keypad\"]"));
 }
 
-TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonStringNotRedacted) {
+TEST(DiscoveryTypeVertexTest,
+     FormatFieldOptionsDebugRedactNonStringNotRedacted) {
   auto constexpr kFieldJson = R"""(
 {
   "type": "integer"
@@ -270,9 +268,8 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonStringNotRedacted)
 )""";
   auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("key_id", "keyId", json),
-      Eq(" [json_name=\"keyId\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("key_id", "keyId", json),
+              Eq(" [json_name=\"keyId\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactRequired) {
@@ -1420,8 +1417,7 @@ message TestSchema {
                                  "optional string to: optional double")));
 }
 
-TEST_F(DiscoveryTypeVertexDescriptorTest,
-       JsonToProtobufCustomerEncryptionKey) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufCustomerEncryptionKey) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "CustomerEncryptionKey",
