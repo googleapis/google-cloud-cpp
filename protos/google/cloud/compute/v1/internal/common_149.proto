@@ -32,5 +32,6 @@ message SnapshotUpdateKmsKeyRequest {
   //
   //      -
   // projects/project_id/locations/region/keyRings/key_ring/cryptoKeys/key
-  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
+  optional string kms_key_name = 1
+      [debug_redact = true, json_name = "kmsKeyName"];
 }

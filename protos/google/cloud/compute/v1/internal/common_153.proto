@@ -128,7 +128,7 @@ message SslPoliciesList {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -231,7 +231,7 @@ message SslPolicy {
   // DEFERRED: Disabled until October 2027, enabled afterward.
   // ENABLED: Enabled now.
   optional string post_quantum_key_exchange = 14
-      [json_name = "postQuantumKeyExchange"];
+      [debug_redact = true, json_name = "postQuantumKeyExchange"];
 
   // Profile specifies the set of SSL features that can be used by the load
   // balancer when negotiating SSL with clients. This can be one ofCOMPATIBLE,
@@ -347,7 +347,7 @@ message SslPolicy {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];

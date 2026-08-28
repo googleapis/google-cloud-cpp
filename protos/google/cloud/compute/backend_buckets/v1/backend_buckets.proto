@@ -405,8 +405,11 @@ message DeleteSignedUrlKeyRequest {
       [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
 
   // The name of the Signed URL Key to delete.
-  string key_name = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "keyName"];
+  string key_name = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    debug_redact = true,
+    json_name = "keyName"
+  ];
 
   // Project ID for this request.
   string project = 3 [

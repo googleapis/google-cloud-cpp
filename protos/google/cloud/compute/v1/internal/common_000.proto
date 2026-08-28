@@ -35,14 +35,16 @@ message AWSV4Signature {
   // request.
   //
   // @InputOnly
-  optional string access_key = 1 [json_name = "accessKey"];
+  optional string access_key = 1 [debug_redact = true, json_name = "accessKey"];
 
   // The identifier of an access key used for s3 bucket authentication.
-  optional string access_key_id = 2 [json_name = "accessKeyId"];
+  optional string access_key_id = 2
+      [debug_redact = true, json_name = "accessKeyId"];
 
   // The optional version identifier for the access key. You can use this to
   // keep track of different iterations of your access key.
-  optional string access_key_version = 3 [json_name = "accessKeyVersion"];
+  optional string access_key_version = 3
+      [debug_redact = true, json_name = "accessKeyVersion"];
 
   // The name of the cloud region of your origin. This is a free-form field with
   // the name of the region your cloud uses to host your origin.  For example,
@@ -1095,7 +1097,8 @@ message BackendServiceCdnPolicy {
       [json_name = "signedUrlCacheMaxAgeSec"];
 
   // [Output Only] Names of the keys for signing request URLs.
-  repeated string signed_url_key_names = 12 [json_name = "signedUrlKeyNames"];
+  repeated string signed_url_key_names = 12
+      [debug_redact = true, json_name = "signedUrlKeyNames"];
 }
 
 // Bypass the cache when the specified request headers are present,
@@ -1551,7 +1554,7 @@ message BackendServiceList {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -1682,7 +1685,7 @@ message BackendServiceListUsable {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];

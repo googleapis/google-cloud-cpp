@@ -69,7 +69,8 @@ message GuestAttributes {
   optional string self_link = 4 [json_name = "selfLink"];
 
   // The key to search for.
-  optional string variable_key = 5 [json_name = "variableKey"];
+  optional string variable_key = 5
+      [debug_redact = true, json_name = "variableKey"];
 
   // Output only. [Output Only] The value found for the requested key.
   optional string variable_value = 6 [json_name = "variableValue"];
@@ -78,7 +79,7 @@ message GuestAttributes {
 // A guest attributes namespace/key/value entry.
 message GuestAttributesEntry {
   // Key for the guest attribute entry.
-  optional string key = 1 [json_name = "key"];
+  optional string key = 1 [debug_redact = true, json_name = "key"];
 
   // Namespace for the guest attribute entry.
   optional string namespace = 2 [json_name = "namespace"];
@@ -174,7 +175,7 @@ message Instance {
   // NONE: Indicates user chose no operation.
   // STOP: Indicates user chose to opt for VM shutdown on key revocation.
   optional string key_revocation_action_type = 14
-      [json_name = "keyRevocationActionType"];
+      [debug_redact = true, json_name = "keyRevocationActionType"];
 
   // Output only. [Output Only] Type of the resource. Always compute#instance
   // for instances.
@@ -512,7 +513,7 @@ message InstanceAggregatedList {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -642,7 +643,7 @@ message InstanceList {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -772,7 +773,7 @@ message InstanceListReferrers {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -983,7 +984,7 @@ message InstancesScopedList {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [debug_redact = true, json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];

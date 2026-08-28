@@ -56,10 +56,9 @@ bool IsStringOrBytes(nlohmann::json const& field_json) {
 }
 
 bool ContainsKeyWord(std::string_view s) {
-  for (auto const& token : absl::StrSplit(s, '_')) {
-    if (token == "key") return true;
-  }
-  return false;
+  auto const tokens = absl::StrSplit(s, '_');
+  return std::any_of(tokens.begin(), tokens.end(),
+                     [](absl::string_view token) { return token == "key"; });
 }
 
 }  // namespace
