@@ -30,7 +30,7 @@ void RemoveStaleFolders(
     google::cloud::storagecontrol_v2::StorageControlClient client,
     std::string const& bucket_name, std::string const& prefix,
     std::chrono::system_clock::time_point created_time_limit) {
-  std::regex re(prefix + R"re(-[a-z]{32})re");
+  std::regex re(prefix + R"re(-(recursive-)?[a-z]{16,32})re");
   auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
   for (auto folder : client.ListFolders(parent)) {
     if (!folder) throw std::move(folder).status();
@@ -38,7 +38,7 @@ void RemoveStaleFolders(
     auto const create_time =
         google::cloud::internal::ToChronoTimePoint(folder->create_time());
     if (create_time > created_time_limit) continue;
-    (void)client.DeleteFolder(folder->name());
+    (void)client.DeleteFolderRecursive(folder->name()).get();
   }
 }
 
