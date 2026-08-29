@@ -142,7 +142,9 @@ void DeleteFolderRecursive(
      std::string const& bucket_name, std::string const& folder_id) {
     auto const name = std::string{"projects/_/buckets/"} + bucket_name +
                       "/folders/" + folder_id;
-    auto status = client.DeleteFolderRecursive(name).get();
+    google::cloud::StatusOr<
+        google::storage::control::v2::DeleteFolderRecursiveMetadata>
+        status = client.DeleteFolderRecursive(name).get();
     if (!status.ok()) throw std::move(status).status();
 
     std::cout << "Deleted folder recursively: " << folder_id << "\n";
