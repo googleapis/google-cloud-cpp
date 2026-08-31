@@ -37,7 +37,7 @@ grpc::Status SessionNotFoundRpcError(std::string name) {
   google::rpc::Status proto;
   proto.set_code(grpc::StatusCode::NOT_FOUND);
   proto.set_message("Session not found");
-  proto.add_details()->PackFrom(resource_info);
+  (void)proto.add_details()->PackFrom(resource_info);
 
   return grpc::Status(grpc::StatusCode::NOT_FOUND, proto.message(),
                       proto.SerializeAsString());

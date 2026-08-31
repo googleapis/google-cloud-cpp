@@ -1,0 +1,25 @@
+/*!
+@page biglake-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `biglake_hive_v1::HiveMetastoreServiceClient`:
+
+@snippet hive_metastore_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page biglake_hive_v1::HiveMetastoreServiceClient-endpoint-snippet Override biglake_hive_v1::HiveMetastoreServiceClient Endpoint Configuration
+
+@snippet google/cloud/biglake/hive/v1/samples/hive_metastore_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

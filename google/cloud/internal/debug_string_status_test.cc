@@ -36,7 +36,7 @@ TEST(DebugStringStatus, Basic) {
   auto proto = google::rpc::Status();
   proto.set_code(static_cast<std::int32_t>(StatusCode::kInvalidArgument));
   proto.set_message("oh noes!");
-  proto.add_details()->PackFrom(detail);
+  (void)proto.add_details()->PackFrom(detail);
 
   auto const status = MakeStatusFromRpcError(proto);
   auto const actual = DebugString(status, TracingOptions());
@@ -55,7 +55,7 @@ TEST(DebugStringStatus, WithDetails) {
   google::rpc::Status proto;
   proto.set_code(grpc::StatusCode::NOT_FOUND);
   proto.set_message("Resource not found");
-  proto.add_details()->PackFrom(resource_info);
+  (void)proto.add_details()->PackFrom(resource_info);
 
   TracingOptions tracing_options;
   auto s = DebugString(MakeStatusFromRpcError(proto), tracing_options);

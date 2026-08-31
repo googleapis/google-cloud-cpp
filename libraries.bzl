@@ -46,6 +46,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "baremetalsolution",
     "batch",
     "beyondcorp",
+    "biglake",
     "bigquery",
     "bigquerycontrol",
     "bigtable",

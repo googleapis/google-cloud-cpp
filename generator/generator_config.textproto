@@ -427,6 +427,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# BigLake
+service {
+  service_proto_path: "google/cloud/biglake/hive/v1/hive_metastore.proto"
+  product_path: "google/cloud/biglake/hive/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # BigQuery
 service {
   service_proto_path: "google/cloud/bigquery/analyticshub/v1/analyticshub.proto"

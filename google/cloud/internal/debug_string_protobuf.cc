@@ -105,7 +105,7 @@ std::string DebugString(google::protobuf::Message const& m,
                            new DurationMessagePrinter);
   p.RegisterMessagePrinter(google::protobuf::Timestamp::descriptor(),
                            new TimestampMessagePrinter);
-  p.PrintToString(m, &str);
+  (void)p.PrintToString(m, &str);
   RemoveSilentMarker(str);
   return absl::StrCat(m.GetTypeName(), " {",
                       (options.single_line_mode() ? " " : "\n"), str, "}");
