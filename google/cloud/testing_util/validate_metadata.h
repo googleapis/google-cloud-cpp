@@ -73,7 +73,7 @@ class ValidateMetadataFixture {
   /**
    * Get the `authority` field from `ClientContext`.
    *
-   * With older versions of gRPC this returns `absl::nullopt`, the caller may
+   * With older versions of gRPC this returns `std::nullopt`, the caller may
    * want to skip the rest of the test.
    *
    * @note A `grpc::ClientContext` can be used in only one gRPC. The caller

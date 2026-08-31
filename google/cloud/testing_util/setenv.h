@@ -44,7 +44,7 @@ void SetEnv(char const* variable, char const* value);
 /**
  * Set the @p variable environment variable to @p value.
  *
- * If @value is an unset `absl::optional` then the variable is unset.
+ * If @value is an unset `std::optional` then the variable is unset.
  *
  * @warning A modification to the environment must be serialized with all
  *   other environment reads and writes, so this should only be used when

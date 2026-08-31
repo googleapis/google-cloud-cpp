@@ -35,7 +35,7 @@ class ScopedEnvironment {
  public:
   /**
    * Set the @p variable environment variable to @p value. If @value is
-   * an unset `absl::optional` then the variable is unset. The previous value
+   * an unset `std::optional` then the variable is unset. The previous value
    * of the variable will be restored upon destruction.
    */
   ScopedEnvironment(std::string variable,

@@ -106,7 +106,6 @@ function (google_cloud_cpp_rest_protobuf_internal_add_test fname labels)
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing
                 google-cloud-cpp::common
-                absl::variant
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest)

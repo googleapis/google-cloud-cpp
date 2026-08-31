@@ -184,11 +184,9 @@ target_link_libraries(
     google_cloud_cpp_common
     PUBLIC absl::base
            absl::memory
-           absl::optional
            absl::span
            absl::str_format
            absl::time
-           absl::variant
            Threads::Threads)
 if (WIN32)
     target_compile_definitions(google_cloud_cpp_common
@@ -255,12 +253,10 @@ google_cloud_cpp_add_pkgconfig(
     "common"
     "Google Cloud C++ Client Library Common Components"
     "Common Components used by the Google Cloud C++ Client Libraries."
-    "absl_optional"
     "absl_span"
     "absl_strings"
     "absl_time"
     "absl_time_zone"
-    "absl_variant"
     "${GOOGLE_CLOUD_CPP_OPENTELEMETRY_API}"
     NON_WIN32_REQUIRES
     openssl
@@ -428,7 +424,6 @@ if (BUILD_TESTING)
             PRIVATE google_cloud_cpp_testing
                     google-cloud-cpp::common
                     google-cloud-cpp::mocks
-                    absl::variant
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)
