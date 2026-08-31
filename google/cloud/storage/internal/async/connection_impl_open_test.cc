@@ -100,10 +100,10 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
     auto details_proto = google::rpc::Status{};
     details_proto.set_code(grpc::StatusCode::ABORTED);
     details_proto.set_message("redirect");
-    details_proto.add_details()->PackFrom(redirected);
+    (void)details_proto.add_details()->PackFrom(redirected);
 
     std::string details;
-    details_proto.SerializeToString(&details);
+    (void)details_proto.SerializeToString(&details);
     return details;
   };
 

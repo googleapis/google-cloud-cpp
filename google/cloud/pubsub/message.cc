@@ -87,7 +87,7 @@ std::ostream& operator<<(std::ostream& os, Message const& rhs) {
   p.SetSingleLineMode(true);
   p.SetTruncateStringFieldLongerThan(kMaximumPayloadBytes);
   std::string text;
-  p.PrintToString(rhs.proto_, &text);
+  (void)p.PrintToString(rhs.proto_, &text);
   return os << text;
 }
 
