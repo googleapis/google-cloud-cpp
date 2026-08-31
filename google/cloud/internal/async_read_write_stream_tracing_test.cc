@@ -114,11 +114,11 @@ TEST(AsyncStreamingReadWriteRpcTracing, Read) {
   auto span = MakeSpan("span");
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce([] { return make_ready_future(absl::make_optional(100)); })
-      .WillOnce([] { return make_ready_future(absl::make_optional(200)); })
-      .WillOnce([] { return make_ready_future(absl::make_optional(300)); })
+      .WillOnce([] { return make_ready_future(std::make_optional(100)); })
+      .WillOnce([] { return make_ready_future(std::make_optional(200)); })
+      .WillOnce([] { return make_ready_future(std::make_optional(300)); })
       .WillOnce(
-          [] { return make_ready_future<absl::optional<int>>(absl::nullopt); });
+          [] { return make_ready_future<std::optional<int>>(std::nullopt); });
   EXPECT_CALL(*mock, Finish)
       .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
 
@@ -207,7 +207,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, SeparateCountersForReadAndWrite) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Write).WillOnce(Return(make_ready_future(true)));
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::make_optional(100));
+    return make_ready_future(std::make_optional(100));
   });
   EXPECT_CALL(*mock, Finish)
       .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));

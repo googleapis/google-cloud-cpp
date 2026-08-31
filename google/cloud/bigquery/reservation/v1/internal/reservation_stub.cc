@@ -416,6 +416,20 @@ DefaultReservationServiceStub::ListReservationGroups(
   return response;
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+DefaultReservationServiceStub::UpdateReservationGroup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request) {
+  google::cloud::bigquery::reservation::v1::ReservationGroup response;
+  auto status =
+      grpc_stub_->UpdateReservationGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud

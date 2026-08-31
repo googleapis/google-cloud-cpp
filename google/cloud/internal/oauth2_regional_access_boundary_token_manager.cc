@@ -218,7 +218,7 @@ RegionalAccessBoundaryTokenManager::AllowedLocations(
 
 StatusOr<std::vector<std::uint8_t>>
 RegionalAccessBoundaryTokenManager::SignBlob(
-    absl::optional<std::string> const& signing_service_account,
+    std::optional<std::string> const& signing_service_account,
     std::string const& string_to_sign) const {
   return child_->SignBlob(signing_service_account, string_to_sign);
 }

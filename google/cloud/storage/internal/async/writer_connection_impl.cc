@@ -13,12 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/partial_upload.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
-#include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -50,14 +52,11 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    std::int64_t persisted_size, bool first_request,
-    absl::optional<google::storage::v2::ObjectChecksums>
-        persisted_data_checksums)
+    std::int64_t persisted_size, bool first_request)
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(persisted_size),
-          /*offset=*/persisted_size, std::move(first_request),
-          std::move(persisted_data_checksums)) {}
+          /*offset=*/persisted_size, std::move(first_request)) {}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
@@ -68,17 +67,14 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(metadata),
-          /*offset=*/metadata.size(), std::move(first_request), absl::nullopt) {
-}
+          /*offset=*/metadata.size(), std::move(first_request)) {}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    PersistedStateType persisted_state, std::int64_t offset, bool first_request,
-    absl::optional<google::storage::v2::ObjectChecksums>
-        persisted_data_checksums)
+    PersistedStateType persisted_state, std::int64_t offset, bool first_request)
     : options_(std::move(options)),
       impl_(std::move(impl)),
       request_(std::move(request)),
@@ -86,8 +82,7 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
       persisted_state_(std::move(persisted_state)),
       offset_(offset),
       first_request_(std::move(first_request)),
-      finished_(on_finish_.get_future()),
-      persisted_data_checksums_(std::move(persisted_data_checksums)) {
+      finished_(on_finish_.get_future()) {
   request_.clear_object_checksums();
   request_.set_state_lookup(false);
   request_.set_flush(false);
@@ -123,6 +118,7 @@ std::string AsyncWriterConnectionImpl::UploadId() const {
 
 absl::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriterConnectionImpl::PersistedState() const {
+  std::unique_lock<std::mutex> lk(mu_);
   return persisted_state_;
 }
 
@@ -146,15 +142,43 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
+  auto is_append = request_.has_append_object_spec() ||
+                   request_.write_object_spec().appendable();
+  auto const& current_options = google::cloud::internal::CurrentOptions();
+  auto merged = google::cloud::internal::MergeOptions(
+      current_options, options_ ? *options_ : google::cloud::Options{});
+
+  // Default to letting the internal hash function compute and send the
+  // checksum.
   auto action = PartialUpload::kFinalizeWithChecksum;
-  if (request_.has_append_object_spec() ||
-      request_.write_object_spec().appendable()) {
-    if (!absl::holds_alternative<google::storage::v2::Object>(
-            persisted_state_) &&
-        !persisted_data_checksums_.has_value()) {
-      action = PartialUpload::kFinalize;
+
+  if (is_append) {
+    // For appendable uploads, the internal hash function only sees the chunks
+    // uploaded in this stream, not the full object. We use `kFinalize` to avoid
+    // sending this partial hash, which would otherwise fail validation.
+    if (merged.has<google::cloud::storage::UseCrc32cValueOption>()) {
+      write.mutable_object_checksums()->set_crc32c(
+          merged.get<google::cloud::storage::UseCrc32cValueOption>());
     }
+    action = PartialUpload::kFinalize;
+  } else if (current_options
+                 .has<google::cloud::storage::UseCrc32cValueOption>() ||
+             current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
+    // If the user specified a manual expected checksum dynamically at
+    // Finalize() via current_options, we manually inject it and use `kFinalize`
+    // so the internal hash function doesn't overwrite it with its own computed
+    // hash.
+    if (current_options.has<google::cloud::storage::UseCrc32cValueOption>()) {
+      write.mutable_object_checksums()->set_crc32c(
+          current_options.get<google::cloud::storage::UseCrc32cValueOption>());
+    }
+    if (current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
+      write.mutable_object_checksums()->set_md5_hash(
+          current_options.get<google::cloud::storage::UseMD5ValueOption>());
+    }
+    action = PartialUpload::kFinalize;
   }
+
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
@@ -172,7 +196,7 @@ future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {
 
   return coro->Start().then([coro, size, this](auto f) mutable {
     coro.reset();  // breaks the cycle between the completion queue and coro
-    return OnPartialUpload(size, f.get());
+    return OnFlush(size, f.get());
   });
 }
 
@@ -190,7 +214,16 @@ future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
-  return impl_->Read().then([this](auto f) { return OnQuery(f.get()); });
+  std::unique_lock<std::mutex> lk(mu_);
+  if (auto* size = absl::get_if<std::int64_t>(&persisted_state_)) {
+    return make_ready_future(make_status_or(*size));
+  }
+  if (auto* meta =
+          absl::get_if<google::storage::v2::Object>(&persisted_state_)) {
+    return make_ready_future(
+        make_status_or(static_cast<std::int64_t>(meta->size())));
+  }
+  return make_ready_future(make_status_or(static_cast<std::int64_t>(0)));
 }
 
 RpcMetadata AsyncWriterConnectionImpl::GetRequestMetadata() {
@@ -224,8 +257,59 @@ future<Status> AsyncWriterConnectionImpl::OnPartialUpload(
     return Finish().then(
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
+  std::unique_lock<std::mutex> lk(mu_);
   offset_ += upload_size;
+  lk.unlock();
   return make_ready_future(Status{});
+}
+
+future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
+                                                  StatusOr<bool> success) {
+  if (!success) {
+    return Finish().then(HandleFinishAfterError(std::move(success).status()));
+  }
+  if (!*success) {
+    return Finish().then(
+        HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
+  }
+  std::unique_lock<std::mutex> lk(mu_);
+  offset_ += upload_size;
+  auto expected_offset = offset_;
+  auto impl = impl_;
+  lk.unlock();
+
+  struct ConsumeLoop {
+    AsyncWriterConnectionImpl* self;
+    std::shared_ptr<StreamingRpc> impl;
+    std::int64_t expected_offset;
+
+    future<Status> operator()(
+        future<absl::optional<google::storage::v2::BidiWriteObjectResponse>>
+            f) {
+      auto response = std::move(f).get();
+      if (!response.has_value()) {
+        return self->Finish().then(HandleFinishAfterError(
+            "Expected error in Finish() after non-ok Read()"));
+      }
+      std::unique_lock<std::mutex> lk(self->mu_);
+      if (response->has_write_handle()) {
+        self->latest_write_handle_ = response->write_handle();
+      }
+      if (response->has_persisted_size()) {
+        self->persisted_state_ = response->persisted_size();
+        if (response->persisted_size() >= expected_offset) {
+          return make_ready_future(Status{});
+        }
+      }
+      if (response->has_resource()) {
+        self->persisted_state_ = response->resource();
+        return make_ready_future(Status{});
+      }
+      lk.unlock();
+      return impl->Read().then(std::move(*this));
+    }
+  };
+  return impl->Read().then(ConsumeLoop{this, impl, expected_offset});
 }
 
 future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
@@ -237,8 +321,26 @@ future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
     return Finish().then(
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
+  std::unique_lock<std::mutex> lk(mu_);
   offset_ += upload_size;
-  return Finish().then([](auto f) { return f.get(); });
+  auto impl = impl_;
+  lk.unlock();
+
+  struct ConsumeLoop {
+    std::shared_ptr<StreamingRpc> impl;
+
+    future<void> operator()(
+        future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
+      auto response = std::move(f).get();
+      if (!response.has_value()) return make_ready_future();
+      return impl->Read().then(*this);
+    }
+  };
+
+  return impl->Read().then(ConsumeLoop{impl}).then([this](auto f) {
+    f.get();
+    return Finish();
+  });
 }
 
 future<StatusOr<google::storage::v2::Object>>
@@ -258,58 +360,52 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
             "Expected error in Finish() after non-ok Write()"))
         .then(transform);
   }
+  std::unique_lock<std::mutex> lk(mu_);
   offset_ += upload_size;
 
-  std::unique_lock<std::mutex> lk(mu_);
   auto impl = impl_;
   lk.unlock();
-  return impl->Read()
-      .then([this](auto f) { return OnQuery(f.get()); })
-      .then([this](auto g) -> StatusOr<google::storage::v2::Object> {
-        auto status = g.get();
-        if (!status) return std::move(status).status();
-        if (!absl::holds_alternative<google::storage::v2::Object>(
-                persisted_state_)) {
-          return internal::InternalError(
-              "no object metadata returned after finalizing upload",
-              GCP_ERROR_INFO());
+
+  struct ConsumeLoop {
+    AsyncWriterConnectionImpl* self;
+    std::shared_ptr<StreamingRpc> impl;
+
+    future<void> operator()(
+        future<absl::optional<google::storage::v2::BidiWriteObjectResponse>>
+            f) {
+      auto response = std::move(f).get();
+      if (!response.has_value()) return make_ready_future();
+      {
+        std::unique_lock<std::mutex> lk(self->mu_);
+        if (response->has_write_handle()) {
+          self->latest_write_handle_ = response->write_handle();
         }
-        return absl::get<google::storage::v2::Object>(persisted_state_);
-      });
-}
-
-future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
-    absl::optional<google::storage::v2::BidiWriteObjectResponse> response) {
-  if (!response.has_value()) {
-    return Finish()
-        .then(HandleFinishAfterError(
-            "Expected error in Finish() after non-ok Read()"))
-        .then([this](auto g) {
-          auto result = g.get();
-          google::rpc::Status grpc_status = ExtractGrpcStatus(result);
-          HandleBidiWriteRedirect(request_, grpc_status);
-          return StatusOr<std::int64_t>(std::move(result));
-        });
-  }
-  if (response->has_write_handle()) {
-    latest_write_handle_ = response->write_handle();
-  }
-  if (response->has_persisted_size()) {
-    persisted_state_ = response->persisted_size();
-
-    if (response->has_persisted_data_checksums()) {
-      auto const& checksums = response->persisted_data_checksums();
-      if (checksums.has_crc32c()) {
-        persisted_data_checksums_ = checksums;
+        if (response->has_persisted_size()) {
+          self->persisted_state_ = response->persisted_size();
+        }
+        if (response->has_resource()) {
+          self->persisted_state_ = response->resource();
+        }
       }
+      return impl->Read().then(std::move(*this));
     }
-    return make_ready_future(make_status_or(response->persisted_size()));
-  }
-  if (response->has_resource()) {
-    persisted_state_ = response->resource();
-    return make_ready_future(make_status_or(response->resource().size()));
-  }
-  return make_ready_future(make_status_or(static_cast<std::int64_t>(0)));
+  };
+
+  return impl->Read().then(ConsumeLoop{this, impl}).then([this](auto f) {
+    std::move(f).get();
+    return Finish().then(
+        [this](auto f2) -> StatusOr<google::storage::v2::Object> {
+          auto status = f2.get();
+          if (!status.ok()) return status;
+          if (!absl::holds_alternative<google::storage::v2::Object>(
+                  persisted_state_)) {
+            return internal::InternalError(
+                "no object metadata returned after finalizing upload",
+                GCP_ERROR_INFO());
+          }
+          return absl::get<google::storage::v2::Object>(persisted_state_);
+        });
+  });
 }
 
 future<Status> AsyncWriterConnectionImpl::Finish() {

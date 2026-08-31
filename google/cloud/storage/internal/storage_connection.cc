@@ -34,7 +34,7 @@ StatusOr<CreateOrResumeResponse> CreateOrResume(
     auto create = connection.CreateResumableUpload(request);
     if (!create) return std::move(create).status();
     return CreateOrResumeResponse{std::move(create->upload_id), 0,
-                                  absl::nullopt};
+                                  std::nullopt};
   }
 
   auto query = internal::QueryResumableUploadRequest(session_id);

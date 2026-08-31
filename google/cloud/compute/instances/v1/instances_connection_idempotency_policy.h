@@ -40,6 +40,10 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
           request);
 
+  virtual google::cloud::Idempotency AddNetworkInterface(
+      google::cloud::cpp::compute::instances::v1::
+          AddNetworkInterfaceRequest const& request);
+
   virtual google::cloud::Idempotency AddResourcePolicies(
       google::cloud::cpp::compute::instances::v1::
           AddResourcePoliciesRequest const& request);
@@ -63,6 +67,10 @@ class InstancesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteAccessConfig(
       google::cloud::cpp::compute::instances::v1::
           DeleteAccessConfigRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteNetworkInterface(
+      google::cloud::cpp::compute::instances::v1::
+          DeleteNetworkInterfaceRequest const& request);
 
   virtual google::cloud::Idempotency DetachDisk(
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&

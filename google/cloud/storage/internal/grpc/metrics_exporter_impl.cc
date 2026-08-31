@@ -81,14 +81,14 @@ class ExporterRegistry {
 
 }  // namespace
 
-absl::optional<ExporterConfig> MakeMeterProviderConfig(
+std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options) {
   if (!options.get<storage_experimental::EnableGrpcMetricsOption>()) {
-    return absl::nullopt;
+    return std::nullopt;
   }
   auto project = MonitoringProject(resource, options);
-  if (!project) return absl::nullopt;
+  if (!project) return std::nullopt;
 
   auto exporter_options = MetricsExporterOptions(*project, resource);
   if (options.has<storage_experimental::GrpcMetricsExcludedLabelsOption>()) {

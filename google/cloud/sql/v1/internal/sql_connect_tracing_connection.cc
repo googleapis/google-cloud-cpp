@@ -39,6 +39,15 @@ SqlConnectServiceTracingConnection::GetConnectSettings(
   return internal::EndSpan(*span, child_->GetConnectSettings(request));
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+SqlConnectServiceTracingConnection::ResolveConnectSettings(
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlConnectServiceConnection::ResolveConnectSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ResolveConnectSettings(request));
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceTracingConnection::GenerateEphemeralCert(
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {

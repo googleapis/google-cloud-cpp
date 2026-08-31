@@ -27,13 +27,13 @@
 #include "google/cloud/ssl_certificate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "absl/types/span.h"
 #include <array>
 #include <chrono>
 #include <cstdint>
 #include <map>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -75,6 +75,8 @@ class CurlImpl {
 
   CurlImpl(CurlHandle handle, std::shared_ptr<CurlHandleFactory> factory,
            Options const& options);
+  CurlImpl(CurlHandle handle, std::shared_ptr<CurlHandleFactory> factory,
+           Options const& options, std::string pqc_ec_curves);
   ~CurlImpl();
 
   CurlImpl(CurlImpl const&) = delete;
@@ -121,6 +123,13 @@ class CurlImpl {
 
   void WriteHeader(std::string const& header);
 
+  // Sets the connection timeout, using `HttpConnectTimeoutOption` when the
+  // application configured one and @p fallback (the relevant stall timeout)
+  // otherwise. This is the only place that sets a connection timeout: libcurl
+  // keeps a single value for `CURLOPT_CONNECTTIMEOUT` and
+  // `CURLOPT_CONNECTTIMEOUT_MS`.
+  Status SetConnectTimeout(std::chrono::seconds fallback);
+
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
   // Perform at least part of the request.
@@ -144,18 +153,19 @@ class CurlImpl {
   CurlHandle::SocketOptions socket_options_;
   std::string user_agent_;
   std::string http_version_;
+  std::chrono::milliseconds connect_timeout_ms_{0};
   std::chrono::seconds transfer_stall_timeout_;
   std::uint32_t transfer_stall_minimum_rate_;
   std::chrono::seconds download_stall_timeout_;
   std::uint32_t download_stall_minimum_rate_;
 
-  absl::optional<std::string> proxy_;
-  absl::optional<std::string> proxy_username_;
-  absl::optional<std::string> proxy_password_;
+  std::optional<std::string> proxy_;
+  std::optional<std::string> proxy_username_;
+  std::optional<std::string> proxy_password_;
 
-  absl::optional<experimental::SslCertificate> client_ssl_cert_ = absl::nullopt;
+  std::optional<experimental::SslCertificate> client_ssl_cert_ = std::nullopt;
 
-  absl::optional<std::string> interface_;
+  std::optional<std::string> interface_;
 
   CurlReceivedHeaders received_headers_;
   std::string url_;
@@ -195,19 +205,21 @@ class CurlImpl {
 
   // Store pending data between WriteCallback() calls.
   SpillBuffer spill_;
+
+  std::string pqc_ec_curves_;
 };
 
 /// Compute the CURLOPT_PROXY setting from @p options.
-absl::optional<std::string> CurlOptProxy(Options const& options);
+std::optional<std::string> CurlOptProxy(Options const& options);
 
 /// Compute the CURLOPT_PROXYUSERNAME setting from @p options.
-absl::optional<std::string> CurlOptProxyUsername(Options const& options);
+std::optional<std::string> CurlOptProxyUsername(Options const& options);
 
 /// Compute the CURLOPT_PROXYPASSWORD setting from @p options.
-absl::optional<std::string> CurlOptProxyPassword(Options const& options);
+std::optional<std::string> CurlOptProxyPassword(Options const& options);
 
 /// Compute the CURLOPT_INTERFACE setting from @p options.
-absl::optional<std::string> CurlOptInterface(Options const& options);
+std::optional<std::string> CurlOptInterface(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

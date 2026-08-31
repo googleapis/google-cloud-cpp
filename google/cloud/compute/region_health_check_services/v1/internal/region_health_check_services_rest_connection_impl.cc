@@ -48,6 +48,53 @@ RegionHealthCheckServicesRestConnectionImpl::
           std::move(options), RegionHealthCheckServicesConnection::options())) {
 }
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>
+RegionHealthCheckServicesRestConnectionImpl::
+    AggregatedListRegionHealthCheckServices(
+        google::cloud::cpp::compute::region_health_check_services::v1::
+            AggregatedListRegionHealthCheckServicesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListRegionHealthCheckServices(
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_region_health_check_services_v1::
+                                   RegionHealthCheckServicesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::cpp::compute::region_health_check_services::v1::
+              AggregatedListRegionHealthCheckServicesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::region_health_check_services::
+                       v1::AggregatedListRegionHealthCheckServicesRequest const&
+                           request) {
+              return stub->AggregatedListRegionHealthCheckServices(
+                  rest_context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               HealthCheckServicesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
@@ -496,6 +543,22 @@ RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
         r.set_region(info.region);
         r.set_operation(info.operation);
       });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_health_check_services::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

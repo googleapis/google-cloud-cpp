@@ -204,6 +204,12 @@ class ReservationServiceAuth : public ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::
           ListReservationGroupsRequest const& request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ReservationServiceStub> child_;

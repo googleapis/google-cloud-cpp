@@ -456,7 +456,7 @@ TEST(ReadRange, TranscodingSuppressesWarning) {
 TEST(ReadRange, ZeroLengthOverrunLogging) {
   ScopedLog log;
   // Pass 0 as the limit (not nullopt, which would mean read to end).
-  ReadRange actual(0, absl::make_optional<std::int64_t>(0), "my-bucket",
+  ReadRange actual(0, std::make_optional<std::int64_t>(0), "my-bucket",
                    "my-object");
 
   auto data = google::storage::v2::ObjectRangeData{};
@@ -482,7 +482,7 @@ TEST(ReadRange, ZeroLengthOverrunLogging) {
 TEST(ReadRange, ReadLastOverrunLogging) {
   ScopedLog log;
   // ReadLast(5) is represented by start = -5, limit = 5.
-  ReadRange actual(-5, absl::make_optional<std::int64_t>(5), "my-bucket",
+  ReadRange actual(-5, std::make_optional<std::int64_t>(5), "my-bucket",
                    "my-object");
 
   // GCS returns 10 bytes (overrun of 5 bytes)
@@ -579,6 +579,39 @@ TEST(ReadRange, NoResumeIfRequestExceeded) {
   // RangeForResume should return nullopt to prevent resuming!
   auto resume = actual.RangeForResume(42);
   EXPECT_FALSE(resume.has_value());
+}
+
+TEST(ReadRange, DeduplicateRangesBasic) {
+  std::vector<ReadRangeConfig> ranges = {
+      {0, 10},  {10, 10}, {0, 10},  // Duplicate
+      {20, 10}, {10, 10},           // Duplicate
+  };
+
+  auto deduped = DeduplicateRanges(ranges);
+  ASSERT_EQ(deduped.size(), 3);
+  EXPECT_EQ(deduped[0].config.offset, 0);
+  EXPECT_EQ(deduped[0].config.length, 10);
+  EXPECT_EQ(deduped[0].read_id, 1);
+
+  EXPECT_EQ(deduped[1].config.offset, 10);
+  EXPECT_EQ(deduped[1].config.length, 10);
+  EXPECT_EQ(deduped[1].read_id, 2);
+
+  EXPECT_EQ(deduped[2].config.offset, 20);
+  EXPECT_EQ(deduped[2].config.length, 10);
+  EXPECT_EQ(deduped[2].read_id, 3);
+}
+
+TEST(ReadRange, DeduplicateRangesInitialId) {
+  std::vector<ReadRangeConfig> ranges = {
+      {0, 10},
+  };
+
+  auto deduped = DeduplicateRanges(ranges, /*initial_id=*/5);
+  ASSERT_EQ(deduped.size(), 1);
+  EXPECT_EQ(deduped[0].config.offset, 0);
+  EXPECT_EQ(deduped[0].config.length, 10);
+  EXPECT_EQ(deduped[0].read_id, 6);
 }
 
 }  // namespace

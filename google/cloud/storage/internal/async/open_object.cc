@@ -77,7 +77,7 @@ void OpenObject::OnWrite(bool ok) {
 }
 
 void OpenObject::OnRead(
-    absl::optional<google::storage::v2::BidiReadObjectResponse> response) {
+    std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   if (!response) return DoFinish();
   promise_.set_value(OpenStreamResult{std::move(rpc_), std::move(*response)});
 }

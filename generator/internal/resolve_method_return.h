@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_RESOLVE_METHOD_RETURN_H
 
 #include "generator/internal/proto_definition_location.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/descriptor.h>
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -25,7 +25,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-absl::optional<std::pair<std::string, ProtoDefinitionLocation>>
+std::optional<std::pair<std::string, ProtoDefinitionLocation>>
 ResolveMethodReturn(google::protobuf::MethodDescriptor const& method);
 
 }  // namespace generator_internal

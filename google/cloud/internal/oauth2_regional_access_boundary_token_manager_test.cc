@@ -37,7 +37,7 @@ using ::testing::Return;
 class MockCredentials : public Credentials {
  public:
   MOCK_METHOD(StatusOr<std::vector<std::uint8_t>>, SignBlob,
-              (absl::optional<std::string> const&, std::string const&),
+              (std::optional<std::string> const&, std::string const&),
               (const, override));
   MOCK_METHOD(std::string, AccountEmail, (), (const, override));
   MOCK_METHOD(std::string, KeyId, (), (const, override));

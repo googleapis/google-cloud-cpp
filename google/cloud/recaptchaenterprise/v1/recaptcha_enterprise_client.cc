@@ -270,6 +270,42 @@ RecaptchaEnterpriseServiceClient::GetMetrics(
   return connection_->GetMetrics(request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceClient::GetPolicy(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::GetPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetPolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceClient::GetPolicy(
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceClient::UpdatePolicy(
+    google::cloud::recaptchaenterprise::v1::Policy const& policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest request;
+  *request.mutable_policy() = policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePolicy(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceClient::UpdatePolicy(
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePolicy(request);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(
     std::string const& parent,

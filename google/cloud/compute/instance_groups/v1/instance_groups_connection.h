@@ -263,6 +263,10 @@ class InstanceGroupsConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetNamedPorts(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::instance_groups::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

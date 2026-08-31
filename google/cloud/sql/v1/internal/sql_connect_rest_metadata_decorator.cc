@@ -47,6 +47,14 @@ SqlConnectServiceRestMetadata::GetConnectSettings(
   return child_->GetConnectSettings(rest_context, options, request);
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+SqlConnectServiceRestMetadata::ResolveConnectSettings(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ResolveConnectSettings(rest_context, options, request);
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceRestMetadata::GenerateEphemeralCert(
     rest_internal::RestContext& rest_context, Options const& options,

@@ -152,6 +152,30 @@ StreamRange<google::cloud::cpp::compute::v1::Route> RoutesClient::ListRoutes(
   return connection_->ListRoutes(std::move(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RoutesClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RoutesClient::TestIamPermissions(
+    google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_routes_v1
 }  // namespace cloud

@@ -38,6 +38,14 @@ class RegionNotificationEndpointsRestStub {
  public:
   virtual ~RegionNotificationEndpointsRestStub() = default;
 
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+  AggregatedListRegionNotificationEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          AggregatedListRegionNotificationEndpointsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
@@ -82,6 +90,13 @@ class RegionNotificationEndpointsRestStub {
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -107,6 +122,14 @@ class DefaultRegionNotificationEndpointsRestStub
   DefaultRegionNotificationEndpointsRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
+
+  StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+  AggregatedListRegionNotificationEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          AggregatedListRegionNotificationEndpointsRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNotificationEndpoint(
@@ -151,6 +174,13 @@ class DefaultRegionNotificationEndpointsRestStub
       Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

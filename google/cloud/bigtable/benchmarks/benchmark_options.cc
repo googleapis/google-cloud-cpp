@@ -100,6 +100,11 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        [&options](std::string const& val) {
          options.enable_metrics = ParseBoolean(val).value_or(true);
        }},
+      {"--metrics-period",
+       "the frequency at which client-side metrics are exported",
+       [&options](std::string const& val) {
+         options.metrics_period = ParseDuration(val);
+       }},
   };
 
   auto usage = BuildUsage(desc, argv[0]);
@@ -162,6 +167,12 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
     std::ostringstream os;
     os << "Invalid test duration seconds (" << options.test_duration.count()
        << "). Check your --test-duration option.\n";
+    return make_status(os, GCP_ERROR_INFO());
+  }
+  if (options.metrics_period && options.metrics_period->count() <= 0) {
+    std::ostringstream os;
+    os << "Invalid metrics period seconds (" << options.metrics_period->count()
+       << "). Check your --metrics-period option.\n";
     return make_status(os, GCP_ERROR_INFO());
   }
   return options;

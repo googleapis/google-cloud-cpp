@@ -216,7 +216,7 @@ using RawClient [[deprecated("Prefer using internal::StorageConnection")]] =
 struct CreateOrResumeResponse {
   std::string upload_id;
   std::uint64_t committed_size;
-  absl::optional<ObjectMetadata> metadata;
+  std::optional<ObjectMetadata> metadata;
 };
 
 StatusOr<CreateOrResumeResponse> CreateOrResume(

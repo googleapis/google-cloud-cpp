@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-find_package(CURL REQUIRED)
+find_package(CURL 8.7.1 REQUIRED)
 if (NOT WIN32)
     find_package(OpenSSL REQUIRED)
 endif ()
@@ -74,10 +74,13 @@ add_library(
     internal/bucket_access_control_parser.h
     internal/bucket_acl_requests.cc
     internal/bucket_acl_requests.h
+    internal/bucket_metadata_cache.cc
+    internal/bucket_metadata_cache.h
     internal/bucket_metadata_parser.cc
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
     internal/bucket_requests.h
+    internal/checksum_helpers.h
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
@@ -114,6 +117,9 @@ add_library(
     internal/hash_validator_impl.h
     internal/hash_values.cc
     internal/hash_values.h
+    internal/hedged_object_read_source.cc
+    internal/hedged_object_read_source.h
+    internal/hedging_thread_pool.h
     internal/hmac_key_metadata_parser.cc
     internal/hmac_key_metadata_parser.h
     internal/hmac_key_requests.cc
@@ -420,7 +426,9 @@ if (BUILD_TESTING)
         idempotency_policy_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
+        internal/bucket_metadata_cache_test.cc
         internal/bucket_requests_test.cc
+        internal/checksum_helpers_test.cc
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc
         internal/connection_impl_bucket_acl_test.cc
@@ -442,6 +450,8 @@ if (BUILD_TESTING)
         internal/hash_function_impl_test.cc
         internal/hash_validator_test.cc
         internal/hash_values_test.cc
+        internal/hedged_object_read_source_test.cc
+        internal/hedging_thread_pool_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
         internal/logging_stub_test.cc

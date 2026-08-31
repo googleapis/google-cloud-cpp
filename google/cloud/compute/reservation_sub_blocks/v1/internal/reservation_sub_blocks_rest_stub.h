@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_SUB_BLOCKS_V1_INTERNAL_RESERVATION_SUB_BLOCKS_REST_STUB_H
 
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
@@ -45,6 +46,26 @@ class ReservationSubBlocksRestStub {
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           GetReservationSubBlocksGetResponseRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetIamPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetVersion(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request) = 0;
+
   virtual StatusOr<
       google::cloud::cpp::compute::v1::ReservationSubBlocksListResponse>
   ListReservationSubBlocks(
@@ -52,6 +73,61 @@ class ReservationSubBlocksRestStub {
       Options const& options,
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           ListReservationSubBlocksRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPerformMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          PerformMaintenanceRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         PerformMaintenanceRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncReportFaulty(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> ReportFaulty(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          SetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         TestIamPermissionsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultReservationSubBlocksRestStub
@@ -61,7 +137,8 @@ class DefaultReservationSubBlocksRestStub
 
   explicit DefaultReservationSubBlocksRestStub(Options options);
   DefaultReservationSubBlocksRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationSubBlocksGetResponse>
   GetReservationSubBlocksGetResponse(
@@ -70,6 +147,25 @@ class DefaultReservationSubBlocksRestStub
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           GetReservationSubBlocksGetResponseRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetIamPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetVersion(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetVersion(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ReservationSubBlocksListResponse>
   ListReservationSubBlocks(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -77,8 +173,64 @@ class DefaultReservationSubBlocksRestStub
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           ListReservationSubBlocksRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPerformMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          PerformMaintenanceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          PerformMaintenanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncReportFaulty(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ReportFaulty(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteOperationRequest const& request) override;
+
  private:
   std::shared_ptr<rest_internal::RestClient> service_;
+  std::shared_ptr<rest_internal::RestClient> operations_;
   Options options_;
 };
 

@@ -55,6 +55,21 @@ class AsyncConnection {
   virtual Options options() const = 0;
 
   /**
+   * A thin wrapper around the `GetBucket()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct GetBucketParams {
+    google::storage::v2::GetBucketRequest request;
+    Options options;
+  };
+
+  /// Get bucket metadata.
+  virtual future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      GetBucketParams p) = 0;
+
+  /**
    * A thin wrapper around the `InsertObject()` parameters.
    *
    * We use a single struct as the input parameter for this function to

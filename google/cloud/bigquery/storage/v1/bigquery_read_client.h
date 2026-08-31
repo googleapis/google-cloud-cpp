@@ -222,7 +222,7 @@ class BigQueryReadClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L269}
-  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L331}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
@@ -258,7 +258,7 @@ class BigQueryReadClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L269}
-  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L331}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
@@ -299,8 +299,8 @@ class BigQueryReadClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.storage.v1.SplitReadStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L371}
-  /// [google.cloud.bigquery.storage.v1.SplitReadStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L391}
+  /// [google.cloud.bigquery.storage.v1.SplitReadStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L390}
+  /// [google.cloud.bigquery.storage.v1.SplitReadStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L410}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

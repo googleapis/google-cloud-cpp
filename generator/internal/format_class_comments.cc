@@ -56,7 +56,7 @@ auto constexpr kFixedClientComment = R"""(
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service,
     std::string const& service_name,
-    absl::optional<std::string> const& replacement_comment) {
+    std::optional<std::string> const& replacement_comment) {
   google::protobuf::SourceLocation service_source_location;
   std::string formatted_comments;
   // Use the service descriptor to populate the service_source_location.

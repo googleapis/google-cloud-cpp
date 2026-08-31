@@ -21,7 +21,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-absl::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
+std::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
   return impl_->metadata();
 }
 

@@ -99,6 +99,7 @@ add_library(
     async/writer_connection.h
     grpc_plugin.cc
     grpc_plugin.h
+    internal/async/checksum_helpers.h
     internal/async/connection_fwd.h
     internal/async/connection_impl.cc
     internal/async/connection_impl.h
@@ -124,6 +125,7 @@ add_library(
     internal/async/open_object.h
     internal/async/open_stream.cc
     internal/async/open_stream.h
+    internal/async/options.h
     internal/async/partial_upload.cc
     internal/async/partial_upload.h
     internal/async/read_payload_fwd.h
@@ -231,7 +233,6 @@ target_link_libraries(
            google-cloud-cpp::common
            nlohmann_json::nlohmann_json
            gRPC::grpc++
-           absl::optional
            absl::strings
            absl::time
            Threads::Threads)

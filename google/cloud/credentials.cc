@@ -48,13 +48,13 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object, Options opts) {
   return std::make_shared<internal::ServiceAccountConfig>(
-      std::move(json_object), absl::nullopt, std::move(opts));
+      std::move(json_object), std::nullopt, std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeServiceAccountCredentialsFromFile(
     std::string const& file_path, Options opts) {
   return std::make_shared<internal::ServiceAccountConfig>(
-      absl::nullopt, file_path, std::move(opts));
+      std::nullopt, file_path, std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeExternalAccountCredentials(

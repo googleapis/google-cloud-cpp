@@ -323,6 +323,15 @@ TEST(ProcessCommandLineArgs, ProcessExperimental) {
   EXPECT_THAT(*result, Contains(Pair("experimental", "true")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessExperimentalBigtableOperationContext) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/bigtable/"
+      ",experimental_bigtable_operation_context=true");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("experimental_bigtable_operation_context",
+                                     "true")));
+}
+
 TEST(ProcessCommandLineArgs, ProcessServiceNameMapping) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
@@ -466,7 +475,17 @@ wordthatiswaytoolong)"""},
 // internal)](https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses)
 // * [Regional (external and
 // internal)](https://cloud.google.com/compute/docs/reference/rest/v1/addresses)
-// For more information, see Reserving a static external IP address.)"""}));
+// For more information, see Reserving a static external IP address.)"""},
+        FormatCommentBlockTestParams{"Line 1.\nLine 2 is here.", 1, "// ", 2,
+                                     80, R"""(
+  // Line 1.
+  // Line 2 is here.)"""},
+        FormatCommentBlockTestParams{
+            "Paragraph 1.\n\nParagraph 2 with more text.", 1, "// ", 2, 80,
+            R"""(
+  // Paragraph 1.
+  //
+  // Paragraph 2 with more text.)"""}));
 
 struct FormatCommentKeyValueListTestParams {
   std::vector<std::pair<std::string, std::string>> comment;

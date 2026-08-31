@@ -30,7 +30,7 @@ struct ImpersonatedServiceAccountCredentialsInfo {
   std::string service_account;
   std::vector<std::string> delegates;
   std::vector<std::string> scopes;
-  absl::optional<std::string> quota_project_id;
+  std::optional<std::string> quota_project_id;
   std::string source_credentials;
 };
 
@@ -49,8 +49,9 @@ class ImpersonateServiceAccountCredentials
   /**
    * Creates an instance of ImpersonateServiceAccountCredentials.
    *
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
+   * @param client_factory a dependency injection point. It makes it possible
+   *     to mock internal REST types. This should generally not be overridden
+   *     except for testing.
    */
   explicit ImpersonateServiceAccountCredentials(
       google::cloud::internal::ImpersonateServiceAccountConfig const& config,

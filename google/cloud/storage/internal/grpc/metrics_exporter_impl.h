@@ -20,9 +20,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -39,7 +39,7 @@ struct ExporterConfig {
   std::string authority;
 };
 
-absl::optional<ExporterConfig> MakeMeterProviderConfig(
+std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options);
 

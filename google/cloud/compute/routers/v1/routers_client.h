@@ -88,8 +88,10 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of routers. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of routers.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -115,8 +117,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L239}
-  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1601}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L302}
+  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L2053}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -125,8 +127,10 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of routers. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of routers.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -157,8 +161,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L239}
-  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1601}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L302}
+  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L2053}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -196,7 +200,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L357}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
@@ -249,7 +253,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L357}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
@@ -289,6 +293,125 @@ class RoutersClient {
 
   // clang-format off
   ///
+  /// Deletes Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/deleteNamedSet
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param router  Name of the Router resource where Named Set is defined.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.DeleteNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNamedSet(
+      std::string const& project, std::string const& region,
+      std::string const& router, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteNamedSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNamedSet(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& router, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/deleteNamedSet
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.routers.v1.DeleteNamedSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.DeleteNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNamedSet(
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteNamedSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNamedSet(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteNamedSet
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNamedSet(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes Route Policy
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/deleteRoutePolicy
   ///
@@ -315,7 +438,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L321}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L456}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -368,7 +491,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L321}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L456}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -428,8 +551,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L511}
-  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L339}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L705}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L384}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
@@ -460,12 +583,76 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L511}
-  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L339}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L705}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L384}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns specified Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/getNamedSet
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param router  Name of the Router resource to query for the named set. The name should
+  ///  conform to RFC1035.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.RoutersGetNamedSetResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.GetNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L531}
+  /// [google.cloud.cpp.compute.v1.RoutersGetNamedSetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1632}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+  GetNamedSet(std::string const& project, std::string const& region,
+              std::string const& router, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns specified Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/getNamedSet
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.routers.v1.GetNamedSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.RoutersGetNamedSetResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.GetNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L531}
+  /// [google.cloud.cpp.compute.v1.RoutersGetNamedSetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1632}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+  GetNamedSet(
+      google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -490,8 +677,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatIpInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L390}
-  /// [google.cloud.cpp.compute.v1.NatIpInfoResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L262}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatIpInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L550}
+  /// [google.cloud.cpp.compute.v1.NatIpInfoResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L301}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
@@ -522,8 +709,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatIpInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L390}
-  /// [google.cloud.cpp.compute.v1.NatIpInfoResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L262}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatIpInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L550}
+  /// [google.cloud.cpp.compute.v1.NatIpInfoResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L301}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
@@ -538,8 +725,8 @@ class RoutersClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
-  /// @param router  Name of the Router resource to query for Nat Mapping information of VM
-  ///  endpoints.
+  /// @param router  Name of the Router resource to query for Nat Mapping information of
+  ///  VM endpoints.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -553,8 +740,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L410}
-  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1768}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L571}
+  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L2254}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -585,8 +772,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L410}
-  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1768}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L571}
+  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L2254}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -617,8 +804,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L492}
-  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1364}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L686}
+  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1639}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
@@ -649,8 +836,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L492}
-  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1364}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L686}
+  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1639}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
@@ -680,8 +867,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L526}
-  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1357}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L720}
+  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1625}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -712,8 +899,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L526}
-  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1357}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L720}
+  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1625}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -724,8 +911,8 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// Creates a Router resource in the specified project and region using the
-  /// data included in the request.
+  /// Creates a Router resource in the specified project and region using
+  /// the data included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/insert
   ///
   /// @param project  Project ID for this request.
@@ -751,7 +938,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L541}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L735}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
@@ -777,8 +964,8 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// Creates a Router resource in the specified project and region using the
-  /// data included in the request.
+  /// Creates a Router resource in the specified project and region using
+  /// the data included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -807,7 +994,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L541}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L735}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
@@ -874,8 +1061,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L753}
-  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L339}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1126}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L384}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
@@ -914,8 +1101,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L753}
-  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L339}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1126}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L384}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
@@ -929,8 +1116,8 @@ class RoutersClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
-  /// @param router  Name or id of the resource for this request. Name should conform to
-  ///  RFC1035.
+  /// @param router  Name or id of the resource for this request.
+  ///  Name should conform to RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -944,8 +1131,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListBgpRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L574}
-  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1368}
+  /// [google.cloud.cpp.compute.routers.v1.ListBgpRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L771}
+  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1643}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
@@ -976,12 +1163,77 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListBgpRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L574}
-  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1368}
+  /// [google.cloud.cpp.compute.routers.v1.ListBgpRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L771}
+  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1643}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
       google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves a list of router named set subresources available to the
+  /// specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/listNamedSets
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param router  Name or id of the resource for this request.
+  ///  Name should conform to RFC1035.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.RoutersListNamedSets])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.ListNamedSetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L906}
+  /// [google.cloud.cpp.compute.v1.RoutersListNamedSets]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1778}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets> ListNamedSets(
+      std::string const& project, std::string const& region,
+      std::string const& router, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves a list of router named set subresources available to the
+  /// specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/listNamedSets
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.routers.v1.ListNamedSetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.RoutersListNamedSets])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.ListNamedSetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L906}
+  /// [google.cloud.cpp.compute.v1.RoutersListNamedSets]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1778}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets> ListNamedSets(
+      google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
           request,
       Options opts = {});
 
@@ -993,8 +1245,8 @@ class RoutersClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
-  /// @param router  Name or id of the resource for this request. Name should conform to
-  ///  RFC1035.
+  /// @param router  Name or id of the resource for this request.
+  ///  Name should conform to RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1008,8 +1260,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L676}
-  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1482}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1016}
+  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1913}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
@@ -1041,8 +1293,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L676}
-  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1482}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1016}
+  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L1913}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
@@ -1054,8 +1306,9 @@ class RoutersClient {
   // clang-format off
   ///
   /// Patches the specified Router resource with the data included in the
-  /// request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// request. This method supportsPATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patch
   ///
   /// @param project  Project ID for this request.
@@ -1082,7 +1335,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L862}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
@@ -1111,8 +1364,9 @@ class RoutersClient {
   // clang-format off
   ///
   /// Patches the specified Router resource with the data included in the
-  /// request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// request. This method supportsPATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1141,7 +1395,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L862}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
@@ -1181,6 +1435,130 @@ class RoutersClient {
 
   // clang-format off
   ///
+  /// Patches Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patchNamedSet
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param router  Name of the Router resource where Named Set is defined.
+  /// @param named_set_resource  The NamedSet for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.PatchNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1231}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNamedSet(
+      std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PatchNamedSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNamedSet(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Patches Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patchNamedSet
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.routers.v1.PatchNamedSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.PatchNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1231}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNamedSet(
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PatchNamedSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNamedSet(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PatchNamedSet
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNamedSet(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Patches Route Policy
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patchRoutePolicy
   ///
@@ -1208,7 +1586,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L825}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRoutePolicy(
@@ -1265,7 +1643,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L825}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRoutePolicy(
@@ -1305,7 +1683,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// Preview fields auto-generated during router create and update operations.
+  /// Preview fields auto-generated during router create andupdate operations.
   /// Calling this method does NOT create or update the router.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/preview
   ///
@@ -1326,8 +1704,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L899}
-  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1596}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1351}
+  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L2048}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -1338,7 +1716,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// Preview fields auto-generated during router create and update operations.
+  /// Preview fields auto-generated during router create andupdate operations.
   /// Calling this method does NOT create or update the router.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/preview
   ///
@@ -1361,8 +1739,8 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L899}
-  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1596}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1351}
+  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L2048}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -1372,9 +1750,10 @@ class RoutersClient {
   // clang-format off
   ///
   /// Updates the specified Router resource with the data included in the
-  /// request. This method conforms to PUT semantics, which requests that the
-  /// state of the target resource be created or replaced with the state defined
-  /// by the representation enclosed in the request message payload.
+  /// request.  This method conforms toPUT semantics, which requests that the
+  /// state of the
+  /// target resource be created or replaced with the state defined by the
+  /// representation enclosed in the request message payload.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/update
   ///
   /// @param project  Project ID for this request.
@@ -1401,7 +1780,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L955}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
@@ -1430,9 +1809,10 @@ class RoutersClient {
   // clang-format off
   ///
   /// Updates the specified Router resource with the data included in the
-  /// request. This method conforms to PUT semantics, which requests that the
-  /// state of the target resource be created or replaced with the state defined
-  /// by the representation enclosed in the request message payload.
+  /// request.  This method conforms toPUT semantics, which requests that the
+  /// state of the
+  /// target resource be created or replaced with the state defined by the
+  /// representation enclosed in the request message payload.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1461,7 +1841,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L955}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
@@ -1501,6 +1881,130 @@ class RoutersClient {
 
   // clang-format off
   ///
+  /// Updates or creates new Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/updateNamedSet
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param router  Name of the Router resource where Named Set is defined.
+  /// @param named_set_resource  The NamedSet for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.UpdateNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1370}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateNamedSet(
+      std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateNamedSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNamedSet(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates or creates new Named Set
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/updateNamedSet
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.routers.v1.UpdateNamedSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.routers.v1.UpdateNamedSetRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1370}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateNamedSet(
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateNamedSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNamedSet(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateNamedSet
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateNamedSet(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Updates or creates new Route Policy
   /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/updateRoutePolicy
   ///
@@ -1528,7 +2032,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L918}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1410}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1586,7 +2090,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L918}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L1410}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

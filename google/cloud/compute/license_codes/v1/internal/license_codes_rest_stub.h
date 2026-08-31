@@ -42,6 +42,18 @@ class LicenseCodesRestStub {
       google::cloud::cpp::compute::license_codes::v1::
           GetLicenseCodeRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
                      Options const& options,
@@ -62,6 +74,18 @@ class DefaultLicenseCodesRestStub : public LicenseCodesRestStub {
       Options const& options,
       google::cloud::cpp::compute::license_codes::v1::
           GetLicenseCodeRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,

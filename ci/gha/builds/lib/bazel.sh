@@ -103,6 +103,12 @@ function bazel::integration_test_args() {
 function bazel::prefetch() {
   local args
   mapfile -t args < <(bazel::common_args)
+  if [[ "${GOOGLE_CLOUD_CPP_CI_BAZEL_USE_WORKSPACE:-}" == "true" ]]; then
+    args+=(
+      "--noenable_bzlmod"
+      "--enable_workspace"
+    )
+  fi
   local common_rules=(
     "..."
   )

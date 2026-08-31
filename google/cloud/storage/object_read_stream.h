@@ -144,23 +144,23 @@ class ObjectReadStream : public std::basic_istream<char> {
    * the metadata before the first download, but this is less efficient as it
    * requires one additional server round trip.
    *
-   * Note that all these attributes are `absl::optional<>`, as the attributes
+   * Note that all these attributes are `std::optional<>`, as the attributes
    * may not be known (or exist) if there is an error during the download. If
    * the attribute is needed for the application's correctness the application
    * should fetch the object metadata when the attribute is not available.
    */
   /// The object's generation at the time of the download, if known.
-  absl::optional<std::int64_t> const& generation() const {
+  std::optional<std::int64_t> const& generation() const {
     return buf_->generation();
   }
 
   /// The object's metageneration at the time of the download, if known.
-  absl::optional<std::int64_t> const& metageneration() const {
+  std::optional<std::int64_t> const& metageneration() const {
     return buf_->metageneration();
   }
 
   /// The object's storage class at the time of the download, if known.
-  absl::optional<std::string> const& storage_class() const {
+  std::optional<std::string> const& storage_class() const {
     return buf_->storage_class();
   }
 
@@ -173,7 +173,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    *
    * [object transcoding]: https://cloud.google.com/storage/docs/transcoding
    */
-  absl::optional<std::uint64_t> const& size() const { return buf_->size(); }
+  std::optional<std::uint64_t> const& size() const { return buf_->size(); }
   ///@}
 
  private:

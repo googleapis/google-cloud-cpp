@@ -547,6 +547,40 @@ DisksRestLogging::UpdateDisk(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksRestLogging::AsyncUpdateKmsKey(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+                 request) {
+        return child_->AsyncUpdateKmsKey(cq, std::move(rest_context),
+                                         std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestLogging::UpdateKmsKey(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+                 request) {
+        return child_->UpdateKmsKey(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

@@ -234,6 +234,34 @@ SecretManagerServiceLogging::TestIamPermissions(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceLogging::EnableManagedRotation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+              request) {
+        return child_->EnableManagedRotation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceLogging::RotateSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::secretmanager::v1::RotateSecretRequest const&
+                 request) {
+        return child_->RotateSecret(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecretManagerServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

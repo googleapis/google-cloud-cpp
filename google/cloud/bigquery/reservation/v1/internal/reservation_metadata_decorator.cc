@@ -341,6 +341,18 @@ ReservationServiceMetadata::ListReservationGroups(
   return child_->ListReservationGroups(context, options, request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceMetadata::UpdateReservationGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("reservation_group.name=",
+                   internal::UrlEncode(request.reservation_group().name())));
+  return child_->UpdateReservationGroup(context, options, request);
+}
+
 void ReservationServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {

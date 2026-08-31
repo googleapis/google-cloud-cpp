@@ -17,9 +17,9 @@
 
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/version.h"
-#include "absl/types/optional.h"
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -97,7 +97,7 @@ class MD5HashFunction : public HashFunction {
 
  private:
   std::int64_t minimum_offset_ = 0;
-  absl::optional<HashValues> hashes_;
+  std::optional<HashValues> hashes_;
 };
 
 /**
@@ -106,9 +106,6 @@ class MD5HashFunction : public HashFunction {
 class Crc32cHashFunction : public HashFunction {
  public:
   Crc32cHashFunction() = default;
-  explicit Crc32cHashFunction(std::uint32_t initial_crc,
-                              std::int64_t initial_offset)
-      : current_(initial_crc), minimum_offset_(initial_offset) {}
 
   Crc32cHashFunction(Crc32cHashFunction const&) = delete;
   Crc32cHashFunction& operator=(Crc32cHashFunction const&) = delete;

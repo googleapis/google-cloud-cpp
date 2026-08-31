@@ -56,7 +56,7 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
         });
   }
 
-  future<absl::optional<Response>> Read() override {
+  future<std::optional<Response>> Read() override {
     std::lock_guard<std::mutex> g{state_->mu};
     return state_->stream->Read();
   }

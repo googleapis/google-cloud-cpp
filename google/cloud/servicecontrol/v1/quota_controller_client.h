@@ -34,7 +34,8 @@ namespace servicecontrol_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// [Google Quota Control API](/service-control/overview)
+/// [Google Quota Control
+/// API](https://cloud.google.com/service-control/overview)
 ///
 /// Allows clients to allocate and release quota against a [managed
 /// service](https://cloud.google.com/service-management/reference/rpc/google.api/servicemanagement.v1#google.api.servicemanagement.v1.ManagedService).
@@ -121,7 +122,7 @@ class QuotaControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicecontrol.v1.AllocateQuotaRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L63}
+  /// [google.api.servicecontrol.v1.AllocateQuotaRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L62}
   /// [google.api.servicecontrol.v1.AllocateQuotaResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L178}
   ///
   // clang-format on

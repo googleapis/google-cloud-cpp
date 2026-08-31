@@ -20,9 +20,9 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -50,7 +50,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<grpc::ChannelCredentials> const& credentials);
 
-absl::optional<std::string> LoadCAInfo(Options const& opts);
+std::optional<std::string> LoadCAInfo(Options const& opts);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

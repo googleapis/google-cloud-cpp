@@ -48,7 +48,7 @@ DebugFormatter& DebugFormatter::Field(
 
 DebugFormatter& DebugFormatter::Field(
     absl::string_view field_name,
-    absl::optional<std::chrono::system_clock::time_point> value) {
+    std::optional<std::chrono::system_clock::time_point> value) {
   return value ? Field(field_name, *value) : *this;
 }
 

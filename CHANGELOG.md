@@ -7,7 +7,74 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.7.0 - TBD
+## v3.9.0 - TBD
+
+### Dependency version update
+
+- Updated minimum version of libcurl from 7.74.0 to 8.7.1. This was done primarily to avoid a known bug introduced in libcurl 8.5.0. For more information, see [Issue #16343](https://github.com/googleapis/google-cloud-cpp/issues/16343).
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud FTP API](/google/cloud/ftp/README.md)
+- [Lakehouse API](/google/cloud/biglake/README.md)
+- [Workload Identity API](/google/cloud/workloadidentity/README.md)
+
+## v3.8.0 - 2026-08
+
+### Removed Libraries
+
+- The `parallelstore` client library has been removed because the Parallelstore service has been deprecated.
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Agent Identity API](/google/cloud/agentidentity/README.md)
+
+### [Cloud Quotas API](/google/cloud/cloudquotas/README.md)
+ - The library has been expanded to include the QuotaAdjusterSettingsManager service.
+
+### [Cloud Sql Admin API](/google/cloud/sql/README.md)
+ - The library has been expanded to include the Backups and FeatureEligibility services.
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): avoid deadlock by ensuring lease refresh timer runs on cq thread ([#16297](https://github.com/googleapis/google-cloud-cpp/pull/16297))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): remove duplicate Query calls from AsyncWriterConnectionBuffered and AsyncWriterConnectionResumed ([#16315](https://github.com/googleapis/google-cloud-cpp/pull/16315))
+- feat(storage): formally deprecate MD5HashValue and Crc32cChecksumValue ([#16311](https://github.com/googleapis/google-cloud-cpp/pull/16311))
+- fix(storage): limit retries in InsertObjectWithBadChecksum sample ([#16322](https://github.com/googleapis/google-cloud-cpp/pull/16322))
+- feat(storage): implement pacing & eviction for pre-warmed ranges in ObjectDescriptorImpl ([#16309](https://github.com/googleapis/google-cloud-cpp/pull/16309))
+- fix(storage): redesign AsyncWriterConnectionImpl Flush and Query ([#16307](https://github.com/googleapis/google-cloud-cpp/pull/16307))
+- feat(storage): support pre-warming read ranges in AsyncConnection ([#16275](https://github.com/googleapis/google-cloud-cpp/pull/16275))
+- fix(storage): Use append_object_spec in EnrichSpan for ResumeAppendableUpload ([#16296](https://github.com/googleapis/google-cloud-cpp/pull/16296))
+- feat(storage): Make PrecomputedChecksumsOption compatible with Options ([#16295](https://github.com/googleapis/google-cloud-cpp/pull/16295))
+- feat(storage): add resource span attributes for ACO ( App Centric Observability ) for rewrite API in async client ([#16285](https://github.com/googleapis/google-cloud-cpp/pull/16285))
+- feat(storage): add resource span attributes for ACO ( App Centric Observability ) for async client ([#16151](https://github.com/googleapis/google-cloud-cpp/pull/16151))
+- fix(storage): consume server responses before finishing stream in AsyncWriter Close/Finalize ([#16270](https://github.com/googleapis/google-cloud-cpp/pull/16270))
+- feat(storage): migrate sync client to unified checksum options ([#16264](https://github.com/googleapis/google-cloud-cpp/pull/16264))
+- fix(storage): preserve flush state across concurrent flushes in async writers ([#16274](https://github.com/googleapis/google-cloud-cpp/pull/16274))
+- feat(storage): add support for bucket metadata call in async client ([#16262](https://github.com/googleapis/google-cloud-cpp/pull/16262))
+- feat(storage): add resource span attributes for ACO ( App Centric Observability ) ([#16119](https://github.com/googleapis/google-cloud-cpp/pull/16119))
+- feat(storage): Migrate async client to unified checksum options ([#16261](https://github.com/googleapis/google-cloud-cpp/pull/16261))
+- feat(storage): introduce unified checksum options and deprecate old options ([#16260](https://github.com/googleapis/google-cloud-cpp/pull/16260))
+- fix(storage): prevent indefinite hang when calling Close() on async appendable uploads ([#16255](https://github.com/googleapis/google-cloud-cpp/pull/16255))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-07-28T18:29:07-07:00](https://github.com/googleapis/googleapis/tree/b8486a2f44f15dc578a9dc1e17b144253079d5c1)
+
+## v3.7.0 - 2026-07
+
+### Removed Libraries
+
+- The `pubsublite` client library has been removed because the Pub/Sub Lite service has been turned down.
 
 ### New Libraries
 
@@ -29,6 +96,22 @@ the APIs in these libraries are stable, and are ready for production use.
       {cbt::InstanceResource(google::cloud::Project("my-project"), "my-instance")},
       google::cloud::Options{});
   ```
+
+- fix(bigtable): safely handle error states in metadata retrieval ([#16225](https://github.com/googleapis/google-cloud-cpp/pull/16225))
+- cleanup(bigtable)!: remove experimental InstanceChannelAffinityOption ([#16213](https://github.com/googleapis/google-cloud-cpp/pull/16213))
+- feat(bigtable): add explicit instance MakeDataConnection ([#16191](https://github.com/googleapis/google-cloud-cpp/pull/16191))
+- feat(bigtable): Add support for adding tags to an Instance in InstanceConfig ([#16014](https://github.com/googleapis/google-cloud-cpp/pull/16014))
+- fix(bigtable): DynamicChannelPoolSizingPolicyOption used correctly ([#16188](https://github.com/googleapis/google-cloud-cpp/pull/16188))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Add full object checksum validation for appendable uploads finalize ([#16245](https://github.com/googleapis/google-cloud-cpp/pull/16245))
+- fix(storage): enforce mutual exclusion between Close() and Finalize() in async writers ([#16211](https://github.com/googleapis/google-cloud-cpp/pull/16211))
+- fix(storage): add Close() support to AsyncWriterConnectionResumed ([#16163](https://github.com/googleapis/google-cloud-cpp/pull/16163))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-06-23T06:02:24-07:00](https://github.com/googleapis/googleapis/tree/b6f9ff05aaec18070232a1ab36da98e684bc7909)
 
 ## v3.6.0 - 2026-06
 

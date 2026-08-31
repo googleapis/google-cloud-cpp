@@ -20,8 +20,8 @@
 #include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <optional>
 
 namespace google {
 namespace cloud {

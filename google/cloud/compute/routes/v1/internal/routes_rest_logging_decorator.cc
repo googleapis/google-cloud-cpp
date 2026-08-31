@@ -127,6 +127,20 @@ RoutesRestLogging::ListRoutes(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RoutesRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::routes::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

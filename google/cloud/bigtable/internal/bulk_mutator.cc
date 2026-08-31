@@ -212,7 +212,8 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   limiter.Acquire();
 
   // Read the stream of responses.
-  auto stream = stub.MutateRows(client_context, options, mutations);
+  auto stream =
+      stub.MutateRows(client_context, options, mutations, operation_context_);
   std::optional<Status> status;
   while (true) {
     btproto::MutateRowsResponse response;

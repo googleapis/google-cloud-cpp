@@ -42,6 +42,10 @@ class SqlConnectServiceTracingConnection
       google::cloud::sql::v1::GetConnectSettingsRequest const& request)
       override;
 
+  StatusOr<google::cloud::sql::v1::ConnectSettings> ResolveConnectSettings(
+      google::cloud::sql::v1::ResolveConnectSettingsRequest const& request)
+      override;
+
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
   GenerateEphemeralCert(
       google::cloud::sql::v1::GenerateEphemeralCertRequest const& request)

@@ -496,7 +496,7 @@ class NotebookServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L385}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>

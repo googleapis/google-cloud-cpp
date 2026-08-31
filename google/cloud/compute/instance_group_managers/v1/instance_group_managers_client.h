@@ -94,22 +94,28 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Flags the specified instances to be removed from the managed instance
-  /// group. Abandoning an instance does not delete the instance, but it does
-  /// remove the instance from any target pools that are applied by the managed
-  /// instance group. This method reduces the targetSize of the managed instance
-  /// group by the number of instances that you abandon. This operation is marked
-  /// as DONE when the action is scheduled even if the instances have not yet
-  /// been removed from the group. You must separately verify the status of the
-  /// abandoning action with the listmanagedinstances method. If the group is
-  /// part of a backend service that has enabled connection draining, it can take
-  /// up to 60 seconds after the connection draining duration has elapsed before
-  /// the VM instance is removed or deleted. You can specify a maximum of 1000
-  /// instances with this method per request.
+  /// Flags the specified instances to be removed from the
+  /// managed instance group. Abandoning an instance does not delete the
+  /// instance, but it does remove the instance from any target pools that are
+  /// applied by the managed instance group. This method reduces thetargetSize of
+  /// the managed instance group by the
+  /// number of instances that you abandon. This operation is marked asDONE when
+  /// the action is scheduled even if the instances have
+  /// not yet been removed from the group. You must separately verify the
+  /// status of the abandoning action with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/abandonInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_abandon_instances_request_resource  The InstanceGroupManagersAbandonInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -132,7 +138,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L496}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L566}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
@@ -164,18 +170,23 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Flags the specified instances to be removed from the managed instance
-  /// group. Abandoning an instance does not delete the instance, but it does
-  /// remove the instance from any target pools that are applied by the managed
-  /// instance group. This method reduces the targetSize of the managed instance
-  /// group by the number of instances that you abandon. This operation is marked
-  /// as DONE when the action is scheduled even if the instances have not yet
-  /// been removed from the group. You must separately verify the status of the
-  /// abandoning action with the listmanagedinstances method. If the group is
-  /// part of a backend service that has enabled connection draining, it can take
-  /// up to 60 seconds after the connection draining duration has elapsed before
-  /// the VM instance is removed or deleted. You can specify a maximum of 1000
-  /// instances with this method per request.
+  /// Flags the specified instances to be removed from the
+  /// managed instance group. Abandoning an instance does not delete the
+  /// instance, but it does remove the instance from any target pools that are
+  /// applied by the managed instance group. This method reduces thetargetSize of
+  /// the managed instance group by the
+  /// number of instances that you abandon. This operation is marked asDONE when
+  /// the action is scheduled even if the instances have
+  /// not yet been removed from the group. You must separately verify the
+  /// status of the abandoning action with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/abandonInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -204,7 +215,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L496}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L566}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
@@ -244,9 +255,10 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of managed instance groups and groups them by zone. To
-  /// prevent failure, Google recommends that you set the `returnPartialSuccess`
-  /// parameter to `true`.
+  /// Retrieves the list of managed instance groups and groups them by zone.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -272,8 +284,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L537}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L469}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L611}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L560}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -283,9 +295,10 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of managed instance groups and groups them by zone. To
-  /// prevent failure, Google recommends that you set the `returnPartialSuccess`
-  /// parameter to `true`.
+  /// Retrieves the list of managed instance groups and groups them by zone.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -316,8 +329,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L537}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L469}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L611}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L560}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -329,13 +342,13 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Applies changes to selected instances on the managed instance group. This
-  /// method can be used to apply new overrides and/or new versions.
+  /// Applies changes to selected instances on the managed instance group.
+  /// This method can be used to apply new overrides and/or new versions.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/applyUpdatesToInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. Should
-  ///  conform to RFC1035.
+  /// @param zone  The name of thezone
+  ///  where the managed instance group is located. Should conform to RFC1035.
   /// @param instance_group_manager  The name of the managed instance group, should conform to RFC1035.
   /// @param instance_group_managers_apply_updates_request_resource  The InstanceGroupManagersApplyUpdatesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -358,7 +371,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L619}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L726}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -391,8 +404,8 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Applies changes to selected instances on the managed instance group. This
-  /// method can be used to apply new overrides and/or new versions.
+  /// Applies changes to selected instances on the managed instance group.
+  /// This method can be used to apply new overrides and/or new versions.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/applyUpdatesToInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -421,7 +434,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L619}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L726}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -463,17 +476,20 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Creates instances with per-instance configurations in this managed instance
-  /// group. Instances are created using the current instance template. The
-  /// create instances operation is marked DONE if the createInstances request is
-  /// successful. The underlying actions take additional time. You must
-  /// separately verify the status of the creating or actions with the
-  /// listmanagedinstances method.
+  /// group. Instances are created using the current instance template. Thecreate
+  /// instances operation is marked DONE if thecreateInstances request is
+  /// successful. The underlying actions
+  /// take additional time. You must separately verify the status of thecreating
+  /// or actions with the listmanagedinstances
+  /// method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/createInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. It should
-  ///  conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. It should conform to RFC1035.
+  /// @param zone  The name of thezone
+  ///  where the managed instance group is located.
+  ///  It should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  It should conform to RFC1035.
   /// @param instance_group_managers_create_instances_request_resource  The InstanceGroupManagersCreateInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -495,7 +511,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L648}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L755}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
@@ -528,11 +544,12 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Creates instances with per-instance configurations in this managed instance
-  /// group. Instances are created using the current instance template. The
-  /// create instances operation is marked DONE if the createInstances request is
-  /// successful. The underlying actions take additional time. You must
-  /// separately verify the status of the creating or actions with the
-  /// listmanagedinstances method.
+  /// group. Instances are created using the current instance template. Thecreate
+  /// instances operation is marked DONE if thecreateInstances request is
+  /// successful. The underlying actions
+  /// take additional time. You must separately verify the status of thecreating
+  /// or actions with the listmanagedinstances
+  /// method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/createInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -561,7 +578,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L648}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L755}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
@@ -601,13 +618,15 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Deletes the specified managed instance group and all of the instances in
-  /// that group. Note that the instance group must not belong to a backend
-  /// service. Read Deleting an instance group for more information.
+  /// Deletes the specified managed instance group and all of the instances
+  /// in that group. Note that the instance group must not belong to a
+  /// backend service. Read
+  /// Deleting an instance group for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/delete
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -629,7 +648,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L689}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L801}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -657,9 +676,10 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Deletes the specified managed instance group and all of the instances in
-  /// that group. Note that the instance group must not belong to a backend
-  /// service. Read Deleting an instance group for more information.
+  /// Deletes the specified managed instance group and all of the instances
+  /// in that group. Note that the instance group must not belong to a
+  /// backend service. Read
+  /// Deleting an instance group for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -688,7 +708,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L689}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L801}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -732,20 +752,26 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Flags the specified instances in the managed instance group for immediate
-  /// deletion. The instances are also removed from any target pools of which
-  /// they were a member. This method reduces the targetSize of the managed
-  /// instance group by the number of instances that you delete. This operation
-  /// is marked as DONE when the action is scheduled even if the instances are
-  /// still being deleted. You must separately verify the status of the deleting
-  /// action with the listmanagedinstances method. If the group is part of a
-  /// backend service that has enabled connection draining, it can take up to 60
-  /// seconds after the connection draining duration has elapsed before the VM
-  /// instance is removed or deleted. You can specify a maximum of 1000 instances
-  /// with this method per request.
+  /// deletion. The instances are also removed from any target
+  /// pools of which they were a member. This method reduces thetargetSize of the
+  /// managed instance group by the number of
+  /// instances that you delete. This operation is marked as DONE
+  /// when the action is scheduled even if the instances are still being deleted.
+  /// You must separately verify the status of the deleting action
+  /// with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deleteInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_delete_instances_request_resource  The InstanceGroupManagersDeleteInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -768,7 +794,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L724}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L844}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -801,16 +827,21 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Flags the specified instances in the managed instance group for immediate
-  /// deletion. The instances are also removed from any target pools of which
-  /// they were a member. This method reduces the targetSize of the managed
-  /// instance group by the number of instances that you delete. This operation
-  /// is marked as DONE when the action is scheduled even if the instances are
-  /// still being deleted. You must separately verify the status of the deleting
-  /// action with the listmanagedinstances method. If the group is part of a
-  /// backend service that has enabled connection draining, it can take up to 60
-  /// seconds after the connection draining duration has elapsed before the VM
-  /// instance is removed or deleted. You can specify a maximum of 1000 instances
-  /// with this method per request.
+  /// deletion. The instances are also removed from any target
+  /// pools of which they were a member. This method reduces thetargetSize of the
+  /// managed instance group by the number of
+  /// instances that you delete. This operation is marked as DONE
+  /// when the action is scheduled even if the instances are still being deleted.
+  /// You must separately verify the status of the deleting action
+  /// with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deleteInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -839,7 +870,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L724}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L844}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -884,9 +915,12 @@ class InstanceGroupManagersClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deletePerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. It should
-  ///  conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. It should conform to RFC1035.
+  /// @param zone  The name of thezone
+  ///  where the managed instance
+  ///  group is located.
+  ///  It should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  It should conform to RFC1035.
   /// @param instance_group_managers_delete_per_instance_configs_req_resource  The InstanceGroupManagersDeletePerInstanceConfigsReq for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -908,7 +942,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L765}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L893}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -971,7 +1005,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L765}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L893}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1017,7 +1051,8 @@ class InstanceGroupManagersClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/get
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1032,8 +1067,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L795}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L926}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L84}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1065,8 +1100,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L795}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L926}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L84}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1076,18 +1111,23 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Creates a managed instance group using the information that you specify in
-  /// the request. After the group is created, instances in the group are created
-  /// using the specified instance template. This operation is marked as DONE
-  /// when the group is created even if the instances in the group have not yet
-  /// been created. You must separately verify the status of the individual
-  /// instances with the listmanagedinstances method. A managed instance group
-  /// can have up to 1000 VM instances per group. Please contact Cloud Support if
-  /// you need an increase in this limit.
+  /// Creates a managed instance group using the information that you specify
+  /// in the request. After the group is created, instances in the group are
+  /// created using the specified instance template.
+  /// This operation is marked as DONE when the group is created
+  /// even if the instances in the group have not yet been created. You
+  /// must separately verify the status of the individual instances with
+  /// thelistmanagedinstances
+  /// method.
+  ///
+  /// A managed instance group can have up to 1000 VM instances per group. Please
+  /// contact Cloud Support if you need an increase in
+  /// this limit.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/insert
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where you want to create the managed instance group.
+  /// @param zone  The name of the zone
+  ///  where you want to create the managed instance group.
   /// @param instance_group_manager_resource  The InstanceGroupManager for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1109,7 +1149,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L811}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L943}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1139,14 +1179,18 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Creates a managed instance group using the information that you specify in
-  /// the request. After the group is created, instances in the group are created
-  /// using the specified instance template. This operation is marked as DONE
-  /// when the group is created even if the instances in the group have not yet
-  /// been created. You must separately verify the status of the individual
-  /// instances with the listmanagedinstances method. A managed instance group
-  /// can have up to 1000 VM instances per group. Please contact Cloud Support if
-  /// you need an increase in this limit.
+  /// Creates a managed instance group using the information that you specify
+  /// in the request. After the group is created, instances in the group are
+  /// created using the specified instance template.
+  /// This operation is marked as DONE when the group is created
+  /// even if the instances in the group have not yet been created. You
+  /// must separately verify the status of the individual instances with
+  /// thelistmanagedinstances
+  /// method.
+  ///
+  /// A managed instance group can have up to 1000 VM instances per group. Please
+  /// contact Cloud Support if you need an increase in
+  /// this limit.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1175,7 +1219,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L811}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L943}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1223,7 +1267,8 @@ class InstanceGroupManagersClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/list
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1246,8 +1291,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L924}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1095}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L84}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1288,8 +1333,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L924}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1095}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L84}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1301,15 +1346,18 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Lists all errors thrown by actions on instances for a given managed
-  /// instance group. The filter and orderBy query parameters are not supported.
+  /// instance group. The filter and orderBy query
+  /// parameters are not supported.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listErrors
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. It should
-  ///  conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. It must be a string that meets the
-  ///  requirements in RFC1035, or an unsigned long integer: must match regexp
-  ///  pattern: (?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)|1-9{0,19}.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
+  ///  It should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  It must be a string that meets the requirements in RFC1035, or an
+  ///  unsigned long integer: must match regexp pattern:
+  ///  (?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)|1-9{0,19}.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1332,8 +1380,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L844}
-  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L567}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L980}
+  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L938}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
@@ -1343,7 +1391,8 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Lists all errors thrown by actions on instances for a given managed
-  /// instance group. The filter and orderBy query parameters are not supported.
+  /// instance group. The filter and orderBy query
+  /// parameters are not supported.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listErrors
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1374,8 +1423,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L844}
-  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L567}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L980}
+  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L938}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
@@ -1385,18 +1434,20 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Lists all of the instances in the managed instance group. Each instance in
-  /// the list has a currentAction, which indicates the action that the managed
-  /// instance group is performing on the instance. For example, if the group is
-  /// still creating an instance, the currentAction is CREATING. If a previous
-  /// action failed, the list displays the errors for that failed action. The
-  /// orderBy query parameter is not supported. The `pageToken` query parameter
-  /// is supported only if the group's `listManagedInstancesResults` field is set
+  /// Lists all of the instances in the managed instance group. Each instance
+  /// in the list has a currentAction, which indicates the action
+  /// that the managed instance group is performing on the instance. For example,
+  /// if the group is still creating an instance, the currentAction
+  /// is CREATING. If a previous action failed, the
+  /// list displays the errors for that failed action. The orderBy
+  /// query parameter is not supported. The `pageToken` query parameter is
+  /// supported only if the group's `listManagedInstancesResults` field is set
   /// to `PAGINATED`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1411,8 +1462,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L995}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L338}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1200}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L404}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -1423,13 +1474,14 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Lists all of the instances in the managed instance group. Each instance in
-  /// the list has a currentAction, which indicates the action that the managed
-  /// instance group is performing on the instance. For example, if the group is
-  /// still creating an instance, the currentAction is CREATING. If a previous
-  /// action failed, the list displays the errors for that failed action. The
-  /// orderBy query parameter is not supported. The `pageToken` query parameter
-  /// is supported only if the group's `listManagedInstancesResults` field is set
+  /// Lists all of the instances in the managed instance group. Each instance
+  /// in the list has a currentAction, which indicates the action
+  /// that the managed instance group is performing on the instance. For example,
+  /// if the group is still creating an instance, the currentAction
+  /// is CREATING. If a previous action failed, the
+  /// list displays the errors for that failed action. The orderBy
+  /// query parameter is not supported. The `pageToken` query parameter is
+  /// supported only if the group's `listManagedInstancesResults` field is set
   /// to `PAGINATED`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   ///
@@ -1452,8 +1504,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L995}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L338}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1200}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L404}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -1469,8 +1521,9 @@ class InstanceGroupManagersClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listPerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. It should
-  ///  conform to RFC1035.
+  /// @param zone  The name of thezone
+  ///  where the managed instance group is located.
+  ///  It should conform to RFC1035.
   /// @param instance_group_manager  The name of the managed instance group. It should conform to RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1494,8 +1547,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1072}
-  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L833}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1311}
+  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L24}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
@@ -1537,8 +1590,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1072}
-  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L833}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1311}
+  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L24}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
@@ -1548,20 +1601,27 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Updates a managed instance group using the information that you specify in
-  /// the request. This operation is marked as DONE when the group is patched
+  /// Updates a managed instance group using the information that you specify
+  /// in the request.
+  /// This operation is marked as DONE when the group is patched
   /// even if the instances in the group are still in the process of being
   /// patched. You must separately verify the status of the individual instances
-  /// with the listManagedInstances method. This method supports PATCH semantics
-  /// and uses the JSON merge patch format and processing rules. If you update
-  /// your group to specify a new template or instance configuration, it's
-  /// possible that your intended specification for each VM in the group is
-  /// different from the current state of that VM. To learn how to apply an
-  /// updated configuration to the VMs in a MIG, see Updating instances in a MIG.
+  /// with thelistManagedInstances
+  /// method. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
+  ///
+  /// If you update your group to specify a new template or instance
+  /// configuration, it's possible that your intended specification for each VM
+  /// in the group is different from the current state of that VM. To learn how
+  /// to apply an updated configuration to the VMs in a MIG, seeUpdating
+  /// instances in
+  /// a MIG.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patch
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where you want to create the managed instance group.
+  /// @param zone  The name of the zone where
+  ///  you want to create the managed instance group.
   /// @param instance_group_manager  The name of the instance group manager.
   /// @param instance_group_manager_resource  The InstanceGroupManager for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1584,7 +1644,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1150}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1423}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1616,16 +1676,22 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Updates a managed instance group using the information that you specify in
-  /// the request. This operation is marked as DONE when the group is patched
+  /// Updates a managed instance group using the information that you specify
+  /// in the request.
+  /// This operation is marked as DONE when the group is patched
   /// even if the instances in the group are still in the process of being
   /// patched. You must separately verify the status of the individual instances
-  /// with the listManagedInstances method. This method supports PATCH semantics
-  /// and uses the JSON merge patch format and processing rules. If you update
-  /// your group to specify a new template or instance configuration, it's
-  /// possible that your intended specification for each VM in the group is
-  /// different from the current state of that VM. To learn how to apply an
-  /// updated configuration to the VMs in a MIG, see Updating instances in a MIG.
+  /// with thelistManagedInstances
+  /// method. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
+  ///
+  /// If you update your group to specify a new template or instance
+  /// configuration, it's possible that your intended specification for each VM
+  /// in the group is different from the current state of that VM. To learn how
+  /// to apply an updated configuration to the VMs in a MIG, seeUpdating
+  /// instances in
+  /// a MIG.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1654,7 +1720,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1150}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1423}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1698,14 +1764,16 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Inserts or patches per-instance configurations for the managed instance
-  /// group. perInstanceConfig.name serves as a key used to distinguish whether
-  /// to perform insert or patch.
+  /// group. perInstanceConfig.name serves as a key used to
+  /// distinguish whether to perform insert or patch.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patchPerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. It should
-  ///  conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. It should conform to RFC1035.
+  /// @param zone  The name of thezone
+  ///  where the managed instance group is located.
+  ///  It should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  It should conform to RFC1035.
   /// @param instance_group_managers_patch_per_instance_configs_req_resource  The InstanceGroupManagersPatchPerInstanceConfigsReq for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1727,7 +1795,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1189}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1466}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1761,8 +1829,8 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Inserts or patches per-instance configurations for the managed instance
-  /// group. perInstanceConfig.name serves as a key used to distinguish whether
-  /// to perform insert or patch.
+  /// group. perInstanceConfig.name serves as a key used to
+  /// distinguish whether to perform insert or patch.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patchPerInstanceConfigs
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1791,7 +1859,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1189}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1466}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1834,18 +1902,23 @@ class InstanceGroupManagersClient {
   ///
   /// Flags the specified VM instances in the managed instance group to be
   /// immediately recreated. Each instance is recreated using the group's current
-  /// configuration. This operation is marked as DONE when the flag is set even
-  /// if the instances have not yet been recreated. You must separately verify
-  /// the status of each instance by checking its currentAction field; for more
-  /// information, see Checking the status of managed instances. If the group is
-  /// part of a backend service that has enabled connection draining, it can take
-  /// up to 60 seconds after the connection draining duration has elapsed before
-  /// the VM instance is removed or deleted. You can specify a maximum of 1000
-  /// instances with this method per request.
+  /// configuration. This operation is marked as DONE when the flag
+  /// is set even if the instances have not yet been recreated. You must
+  /// separately verify the status of each instance by checking itscurrentAction
+  /// field; for more information, see Checking
+  /// the status of managed instances.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/recreateInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_recreate_instances_request_resource  The InstanceGroupManagersRecreateInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1868,7 +1941,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1231}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1513}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1903,14 +1976,18 @@ class InstanceGroupManagersClient {
   ///
   /// Flags the specified VM instances in the managed instance group to be
   /// immediately recreated. Each instance is recreated using the group's current
-  /// configuration. This operation is marked as DONE when the flag is set even
-  /// if the instances have not yet been recreated. You must separately verify
-  /// the status of each instance by checking its currentAction field; for more
-  /// information, see Checking the status of managed instances. If the group is
-  /// part of a backend service that has enabled connection draining, it can take
-  /// up to 60 seconds after the connection draining duration has elapsed before
-  /// the VM instance is removed or deleted. You can specify a maximum of 1000
-  /// instances with this method per request.
+  /// configuration. This operation is marked as DONE when the flag
+  /// is set even if the instances have not yet been recreated. You must
+  /// separately verify the status of each instance by checking itscurrentAction
+  /// field; for more information, see Checking
+  /// the status of managed instances.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/recreateInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1939,7 +2016,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1231}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1513}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1981,23 +2058,33 @@ class InstanceGroupManagersClient {
   ///
   /// Resizes the managed instance group. If you increase the size, the group
   /// creates new instances using the current instance template. If you decrease
-  /// the size, the group deletes instances. The resize operation is marked DONE
-  /// when the resize actions are scheduled even if the group has not yet added
-  /// or deleted any instances. You must separately verify the status of the
-  /// creating or deleting actions with the listmanagedinstances method. When
-  /// resizing down, the instance group arbitrarily chooses the order in which
-  /// VMs are deleted. The group takes into account some VM attributes when
-  /// making the selection including: + The status of the VM instance. + The
-  /// health of the VM instance. + The instance template version the VM is based
-  /// on. + For regional managed instance groups, the location of the VM
-  /// instance. This list is subject to change. If the group is part of a backend
-  /// service that has enabled connection draining, it can take up to 60 seconds
-  /// after the connection draining duration has elapsed before the VM instance
-  /// is removed or deleted.
+  /// the size, the group deletes instances. The resize operation is markedDONE
+  /// when the resize actions are scheduled even if the group
+  /// has not yet added or deleted any instances. You must separately
+  /// verify the status of the creating or deleting
+  /// actions with thelistmanagedinstances
+  /// method.
+  ///
+  /// When resizing down, the instance group arbitrarily chooses the order in
+  /// which VMs are deleted. The group takes into account some VM attributes when
+  /// making the selection including:
+  ///
+  /// + The status of the VM instance.
+  /// + The health of the VM instance.
+  /// + The instance template version the VM is based on.
+  /// + For regional managed instance groups, the location of the VM instance.
+  ///
+  /// This list is subject to change.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resize
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param size  The number of running instances that the managed instance group should
   ///  maintain at any given time. The group automatically adds or removes
@@ -2022,7 +2109,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1272}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1562}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -2050,19 +2137,28 @@ class InstanceGroupManagersClient {
   ///
   /// Resizes the managed instance group. If you increase the size, the group
   /// creates new instances using the current instance template. If you decrease
-  /// the size, the group deletes instances. The resize operation is marked DONE
-  /// when the resize actions are scheduled even if the group has not yet added
-  /// or deleted any instances. You must separately verify the status of the
-  /// creating or deleting actions with the listmanagedinstances method. When
-  /// resizing down, the instance group arbitrarily chooses the order in which
-  /// VMs are deleted. The group takes into account some VM attributes when
-  /// making the selection including: + The status of the VM instance. + The
-  /// health of the VM instance. + The instance template version the VM is based
-  /// on. + For regional managed instance groups, the location of the VM
-  /// instance. This list is subject to change. If the group is part of a backend
-  /// service that has enabled connection draining, it can take up to 60 seconds
-  /// after the connection draining duration has elapsed before the VM instance
-  /// is removed or deleted.
+  /// the size, the group deletes instances. The resize operation is markedDONE
+  /// when the resize actions are scheduled even if the group
+  /// has not yet added or deleted any instances. You must separately
+  /// verify the status of the creating or deleting
+  /// actions with thelistmanagedinstances
+  /// method.
+  ///
+  /// When resizing down, the instance group arbitrarily chooses the order in
+  /// which VMs are deleted. The group takes into account some VM attributes when
+  /// making the selection including:
+  ///
+  /// + The status of the VM instance.
+  /// + The health of the VM instance.
+  /// + The instance template version the VM is based on.
+  /// + For regional managed instance groups, the location of the VM instance.
+  ///
+  /// This list is subject to change.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is removed or deleted.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resize
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2091,7 +2187,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1272}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1562}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -2131,23 +2227,29 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Flags the specified instances in the managed instance group to be resumed.
-  /// This method increases the targetSize and decreases the targetSuspendedSize
+  /// Flags the specified instances in the managed instance group to be
+  /// resumed. This method increases thetargetSize and decreases the
+  /// targetSuspendedSize
   /// of the managed instance group by the number of instances that you resume.
-  /// The resumeInstances operation is marked DONE if the resumeInstances request
-  /// is successful. The underlying actions take additional time. You must
-  /// separately verify the status of the RESUMING action with the
-  /// listmanagedinstances method. In this request, you can only specify
-  /// instances that are suspended. For example, if an instance was previously
-  /// suspended using the suspendInstances method, it can be resumed using the
-  /// resumeInstances method. If a health check is attached to the managed
-  /// instance group, the specified instances will be verified as healthy after
-  /// they are resumed. You can specify a maximum of 1000 instances with this
-  /// method per request.
+  /// The resumeInstances operation is marked DONE if
+  /// the resumeInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theRESUMING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// In this request, you can only specify instances that are suspended. For
+  /// example, if an instance was previously suspended using the suspendInstances
+  /// method, it can be resumed using the resumeInstances method.
+  ///
+  /// If a health check is attached to the managed instance group, the specified
+  /// instances will be verified as healthy after they are resumed.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resumeInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_resume_instances_request_resource  The InstanceGroupManagersResumeInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2170,7 +2272,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResumeInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1312}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResumeInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1606}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ResumeInstances(
@@ -2202,19 +2304,24 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Flags the specified instances in the managed instance group to be resumed.
-  /// This method increases the targetSize and decreases the targetSuspendedSize
+  /// Flags the specified instances in the managed instance group to be
+  /// resumed. This method increases thetargetSize and decreases the
+  /// targetSuspendedSize
   /// of the managed instance group by the number of instances that you resume.
-  /// The resumeInstances operation is marked DONE if the resumeInstances request
-  /// is successful. The underlying actions take additional time. You must
-  /// separately verify the status of the RESUMING action with the
-  /// listmanagedinstances method. In this request, you can only specify
-  /// instances that are suspended. For example, if an instance was previously
-  /// suspended using the suspendInstances method, it can be resumed using the
-  /// resumeInstances method. If a health check is attached to the managed
-  /// instance group, the specified instances will be verified as healthy after
-  /// they are resumed. You can specify a maximum of 1000 instances with this
-  /// method per request.
+  /// The resumeInstances operation is marked DONE if
+  /// the resumeInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theRESUMING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// In this request, you can only specify instances that are suspended. For
+  /// example, if an instance was previously suspended using the suspendInstances
+  /// method, it can be resumed using the resumeInstances method.
+  ///
+  /// If a health check is attached to the managed instance group, the specified
+  /// instances will be verified as healthy after they are resumed.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resumeInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2243,7 +2350,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResumeInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1312}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResumeInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1606}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ResumeInstances(
@@ -2285,12 +2392,13 @@ class InstanceGroupManagersClient {
   ///
   /// Specifies the instance template to use when creating new instances in this
   /// group. The templates for existing instances in the group do not change
-  /// unless you run recreateInstances, run applyUpdatesToInstances, or set the
-  /// group's updatePolicy.type to PROACTIVE.
+  /// unless you run recreateInstances, runapplyUpdatesToInstances, or set the
+  /// group'supdatePolicy.type to PROACTIVE.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setInstanceTemplate
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_set_instance_template_request_resource  The InstanceGroupManagersSetInstanceTemplateRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2313,7 +2421,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1353}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2348,8 +2456,8 @@ class InstanceGroupManagersClient {
   ///
   /// Specifies the instance template to use when creating new instances in this
   /// group. The templates for existing instances in the group do not change
-  /// unless you run recreateInstances, run applyUpdatesToInstances, or set the
-  /// group's updatePolicy.type to PROACTIVE.
+  /// unless you run recreateInstances, runapplyUpdatesToInstances, or set the
+  /// group'supdatePolicy.type to PROACTIVE.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setInstanceTemplate
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2378,7 +2486,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1353}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2421,14 +2529,16 @@ class InstanceGroupManagersClient {
   ///
   /// Modifies the target pools to which all instances in this managed instance
   /// group are assigned. The target pools automatically apply to all of the
-  /// instances in the managed instance group. This operation is marked DONE when
-  /// you make the request even if the instances have not yet been added to their
-  /// target pools. The change might take some time to apply to all of the
-  /// instances in the group depending on the size of the group.
+  /// instances in the managed instance group. This operation is markedDONE when
+  /// you make the request even if the instances have not
+  /// yet been added to their target pools. The change might take some time to
+  /// apply to all of the instances in the group depending on the size of the
+  /// group.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setTargetPools
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_set_target_pools_request_resource  The InstanceGroupManagersSetTargetPoolsRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2451,7 +2561,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1394}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1696}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
@@ -2485,10 +2595,11 @@ class InstanceGroupManagersClient {
   ///
   /// Modifies the target pools to which all instances in this managed instance
   /// group are assigned. The target pools automatically apply to all of the
-  /// instances in the managed instance group. This operation is marked DONE when
-  /// you make the request even if the instances have not yet been added to their
-  /// target pools. The change might take some time to apply to all of the
-  /// instances in the group depending on the size of the group.
+  /// instances in the managed instance group. This operation is markedDONE when
+  /// you make the request even if the instances have not
+  /// yet been added to their target pools. The change might take some time to
+  /// apply to all of the instances in the group depending on the size of the
+  /// group.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setTargetPools
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2517,7 +2628,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1394}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1696}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
@@ -2557,23 +2668,29 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Flags the specified instances in the managed instance group to be started.
-  /// This method increases the targetSize and decreases the targetStoppedSize of
-  /// the managed instance group by the number of instances that you start. The
-  /// startInstances operation is marked DONE if the startInstances request is
-  /// successful. The underlying actions take additional time. You must
-  /// separately verify the status of the STARTING action with the
-  /// listmanagedinstances method. In this request, you can only specify
-  /// instances that are stopped. For example, if an instance was previously
-  /// stopped using the stopInstances method, it can be started using the
-  /// startInstances method. If a health check is attached to the managed
-  /// instance group, the specified instances will be verified as healthy after
-  /// they are started. You can specify a maximum of 1000 instances with this
-  /// method per request.
+  /// Flags the specified instances in the managed instance group to be
+  /// started. This method increases thetargetSize and decreases the
+  /// targetStoppedSize
+  /// of the managed instance group by the number of instances that you start.
+  /// The startInstances operation is marked DONE if
+  /// the startInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theSTARTING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// In this request, you can only specify instances that are stopped. For
+  /// example, if an instance was previously stopped using the stopInstances
+  /// method, it can be started using the startInstances method.
+  ///
+  /// If a health check is attached to the managed instance group, the specified
+  /// instances will be verified as healthy after they are started.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/startInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_start_instances_request_resource  The InstanceGroupManagersStartInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2596,7 +2713,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.StartInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1435}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.StartInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1741}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StartInstances(
@@ -2628,19 +2745,24 @@ class InstanceGroupManagersClient {
 
   // clang-format off
   ///
-  /// Flags the specified instances in the managed instance group to be started.
-  /// This method increases the targetSize and decreases the targetStoppedSize of
-  /// the managed instance group by the number of instances that you start. The
-  /// startInstances operation is marked DONE if the startInstances request is
-  /// successful. The underlying actions take additional time. You must
-  /// separately verify the status of the STARTING action with the
-  /// listmanagedinstances method. In this request, you can only specify
-  /// instances that are stopped. For example, if an instance was previously
-  /// stopped using the stopInstances method, it can be started using the
-  /// startInstances method. If a health check is attached to the managed
-  /// instance group, the specified instances will be verified as healthy after
-  /// they are started. You can specify a maximum of 1000 instances with this
-  /// method per request.
+  /// Flags the specified instances in the managed instance group to be
+  /// started. This method increases thetargetSize and decreases the
+  /// targetStoppedSize
+  /// of the managed instance group by the number of instances that you start.
+  /// The startInstances operation is marked DONE if
+  /// the startInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theSTARTING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// In this request, you can only specify instances that are stopped. For
+  /// example, if an instance was previously stopped using the stopInstances
+  /// method, it can be started using the startInstances method.
+  ///
+  /// If a health check is attached to the managed instance group, the specified
+  /// instances will be verified as healthy after they are started.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/startInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2669,7 +2791,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.StartInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1435}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.StartInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1741}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StartInstances(
@@ -2711,26 +2833,38 @@ class InstanceGroupManagersClient {
   ///
   /// Flags the specified instances in the managed instance group to be
   /// immediately stopped. You can only specify instances that are running in
-  /// this request. This method reduces the targetSize and increases the
-  /// targetStoppedSize of the managed instance group by the number of instances
-  /// that you stop. The stopInstances operation is marked DONE if the
-  /// stopInstances request is successful. The underlying actions take additional
-  /// time. You must separately verify the status of the STOPPING action with the
-  /// listmanagedinstances method. If the standbyPolicy.initialDelaySec field is
-  /// set, the group delays stopping the instances until initialDelaySec have
-  /// passed from instance.creationTimestamp (that is, when the instance was
-  /// created). This delay gives your application time to set itself up and
-  /// initialize on the instance. If more than initialDelaySec seconds have
-  /// passed since instance.creationTimestamp when this method is called, there
-  /// will be zero delay. If the group is part of a backend service that has
-  /// enabled connection draining, it can take up to 60 seconds after the
-  /// connection draining duration has elapsed before the VM instance is stopped.
-  /// Stopped instances can be started using the startInstances method. You can
-  /// specify a maximum of 1000 instances with this method per request.
+  /// this request. This method reduces thetargetSize and increases the
+  /// targetStoppedSize
+  /// of the managed instance group by the number of instances that you stop.
+  /// The stopInstances operation is marked DONE if
+  /// the stopInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theSTOPPING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the standbyPolicy.initialDelaySec field is set, the group
+  /// delays stopping the instances until initialDelaySec have
+  /// passed from instance.creationTimestamp (that is, when the
+  /// instance was created). This delay gives your application time to
+  /// set itself up and initialize on the instance. If more thaninitialDelaySec
+  /// seconds have passed sinceinstance.creationTimestamp when this method is
+  /// called, there
+  /// will be zero delay.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is stopped.
+  ///
+  /// Stopped instances can be started using the startInstances
+  /// method.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/stopInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_stop_instances_request_resource  The InstanceGroupManagersStopInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2753,7 +2887,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.StopInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1476}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.StopInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1786}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StopInstances(
@@ -2787,22 +2921,33 @@ class InstanceGroupManagersClient {
   ///
   /// Flags the specified instances in the managed instance group to be
   /// immediately stopped. You can only specify instances that are running in
-  /// this request. This method reduces the targetSize and increases the
-  /// targetStoppedSize of the managed instance group by the number of instances
-  /// that you stop. The stopInstances operation is marked DONE if the
-  /// stopInstances request is successful. The underlying actions take additional
-  /// time. You must separately verify the status of the STOPPING action with the
-  /// listmanagedinstances method. If the standbyPolicy.initialDelaySec field is
-  /// set, the group delays stopping the instances until initialDelaySec have
-  /// passed from instance.creationTimestamp (that is, when the instance was
-  /// created). This delay gives your application time to set itself up and
-  /// initialize on the instance. If more than initialDelaySec seconds have
-  /// passed since instance.creationTimestamp when this method is called, there
-  /// will be zero delay. If the group is part of a backend service that has
-  /// enabled connection draining, it can take up to 60 seconds after the
-  /// connection draining duration has elapsed before the VM instance is stopped.
-  /// Stopped instances can be started using the startInstances method. You can
-  /// specify a maximum of 1000 instances with this method per request.
+  /// this request. This method reduces thetargetSize and increases the
+  /// targetStoppedSize
+  /// of the managed instance group by the number of instances that you stop.
+  /// The stopInstances operation is marked DONE if
+  /// the stopInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theSTOPPING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the standbyPolicy.initialDelaySec field is set, the group
+  /// delays stopping the instances until initialDelaySec have
+  /// passed from instance.creationTimestamp (that is, when the
+  /// instance was created). This delay gives your application time to
+  /// set itself up and initialize on the instance. If more thaninitialDelaySec
+  /// seconds have passed sinceinstance.creationTimestamp when this method is
+  /// called, there
+  /// will be zero delay.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration has elapsed before the VM instance is stopped.
+  ///
+  /// Stopped instances can be started using the startInstances
+  /// method.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/stopInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2831,7 +2976,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.StopInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1476}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.StopInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1786}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StopInstances(
@@ -2873,27 +3018,38 @@ class InstanceGroupManagersClient {
   ///
   /// Flags the specified instances in the managed instance group to be
   /// immediately suspended. You can only specify instances that are running in
-  /// this request. This method reduces the targetSize and increases the
-  /// targetSuspendedSize of the managed instance group by the number of
-  /// instances that you suspend. The suspendInstances operation is marked DONE
-  /// if the suspendInstances request is successful. The underlying actions take
-  /// additional time. You must separately verify the status of the SUSPENDING
-  /// action with the listmanagedinstances method. If the
-  /// standbyPolicy.initialDelaySec field is set, the group delays suspension of
-  /// the instances until initialDelaySec have passed from
-  /// instance.creationTimestamp (that is, when the instance was created). This
-  /// delay gives your application time to set itself up and initialize on the
-  /// instance. If more than initialDelaySec seconds have passed since
-  /// instance.creationTimestamp when this method is called, there will be zero
-  /// delay. If the group is part of a backend service that has enabled
+  /// this request. This method reduces thetargetSize and increases the
+  /// targetSuspendedSize
+  /// of the managed instance group by the number of instances that you suspend.
+  /// The suspendInstances operation is marked DONE if
+  /// the suspendInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theSUSPENDING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the standbyPolicy.initialDelaySec field is set, the group
+  /// delays suspension of the instances until initialDelaySec have
+  /// passed from instance.creationTimestamp (that is, when the
+  /// instance was created). This delay gives your application time to
+  /// set itself up and initialize on the instance. If more thaninitialDelaySec
+  /// seconds have passed sinceinstance.creationTimestamp when this method is
+  /// called, there
+  /// will be zero delay.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
   /// connection draining, it can take up to 60 seconds after the connection
   /// draining duration has elapsed before the VM instance is suspended.
-  /// Suspended instances can be resumed using the resumeInstances method. You
-  /// can specify a maximum of 1000 instances with this method per request.
+  ///
+  /// Suspended instances can be resumed using the resumeInstances
+  /// method.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/suspendInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located.
   /// @param instance_group_manager  The name of the managed instance group.
   /// @param instance_group_managers_suspend_instances_request_resource  The InstanceGroupManagersSuspendInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2916,7 +3072,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SuspendInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1516}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SuspendInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1834}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SuspendInstances(
@@ -2950,23 +3106,33 @@ class InstanceGroupManagersClient {
   ///
   /// Flags the specified instances in the managed instance group to be
   /// immediately suspended. You can only specify instances that are running in
-  /// this request. This method reduces the targetSize and increases the
-  /// targetSuspendedSize of the managed instance group by the number of
-  /// instances that you suspend. The suspendInstances operation is marked DONE
-  /// if the suspendInstances request is successful. The underlying actions take
-  /// additional time. You must separately verify the status of the SUSPENDING
-  /// action with the listmanagedinstances method. If the
-  /// standbyPolicy.initialDelaySec field is set, the group delays suspension of
-  /// the instances until initialDelaySec have passed from
-  /// instance.creationTimestamp (that is, when the instance was created). This
-  /// delay gives your application time to set itself up and initialize on the
-  /// instance. If more than initialDelaySec seconds have passed since
-  /// instance.creationTimestamp when this method is called, there will be zero
-  /// delay. If the group is part of a backend service that has enabled
+  /// this request. This method reduces thetargetSize and increases the
+  /// targetSuspendedSize
+  /// of the managed instance group by the number of instances that you suspend.
+  /// The suspendInstances operation is marked DONE if
+  /// the suspendInstances request is successful. The underlying
+  /// actions take additional time. You must separately verify the status of
+  /// theSUSPENDING action with thelistmanagedinstances
+  /// method.
+  ///
+  /// If the standbyPolicy.initialDelaySec field is set, the group
+  /// delays suspension of the instances until initialDelaySec have
+  /// passed from instance.creationTimestamp (that is, when the
+  /// instance was created). This delay gives your application time to
+  /// set itself up and initialize on the instance. If more thaninitialDelaySec
+  /// seconds have passed sinceinstance.creationTimestamp when this method is
+  /// called, there
+  /// will be zero delay.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
   /// connection draining, it can take up to 60 seconds after the connection
   /// draining duration has elapsed before the VM instance is suspended.
-  /// Suspended instances can be resumed using the resumeInstances method. You
-  /// can specify a maximum of 1000 instances with this method per request.
+  ///
+  /// Suspended instances can be resumed using the resumeInstances
+  /// method.
+  ///
+  /// You can specify a maximum of 1000 instances with this method per request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/suspendInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2995,7 +3161,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SuspendInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1516}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SuspendInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1834}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SuspendInstances(
@@ -3036,14 +3202,16 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Inserts or updates per-instance configurations for the managed instance
-  /// group. perInstanceConfig.name serves as a key used to distinguish whether
-  /// to perform insert or patch.
+  /// group. perInstanceConfig.name serves as a key used to
+  /// distinguish whether to perform insert or patch.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/updatePerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. It should
-  ///  conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. It should conform to RFC1035.
+  /// @param zone  The name of thezone
+  ///  where the managed instance group is located.
+  ///  It should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  It should conform to RFC1035.
   /// @param instance_group_managers_update_per_instance_configs_req_resource  The InstanceGroupManagersUpdatePerInstanceConfigsReq for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -3065,7 +3233,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1557}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1879}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3099,8 +3267,8 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Inserts or updates per-instance configurations for the managed instance
-  /// group. perInstanceConfig.name serves as a key used to distinguish whether
-  /// to perform insert or patch.
+  /// group. perInstanceConfig.name serves as a key used to
+  /// distinguish whether to perform insert or patch.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/updatePerInstanceConfigs
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3129,7 +3297,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1557}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1879}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

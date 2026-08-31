@@ -53,6 +53,18 @@ TEST(BenchmarkTest, Create) {
   SUCCEED() << "Benchmark object successfully destroyed";
 }
 
+TEST(BenchmarkTest, MakeTableWithMetricsPeriod) {
+  char arg8[] = "--metrics-period=10s";
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
+
+  Benchmark bm(*options);
+  auto table = bm.MakeTable();
+  SUCCEED();
+}
+
 TEST(BenchmarkTest, Populate) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);

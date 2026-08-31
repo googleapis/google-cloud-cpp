@@ -87,6 +87,13 @@ class SecretManagerServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
 
+  virtual google::cloud::Idempotency EnableManagedRotation(
+      google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RotateSecret(
+      google::cloud::secretmanager::v1::RotateSecretRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

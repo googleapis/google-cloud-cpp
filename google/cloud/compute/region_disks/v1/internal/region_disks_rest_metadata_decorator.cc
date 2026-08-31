@@ -336,6 +336,27 @@ RegionDisksRestMetadata::UpdateDisk(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksRestMetadata::AsyncUpdateKmsKey(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateKmsKey(cq, std::move(rest_context),
+                                   std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestMetadata::UpdateKmsKey(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateKmsKey(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

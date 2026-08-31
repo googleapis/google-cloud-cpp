@@ -84,6 +84,10 @@ class RegionHealthChecksTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_health_checks::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
                         UpdateHealthCheckRequest const& request) override;

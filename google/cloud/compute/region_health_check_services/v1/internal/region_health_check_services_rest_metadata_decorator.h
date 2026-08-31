@@ -42,6 +42,14 @@ class RegionHealthCheckServicesRestMetadata
       std::shared_ptr<RegionHealthCheckServicesRestStub> child,
       std::string api_client_header = "");
 
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+  AggregatedListRegionHealthCheckServices(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          AggregatedListRegionHealthCheckServicesRequest const& request)
+      override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteHealthCheckService(
       google::cloud::CompletionQueue& cq,
@@ -97,6 +105,12 @@ class RegionHealthCheckServicesRestMetadata
       Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::TestIamPermissionsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

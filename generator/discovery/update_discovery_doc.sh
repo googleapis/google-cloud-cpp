@@ -53,29 +53,72 @@ function add_service_directory() {
 EOT
 }
 
-if (($# > 0)); then
-  cat 1>&2 <<EOM
-Usage: $(basename "$0")
+CREATE_BRANCH=true
+while (($# > 0)); do
+  case "$1" in
+    --create-branch=true)
+      CREATE_BRANCH=true
+      shift
+      ;;
+    --create-branch=false | --no-create-branch)
+      CREATE_BRANCH=false
+      shift
+      ;;
+    *)
+      cat 1>&2 <<EOM
+Usage: $(basename "$0") [--create-branch=true|false]
 
   Updates the Compute Discovery Document and runs the generator on the updated
   JSON.
-EOM
-  exit 1
-fi
 
-readonly COMPUTE_DISCOVERY_DOCUMENT_URL="https://www.googleapis.com/discovery/v1/apis/compute/v1/rest"
+  --create-branch=true|false (default: true)
+      Whether to create and check out a new git branch update_compute_discovery_circa_<REVISION>.
+EOM
+      exit 1
+      ;;
+  esac
+done
+readonly CREATE_BRANCH
+
+readonly COMPUTE_DISCOVERY_DOCUMENT_URL="https://raw.githubusercontent.com/googleapis/discovery-artifact-manager/master/discoveries/compute.v1.json"
 readonly COMPUTE_DISCOVERY_JSON_RELATIVE_PATH="generator/discovery/compute_public_google_rest_v1.json"
 readonly GENERATOR_CONFIG_RELATIVE_PATH="generator/generator_config.textproto"
 readonly COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH="google/cloud/compute/service_dirs.cmake"
 readonly COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH="google/cloud/compute/service_dirs.bzl"
 
-io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
-curl "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
+CURRENT_REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}" 2>/dev/null || echo "")
 
-# TODO(#14028): Make branch creation optional.
-REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}")
+io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
+TEMP_JSON=$(mktemp)
+if [[ ! -f "${TEMP_JSON}" ]]; then
+  io::log_red "Failed to create temporary file."
+  exit 1
+fi
+trap 'rm -f "${TEMP_JSON}"' EXIT
+
+if ! curl -fsSL "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${TEMP_JSON}"; then
+  io::log_red "Failed to fetch discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
+  exit 1
+fi
+
+REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${TEMP_JSON}")
+if [[ -z "${REVISION}" ]]; then
+  io::log_red "Could not parse revision from fetched discovery document."
+  exit 1
+fi
 readonly REVISION
-io::run git checkout -B update_compute_discovery_circa_"${REVISION}"
+
+if [[ -n "${CURRENT_REVISION}" && "${REVISION}" == "${CURRENT_REVISION}" ]]; then
+  io::log_green "Compute discovery document is already up to date (revision ${CURRENT_REVISION}). Nothing to do."
+  exit 0
+fi
+
+io::log_h2 "Updating Discovery Document: ${CURRENT_REVISION:-none} -> ${REVISION}"
+mv "${TEMP_JSON}" "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
+
+if [[ "${CREATE_BRANCH}" == "true" ]]; then
+  io::run git checkout -B update_compute_discovery_circa_"${REVISION}"
+fi
 
 io::log_h2 "Adding updated Discovery JSON ${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
 git commit -m"chore(compute): update discovery doc circa ${REVISION}" \
@@ -126,7 +169,8 @@ if [[ -n "${NEW_FILES}" ]]; then
   done
 
   io::log_yellow "Adding new directories to ${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
-  cmake -DGOOGLE_CLOUD_CPP_ENABLE=compute -S . -B ./cmake-build-debug
+  CMAKE_BUILD_DIR=$(mktemp -d)
+  cmake -DGOOGLE_CLOUD_CPP_ENABLE=compute -S . -B "${CMAKE_BUILD_DIR}"
 
   git commit -m"Update generator_config.textproto and service_dirs files" \
     "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}" \
@@ -134,4 +178,4 @@ if [[ -n "${NEW_FILES}" ]]; then
     "${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
 fi
 
-git commit -m"Update generated code" .
+git add -A . && git commit -m"Update generated code"

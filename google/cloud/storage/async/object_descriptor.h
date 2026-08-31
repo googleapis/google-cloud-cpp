@@ -20,9 +20,9 @@
 #include "google/cloud/storage/async/token.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <utility>
 
 namespace google {
@@ -57,7 +57,7 @@ class ObjectDescriptor {
 
   /// Returns, if available, the object metadata associated with this
   /// descriptor.
-  absl::optional<google::storage::v2::Object> metadata() const;
+  std::optional<google::storage::v2::Object> metadata() const;
 
   /**
    * Starts a new range read in the current descriptor.

@@ -184,6 +184,21 @@ KeyManagementServiceConnection::ImportCryptoKeyVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceConnection::ImportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceConnection::ExportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceConnection::CreateImportJob(
     google::cloud::kms::v1::CreateImportJobRequest const&) {

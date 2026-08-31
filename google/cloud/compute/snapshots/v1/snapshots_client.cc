@@ -278,6 +278,62 @@ SnapshotsClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsClient::UpdateKmsKey(
+    std::string const& project, std::string const& snapshot,
+    google::cloud::cpp::compute::v1::SnapshotUpdateKmsKeyRequest const&
+        snapshot_update_kms_key_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest request;
+  request.set_project(project);
+  request.set_snapshot(snapshot);
+  *request.mutable_snapshot_update_kms_key_request_resource() =
+      snapshot_update_kms_key_request_resource;
+  return connection_->UpdateKmsKey(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsClient::UpdateKmsKey(
+    NoAwaitTag, std::string const& project, std::string const& snapshot,
+    google::cloud::cpp::compute::v1::SnapshotUpdateKmsKeyRequest const&
+        snapshot_update_kms_key_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest request;
+  request.set_project(project);
+  request.set_snapshot(snapshot);
+  *request.mutable_snapshot_update_kms_key_request_resource() =
+      snapshot_update_kms_key_request_resource;
+  return connection_->UpdateKmsKey(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsClient::UpdateKmsKey(
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateKmsKey(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsClient::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateKmsKey(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsClient::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateKmsKey(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_snapshots_v1
 }  // namespace cloud

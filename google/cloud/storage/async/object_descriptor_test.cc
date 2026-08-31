@@ -34,7 +34,7 @@ using ReadResponse = AsyncReaderConnection::ReadResponse;
 
 TEST(ObjectDescriptor, Basic) {
   auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
-  EXPECT_CALL(*mock, metadata).WillOnce(Return(absl::nullopt));
+  EXPECT_CALL(*mock, metadata).WillOnce(Return(std::nullopt));
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
         EXPECT_EQ(p.start, 100);
@@ -71,7 +71,7 @@ TEST(ObjectDescriptor, Basic) {
 
 TEST(ObjectDescriptor, ReadFromOffset) {
   auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
-  EXPECT_CALL(*mock, metadata).WillOnce(Return(absl::nullopt));
+  EXPECT_CALL(*mock, metadata).WillOnce(Return(std::nullopt));
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
         EXPECT_EQ(p.start, 10);
@@ -110,7 +110,7 @@ TEST(ObjectDescriptor, ReadFromOffset) {
 
 TEST(ObjectDescriptor, ReadLast) {
   auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
-  EXPECT_CALL(*mock, metadata).WillOnce(Return(absl::nullopt));
+  EXPECT_CALL(*mock, metadata).WillOnce(Return(std::nullopt));
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
         EXPECT_EQ(p.start, -15);

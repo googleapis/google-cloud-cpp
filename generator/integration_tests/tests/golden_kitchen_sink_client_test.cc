@@ -331,9 +331,9 @@ TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
         .WillOnce([] {
           Response response;
           response.set_response("test-only-response");
-          return make_ready_future(absl::make_optional(response));
+          return make_ready_future(std::make_optional(response));
         })
-        .WillOnce([] { return make_ready_future(absl::optional<Response>()); });
+        .WillOnce([] { return make_ready_future(std::optional<Response>()); });
     EXPECT_CALL(*stream, Finish).WillOnce([] {
       return make_ready_future(Status(StatusCode::kUnavailable, "try-again"));
     });

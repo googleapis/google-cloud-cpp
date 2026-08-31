@@ -76,6 +76,37 @@ RoutersTracingConnection::DeleteRouter(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersTracingConnection::DeleteNamedSet(
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::DeleteNamedSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteNamedSet(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersTracingConnection::DeleteNamedSet(
+    NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::DeleteNamedSet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteNamedSet(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersTracingConnection::DeleteNamedSet(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::DeleteNamedSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteNamedSet(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersTracingConnection::DeleteRoutePolicy(
     google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
         request) {
@@ -114,6 +145,16 @@ RoutersTracingConnection::GetRouter(
       internal::MakeSpan("compute_routers_v1::RoutersConnection::GetRouter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRouter(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+RoutersTracingConnection::GetNamedSet(
+    google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_routers_v1::RoutersConnection::GetNamedSet");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNamedSet(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
@@ -207,6 +248,16 @@ RoutersTracingConnection::ListBgpRoutes(
   return internal::EndSpan(*span, child_->ListBgpRoutes(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets>
+RoutersTracingConnection::ListNamedSets(
+    google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::ListNamedSets");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListNamedSets(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
 RoutersTracingConnection::ListRoutePolicies(
     google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
@@ -245,6 +296,36 @@ RoutersTracingConnection::PatchRouter(
       internal::MakeSpan("compute_routers_v1::RoutersConnection::PatchRouter");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchRouter(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersTracingConnection::PatchNamedSet(
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::PatchNamedSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PatchNamedSet(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersTracingConnection::PatchNamedSet(
+    NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::PatchNamedSet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->PatchNamedSet(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersTracingConnection::PatchNamedSet(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::PatchNamedSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PatchNamedSet(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -316,6 +397,37 @@ RoutersTracingConnection::UpdateRouter(
       internal::MakeSpan("compute_routers_v1::RoutersConnection::UpdateRouter");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateRouter(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersTracingConnection::UpdateNamedSet(
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::UpdateNamedSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateNamedSet(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersTracingConnection::UpdateNamedSet(
+    NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::UpdateNamedSet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateNamedSet(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersTracingConnection::UpdateNamedSet(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_routers_v1::RoutersConnection::UpdateNamedSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateNamedSet(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

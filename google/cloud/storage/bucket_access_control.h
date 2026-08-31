@@ -79,7 +79,7 @@ class BucketAccessControl {
   std::string const& kind() const { return kind_; }
   bool has_project_team() const { return project_team_.has_value(); }
   ProjectTeam const& project_team() const { return *project_team_; }
-  absl::optional<ProjectTeam> const& project_team_as_optional() const {
+  std::optional<ProjectTeam> const& project_team_as_optional() const {
     return project_team_;
   }
   std::string const& role() const { return role_; }
@@ -164,7 +164,7 @@ class BucketAccessControl {
   std::string etag_;
   std::string id_;
   std::string kind_;
-  absl::optional<ProjectTeam> project_team_;
+  std::optional<ProjectTeam> project_team_;
   std::string role_;
   std::string self_link_;
 };

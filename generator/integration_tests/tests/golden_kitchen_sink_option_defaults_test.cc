@@ -33,7 +33,7 @@ using ::google::cloud::golden_v1::GoldenKitchenSinkRetryPolicyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 
 TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
-  auto env = ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", absl::nullopt);
+  auto env = ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", std::nullopt);
   Options options;
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("goldenkitchensink.googleapis.com",
@@ -57,7 +57,7 @@ TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, UserProjectDefault) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   auto options = Options{};
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_FALSE(updated_options.has<UserProjectOption>());
@@ -72,7 +72,7 @@ TEST(GoldenKitchenSinkDefaultOptions, UserProjectEnvVar) {
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, UserProjectOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   auto options = Options{}.set<UserProjectOption>("another-project");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("another-project", updated_options.get<UserProjectOption>());

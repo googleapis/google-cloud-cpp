@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/storage/testing/upload_hash_cases.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -447,6 +449,45 @@ TEST(HashFunctionImplTest, CreateHashFunctionInsertObjectMedia) {
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);
     EXPECT_EQ(test.md5_expected, actual.md5);
   }
+}
+
+TEST(HashFunctionImplTest, CreateHashFunctionPrecomputedChecksumsOption) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::Options{}.set<PrecomputedChecksumsOption>(
+          PrecomputedChecksums{"crc-from-options", "md5-from-options"}));
+
+  ResumableUploadRequest request("bucket", "object");
+  auto function = CreateHashFunction(request);
+  EXPECT_EQ(function->Finish().crc32c, "crc-from-options");
+  EXPECT_EQ(function->Finish().md5, "md5-from-options");
+}
+
+TEST(HashFunctionImplTest,
+     CreateHashFunctionPrecomputedChecksumsOptionPartial) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::Options{}.set<PrecomputedChecksumsOption>(
+          PrecomputedChecksums{"crc-from-options", ""}));
+
+  ResumableUploadRequest request("bucket", "object");
+  auto function = CreateHashFunction(request);
+  EXPECT_EQ(function->Finish().crc32c, "crc-from-options");
+  // MD5 is disabled by default for uploads, so it will be empty
+  EXPECT_EQ(function->Finish().md5, "");
+}
+
+TEST(HashFunctionImplTest, CreateHashFunctionPrecedence) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::Options{}.set<PrecomputedChecksumsOption>(
+          PrecomputedChecksums{"crc-from-options", "md5-from-options"}));
+
+  ResumableUploadRequest request("bucket", "object");
+  request.set_multiple_options(Crc32cChecksumValue("crc-from-request"),
+                               MD5HashValue("md5-from-request"));
+  auto function = CreateHashFunction(request);
+  // The variadic options provided directly to the request should take
+  // precedence
+  EXPECT_EQ(function->Finish().crc32c, "crc-from-request");
+  EXPECT_EQ(function->Finish().md5, "md5-from-request");
 }
 
 }  // namespace

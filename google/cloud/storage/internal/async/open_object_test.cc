@@ -125,7 +125,7 @@ TEST(OpenImpl, Basic) {
                 });
         EXPECT_CALL(*stream, Read).WillOnce([&sequencer, expected_response]() {
           return sequencer.PushBack("Read").then([expected_response](auto) {
-            return absl::make_optional(expected_response);
+            return std::make_optional(expected_response);
           });
         });
         return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
@@ -207,7 +207,7 @@ TEST(OpenImpl, BasicReadHandle) {
                 });
         EXPECT_CALL(*stream, Read).WillOnce([&sequencer, expected_response]() {
           return sequencer.PushBack("Read").then([expected_response](auto) {
-            return absl::make_optional(expected_response);
+            return std::make_optional(expected_response);
           });
         });
         return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
@@ -320,7 +320,7 @@ TEST(OpenImpl, ReadError) {
     });
     EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
       return sequencer.PushBack("Read").then([](auto) {
-        return absl::optional<google::storage::v2::BidiReadObjectResponse>();
+        return std::optional<google::storage::v2::BidiReadObjectResponse>();
       });
     });
     EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {

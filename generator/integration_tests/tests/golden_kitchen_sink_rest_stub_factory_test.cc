@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_stub_factory.h"
 #include "generator/integration_tests/test.pb.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -30,6 +31,7 @@ using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 
 TEST(GoldenKitchenSinkRestStubFactoryTest, DefaultStubWithoutLogging) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_DISABLE_PQC", "true");
   testing_util::ScopedLog log;
   auto default_stub = CreateDefaultGoldenKitchenSinkRestStub({});
   auto const log_lines = log.ExtractLines();

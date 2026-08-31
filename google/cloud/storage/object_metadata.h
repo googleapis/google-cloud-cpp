@@ -23,9 +23,9 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <map>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -45,8 +45,8 @@ struct CustomerEncryption {
 /// Defines one of the source objects for a compose operation.
 struct ComposeSourceObject {
   std::string object_name;
-  absl::optional<std::int64_t> generation;
-  absl::optional<std::int64_t> if_generation_match;
+  std::optional<std::int64_t> generation;
+  std::optional<std::int64_t> if_generation_match;
 };
 
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);
@@ -624,8 +624,8 @@ class ObjectMetadata {
   std::string content_language_;
   std::string content_type_;
   std::string crc32c_;
-  absl::optional<std::chrono::system_clock::time_point> custom_time_;
-  absl::optional<CustomerEncryption> customer_encryption_;
+  std::optional<std::chrono::system_clock::time_point> custom_time_;
+  std::optional<CustomerEncryption> customer_encryption_;
   std::string etag_;
   bool event_based_hold_{false};
   std::int64_t generation_{0};
@@ -636,11 +636,11 @@ class ObjectMetadata {
   std::string md5_hash_;
   std::string media_link_;
   std::map<std::string, std::string> metadata_;
-  absl::optional<ObjectContexts> contexts_;
+  std::optional<ObjectContexts> contexts_;
   std::string name_;
-  absl::optional<Owner> owner_;
+  std::optional<Owner> owner_;
   std::chrono::system_clock::time_point retention_expiration_time_;
-  absl::optional<ObjectRetention> retention_;
+  std::optional<ObjectRetention> retention_;
   std::string self_link_;
   std::uint64_t size_{0};
   std::string storage_class_;
@@ -649,8 +649,8 @@ class ObjectMetadata {
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
   std::chrono::system_clock::time_point updated_;
-  absl::optional<std::chrono::system_clock::time_point> soft_delete_time_;
-  absl::optional<std::chrono::system_clock::time_point> hard_delete_time_;
+  std::optional<std::chrono::system_clock::time_point> soft_delete_time_;
+  std::optional<std::chrono::system_clock::time_point> hard_delete_time_;
 };
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);

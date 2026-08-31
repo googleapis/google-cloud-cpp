@@ -29,7 +29,7 @@ class MockAsyncWriterConnection : public storage::AsyncWriterConnection {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(std::string, UploadId, (), (const, override));
-  MOCK_METHOD(absl::optional<google::storage::v2::BidiWriteHandle>, WriteHandle,
+  MOCK_METHOD(std::optional<google::storage::v2::BidiWriteHandle>, WriteHandle,
               (), (const, override));
   MOCK_METHOD((absl::variant<std::int64_t, google::storage::v2::Object>),
               PersistedState, (), (const, override));

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
+#include "google/cloud/storage/options.h"
 #include <limits>
 
 namespace google {
@@ -76,7 +77,8 @@ Options DefaultOptionsAsync(Options opts) {
               storage::MakeStrictAsyncIdempotencyPolicy)
           .set<storage::EnableCrc32cValidationOption>(true)
           .set<storage::MaximumRangeSizeOption>(128 * 1024 * 1024L)
-          .set<storage::EnableMultiStreamOptimizationOption>(true));
+          .set<storage::EnableMultiStreamOptimizationOption>(true)
+          .set<storage_experimental::OTelSpanEnrichmentOption>(true));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 

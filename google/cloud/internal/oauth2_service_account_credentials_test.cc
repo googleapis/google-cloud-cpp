@@ -355,7 +355,7 @@ TEST(ServiceAccountCredentialsTest,
 /// @test Verify that ServiceAccountCredentials defaults to self-signed JWTs.
 TEST(ServiceAccountCredentialsTest, RefreshWithSelfSignedJWT) {
   ScopedEnvironment disable_self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", std::nullopt);
 
   auto info =
       ParseServiceAccountCredentials(MakeUniverseDomainTestContents(), "test");
@@ -536,7 +536,7 @@ TEST(ServiceAccountCredentialsTest, ParseMissingProjectId) {
   auto actual =
       ParseServiceAccountCredentials(contents, "test-data", "unused-uri");
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(actual->project_id, absl::nullopt);
+  EXPECT_EQ(actual->project_id, std::nullopt);
 }
 
 /// @test Verify that invalid contents result in a readable error.
@@ -710,7 +710,7 @@ TEST(ServiceAccountCredentialsTest, UniverseDomainAccessorCustom) {
 
 TEST(ServiceAccountCredentialsTest, UniverseDomainAccessorFailure) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  info->universe_domain = absl::nullopt;
+  info->universe_domain = std::nullopt;
   ASSERT_STATUS_OK(info);
   MockHttpClientFactory mock_http_client_factory;
   EXPECT_CALL(mock_http_client_factory, Call).Times(0);

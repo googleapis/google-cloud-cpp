@@ -271,6 +271,25 @@ StorageControlClient::ListManagedFolders(
   return connection_->ListManagedFolders(std::move(request));
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlClient::UpdateManagedFolder(
+    google::storage::control::v2::ManagedFolder const& managed_folder,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateManagedFolderRequest request;
+  *request.mutable_managed_folder() = managed_folder;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateManagedFolder(request);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlClient::UpdateManagedFolder(
+    google::storage::control::v2::UpdateManagedFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateManagedFolder(request);
+}
+
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlClient::CreateAnywhereCache(
     std::string const& parent,
@@ -448,6 +467,167 @@ StorageControlClient::ListAnywhereCaches(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAnywhereCaches(std::move(request));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::CreateRapidCache(
+    std::string const& parent,
+    google::storage::control::v2::RapidCache const& rapid_cache, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::CreateRapidCacheRequest request;
+  request.set_parent(parent);
+  *request.mutable_rapid_cache() = rapid_cache;
+  return connection_->CreateRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageControlClient::CreateRapidCache(
+    NoAwaitTag, std::string const& parent,
+    google::storage::control::v2::RapidCache const& rapid_cache, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::CreateRapidCacheRequest request;
+  request.set_parent(parent);
+  *request.mutable_rapid_cache() = rapid_cache;
+  return connection_->CreateRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::CreateRapidCache(
+    google::storage::control::v2::CreateRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageControlClient::CreateRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::CreateRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::CreateRapidCache(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRapidCache(operation);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::UpdateRapidCache(
+    google::storage::control::v2::RapidCache const& rapid_cache,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateRapidCacheRequest request;
+  *request.mutable_rapid_cache() = rapid_cache;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageControlClient::UpdateRapidCache(
+    NoAwaitTag, google::storage::control::v2::RapidCache const& rapid_cache,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateRapidCacheRequest request;
+  *request.mutable_rapid_cache() = rapid_cache;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::UpdateRapidCache(
+    google::storage::control::v2::UpdateRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageControlClient::UpdateRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::UpdateRapidCache(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRapidCache(operation);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::DisableRapidCache(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DisableRapidCacheRequest request;
+  request.set_name(name);
+  return connection_->DisableRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::DisableRapidCache(NoAwaitTag, std::string const& name,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DisableRapidCacheRequest request;
+  request.set_name(name);
+  return connection_->DisableRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::DisableRapidCache(
+    google::storage::control::v2::DisableRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableRapidCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::DisableRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::DisableRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableRapidCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlClient::DisableRapidCache(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableRapidCache(operation);
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+StorageControlClient::GetRapidCache(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetRapidCacheRequest request;
+  request.set_name(name);
+  return connection_->GetRapidCache(request);
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+StorageControlClient::GetRapidCache(
+    google::storage::control::v2::GetRapidCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRapidCache(request);
+}
+
+StreamRange<google::storage::control::v2::RapidCache>
+StorageControlClient::ListRapidCaches(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ListRapidCachesRequest request;
+  request.set_parent(parent);
+  return connection_->ListRapidCaches(request);
+}
+
+StreamRange<google::storage::control::v2::RapidCache>
+StorageControlClient::ListRapidCaches(
+    google::storage::control::v2::ListRapidCachesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListRapidCaches(std::move(request));
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -734,6 +914,38 @@ StorageControlClient::ListIntelligenceFindingRevisions(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIntelligenceFindingRevisions(std::move(request));
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlClient::ViewObjectFullContext(std::string const& name,
+                                            std::string const& context_key,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ViewObjectFullContextRequest request;
+  request.set_name(name);
+  request.set_context_key(context_key);
+  return connection_->ViewObjectFullContext(request);
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlClient::ViewObjectFullContext(std::string const& name,
+                                            std::int64_t generation,
+                                            std::string const& context_key,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ViewObjectFullContextRequest request;
+  request.set_name(name);
+  request.set_generation(generation);
+  request.set_context_key(context_key);
+  return connection_->ViewObjectFullContext(request);
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlClient::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ViewObjectFullContext(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

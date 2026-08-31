@@ -830,7 +830,7 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPattern) {
 
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternNonExist) {
   std::string url_pattern = "/foo/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern), Eq(absl::nullopt));
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern), Eq(std::nullopt));
 }
 
 }  // namespace

@@ -116,6 +116,17 @@ class SecretManagerServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  EnableManagedRotation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  RotateSecret(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::RotateSecretRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -212,6 +223,17 @@ class DefaultSecretManagerServiceStub : public SecretManagerServiceStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  EnableManagedRotation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+          request) override;
+
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> RotateSecret(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::RotateSecretRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

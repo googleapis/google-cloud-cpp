@@ -48,7 +48,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf(std::shared_ptr<StorageConnection> connection,
                        ResumableUploadRequest request, std::string upload_id,
                        std::uint64_t committed_size,
-                       absl::optional<ObjectMetadata> metadata,
+                       std::optional<ObjectMetadata> metadata,
                        std::size_t max_buffer_size,
                        std::unique_ptr<HashFunction> hash_function,
                        HashValues known_hashes,
@@ -114,7 +114,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   Status last_status_;
   std::string upload_id_;
   std::uint64_t committed_size_ = 0;
-  absl::optional<ObjectMetadata> metadata_;
+  std::optional<ObjectMetadata> metadata_;
   std::multimap<std::string, std::string> headers_;
 
   std::vector<char> current_ios_buffer_;

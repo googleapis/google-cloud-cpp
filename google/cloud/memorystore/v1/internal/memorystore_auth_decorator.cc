@@ -306,6 +306,210 @@ StatusOr<google::longrunning::Operation> MemorystoreAuth::BackupInstance(
   return child_->BackupInstance(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncStartMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncStartMigration(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::StartMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartMigration(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncFinishMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncFinishMigration(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::FinishMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FinishMigration(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+MemorystoreAuth::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListTokenAuthUsers(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreAuth::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTokenAuthUser(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+MemorystoreAuth::ListAuthTokens(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAuthTokensRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAuthTokens(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreAuth::GetAuthToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAuthToken(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncAddTokenAuthUser(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::AddTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddTokenAuthUser(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteTokenAuthUser(cq, *std::move(context),
+                                               std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTokenAuthUser(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncAddAuthToken(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::AddAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddAuthToken(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAuthToken(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::DeleteAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAuthToken(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 MemorystoreAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

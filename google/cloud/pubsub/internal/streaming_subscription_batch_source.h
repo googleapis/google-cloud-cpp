@@ -103,7 +103,7 @@ class StreamingSubscriptionBatchSource
   void OnInitialWrite(RetryLoopState const& rs, bool ok);
   void OnInitialRead(
       RetryLoopState rs,
-      absl::optional<google::pubsub::v1::StreamingPullResponse> response);
+      std::optional<google::pubsub::v1::StreamingPullResponse> response);
   void OnInitialError(RetryLoopState rs);
   void OnInitialFinish(RetryLoopState rs, Status status);
   void OnBackoff(RetryLoopState rs, Status status);
@@ -112,7 +112,7 @@ class StreamingSubscriptionBatchSource
   void ReadLoop();
 
   void OnRead(
-      absl::optional<google::pubsub::v1::StreamingPullResponse> response);
+      std::optional<google::pubsub::v1::StreamingPullResponse> response);
   void ShutdownStream(std::unique_lock<std::mutex> lk, char const* reason);
   void OnFinish(Status status);
 
@@ -141,7 +141,7 @@ class StreamingSubscriptionBatchSource
   bool pending_read_ = false;
   Status status_;
   std::shared_ptr<AsyncPullStream> stream_;
-  absl::optional<bool> exactly_once_delivery_enabled_;
+  std::optional<bool> exactly_once_delivery_enabled_;
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines_queue_;
 };
 

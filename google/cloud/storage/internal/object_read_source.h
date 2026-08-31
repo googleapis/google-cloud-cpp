@@ -19,8 +19,8 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -52,11 +52,11 @@ struct ReadSourceResult {
   std::size_t bytes_received;
   HttpResponse response;
   HashValues hashes;
-  absl::optional<std::int64_t> generation;
-  absl::optional<std::int64_t> metageneration;
-  absl::optional<std::string> storage_class;
-  absl::optional<std::uint64_t> size;
-  absl::optional<std::string> transformation;
+  std::optional<std::int64_t> generation;
+  std::optional<std::int64_t> metageneration;
+  std::optional<std::string> storage_class;
+  std::optional<std::uint64_t> size;
+  std::optional<std::string> transformation;
 
   ReadSourceResult() = default;
   ReadSourceResult(std::size_t b, HttpResponse r)

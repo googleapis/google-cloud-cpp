@@ -50,6 +50,12 @@ class BackendBucketsTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+  AggregatedListBackendBuckets(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AggregatedListBackendBucketsRequest request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
                           DeleteBackendBucketRequest const& request) override;
@@ -97,6 +103,10 @@ class BackendBucketsTracingConnection
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
   ListBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
                          ListBackendBucketsRequest request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::BackendBucket> ListUsable(
+      google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::

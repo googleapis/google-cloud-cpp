@@ -20,6 +20,7 @@
 #include "google/cloud/ces/v1/session_service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_cat.h"

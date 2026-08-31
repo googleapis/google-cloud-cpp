@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
-#include "absl/types/optional.h"
 #include <grpcpp/support/async_stream.h>
 #include <memory>
+#include <optional>
 #include <utility>
 
 namespace google {
@@ -76,7 +76,7 @@ class AsyncStreamingReadWriteRpcImpl
     return op->p.get_future();
   }
 
-  future<absl::optional<Response>> Read() override {
+  future<std::optional<Response>> Read() override {
     struct OnRead : public AsyncGrpcOperation {
       explicit OnRead(ImmutableOptions o) : call_context(std::move(o)) {}
 
@@ -91,7 +91,7 @@ class AsyncStreamingReadWriteRpcImpl
       }
       void Cancel() override {}
 
-      promise<absl::optional<Response>> p;
+      promise<std::optional<Response>> p;
       Response response;
       CallContext call_context;
     };
@@ -223,8 +223,8 @@ class AsyncStreamingReadWriteRpcError
 
   void Cancel() override {}
   future<bool> Start() override { return make_ready_future(false); }
-  future<absl::optional<Response>> Read() override {
-    return make_ready_future<absl::optional<Response>>(absl::nullopt);
+  future<std::optional<Response>> Read() override {
+    return make_ready_future<std::optional<Response>>(std::nullopt);
   }
   future<bool> Write(Request const&, grpc::WriteOptions) override {
     return make_ready_future(false);

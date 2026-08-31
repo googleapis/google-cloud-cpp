@@ -74,7 +74,7 @@ TEST(WriteObjectTest, Basic) {
 
   EXPECT_CALL(*mock, Read).WillOnce([&sequencer, expected_response]() {
     return sequencer.PushBack("Read").then([expected_response](auto) {
-      return absl::make_optional(expected_response);
+      return std::make_optional(expected_response);
     });
   });
 
@@ -134,7 +134,7 @@ TEST(WriteObject, BasicWriteHandle) {
       });
   EXPECT_CALL(*mock, Read).WillOnce([&sequencer, expected_response]() {
     return sequencer.PushBack("Read").then([expected_response](auto) {
-      return absl::make_optional(expected_response);
+      return std::make_optional(expected_response);
     });
   });
 
@@ -229,7 +229,7 @@ TEST(WriteObject, ReadError) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&sequencer]() {
     return sequencer.PushBack("Read").then([](auto) {
-      return absl::optional<google::storage::v2::BidiWriteObjectResponse>();
+      return std::optional<google::storage::v2::BidiWriteObjectResponse>();
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&sequencer]() {

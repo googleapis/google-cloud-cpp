@@ -90,6 +90,10 @@ class DatasetServiceClient {
   ///
   /// Returns the dataset specified by datasetID.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.datasets.get` permission on the dataset.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -109,8 +113,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.GetDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L478}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L249}
+  /// [google.cloud.bigquery.v2.GetDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L514}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> GetDataset(
@@ -120,6 +124,10 @@ class DatasetServiceClient {
   // clang-format off
   ///
   /// Creates a new empty dataset.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.datasets.create` permission on the project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -140,8 +148,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.InsertDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L537}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L249}
+  /// [google.cloud.bigquery.v2.InsertDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L573}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> InsertDataset(
@@ -155,6 +163,13 @@ class DatasetServiceClient {
   /// are provided in the submitted dataset resource.
   /// This method supports RFC5789 patch semantics.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) to use this method:
+  ///
+  ///  - `bigquery.datasets.update` on the dataset.
+  ///  - `bigquery.datasets.get` on the dataset.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -174,8 +189,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L567}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L249}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L603}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> PatchDataset(
@@ -188,6 +203,10 @@ class DatasetServiceClient {
   /// entire dataset resource, whereas the patch method only replaces fields that
   /// are provided in the submitted dataset resource.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.datasets.update` permission on the dataset.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -207,8 +226,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L567}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L249}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L603}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> UpdateDataset(
@@ -221,6 +240,10 @@ class DatasetServiceClient {
   /// a dataset, you must delete all its tables, either manually or by specifying
   /// deleteContents. Immediately after deletion, you can create another dataset
   /// with the same name.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.datasets.delete` permission on the dataset.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -239,7 +262,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L626}
+  /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L662}
   ///
   // clang-format on
   Status DeleteDataset(
@@ -250,6 +273,12 @@ class DatasetServiceClient {
   ///
   /// Lists all datasets in the specified project to which the user has been
   /// granted the READER dataset role.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires no specific IAM permission(s) to use this method.
+  /// Results are filtered to only include datasets on which the caller has the
+  /// `bigquery.datasets.get` permission.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -279,8 +308,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L639}
-  /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L666}
+  /// [google.cloud.bigquery.v2.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L675}
+  /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L702}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatDataset> ListDatasets(
@@ -292,6 +321,13 @@ class DatasetServiceClient {
   /// Undeletes a dataset which is within time travel window based on datasetId.
   /// If a time is specified, the dataset version deleted at that time is
   /// undeleted, else the last live version is undeleted.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) to use this method:
+  ///
+  ///  - `bigquery.datasets.create` on the project.
+  ///  - `bigquery.datasets.get` on the dataset.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -312,8 +348,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L742}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L249}
+  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L778}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(

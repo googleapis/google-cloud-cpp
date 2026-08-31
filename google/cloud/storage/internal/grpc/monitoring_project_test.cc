@@ -21,10 +21,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -83,17 +83,17 @@ TEST(MonitoringProject, Full) {
       MonitoringProject(resource_no_project, options_with_credentials_project),
       Optional<Project>(Project("project-id-credentials")));
   EXPECT_THAT(MonitoringProject(resource_no_project, options_no_project),
-              absl::nullopt);
+              std::nullopt);
 }
 
 TEST(MonitoringProject, Credentials) {
   auto credentials = MakeAccessTokenCredentials(
       "test-only-invalid",
       std::chrono::system_clock::now() + std::chrono::seconds(1800));
-  EXPECT_EQ(MonitoringProject(*credentials), absl::nullopt);
+  EXPECT_EQ(MonitoringProject(*credentials), std::nullopt);
 
   credentials = MakeServiceAccountCredentials(KeyFileNoProject().dump());
-  EXPECT_EQ(MonitoringProject(*credentials), absl::nullopt);
+  EXPECT_EQ(MonitoringProject(*credentials), std::nullopt);
 
   credentials = MakeServiceAccountCredentials(KeyFileWithProject().dump());
   EXPECT_THAT(MonitoringProject(*credentials),
@@ -103,17 +103,17 @@ TEST(MonitoringProject, Credentials) {
 TEST(MonitoringProject, Resource) {
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.region", "unknown"}})),
-            absl::nullopt);
+            std::nullopt);
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.account.id", "missing cloud provider"}})),
-            absl::nullopt);
+            std::nullopt);
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.provider", "missing project"}})),
-            absl::nullopt);
+            std::nullopt);
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.provider", "not-the-right-cloud"},
                  {"cloud.account.id", "test-only"}})),
-            absl::nullopt);
+            std::nullopt);
   EXPECT_THAT(
       MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
           {{"cloud.provider", "gcp"}, {"cloud.account.id", "test-only"}})),
@@ -121,17 +121,17 @@ TEST(MonitoringProject, Resource) {
 }
 
 TEST(MonitoringProject, Default) {
-  ScopedEnvironment pr("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  ScopedEnvironment pr("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto storage_options = DefaultOptionsGrpc(Options{});
   EXPECT_EQ(MonitoringProject(storage_options),
-            absl::optional<Project>(absl::nullopt));
+            std::optional<Project>(std::nullopt));
 }
 
 TEST(MonitoringProject, WithExplicitProject) {
   // The cases where the project is set in the environment, or in both the
   // environment and the application-provided options are already tested. Here
   // we (un)set the environment only to prevent flakes.
-  ScopedEnvironment pr("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  ScopedEnvironment pr("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto storage_options = DefaultOptionsGrpc(
       Options{}.set<storage::ProjectIdOption>("test-only-project"));
   EXPECT_THAT(MonitoringProject(storage_options),

@@ -41,6 +41,12 @@ class SqlConnectServiceRestStub {
       Options const& options,
       google::cloud::sql::v1::GetConnectSettingsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::sql::v1::ConnectSettings>
+  ResolveConnectSettings(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::ResolveConnectSettingsRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
   GenerateEphemeralCert(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -60,6 +66,12 @@ class DefaultSqlConnectServiceRestStub : public SqlConnectServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::sql::v1::GetConnectSettingsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::sql::v1::ConnectSettings> ResolveConnectSettings(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::ResolveConnectSettingsRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>

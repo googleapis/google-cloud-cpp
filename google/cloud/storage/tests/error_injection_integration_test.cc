@@ -18,8 +18,8 @@
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -188,11 +188,11 @@ class SymbolInterceptor {
 
   SendPtr orig_send_;
   RecvPtr orig_recv_;
-  absl::optional<int> last_seen_send_fd_;
-  absl::optional<FailDesc> fail_send_;
+  std::optional<int> last_seen_send_fd_;
+  std::optional<FailDesc> fail_send_;
   std::size_t num_failed_send_;
-  absl::optional<int> last_seen_recv_fd_;
-  absl::optional<FailDesc> fail_recv_;
+  std::optional<int> last_seen_recv_fd_;
+  std::optional<FailDesc> fail_recv_;
   std::size_t num_failed_recv_;
 };
 

@@ -91,12 +91,12 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override { impl_->Cancel(); }
 
-  absl::optional<Status> Read(ResponseType* response) override {
+  std::optional<Status> Read(ResponseType* response) override {
     auto opt_status = impl_->Read(response);
     if (!opt_status.has_value()) {
       updater_(*response, request_);
       has_received_data_ = true;
-      return absl::nullopt;
+      return std::nullopt;
     }
     auto last_status = *opt_status;
     if (last_status.ok()) return last_status;
@@ -122,7 +122,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
       if (!next_opt_status.has_value()) {
         updater_(*response, request_);
         has_received_data_ = true;
-        return absl::nullopt;
+        return std::nullopt;
       }
       last_status = *std::move(next_opt_status);
     }

@@ -56,11 +56,149 @@ class MockReservationSubBlocksConnection
            GetReservationSubBlocksGetResponseRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// GetVersion(Matcher<google::cloud::cpp::compute::reservation_sub_blocks::v1::GetVersionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              GetVersion,
+              (google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                   GetVersionRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, GetVersion(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, GetVersion,
+              (NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::
+                               v1::GetVersionRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// GetVersion(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              GetVersion,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>),
       ListReservationSubBlocks,
       (google::cloud::cpp::compute::reservation_sub_blocks::v1::
            ListReservationSubBlocksRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PerformMaintenance(Matcher<google::cloud::cpp::compute::reservation_sub_blocks::v1::PerformMaintenanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PerformMaintenance,
+              (google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                   PerformMaintenanceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PerformMaintenance(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PerformMaintenance,
+              (NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::
+                               v1::PerformMaintenanceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PerformMaintenance(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PerformMaintenance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReportFaulty(Matcher<google::cloud::cpp::compute::reservation_sub_blocks::v1::ReportFaultyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              ReportFaulty,
+              (google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                   ReportFaultyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ReportFaulty(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              ReportFaulty,
+              (NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::
+                               v1::ReportFaultyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReportFaulty(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              ReportFaulty,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::reservation_sub_blocks::v1::
+           TestIamPermissionsRequest const& request),
       (override));
 };
 

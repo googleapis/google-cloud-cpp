@@ -169,6 +169,8 @@ add_library(
     internal/bulk_mutator.h
     internal/channel_usage.h
     internal/client_options_defaults.h
+    internal/client_schema_metrics.cc
+    internal/client_schema_metrics.h
     internal/common_client.h
     internal/connection_refresh_state.cc
     internal/connection_refresh_state.h
@@ -186,10 +188,16 @@ add_library(
     internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
+    internal/directpath_diagnostics.cc
+    internal/directpath_diagnostics.h
+    internal/directpath_prober.cc
+    internal/directpath_prober.h
     internal/dynamic_channel_pool.h
     internal/endpoint_options.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
+    internal/grpc_metrics_exporter.cc
+    internal/grpc_metrics_exporter.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
     internal/metrics.cc
@@ -220,6 +228,8 @@ add_library(
     internal/rpc_policy_parameters.inc
     internal/stub_manager.cc
     internal/stub_manager.h
+    internal/table_schema_metrics.cc
+    internal/table_schema_metrics.h
     internal/traced_row_reader.cc
     internal/traced_row_reader.h
     internal/tuple_utils.h
@@ -285,7 +295,17 @@ target_compile_definitions(google_cloud_cpp_bigtable
                            PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
 target_link_libraries(google_cloud_cpp_bigtable
                       PUBLIC google-cloud-cpp::opentelemetry)
-set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
+if (TARGET gRPC::grpcpp_otel_plugin)
+    target_compile_definitions(
+        google_cloud_cpp_bigtable
+        PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS)
+    target_link_libraries(google_cloud_cpp_bigtable
+                          PUBLIC gRPC::grpcpp_otel_plugin)
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "grpcpp_otel_plugin"
+                      "opentelemetry_metrics")
+else ()
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable)
 target_include_directories(
     google_cloud_cpp_bigtable
@@ -451,6 +471,7 @@ if (BUILD_TESTING)
         internal/bigtable_stub_factory_test.cc
         internal/bulk_mutator_test.cc
         internal/channel_usage_test.cc
+        internal/client_schema_metrics_test.cc
         internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc
         internal/crc32c_test.cc
@@ -458,10 +479,12 @@ if (BUILD_TESTING)
         internal/data_tracing_connection_test.cc
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
+        internal/directpath_diagnostics_test.cc
+        internal/directpath_prober_test.cc
         internal/dynamic_channel_pool_test.cc
         internal/google_bytes_traits_test.cc
+        internal/grpc_metrics_exporter_test.cc
         internal/logging_result_set_reader_test.cc
-        internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
         internal/operation_context_factory_test.cc
         internal/operation_context_test.cc
@@ -472,6 +495,7 @@ if (BUILD_TESTING)
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/stub_manager_test.cc
+        internal/table_schema_metrics_test.cc
         internal/traced_row_reader_test.cc
         internal/tuple_utils_test.cc
         mocks/mock_row_reader_test.cc
@@ -527,6 +551,11 @@ if (BUILD_TESTING)
         if (opentelemetry-cpp_FOUND)
             target_compile_definitions(
                 ${target} PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
+        endif ()
+        if (TARGET gRPC::grpcpp_otel_plugin)
+            target_compile_definitions(
+                ${target}
+                PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS)
         endif ()
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})

@@ -50,6 +50,36 @@ ReservationSubBlocksRestMetadata::GetReservationSubBlocksGetResponse(
                                                     request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksRestMetadata::AsyncGetVersion(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetVersion(cq, std::move(rest_context),
+                                 std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksRestMetadata::GetVersion(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetVersion(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ReservationSubBlocksListResponse>
 ReservationSubBlocksRestMetadata::ListReservationSubBlocks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -57,6 +87,89 @@ ReservationSubBlocksRestMetadata::ListReservationSubBlocks(
         ListReservationSubBlocksRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListReservationSubBlocks(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksRestMetadata::AsyncPerformMaintenance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksRestMetadata::PerformMaintenance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PerformMaintenance(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksRestMetadata::AsyncReportFaulty(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncReportFaulty(cq, std::move(rest_context),
+                                   std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksRestMetadata::ReportFaulty(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ReportFaulty(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksRestMetadata::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        SetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationSubBlocksRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksRestMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
+}
+
+future<Status> ReservationSubBlocksRestMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void ReservationSubBlocksRestMetadata::SetMetadata(

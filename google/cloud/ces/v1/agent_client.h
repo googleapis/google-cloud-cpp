@@ -1471,7 +1471,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.ListToolsRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L983}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StreamRange<google::cloud::ces::v1::Tool> ListTools(std::string const& parent,
@@ -1510,7 +1510,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.ListToolsRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L983}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StreamRange<google::cloud::ces::v1::Tool> ListTools(
@@ -1535,7 +1535,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.GetToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1025}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Tool> GetTool(std::string const& name,
@@ -1565,7 +1565,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.GetToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1025}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Tool> GetTool(
@@ -1889,7 +1889,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1035}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Tool> CreateTool(
@@ -1916,7 +1916,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1035}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Tool> CreateTool(
@@ -1947,7 +1947,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1035}
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Tool> CreateTool(
@@ -1974,7 +1974,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   /// [google.cloud.ces.v1.UpdateToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1053}
   ///
   // clang-format on
@@ -2005,7 +2005,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L43}
+  /// [google.cloud.ces.v1.Tool]: @googleapis_reference_link{google/cloud/ces/v1/tool.proto#L45}
   /// [google.cloud.ces.v1.UpdateToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1053}
   ///
   // clang-format on
@@ -2416,7 +2416,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   /// [google.cloud.ces.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1320}
   ///
   // clang-format on
@@ -2455,7 +2455,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   /// [google.cloud.ces.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1320}
   ///
   // clang-format on
@@ -2483,7 +2483,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   /// [google.cloud.ces.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1362}
   ///
   // clang-format on
@@ -2513,7 +2513,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   /// [google.cloud.ces.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1362}
   ///
   // clang-format on
@@ -2546,7 +2546,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1374}
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Deployment> CreateDeployment(
@@ -2576,7 +2576,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1374}
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Deployment> CreateDeployment(
@@ -2607,7 +2607,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1374}
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Deployment> CreateDeployment(
@@ -2633,7 +2633,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   /// [google.cloud.ces.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1396}
   ///
   // clang-format on
@@ -2664,7 +2664,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L31}
+  /// [google.cloud.ces.v1.Deployment]: @googleapis_reference_link{google/cloud/ces/v1/deployment.proto#L86}
   /// [google.cloud.ces.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1396}
   ///
   // clang-format on
@@ -2751,7 +2751,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.ListToolsetsRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1424}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::ces::v1::Toolset> ListToolsets(
@@ -2790,7 +2790,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.ListToolsetsRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1424}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::ces::v1::Toolset> ListToolsets(
@@ -2815,7 +2815,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.GetToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1468}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Toolset> GetToolset(std::string const& name,
@@ -2845,7 +2845,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.GetToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1468}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Toolset> GetToolset(
@@ -2875,7 +2875,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1478}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Toolset> CreateToolset(
@@ -2902,7 +2902,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1478}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Toolset> CreateToolset(
@@ -2933,7 +2933,7 @@ class AgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.CreateToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1478}
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::Toolset> CreateToolset(
@@ -2960,7 +2960,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   /// [google.cloud.ces.v1.UpdateToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1498}
   ///
   // clang-format on
@@ -2991,7 +2991,7 @@ class AgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L35}
+  /// [google.cloud.ces.v1.Toolset]: @googleapis_reference_link{google/cloud/ces/v1/toolset.proto#L36}
   /// [google.cloud.ces.v1.UpdateToolsetRequest]: @googleapis_reference_link{google/cloud/ces/v1/agent_service.proto#L1498}
   ///
   // clang-format on

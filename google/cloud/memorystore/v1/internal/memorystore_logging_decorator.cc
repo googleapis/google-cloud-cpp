@@ -365,6 +365,245 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::BackupInstance(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncStartMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::StartMigrationRequest const&
+                 request) {
+        return child_->AsyncStartMigration(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::StartMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::StartMigrationRequest const&
+                 request) {
+        return child_->StartMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncFinishMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::FinishMigrationRequest const&
+                 request) {
+        return child_->AsyncFinishMigration(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::FinishMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::FinishMigrationRequest const&
+                 request) {
+        return child_->FinishMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+MemorystoreLogging::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::ListTokenAuthUsersRequest const&
+                 request) {
+        return child_->ListTokenAuthUsers(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreLogging::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::GetTokenAuthUserRequest const&
+                 request) {
+        return child_->GetTokenAuthUser(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+MemorystoreLogging::ListAuthTokens(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAuthTokensRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::ListAuthTokensRequest const&
+                 request) {
+        return child_->ListAuthTokens(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreLogging::GetAuthToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+        return child_->GetAuthToken(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+                 request) {
+        return child_->AsyncAddTokenAuthUser(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::AddTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+                 request) {
+        return child_->AddTokenAuthUser(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+                 request) {
+        return child_->AsyncDeleteTokenAuthUser(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+                 request) {
+        return child_->DeleteTokenAuthUser(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+        return child_->AsyncAddAuthToken(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::AddAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+        return child_->AddAuthToken(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+                 request) {
+        return child_->AsyncDeleteAuthToken(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::DeleteAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+                 request) {
+        return child_->DeleteAuthToken(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 MemorystoreLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

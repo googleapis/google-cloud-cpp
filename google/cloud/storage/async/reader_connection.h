@@ -74,7 +74,7 @@ class AsyncReaderConnection {
    *
    * A `StatusOr<>` cannot represent the last bullet point, so we need an
    * `absl::variant<>` in this case.  We could have used
-   * `StatusOr<absl::optional<ReadPayload>>` but that sounds unnecessarily
+   * `StatusOr<std::optional<ReadPayload>>` but that sounds unnecessarily
    * complicated.
    */
   virtual future<ReadResponse> Read() = 0;

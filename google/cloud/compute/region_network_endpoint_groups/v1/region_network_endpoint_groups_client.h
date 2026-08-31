@@ -100,8 +100,9 @@ class RegionNetworkEndpointGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/attachNetworkEndpoints
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where you want to create the network endpoint group.
-  ///  It should comply with RFC1035.
+  /// @param region  The name of the region where
+  ///  you want to create the network endpoint group. It should comply with
+  ///  RFC1035.
   /// @param network_endpoint_group  The name of the network endpoint group where you are attaching network
   ///  endpoints to. It should comply with RFC1035.
   /// @param region_network_endpoint_groups_attach_endpoints_request_resource  The RegionNetworkEndpointGroupsAttachEndpointsRequest for this request.
@@ -125,7 +126,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L130}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -187,7 +188,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L130}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -234,8 +235,8 @@ class RegionNetworkEndpointGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/delete
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where the network endpoint group is located. It
-  ///  should comply with RFC1035.
+  /// @param region  The name of the region where
+  ///  the network endpoint group is located. It should comply with RFC1035.
   /// @param network_endpoint_group  The name of the network endpoint group to delete. It should comply with
   ///  RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -258,7 +259,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L173}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L191}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -316,7 +317,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L173}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L191}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -363,10 +364,11 @@ class RegionNetworkEndpointGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/detachNetworkEndpoints
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where the network endpoint group is located. It
-  ///  should comply with RFC1035.
-  /// @param network_endpoint_group  The name of the network endpoint group you are detaching network endpoints
-  ///  from. It should comply with RFC1035.
+  /// @param region  The name of the region where
+  ///  the network endpoint group is located. It should comply with
+  ///  RFC1035.
+  /// @param network_endpoint_group  The name of the network endpoint group you are detaching network
+  ///  endpoints from. It should comply with RFC1035.
   /// @param region_network_endpoint_groups_detach_endpoints_request_resource  The RegionNetworkEndpointGroupsDetachEndpointsRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -388,7 +390,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L210}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -450,7 +452,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L210}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -496,8 +498,8 @@ class RegionNetworkEndpointGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/get
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where the network endpoint group is located. It
-  ///  should comply with RFC1035.
+  /// @param region  The name of the region where
+  ///  the network endpoint group is located. It should comply with RFC1035.
   /// @param network_endpoint_group  The name of the network endpoint group. It should comply with RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -512,8 +514,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L254}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L131}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L279}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L157}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -545,8 +547,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L254}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L131}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L279}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L157}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -559,11 +561,26 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Creates a network endpoint group in the specified project using the
   /// parameters that are included in the request.
+  ///
+  /// Note: Use the following APIs to manage network endpoint groups:
+  ///
+  ///    -
+  ///    To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+  ///    NEGs): zonal
+  ///    API
+  ///    -
+  ///    To manage NEGs with regional scope (such as regional internet NEGs,
+  ///    serverless NEGs, Private Service Connect NEGs): regional
+  ///    API
+  ///    -
+  ///    To manage NEGs with global scope (such as global internet NEGs):global
+  ///    API
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/insert
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where you want to create the network endpoint group.
-  ///  It should comply with RFC1035.
+  /// @param region  The name of the region where
+  ///  you want to create the network endpoint group. It should comply with
+  ///  RFC1035.
   /// @param network_endpoint_group_resource  The NetworkEndpointGroup for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -585,7 +602,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L272}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -617,6 +634,20 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Creates a network endpoint group in the specified project using the
   /// parameters that are included in the request.
+  ///
+  /// Note: Use the following APIs to manage network endpoint groups:
+  ///
+  ///    -
+  ///    To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+  ///    NEGs): zonal
+  ///    API
+  ///    -
+  ///    To manage NEGs with regional scope (such as regional internet NEGs,
+  ///    serverless NEGs, Private Service Connect NEGs): regional
+  ///    API
+  ///    -
+  ///    To manage NEGs with global scope (such as global internet NEGs):global
+  ///    API
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -645,7 +676,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L272}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -693,8 +724,8 @@ class RegionNetworkEndpointGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/list
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where the network endpoint group is located. It
-  ///  should comply with RFC1035.
+  /// @param region  The name of theregion
+  ///  where the network endpoint group is located. It should comply with RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -717,8 +748,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L386}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L131}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L448}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L157}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -759,8 +790,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L386}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L131}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L448}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L157}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -775,8 +806,8 @@ class RegionNetworkEndpointGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/listNetworkEndpoints
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The name of the region where the network endpoint group is located. It
-  ///  should comply with RFC1035.
+  /// @param region  The name of theregion
+  ///  where the network endpoint group is located. It should comply with RFC1035.
   /// @param network_endpoint_group  The name of the network endpoint group from which you want to generate a
   ///  list of included network endpoints. It should comply with RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -801,8 +832,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L306}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L548}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L335}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L678}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
@@ -843,8 +874,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L306}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L548}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L335}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L678}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>

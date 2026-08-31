@@ -529,7 +529,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L618}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(

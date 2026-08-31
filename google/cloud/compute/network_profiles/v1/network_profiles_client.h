@@ -106,8 +106,8 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L60}
-  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L25}
+  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L61}
+  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_102.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
@@ -138,8 +138,8 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L60}
-  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L25}
+  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L61}
+  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_102.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
@@ -149,7 +149,8 @@ class NetworkProfilesClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of network profiles available to the specified project.
+  /// Retrieves a list of network profiles available to the specified
+  /// project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networkProfiles/list
   ///
   /// @param project  Project ID for this request.
@@ -175,8 +176,8 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L71}
-  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L25}
+  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L72}
+  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_102.proto#L25}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
@@ -184,7 +185,8 @@ class NetworkProfilesClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of network profiles available to the specified project.
+  /// Retrieves a list of network profiles available to the specified
+  /// project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networkProfiles/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -215,8 +217,8 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L71}
-  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L25}
+  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L72}
+  /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_102.proto#L25}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>

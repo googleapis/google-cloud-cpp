@@ -1,0 +1,37 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.opentelemetry.testing;
+
+import "google/monitoring/v3/metric_service.proto";
+import "google/protobuf/empty.proto";
+
+// Response containing all captured CreateTimeSeriesRequest protobuf messages.
+message GetRecordedMetricsResponse {
+  repeated google.monitoring.v3.CreateTimeSeriesRequest requests = 1;
+}
+
+// Control-plane service for test harnesses to query and manage captured
+// observability telemetry.
+service ObservabilityVerificationService {
+  // Returns all CreateTimeSeriesRequests captured since the last reset.
+  rpc GetRecordedMetrics(google.protobuf.Empty)
+      returns (GetRecordedMetricsResponse);
+
+  // Resets the server metric state by clearing all recorded metric requests.
+  rpc ClearRecordedMetrics(google.protobuf.Empty)
+      returns (google.protobuf.Empty);
+}

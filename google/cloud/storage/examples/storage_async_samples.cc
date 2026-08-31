@@ -17,6 +17,7 @@
 // in the final rendering.
 //! [async-includes]
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/read_all.h"
 
 //! [async-includes]
@@ -243,6 +244,55 @@ void OpenObjectMultipleRangedRead(google::cloud::storage::AsyncClient& client,
   // until it completes.
   auto const count = coro(client, argv.at(0), argv.at(1)).get();
   std::cout << "The ranges contain " << count << " newlines\n";
+}
+
+void OpenObjectWithInitialReadRanges(
+    google::cloud::storage::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [open-object-initial-read-ranges]
+  // [START storage_open_object_initial_read_ranges]
+  namespace gcs = google::cloud::storage;
+
+  // Helper coroutine to count newlines returned by an AsyncReader.
+  auto count_newlines =
+      [](gcs::AsyncReader reader,
+         gcs::AsyncToken token) -> google::cloud::future<std::uint64_t> {
+    std::uint64_t count = 0;
+    while (token.valid()) {
+      auto [payload, t] = (co_await reader.Read(std::move(token))).value();
+      token = std::move(t);
+      for (auto const& buffer : payload.contents()) {
+        count += std::count(buffer.begin(), buffer.end(), '\n');
+      }
+    }
+    co_return count;
+  };
+
+  auto coro =
+      [&count_newlines](
+          gcs::AsyncClient& client, std::string bucket_name,
+          std::string object_name) -> google::cloud::future<std::uint64_t> {
+    gcs::AsyncClient::InitialReadRanges config;
+    config.initial_ranges = {{0, 1024}, {1024, 1024}};
+
+    auto descriptor =
+        (co_await client.Open(gcs::BucketName(std::move(bucket_name)),
+                              std::move(object_name), std::move(config)))
+            .value();
+
+    auto [r1, t1] = descriptor.Read(0, 1024);
+    auto [r2, t2] = descriptor.Read(1024, 1024);
+
+    auto c1 = count_newlines(std::move(r1), std::move(t1));
+    auto c2 = count_newlines(std::move(r2), std::move(t2));
+    co_return (co_await std::move(c1)) + (co_await std::move(c2));
+  };
+  // [END storage_open_object_initial_read_ranges]
+  //! [open-object-initial-read-ranges]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const count = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "The pre-warmed ranges contain " << count << " newlines\n";
 }
 
 void OpenObjectReadFullObject(google::cloud::storage::AsyncClient& client,
@@ -728,6 +778,42 @@ void CreateAndWriteAppendableObject(google::cloud::storage::AsyncClient& client,
   std::cout << "File successfully uploaded " << object.DebugString() << "\n";
 }
 
+void CreateAndWriteAppendableObjectWithChecksum(
+    google::cloud::storage::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [create-and-write-appendable-object-with-checksum]
+  // [START storage_create_and_write_appendable_object_with_checksum]
+  namespace gcs = google::cloud::storage;
+  auto coro = [](gcs::AsyncClient& client, std::string bucket_name,
+                 std::string object_name)
+      -> google::cloud::future<google::storage::v2::Object> {
+    auto [writer, token] =
+        (co_await client.StartAppendableObjectUpload(
+             gcs::BucketName(std::move(bucket_name)), std::move(object_name)))
+            .value();
+    std::cout << "Appendable upload started for object " << object_name << "\n";
+
+    token = (co_await writer.Write(std::move(token),
+                                   gcs::WritePayload("Some data\n")))
+                .value();
+    std::cout << "Wrote some data.\n";
+
+    // Set the expected CRC32C checksum in the current options scope
+    // just before calling Finalize().
+    google::cloud::internal::OptionsSpan span(
+        google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
+            gcs::PrecomputedChecksums{
+                gcs::ComputeCrc32cChecksum("Some data\n")}));
+    co_return (co_await writer.Finalize(std::move(token))).value();
+  };
+  // [END storage_create_and_write_appendable_object_with_checksum]
+  //! [create-and-write-appendable-object-with-checksum]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes..
+  auto const object = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "File successfully uploaded " << object.DebugString() << "\n";
+}
+
 void PauseAndResumeAppendableUpload(google::cloud::storage::AsyncClient& client,
                                     std::vector<std::string> const& argv) {
   //! [pause-and-resume-appendable-upload]
@@ -960,6 +1046,11 @@ void OpenObjectMultipleRangedRead(google::cloud::storage::AsyncClient&,
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
 }
 
+void OpenObjectWithInitialReadRanges(google::cloud::storage::AsyncClient&,
+                                     std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::Open() example requires coroutines\n";
+}
+
 void OpenMultipleObjectsRangedRead(google::cloud::storage::AsyncClient&,
                                    std::vector<std::string> const&) {
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
@@ -1035,6 +1126,12 @@ void CreateAndWriteAppendableObject(google::cloud::storage::AsyncClient&,
                "coroutines\n";
 }
 
+void CreateAndWriteAppendableObjectWithChecksum(
+    google::cloud::storage::AsyncClient&, std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::CreateAndWriteAppendableObjectWithChecksum() "
+               "example requires coroutines\n";
+}
+
 void PauseAndResumeAppendableUpload(google::cloud::storage::AsyncClient&,
                                     std::vector<std::string> const&) {
   std::cerr << "AsyncClient::PauseAndResumeAppendableUpload() example requires "
@@ -1094,11 +1191,17 @@ void ComposeObject(google::cloud::storage::AsyncClient& client,
 
 void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
                           std::vector<std::string> const& argv) {
+  using ::google::cloud::storage::examples::Usage;
+  if (argv.at(2) != "true" && argv.at(2) != "false") {
+    throw Usage{"delete-source-objects must be either 'true' or 'false'"};
+  }
+  auto const delete_source_objects = argv.at(2) == "true";
+
   //! [compose-object-request]
   namespace g = google::cloud;
   namespace gcs = g::storage;
   [](gcs::AsyncClient& client, std::string bucket_name, std::string object_name,
-     std::string name1, std::string name2) {
+     bool delete_source_objects, std::string name1, std::string name2) {
     google::storage::v2::ComposeObjectRequest request;
     request.mutable_destination()->set_bucket(
         gcs::BucketName(std::move(bucket_name)).FullName());
@@ -1107,6 +1210,7 @@ void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
     request.set_if_generation_match(0);
     request.add_source_objects()->set_name(std::move(name1));
     request.add_source_objects()->set_name(std::move(name2));
+    request.set_delete_source_objects(delete_source_objects);
 
     client.ComposeObject(std::move(request))
         .then([](auto f) {
@@ -1118,7 +1222,26 @@ void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
         .get();
   }
   //! [compose-object-request]
-  (client, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  (client, argv.at(0), argv.at(1), delete_source_objects, argv.at(3),
+   argv.at(4));
+}
+
+void GetBucket(google::cloud::storage::AsyncClient& client,
+               std::vector<std::string> const& argv) {
+  //! [get-bucket]
+  namespace gcs = google::cloud::storage;
+  [](gcs::AsyncClient& client, std::string bucket_name) {
+    client.GetBucket(gcs::BucketName(std::move(bucket_name)))
+        .then([](auto f) {
+          auto metadata = f.get();
+          if (!metadata) throw std::move(metadata).status();
+          std::cout << "Bucket metadata successfully fetched: "
+                    << metadata->DebugString() << "\n";
+        })
+        .get();
+  }
+  //! [get-bucket]
+  (client, argv.at(0));
 }
 
 // We would like to call this function `DeleteObject()`, but that conflicts with
@@ -1185,6 +1308,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto client = google::cloud::storage::AsyncClient();
 
+  std::cout << "Running GetBucket() example" << std::endl;
+  GetBucket(client, {bucket_name});
+
   // We need different object names because writing to the same object within
   // a second exceeds the service's quota.
   auto object_name = examples::MakeRandomObjectName(generator, "object-");
@@ -1233,6 +1359,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running the OpenObjectMultipleRangedRead() example"
             << std::endl;
   OpenObjectMultipleRangedRead(client, {bucket_name, composed_name});
+
+  std::cout << "Running the OpenObjectWithInitialReadRanges() example"
+            << std::endl;
+  OpenObjectWithInitialReadRanges(client, {bucket_name, composed_name});
 
   std::cout << "Running the OpenMultipleObjectsRangedRead() example"
             << std::endl;
@@ -1376,12 +1506,30 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "Running ComposeObjectRequest() example" << std::endl;
   auto const to_delete = object_name;
-  ComposeObjectRequest(client, {bucket_name, object_name, o1, o2});
+  ComposeObjectRequest(client, {bucket_name, object_name, "false", o1, o2});
+  scheduled_for_delete.push_back(std::move(object_name));
+  object_name = examples::MakeRandomObjectName(generator, "object-");
+
+  std::cout
+      << "Running ComposeObjectRequest() with deleteSourceObjects=true example"
+      << std::endl;
+  auto const temp_source_1 =
+      examples::MakeRandomObjectName(generator, "temp-source-1-");
+  auto const temp_source_2 =
+      examples::MakeRandomObjectName(generator, "temp-source-2-");
+  InsertObject(client, {bucket_name, temp_source_1});
+  scheduled_for_delete.push_back(temp_source_1);
+  InsertObject(client, {bucket_name, temp_source_2});
+  scheduled_for_delete.push_back(temp_source_2);
+  auto const to_delete_2 = object_name;
+  ComposeObjectRequest(
+      client, {bucket_name, object_name, "true", temp_source_1, temp_source_2});
   scheduled_for_delete.push_back(std::move(object_name));
   object_name = examples::MakeRandomObjectName(generator, "object-");
 
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, to_delete});
+  AsyncDeleteObject(client, {bucket_name, to_delete_2});
   scheduled_for_delete.push_back(std::move(object_name));
   object_name = examples::MakeRandomObjectName(generator, "object-");
 
@@ -1441,9 +1589,30 @@ int main(int argc, char* argv[]) try {
     return {name, std::move(adapter)};
   };
 
+  auto make_bucket_entry =
+      [](std::string const& name, std::vector<std::string> arg_names,
+         Command const& command) -> examples::Commands::value_type {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    auto adapter = [=](std::vector<std::string> const& argv) {
+      if (argv.size() != arg_names.size() ||
+          (!argv.empty() && argv[0] == "--help")) {
+        std::ostringstream os;
+        os << name;
+        for (auto const& a : arg_names) {
+          os << " " << a;
+        }
+        throw examples::Usage{std::move(os).str()};
+      }
+      auto client = google::cloud::storage::AsyncClient();
+      command(client, argv);
+    };
+    return {name, std::move(adapter)};
+  };
+
   examples::Example example({
       {"create-client", CreateClientCommand},
       {"create-client-with-dp", CreateClientWithDPCommand},
+      make_bucket_entry("get-bucket", {}, GetBucket),
       make_entry("insert-object", {}, InsertObject),
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
@@ -1452,6 +1621,8 @@ int main(int argc, char* argv[]) try {
                  OpenObjectSingleRangedRead),
       make_entry("open-object-multiple-ranged-read", {},
                  OpenObjectMultipleRangedRead),
+      make_entry("open-object-initial-read-ranges", {},
+                 OpenObjectWithInitialReadRanges),
       make_entry("open-object-read-full-object", {}, OpenObjectReadFullObject),
       make_entry("open-multiple-objects-ranged-read",
                  {"<object-name-1>", "<object-name-2>", "<object-name-3>"},
@@ -1461,8 +1632,10 @@ int main(int argc, char* argv[]) try {
       make_entry("read-object-range", {}, ReadObjectRange),
       make_entry("read-object-with-options", {"<generation>"},
                  ReadObjectWithOptions),
-      make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
-      make_entry("compose-object-request", {"<o1> <o2>"}, ComposeObjectRequest),
+      make_entry("compose-object", {"<o1>", "<o2>"}, ComposeObject),
+      make_entry("compose-object-request",
+                 {"<delete-source-objects (true/false)>", "<o1>", "<o2>"},
+                 ComposeObjectRequest),
       make_entry("delete-object", {}, AsyncDeleteObject),
 
       make_entry("start-buffered-upload", {}, StartBufferedUpload),
@@ -1477,6 +1650,8 @@ int main(int argc, char* argv[]) try {
 
       make_entry("create-and-write-appendable-object", {},
                  CreateAndWriteAppendableObject),
+      make_entry("create-and-write-appendable-object-with-checksum", {},
+                 CreateAndWriteAppendableObjectWithChecksum),
       make_entry("pause-and-resume-appendable-upload", {},
                  PauseAndResumeAppendableUpload),
       make_entry("finalize-appendable-object-upload", {},

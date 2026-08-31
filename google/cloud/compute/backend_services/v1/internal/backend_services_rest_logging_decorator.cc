@@ -165,6 +165,20 @@ BackendServicesRestLogging::GetBackendService(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+Status BackendServicesRestLogging::GetEffectiveSecurityPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 GetEffectiveSecurityPoliciesRequest const& request) {
+        return child_->GetEffectiveSecurityPolicies(rest_context, options,
+                                                    request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesRestLogging::GetHealth(
     rest_internal::RestContext& rest_context, Options const& options,

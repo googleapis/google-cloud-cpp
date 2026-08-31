@@ -154,7 +154,7 @@ bool IsKnownIdempotentMethod(google::protobuf::MethodDescriptor const& m) {
 
 std::string DefaultIdempotencyFromHttpOperation(
     google::protobuf::MethodDescriptor const& method,
-    absl::optional<google::api::HttpRule> http_rule) {
+    std::optional<google::api::HttpRule> http_rule) {
   if (IsKnownIdempotentMethod(method)) return "kIdempotent";
   if (http_rule) {
     switch (http_rule->pattern_case()) {
@@ -495,11 +495,11 @@ std::string GetEffectiveServiceName(VarsDictionary const& vars,
 // If it does not exist, return a null optional.
 // Parses a command line argument in the form:
 // {"service_name_to_comments": "service_a=comment_a,service_b=comment_b"}.
-absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
-                                                  absl::string_view name) {
+std::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
+                                                 absl::string_view name) {
   auto service_name_to_comments = vars.find("service_name_to_comments");
   if (service_name_to_comments == vars.end()) {
-    return absl::nullopt;
+    return std::nullopt;
   }
   for (absl::string_view arg :
        absl::StrSplit(service_name_to_comments->second, ',')) {
@@ -507,14 +507,14 @@ absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
         absl::StrSplit(arg, absl::MaxSplits('=', 1));
     if (p.first == name) return std::string(p.second.data(), p.second.size());
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 VarsDictionary GetMethodVars(
     google::protobuf::ServiceDescriptor const& service,
     YAML::Node const& service_config,
     google::protobuf::MethodDescriptor const& method,
-    absl::optional<google::api::HttpRule> const& http_rule,
+    std::optional<google::api::HttpRule> const& http_rule,
     std::string const& grpc_stub_name,
     VarsDictionary const& idempotency_overrides,
     std::set<std::string> const& omitted_rpcs) {
@@ -851,6 +851,37 @@ VarsDictionary CreateServiceVars(
   SetRetryStatusCodeExpression(vars);
   vars["transient_errors_comment"] = TransientErrorsComment(vars);
   SetLongrunningOperationServiceVars(descriptor, vars);
+  auto const experimental_bigtable_operation_context =
+      vars.find("experimental_bigtable_operation_context");
+  if (experimental_bigtable_operation_context != vars.end() &&
+      experimental_bigtable_operation_context->second == "true") {
+    vars["op_ctx_decl"] =
+        ",\n      google::cloud::bigtable_internal::OperationContext& "
+        "operation_context";
+    vars["op_ctx_arg"] = ", operation_context";
+    vars["op_ctx_cap"] = ", &operation_context";
+    vars["op_ctx_stub_decl"] =
+        ",\n    google::cloud::bigtable_internal::OperationContext&";
+    vars["op_ctx_shared_decl"] =
+        ",\n      "
+        "std::shared_ptr<google::cloud::bigtable_internal::OperationContext> "
+        "operation_context";
+    vars["op_ctx_shared_arg"] = ", std::move(operation_context)";
+    vars["op_ctx_shared_cap"] =
+        ", operation_context = std::move(operation_context)";
+    vars["op_ctx_shared_stub_decl"] =
+        ",\n    "
+        "std::shared_ptr<google::cloud::bigtable_internal::OperationContext>";
+  } else {
+    vars["op_ctx_decl"] = "";
+    vars["op_ctx_arg"] = "";
+    vars["op_ctx_cap"] = "";
+    vars["op_ctx_stub_decl"] = "";
+    vars["op_ctx_shared_decl"] = "";
+    vars["op_ctx_shared_arg"] = "";
+    vars["op_ctx_shared_cap"] = "";
+    vars["op_ctx_shared_stub_decl"] = "";
+  }
   return vars;
 }
 
@@ -892,7 +923,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
-    absl::optional<google::api::HttpRule> http_rule;
+    std::optional<google::api::HttpRule> http_rule;
     if (method.options().HasExtension(google::api::http)) {
       http_rule = method.options().GetExtension(google::api::http);
     }

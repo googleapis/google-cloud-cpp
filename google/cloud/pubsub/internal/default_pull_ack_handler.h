@@ -23,11 +23,11 @@
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <optional>
 
 namespace google {
 namespace cloud {

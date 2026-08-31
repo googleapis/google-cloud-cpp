@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 #include <gmock/gmock.h>
 #include <string>
 
@@ -54,8 +57,26 @@ TEST(ComputeCrc32cChecksumTest, Simple) {
   EXPECT_EQ("ImIEBA==", actual);
 }
 
+TEST(ChecksumOptionsTest, SetAndGet) {
+  Options options;
+  EXPECT_FALSE(options.has<UploadChecksumValidationOption>());
+  EXPECT_FALSE(options.has<DownloadChecksumValidationOption>());
+
+  options.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5);
+  options.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c);
+
+  EXPECT_TRUE(options.has<UploadChecksumValidationOption>());
+  EXPECT_EQ(ChecksumAlgorithm::kMD5,
+            options.get<UploadChecksumValidationOption>());
+
+  EXPECT_TRUE(options.has<DownloadChecksumValidationOption>());
+  EXPECT_EQ(ChecksumAlgorithm::kCrc32c,
+            options.get<DownloadChecksumValidationOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

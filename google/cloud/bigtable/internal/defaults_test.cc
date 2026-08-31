@@ -40,6 +40,7 @@ using ::google::cloud::internal::GetIntChannelArgument;
 using ::google::cloud::internal::GetStringChannelArgument;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using secs = std::chrono::seconds;
 using mins = std::chrono::minutes;
@@ -577,6 +578,66 @@ TEST(EndpointEnvTest, BigtableDirectPathOverridesUserEndpoints) {
   EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
             opts.get<EndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
+}
+
+TEST(EndpointEnvTest, DirectPathModeOptionEnabled) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                std::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
+
+  auto opts = Options{}.set<experimental::DirectPathModeOption>(
+      experimental::DirectPathMode::kEnabled);
+  EXPECT_TRUE(IsDirectPath(opts));
+  opts = DefaultOptions(opts);
+  EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
+}
+
+TEST(EndpointEnvTest, DirectPathModeOptionDisabled) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                std::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
+
+  auto opts = Options{}.set<experimental::DirectPathModeOption>(
+      experimental::DirectPathMode::kDisabled);
+  EXPECT_FALSE(IsDirectPath(opts));
+  auto default_opts = DefaultDataOptions(opts);
+  EXPECT_EQ("bigtable.googleapis.com", default_opts.get<EndpointOption>());
+}
+
+TEST(EndpointEnvTest, DirectPathEnvVarOverridesDirectPathModeOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                std::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "false");
+
+  Options const opts = Options{}.set<experimental::DirectPathModeOption>(
+      experimental::DirectPathMode::kEnabled);
+  EXPECT_FALSE(IsDirectPath(opts));
+}
+
+TEST(EndpointEnvTest, CbtDirectPathFalseOverridesCloudDirectPath) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "false");
+
+  Options const opts = Options{}.set<experimental::DirectPathModeOption>(
+      experimental::DirectPathMode::kEnabled);
+  EXPECT_FALSE(IsDirectPath(opts));
+}
+
+TEST(EndpointEnvTest, DirectPathTimeoutDefaults) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  Options const opts = DefaultOptions();
+  EXPECT_THAT(opts.get<experimental::DirectPathProbeTimeoutOption>(),
+              Eq(DefaultDirectPathProbeTimeout()));
+  EXPECT_THAT(opts.get<experimental::DirectPathDiagnosticsTimeoutOption>(),
+              Eq(DefaultDirectPathDiagnosticsTimeout()));
+  EXPECT_THAT(opts.get<experimental::DirectPathInitializationModeOption>(),
+              Eq(DefaultDirectPathInitializationMode()));
 }
 
 TEST(EndpointEnvTest, EmulatorOverridesCloudDirectPath) {

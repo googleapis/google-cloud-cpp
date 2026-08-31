@@ -84,6 +84,62 @@ std::shared_ptr<storage::AsyncConnection> MakeTestConnection(
                              TestOptions(std::move(options)));
 }
 
+TEST_F(AsyncConnectionImplTest, GetBucket) {
+  auto constexpr kExpectedRequest = R"pb(
+    name: "projects/_/buckets/test-bucket"
+  )pb";
+  auto constexpr kExpectedBucket = R"pb(
+    name: "projects/_/buckets/test-bucket"
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncGetBucket)
+      .WillOnce([&] {
+        return sequencer.PushBack("GetBucket(1)").then([](auto) {
+          return StatusOr<google::storage::v2::Bucket>(TransientError());
+        });
+      })
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const& options,
+                    google::storage::v2::GetBucketRequest const& request) {
+        EXPECT_THAT(GetMetadata(*context),
+                    testing::Not(testing::Contains(
+                        testing::Key("x-goog-gcs-idempotency-token"))));
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
+        auto expected = google::storage::v2::GetBucketRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("GetBucket(2)").then([&](auto) {
+          auto result = google::storage::v2::Bucket{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kExpectedBucket, &result));
+          return make_status_or(std::move(result));
+        });
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto request = google::storage::v2::GetBucketRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending =
+      connection->GetBucket({std::move(request), connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "GetBucket(1)");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "GetBucket(2)");
+  next.first.set_value(true);
+
+  auto expected = google::storage::v2::Bucket{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedBucket, &expected));
+  auto response = pending.get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
+}
+
 TEST_F(AsyncConnectionImplTest, ComposeObject) {
   auto constexpr kExpectedRequest = R"pb(
     destination { bucket: "projects/_/buckets/test-bucket" name: "test-object" }

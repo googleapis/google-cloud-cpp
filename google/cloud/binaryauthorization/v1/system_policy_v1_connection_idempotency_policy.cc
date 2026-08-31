@@ -39,6 +39,22 @@ Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetSystemPolicy(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
 MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy() {
   return std::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>();

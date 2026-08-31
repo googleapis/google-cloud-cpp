@@ -152,6 +152,12 @@ class StorageLogging : public StorageStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::MoveObjectRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::Bucket>> AsyncGetBucket(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::GetBucketRequest const& request) override;
+
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

@@ -128,6 +128,15 @@ AutoscalersRestMetadata::PatchAutoscaler(
   return child_->PatchAutoscaler(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+AutoscalersRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncUpdateAutoscaler(
     CompletionQueue& cq,

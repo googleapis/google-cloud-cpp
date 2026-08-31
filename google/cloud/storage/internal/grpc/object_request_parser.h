@@ -98,11 +98,6 @@ Status Finalize(google::storage::v2::BidiWriteObjectRequest& write_request,
 
 Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
                      grpc::WriteOptions& options,
-                     storage::internal::InsertObjectMediaRequest const& request,
-                     bool chunk_has_more);
-
-Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
-                     grpc::WriteOptions& options,
                      storage::internal::UploadChunkRequest const& request,
                      bool chunk_has_more);
 

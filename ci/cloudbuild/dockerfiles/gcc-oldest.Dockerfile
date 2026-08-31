@@ -16,7 +16,7 @@ FROM opensuse/leap:15
 ARG NCPU=4
 
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y automake cmake curl gcc9 gcc9-c++ \
+    zypper install --allow-downgrade -y automake cmake curl gcc10 gcc10-c++ \
         git gzip libtool make ninja patch tar wget \
         c-ares-devel libcurl-devel libopenssl-devel libcrc32c-devel
 
@@ -25,11 +25,11 @@ RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
 
-ENV CXX=g++-9
-ENV CC=gcc-9
+ENV CXX=g++-10
+ENV CC=gcc-10
 
-RUN ln -s /usr/bin/g++-9 /usr/local/bin/g++
-RUN ln -s /usr/bin/gcc-9 /usr/local/bin/gcc
+RUN ln -s /usr/bin/g++-10 /usr/local/bin/g++
+RUN ln -s /usr/bin/gcc-10 /usr/local/bin/gcc
 
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.2.tar.gz | \

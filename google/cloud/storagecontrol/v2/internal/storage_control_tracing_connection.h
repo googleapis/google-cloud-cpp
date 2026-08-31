@@ -96,6 +96,10 @@ class StorageControlTracingConnection
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
       google::storage::control::v2::ListManagedFoldersRequest request) override;
 
+  StatusOr<google::storage::control::v2::ManagedFolder> UpdateManagedFolder(
+      google::storage::control::v2::UpdateManagedFolderRequest const& request)
+      override;
+
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
   CreateAnywhereCache(
       google::storage::control::v2::CreateAnywhereCacheRequest const& request)
@@ -140,6 +144,49 @@ class StorageControlTracingConnection
 
   StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
       google::storage::control::v2::ListAnywhereCachesRequest request) override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> CreateRapidCache(
+      google::storage::control::v2::CreateRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::CreateRapidCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> CreateRapidCache(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> UpdateRapidCache(
+      google::storage::control::v2::UpdateRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::UpdateRapidCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> UpdateRapidCache(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      google::storage::control::v2::DisableRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DisableRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::DisableRapidCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::RapidCache>> DisableRapidCache(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
+      google::storage::control::v2::GetRapidCacheRequest const& request)
+      override;
+
+  StreamRange<google::storage::control::v2::RapidCache> ListRapidCaches(
+      google::storage::control::v2::ListRapidCachesRequest request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
   GetProjectIntelligenceConfig(
@@ -204,6 +251,11 @@ class StorageControlTracingConnection
   ListIntelligenceFindingRevisions(
       google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
           request) override;
+
+  StatusOr<google::storage::control::v2::ObjectFullContext>
+  ViewObjectFullContext(
+      google::storage::control::v2::ViewObjectFullContextRequest const& request)
+      override;
 
  private:
   std::shared_ptr<storagecontrol_v2::StorageControlConnection> child_;

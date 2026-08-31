@@ -115,6 +115,17 @@ Idempotency SecretManagerServiceConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+SecretManagerServiceConnectionIdempotencyPolicy::EnableManagedRotation(
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecretManagerServiceConnectionIdempotencyPolicy::RotateSecret(
+    google::cloud::secretmanager::v1::RotateSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SecretManagerServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

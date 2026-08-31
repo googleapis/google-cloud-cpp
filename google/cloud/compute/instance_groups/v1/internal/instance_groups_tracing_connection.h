@@ -115,6 +115,10 @@ class InstanceGroupsTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::instance_groups::v1::
+                         TestIamPermissionsRequest const& request) override;
+
  private:
   std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> child_;
 };

@@ -66,7 +66,7 @@ TEST(BucketIamConfiguration, IOStream) {
   EXPECT_THAT(full_output, HasSubstr("public_access_prevention=enforced"));
 
   auto no_ubla_input = BucketIamConfiguration{
-      /*.uniform_bucket_level_access=*/absl::nullopt,
+      /*.uniform_bucket_level_access=*/std::nullopt,
       /*.public_access_prevention=*/PublicAccessPreventionEnforced()};
   auto const no_ubla_output = to_string(no_ubla_input);
   EXPECT_THAT(no_ubla_output, Not(HasSubstr("uniform_bucket_level_access=")));
@@ -75,7 +75,7 @@ TEST(BucketIamConfiguration, IOStream) {
   auto no_pap_input = BucketIamConfiguration{
       /*.uniform_bucket_level_access=*/UniformBucketLevelAccess{
           /*.enabled=*/true, /*.locked=*/TestTimePoint()},
-      /*.public_access_prevention=*/absl::nullopt};
+      /*.public_access_prevention=*/std::nullopt};
   auto const no_pap_output = to_string(no_pap_input);
   EXPECT_THAT(no_pap_output, HasSubstr("uniform_bucket_level_access="));
   EXPECT_THAT(no_pap_output, HasSubstr("enabled=true"));
@@ -83,8 +83,8 @@ TEST(BucketIamConfiguration, IOStream) {
   EXPECT_THAT(no_pap_output, Not(HasSubstr("public_access_prevention")));
 
   auto empty_input =
-      BucketIamConfiguration{/*.uniform_bucket_level_access=*/absl::nullopt,
-                             /*.public_access_prevention=*/absl::nullopt};
+      BucketIamConfiguration{/*.uniform_bucket_level_access=*/std::nullopt,
+                             /*.public_access_prevention=*/std::nullopt};
   auto const empty_output = to_string(empty_input);
   EXPECT_THAT(empty_output, Not(HasSubstr("uniform_bucket_level_access")));
   EXPECT_THAT(empty_output, Not(HasSubstr("public_access_prevention")));

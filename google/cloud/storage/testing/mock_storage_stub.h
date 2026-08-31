@@ -152,6 +152,12 @@ class MockStorageStub : public storage_internal::StorageStub {
                google::cloud::internal::ImmutableOptions,
                google::storage::v2::ComposeObjectRequest const&),
               (override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::Bucket>>, AsyncGetBucket,
+              (google::cloud::CompletionQueue&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
+               google::storage::v2::GetBucketRequest const&),
+              (override));
   MOCK_METHOD(future<Status>, AsyncDeleteObject,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
@@ -217,7 +223,7 @@ class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
                                   google::storage::v2::ReadObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read,
+  MOCK_METHOD(std::optional<Status>, Read,
               (google::storage::v2::ReadObjectResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));

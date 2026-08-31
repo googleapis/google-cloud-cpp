@@ -346,6 +346,237 @@ StatusOr<google::longrunning::Operation> DefaultMemorystoreStub::BackupInstance(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncStartMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::StartMigrationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::memorystore::v1::StartMigrationRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStartMigration(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultMemorystoreStub::StartMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncFinishMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::FinishMigrationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::memorystore::v1::FinishMigrationRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncFinishMigration(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMemorystoreStub::FinishMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->FinishMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+DefaultMemorystoreStub::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& request) {
+  google::cloud::memorystore::v1::ListTokenAuthUsersResponse response;
+  auto status = grpc_stub_->ListTokenAuthUsers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+DefaultMemorystoreStub::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  google::cloud::memorystore::v1::TokenAuthUser response;
+  auto status = grpc_stub_->GetTokenAuthUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+DefaultMemorystoreStub::ListAuthTokens(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::ListAuthTokensRequest const& request) {
+  google::cloud::memorystore::v1::ListAuthTokensResponse response;
+  auto status = grpc_stub_->ListAuthTokens(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+DefaultMemorystoreStub::GetAuthToken(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  google::cloud::memorystore::v1::AuthToken response;
+  auto status = grpc_stub_->GetAuthToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncAddTokenAuthUser(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMemorystoreStub::AddTokenAuthUser(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddTokenAuthUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteTokenAuthUser(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMemorystoreStub::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTokenAuthUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::AddAuthTokenRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::memorystore::v1::AddAuthTokenRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncAddAuthToken(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultMemorystoreStub::AddAuthToken(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddAuthToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAuthToken(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMemorystoreStub::DeleteAuthToken(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAuthToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultMemorystoreStub::ListLocations(
     grpc::ClientContext& context, Options const&,

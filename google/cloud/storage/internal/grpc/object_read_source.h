@@ -22,9 +22,9 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "absl/functional/function_ref.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <functional>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -76,7 +76,7 @@ class GrpcObjectReadSource : public storage::internal::ObjectReadSource {
   TimerSource timer_source_;
   std::unique_ptr<StreamingRpc> stream_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
-  absl::optional<std::int64_t> offset_;
+  std::optional<std::int64_t> offset_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.

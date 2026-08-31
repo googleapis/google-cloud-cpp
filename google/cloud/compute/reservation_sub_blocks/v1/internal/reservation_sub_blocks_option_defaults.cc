@@ -57,6 +57,23 @@ Options ReservationSubBlocksDefaultOptions(Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<compute_reservation_sub_blocks_v1::
+                       ReservationSubBlocksPollingPolicyOption>()) {
+    options.set<compute_reservation_sub_blocks_v1::
+                    ReservationSubBlocksPollingPolicyOption>(
+        GenericPollingPolicy<compute_reservation_sub_blocks_v1::
+                                 ReservationSubBlocksRetryPolicyOption::Type,
+                             compute_reservation_sub_blocks_v1::
+                                 ReservationSubBlocksBackoffPolicyOption::Type>(
+            options
+                .get<compute_reservation_sub_blocks_v1::
+                         ReservationSubBlocksRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options
            .has<compute_reservation_sub_blocks_v1::
                     ReservationSubBlocksConnectionIdempotencyPolicyOption>()) {

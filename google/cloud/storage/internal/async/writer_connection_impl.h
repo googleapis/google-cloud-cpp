@@ -42,9 +42,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      std::int64_t persisted_size, bool first_request = true,
-      absl::optional<google::storage::v2::ObjectChecksums>
-          persisted_data_checksums = absl::nullopt);
+      std::int64_t persisted_size, bool first_request = true);
   explicit AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
@@ -56,13 +54,10 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   void Cancel() override { return impl_->Cancel(); }
 
   std::string UploadId() const override;
-  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+  std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const override {
+    std::unique_lock<std::mutex> lk(mu_);
     return latest_write_handle_;
-  }
-  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
-      const override {
-    return persisted_data_checksums_;
   }
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
@@ -84,19 +79,16 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       PersistedStateType persisted_state, std::int64_t offset,
-      bool first_request = true,
-      absl::optional<google::storage::v2::ObjectChecksums>
-          persisted_data_checksums = absl::nullopt);
+      bool first_request = true);
 
   google::storage::v2::BidiWriteObjectRequest MakeRequest();
 
   future<Status> OnPartialUpload(std::size_t upload_size,
                                  StatusOr<bool> success);
+  future<Status> OnFlush(std::size_t upload_size, StatusOr<bool> success);
   future<Status> OnClose(std::size_t upload_size, StatusOr<bool> success);
   future<StatusOr<google::storage::v2::Object>> OnFinalUpload(
       std::size_t upload_size, StatusOr<bool> success);
-  future<StatusOr<std::int64_t>> OnQuery(
-      absl::optional<google::storage::v2::BidiWriteObjectResponse> response);
   future<Status> Finish();
 
   google::cloud::internal::ImmutableOptions options_;
@@ -121,13 +113,9 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   google::cloud::future<void> finished_;
 
   // Track the latest write handle seen in responses.
-  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
+  std::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 
-  // Track the latest persisted data checksums seen in responses.
-  absl::optional<google::storage::v2::ObjectChecksums>
-      persisted_data_checksums_;
-
-  std::mutex mu_;
+  mutable std::mutex mu_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

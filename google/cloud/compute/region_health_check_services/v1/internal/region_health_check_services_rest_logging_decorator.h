@@ -44,6 +44,14 @@ class RegionHealthCheckServicesRestLogging
       std::shared_ptr<RegionHealthCheckServicesRestStub> child,
       TracingOptions tracing_options, std::set<std::string> components);
 
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+  AggregatedListRegionHealthCheckServices(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          AggregatedListRegionHealthCheckServicesRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteHealthCheckService(
       google::cloud::CompletionQueue& cq,
@@ -99,6 +107,12 @@ class RegionHealthCheckServicesRestLogging
       Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

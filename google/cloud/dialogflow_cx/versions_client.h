@@ -518,7 +518,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L286}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
@@ -579,7 +579,7 @@ class VersionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L286}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> LoadVersion(

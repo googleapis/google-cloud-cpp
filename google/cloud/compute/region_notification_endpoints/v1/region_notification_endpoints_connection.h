@@ -205,6 +205,13 @@ class RegionNotificationEndpointsConnection {
 
   virtual Options options() { return Options{}; }
 
+  virtual StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>
+  AggregatedListRegionNotificationEndpoints(
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          AggregatedListRegionNotificationEndpointsRequest request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -242,6 +249,11 @@ class RegionNotificationEndpointsConnection {
   ListRegionNotificationEndpoints(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -133,6 +133,11 @@ Idempotency DisksConnectionIdempotencyPolicy::UpdateDisk(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DisksConnectionIdempotencyPolicy::UpdateKmsKey(
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DisksConnectionIdempotencyPolicy>
 MakeDefaultDisksConnectionIdempotencyPolicy() {
   return std::make_unique<DisksConnectionIdempotencyPolicy>();

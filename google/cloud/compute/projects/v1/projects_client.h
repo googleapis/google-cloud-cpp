@@ -111,7 +111,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L237}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L256}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
@@ -162,7 +162,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L237}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L256}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
@@ -228,7 +228,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L281}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -287,7 +287,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L281}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -352,7 +352,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L286}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
@@ -403,7 +403,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L286}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
@@ -470,7 +470,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L308}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -530,7 +530,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L308}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -571,13 +571,15 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// Returns the specified Project resource. To decrease latency for this
-  /// method, you can optionally omit any unneeded information from the response
-  /// by using a field mask. This practice is especially recommended for unused
-  /// quota information (the `quotas` field). To exclude one or more fields, set
-  /// your request's `fields` query parameter to only include the fields you
-  /// need. For example, to only include the `id` and `selfLink` fields, add the
-  /// query parameter `?fields=id,selfLink` to your request.
+  /// Returns the specified Project resource.
+  ///
+  /// To decrease latency for this method, you can optionally omit any unneeded
+  /// information from the response by using a field mask. This practice is
+  /// especially recommended for unused quota information (the `quotas` field).
+  /// To exclude one or more fields, set your request's `fields` query parameter
+  /// to only include the fields you need. For example, to only include the `id`
+  /// and `selfLink` fields, add the query parameter `?fields=id,selfLink` to
+  /// your request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/get
   ///
   /// @param project  Project ID for this request.
@@ -594,8 +596,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L335}
-  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L366}
+  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L70}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
@@ -603,13 +605,15 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// Returns the specified Project resource. To decrease latency for this
-  /// method, you can optionally omit any unneeded information from the response
-  /// by using a field mask. This practice is especially recommended for unused
-  /// quota information (the `quotas` field). To exclude one or more fields, set
-  /// your request's `fields` query parameter to only include the fields you
-  /// need. For example, to only include the `id` and `selfLink` fields, add the
-  /// query parameter `?fields=id,selfLink` to your request.
+  /// Returns the specified Project resource.
+  ///
+  /// To decrease latency for this method, you can optionally omit any unneeded
+  /// information from the response by using a field mask. This practice is
+  /// especially recommended for unused quota information (the `quotas` field).
+  /// To exclude one or more fields, set your request's `fields` query parameter
+  /// to only include the fields you need. For example, to only include the `id`
+  /// and `selfLink` fields, add the query parameter `?fields=id,selfLink` to
+  /// your request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -631,8 +635,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L335}
-  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L366}
+  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L70}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
@@ -660,8 +664,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L342}
-  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L373}
+  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L70}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -692,8 +696,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L342}
-  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L373}
+  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L70}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -721,8 +725,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L349}
-  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L148}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L380}
+  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
@@ -753,8 +757,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L349}
-  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L148}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L380}
+  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
@@ -792,8 +796,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L417}
-  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L481}
+  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L70}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
@@ -835,8 +839,8 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L417}
-  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L481}
+  /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L70}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
@@ -846,6 +850,19 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Moves a persistent disk from one zone to another.
+  /// *Note*: The moveDisk API will be deprecated on September 29, 2026.
+  ///
+  /// Starting September 29, 2025, you can't use the moveDisk API on new
+  /// projects. To move a disk to a different region or zone, follow the steps in
+  /// [Change the location of a
+  /// disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
+  ///
+  /// Projects that already use the moveDisk API can continue usage until
+  /// September 29, 2026.
+  ///
+  /// Starting November 1, 2025, API responses will include a warning message in
+  /// the response body about the upcoming deprecation. You can skip the message
+  /// to continue using the service without interruption.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveDisk
   ///
   /// @param project  Project ID for this request.
@@ -870,7 +887,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L490}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L587}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
@@ -899,6 +916,19 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Moves a persistent disk from one zone to another.
+  /// *Note*: The moveDisk API will be deprecated on September 29, 2026.
+  ///
+  /// Starting September 29, 2025, you can't use the moveDisk API on new
+  /// projects. To move a disk to a different region or zone, follow the steps in
+  /// [Change the location of a
+  /// disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
+  ///
+  /// Projects that already use the moveDisk API can continue usage until
+  /// September 29, 2026.
+  ///
+  /// Starting November 1, 2025, API responses will include a warning message in
+  /// the response body about the upcoming deprecation. You can skip the message
+  /// to continue using the service without interruption.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveDisk
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -927,7 +957,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L490}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L587}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
@@ -966,11 +996,14 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Moves an instance and its attached persistent disks from one zone to
-  /// another. *Note*: Moving VMs or disks by using this method might cause
-  /// unexpected behavior. For more information, see the [known
-  /// issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
+  /// another.
+  /// *Note*: Moving VMs or disks by using this method might
+  ///  cause unexpected behavior. For more information, see the [known
+  ///
+  /// issue](https://cloud.google.com/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
   /// [Deprecated] This method is deprecated. See [moving instance across
-  /// zones](/compute/docs/instances/moving-instance-across-zones) instead.
+  /// zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones)
+  /// instead.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveInstance
   ///
   /// @param project  Project ID for this request.
@@ -995,7 +1028,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L516}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L616}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
@@ -1024,11 +1057,14 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Moves an instance and its attached persistent disks from one zone to
-  /// another. *Note*: Moving VMs or disks by using this method might cause
-  /// unexpected behavior. For more information, see the [known
-  /// issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
+  /// another.
+  /// *Note*: Moving VMs or disks by using this method might
+  ///  cause unexpected behavior. For more information, see the [known
+  ///
+  /// issue](https://cloud.google.com/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
   /// [Deprecated] This method is deprecated. See [moving instance across
-  /// zones](/compute/docs/instances/moving-instance-across-zones) instead.
+  /// zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones)
+  /// instead.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveInstance
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1057,7 +1093,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L516}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L616}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
@@ -1099,7 +1135,8 @@ class ProjectsClient {
   ///
   /// Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the
   /// billing account of the project must be subscribed to Cloud Armor
-  /// Enterprise. See Subscribing to Cloud Armor Enterprise for more information.
+  /// Enterprise. See Subscribing
+  /// to Cloud Armor Enterprise for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setCloudArmorTier
   ///
   /// @param project  Project ID for this request.
@@ -1124,7 +1161,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCloudArmorTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L542}
+  /// [google.cloud.cpp.compute.projects.v1.SetCloudArmorTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L645}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1155,7 +1192,8 @@ class ProjectsClient {
   ///
   /// Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the
   /// billing account of the project must be subscribed to Cloud Armor
-  /// Enterprise. See Subscribing to Cloud Armor Enterprise for more information.
+  /// Enterprise. See Subscribing
+  /// to Cloud Armor Enterprise for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setCloudArmorTier
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1184,7 +1222,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCloudArmorTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L542}
+  /// [google.cloud.cpp.compute.projects.v1.SetCloudArmorTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L645}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1251,7 +1289,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L569}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L675}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1309,7 +1347,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L569}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L675}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1377,7 +1415,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L595}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L704}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1439,7 +1477,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L595}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L704}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1480,9 +1518,9 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// Enables the usage export feature and sets the usage export bucket where
-  /// reports are stored. If you provide an empty request body using this method,
-  /// the usage export feature will be disabled.
+  /// Enables the usage export feature and sets theusage export bucket
+  /// where reports are stored. If you provide an empty request body using this
+  /// method, the usage export feature will be disabled.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setUsageExportBucket
   ///
   /// @param project  Project ID for this request.
@@ -1507,7 +1545,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L622}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L734}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1536,9 +1574,9 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// Enables the usage export feature and sets the usage export bucket where
-  /// reports are stored. If you provide an empty request body using this method,
-  /// the usage export feature will be disabled.
+  /// Enables the usage export feature and sets theusage export bucket
+  /// where reports are stored. If you provide an empty request body using this
+  /// method, the usage export feature will be disabled.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setUsageExportBucket
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1567,7 +1605,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L622}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L734}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

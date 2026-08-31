@@ -122,6 +122,13 @@ FirewallsConnection::PatchFirewall(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+FirewallsConnection::TestIamPermissions(
+    google::cloud::cpp::compute::firewalls::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsConnection::UpdateFirewall(
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&) {

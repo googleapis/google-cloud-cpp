@@ -40,6 +40,10 @@ class NetworksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request);
 
+  virtual google::cloud::Idempotency CancelRequestRemovePeering(
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request);
+
   virtual google::cloud::Idempotency DeleteNetwork(
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request);
@@ -70,6 +74,10 @@ class NetworksConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RemovePeering(
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request);
+
+  virtual google::cloud::Idempotency RequestRemovePeering(
+      google::cloud::cpp::compute::networks::v1::
+          RequestRemovePeeringRequest const& request);
 
   virtual google::cloud::Idempotency SwitchToCustomMode(
       google::cloud::cpp::compute::networks::v1::

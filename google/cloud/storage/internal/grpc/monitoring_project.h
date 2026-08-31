@@ -21,8 +21,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <opentelemetry/sdk/resource/resource.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Returns the project to automatically publish GCS+gRPC metrics.
  */
-absl::optional<Project> MonitoringProject(
+std::optional<Project> MonitoringProject(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options);
 
 /**
  * Returns the project associated with @p credentials, if any.
  */
-absl::optional<Project> MonitoringProject(Credentials const& credentials);
+std::optional<Project> MonitoringProject(Credentials const& credentials);
 
 /**
  * Returns the project associated with @p resource.
@@ -48,13 +48,13 @@ absl::optional<Project> MonitoringProject(Credentials const& credentials);
  * GCP resource detector. If the detector finds a GCP project, we can use it as
  * the project to send monitoring metrics.
  */
-absl::optional<Project> MonitoringProject(
+std::optional<Project> MonitoringProject(
     opentelemetry::sdk::resource::Resource const& resource);
 
 /**
  * Returns the monitoring project given the (fully populated) options.
  */
-absl::optional<Project> MonitoringProject(Options const& options);
+std::optional<Project> MonitoringProject(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

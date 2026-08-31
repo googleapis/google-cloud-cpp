@@ -108,6 +108,15 @@ class SecretManagerServiceConnectionImpl
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  EnableManagedRotation(
+      google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+          request) override;
+
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> RotateSecret(
+      google::cloud::secretmanager::v1::RotateSecretRequest const& request)
+      override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

@@ -39,6 +39,12 @@ Idempotency NetworksConnectionIdempotencyPolicy::AddPeering(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetworksConnectionIdempotencyPolicy::CancelRequestRemovePeering(
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworksConnectionIdempotencyPolicy::DeleteNetwork(
     google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -78,6 +84,12 @@ Idempotency NetworksConnectionIdempotencyPolicy::PatchNetwork(
 
 Idempotency NetworksConnectionIdempotencyPolicy::RemovePeering(
     google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworksConnectionIdempotencyPolicy::RequestRemovePeering(
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

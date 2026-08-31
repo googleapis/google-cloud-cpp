@@ -31,9 +31,7 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
     # cmake-format: sort
     "experimental-bigquery_rest" "mocks" "oauth2" "storage")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-    # cmake-format: sort
-    "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sort
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
@@ -44,7 +42,8 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "accessapproval"
     "accesscontextmanager"
     "advisorynotifications"
-    "agentregistry" # Generated 2026-06-26
+    "agentidentity"
+    "agentregistry"
     "aiplatform"
     "alloydb"
     "apigateway"
@@ -62,6 +61,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "baremetalsolution"
     "batch"
     "beyondcorp"
+    "biglake"
     "bigquery"
     "bigquerycontrol"
     "bigtable"
@@ -109,6 +109,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "eventarc"
     "filestore"
     "financialservices"
+    "ftp"
     "functions"
     "geminidataanalytics"
     "gkebackup"
@@ -145,7 +146,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "orgpolicy"
     "osconfig"
     "oslogin"
-    "parallelstore"
     "parametermanager"
     "policysimulator"
     "policytroubleshooter"
@@ -200,6 +200,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "webrisk"
     "websecurityscanner"
     "workflows"
+    "workloadidentity"
     "workloadmanager"
     "workstations")
 
@@ -355,9 +356,6 @@ macro (google_cloud_cpp_enable_deps)
     endif ()
     if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
-    endif ()
-    if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 pubsub)
     endif ()
     if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)

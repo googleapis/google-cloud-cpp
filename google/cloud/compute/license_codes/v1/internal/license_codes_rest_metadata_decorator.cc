@@ -47,6 +47,24 @@ LicenseCodesRestMetadata::GetLicenseCode(
   return child_->GetLicenseCode(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesRestMetadata::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context, Options const& options,

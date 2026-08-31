@@ -14,18 +14,23 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/internal/async/checksum_helpers.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
+#include "google/cloud/storage/internal/async/options.h"
+#include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/rpc/status.pb.h"
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <utility>
@@ -34,6 +39,31 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+
+enum class InitialReadRangesCacheStatus {
+  kNone,
+  kMiss,
+  kHit,
+  kEvicted,
+};
+
+absl::string_view CacheStatusToString(InitialReadRangesCacheStatus status) {
+  switch (status) {
+    case InitialReadRangesCacheStatus::kHit:
+      return "HIT";
+    case InitialReadRangesCacheStatus::kEvicted:
+      return "EVICTED";
+    case InitialReadRangesCacheStatus::kMiss:
+      return "MISS";
+    case InitialReadRangesCacheStatus::kNone:
+      return "";
+  }
+  return "INVALID_STATUS";
+}
+
+}  // namespace
 
 ObjectDescriptorImpl::ObjectDescriptorImpl(
     std::unique_ptr<storage::ResumePolicy> resume_policy,
@@ -45,11 +75,44 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
+      has_initial_read_ranges_(options_.has<ReadRangesOption>()),
       transport_ok_(std::move(transport_ok)) {
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
                                    resume_policy_prototype_->clone()));
+  // Initialize the pacing limit from options if configured.
+  if (options_.has<PreWarmBufferLimitOption>()) {
+    max_prewarmed_buffer_size_ = options_.get<PreWarmBufferLimitOption>();
+  }
+  // If pre-warmed ranges are specified, initialize their `ReadRange` objects,
+  // register them as active on the initial stream, and cache them.
+  if (options_.has<ReadRangesOption>()) {
+    auto const& ranges = options_.get<ReadRangesOption>();
+    auto it = stream_manager_->GetFirstStream();
+    if (it != stream_manager_->End()) {
+      auto deduped_ranges = DeduplicateRanges(ranges);
+      for (auto const& dr : deduped_ranges) {
+        auto range_key = std::make_pair(dr.config.offset, dr.config.length);
+        auto range = std::make_shared<ReadRange>(
+            dr.config.offset, dr.config.length, read_object_spec_.bucket(),
+            read_object_spec_.object());
+        // Registering on the stream allows `OnRead` to route incoming data to
+        // these ranges.
+        it->active_ranges.emplace(dr.read_id, range);
+        // Cache them so subsequent `Read()` calls can claim them.
+        auto [cache_it, inserted] = prewarmed_ranges_.emplace(
+            range_key, PrewarmedRange{range, dr.read_id});
+        // Mark them as unclaimed for pacing checks and store the iterator.
+        unclaimed_ranges_.emplace(dr.read_id, UnclaimedRangeState{0, cache_it});
+      }
+      // Ensure new dynamically requested ranges use IDs that don't conflict
+      // with pre-warmed ones.
+      if (!deduped_ranges.empty()) {
+        read_id_generator_ = deduped_ranges.back().read_id;
+      }
+    }
+  }
 }
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() { Cancel(); }
@@ -86,7 +149,7 @@ void ObjectDescriptorImpl::Cancel() {
   if (pending_stream_.valid()) pending_stream_.cancel();
 }
 
-absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
+std::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {
   std::unique_lock<std::mutex> lk(mu_);
   return metadata_;
@@ -175,7 +238,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   // 2. If `p.start >= 0` and `p.length > 0`, this is a standard range request
   // (ReadRange). The limit is `p.length`.
   // 3. Otherwise, the limit is not set (unlimited / read to end).
-  absl::optional<std::int64_t> limit;
+  std::optional<std::int64_t> limit;
   if (p.start < 0) {
     if (p.start == (std::numeric_limits<std::int64_t>::min)()) {
       limit = (std::numeric_limits<std::int64_t>::max)();
@@ -191,6 +254,39 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       read_object_spec_.bucket(), read_object_spec_.object());
 
   std::unique_lock<std::mutex> lk(mu_);
+  // Check if this range matches a pre-warmed range.
+  auto cache_key = std::make_pair(p.start, p.length);
+  auto cache_it = prewarmed_ranges_.find(cache_key);
+  auto cache_status = has_initial_read_ranges_
+                          ? InitialReadRangesCacheStatus::kMiss
+                          : InitialReadRangesCacheStatus::kNone;
+
+  if (cache_it != prewarmed_ranges_.end()) {
+    cache_status = InitialReadRangesCacheStatus::kHit;
+    // Cache hit. Claim the pre-warmed range and return it to the user.
+    auto prewarmed = std::move(cache_it->second);
+    prewarmed_ranges_.erase(cache_it);
+    // Mark as claimed so we stop applying pacing constraints to it, and
+    // reclaim the buffer budget used by this range atomically under the lock.
+    auto unclaimed_it = unclaimed_ranges_.find(prewarmed.read_id);
+    if (unclaimed_it != unclaimed_ranges_.end()) {
+      total_prewarmed_bytes_buffered_ -= unclaimed_it->second.bytes_buffered;
+      unclaimed_ranges_.erase(unclaimed_it);
+    }
+    lk.unlock();
+    if (!internal::TracingEnabled(options_)) {
+      return std::unique_ptr<storage::AsyncReaderConnection>(
+          std::make_unique<ObjectDescriptorReader>(std::move(prewarmed.range)));
+    }
+    return MakeTracingObjectDescriptorReader(std::move(prewarmed.range),
+                                             CacheStatusToString(cache_status));
+  }
+
+  // If not hit, check if it was evicted earlier due to pacing.
+  if (evicted_ranges_.erase(cache_key) != 0) {
+    cache_status = InitialReadRangesCacheStatus::kEvicted;
+  }
+
   if (stream_manager_->Empty()) {
     lk.unlock();
     range->OnFinish(Status(StatusCode::kFailedPrecondition,
@@ -199,7 +295,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(range)));
     }
-    return MakeTracingObjectDescriptorReader(std::move(range));
+    return MakeTracingObjectDescriptorReader(std::move(range),
+                                             CacheStatusToString(cache_status));
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
@@ -215,15 +312,15 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     return std::unique_ptr<storage::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
   }
-
-  return MakeTracingObjectDescriptorReader(std::move(range));
+  return MakeTracingObjectDescriptorReader(std::move(range),
+                                           CacheStatusToString(cache_status));
 }
 
 std::shared_ptr<storage::internal::HashFunction>
 ObjectDescriptorImpl::CreateHashFunction(bool is_full_read) const {
-  auto const enable_crc32c =
-      options_.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  auto const settings = GetDownloadChecksumSettings(options_);
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
 
   if (enable_crc32c) {
     std::unique_ptr<storage::internal::HashFunction> child;
@@ -255,9 +352,9 @@ ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
     return storage::internal::CreateNullHashValidator();
   }
 
-  auto const enable_crc32c =
-      options_.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  auto const settings = GetDownloadChecksumSettings(options_);
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
 
   std::unique_ptr<storage::internal::HashValidator> hash_validator;
   if (enable_crc32c && enable_md5) {
@@ -338,7 +435,7 @@ void ObjectDescriptorImpl::DoRead(std::unique_lock<std::mutex> lk,
 
 void ObjectDescriptorImpl::OnRead(
     StreamIterator it,
-    absl::optional<google::storage::v2::BidiReadObjectResponse> response) {
+    std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   std::unique_lock<std::mutex> lk(mu_);
   it->stream->read_pending = false;
 
@@ -352,7 +449,7 @@ void ObjectDescriptorImpl::OnRead(
   }
   auto copy = it->active_ranges;
   bool is_transcoded = false;
-  absl::optional<std::int64_t> object_size;
+  std::optional<std::int64_t> object_size;
   if (metadata_.has_value()) {
     is_transcoded = metadata_->content_encoding() == "gzip";
     object_size = metadata_->size();
@@ -360,13 +457,66 @@ void ObjectDescriptorImpl::OnRead(
   // Release the lock while notifying the ranges. The notifications may trigger
   // application code, and that code may callback on this class.
   lk.unlock();
+  auto apply_pacing_and_check_eviction = [this](std::int64_t id,
+                                                std::size_t chunk_size,
+                                                StreamIterator it) {
+    auto unclaimed_it = unclaimed_ranges_.find(id);
+    if (unclaimed_it == unclaimed_ranges_.end()) return false;
+
+    if (total_prewarmed_bytes_buffered_ + chunk_size >
+        max_prewarmed_buffer_size_) {
+      // Evict the range if it exceeds the pacing limit.
+      total_prewarmed_bytes_buffered_ -= unclaimed_it->second.bytes_buffered;
+      // Cap tombstone set size to prevent unbounded memory growth in long-lived
+      // descriptors where pre-warmed ranges are evicted but never requested.
+      if (evicted_ranges_.size() < 1000) {
+        evicted_ranges_.insert(unclaimed_it->second.cache_it->first);
+      }
+      prewarmed_ranges_.erase(unclaimed_it->second.cache_it);
+      unclaimed_ranges_.erase(unclaimed_it);
+
+      // Erasing from active_ranges ensures we ignore any subsequent GCS chunks
+      // for this range.
+      it->active_ranges.erase(id);
+      return true;
+    }
+
+    // Track buffered data size for pacing.
+    unclaimed_it->second.bytes_buffered += chunk_size;
+    total_prewarmed_bytes_buffered_ += chunk_size;
+    return false;
+  };
+
   for (auto& range_data : *response->mutable_object_data_ranges()) {
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);
     if (l == copy.end()) continue;
-    // TODO(#15104) - Consider returning if the range is done, and then
-    // skipping CleanupDoneRanges().
-    l->second->OnRead(std::move(range_data), is_transcoded, object_size);
+
+    auto range = l->second;
+    auto chunk_size = range_data.checksummed_data().content().size();
+
+    bool evict = false;
+    lk.lock();
+    // Verify the range is still active under the lock. Because `OnRead`
+    // processes chunks in batches, an earlier chunk in the same batch could
+    // breach the pacing limit and evict a subsequent chunk's range.
+    bool active = it->active_ranges.count(id) != 0;
+    if (active) {
+      evict = apply_pacing_and_check_eviction(id, chunk_size, it);
+    }
+    lk.unlock();
+    if (active) {
+      if (evict) {
+        // Complete the evicted range with an error.
+        range->OnFinish(Status(StatusCode::kResourceExhausted,
+                               "Evicted pre-warmed range due to pacing limit"));
+      } else {
+        // Deliver data to the range.
+        // TODO(#15104) - Consider returning if the range is done, and then
+        // skipping CleanupDoneRanges().
+        range->OnRead(std::move(range_data), is_transcoded, object_size);
+      }
+    }
   }
   lk.lock();
   stream_manager_->CleanupDoneRanges(it);

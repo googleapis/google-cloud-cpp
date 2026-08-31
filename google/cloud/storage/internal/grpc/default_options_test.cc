@@ -167,7 +167,7 @@ TEST(DefaultOptionsGrpc, GrpcEnableMetricsIsSafe) {
 
 TEST(DefaultOptionsGrpc, MetricsEnabled) {
   ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
-                        absl::nullopt);
+                        std::nullopt);
   auto const options = DefaultOptionsGrpc(Options{});
   auto const expected = GrpcEnableMetricsIsSafe();
   EXPECT_EQ(options.get<storage_experimental::EnableGrpcMetricsOption>(),

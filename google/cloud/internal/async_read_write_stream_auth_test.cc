@@ -57,7 +57,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
           return make_ready_future(true);
         });
     EXPECT_CALL(*mock, Read).WillOnce([] {
-      return make_ready_future(absl::make_optional(FakeResponse{"k0", "v0"}));
+      return make_ready_future(std::make_optional(FakeResponse{"k0", "v0"}));
     });
     EXPECT_CALL(*mock, WritesDone).WillOnce([] {
       return make_ready_future(true);

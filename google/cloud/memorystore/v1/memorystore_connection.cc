@@ -243,6 +243,165 @@ MemorystoreConnection::BackupInstance(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnection::StartMigration(
+    google::cloud::memorystore::v1::StartMigrationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreConnection::StartMigration(
+    NoAwaitTag, google::cloud::memorystore::v1::StartMigrationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnection::StartMigration(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnection::FinishMigration(
+    google::cloud::memorystore::v1::FinishMigrationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreConnection::FinishMigration(
+    NoAwaitTag, google::cloud::memorystore::v1::FinishMigrationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnection::FinishMigration(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreConnection::ListTokenAuthUsers(
+    google::cloud::memorystore::v1::
+        ListTokenAuthUsersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::memorystore::v1::TokenAuthUser>>();
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreConnection::GetTokenAuthUser(
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::memorystore::v1::AuthToken>
+MemorystoreConnection::ListAuthTokens(
+    google::cloud::memorystore::v1::
+        ListAuthTokensRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::memorystore::v1::AuthToken>>();
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreConnection::GetAuthToken(
+    google::cloud::memorystore::v1::GetAuthTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnection::AddTokenAuthUser(
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnection::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnection::AddTokenAuthUser(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnection::DeleteTokenAuthUser(
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnection::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnection::DeleteTokenAuthUser(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreConnection::AddAuthToken(
+    google::cloud::memorystore::v1::AddAuthTokenRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreConnection::AddAuthToken(
+    NoAwaitTag, google::cloud::memorystore::v1::AddAuthTokenRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreConnection::AddAuthToken(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnection::DeleteAuthToken(
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreConnection::DeleteAuthToken(
+    NoAwaitTag, google::cloud::memorystore::v1::DeleteAuthTokenRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnection::DeleteAuthToken(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 MemorystoreConnection::ListLocations(
     google::cloud::location::

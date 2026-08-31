@@ -25,10 +25,10 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
-#include "absl/types/optional.h"
 #include "google/api/annotations.pb.h"
 #include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
+#include <optional>
 #include <regex>
 #include <vector>
 
@@ -54,12 +54,12 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
-void RestPathVisitorHelper(absl::optional<std::string> api_version,
+void RestPathVisitorHelper(std::optional<std::string> api_version,
                            PathTemplate::Segment const& s,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path);
 
 struct RestPathVisitor {
-  explicit RestPathVisitor(absl::optional<std::string> api_version,
+  explicit RestPathVisitor(std::optional<std::string> api_version,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path)
       : api_version(std::move(api_version)), path(path) {}
   void operator()(PathTemplate::Match const&) {}
@@ -89,12 +89,12 @@ struct RestPathVisitor {
     RestPathVisitorHelper(api_version, s, path);
   }
 
-  absl::optional<std::string> api_version;
+  std::optional<std::string> api_version;
   std::vector<HttpExtensionInfo::RestPathPiece>& path;
 };
 
 void RestPathVisitorHelper(
-    absl::optional<std::string> api_version, PathTemplate::Segment const& s,
+    std::optional<std::string> api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
   absl::visit(RestPathVisitor{std::move(api_version), path}, s.value);
 }
@@ -187,7 +187,7 @@ void SetHttpDerivedMethodVars(HttpExtensionInfo const& info,
       absl::StrCat(R"""(absl::StrCat("/")""", path_expression(true), trailer());
 }
 
-absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
+std::optional<QueryParameterInfo> DetermineQueryParameterInfo(
     google::protobuf::FieldDescriptor const& field) {
   static auto* const kSupportedWellKnownValueTypes = [] {
     auto foo = std::make_unique<
@@ -211,7 +211,7 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
     return foo.release();
   }();
 
-  absl::optional<QueryParameterInfo> param_info;
+  std::optional<QueryParameterInfo> param_info;
   // Only attempt to make non-repeated, simple fields query parameters.
   if (!field.is_repeated() && !field.options().deprecated()) {
     // TODO(#15707): Most services will error if this is set at all. Skip it
@@ -384,7 +384,7 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
 
 // Generate api version by extracting the version from the url pattern.
 // In some cases(i.e. location), there is no version in the package name.
-absl::optional<std::string> FormatApiVersionFromUrlPattern(
+std::optional<std::string> FormatApiVersionFromUrlPattern(
     std::string const& url_pattern) {
   std::vector<std::string> const parts = absl::StrSplit(url_pattern, '/');
   static auto const* const kVersion = new std::regex{R"(v\d+)"};
@@ -393,7 +393,7 @@ absl::optional<std::string> FormatApiVersionFromUrlPattern(
       return part;
     }
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 }  // namespace generator_internal

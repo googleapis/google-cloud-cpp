@@ -52,11 +52,11 @@ TEST(GrpcObjectReadSource, Simple) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, "0123456789");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, " The quick brown fox jumps over the lazy dog");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -99,7 +99,7 @@ TEST(GrpcObjectReadSource, DataWithError) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, "0123456789");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -127,7 +127,7 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([&contents](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, contents);
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -161,7 +161,7 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([&contents](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, contents);
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -208,7 +208,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
             storage_internal::MD5ToProto(expected_md5).value());
         r->mutable_object_checksums()->set_crc32c(
             storage_internal::Crc32cToProto(expected_crc32c).value());
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce([&](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, " fox jumps over the lazy dog");
@@ -218,7 +218,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
             storage_internal::MD5ToProto(expected_md5).value());
         r->mutable_object_checksums()->set_crc32c(
             storage_internal::Crc32cToProto(expected_crc32c).value());
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -248,12 +248,12 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
         // to return immediately.
         r->mutable_metadata()->set_generation(1234);
         SetContent(*r, "The quick brown");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce([&](storage_proto::ReadObjectResponse* r) {
         // The last response, without metadata or generation.
         SetContent(*r, " fox jumps over the lazy dog");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -270,23 +270,23 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
   auto mock = std::make_unique<MockObjectMediaStream>();
   auto make_empty_response = [](storage_proto::ReadObjectResponse*) {
-    return absl::nullopt;
+    return std::nullopt;
   };
   EXPECT_CALL(*mock, Read)
       .WillOnce(make_empty_response)
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, "The quick brown ");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(make_empty_response)
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, "fox jumps over ");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(make_empty_response)
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, "the lazy dog");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -310,7 +310,7 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, "The quick brown fox jumps over the lazy dog");
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -360,7 +360,7 @@ TEST(GrpcObjectReadSource, ChecksumMismatch) {
       .WillOnce([&contents](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, contents);
         r->mutable_checksummed_data()->set_crc32c(123);  // Wrong CRC
-        return absl::nullopt;
+        return std::nullopt;
       });
 
   auto hash_function =
@@ -393,14 +393,14 @@ TEST(GrpcObjectReadSource, ChecksumWithNonZeroOffset) {
         r->mutable_content_range()->set_start(100);
         r->mutable_checksummed_data()->set_crc32c(
             storage_internal::Crc32cToProto(expected_crc32c_1).value());
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce([&contents2,
                  expected_crc32c_2](storage_proto::ReadObjectResponse* r) {
         SetContent(*r, contents2);
         r->mutable_checksummed_data()->set_crc32c(
             storage_internal::Crc32cToProto(expected_crc32c_2).value());
-        return absl::nullopt;
+        return std::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));

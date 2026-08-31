@@ -190,6 +190,15 @@ class ValidationHelperV1Connection {
   ValidateAttestationOccurrence(
       google::cloud::binaryauthorization::v1::
           ValidateAttestationOccurrenceRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**

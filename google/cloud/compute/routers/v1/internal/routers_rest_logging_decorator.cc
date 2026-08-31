@@ -85,6 +85,42 @@ RoutersRestLogging::DeleteRouter(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestLogging::AsyncDeleteNamedSet(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+              request) {
+        return child_->AsyncDeleteNamedSet(cq, std::move(rest_context),
+                                           std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::DeleteNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+              request) {
+        return child_->DeleteNamedSet(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestLogging::AsyncDeleteRoutePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -126,6 +162,20 @@ StatusOr<google::cloud::cpp::compute::v1::Router> RoutersRestLogging::GetRouter(
              google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
                  request) {
         return child_->GetRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+RoutersRestLogging::GetNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
+                 request) {
+        return child_->GetNamedSet(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
@@ -253,6 +303,21 @@ RoutersRestLogging::ListBgpRoutes(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets>
+RoutersRestLogging::ListNamedSets(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+              request) {
+        return child_->ListNamedSets(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
 RoutersRestLogging::ListRoutePolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -297,6 +362,42 @@ RoutersRestLogging::PatchRouter(
              google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
                  request) {
         return child_->PatchRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestLogging::AsyncPatchNamedSet(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+              request) {
+        return child_->AsyncPatchNamedSet(cq, std::move(rest_context),
+                                          std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::PatchNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+              request) {
+        return child_->PatchNamedSet(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
@@ -380,6 +481,42 @@ RoutersRestLogging::UpdateRouter(
           google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
               request) {
         return child_->UpdateRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestLogging::AsyncUpdateNamedSet(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+              request) {
+        return child_->AsyncUpdateNamedSet(cq, std::move(rest_context),
+                                           std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::UpdateNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+              request) {
+        return child_->UpdateNamedSet(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

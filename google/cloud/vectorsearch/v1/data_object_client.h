@@ -265,7 +265,7 @@ class DataObjectServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vectorsearch.v1.DataObject]: @googleapis_reference_link{google/cloud/vectorsearch/v1/data_object.proto#L33}
   /// [google.cloud.vectorsearch.v1.UpdateDataObjectRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/data_object_service.proto#L173}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::vectorsearch::v1::DataObject> UpdateDataObject(

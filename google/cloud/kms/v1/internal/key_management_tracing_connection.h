@@ -112,6 +112,19 @@ class KeyManagementServiceTracingConnection
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request)
       override;
 
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+  ImportTrustedKeyWrappedCryptoKeyVersion(
+      google::cloud::kms::v1::
+          ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+  ExportTrustedKeyWrappedCryptoKeyVersion(
+      google::cloud::kms::v1::
+          ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
       google::cloud::kms::v1::CreateImportJobRequest const& request) override;
 

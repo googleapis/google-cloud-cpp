@@ -457,6 +457,36 @@ RegionDisksTracingConnection::UpdateDisk(
   return internal::EndSpan(std::move(span), child_->UpdateDisk(operation));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksTracingConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::UpdateKmsKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateKmsKey(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksTracingConnection::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::UpdateKmsKey");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateKmsKey(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksTracingConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::UpdateKmsKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateKmsKey(operation));
+}
+
 std::shared_ptr<compute_region_disks_v1::RegionDisksConnection>
 MakeRegionDisksTracingConnection(
     std::shared_ptr<compute_region_disks_v1::RegionDisksConnection> conn) {

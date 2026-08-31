@@ -156,7 +156,7 @@ TEST(RetryClientTest, QueryResumableUploadHandlesTransient) {
       .WillOnce(
           Return(StatusOr<QueryResumableUploadResponse>(TransientError())))
       .WillOnce(Return(make_status_or(QueryResumableUploadResponse{
-          /*.committed_size=*/1234, /*.payload=*/absl::nullopt})));
+          /*.committed_size=*/1234, /*.payload=*/std::nullopt})));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -182,23 +182,23 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce(Return(TransientError()))
-      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{0, std::nullopt}));
 
   EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, std::nullopt}));
 
   // A simpler scenario where only the UploadChunk() calls fail.
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, std::nullopt}));
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
+          Return(QueryResumableUploadResponse{2 * quantum, std::nullopt}));
 
   // Even simpler scenario where only the UploadChunk() calls succeeds.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{3 * quantum, absl::nullopt}));
+          Return(QueryResumableUploadResponse{3 * quantum, std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -243,7 +243,7 @@ TEST(RetryClientTest, UploadChunkAbortedMaybeIsTransient) {
       .WillRepeatedly(Return(TransientAbortError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+      .WillRepeatedly(Return(QueryResumableUploadResponse{0, std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -268,12 +268,12 @@ TEST(RetryClientTest, UploadChunkRestoreSession) {
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](auto&, auto const&, UploadChunkRequest const&) {
         committed_size += quantum;
-        return QueryResumableUploadResponse{committed_size, absl::nullopt};
+        return QueryResumableUploadResponse{committed_size, std::nullopt};
       });
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](auto&, auto const&, UploadChunkRequest const&) {
         committed_size += quantum;
-        return QueryResumableUploadResponse{committed_size, absl::nullopt};
+        return QueryResumableUploadResponse{committed_size, std::nullopt};
       });
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
@@ -313,7 +313,7 @@ TEST(RetryClientTest, UploadChunkHandleTransientPartialFailures) {
   // When calling QueryResumableUpload() we discover that they have been
   // partially successful.
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, std::nullopt}));
   // We expect that the next call skips these initial bytes, and simulate
   // another transient failure
   EXPECT_CALL(*mock, UploadChunk)
@@ -326,13 +326,13 @@ TEST(RetryClientTest, UploadChunkHandleTransientPartialFailures) {
   // partial failure.
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce(
-          Return(QueryResumableUploadResponse{2 * quantum, absl::nullopt}));
+          Return(QueryResumableUploadResponse{2 * quantum, std::nullopt}));
   // This should trigger another UploadChunk() request with the remaining data.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](auto&, auto const&, UploadChunkRequest const& r) {
         EXPECT_EQ(r.offset(), 2 * quantum);
         EXPECT_THAT(r.payload(), ElementsAre(payload.substr(2 * quantum)));
-        return QueryResumableUploadResponse{3 * quantum, absl::nullopt};
+        return QueryResumableUploadResponse{3 * quantum, std::nullopt};
       });
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
@@ -401,8 +401,8 @@ TEST(RetryClientTest, UploadChunkHandleRollback) {
   auto const rollback = 3 * quantum;
   EXPECT_LT(rollback, hwm);
   EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(Return(QueryResumableUploadResponse{hwm, absl::nullopt}))
-      .WillOnce(Return(QueryResumableUploadResponse{rollback, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{hwm, std::nullopt}))
+      .WillOnce(Return(QueryResumableUploadResponse{rollback, std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -434,7 +434,7 @@ TEST(RetryClientTest, UploadChunkHandleOvercommit) {
   // `committed_size`
   auto const excess = 4 * quantum;
   EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce(Return(QueryResumableUploadResponse{excess, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{excess, std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -462,7 +462,7 @@ TEST(RetryClientTest, UploadChunkExhausted) {
       .WillRepeatedly(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+      .WillRepeatedly(Return(QueryResumableUploadResponse{0, std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -503,18 +503,18 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInUpload) {
   // committed size.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{/*.committed_size=*/absl::nullopt,
-                                              /*.payload=*/absl::nullopt}));
+          Return(QueryResumableUploadResponse{/*.committed_size=*/std::nullopt,
+                                              /*.payload=*/std::nullopt}));
   // This should trigger a QueryResumableUpload(), simulate a good response.
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, std::nullopt}));
 
   // The test will create a second request that finalizes the upload. Respond
   // without a committed size also, this should be interpreted as success and
   // not require an additional query.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(Return(QueryResumableUploadResponse{
-          /*.committed_size=*/absl::nullopt, /*.payload=*/ObjectMetadata()}));
+          /*.committed_size=*/std::nullopt, /*.payload=*/ObjectMetadata()}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -546,19 +546,19 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
   // what bytes got uploaded.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
-          Return(QueryResumableUploadResponse{/*.committed_size=*/absl::nullopt,
-                                              /*.payload=*/absl::nullopt}));
+          Return(QueryResumableUploadResponse{/*.committed_size=*/std::nullopt,
+                                              /*.payload=*/std::nullopt}));
   // This should trigger a `QueryResumableUpload()`, which should also have its
   // Range header missing indicating no bytes were uploaded.
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce(
-          Return(QueryResumableUploadResponse{absl::nullopt, absl::nullopt}));
+          Return(QueryResumableUploadResponse{std::nullopt, std::nullopt}));
 
   // This should trigger a second upload, which we will let succeed.
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
           Return(QueryResumableUploadResponse{/*.committed_size=*/quantum,
-                                              /*.payload=*/absl::nullopt}));
+                                              /*.payload=*/std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -587,7 +587,7 @@ TEST(RetryClientTest, UploadFinalChunkQueryMissingPayloadTriggersRetry) {
   // all the data is reported as "committed", but the payload is not reported
   // back.
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, std::nullopt}));
   // This should force a new UploadChunk() to finalize the object, verify this
   // is an "empty" message, and return a successful result.
   EXPECT_CALL(*mock,
@@ -624,7 +624,7 @@ TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
   EXPECT_CALL(*mock, QueryResumableUpload)
       .Times(AtLeast(2))
       .WillRepeatedly(
-          Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+          Return(QueryResumableUploadResponse{quantum, std::nullopt}));
 
   auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
@@ -669,13 +669,13 @@ TEST(RetryClientTest, BackoffSpansUploadChunk) {
   EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{0, std::nullopt}));
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{0, std::nullopt}));
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{0, std::nullopt}));
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
 
   auto client = storage_internal::MakeTracingClient(

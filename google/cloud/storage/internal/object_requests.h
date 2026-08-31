@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
@@ -31,11 +32,11 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
 #include "absl/types/span.h"
 #include <map>
 #include <memory>
 #include <numeric>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -128,15 +129,6 @@ class InsertObjectMediaRequest
   absl::string_view payload() const { return payload_; }
   void set_payload(absl::string_view payload);
 
-  template <typename... O>
-  InsertObjectMediaRequest& set_multiple_options(O&&... o) {
-    InsertObjectRequestImpl<InsertObjectMediaRequest>::set_multiple_options(
-        std::forward<O>(o)...);
-    reset_hash_function();
-    return *this;
-  }
-  HashFunction& hash_function() const { return *hash_function_; }
-
   ///@{
   /**
    * @name Backwards compatibility.
@@ -153,15 +145,10 @@ class InsertObjectMediaRequest
   ///@}
 
  private:
-  void reset_hash_function();
-
   absl::string_view payload_;
-  std::shared_ptr<HashFunction> hash_function_;
   mutable std::string contents_;
   mutable bool dirty_ = true;
 };
-
-HashValues FinishHashes(InsertObjectMediaRequest const& request);
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
 
@@ -523,7 +510,7 @@ class UploadChunkRequest
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t offset() const { return offset_; }
-  absl::optional<std::uint64_t> upload_size() const { return upload_size_; }
+  std::optional<std::uint64_t> upload_size() const { return upload_size_; }
   ConstBufferSequence const& payload() const { return payload_; }
 
   [[deprecated("use known_hashes() and hash_function()")]] HashValues const&
@@ -569,7 +556,7 @@ class UploadChunkRequest
  private:
   std::string upload_session_url_;
   std::uint64_t offset_ = 0;
-  absl::optional<std::uint64_t> upload_size_;
+  std::optional<std::uint64_t> upload_size_;
   ConstBufferSequence payload_;
   std::shared_ptr<HashFunction> hash_function_;
   HashValues known_object_hashes_;
@@ -613,19 +600,19 @@ struct QueryResumableUploadResponse {
       HttpResponse response);
   QueryResumableUploadResponse() = default;
   QueryResumableUploadResponse(
-      absl::optional<std::uint64_t> cs,
-      absl::optional<google::cloud::storage::ObjectMetadata> p)
+      std::optional<std::uint64_t> cs,
+      std::optional<google::cloud::storage::ObjectMetadata> p)
       : committed_size(std::move(cs)), payload(std::move(p)) {}
   QueryResumableUploadResponse(
-      absl::optional<std::uint64_t> cs,
-      absl::optional<google::cloud::storage::ObjectMetadata> p,
+      std::optional<std::uint64_t> cs,
+      std::optional<google::cloud::storage::ObjectMetadata> p,
       std::multimap<std::string, std::string> rm)
       : committed_size(std::move(cs)),
         payload(std::move(p)),
         request_metadata(std::move(rm)) {}
 
-  absl::optional<std::uint64_t> committed_size;
-  absl::optional<google::cloud::storage::ObjectMetadata> payload;
+  std::optional<std::uint64_t> committed_size;
+  std::optional<google::cloud::storage::ObjectMetadata> payload;
   std::multimap<std::string, std::string> request_metadata;
 };
 
@@ -645,4 +632,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
+#include "google/cloud/internal/diagnostics_pop.inc"
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H

@@ -119,7 +119,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.CreateMembersRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L166}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.CreateMembersRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L168}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
@@ -180,7 +180,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.CreateMembersRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L166}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.CreateMembersRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L168}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
@@ -245,7 +245,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.DeleteInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L185}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.DeleteInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -299,7 +299,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.DeleteInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L185}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.DeleteInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -358,8 +358,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L227}
-  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L232}
+  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
@@ -391,8 +391,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L227}
-  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L232}
+  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
@@ -421,8 +421,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L212}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L217}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -454,8 +454,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L212}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L217}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -465,7 +465,8 @@ class InterconnectGroupsClient {
 
   // clang-format off
   ///
-  /// Returns the interconnectStatuses for the specified InterconnectGroup.
+  /// Returns the interconnectStatuses for the specified
+  /// InterconnectGroup.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups/getOperationalStatus
   ///
   /// @param project  Project ID for this request.
@@ -483,8 +484,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L238}
-  /// [google.cloud.cpp.compute.v1.InterconnectGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L298}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L243}
+  /// [google.cloud.cpp.compute.v1.InterconnectGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L330}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -495,7 +496,8 @@ class InterconnectGroupsClient {
 
   // clang-format off
   ///
-  /// Returns the interconnectStatuses for the specified InterconnectGroup.
+  /// Returns the interconnectStatuses for the specified
+  /// InterconnectGroup.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups/getOperationalStatus
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -517,8 +519,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L238}
-  /// [google.cloud.cpp.compute.v1.InterconnectGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L298}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L243}
+  /// [google.cloud.cpp.compute.v1.InterconnectGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L330}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -555,7 +557,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.InsertInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L249}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.InsertInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -614,7 +616,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.InsertInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L249}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.InsertInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -681,8 +683,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.ListInterconnectGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L276}
-  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.ListInterconnectGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L284}
+  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
@@ -721,8 +723,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.ListInterconnectGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L276}
-  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.ListInterconnectGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L284}
+  /// [google.cloud.cpp.compute.v1.InterconnectGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
@@ -733,8 +735,9 @@ class InterconnectGroupsClient {
   // clang-format off
   ///
   /// Patches the specified InterconnectGroup resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups/patch
   ///
   /// @param project  Project ID for this request.
@@ -761,7 +764,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.PatchInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L344}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.PatchInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L385}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -793,8 +796,9 @@ class InterconnectGroupsClient {
   // clang-format off
   ///
   /// Patches the specified InterconnectGroup resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -823,7 +827,7 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.PatchInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L344}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.PatchInterconnectGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L385}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -864,8 +868,8 @@ class InterconnectGroupsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -884,8 +888,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L378}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L422}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -896,8 +900,8 @@ class InterconnectGroupsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -919,8 +923,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L378}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L422}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -949,8 +953,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L394}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L438}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -984,8 +988,8 @@ class InterconnectGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L394}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.interconnect_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L438}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

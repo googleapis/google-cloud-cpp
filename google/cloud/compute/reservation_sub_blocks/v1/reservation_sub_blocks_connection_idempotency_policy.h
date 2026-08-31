@@ -42,9 +42,33 @@ class ReservationSubBlocksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           GetReservationSubBlocksGetResponseRequest const& request);
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetVersion(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request);
+
   virtual google::cloud::Idempotency ListReservationSubBlocks(
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           ListReservationSubBlocksRequest request);
+
+  virtual google::cloud::Idempotency PerformMaintenance(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          PerformMaintenanceRequest const& request);
+
+  virtual google::cloud::Idempotency ReportFaulty(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<ReservationSubBlocksConnectionIdempotencyPolicy>

@@ -21,6 +21,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
 #include "google/cloud/internal/opentelemetry.h"
@@ -142,7 +143,7 @@ TEST_F(AsyncBulkApplyTest, NoMutations) {
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-class MockMetric : public Metric {
+class MockMetric : public TableSchemaMetric {
  public:
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&, PreCallParams const&),
@@ -162,22 +163,10 @@ class MockMetric : public Metric {
               (opentelemetry::context::Context const&,
                ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (ResourceLabels resource_labels, DataLabels data_labels),
+  MOCK_METHOD(std::unique_ptr<TableSchemaMetric>, clone,
+              (TableResourceLabels const& resource_labels,
+               TableDataLabels const& data_labels),
               (const, override));
-};
-
-// This class is a vehicle to get a MockMetric into the OperationContext object.
-class CloningMetric : public Metric {
- public:
-  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
-      : metric_(std::move(metric)) {}
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
-    return std::move(metric_);
-  }
-
- private:
-  mutable std::unique_ptr<MockMetric> metric_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -187,19 +176,18 @@ TEST_F(AsyncBulkApplyTest, Success) {
                              IdempotentMutation("r1"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -207,7 +195,7 @@ TEST_F(AsyncBulkApplyTest, Success) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -261,19 +249,18 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
                              IdempotentMutation("r1"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -281,7 +268,7 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -306,7 +293,7 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -363,19 +350,18 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
       NonIdempotentMutation("fail-with-transient-error"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -383,7 +369,7 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -408,7 +394,7 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -464,7 +450,8 @@ TEST_F(AsyncBulkApplyTest, TooManyStreamFailures) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const& request) {
+                             v2::MutateRowsRequest const& request,
+                             auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -510,19 +497,18 @@ TEST_F(AsyncBulkApplyTest, RetryInfoHeeded) {
   bigtable::BulkMutation mut(IdempotentMutation("r0"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -530,7 +516,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoHeeded) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -544,7 +530,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoHeeded) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -583,19 +569,18 @@ TEST_F(AsyncBulkApplyTest, RetryInfoIgnored) {
   bigtable::BulkMutation mut(IdempotentMutation("r0"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -603,7 +588,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoIgnored) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -640,7 +625,7 @@ TEST_F(AsyncBulkApplyTest, TimerError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -685,19 +670,18 @@ TEST_F(AsyncBulkApplyTest, CancelAfterSuccess) {
   promise<std::optional<v2::MutateRowsResponse>> p;
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -705,7 +689,7 @@ TEST_F(AsyncBulkApplyTest, CancelAfterSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([&p, this](CompletionQueue const&, auto client_context, auto,
-                           v2::MutateRowsRequest const& request) {
+                           v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -761,19 +745,18 @@ TEST_F(AsyncBulkApplyTest, CancelMidStream) {
   promise<std::optional<v2::MutateRowsResponse>> p;
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -781,7 +764,7 @@ TEST_F(AsyncBulkApplyTest, CancelMidStream) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([&p, this](CompletionQueue const&, auto client_context, auto,
-                           v2::MutateRowsRequest const& request) {
+                           v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -849,7 +832,7 @@ TEST_F(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(2)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const&) {
+                             v2::MutateRowsRequest const&, auto const&) {
         EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
@@ -902,7 +885,8 @@ TEST_F(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const& request) {
+                             v2::MutateRowsRequest const& request,
+                             auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -974,7 +958,8 @@ TEST_F(AsyncBulkApplyTest, Throttling) {
   });
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([&limiter, this](CompletionQueue const&, auto client_context,
-                                 auto, v2::MutateRowsRequest const&) {
+                                 auto, v2::MutateRowsRequest const&,
+                                 auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         ::testing::InSequence seq2;
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
@@ -1011,7 +996,7 @@ TEST_F(AsyncBulkApplyTest, ThrottlingBeforeEachRetry) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const&) {
+                             v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -1065,7 +1050,7 @@ TEST_F(AsyncBulkApplyTest, BigtableCookie) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
@@ -1079,7 +1064,7 @@ TEST_F(AsyncBulkApplyTest, BigtableCookie) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,
@@ -1128,10 +1113,11 @@ TEST_F(AsyncBulkApplyTest, TracedBackoff) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this](auto&, auto context, auto, auto const&) {
-        metadata_fixture_.SetServerMetadata(*context, {});
-        return std::make_unique<ErrorStream>(TransientError());
-      });
+      .WillRepeatedly(
+          [this](auto&, auto context, auto, auto const&, auto const&) {
+            metadata_fixture_.SetServerMetadata(*context, {});
+            return std::make_unique<ErrorStream>(TransientError());
+          });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
@@ -1160,11 +1146,12 @@ TEST_F(AsyncBulkApplyTest, CallSpanActiveThroughout) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this, span](auto&, auto context, auto, auto const&) {
-        metadata_fixture_.SetServerMetadata(*context, {});
-        EXPECT_THAT(span, IsActive());
-        return std::make_unique<ErrorStream>(TransientError());
-      });
+      .WillRepeatedly(
+          [this, span](auto&, auto context, auto, auto const&, auto const&) {
+            metadata_fixture_.SetServerMetadata(*context, {});
+            EXPECT_THAT(span, IsActive());
+            return std::make_unique<ErrorStream>(TransientError());
+          });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();

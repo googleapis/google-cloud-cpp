@@ -831,7 +831,7 @@ class IntentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1117}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
@@ -899,7 +899,7 @@ class IntentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1117}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(

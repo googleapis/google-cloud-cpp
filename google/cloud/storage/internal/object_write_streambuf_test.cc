@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/object_metadata.h"
@@ -42,12 +43,12 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
     EXPECT_EQ(0, r.payload_size());
     EXPECT_EQ(0, r.offset());
     EXPECT_TRUE(r.last_chunk());
-    return QueryResumableUploadResponse{absl::nullopt, ObjectMetadata()};
+    return QueryResumableUploadResponse{std::nullopt, ObjectMetadata()};
   });
 
   ObjectWriteStream stream(std::make_unique<ObjectWriteStreambuf>(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/0,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/0,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled));
   stream.Close();
@@ -62,13 +63,13 @@ TEST(ObjectWriteStreambufTest, AutoFinalizeEnabled) {
     EXPECT_EQ(0, r.payload_size());
     EXPECT_EQ(0, r.offset());
     EXPECT_TRUE(r.last_chunk());
-    return QueryResumableUploadResponse{absl::nullopt, ObjectMetadata()};
+    return QueryResumableUploadResponse{std::nullopt, ObjectMetadata()};
   });
 
   {
     ObjectWriteStream stream(std::make_unique<ObjectWriteStreambuf>(
         std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-        /*committed_size=*/0, absl::nullopt,
+        /*committed_size=*/0, std::nullopt,
         /*max_buffer_size=*/0, CreateNullHashFunction(), HashValues{},
         CreateNullHashValidator(), AutoFinalizeConfig::kEnabled));
   }
@@ -83,7 +84,7 @@ TEST(ObjectWriteStreambufTest, AutoFinalizeDisabled) {
   {
     ObjectWriteStream stream(std::make_unique<ObjectWriteStreambuf>(
         std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-        /*committed_size=*/0, absl::nullopt,
+        /*committed_size=*/0, std::nullopt,
         /*max_buffer_size=*/0, CreateNullHashFunction(), HashValues{},
         CreateNullHashValidator(), AutoFinalizeConfig::kDisabled));
   }
@@ -99,12 +100,12 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
     EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
     EXPECT_TRUE(r.last_chunk());
     EXPECT_EQ(r.upload_size().value_or(0), payload.size());
-    return QueryResumableUploadResponse{absl::nullopt, ObjectMetadata()};
+    return QueryResumableUploadResponse{std::nullopt, ObjectMetadata()};
   });
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -128,7 +129,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
         EXPECT_FALSE(r.last_chunk());
         committed_size += r.payload_size();
-        return QueryResumableUploadResponse{committed_size, absl::nullopt};
+        return QueryResumableUploadResponse{committed_size, std::nullopt};
       })
       .WillOnce([&](UploadChunkRequest const& r) {
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{}));
@@ -139,7 +140,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -161,7 +162,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
       .WillOnce([&](UploadChunkRequest const& r) {
         EXPECT_FALSE(r.last_chunk());
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p0}));
-        return QueryResumableUploadResponse{p0.size(), absl::nullopt};
+        return QueryResumableUploadResponse{p0.size(), std::nullopt};
       })
       .WillOnce([&](UploadChunkRequest const& r) {
         EXPECT_TRUE(r.last_chunk());
@@ -172,7 +173,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/3 * quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/3 * quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -198,7 +199,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
                     ElementsAre(ConstBuffer{p0}, ConstBuffer{trailer}));
         EXPECT_FALSE(r.last_chunk());
         return QueryResumableUploadResponse{r.offset() + r.payload_size(),
-                                            absl::nullopt};
+                                            std::nullopt};
       })
       .WillOnce([&](UploadChunkRequest const& r) {
         auto const expected = p1.substr(p1.size() - p0.size());
@@ -211,7 +212,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -232,7 +233,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     EXPECT_FALSE(r.last_chunk());
     EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
-    return QueryResumableUploadResponse{quantum, absl::nullopt};
+    return QueryResumableUploadResponse{quantum, std::nullopt};
   });
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     std::string expected = " ";
@@ -243,7 +244,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -267,7 +268,7 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     auto expected = payload.substr(0, quantum);
     EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{expected}));
-    return QueryResumableUploadResponse{quantum, absl::nullopt};
+    return QueryResumableUploadResponse{quantum, std::nullopt};
   });
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     auto const expected = payload.substr(quantum);
@@ -278,7 +279,7 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -301,12 +302,12 @@ TEST(ObjectWriteStreambufTest, CommittedSizeJumpsAhead) {
     EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{expected}));
     // Simulate a condition where the server reports more bytes committed
     // than expected
-    return QueryResumableUploadResponse{3 * quantum, absl::nullopt};
+    return QueryResumableUploadResponse{3 * quantum, std::nullopt};
   });
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
   std::ostream output(&streambuf);
@@ -325,12 +326,12 @@ TEST(ObjectWriteStreambufTest, CommittedSizeDecreases) {
 
   auto const initial_committed_size = 2 * quantum;
   EXPECT_CALL(*mock, UploadChunk).WillOnce(InvokeWithoutArgs([&]() {
-    return QueryResumableUploadResponse{quantum, absl::nullopt};
+    return QueryResumableUploadResponse{quantum, std::nullopt};
   }));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/initial_committed_size, absl::nullopt,
+      /*committed_size=*/initial_committed_size, std::nullopt,
       /*max_buffer_size=*/quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
   std::ostream output(&streambuf);
@@ -348,12 +349,12 @@ TEST(ObjectWriteStreambufTest, PartialUploadChunk) {
   std::string const payload = std::string(quantum * 4, '*');
 
   EXPECT_CALL(*mock, UploadChunk).WillOnce(InvokeWithoutArgs([&]() {
-    return QueryResumableUploadResponse{2 * quantum, absl::nullopt};
+    return QueryResumableUploadResponse{2 * quantum, std::nullopt};
   }));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
   std::ostream output(&streambuf);
@@ -379,7 +380,7 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
     EXPECT_THAT(r.payload(),
                 ElementsAre(ConstBuffer{payload_1}, ConstBuffer{expected}));
     committed_size += r.payload_size();
-    return QueryResumableUploadResponse{committed_size, absl::nullopt};
+    return QueryResumableUploadResponse{committed_size, std::nullopt};
   });
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     EXPECT_TRUE(r.last_chunk());
@@ -391,7 +392,7 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -435,7 +436,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   // all the data is reported as "committed", but the payload is not reported
   // back.
   EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
+      .WillOnce(Return(QueryResumableUploadResponse{quantum, std::nullopt}));
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(
           Return(QueryResumableUploadResponse{quantum, ObjectMetadata()}));
@@ -453,7 +454,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   ObjectWriteStreambuf streambuf(
       std::move(retry), ResumableUploadRequest(), "test-only-upload-id",
       /*committed_size=*/0,
-      /*metadata=*/absl::nullopt,
+      /*metadata=*/std::nullopt,
       /*max_buffer_size=*/2 * quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
   EXPECT_TRUE(streambuf.IsOpen());
@@ -489,7 +490,7 @@ TEST(ObjectWriteStreambufTest, ErrorInSmallPayload) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -512,7 +513,7 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   });
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -537,11 +538,11 @@ TEST(ObjectWriteStreambufTest, KnownSizeUpload) {
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& r) {
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
-        return QueryResumableUploadResponse{2 * quantum, absl::nullopt};
+        return QueryResumableUploadResponse{2 * quantum, std::nullopt};
       })
       .WillOnce([&](UploadChunkRequest const& r) {
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
-        return QueryResumableUploadResponse{4 * quantum, absl::nullopt};
+        return QueryResumableUploadResponse{4 * quantum, std::nullopt};
       })
       .WillOnce([&](UploadChunkRequest const& r) {
         EXPECT_THAT(r.payload(),
@@ -550,12 +551,12 @@ TEST(ObjectWriteStreambufTest, KnownSizeUpload) {
         // enough data is sent, regardless of whether the client marks a chunk
         // as the final chunk. Furthermore, the response does not have a
         // committed size.
-        return QueryResumableUploadResponse{absl::nullopt, ObjectMetadata()};
+        return QueryResumableUploadResponse{std::nullopt, ObjectMetadata()};
       });
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -580,7 +581,7 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
     EXPECT_FALSE(r.last_chunk());
-    return QueryResumableUploadResponse{quantum, absl::nullopt};
+    return QueryResumableUploadResponse{quantum, std::nullopt};
   });
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
     EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{payload}));
@@ -590,7 +591,7 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/2 * quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/2 * quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
 
@@ -616,7 +617,7 @@ TEST(ObjectWriteStreambufTest, PubsyncTooSmall) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), ResumableUploadRequest(), "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/2 * quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/2 * quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kDisabled);
 
@@ -637,20 +638,20 @@ TEST(ObjectWriteStreambufTest, WriteObjectWithCustomHeader) {
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p0}));
         EXPECT_EQ("header-value", r.GetOption<CustomHeader>().value_or(""));
         return internal::QueryResumableUploadResponse{r.payload_size(),
-                                                      absl::nullopt};
+                                                      std::nullopt};
       })
       .WillOnce([&](internal::UploadChunkRequest const& r) {
         EXPECT_FALSE(r.last_chunk());
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{p1}));
         EXPECT_EQ("header-value", r.GetOption<CustomHeader>().value_or(""));
         return internal::QueryResumableUploadResponse{
-            r.offset() + r.payload_size(), absl::nullopt};
+            r.offset() + r.payload_size(), std::nullopt};
       })
       .WillOnce([&](internal::UploadChunkRequest const& r) {
         EXPECT_TRUE(r.last_chunk());
         EXPECT_THAT(r.payload(), ElementsAre(ConstBuffer{}));
         EXPECT_EQ("header-value", r.GetOption<CustomHeader>().value_or(""));
-        return internal::QueryResumableUploadResponse{absl::nullopt,
+        return internal::QueryResumableUploadResponse{std::nullopt,
                                                       ObjectMetadata()};
       });
 
@@ -659,7 +660,7 @@ TEST(ObjectWriteStreambufTest, WriteObjectWithCustomHeader) {
       ResumableUploadRequest().set_option(
           CustomHeader("x-test-custom-header", "header-value")),
       "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kDisabled);
 
@@ -691,7 +692,7 @@ TEST(ObjectWriteStreambufTest, FlushFinalWithHashes) {
   request.set_option(DisableMD5Hash(false));
   ObjectWriteStreambuf streambuf(
       std::move(mock), request, "test-only-upload-id",
-      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
       CreateHashFunction(Crc32cChecksumValue(), DisableCrc32cChecksum(false),
                          MD5HashValue(), DisableMD5Hash(false)),
       HashValues{}, CreateHashValidator(request), AutoFinalizeConfig::kEnabled);
@@ -707,3 +708,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

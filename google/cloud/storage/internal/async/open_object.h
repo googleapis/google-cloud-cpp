@@ -100,7 +100,7 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
   void OnStart(bool ok);
   void OnWrite(bool ok);
   void OnRead(
-      absl::optional<google::storage::v2::BidiReadObjectResponse> response);
+      std::optional<google::storage::v2::BidiReadObjectResponse> response);
   void DoFinish();
   void OnFinish(Status status);
 

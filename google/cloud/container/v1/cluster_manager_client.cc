@@ -538,6 +538,14 @@ ClusterManagerClient::FetchNodePoolUpgradeInfo(
   return connection_->FetchNodePoolUpgradeInfo(request);
 }
 
+StatusOr<google::container::v1::Operation>
+ClusterManagerClient::CompleteControlPlaneUpgrade(
+    google::container::v1::CompleteControlPlaneUpgradeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CompleteControlPlaneUpgrade(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1
 }  // namespace cloud

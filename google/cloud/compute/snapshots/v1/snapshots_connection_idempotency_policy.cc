@@ -76,6 +76,11 @@ Idempotency SnapshotsConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SnapshotsConnectionIdempotencyPolicy::UpdateKmsKey(
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SnapshotsConnectionIdempotencyPolicy>
 MakeDefaultSnapshotsConnectionIdempotencyPolicy() {
   return std::make_unique<SnapshotsConnectionIdempotencyPolicy>();

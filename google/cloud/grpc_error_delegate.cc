@@ -14,10 +14,10 @@
 
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/status_payload_keys.h"
-#include "absl/types/optional.h"
 #include "google/protobuf/any.pb.h"
 #include "google/rpc/error_details.pb.h"
 #include <google/protobuf/text_format.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -67,7 +67,7 @@ google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
 }
 
 // Unpacks the ErrorInfo from the Status proto, if one exists.
-absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
+std::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
     google::rpc::Status const& proto) {
   // While in theory there _could_ be multiple ErrorInfo protos in this
   // repeated field, we're told that there will be at most one, and our
@@ -76,7 +76,7 @@ absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
   for (google::protobuf::Any const& any : proto.details()) {
     if (any.UnpackTo(&error_info)) return error_info;
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 ErrorInfo GetErrorInfo(google::rpc::Status const& status) {
@@ -88,7 +88,7 @@ ErrorInfo GetErrorInfo(google::rpc::Status const& status) {
 }
 
 // Unpacks the RetryInfo from the Status proto, if one exists.
-absl::optional<internal::RetryInfo> GetRetryInfo(
+std::optional<internal::RetryInfo> GetRetryInfo(
     google::rpc::Status const& proto) {
   // While in theory there _could_ be multiple RetryInfo protos in this
   // repeated field, we're told that there will be at most one, and our
@@ -101,7 +101,7 @@ absl::optional<internal::RetryInfo> GetRetryInfo(
       return internal::RetryInfo(d);
     }
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 }  // namespace

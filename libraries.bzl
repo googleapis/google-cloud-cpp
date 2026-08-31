@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
-    "pubsublite",
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
@@ -28,6 +27,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "accessapproval",
     "accesscontextmanager",
     "advisorynotifications",
+    "agentidentity",
     "agentregistry",
     "aiplatform",
     "alloydb",
@@ -46,6 +46,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "baremetalsolution",
     "batch",
     "beyondcorp",
+    "biglake",
     "bigquery",
     "bigquerycontrol",
     "bigtable",
@@ -169,6 +170,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "eventarc",
     "filestore",
     "financialservices",
+    "ftp",
     "functions",
     "geminidataanalytics",
     "gkebackup",
@@ -205,7 +207,6 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "orgpolicy",
     "osconfig",
     "oslogin",
-    "parallelstore",
     "parametermanager",
     "policysimulator",
     "policytroubleshooter",
@@ -260,6 +261,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "webrisk",
     "websecurityscanner",
     "workflows",
+    "workloadidentity",
     "workloadmanager",
     "workstations",
 ]

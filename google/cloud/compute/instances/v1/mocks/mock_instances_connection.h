@@ -96,6 +96,47 @@ class MockInstancesConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// AddNetworkInterface(Matcher<google::cloud::cpp::compute::instances::v1::AddNetworkInterfaceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddNetworkInterface,
+              (google::cloud::cpp::compute::instances::v1::
+                   AddNetworkInterfaceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddNetworkInterface(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              AddNetworkInterface,
+              (NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                               AddNetworkInterfaceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddNetworkInterface(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddNetworkInterface,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// AddResourcePolicies(Matcher<google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest
   /// const&>(_)))
   /// @endcode
@@ -302,6 +343,47 @@ class MockInstancesConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteAccessConfig,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkInterface(Matcher<google::cloud::cpp::compute::instances::v1::DeleteNetworkInterfaceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteNetworkInterface,
+              (google::cloud::cpp::compute::instances::v1::
+                   DeleteNetworkInterfaceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNetworkInterface(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteNetworkInterface,
+              (NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                               DeleteNetworkInterfaceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkInterface(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteNetworkInterface,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 

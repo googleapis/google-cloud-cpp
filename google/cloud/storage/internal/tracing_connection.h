@@ -15,12 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 
+#include "google/cloud/storage/internal/bucket_metadata_cache.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include "absl/base/call_once.h"
+#include <functional>
 #include <memory>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -29,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TracingConnection : public storage::internal::StorageConnection {
  public:
-  explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
-  ~TracingConnection() override = default;
+  using AsyncRunner = std::function<void(std::function<void()>)>;
+  explicit TracingConnection(std::shared_ptr<StorageConnection> impl,
+                             AsyncRunner runner = {});
+  ~TracingConnection() override;
 
   Options options() const override;
 
@@ -178,11 +182,39 @@ class TracingConnection : public storage::internal::StorageConnection {
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
+  void EnrichSpan(opentelemetry::trace::Span& span,
+                  std::string const& bucket_name);
+  void EnrichSpan(opentelemetry::trace::Span& span,
+                  storage::BucketMetadata const& metadata) const;
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         BucketCacheEntry const& entry);
+  void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
+
+  void MaybeInvalidate(Status const& status, std::string const& bucket_name) {
+    if (!status.ok() && status.code() == StatusCode::kNotFound) {
+      cache().Invalidate(bucket_name);
+    }
+  }
+
+  template <typename T>
+  void MaybeInvalidate(StatusOr<T> const& result,
+                       std::string const& bucket_name) {
+    MaybeInvalidate(result.status(), bucket_name);
+  }
+
+  BucketMetadataCache& cache() const;
+
+  AsyncRunner const& runner();
+
   std::shared_ptr<StorageConnection> impl_;
+  std::shared_ptr<BucketMetadataCache> cache_;
+  absl::once_flag once_flag_;
+  AsyncRunner runner_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
-    std::shared_ptr<storage::internal::StorageConnection> impl);
+    std::shared_ptr<storage::internal::StorageConnection> impl,
+    TracingConnection::AsyncRunner runner = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

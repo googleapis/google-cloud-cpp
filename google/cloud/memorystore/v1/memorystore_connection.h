@@ -295,6 +295,88 @@ class MemorystoreConnection {
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
   BackupInstance(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  StartMigration(
+      google::cloud::memorystore::v1::StartMigrationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StartMigration(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  StartMigration(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  FinishMigration(
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> FinishMigration(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  FinishMigration(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::memorystore::v1::TokenAuthUser>
+  ListTokenAuthUsers(
+      google::cloud::memorystore::v1::ListTokenAuthUsersRequest request);
+
+  virtual StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+  GetTokenAuthUser(
+      google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request);
+
+  virtual StreamRange<google::cloud::memorystore::v1::AuthToken> ListAuthTokens(
+      google::cloud::memorystore::v1::ListAuthTokensRequest request);
+
+  virtual StatusOr<google::cloud::memorystore::v1::AuthToken> GetAuthToken(
+      google::cloud::memorystore::v1::GetAuthTokenRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  AddTokenAuthUser(
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  AddTokenAuthUser(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+  AddAuthToken(
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> AddAuthToken(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+  AddAuthToken(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

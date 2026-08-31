@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
@@ -477,3 +478,4 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

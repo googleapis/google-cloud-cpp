@@ -42,6 +42,20 @@ LicenseCodesConnection::GetLicenseCode(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesConnection::GetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::
+        GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesConnection::SetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::
+        SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesConnection::TestIamPermissions(
     google::cloud::cpp::compute::license_codes::v1::

@@ -46,7 +46,7 @@ TEST(CorsEntry, IOStream) {
       full_output,
       HasSubstr("response_header=[response-header-1, response-header-2]"));
 
-  auto empty_input = CorsEntry{/*.max_age_seconds=*/absl::nullopt,
+  auto empty_input = CorsEntry{/*.max_age_seconds=*/std::nullopt,
                                /*.method=*/{},
                                /*.origin=*/{},
                                /*.response_header=*/{}};

@@ -40,6 +40,26 @@ LicenseCodesTracingConnection::GetLicenseCode(
   return internal::EndSpan(*span, child_->GetLicenseCode(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_license_codes_v1::LicenseCodesConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_license_codes_v1::LicenseCodesConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesTracingConnection::TestIamPermissions(
     google::cloud::cpp::compute::license_codes::v1::

@@ -86,6 +86,7 @@ add_library(
     internal/future_impl.h
     internal/future_then_impl.cc
     internal/future_then_impl.h
+    internal/generic_background_threads_impl.h
     internal/getenv.cc
     internal/getenv.h
     internal/group_options.h

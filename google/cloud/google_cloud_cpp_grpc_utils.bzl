@@ -90,7 +90,6 @@ google_cloud_cpp_grpc_utils_srcs = [
     "grpc_options.cc",
     "internal/async_connection_ready.cc",
     "internal/async_polling_loop.cc",
-    "internal/background_threads_impl.cc",
     "internal/debug_string_protobuf.cc",
     "internal/debug_string_status.cc",
     "internal/default_completion_queue_impl.cc",

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/object_descriptor.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
@@ -82,12 +83,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class AsyncClient {
  public:
+  /**
+   * Specifies a byte range for a read request.
+   */
+  struct ByteRange {
+    std::int64_t offset = 0;
+    std::int64_t length = 0;
+  };
+
+  /**
+   * Specifies initial byte ranges to request concurrently when opening an
+   * object.
+   *
+   * Passing initial read ranges allows the client to begin fetching expected
+   * byte ranges during connection setup, which may improve first-byte retrieval
+   * times for known access patterns.
+   */
+  struct InitialReadRanges {
+    // The initial read ranges.
+    std::vector<ByteRange> initial_ranges;
+  };
+
   /// Create a new client configured with @p options.
   explicit AsyncClient(Options options = {});
   /// Create a new client using @p connection. This is often used for mocking.
   explicit AsyncClient(std::shared_ptr<AsyncConnection> connection);
 
   ~AsyncClient() = default;
+
+  /**
+   * Get bucket metadata.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param bucket_name the name of the bucket to get metadata for.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      BucketName const& bucket_name, Options opts = {});
+
+  /**
+   * Get bucket metadata using a raw request.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param request the request contents.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      google::storage::v2::GetBucketRequest request, Options opts = {});
 
   /*
   This snippet discusses the tradeoffs between `InsertObject()`,
@@ -240,6 +292,29 @@ class AsyncClient {
    */
   future<StatusOr<ObjectDescriptor>> Open(BucketName const& bucket_name,
                                           std::string object_name,
+                                          Options opts = {});
+
+  /**
+   * Open an object descriptor, requesting specified initial read ranges
+   * concurrently.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc open-object-initial-read-ranges
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. The operation will
+   * retry until the descriptor is successfully created. The descriptor itself
+   * will resume any incomplete ranged reads if the connection(s) are
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param config initial byte ranges to request during connection setup.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<ObjectDescriptor>> Open(BucketName const& bucket_name,
+                                          std::string object_name,
+                                          InitialReadRanges const& config,
                                           Options opts = {});
 
   /**

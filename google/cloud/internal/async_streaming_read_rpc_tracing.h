@@ -57,9 +57,9 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
         });
   }
 
-  future<absl::optional<Response>> Read() override {
+  future<std::optional<Response>> Read() override {
     if (read_count_ == 0) span_->AddEvent("gl-cpp.first-read");
-    return impl_->Read().then([this](future<absl::optional<Response>> f) {
+    return impl_->Read().then([this](future<std::optional<Response>> f) {
       auto r = f.get();
       if (r.has_value()) {
         span_->AddEvent("message", {{"message.type", "RECEIVED"},

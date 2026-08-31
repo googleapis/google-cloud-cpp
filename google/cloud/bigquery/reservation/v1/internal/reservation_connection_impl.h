@@ -182,6 +182,11 @@ class ReservationServiceConnectionImpl
       google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
           request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_reservation_v1_internal::ReservationServiceStub>

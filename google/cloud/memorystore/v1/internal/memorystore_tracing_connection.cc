@@ -319,6 +319,224 @@ MemorystoreTracingConnection::BackupInstance(
   return internal::EndSpan(std::move(span), child_->BackupInstance(operation));
 }
 
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreTracingConnection::StartMigration(
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::StartMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartMigration(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingConnection::StartMigration(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::StartMigration");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->StartMigration(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreTracingConnection::StartMigration(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::StartMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartMigration(operation));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreTracingConnection::FinishMigration(
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::FinishMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->FinishMigration(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingConnection::FinishMigration(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::FinishMigration");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->FinishMigration(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreTracingConnection::FinishMigration(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::FinishMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->FinishMigration(operation));
+}
+
+StreamRange<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreTracingConnection::ListTokenAuthUsers(
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::ListTokenAuthUsers");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListTokenAuthUsers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::memorystore::v1::TokenAuthUser>(std::move(span),
+                                                     std::move(sr));
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreTracingConnection::GetTokenAuthUser(
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::GetTokenAuthUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTokenAuthUser(request));
+}
+
+StreamRange<google::cloud::memorystore::v1::AuthToken>
+MemorystoreTracingConnection::ListAuthTokens(
+    google::cloud::memorystore::v1::ListAuthTokensRequest request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::ListAuthTokens");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAuthTokens(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::memorystore::v1::AuthToken>(std::move(span),
+                                                 std::move(sr));
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreTracingConnection::GetAuthToken(
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetAuthToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAuthToken(request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreTracingConnection::AddTokenAuthUser(
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::AddTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->AddTokenAuthUser(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingConnection::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::AddTokenAuthUser");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->AddTokenAuthUser(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreTracingConnection::AddTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::AddTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddTokenAuthUser(operation));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreTracingConnection::DeleteTokenAuthUser(
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTokenAuthUser(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingConnection::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteTokenAuthUser");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteTokenAuthUser(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreTracingConnection::DeleteTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTokenAuthUser(operation));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreTracingConnection::AddAuthToken(
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::AddAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->AddAuthToken(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingConnection::AddAuthToken(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::AddAuthToken");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->AddAuthToken(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreTracingConnection::AddAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::AddAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->AddAuthToken(operation));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreTracingConnection::DeleteAuthToken(
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAuthToken(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingConnection::DeleteAuthToken(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteAuthToken");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteAuthToken(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreTracingConnection::DeleteAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAuthToken(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 MemorystoreTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

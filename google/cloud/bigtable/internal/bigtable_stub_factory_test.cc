@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/bigtable_random_two_least_used_decorator.h"
 #include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/common_options.h"
@@ -109,7 +110,8 @@ TEST(BigtableStubFactory, RoundRobin) {
 
   grpc::ClientContext context;
   for (int i = 0; i != kTestChannels; ++i) {
-    auto response = stub->MutateRow(context, Options{}, {});
+    OperationContext op_ctx;
+    auto response = stub->MutateRow(context, Options{}, {}, op_ctx);
     EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
   }
 }
@@ -157,7 +159,8 @@ TEST(BigtableStubFactory, RandomTwoLeastUsed) {
 
   grpc::ClientContext context;
   for (int i = 0; i != kTestChannels; ++i) {
-    auto response = stub->MutateRow(context, Options{}, {});
+    OperationContext op_ctx;
+    auto response = stub->MutateRow(context, Options{}, {}, op_ctx);
     EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
   }
 
@@ -247,7 +250,8 @@ TEST(BigtableStubFactory, Auth) {
       factory.AsStdFunction());
 
   grpc::ClientContext context;
-  auto response = stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  auto response = stub->MutateRow(context, Options{}, {}, op_ctx);
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 }
 
@@ -257,15 +261,15 @@ TEST(BigtableStubFactory, Metadata) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
-            .WillOnce(
-                [](grpc::ClientContext& context, Options const&,
-                   google::bigtable::v2::MutateRowRequest const& request) {
-                  ValidateMetadataFixture fixture;
-                  fixture.IsContextMDValid(
-                      context, "google.bigtable.v2.Bigtable.MutateRow", request,
-                      internal::HandCraftedLibClientHeader());
-                  return internal::AbortedError("fail");
-                });
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const& request,
+                         auto const&) {
+              ValidateMetadataFixture fixture;
+              fixture.IsContextMDValid(
+                  context, "google.bigtable.v2.Bigtable.MutateRow", request,
+                  internal::HandCraftedLibClientHeader());
+              return internal::AbortedError("fail");
+            });
         return mock;
       });
 
@@ -280,7 +284,8 @@ TEST(BigtableStubFactory, Metadata) {
       factory.AsStdFunction());
 
   grpc::ClientContext context;
-  auto response = stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  auto response = stub->MutateRow(context, Options{}, {}, op_ctx);
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 }
 
@@ -308,7 +313,8 @@ TEST(BigtableStubFactory, LoggingEnabled) {
       factory.AsStdFunction());
 
   grpc::ClientContext context;
-  auto response = stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  auto response = stub->MutateRow(context, Options{}, {}, op_ctx);
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
@@ -338,7 +344,8 @@ TEST(BigtableStubFactory, LoggingDisabled) {
       factory.AsStdFunction());
 
   grpc::ClientContext context;
-  auto response = stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  auto response = stub->MutateRow(context, Options{}, {}, op_ctx);
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
@@ -351,7 +358,8 @@ TEST(BigtableStubFactory, FeaturesFlagsCloudDirectPath) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
             .WillOnce([](grpc::ClientContext& context, Options const&,
-                         google::bigtable::v2::MutateRowRequest const&) {
+                         google::bigtable::v2::MutateRowRequest const&,
+                         auto const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
               auto it = headers.find("bigtable-features");
@@ -389,7 +397,8 @@ TEST(BigtableStubFactory, FeaturesFlagsCloudDirectPath) {
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());
   grpc::ClientContext context;
-  (void)stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
   testing_util::UnsetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
 }
 
@@ -400,7 +409,8 @@ TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
             .WillOnce([](grpc::ClientContext& context, Options const&,
-                         google::bigtable::v2::MutateRowRequest const&) {
+                         google::bigtable::v2::MutateRowRequest const&,
+                         auto const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
               auto it = headers.find("bigtable-features");
@@ -438,7 +448,8 @@ TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());
   grpc::ClientContext context;
-  (void)stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
   testing_util::UnsetEnv("CBT_ENABLE_DIRECTPATH");
 }
 
@@ -449,7 +460,8 @@ TEST(BigtableStubFactory, FeaturesFlags) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
             .WillOnce([](grpc::ClientContext& context, Options const&,
-                         google::bigtable::v2::MutateRowRequest const&) {
+                         google::bigtable::v2::MutateRowRequest const&,
+                         auto const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
               auto it = headers.find("bigtable-features");
@@ -486,7 +498,8 @@ TEST(BigtableStubFactory, FeaturesFlags) {
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());
   grpc::ClientContext context;
-  (void)stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
 }
 
 using ::google::cloud::testing_util::DisableTracing;
@@ -505,7 +518,7 @@ TEST(BigtableStubFactory, TracingEnabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
-            .WillOnce([](auto& context, auto const&, auto const&) {
+            .WillOnce([](auto& context, auto const&, auto const&, auto const&) {
               ValidatePropagator(context);
               return internal::AbortedError("fail");
             });
@@ -523,7 +536,8 @@ TEST(BigtableStubFactory, TracingEnabled) {
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
       factory.AsStdFunction());
   grpc::ClientContext context;
-  (void)stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
 
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(SpanNamed("google.bigtable.v2.Bigtable/MutateRow")));
@@ -537,7 +551,7 @@ TEST(BigtableStubFactory, TracingDisabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
-            .WillOnce([](auto& context, auto const&, auto const&) {
+            .WillOnce([](auto& context, auto const&, auto const&, auto const&) {
               ValidateNoPropagator(context);
               return internal::AbortedError("fail");
             });
@@ -555,7 +569,8 @@ TEST(BigtableStubFactory, TracingDisabled) {
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
       factory.AsStdFunction());
   grpc::ClientContext context;
-  (void)stub->MutateRow(context, Options{}, {});
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }

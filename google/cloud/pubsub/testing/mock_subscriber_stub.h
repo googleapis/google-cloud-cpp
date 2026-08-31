@@ -14,10 +14,10 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_SUBSCRIBER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_SUBSCRIBER_STUB_H
-
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/version.h"
 #include <gmock/gmock.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -143,7 +143,7 @@ class MockAsyncPullStream : public MockSubscriberStub::StreamingPullStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<google::pubsub::v1::StreamingPullResponse>>,
+  MOCK_METHOD(future<std::optional<google::pubsub::v1::StreamingPullResponse>>,
               Read, (), (override));
   MOCK_METHOD(future<bool>, Write,
               (google::pubsub::v1::StreamingPullRequest const&,

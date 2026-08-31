@@ -189,6 +189,12 @@ class ClusterManagerStub {
       grpc::ClientContext& context, Options const& options,
       google::container::v1::FetchNodePoolUpgradeInfoRequest const&
           request) = 0;
+
+  virtual StatusOr<google::container::v1::Operation>
+  CompleteControlPlaneUpgrade(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::CompleteControlPlaneUpgradeRequest const&
+          request) = 0;
 };
 
 class DefaultClusterManagerStub : public ClusterManagerStub {
@@ -352,6 +358,11 @@ class DefaultClusterManagerStub : public ClusterManagerStub {
   StatusOr<google::container::v1::NodePoolUpgradeInfo> FetchNodePoolUpgradeInfo(
       grpc::ClientContext& context, Options const& options,
       google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
+      override;
+
+  StatusOr<google::container::v1::Operation> CompleteControlPlaneUpgrade(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::CompleteControlPlaneUpgradeRequest const& request)
       override;
 
  private:

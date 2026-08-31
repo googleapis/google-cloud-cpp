@@ -265,6 +265,25 @@ StatusOr<google::storage::v2::Object> StorageAuth::MoveObject(
   return child_->MoveObject(context, options, request);
 }
 
+future<StatusOr<google::storage::v2::Bucket>> StorageAuth::AsyncGetBucket(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::GetBucketRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(StatusOr<google::storage::v2::Bucket>(
+              std::move(context).status()));
+        }
+        return child->AsyncGetBucket(cq, *std::move(context),
+                                     std::move(options), request);
+      });
+}
+
 future<StatusOr<google::storage::v2::Object>> StorageAuth::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

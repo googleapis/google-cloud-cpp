@@ -225,6 +225,29 @@ KeyManagementServiceMetadata::ImportCryptoKeyVersion(
   return child_->ImportCryptoKeyVersion(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceMetadata::ImportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                         request);
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceMetadata::ExportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                         request);
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceMetadata::CreateImportJob(
     grpc::ClientContext& context, Options const& options,

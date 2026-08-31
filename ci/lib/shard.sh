@@ -47,9 +47,6 @@ readonly BIGQUERY_SHARD=(
 
 readonly PUBSUB_SHARD=(
   pubsub
-  # Pub/Sub Lite is included because it has hand-crafted code and requires
-  # Pub/Sub
-  pubsublite
   # IAM is included because it has hand-crafted tests and/or examples and is
   # required by Pub/Sub
   iam

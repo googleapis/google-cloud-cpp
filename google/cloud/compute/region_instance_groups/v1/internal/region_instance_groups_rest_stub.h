@@ -72,6 +72,12 @@ class RegionInstanceGroupsRestStub {
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_instance_groups::v1::
+                         TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -130,6 +136,12 @@ class DefaultRegionInstanceGroupsRestStub
       Options const& options,
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_instance_groups::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

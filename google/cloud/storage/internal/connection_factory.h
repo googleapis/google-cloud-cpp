@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CONNECTION_FACTORY_H
 
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -46,7 +47,8 @@ std::shared_ptr<storage::internal::StorageConnection> DecorateConnection(
  * initialize this stub in the usual `MakeStorageConnection(Options)` function.
  */
 std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
-    Options const& opts, std::unique_ptr<GenericStub> stub);
+    Options const& opts, std::unique_ptr<GenericStub> stub,
+    TracingConnection::AsyncRunner runner = {});
 
 /// Creates a fully configured connection for the storage service.
 std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(

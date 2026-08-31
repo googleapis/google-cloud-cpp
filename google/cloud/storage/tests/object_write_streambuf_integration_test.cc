@@ -58,7 +58,7 @@ class ObjectWriteStreambufIntegrationTest
     auto constexpr kTestUploadBufferSize = 16 * 1024 * 1024L;
     ObjectWriteStream writer(std::make_unique<ObjectWriteStreambuf>(
         connection, request, std::move(create->upload_id), /*committed_size=*/0,
-        /*metadata=*/absl::nullopt, kTestUploadBufferSize,
+        /*metadata=*/std::nullopt, kTestUploadBufferSize,
         CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
         AutoFinalizeConfig::kEnabled));
 

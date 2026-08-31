@@ -114,7 +114,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.CreateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L184}
+  /// [google.pubsub.v1.CreateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L196}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -145,7 +145,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.CreateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L184}
+  /// [google.pubsub.v1.CreateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L196}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -172,7 +172,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L210}
+  /// [google.pubsub.v1.GetSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L222}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -202,7 +202,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L210}
+  /// [google.pubsub.v1.GetSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L222}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -237,7 +237,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSchemasRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L224}
+  /// [google.pubsub.v1.ListSchemasRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L236}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -276,7 +276,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSchemasRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L224}
+  /// [google.pubsub.v1.ListSchemasRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L236}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -310,7 +310,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSchemaRevisionsRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L259}
+  /// [google.pubsub.v1.ListSchemaRevisionsRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L271}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -349,7 +349,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSchemaRevisionsRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L259}
+  /// [google.pubsub.v1.ListSchemaRevisionsRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L271}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -377,7 +377,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.CommitSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L290}
+  /// [google.pubsub.v1.CommitSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L302}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -408,7 +408,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.CommitSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L290}
+  /// [google.pubsub.v1.CommitSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L302}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -438,7 +438,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.RollbackSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L303}
+  /// [google.pubsub.v1.RollbackSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L315}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -469,7 +469,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.RollbackSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L303}
+  /// [google.pubsub.v1.RollbackSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L315}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -501,7 +501,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L318}
+  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L330}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -532,7 +532,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L318}
+  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L330}
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
@@ -557,7 +557,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L336}
+  /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L348}
   ///
   // clang-format on
   Status DeleteSchema(std::string const& name, Options opts = {});
@@ -583,7 +583,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L336}
+  /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L348}
   ///
   // clang-format on
   Status DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request,
@@ -609,8 +609,8 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ValidateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L346}
-  /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L362}
+  /// [google.pubsub.v1.ValidateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L358}
+  /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L374}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
@@ -640,8 +640,8 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ValidateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L346}
-  /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L362}
+  /// [google.pubsub.v1.ValidateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L358}
+  /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L374}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
@@ -671,8 +671,8 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ValidateMessageRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L365}
-  /// [google.pubsub.v1.ValidateMessageResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L396}
+  /// [google.pubsub.v1.ValidateMessageRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L377}
+  /// [google.pubsub.v1.ValidateMessageResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L408}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(

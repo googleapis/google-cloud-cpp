@@ -150,6 +150,13 @@ GlobalAddressesConnection::SetLabels(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+GlobalAddressesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::global_addresses::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_addresses_v1
 }  // namespace cloud

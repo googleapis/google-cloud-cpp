@@ -49,6 +49,15 @@ class MockRegionNotificationEndpointsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  MOCK_METHOD(
+      (StreamRange<std::pair<
+           std::string,
+           google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>),
+      AggregatedListRegionNotificationEndpoints,
+      (google::cloud::cpp::compute::region_notification_endpoints::v1::
+           AggregatedListRegionNotificationEndpointsRequest request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code
@@ -144,6 +153,13 @@ class MockRegionNotificationEndpointsConnection
       ListRegionNotificationEndpoints,
       (google::cloud::cpp::compute::region_notification_endpoints::v1::
            ListRegionNotificationEndpointsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::region_notification_endpoints::v1::
+           TestIamPermissionsRequest const& request),
       (override));
 };
 

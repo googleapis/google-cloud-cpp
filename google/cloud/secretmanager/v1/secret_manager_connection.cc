@@ -129,6 +129,18 @@ SecretManagerServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceConnection::EnableManagedRotation(
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceConnection::RotateSecret(
+    google::cloud::secretmanager::v1::RotateSecretRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 SecretManagerServiceConnection::ListLocations(
     google::cloud::location::

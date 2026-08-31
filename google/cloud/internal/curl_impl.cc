@@ -171,9 +171,15 @@ std::size_t SpillBuffer::MoveTo(absl::Span<char> dst) {
 CurlImpl::CurlImpl(CurlHandle handle,
                    std::shared_ptr<CurlHandleFactory> factory,
                    Options const& options)
+    : CurlImpl(std::move(handle), std::move(factory), options, {}) {}
+
+CurlImpl::CurlImpl(CurlHandle handle,
+                   std::shared_ptr<CurlHandleFactory> factory,
+                   Options const& options, std::string pqc_ec_curves)
     : factory_(std::move(factory)),
       handle_(std::move(handle)),
-      multi_(factory_->CreateMultiHandle()) {
+      multi_(factory_->CreateMultiHandle()),
+      pqc_ec_curves_(std::move(pqc_ec_curves)) {
   CurlInitializeOnce(options);
 
   logging_enabled_ = google::cloud::internal::Contains(
@@ -190,6 +196,10 @@ CurlImpl::CurlImpl(CurlHandle handle,
   user_agent_ = absl::StrJoin(agents, " ");
 
   http_version_ = options.get<HttpVersionOption>();
+
+  if (options.has<HttpConnectTimeoutOption>()) {
+    connect_timeout_ms_ = options.get<HttpConnectTimeoutOption>();
+  }
 
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
   transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
@@ -254,6 +264,22 @@ void CurlImpl::WriteHeader(std::string const& header) {
   auto* headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();  // Now owned by list, not us.
   request_headers_.reset(headers);
+}
+
+Status CurlImpl::SetConnectTimeout(std::chrono::seconds fallback) {
+  // libcurl stores `CURLOPT_CONNECTTIMEOUT` and `CURLOPT_CONNECTTIMEOUT_MS` in
+  // a single setting, so there must be exactly one place that decides the
+  // value. An explicitly configured connect timeout wins; otherwise fall back
+  // to the timeout implied by the stall options, preserving the historical
+  // behavior for applications that do not set one.
+  auto const connect_timeout =
+      connect_timeout_ms_ != std::chrono::milliseconds::zero()
+          ? connect_timeout_ms_
+          : std::chrono::duration_cast<std::chrono::milliseconds>(fallback);
+  if (connect_timeout == std::chrono::milliseconds::zero()) return {};
+  // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
+  auto const timeout_ms = static_cast<long>(connect_timeout.count());
+  return handle_.SetOption(CURLOPT_CONNECTTIMEOUT_MS, timeout_ms);
 }
 
 void CurlImpl::MergeAndWriteHeaders(
@@ -381,6 +407,13 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
+#if CURL_AT_LEAST_VERSION(7, 73, 0)
+  if (!pqc_ec_curves_.empty()) {
+    status = handle_.SetOption(CURLOPT_SSL_EC_CURVES, pqc_ec_curves_.c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+#endif
+
   if (client_ssl_cert_.has_value()) {
 #if CURL_AT_LEAST_VERSION(7, 71, 0)
     status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1L);
@@ -419,6 +452,13 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
 #endif
   }
 
+  // Nothing else sets a connection timeout, so this can be decided once, before
+  // the per-method options.
+  status =
+      SetConnectTimeout(method == HttpMethod::kGet ? download_stall_timeout_
+                                                   : transfer_stall_timeout_);
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
     if (!status.ok()) return OnTransferError(context, std::move(status));
@@ -427,8 +467,6 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
       auto const limit = static_cast<long>(download_stall_minimum_rate_);
-      status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-      if (!status.ok()) return OnTransferError(context, std::move(status));
       // Timeout if the request sends or receives less than 1 byte/second
       // (i.e.  effectively no bytes) for download_stall_timeout_.
       status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
@@ -444,8 +482,6 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
     auto const limit = static_cast<long>(transfer_stall_minimum_rate_);
-    status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-    if (!status.ok()) return OnTransferError(context, std::move(status));
     // Timeout if the request sends or receives less than 1 byte/second
     // (i.e.  effectively no bytes) for transfer_stall_timeout_.
     status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
@@ -870,31 +906,31 @@ void CurlImpl::OnTransferDone() {
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
 }
 
-absl::optional<std::string> CurlOptProxy(Options const& options) {
-  if (!options.has<ProxyOption>()) return absl::nullopt;
+std::optional<std::string> CurlOptProxy(Options const& options) {
+  if (!options.has<ProxyOption>()) return std::nullopt;
   auto const& cfg = options.get<ProxyOption>();
-  if (cfg.hostname().empty()) return absl::nullopt;
+  if (cfg.hostname().empty()) return std::nullopt;
   if (cfg.port().empty()) {
     return absl::StrCat(cfg.scheme(), "://", cfg.hostname());
   }
   return absl::StrCat(cfg.scheme(), "://", cfg.hostname(), ":", cfg.port());
 }
 
-absl::optional<std::string> CurlOptProxyUsername(Options const& options) {
+std::optional<std::string> CurlOptProxyUsername(Options const& options) {
   auto const& cfg = options.get<ProxyOption>();
-  if (cfg.username().empty()) return absl::nullopt;
+  if (cfg.username().empty()) return std::nullopt;
   return cfg.username();
 }
 
-absl::optional<std::string> CurlOptProxyPassword(Options const& options) {
+std::optional<std::string> CurlOptProxyPassword(Options const& options) {
   auto const& cfg = options.get<ProxyOption>();
-  if (cfg.password().empty()) return absl::nullopt;
+  if (cfg.password().empty()) return std::nullopt;
   return cfg.password();
 }
 
-absl::optional<std::string> CurlOptInterface(Options const& options) {
+std::optional<std::string> CurlOptInterface(Options const& options) {
   auto const& cfg = options.get<Interface>();
-  if (cfg.empty()) return absl::nullopt;
+  if (cfg.empty()) return std::nullopt;
   return cfg;
 }
 

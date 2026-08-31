@@ -30,8 +30,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct DataLabels;
-struct ResourceLabels;
+struct StubSelectionParams;
 class Metric;
 
 /**
@@ -64,11 +63,11 @@ class OperationContext {
   // The default constructor is used when metric support is unavailable or
   // disabled.
   OperationContext() = default;
-  OperationContext(ResourceLabels const& resource_labels,
-                   DataLabels const& data_labels,
-                   std::vector<std::shared_ptr<Metric const>> const& metrics,
+  OperationContext(std::vector<std::shared_ptr<Metric>> metrics,
                    std::shared_ptr<Clock> clock);
 
+  // Called when a stub is selected from a channel pool.
+  void StubSelection(StubSelectionParams const& params);
   // Called before each RPC attempt.
   void PreCall(grpc::ClientContext& client_context);
   // Called after receiving RPC attempt response.

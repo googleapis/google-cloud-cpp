@@ -84,17 +84,17 @@ TEST(ReaderConnectionImpl, CleanFinish) {
         response.mutable_content_range()->set_end(2048);
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedObject,
                                                 response.mutable_metadata()));
-        return make_ready_future(absl::make_optional(response));
+        return make_ready_future(std::make_optional(response));
       })
       .WillOnce([] {
         google::storage::v2::ReadObjectResponse response;
         SetMutableContent(*response.mutable_checksummed_data(),
                           ContentType("test-only-2"));
-        return make_ready_future(absl::make_optional(response));
+        return make_ready_future(std::make_optional(response));
       })
       .WillOnce([] {
         return make_ready_future(
-            absl::optional<google::storage::v2::ReadObjectResponse>());
+            std::optional<google::storage::v2::ReadObjectResponse>());
       });
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status());
@@ -149,7 +149,7 @@ TEST(ReaderConnectionImpl, WithError) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
     return make_ready_future(
-        absl::optional<google::storage::v2::ReadObjectResponse>());
+        std::optional<google::storage::v2::ReadObjectResponse>());
   });
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(PermanentError());
@@ -168,7 +168,7 @@ TEST(ReaderConnectionImpl, HashingError) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([&] {
     return sequencer.PushBack("Read").then([](auto) {
-      return absl::make_optional(google::storage::v2::ReadObjectResponse{});
+      return std::make_optional(google::storage::v2::ReadObjectResponse{});
     });
   });
   EXPECT_CALL(*mock, Cancel).WillOnce([&] { sequencer.PushBack("Cancel"); });
@@ -212,23 +212,23 @@ TEST(ReaderConnectionImpl, FullHashes) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([] {
         google::storage::v2::ReadObjectResponse response;
-        return make_ready_future(absl::make_optional(response));
+        return make_ready_future(std::make_optional(response));
       })
       .WillOnce([crc32c] {
         google::storage::v2::ReadObjectResponse response;
         response.mutable_object_checksums()->set_crc32c(crc32c);
-        return make_ready_future(absl::make_optional(response));
+        return make_ready_future(std::make_optional(response));
       })
       .WillOnce([md5] {
         google::storage::v2::ReadObjectResponse response;
         response.mutable_object_checksums()->set_md5_hash(md5);
-        return make_ready_future(absl::make_optional(response));
+        return make_ready_future(std::make_optional(response));
       })
       .WillOnce([crc32c, md5] {
         google::storage::v2::ReadObjectResponse response;
         response.mutable_object_checksums()->set_crc32c(crc32c);
         response.mutable_object_checksums()->set_md5_hash(md5);
-        return make_ready_future(absl::make_optional(response));
+        return make_ready_future(std::make_optional(response));
       });
 
   auto hash_function = std::make_shared<MockHashFunction>();
@@ -245,7 +245,7 @@ TEST(ReaderConnectionImpl, FullHashes) {
                   [](storage::ReadPayload p) {
                     return ReadPayloadImpl::GetObjectHashes(p);
                   },
-                  Eq(absl::nullopt))));
+                  Eq(std::nullopt))));
 
   auto has_hash_values = [](HashValues const& expected) {
     return ResultOf(

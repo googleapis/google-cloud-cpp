@@ -49,6 +49,20 @@ ReservationBlocksRestLogging::GetReservationBlocksGetResponse(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksRestLogging::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
 ReservationBlocksRestLogging::ListReservationBlocks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -93,6 +107,34 @@ ReservationBlocksRestLogging::PerformMaintenance(
              google::cloud::cpp::compute::reservation_blocks::v1::
                  PerformMaintenanceRequest const& request) {
         return child_->PerformMaintenance(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksRestLogging::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationBlocksRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

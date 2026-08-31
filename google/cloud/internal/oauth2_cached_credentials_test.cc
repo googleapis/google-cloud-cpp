@@ -38,7 +38,7 @@ class MockCredentials : public Credentials {
   MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
   MOCK_METHOD(StatusOr<std::vector<std::uint8_t>>, SignBlob,
-              (absl::optional<std::string> const&, std::string const&),
+              (std::optional<std::string> const&, std::string const&),
               (const, override));
   MOCK_METHOD(std::string, AccountEmail, (), (const, override));
   MOCK_METHOD(std::string, KeyId, (), (const, override));
@@ -139,7 +139,7 @@ TEST(CachedCredentials, GetTokenExpiredWithError) {
 TEST(CachedCredentials, SignBlob) {
   auto mock = std::make_shared<MockCredentials>();
   auto const expected = std::vector<std::uint8_t>{1, 2, 3};
-  EXPECT_CALL(*mock, SignBlob(absl::make_optional(std::string("test-account")),
+  EXPECT_CALL(*mock, SignBlob(std::make_optional(std::string("test-account")),
                               "test-blob"))
       .WillOnce(Return(expected));
   CachedCredentials tested(mock);

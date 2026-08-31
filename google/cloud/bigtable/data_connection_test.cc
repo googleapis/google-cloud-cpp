@@ -21,6 +21,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "rpc_retry_policy.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -100,6 +101,79 @@ TEST(MakeDataConnection, WithInstances) {
       options.get<bigtable_internal::InstanceChannelAffinityOption>().size(),
       Eq(2));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+TEST(MakeDataConnection, TestingOtelCollectorEnvVar) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  auto conn = MakeDataConnection(TestOptions().set<EnableMetricsOption>(true));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathMetricsModeOptionDisabled) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathMetricsModeOption>(
+                            experimental::DirectPathMetricsMode::kDisabled));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathMetricsModeOptionEnabled) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kEnabled)
+                        .set<experimental::DirectPathMetricsModeOption>(
+                            experimental::DirectPathMetricsMode::kEnabled));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathModeOptionDisabledNoGrpcMetrics) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kDisabled)
+                        .set<experimental::DirectPathMetricsModeOption>(
+                            experimental::DirectPathMetricsMode::kEnabled));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathInitializationModeBlocking) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a},
+      TestOptions()
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::kBlocking));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathInitializationModeSpeculative) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kEnabled)
+                        .set<experimental::DirectPathInitializationModeOption>(
+                            experimental::DirectPathInitializationMode::
+                                kAsynchronousSpeculative));
+  EXPECT_NE(conn, nullptr);
+}
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

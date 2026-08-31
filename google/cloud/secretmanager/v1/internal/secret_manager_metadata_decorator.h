@@ -118,6 +118,17 @@ class SecretManagerServiceMetadata : public SecretManagerServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  EnableManagedRotation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+          request) override;
+
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> RotateSecret(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::RotateSecretRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

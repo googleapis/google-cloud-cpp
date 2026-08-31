@@ -18,8 +18,8 @@
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
 #include "absl/base/attributes.h"
-#include "absl/types/optional.h"
 #include <memory>
+#include <optional>
 #include <set>
 #include <typeindex>
 #include <typeinfo>
@@ -38,9 +38,9 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
 // TODO(#8800) - Remove when bigtable::Table no longer uses bigtable::DataClient
 bool IsEmpty(Options const&);
 template <typename T>
-absl::optional<typename T::Type> ExtractOption(Options&);
+std::optional<typename T::Type> ExtractOption(Options&);
 template <typename T>
-absl::optional<typename T::Type> FetchOption(Options const&);
+std::optional<typename T::Type> FetchOption(Options const&);
 template <typename T>
 inline T const& DefaultValue() {
   static auto const* const kDefaultValue = new T{};
@@ -249,9 +249,9 @@ class Options {
       std::set<std::type_index> const&, Options const&, char const*);
   friend bool internal::IsEmpty(Options const&);
   template <typename T>
-  friend absl::optional<typename T::Type> internal::ExtractOption(Options&);
+  friend std::optional<typename T::Type> internal::ExtractOption(Options&);
   template <typename T>
-  friend absl::optional<typename T::Type> internal::FetchOption(Options const&);
+  friend std::optional<typename T::Type> internal::FetchOption(Options const&);
 
   // The type-erased data holder of all the option values.
   class DataHolder {
@@ -365,10 +365,10 @@ Options MergeOptions(Options preferred, Options alternatives);
  * mechanisms, rather than through an OptionsSpan.
  */
 template <typename T>
-absl::optional<typename T::Type> ExtractOption(Options& opts) {
+std::optional<typename T::Type> ExtractOption(Options& opts) {
   // Use std::unordered_map::extract() when minimum language version >= C++17.
   auto const it = opts.m_.find(typeid(T));
-  if (it == opts.m_.end()) return absl::nullopt;
+  if (it == opts.m_.end()) return std::nullopt;
   auto dh = std::move(it->second);
   opts.m_.erase(it);
   return std::move(*reinterpret_cast<typename T::Type*>(dh->data_address()));
@@ -381,9 +381,9 @@ absl::optional<typename T::Type> ExtractOption(Options& opts) {
  * value.
  */
 template <typename T>
-absl::optional<typename T::Type> FetchOption(Options const& opts) {
+std::optional<typename T::Type> FetchOption(Options const& opts) {
   auto const it = opts.m_.find(typeid(T));
-  if (it == opts.m_.end()) return absl::nullopt;
+  if (it == opts.m_.end()) return std::nullopt;
   return *reinterpret_cast<typename T::Type const*>(it->second->data_address());
 }
 

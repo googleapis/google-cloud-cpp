@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
-#include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/logging_result_set_reader.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
@@ -37,13 +37,10 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-#include "google/cloud/monitoring/v3/metric_connection.h"
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/universe_domain_options.h"
 #include <memory>
 #include <string>
@@ -200,18 +197,6 @@ std::string_view InstanceNameFromTableName(std::string_view table_name) {
   if (pos == std::string_view::npos) return {};
   return table_name.substr(0, pos);
 }
-
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-Options MetricsExporterConnectionOptions(Options options) {
-  // We start with a copy of the client options to preserve credentials and
-  // universe domain, but we must unset Bigtable-specific endpoints/authorities
-  // to allow default Monitoring defaults.
-  options.unset<EndpointOption>();
-  options.unset<AuthorityOption>();
-  return options;
-}
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -237,45 +222,6 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::unique_ptr<StubManager> stub_manager,
-    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
-    : background_(std::move(background)),
-      stub_manager_(std::move(stub_manager)),
-      limiter_(std::move(limiter)),
-      options_(MergeOptions(std::move(options), DataConnection::options())) {
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  if (options_.get<bigtable::EnableMetricsOption>()) {
-    metric_service_connection_ = monitoring_v3::MakeMetricServiceConnection(
-        MetricsExporterConnectionOptions(options_));
-    // The client_uid is eventually used in conjunction with other data labels
-    // to identify metric data points. This pseudorandom string is used to aid
-    // in disambiguation.
-    auto gen = internal::MakeDefaultPRNG();
-    std::string client_uid =
-        internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
-    operation_context_factory_ =
-        std::make_unique<MetricsOperationContextFactory>(
-            std::move(client_uid), metric_service_connection_, options_);
-  } else {
-    operation_context_factory_ =
-        std::make_unique<SimpleOperationContextFactory>();
-  }
-#else
-  operation_context_factory_ =
-      std::make_unique<SimpleOperationContextFactory>();
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-}
-
-DataConnectionImpl::DataConnectionImpl(
-    std::unique_ptr<BackgroundThreads> background,
-    std::shared_ptr<BigtableStub> stub,
-    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
-    : DataConnectionImpl(std::move(background),
-                         std::make_unique<StubManager>(std::move(stub)),
-                         std::move(limiter), std::move(options)) {}
-
-DataConnectionImpl::DataConnectionImpl(
-    std::unique_ptr<BackgroundThreads> background,
-    std::unique_ptr<StubManager> stub_manager,
     std::unique_ptr<OperationContextFactory> operation_context_factory,
     std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : background_(std::move(background)),
@@ -283,6 +229,8 @@ DataConnectionImpl::DataConnectionImpl(
       operation_context_factory_(std::move(operation_context_factory)),
       limiter_(std::move(limiter)),
       options_(MergeOptions(std::move(options), DataConnection::options())) {}
+
+DataConnectionImpl::~DataConnectionImpl() = default;
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
@@ -320,7 +268,7 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::MutateRowRequest const& request) {
         operation_context->PreCall(context);
-        auto s = stub->MutateRow(context, options, request);
+        auto s = stub->MutateRow(context, options, request, *operation_context);
         operation_context->PostCall(context, s.status());
         return s;
       },
@@ -363,7 +311,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                  google::bigtable::v2::MutateRowRequest const& request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncMutateRow(cq, context, std::move(options),
-                                             request);
+                                             request, operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -498,7 +446,8 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
         operation_context->PreCall(context);
-        auto s = stub->CheckAndMutateRow(context, options, request);
+        auto s = stub->CheckAndMutateRow(context, options, request,
+                                         *operation_context);
         operation_context->PostCall(context, s.status());
         return s;
       },
@@ -548,7 +497,7 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
                      request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncCheckAndMutateRow(
-                   cq, context, std::move(options), request);
+                   cq, context, std::move(options), request, operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -588,7 +537,8 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
     operation_context->PreCall(*context);
-    auto stream = stub->SampleRowKeys(context, Options{}, request);
+    auto stream =
+        stub->SampleRowKeys(context, Options{}, request, operation_context);
 
     std::optional<Status> status;
     while (true) {
@@ -650,7 +600,8 @@ StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
         operation_context->PreCall(context);
-        auto result = stub->ReadModifyWriteRow(context, options, request);
+        auto result = stub->ReadModifyWriteRow(context, options, request,
+                                               *operation_context);
         operation_context->PostCall(context, result.status());
         return result;
       },
@@ -680,7 +631,7 @@ future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
                      request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncReadModifyWriteRow(
-                   cq, context, std::move(options), request);
+                   cq, context, std::move(options), request, operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -813,7 +764,8 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::PrepareQueryRequest const& request) {
         operation_context->PreCall(context);
-        auto const& result = stub->PrepareQuery(context, options, request);
+        auto const& result =
+            stub->PrepareQuery(context, options, request, *operation_context);
         operation_context->PostCall(context, result.status());
         return result;
       },
@@ -852,8 +804,9 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
                    google::cloud::internal::ImmutableOptions options,
                    google::bigtable::v2::PrepareQueryRequest const& request) {
                  operation_context->PreCall(*context);
-                 auto f = stub->AsyncPrepareQuery(cq, context,
-                                                  std::move(options), request);
+                 auto f =
+                     stub->AsyncPrepareQuery(cq, context, std::move(options),
+                                             request, operation_context);
                  return f.then(
                      [operation_context, context = std::move(context)](auto f) {
                        auto s = f.get();
@@ -903,7 +856,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                  google::bigtable::v2::PrepareQueryRequest const& request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncPrepareQuery(cq, context, std::move(options),
-                                                request);
+                                                request, operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -954,7 +907,8 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                              request) {
                        operation_context->PreCall(*context);
                        auto f = stub->AsyncPrepareQuery(
-                           cq, context, std::move(options), request);
+                           cq, context, std::move(options), request,
+                           operation_context);
                        return f.then([operation_context,
                                       context = std::move(context)](auto f) {
                          auto s = f.get();
@@ -1026,7 +980,7 @@ class QueryPlanRefreshingPartialResultSource
   }
 
   std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
-    if (!source_.has_value()) return std::nullopt;
+    if (!source_.has_value() || !source_->ok()) return std::nullopt;
     return (**source_)->Metadata();
   }
 
@@ -1137,7 +1091,8 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           auto const& options = internal::CurrentOptions();
           internal::ConfigureContext(*context, options);
           operation_context->PreCall(*context);
-          auto stream = stub->ExecuteQuery(context, options, request);
+          auto stream =
+              stub->ExecuteQuery(context, options, request, operation_context);
           std::unique_ptr<PartialResultSetReader> reader =
               std::make_unique<DefaultPartialResultSetReader>(
                   std::move(context), operation_context, std::move(stream));

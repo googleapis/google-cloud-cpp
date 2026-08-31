@@ -66,6 +66,10 @@ class SnapshotsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::snapshots::v1::
           TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateKmsKey(
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request);
 };
 
 std::unique_ptr<SnapshotsConnectionIdempotencyPolicy>

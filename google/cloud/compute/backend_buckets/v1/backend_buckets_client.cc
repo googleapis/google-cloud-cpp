@@ -88,6 +88,27 @@ BackendBucketsClient::AddSignedUrlKey(
   return connection_->AddSignedUrlKey(operation);
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+BackendBucketsClient::AggregatedListBackendBuckets(std::string const& project,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::backend_buckets::v1::
+      AggregatedListBackendBucketsRequest request;
+  request.set_project(project);
+  return connection_->AggregatedListBackendBuckets(request);
+}
+
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+BackendBucketsClient::AggregatedListBackendBuckets(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AggregatedListBackendBuckets(std::move(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::DeleteBackendBucket(std::string const& project,
                                           std::string const& backend_bucket,
@@ -304,6 +325,22 @@ BackendBucketsClient::ListBackendBuckets(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackendBuckets(std::move(request));
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+BackendBucketsClient::ListUsable(std::string const& project, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest request;
+  request.set_project(project);
+  return connection_->ListUsable(request);
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+BackendBucketsClient::ListUsable(
+    google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListUsable(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

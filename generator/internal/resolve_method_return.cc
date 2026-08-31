@@ -34,19 +34,19 @@ ProtoDefinitionLocation Location(google::protobuf::Descriptor const& d) {
 
 }  // namespace
 
-absl::optional<std::pair<std::string, ProtoDefinitionLocation>>
+std::optional<std::pair<std::string, ProtoDefinitionLocation>>
 ResolveMethodReturn(google::protobuf::MethodDescriptor const& method) {
   auto const* message = method.output_type();
-  if (!message) return absl::nullopt;
+  if (!message) return std::nullopt;
   // There is no need to document the return type, the generated code treats
   // this as `void`.
-  if (message->full_name() == "google.protobuf.Empty") return absl::nullopt;
+  if (message->full_name() == "google.protobuf.Empty") return std::nullopt;
 
   if (IsPaginated(method)) {
     auto info = DeterminePagination(method);
     // For string pagination we return nothing, there is no need to link the
     // definition of the `std::string` type.
-    if (!info->range_output_type) return absl::nullopt;
+    if (!info->range_output_type) return std::nullopt;
     return std::make_pair(std::string{info->range_output_type->full_name()},
                           Location(*info->range_output_type));
   }
@@ -62,7 +62,7 @@ ResolveMethodReturn(google::protobuf::MethodDescriptor const& method) {
       // Qualify the name and try again
       auto const fqname = std::string{method.file()->package()} + "." + name;
       message = method.file()->pool()->FindMessageTypeByName(fqname);
-      if (!message) return absl::nullopt;
+      if (!message) return std::nullopt;
     }
     return std::make_pair(std::string{message->full_name()},
                           Location(*message));

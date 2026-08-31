@@ -569,6 +569,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
 }
 
 TEST_F(DataIntegrationTest, TableApplyWithLogging) {
+  testing_util::ScopedEnvironment pqc = {"GOOGLE_CLOUD_CPP_DISABLE_PQC", ""};
   // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
@@ -578,10 +579,12 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto const table_id = testing::TableTestEnvironment::table_id();
 
   // Make a `Table` with an implementation that depends on the test's value
-  // parameter.
-  auto make_table = [&](Options const& options) {
+  // parameter. Disable metrics to avoid log pollution.
+  auto make_table = [&](Options options) {
+    options.set<EnableMetricsOption>(false);
     auto conn = MakeDataConnection(
-        {InstanceResource(Project(project_id()), instance_id())}, options);
+        {InstanceResource(Project(project_id()), instance_id())},
+        std::move(options));
     return Table(std::move(conn),
                  TableResource(project_id(), instance_id(), table_id));
   };

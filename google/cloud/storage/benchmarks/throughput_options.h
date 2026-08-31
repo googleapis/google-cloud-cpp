@@ -17,9 +17,9 @@
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/options.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -56,11 +56,11 @@ struct ThroughputOptions {
   std::vector<bool> enabled_crc32c = {false, true};
   std::vector<bool> enabled_md5 = {false, true};
   std::chrono::milliseconds minimum_sample_delay{};
-  absl::optional<std::int64_t> minimum_read_offset;
-  absl::optional<std::int64_t> maximum_read_offset;
+  std::optional<std::int64_t> minimum_read_offset;
+  std::optional<std::int64_t> maximum_read_offset;
   std::int64_t read_offset_quantum = 128 * kKiB;
-  absl::optional<std::int64_t> minimum_read_size;
-  absl::optional<std::int64_t> maximum_read_size;
+  std::optional<std::int64_t> minimum_read_size;
+  std::optional<std::int64_t> maximum_read_size;
   std::int64_t read_size_quantum = 128 * kKiB;
   Options client_options;
   Options rest_options;

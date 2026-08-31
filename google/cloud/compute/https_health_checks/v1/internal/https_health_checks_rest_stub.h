@@ -93,6 +93,12 @@ class HttpsHealthChecksRestStub {
                         google::cloud::cpp::compute::https_health_checks::v1::
                             PatchHttpsHealthCheckRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::https_health_checks::v1::
+                         TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateHttpsHealthCheck(
       google::cloud::CompletionQueue& cq,
@@ -187,6 +193,12 @@ class DefaultHttpsHealthChecksRestStub : public HttpsHealthChecksRestStub {
       Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           PatchHttpsHealthCheckRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::https_health_checks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateHttpsHealthCheck(

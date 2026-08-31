@@ -61,6 +61,10 @@ class AsyncIdempotencyPolicy {
   virtual google::cloud::Idempotency ReadObject(
       google::storage::v2::ReadObjectRequest const&);
 
+  /// Determine if a google.storage.v2.GetBucketRequest is idempotent.
+  virtual google::cloud::Idempotency GetBucket(
+      google::storage::v2::GetBucketRequest const&);
+
   /// Determine if a google.storage.v2.WriteObjectRequest for a one-shot upload
   /// is idempotent.
   virtual google::cloud::Idempotency InsertObject(

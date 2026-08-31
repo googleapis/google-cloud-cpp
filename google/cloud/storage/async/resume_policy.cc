@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/async/resume_policy.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

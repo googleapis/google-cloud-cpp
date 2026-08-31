@@ -210,6 +210,17 @@ TargetTcpProxiesTracingConnection::SetProxyHeader(
   return internal::EndSpan(std::move(span), child_->SetProxyHeader(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetTcpProxiesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<compute_target_tcp_proxies_v1::TargetTcpProxiesConnection>
 MakeTargetTcpProxiesTracingConnection(
     std::shared_ptr<compute_target_tcp_proxies_v1::TargetTcpProxiesConnection>

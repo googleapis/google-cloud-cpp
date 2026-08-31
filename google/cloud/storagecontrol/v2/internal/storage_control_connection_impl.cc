@@ -454,6 +454,21 @@ StorageControlConnectionImpl::ListManagedFolders(
       });
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlConnectionImpl::UpdateManagedFolder(
+    google::storage::control::v2::UpdateManagedFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateManagedFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::UpdateManagedFolderRequest const&
+                 request) {
+        return stub_->UpdateManagedFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlConnectionImpl::CreateAnywhereCache(
     google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
@@ -759,6 +774,337 @@ StorageControlConnectionImpl::ListAnywhereCaches(
       });
 }
 
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnectionImpl::CreateRapidCache(
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRapidCache(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::storage::control::v2::RapidCache>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::control::v2::CreateRapidCacheRequest const&
+              request) {
+        return stub->AsyncCreateRapidCache(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::RapidCache>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::CreateRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRapidCache(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::CreateRapidCacheRequest const&
+                 request) {
+        return stub_->CreateRapidCache(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnectionImpl::CreateRapidCache(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::
+                   CreateRapidCacheMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::storage::control::v2::RapidCache>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateRapidCache",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::RapidCache>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::RapidCache>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnectionImpl::UpdateRapidCache(
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRapidCache(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::storage::control::v2::RapidCache>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::control::v2::UpdateRapidCacheRequest const&
+              request) {
+        return stub->AsyncUpdateRapidCache(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::RapidCache>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::UpdateRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRapidCache(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::UpdateRapidCacheRequest const&
+                 request) {
+        return stub_->UpdateRapidCache(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnectionImpl::UpdateRapidCache(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::
+                   UpdateRapidCacheMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::storage::control::v2::RapidCache>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateRapidCache",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::RapidCache>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::RapidCache>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnectionImpl::DisableRapidCache(
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DisableRapidCache(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::storage::control::v2::RapidCache>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::control::v2::DisableRapidCacheRequest const&
+              request) {
+        return stub->AsyncDisableRapidCache(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::RapidCache>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::DisableRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DisableRapidCache(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DisableRapidCacheRequest const&
+                 request) {
+        return stub_->DisableRapidCache(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnectionImpl::DisableRapidCache(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::
+                   DisableRapidCacheMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::storage::control::v2::RapidCache>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DisableRapidCache",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::RapidCache>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::RapidCache>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+StorageControlConnectionImpl::GetRapidCache(
+    google::storage::control::v2::GetRapidCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRapidCache(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::storage::control::v2::GetRapidCacheRequest const& request) {
+        return stub_->GetRapidCache(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::storage::control::v2::RapidCache>
+StorageControlConnectionImpl::ListRapidCaches(
+    google::storage::control::v2::ListRapidCachesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRapidCaches(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storage::control::v2::RapidCache>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::storage::control::v2::ListRapidCachesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::storage::control::v2::ListRapidCachesRequest const&
+                       request) {
+              return stub->ListRapidCaches(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::storage::control::v2::ListRapidCachesResponse r) {
+        std::vector<google::storage::control::v2::RapidCache> result(
+            r.rapid_caches().size());
+        auto& messages = *r.mutable_rapid_caches();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::storage::control::v2::IntelligenceConfig>
 StorageControlConnectionImpl::GetProjectIntelligenceConfig(
     google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
@@ -1043,6 +1389,21 @@ StorageControlConnectionImpl::ListIntelligenceFindingRevisions(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlConnectionImpl::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ViewObjectFullContext(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ViewObjectFullContextRequest const&
+                 request) {
+        return stub_->ViewObjectFullContext(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

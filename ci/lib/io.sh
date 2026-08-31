@@ -30,7 +30,7 @@ fi # include guard
 # Callers may use these IO_* variables directly, but should prefer to use the
 # logging functions below instead. For example, prefer `io::log_green "..."`
 # over `echo "${IO_COLOR_GREEN}...${IO_RESET}"`.
-if [ -t 0 ] && command -v tput >/dev/null; then
+if [ -t 0 ] && command -v tput >/dev/null && tput bold >/dev/null 2>&1; then
   IO_BOLD="$(tput bold)"
   IO_COLOR_RED="$(tput setaf 1)"
   IO_COLOR_GREEN="$(tput setaf 2)"

@@ -201,6 +201,18 @@ DefaultStorageControlStub::ListManagedFolders(
   return response;
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+DefaultStorageControlStub::UpdateManagedFolder(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::UpdateManagedFolderRequest const& request) {
+  google::storage::control::v2::ManagedFolder response;
+  auto status = grpc_stub_->UpdateManagedFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncCreateAnywhereCache(
     google::cloud::CompletionQueue& cq,
@@ -317,6 +329,123 @@ DefaultStorageControlStub::ListAnywhereCaches(
     google::storage::control::v2::ListAnywhereCachesRequest const& request) {
   google::storage::control::v2::ListAnywhereCachesResponse response;
   auto status = grpc_stub_->ListAnywhereCaches(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultStorageControlStub::AsyncCreateRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::storage::control::v2::CreateRapidCacheRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::storage::control::v2::CreateRapidCacheRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateRapidCache(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultStorageControlStub::CreateRapidCache(
+    grpc::ClientContext& context, Options,
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRapidCache(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultStorageControlStub::AsyncUpdateRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::storage::control::v2::UpdateRapidCacheRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::storage::control::v2::UpdateRapidCacheRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateRapidCache(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultStorageControlStub::UpdateRapidCache(
+    grpc::ClientContext& context, Options,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRapidCache(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultStorageControlStub::AsyncDisableRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::storage::control::v2::DisableRapidCacheRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::storage::control::v2::DisableRapidCacheRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDisableRapidCache(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultStorageControlStub::DisableRapidCache(
+    grpc::ClientContext& context, Options,
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DisableRapidCache(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+DefaultStorageControlStub::GetRapidCache(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetRapidCacheRequest const& request) {
+  google::storage::control::v2::RapidCache response;
+  auto status = grpc_stub_->GetRapidCache(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::ListRapidCachesResponse>
+DefaultStorageControlStub::ListRapidCaches(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::ListRapidCachesRequest const& request) {
+  google::storage::control::v2::ListRapidCachesResponse response;
+  auto status = grpc_stub_->ListRapidCaches(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -506,6 +635,18 @@ DefaultStorageControlStub::ListIntelligenceFindingRevisions(
       response;
   auto status = grpc_stub_->ListIntelligenceFindingRevisions(&context, request,
                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+DefaultStorageControlStub::ViewObjectFullContext(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  google::storage::control::v2::ObjectFullContext response;
+  auto status = grpc_stub_->ViewObjectFullContext(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

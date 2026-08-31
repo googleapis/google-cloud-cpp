@@ -26,11 +26,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_SECURITY_POLICIES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_016.pb.h"
-#include "google/cloud/compute/v1/internal/common_031.pb.h"
-#include "google/cloud/compute/v1/internal/common_046.pb.h"
-#include "google/cloud/compute/v1/internal/common_094.pb.h"
-#include "google/cloud/compute/v1/internal/common_117.pb.h"
+#include "google/cloud/compute/v1/internal/common_019.pb.h"
+#include "google/cloud/compute/v1/internal/common_040.pb.h"
+#include "google/cloud/compute/v1/internal/common_056.pb.h"
+#include "google/cloud/compute/v1/internal/common_111.pb.h"
+#include "google/cloud/compute/v1/internal/common_140.pb.h"
+#include "google/cloud/compute/v1/internal/common_141.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_SECURITY_POLICIES_PROTO_EXPORT_H

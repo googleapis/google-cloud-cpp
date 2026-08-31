@@ -144,11 +144,11 @@ inline std::string CurrentTime() {
   return FormatTimestamp(std::chrono::system_clock::now());
 }
 
-absl::optional<std::string> GetLabel(std::string const& labels,
-                                     std::string const& prefix);
-absl::optional<std::string> Zone(std::string const& labels);
-absl::optional<std::string> Job(std::string const& labels);
-absl::optional<std::string> Task(std::string const& labels);
+std::optional<std::string> GetLabel(std::string const& labels,
+                                    std::string const& prefix);
+std::optional<std::string> Zone(std::string const& labels);
+std::optional<std::string> Job(std::string const& labels);
+std::optional<std::string> Task(std::string const& labels);
 std::string AddDefaultLabels(std::string const& labels);
 
 }  // namespace storage_benchmarks

@@ -213,6 +213,83 @@ struct DynamicChannelPoolSizingPolicyOption {
   using Type = DynamicChannelPoolSizingPolicy;
 };
 
+enum class DirectPathMode {
+  kDisabled,  // Default.
+  kEnabled,
+};
+
+/**
+ * Option to control whether DirectPath should be used for Bigtable
+ * connections.
+ *
+ * By default, DirectPath is disabled.
+ */
+struct DirectPathModeOption {
+  using Type = DirectPathMode;
+};
+
+enum class DirectPathMetricsMode {
+  kEnabled,  // Default.
+  kDisabled,
+};
+
+/**
+ * Option to control whether DirectPath should emit OpenTelemetry metrics.
+ *
+ * By default, DirectPath OpenTelemetry metrics are enabled.
+ */
+struct DirectPathMetricsModeOption {
+  using Type = DirectPathMetricsMode;
+};
+
+/**
+ * Option to configure the timeout for DirectPath startup compatibility probing.
+ *
+ * Defaults to 10 seconds.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DirectPathProbeTimeoutOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
+ * Option to configure the overall timeout for DirectPath environmental
+ * diagnostics.
+ *
+ * Defaults to 60 seconds.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DirectPathDiagnosticsTimeoutOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
+ * Option to configure the initialization behavior for DirectPath.
+ *
+ * - kBlocking - Channel Pool initialization begins only after
+ *   DirectPath or CloudPath is determined.
+ * - kAsynchronousSpeculative - Both DirectPath and CloudPath channel pools
+ *   are initialized on background threads while the probe runs. The unused
+ *   channel pool is discarded.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+enum class DirectPathInitializationMode {
+  kBlocking,  // Default.
+  kAsynchronousSpeculative,
+};
+
+/**
+ * Option to configure the initialization behavior for DirectPath.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DirectPathInitializationModeOption {
+  using Type = DirectPathInitializationMode;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
@@ -303,7 +380,8 @@ using DataPolicyOptionList =
     OptionList<DataRetryPolicyOption, DataBackoffPolicyOption, DeadlineOption,
                IdempotentMutationPolicyOption, EnableMetricsOption,
                MetricsPeriodOption,
-               experimental::DynamicChannelPoolSizingPolicyOption>;
+               experimental::DynamicChannelPoolSizingPolicyOption,
+               experimental::DirectPathInitializationModeOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

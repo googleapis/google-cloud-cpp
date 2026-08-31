@@ -21,8 +21,8 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/time/civil_time.h"
-#include "absl/types/optional.h"
 #include <iosfwd>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -74,17 +74,17 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs);
 
 /// Implement a wrapper for Lifecycle Conditions.
 struct LifecycleRuleCondition {
-  absl::optional<std::int32_t> age;
-  absl::optional<absl::CivilDay> created_before;
-  absl::optional<bool> is_live;
-  absl::optional<std::vector<std::string>> matches_storage_class;
-  absl::optional<std::int32_t> num_newer_versions;
-  absl::optional<std::int32_t> days_since_noncurrent_time;
-  absl::optional<absl::CivilDay> noncurrent_time_before;
-  absl::optional<std::int32_t> days_since_custom_time;
-  absl::optional<absl::CivilDay> custom_time_before;
-  absl::optional<std::vector<std::string>> matches_prefix;
-  absl::optional<std::vector<std::string>> matches_suffix;
+  std::optional<std::int32_t> age;
+  std::optional<absl::CivilDay> created_before;
+  std::optional<bool> is_live;
+  std::optional<std::vector<std::string>> matches_storage_class;
+  std::optional<std::int32_t> num_newer_versions;
+  std::optional<std::int32_t> days_since_noncurrent_time;
+  std::optional<absl::CivilDay> noncurrent_time_before;
+  std::optional<std::int32_t> days_since_custom_time;
+  std::optional<absl::CivilDay> custom_time_before;
+  std::optional<std::vector<std::string>> matches_prefix;
+  std::optional<std::vector<std::string>> matches_suffix;
 };
 
 bool operator==(LifecycleRuleCondition const& lhs,

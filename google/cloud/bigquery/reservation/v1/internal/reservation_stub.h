@@ -202,6 +202,11 @@ class ReservationServiceStub {
   ListReservationGroups(grpc::ClientContext& context, Options const& options,
                         google::cloud::bigquery::reservation::v1::
                             ListReservationGroupsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(grpc::ClientContext& context, Options const& options,
+                         google::cloud::bigquery::reservation::v1::
+                             UpdateReservationGroupRequest const& request) = 0;
 };
 
 class DefaultReservationServiceStub : public ReservationServiceStub {
@@ -374,6 +379,12 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           ListReservationGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::bigquery::reservation::v1::ReservationService::

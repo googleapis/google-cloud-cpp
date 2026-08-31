@@ -226,7 +226,7 @@ class DataObjectSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vectorsearch.v1.BatchSearchDataObjectsRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/data_object_search_service.proto#L360}
-  /// [google.cloud.vectorsearch.v1.BatchSearchDataObjectsResponse]: @googleapis_reference_link{google/cloud/vectorsearch/v1/data_object_search_service.proto#L406}
+  /// [google.cloud.vectorsearch.v1.BatchSearchDataObjectsResponse]: @googleapis_reference_link{google/cloud/vectorsearch/v1/data_object_search_service.proto#L446}
   ///
   // clang-format on
   StatusOr<google::cloud::vectorsearch::v1::BatchSearchDataObjectsResponse>

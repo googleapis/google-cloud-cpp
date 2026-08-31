@@ -42,7 +42,7 @@ std::streamoff InitialOffset(ReadObjectRangeRequest const& request) {
 class OverrunLoggingObjectReadSource : public ObjectReadSource {
  public:
   OverrunLoggingObjectReadSource(std::unique_ptr<ObjectReadSource> child,
-                                 absl::optional<std::int64_t> requested_length,
+                                 std::optional<std::int64_t> requested_length,
                                  std::string bucket_name,
                                  std::string object_name)
       : child_(std::move(child)),
@@ -95,7 +95,7 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
   }
 
   std::unique_ptr<ObjectReadSource> child_;
-  absl::optional<std::int64_t> requested_length_;
+  std::optional<std::int64_t> requested_length_;
   std::string bucket_name_;
   std::string object_name_;
   std::int64_t received_bytes_ = 0;
@@ -103,7 +103,7 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
   bool logged_warning_ = false;
 };
 
-absl::optional<std::int64_t> ExtractRequestedLength(
+std::optional<std::int64_t> ExtractRequestedLength(
     ReadObjectRangeRequest const& request) {
   if (request.HasOption<ReadRange>()) {
     auto range = request.GetOption<ReadRange>().value();
@@ -113,7 +113,7 @@ absl::optional<std::int64_t> ExtractRequestedLength(
     auto last = request.GetOption<ReadLast>();
     return last.value();
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 }  // namespace

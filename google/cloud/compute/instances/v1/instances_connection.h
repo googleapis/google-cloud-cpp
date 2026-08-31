@@ -198,6 +198,19 @@ class InstancesConnection {
   AddAccessConfig(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(google::cloud::cpp::compute::instances::v1::
+                          AddNetworkInterfaceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddNetworkInterface(NoAwaitTag,
+                      google::cloud::cpp::compute::instances::v1::
+                          AddNetworkInterfaceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
                           AddResourcePoliciesRequest const& request);
 
@@ -265,6 +278,19 @@ class InstancesConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAccessConfig(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(google::cloud::cpp::compute::instances::v1::
+                             DeleteNetworkInterfaceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkInterface(NoAwaitTag,
+                         google::cloud::cpp::compute::instances::v1::
+                             DeleteNetworkInterfaceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

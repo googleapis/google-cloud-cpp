@@ -171,6 +171,11 @@ class ReservationServiceTracingConnection
       google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
           request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          UpdateReservationGroupRequest const& request) override;
+
  private:
   std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection> child_;
 };

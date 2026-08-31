@@ -20,10 +20,10 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -75,7 +75,7 @@ class RetryObjectReadSource : public ObjectReadSource {
   google::cloud::internal::ImmutableOptions options_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
-  absl::optional<std::int64_t> generation_;
+  std::optional<std::int64_t> generation_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   OffsetDirection offset_direction_;

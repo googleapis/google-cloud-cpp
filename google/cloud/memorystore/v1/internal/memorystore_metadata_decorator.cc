@@ -268,6 +268,167 @@ StatusOr<google::longrunning::Operation> MemorystoreMetadata::BackupInstance(
   return child_->BackupInstance(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncStartMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartMigration(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::StartMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartMigration(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncFinishMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncFinishMigration(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::FinishMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FinishMigration(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+MemorystoreMetadata::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTokenAuthUsers(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreMetadata::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTokenAuthUser(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+MemorystoreMetadata::ListAuthTokens(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAuthTokensRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAuthTokens(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreMetadata::GetAuthToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAuthToken(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->AsyncAddTokenAuthUser(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::AddTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->AddTokenAuthUser(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTokenAuthUser(cq, std::move(context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreMetadata::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTokenAuthUser(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("token_auth_user=",
+                           internal::UrlEncode(request.token_auth_user())));
+  return child_->AsyncAddAuthToken(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::AddAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("token_auth_user=",
+                           internal::UrlEncode(request.token_auth_user())));
+  return child_->AddAuthToken(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAuthToken(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::DeleteAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAuthToken(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 MemorystoreMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

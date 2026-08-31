@@ -42,6 +42,15 @@ class SystemPolicyV1TracingConnection
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
  private:
   std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection> child_;
 };

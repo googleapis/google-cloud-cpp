@@ -127,7 +127,7 @@ TEST(PerThreadCircularBufferBackend, Basic) {
 
 TEST(DefaultLogBackend, CircularBuffer) {
   ScopedEnvironment config(kLogConfig, "lastN,5,WARNING");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* buffer = dynamic_cast<CircularBufferBackend*>(be.get());
   ASSERT_NE(buffer, nullptr);
@@ -140,7 +140,7 @@ TEST(DefaultLogBackend, CircularBuffer) {
 
 TEST(DefaultLogBackend, PerThreadCircularBuffer) {
   ScopedEnvironment config(kLogConfig, "thread-lastN,5,WARNING");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* buffer = dynamic_cast<PerThreadCircularBufferBackend*>(be.get());
   ASSERT_NE(buffer, nullptr);
@@ -153,7 +153,7 @@ TEST(DefaultLogBackend, PerThreadCircularBuffer) {
 
 TEST(DefaultLogBackend, CLog) {
   ScopedEnvironment config(kLogConfig, "clog");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
   ASSERT_THAT(clog_be, NotNull());
@@ -161,7 +161,7 @@ TEST(DefaultLogBackend, CLog) {
 }
 
 TEST(DefaultLogBackend, BackwardsCompatibilityCLog) {
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment config(kLogConfig, std::nullopt);
   ScopedEnvironment clog(kEnableClog, "yes");
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
@@ -170,8 +170,8 @@ TEST(DefaultLogBackend, BackwardsCompatibilityCLog) {
 }
 
 TEST(DefaultLogBackend, BackwardsCompatibilityCLogUnset) {
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment config(kLogConfig, std::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
   ASSERT_THAT(clog_be, NotNull());
@@ -179,7 +179,7 @@ TEST(DefaultLogBackend, BackwardsCompatibilityCLogUnset) {
 }
 
 TEST(DefaultLogBackend, BackwardsCompatibilityCLogWithSeverity) {
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment config(kLogConfig, std::nullopt);
   ScopedEnvironment clog(kEnableClog, "WARNING");
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
@@ -189,7 +189,7 @@ TEST(DefaultLogBackend, BackwardsCompatibilityCLogWithSeverity) {
 
 TEST(DefaultLogBackend, UnknownType) {
   ScopedEnvironment config(kLogConfig, "invalid");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
   ASSERT_THAT(clog_be, NotNull());
@@ -198,7 +198,7 @@ TEST(DefaultLogBackend, UnknownType) {
 
 TEST(DefaultLogBackend, MissingComponents) {
   ScopedEnvironment config(kLogConfig, "lastN,1");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
   ASSERT_THAT(clog_be, NotNull());
@@ -207,7 +207,7 @@ TEST(DefaultLogBackend, MissingComponents) {
 
 TEST(DefaultLogBackend, InvalidSize) {
   ScopedEnvironment config(kLogConfig, "lastN,-10,WARNING");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
   ASSERT_THAT(clog_be, NotNull());
@@ -216,7 +216,7 @@ TEST(DefaultLogBackend, InvalidSize) {
 
 TEST(DefaultLogBackend, InvalidSeverity) {
   ScopedEnvironment config(kLogConfig, "lastN,10,invalid");
-  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, std::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
   ASSERT_THAT(clog_be, NotNull());

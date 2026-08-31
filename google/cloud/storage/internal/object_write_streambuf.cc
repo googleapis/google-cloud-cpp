@@ -42,7 +42,7 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(Status status)
 ObjectWriteStreambuf::ObjectWriteStreambuf(
     std::shared_ptr<StorageConnection> connection,
     ResumableUploadRequest request, std::string upload_id,
-    std::uint64_t committed_size, absl::optional<ObjectMetadata> metadata,
+    std::uint64_t committed_size, std::optional<ObjectMetadata> metadata,
     std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
     HashValues known_hashes, std::unique_ptr<HashValidator> hash_validator,
     AutoFinalizeConfig auto_finalize)

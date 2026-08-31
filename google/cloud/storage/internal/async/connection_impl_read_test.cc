@@ -126,12 +126,12 @@ TEST_F(AsyncConnectionImplTest, ReadObject) {
             response.mutable_metadata()->set_size(4096);
             response.mutable_content_range()->set_start(1024);
             response.mutable_content_range()->set_end(2048);
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<google::storage::v2::ReadObjectResponse>();
+            return std::optional<google::storage::v2::ReadObjectResponse>();
           });
         });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -246,12 +246,12 @@ TEST_F(AsyncConnectionImplTest, ReadObjectWithTimeout) {
             response.mutable_metadata()->set_size(4096);
             response.mutable_content_range()->set_start(1024);
             response.mutable_content_range()->set_end(2048);
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<google::storage::v2::ReadObjectResponse>();
+            return std::optional<google::storage::v2::ReadObjectResponse>();
           });
         });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -516,7 +516,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {
                           ContentType(kQuick));
         // Deliberatively set the checksum to an incorrect value.
         response.mutable_checksummed_data()->set_crc32c(Crc32c(kQuick) + 1);
-        return absl::make_optional(response);
+        return std::make_optional(response);
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -597,7 +597,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
             full_crc32c = ExtendCrc32c(full_crc32c, kQuick);
             full_crc32c = ExtendCrc32c(full_crc32c, kQuick);
             response.mutable_object_checksums()->set_crc32c(full_crc32c + 1);
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
@@ -606,12 +606,12 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
             SetMutableContent(*response.mutable_checksummed_data(),
                               ContentType(kQuick));
             response.mutable_checksummed_data()->set_crc32c(Crc32c(kQuick));
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<google::storage::v2::ReadObjectResponse>{};
+            return std::optional<google::storage::v2::ReadObjectResponse>{};
           });
         });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -701,7 +701,7 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactory) {
     });
     EXPECT_CALL(*stream, Read).WillOnce([&] {
       return sequencer.PushBack("Read").then([](auto) {
-        return absl::optional<google::storage::v2::ReadObjectResponse>{};
+        return std::optional<google::storage::v2::ReadObjectResponse>{};
       });
     });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {

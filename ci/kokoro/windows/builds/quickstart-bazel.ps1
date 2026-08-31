@@ -58,7 +58,9 @@ function Get-Released-Quickstarts {
             #   TODO(#11772) - the service and library are retired.
             "debugger",
             #   TODO(#11987) - the service and library are retired.
-            "gameservices" -contains $_) } |
+            "gameservices",
+            #   The service and library are retired.
+            "parallelstore" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location

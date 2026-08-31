@@ -187,7 +187,7 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
       MakeExternalAccountTokenSource(*credential_source, *audience, ec);
   if (!source) return std::move(source).status();
 
-  absl::optional<std::string> workforce_pool_user_project;
+  std::optional<std::string> workforce_pool_user_project;
   auto it = json.find("workforce_pool_user_project");
   if (it != json.end()) {
     workforce_pool_user_project = it->get<std::string>();
@@ -197,7 +197,7 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   *std::move(subject_token_type),
                                   *std::move(token_url),
                                   *std::move(source),
-                                  absl::nullopt,
+                                  std::nullopt,
                                   *std::move(universe_domain),
                                   std::move(workforce_pool_user_project),
                                   std::move(identity_federation)};

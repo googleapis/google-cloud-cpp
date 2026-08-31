@@ -40,6 +40,14 @@ SqlConnectServiceClient::GetConnectSettings(
   return connection_->GetConnectSettings(request);
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+SqlConnectServiceClient::ResolveConnectSettings(
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResolveConnectSettings(request);
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceClient::GenerateEphemeralCert(
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request,

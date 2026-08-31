@@ -65,6 +65,13 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::GetBackendService(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+BackendServicesConnectionIdempotencyPolicy::GetEffectiveSecurityPolicies(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackendServicesConnectionIdempotencyPolicy::GetHealth(
     google::cloud::cpp::compute::backend_services::v1::
         GetHealthRequest const&) {

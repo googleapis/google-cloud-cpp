@@ -18,10 +18,10 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -42,7 +42,7 @@ class ObjectDescriptorConnection {
 
   /// Returns, if available, the object metadata associated with this
   /// descriptor.
-  virtual absl::optional<google::storage::v2::Object> metadata() const = 0;
+  virtual std::optional<google::storage::v2::Object> metadata() const = 0;
 
   /**
    * A thin wrapper around the `Read()` parameters.

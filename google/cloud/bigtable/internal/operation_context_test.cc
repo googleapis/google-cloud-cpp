@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/operation_context.h"
-#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -120,7 +120,7 @@ TEST_F(OperationContextTest, Retries) {
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-class MockMetric : public Metric {
+class MockMetric : public TableSchemaMetric {
  public:
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&, PreCallParams const&),
@@ -140,27 +140,14 @@ class MockMetric : public Metric {
               (opentelemetry::context::Context const&,
                ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (ResourceLabels resource_labels, DataLabels data_labels),
+  MOCK_METHOD((std::unique_ptr<TableSchemaMetric>), clone,
+              (TableResourceLabels const&, TableDataLabels const&),
               (const, override));
-};
-
-// This class is a vehicle to get a MockMetric into the OperationContext object.
-class CloningMetric : public Metric {
- public:
-  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
-      : metric_(std::move(metric)) {}
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
-    return std::move(metric_);
-  }
-
- private:
-  mutable std::unique_ptr<MockMetric> metric_;
 };
 
 TEST(OperationContextMetricTest, MetricPreCall) {
   auto expected_first_attempt = std::chrono::steady_clock::now();
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
 
   EXPECT_CALL(*mock_metric, PreCall)
       .WillOnce(
@@ -175,9 +162,8 @@ TEST(OperationContextMetricTest, MetricPreCall) {
         EXPECT_FALSE(p.first_attempt);
       });
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<FakeSteadyClock>();
-  OperationContext operation_context({}, {}, {fake_metric}, clock);
+  OperationContext operation_context({mock_metric}, clock);
   grpc::ClientContext client_context;
 
   clock->SetTime(expected_first_attempt);
@@ -189,7 +175,7 @@ TEST(OperationContextMetricTest, MetricPreCall) {
 TEST(OperationContextMetricTest, MetricPostCall) {
   auto attempt_end = std::chrono::steady_clock::now();
   Status status{StatusCode::kUnavailable, "unavailable"};
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
 
   EXPECT_CALL(*mock_metric, PostCall)
       .WillOnce([&](opentelemetry::context::Context const&,
@@ -198,9 +184,8 @@ TEST(OperationContextMetricTest, MetricPostCall) {
         EXPECT_THAT(p.attempt_status, Eq(status));
       });
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<FakeSteadyClock>();
-  OperationContext operation_context({}, {}, {fake_metric}, clock);
+  OperationContext operation_context({mock_metric}, clock);
 
   testing_util::ValidateMetadataFixture metadata_fixture;
   grpc::ClientContext client_context;
@@ -214,7 +199,7 @@ TEST(OperationContextMetricTest, MetricPostCall) {
 TEST(OperationContextMetricTest, MetricOnDone) {
   auto operation_end = std::chrono::steady_clock::now();
   Status status{StatusCode::kUnavailable, "unavailable"};
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
 
   EXPECT_CALL(*mock_metric, OnDone)
       .WillOnce(
@@ -223,9 +208,8 @@ TEST(OperationContextMetricTest, MetricOnDone) {
             EXPECT_THAT(p.operation_status, Eq(status));
           });
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<FakeSteadyClock>();
-  OperationContext operation_context({}, {}, {fake_metric}, clock);
+  OperationContext operation_context({mock_metric}, clock);
 
   clock->SetTime(operation_end);
   operation_context.OnDone(status);
@@ -233,7 +217,7 @@ TEST(OperationContextMetricTest, MetricOnDone) {
 
 TEST(OperationContextMetricTest, MetricElementRequest) {
   auto element_request = std::chrono::steady_clock::now();
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
 
   EXPECT_CALL(*mock_metric, ElementRequest)
       .WillOnce([&](opentelemetry::context::Context const&,
@@ -241,9 +225,8 @@ TEST(OperationContextMetricTest, MetricElementRequest) {
         EXPECT_THAT(p.element_request, Eq(element_request));
       });
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<FakeSteadyClock>();
-  OperationContext operation_context({}, {}, {fake_metric}, clock);
+  OperationContext operation_context({mock_metric}, clock);
   grpc::ClientContext client_context;
 
   clock->SetTime(element_request);
@@ -252,7 +235,7 @@ TEST(OperationContextMetricTest, MetricElementRequest) {
 
 TEST(OperationContextMetricTest, MetricElementDelivery) {
   auto element_delivery = std::chrono::steady_clock::now();
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
 
   EXPECT_CALL(*mock_metric, ElementDelivery)
       .WillOnce([&](opentelemetry::context::Context const&,
@@ -267,9 +250,8 @@ TEST(OperationContextMetricTest, MetricElementDelivery) {
         EXPECT_FALSE(p.first_response);
       });
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<FakeSteadyClock>();
-  OperationContext operation_context({}, {}, {fake_metric}, clock);
+  OperationContext operation_context({mock_metric}, clock);
   grpc::ClientContext client_context;
 
   clock->SetTime(element_delivery);

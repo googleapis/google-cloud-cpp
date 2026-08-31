@@ -313,6 +313,10 @@ class ReservationServiceConnection {
   ListReservationGroups(
       google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
           request);
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  UpdateReservationGroup(google::cloud::bigquery::reservation::v1::
+                             UpdateReservationGroupRequest const& request);
 };
 
 /**

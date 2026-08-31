@@ -91,6 +91,14 @@ class KeyManagementServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ImportCryptoKeyVersion(
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request);
 
+  virtual google::cloud::Idempotency ImportTrustedKeyWrappedCryptoKeyVersion(
+      google::cloud::kms::v1::
+          ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request);
+
+  virtual google::cloud::Idempotency ExportTrustedKeyWrappedCryptoKeyVersion(
+      google::cloud::kms::v1::
+          ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request);
+
   virtual google::cloud::Idempotency CreateImportJob(
       google::cloud::kms::v1::CreateImportJobRequest const& request);
 

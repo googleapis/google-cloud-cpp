@@ -67,7 +67,7 @@ TEST_F(StreamingReadRpcLoggingTest, Start) {
 TEST_F(StreamingReadRpcLoggingTest, ReadWithValue) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::make_optional(google::protobuf::Duration{}));
+    return make_ready_future(std::make_optional(google::protobuf::Duration{}));
   });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(stream.Read().get().has_value());
@@ -79,7 +79,7 @@ TEST_F(StreamingReadRpcLoggingTest, ReadWithValue) {
 TEST_F(StreamingReadRpcLoggingTest, ReadWithout) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::optional<google::protobuf::Duration>{});
+    return make_ready_future(std::optional<google::protobuf::Duration>{});
   });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   ASSERT_FALSE(stream.Read().get().has_value());

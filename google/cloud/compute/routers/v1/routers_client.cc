@@ -103,6 +103,56 @@ RoutersClient::DeleteRouter(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::DeleteNamedSet(std::string const& project,
+                              std::string const& region,
+                              std::string const& router, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  return connection_->DeleteNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::DeleteNamedSet(NoAwaitTag, std::string const& project,
+                              std::string const& region,
+                              std::string const& router, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  return connection_->DeleteNamedSet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::DeleteNamedSet(
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::DeleteNamedSet(
+    NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNamedSet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::DeleteNamedSet(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNamedSet(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersClient::DeleteRoutePolicy(std::string const& project,
                                  std::string const& region,
                                  std::string const& router, Options opts) {
@@ -168,6 +218,26 @@ StatusOr<google::cloud::cpp::compute::v1::Router> RoutersClient::GetRouter(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRouter(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+RoutersClient::GetNamedSet(std::string const& project,
+                           std::string const& region, std::string const& router,
+                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::GetNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  return connection_->GetNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+RoutersClient::GetNamedSet(
+    google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNamedSet(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
@@ -343,6 +413,27 @@ RoutersClient::ListBgpRoutes(
   return connection_->ListBgpRoutes(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets>
+RoutersClient::ListNamedSets(std::string const& project,
+                             std::string const& region,
+                             std::string const& router, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  return connection_->ListNamedSets(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets>
+RoutersClient::ListNamedSets(
+    google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNamedSets(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
 RoutersClient::ListRoutePolicies(std::string const& project,
                                  std::string const& region,
@@ -414,6 +505,62 @@ RoutersClient::PatchRouter(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRouter(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::PatchNamedSet(
+    std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  *request.mutable_named_set_resource() = named_set_resource;
+  return connection_->PatchNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::PatchNamedSet(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  *request.mutable_named_set_resource() = named_set_resource;
+  return connection_->PatchNamedSet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::PatchNamedSet(
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::PatchNamedSet(
+    NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNamedSet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::PatchNamedSet(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNamedSet(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -549,6 +696,62 @@ RoutersClient::UpdateRouter(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRouter(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::UpdateNamedSet(
+    std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  *request.mutable_named_set_resource() = named_set_resource;
+  return connection_->UpdateNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::UpdateNamedSet(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::NamedSet const& named_set_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  *request.mutable_named_set_resource() = named_set_resource;
+  return connection_->UpdateNamedSet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::UpdateNamedSet(
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNamedSet(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::UpdateNamedSet(
+    NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNamedSet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::UpdateNamedSet(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNamedSet(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

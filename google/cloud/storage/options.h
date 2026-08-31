@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
@@ -31,6 +32,83 @@ namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Enable experimental request hedging for `ReadObject()` streams.
+ *
+ * When enabled, opening a download races the initial request against one or
+ * more delayed, duplicate ("hedged") requests, and the first to respond wins.
+ * This reduces tail latency at the cost of additional requests.
+ *
+ * @ingroup storage-options
+ */
+struct EnableReadHedgingOption {
+  using Type = bool;
+};
+
+/**
+ * The maximum rate of hedged requests per second across the connection.
+ *
+ * The default is 0.0, meaning no rate limit.
+ *
+ * @ingroup storage-options
+ */
+struct ReadHedgeRateLimitOption {
+  using Type = double;
+};
+
+/**
+ * The maximum number of concurrently active hedged requests across the
+ * connection.
+ *
+ * The default is 0, meaning no concurrency limit.
+ *
+ * @ingroup storage-options
+ */
+struct MaxConcurrentHedgesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * The largest read, in bytes, that is eligible for hedging.
+ *
+ * Racing requests each buffer their own copy of the data, so the memory used
+ * while opening a stream grows with the size of the first read. A read larger
+ * than this value is served without hedging, reading directly into the
+ * application's buffer, which bounds that growth. Note this is the size the
+ * application asks for in a single read (e.g. `stream.read(buf, n)`), not the
+ * size of the object or of a requested range.
+ *
+ * The default is 64 MiB (64 * 1024 * 1024).
+ *
+ * @ingroup storage-options
+ */
+struct MaximumHedgeBufferOption {
+  using Type = std::size_t;
+};
+
+/**
+ * The delay before starting a hedged request.
+ *
+ * The default is 500 milliseconds.
+ *
+ * @ingroup storage-options
+ */
+struct ReadHedgeDelayOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
+ * The maximum number of hedged requests per stream open.
+ *
+ * The default is 2. Set to 0 to disable hedging for reads even when
+ * `EnableReadHedgingOption` is set.
+ *
+ * @ingroup storage-options
+ */
+struct MaxReadHedgesOption {
+  using Type = int;
+};
 
 /**
  * Set the HTTP version used by the client.
@@ -52,6 +130,37 @@ struct HttpVersionOption {
   using Type = std::string;
 };
 
+/**
+ * Enable/disable OpenTelemetry trace span enrichment with GCS bucket resource
+ * metadata.
+ *
+ * When enabled, the GCS client decorates spans with gcp.resource.destination.id
+ * and location attributes by fetching metadata in the background.
+ *
+ * @ingroup storage-options
+ */
+struct OTelSpanEnrichmentOption {
+  using Type = bool;
+};
+
+/**
+ * Sets the TCP/TLS connection timeout.
+ *
+ * If the connection cannot be established within this time, the request is
+ * aborted. This is useful as a fail-safe against OS-level TCP locks during
+ * severe network routing anomalies.
+ *
+ * This applies to all requests, not just downloads, and it only bounds
+ * establishing the connection: it has no effect once bytes start flowing. Use
+ * `TransferStallTimeoutOption` and `DownloadStallTimeoutOption` to bound
+ * stalled transfers.
+ *
+ * @ingroup storage-options
+ */
+struct HttpConnectTimeoutOption {
+  using Type = std::chrono::milliseconds;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -69,6 +178,57 @@ struct CAPathOption {
 };
 
 }  // namespace internal
+
+/**
+ * Supported checksum algorithms.
+ *
+ * @ingroup storage-options
+ */
+enum class ChecksumAlgorithm {
+  kNone,          ///< Disable checksum validation
+  kCrc32c,        ///< Use CRC32C for checksum validation
+  kMD5,           ///< Use MD5 for checksum validation
+  kCrc32cAndMD5,  ///< Use CRC32C and MD5 for checksum validation
+};
+
+/**
+ * Configure the checksum algorithm used for uploads.
+ *
+ * If set, the client computes (if necessary) and validates the checksum of
+ * an object during uploads. Set to `ChecksumAlgorithm::kNone` to disable
+ * checksum validation.
+ *
+ * @ingroup storage-options
+ */
+struct UploadChecksumValidationOption {
+  using Type = ChecksumAlgorithm;
+};
+
+/**
+ * Configure the checksum algorithm used for downloads.
+ *
+ * If set, the client computes (if necessary) and validates the checksum of
+ * an object during downloads. Set to `ChecksumAlgorithm::kNone` to disable
+ * checksum validation.
+ *
+ * @ingroup storage-options
+ */
+struct DownloadChecksumValidationOption {
+  using Type = ChecksumAlgorithm;
+};
+
+/**
+ * Provide precomputed hashes for uploads and downloads.
+ *
+ * If set, the client will use these precomputed hashes instead of computing
+ * them locally. This is useful when the application has already computed the
+ * hash and wants to avoid recomputing it.
+ *
+ * @ingroup storage-options
+ */
+struct PrecomputedChecksumsOption {
+  using Type = PrecomputedChecksums;
+};
 
 /**
  * Configure the REST endpoint for the GCS client library.
@@ -325,7 +485,16 @@ using ClientOptionList = ::google::cloud::OptionList<
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
-    storage_experimental::HttpVersionOption>;
+    UploadChecksumValidationOption, DownloadChecksumValidationOption,
+    PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
+    storage_experimental::HttpConnectTimeoutOption,
+    storage_experimental::EnableReadHedgingOption,
+    storage_experimental::ReadHedgeRateLimitOption,
+    storage_experimental::MaxConcurrentHedgesOption,
+    storage_experimental::MaximumHedgeBufferOption,
+    storage_experimental::ReadHedgeDelayOption,
+    storage_experimental::MaxReadHedgesOption,
+    storage_experimental::OTelSpanEnrichmentOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

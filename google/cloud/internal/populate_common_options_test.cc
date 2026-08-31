@@ -21,8 +21,8 @@
 #include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -39,8 +39,8 @@ using ::testing::IsEmpty;
 
 TEST(PopulateCommonOptions, Simple) {
   // Unset all the relevant environment variables.
-  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
-  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
   auto actual =
       PopulateCommonOptions(Options{}, {}, {}, {}, "default.googleapis.com");
   EXPECT_TRUE(actual.has<EndpointOption>());
@@ -103,9 +103,9 @@ TEST(PopulateCommonOptions, EndpointAuthority) {
           .set<EndpointOption>("endpoint_option")
           .set<AuthorityOption>("authority_option"),
   };
-  absl::optional<std::string> endpoints[] = {absl::nullopt, "", "endpoint"};
-  absl::optional<std::string> emulators[] = {absl::nullopt, "", "emulator"};
-  absl::optional<std::string> authorities[] = {absl::nullopt, "", "authority"};
+  std::optional<std::string> endpoints[] = {std::nullopt, "", "endpoint"};
+  std::optional<std::string> emulators[] = {std::nullopt, "", "emulator"};
+  std::optional<std::string> authorities[] = {std::nullopt, "", "authority"};
   for (auto const& options : optionses) {
     for (auto const& endpoint_env : endpoints) {
       for (auto const& emulator_env : emulators) {
@@ -163,8 +163,8 @@ TEST(PopulateCommonOptions, UniverseDomainEnvVar) {
 }
 
 TEST(PopulateCommonOptions, EndpointOptionsOverrideUniverseDomain) {
-  for (auto const& e : std::vector<absl::optional<std::string>>{
-           absl::nullopt, "ud-env-var.net"}) {
+  for (auto const& e : std::vector<std::optional<std::string>>{
+           std::nullopt, "ud-env-var.net"}) {
     ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", e);
 
     auto actual = PopulateCommonOptions(
@@ -203,7 +203,7 @@ TEST(PopulateCommonOptions, UserProject) {
       Options{},
       Options{}.set<UserProjectOption>("project_option"),
   };
-  absl::optional<std::string> projects[] = {absl::nullopt, "", "project"};
+  std::optional<std::string> projects[] = {std::nullopt, "", "project"};
   for (auto const& options : optionses) {
     for (auto const& project_env : projects) {
       ScopedEnvironment projects("GOOGLE_CLOUD_CPP_USER_PROJECT", project_env);
@@ -222,7 +222,7 @@ TEST(PopulateCommonOptions, UserProject) {
 }
 
 TEST(PopulateCommonOptions, QuotaProjectEnvVar) {
-  ScopedEnvironment e1("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment e1("GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   ScopedEnvironment e2("GOOGLE_CLOUD_QUOTA_PROJECT", "env");
 
   auto opts = Options{}.set<UserProjectOption>("option");
@@ -233,11 +233,11 @@ TEST(PopulateCommonOptions, QuotaProjectEnvVar) {
 
 TEST(PopulateCommonOptions, OpenTelemetryTracing) {
   struct TestCase {
-    absl::optional<std::string> env;
+    std::optional<std::string> env;
     bool value;
   };
   std::vector<TestCase> tests = {
-      {absl::nullopt, false},
+      {std::nullopt, false},
       {"", false},
       {"ON", true},
   };
@@ -250,7 +250,7 @@ TEST(PopulateCommonOptions, OpenTelemetryTracing) {
 }
 
 TEST(DefaultTracingComponents, NoEnvironment) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
   auto const actual = DefaultTracingComponents();
   EXPECT_THAT(actual, ElementsAre());
 }
@@ -262,7 +262,7 @@ TEST(DefaultTracingComponents, WithValue) {
 }
 
 TEST(DefaultTracingOptions, NoEnvironment) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", std::nullopt);
   auto const actual = DefaultTracingOptions();
   auto const expected = TracingOptions{};
   EXPECT_EQ(expected.single_line_mode(), actual.single_line_mode());

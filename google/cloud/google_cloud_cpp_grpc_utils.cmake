@@ -55,7 +55,6 @@ add_library(
     internal/async_streaming_write_rpc_logging.h
     internal/async_streaming_write_rpc_timeout.h
     internal/async_streaming_write_rpc_tracing.h
-    internal/background_threads_impl.cc
     internal/background_threads_impl.h
     internal/completion_queue_impl.h
     internal/debug_string_protobuf.cc

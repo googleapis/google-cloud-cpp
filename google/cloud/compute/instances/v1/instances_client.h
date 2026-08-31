@@ -116,7 +116,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L695}
+  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L745}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
@@ -175,7 +175,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L695}
+  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L745}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
@@ -215,8 +215,136 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Adds existing resource policies to an instance. You can only add one policy
-  /// right now which will be applied to this instance for scheduling live
+  /// Adds one dynamic network interface to an active instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addNetworkInterface
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param instance  The instance name for this request stored as resource_id.
+  ///  Name should conform to RFC1035 or be an unsigned long integer.
+  /// @param network_interface_resource  The NetworkInterface for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.instances.v1.AddNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L789}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(std::string const& project, std::string const& zone,
+                      std::string const& instance,
+                      google::cloud::cpp::compute::v1::NetworkInterface const&
+                          network_interface_resource,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddNetworkInterface
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNetworkInterface(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::NetworkInterface const&
+          network_interface_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Adds one dynamic network interface to an active instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addNetworkInterface
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.instances.v1.AddNetworkInterfaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.instances.v1.AddNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L789}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(google::cloud::cpp::compute::instances::v1::
+                          AddNetworkInterfaceRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddNetworkInterface
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNetworkInterface(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          AddNetworkInterfaceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddNetworkInterface
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Adds existing resource policies to an instance. You can only add one
+  /// policy right now which will be applied to this instance for scheduling live
   /// migrations.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addResourcePolicies
   ///
@@ -244,7 +372,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L736}
+  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L830}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -276,8 +404,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Adds existing resource policies to an instance. You can only add one policy
-  /// right now which will be applied to this instance for scheduling live
+  /// Adds existing resource policies to an instance. You can only add one
+  /// policy right now which will be applied to this instance for scheduling live
   /// migrations.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addResourcePolicies
   ///
@@ -307,7 +435,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L736}
+  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L830}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -348,9 +476,12 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of all of the instances in your project across
-  /// all regions and zones. The performance of this method degrades when a
-  /// filter is specified on a project that has a very large number of instances.
+  /// Retrieves an aggregated list of all of the instances in your project
+  /// across all regions and zones.
+  ///
+  /// The performance of this method degrades when a filter is specified on a
+  /// project that has a very large number of instances.
+  ///
   /// To prevent failure, Google recommends that you set the
   /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/aggregatedList
@@ -378,8 +509,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L774}
-  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L751}
+  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L871}
+  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L899}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -388,9 +519,12 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of all of the instances in your project across
-  /// all regions and zones. The performance of this method degrades when a
-  /// filter is specified on a project that has a very large number of instances.
+  /// Retrieves an aggregated list of all of the instances in your project
+  /// across all regions and zones.
+  ///
+  /// The performance of this method degrades when a filter is specified on a
+  /// project that has a very large number of instances.
+  ///
   /// To prevent failure, Google recommends that you set the
   /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/aggregatedList
@@ -423,8 +557,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L774}
-  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L751}
+  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L871}
+  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L899}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -436,10 +570,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Attaches an existing Disk resource to an instance. You must first create
-  /// the disk before you can attach it. It is not possible to create and attach
-  /// a disk at the same time. For more information, read Adding a persistent
-  /// disk to your instance.
+  /// Attaches an existing Disk resource to an instance. You must first
+  /// create the disk before you can attach it. It is not possible to create
+  /// and attach a disk at the same time. For more information, readAdding a
+  /// persistent disk to your instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/attachDisk
   ///
   /// @param project  Project ID for this request.
@@ -466,7 +600,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L856}
+  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L986}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
@@ -496,10 +630,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Attaches an existing Disk resource to an instance. You must first create
-  /// the disk before you can attach it. It is not possible to create and attach
-  /// a disk at the same time. For more information, read Adding a persistent
-  /// disk to your instance.
+  /// Attaches an existing Disk resource to an instance. You must first
+  /// create the disk before you can attach it. It is not possible to create
+  /// and attach a disk at the same time. For more information, readAdding a
+  /// persistent disk to your instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/attachDisk
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -528,7 +662,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L856}
+  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L986}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
@@ -569,7 +703,8 @@ class InstancesClient {
   // clang-format off
   ///
   /// Creates multiple instances. Count specifies the number of instances to
-  /// create. For more information, see About bulk creation of VMs.
+  /// create. For more information, seeAbout bulk
+  /// creation of VMs.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/bulkInsert
   ///
   /// @param project  Project ID for this request.
@@ -595,7 +730,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L898}
+  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1031}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -624,7 +759,8 @@ class InstancesClient {
   // clang-format off
   ///
   /// Creates multiple instances. Count specifies the number of instances to
-  /// create. For more information, see About bulk creation of VMs.
+  /// create. For more information, seeAbout bulk
+  /// creation of VMs.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/bulkInsert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -653,7 +789,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L898}
+  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1031}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -693,7 +829,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Deletes the specified Instance resource. For more information, see Deleting
+  /// Deletes the specified Instance resource. For more information, seeDeleting
   /// an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/delete
   ///
@@ -720,7 +856,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L972}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
@@ -744,7 +880,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Deletes the specified Instance resource. For more information, see Deleting
+  /// Deletes the specified Instance resource. For more information, seeDeleting
   /// an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/delete
   ///
@@ -774,7 +910,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L972}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
@@ -842,7 +978,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L931}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1067}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -898,7 +1034,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L931}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1067}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -939,14 +1075,18 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Detaches a disk from an instance.
-  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/detachDisk
+  /// Deletes one dynamic network interface from an active instance.
+  /// InstancesDeleteNetworkInterfaceRequest indicates:
+  /// - instance from which to delete, using project+zone+resource_id fields;
+  /// - dynamic network interface to be deleted, using network_interface_name
+  /// field;
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/deleteNetworkInterface
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
-  /// @param instance  Instance name for this request.
-  /// @param device_name  The device name of the disk to detach. Make a get() request on the instance
-  ///  to view currently attached disks and device names.
+  /// @param instance  The instance name for this request stored as resource_id.
+  ///  Name should conform to RFC1035 or be an unsigned long integer.
+  /// @param network_interface_name  The name of the dynamic network interface to be deleted from the instance.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -967,7 +1107,136 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1005}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1150}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(std::string const& project, std::string const& zone,
+                         std::string const& instance,
+                         std::string const& network_interface_name,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkInterface
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkInterface(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface_name,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes one dynamic network interface from an active instance.
+  /// InstancesDeleteNetworkInterfaceRequest indicates:
+  /// - instance from which to delete, using project+zone+resource_id fields;
+  /// - dynamic network interface to be deleted, using network_interface_name
+  /// field;
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/deleteNetworkInterface
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.instances.v1.DeleteNetworkInterfaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.instances.v1.DeleteNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1150}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(google::cloud::cpp::compute::instances::v1::
+                             DeleteNetworkInterfaceRequest const& request,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkInterface
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkInterface(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          DeleteNetworkInterfaceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkInterface
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Detaches a disk from an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/detachDisk
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param instance  Instance name for this request.
+  /// @param device_name  The device name of the disk to detach. Make a get() request on
+  ///  the instance to view currently attached disks and device names.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
@@ -1022,7 +1291,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1005}
+  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
@@ -1081,8 +1350,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1099}
-  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L93}
+  /// [google.cloud.cpp.compute.instances.v1.GetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1290}
+  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L99}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
@@ -1113,8 +1382,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1099}
-  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L93}
+  /// [google.cloud.cpp.compute.instances.v1.GetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1290}
+  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L99}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
@@ -1144,8 +1413,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1043}
-  /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L681}
+  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1234}
+  /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L823}
   ///
   // clang-format on
   StatusOr<
@@ -1179,8 +1448,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1043}
-  /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L681}
+  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1234}
+  /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L823}
   ///
   // clang-format on
   StatusOr<
@@ -1210,8 +1479,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1061}
-  /// [google.cloud.cpp.compute.v1.GuestAttributes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L51}
+  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1252}
+  /// [google.cloud.cpp.compute.v1.GuestAttributes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
@@ -1242,8 +1511,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1061}
-  /// [google.cloud.cpp.compute.v1.GuestAttributes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L51}
+  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1252}
+  /// [google.cloud.cpp.compute.v1.GuestAttributes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
@@ -1273,8 +1542,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1081}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1272}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -1306,8 +1575,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1081}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1272}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -1336,8 +1605,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1113}
-  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L974}
+  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1304}
+  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1277}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
@@ -1368,8 +1637,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1113}
-  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L974}
+  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1304}
+  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1277}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
@@ -1398,8 +1667,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1127}
-  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L984}
+  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1318}
+  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -1430,8 +1699,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1127}
-  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L984}
+  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1318}
+  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1287}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -1460,8 +1729,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1160}
-  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L1010}
+  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1354}
+  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1314}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -1493,8 +1762,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1160}
-  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L1010}
+  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1354}
+  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1314}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -1532,7 +1801,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1174}
+  /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
@@ -1588,7 +1857,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1174}
+  /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
@@ -1628,7 +1897,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of instances contained within the specified zone.
+  /// Retrieves the list of instances contained within
+  /// the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/list
   ///
   /// @param project  Project ID for this request.
@@ -1655,8 +1925,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1226}
-  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L93}
+  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1429}
+  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L99}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
@@ -1664,7 +1934,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of instances contained within the specified zone.
+  /// Retrieves the list of instances contained within
+  /// the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1695,8 +1966,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1226}
-  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L93}
+  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1429}
+  /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L99}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
@@ -1708,13 +1979,14 @@ class InstancesClient {
   /// Retrieves a list of resources that refer to the VM instance specified in
   /// the request. For example, if the VM instance is part of a managed or
   /// unmanaged instance group, the referrers list includes the instance group.
-  /// For more information, read Viewing referrers to VM instances.
+  /// For more information, readViewing
+  /// referrers to VM instances.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/listReferrers
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
-  /// @param instance  Name of the target instance scoping this request, or '-' if the request
-  ///  should span over all instances in the container.
+  /// @param instance  Name of the target instance scoping this request, or '-' if the
+  ///  request should span over all instances in the container.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1737,8 +2009,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1297}
-  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L909}
+  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1533}
+  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1081}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
@@ -1750,7 +2022,8 @@ class InstancesClient {
   /// Retrieves a list of resources that refer to the VM instance specified in
   /// the request. For example, if the VM instance is part of a managed or
   /// unmanaged instance group, the referrers list includes the instance group.
-  /// For more information, read Viewing referrers to VM instances.
+  /// For more information, readViewing
+  /// referrers to VM instances.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/listReferrers
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1781,8 +2054,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1297}
-  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_022.proto#L909}
+  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1533}
+  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L1081}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
@@ -1817,7 +2090,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1373}
+  /// [google.cloud.cpp.compute.instances.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1642}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1870,7 +2143,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1373}
+  /// [google.cloud.cpp.compute.instances.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1642}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1938,7 +2211,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1406}
+  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1678}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2000,7 +2273,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1406}
+  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1678}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2068,7 +2341,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ReportHostAsFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1444}
+  /// [google.cloud.cpp.compute.instances.v1.ReportHostAsFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1719}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2128,7 +2401,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ReportHostAsFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1444}
+  /// [google.cloud.cpp.compute.instances.v1.ReportHostAsFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1719}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2169,8 +2442,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Performs a reset on the instance. This is a hard reset. The VM does not do
-  /// a graceful shutdown. For more information, see Resetting an instance.
+  /// Performs a reset on the instance. This is a hard reset. The VM
+  /// does not do a graceful shutdown. For more information, seeResetting
+  /// an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/reset
   ///
   /// @param project  Project ID for this request.
@@ -2196,7 +2470,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1482}
+  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1760}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
@@ -2220,8 +2494,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Performs a reset on the instance. This is a hard reset. The VM does not do
-  /// a graceful shutdown. For more information, see Resetting an instance.
+  /// Performs a reset on the instance. This is a hard reset. The VM
+  /// does not do a graceful shutdown. For more information, seeResetting
+  /// an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/reset
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2250,7 +2525,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1482}
+  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1760}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
@@ -2288,7 +2563,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Resumes an instance that was suspended using the instances().suspend
+  /// Resumes an instance that was suspended using theinstances().suspend
   /// method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/resume
   ///
@@ -2315,7 +2590,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1515}
+  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1796}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
@@ -2339,7 +2614,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Resumes an instance that was suspended using the instances().suspend
+  /// Resumes an instance that was suspended using theinstances().suspend
   /// method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/resume
   ///
@@ -2369,7 +2644,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1515}
+  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1796}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
@@ -2424,7 +2699,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1548}
+  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1832}
   ///
   // clang-format on
   Status SendDiagnosticInterrupt(std::string const& project,
@@ -2454,7 +2729,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1548}
+  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1832}
   ///
   // clang-format on
   Status SendDiagnosticInterrupt(
@@ -2490,7 +2765,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1562}
+  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1846}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2543,7 +2818,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1562}
+  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1846}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2591,8 +2866,8 @@ class InstancesClient {
   /// @param zone  The name of the zone for this request.
   /// @param instance  The instance name for this request.
   /// @param auto_delete  Whether to auto-delete the disk when the instance is deleted.
-  /// @param device_name  The device name of the disk to modify. Make a get() request on the instance
-  ///  to view currently attached disks and device names.
+  /// @param device_name  The device name of the disk to modify. Make a get() request
+  ///  on the instance to view currently attached disks and device names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2613,7 +2888,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1598}
+  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1885}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2668,7 +2943,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1598}
+  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1885}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2708,8 +2983,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -2729,8 +3004,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1640}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1930}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -2742,8 +3017,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2765,8 +3040,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1640}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1930}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -2776,7 +3051,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets labels on an instance. To learn more about labels, read the Labeling
+  /// Sets labels on an instance.  To learn more about labels, read theLabeling
   /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setLabels
   ///
@@ -2804,7 +3079,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1658}
+  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1948}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -2834,7 +3109,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets labels on an instance. To learn more about labels, read the Labeling
+  /// Sets labels on an instance.  To learn more about labels, read theLabeling
   /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setLabels
   ///
@@ -2864,7 +3139,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1658}
+  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1948}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -2932,7 +3207,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1696}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1989}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2994,7 +3269,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1696}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1989}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3035,8 +3310,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Changes the machine type for a stopped instance to the machine type
-  /// specified in the request.
+  /// Changes the machine type for a stopped instance to the machine
+  /// type specified in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineType
   ///
   /// @param project  Project ID for this request.
@@ -3063,7 +3338,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1734}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2030}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
@@ -3093,8 +3368,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Changes the machine type for a stopped instance to the machine type
-  /// specified in the request.
+  /// Changes the machine type for a stopped instance to the machine
+  /// type specified in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineType
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3123,7 +3398,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1734}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2030}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
@@ -3163,8 +3438,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets metadata for the specified instance to the data included in the
-  /// request.
+  /// Sets metadata for the specified instance to the data included
+  /// in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMetadata
   ///
   /// @param project  Project ID for this request.
@@ -3191,7 +3466,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1772}
+  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2071}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
@@ -3219,8 +3494,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets metadata for the specified instance to the data included in the
-  /// request.
+  /// Sets metadata for the specified instance to the data included
+  /// in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMetadata
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3249,7 +3524,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1772}
+  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2071}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
@@ -3289,9 +3564,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Changes the minimum CPU platform that this instance should use. This method
-  /// can only be called on a stopped instance. For more information, read
-  /// Specifying a Minimum CPU Platform.
+  /// Changes the minimum CPU platform that this instance should use.
+  /// This method can only
+  /// be called on a stopped instance. For more information, readSpecifying a
+  /// Minimum CPU Platform.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMinCpuPlatform
   ///
   /// @param project  Project ID for this request.
@@ -3318,7 +3594,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1809}
+  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3349,9 +3625,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Changes the minimum CPU platform that this instance should use. This method
-  /// can only be called on a stopped instance. For more information, read
-  /// Specifying a Minimum CPU Platform.
+  /// Changes the minimum CPU platform that this instance should use.
+  /// This method can only
+  /// be called on a stopped instance. For more information, readSpecifying a
+  /// Minimum CPU Platform.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMinCpuPlatform
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3380,7 +3657,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1809}
+  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3447,7 +3724,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1847}
+  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
@@ -3506,7 +3783,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1847}
+  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
@@ -3544,11 +3821,12 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets an instance's scheduling options. You can only call this method on a
-  /// stopped instance, that is, a VM instance that is in a `TERMINATED` state.
-  /// See Instance Life Cycle for more information on the possible instance
-  /// states. For more information about setting scheduling options for a VM, see
-  /// Set VM host maintenance policy.
+  /// Sets an instance's scheduling options. You can only call this method on
+  /// astopped instance,
+  /// that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life
+  /// Cycle for more information on the possible instance states.
+  /// For more information about setting scheduling options for a VM, seeSet
+  /// VM host maintenance policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
   ///
   /// @param project  Project ID for this request.
@@ -3575,7 +3853,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1885}
+  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
@@ -3603,11 +3881,12 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets an instance's scheduling options. You can only call this method on a
-  /// stopped instance, that is, a VM instance that is in a `TERMINATED` state.
-  /// See Instance Life Cycle for more information on the possible instance
-  /// states. For more information about setting scheduling options for a VM, see
-  /// Set VM host maintenance policy.
+  /// Sets an instance's scheduling options. You can only call this method on
+  /// astopped instance,
+  /// that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life
+  /// Cycle for more information on the possible instance states.
+  /// For more information about setting scheduling options for a VM, seeSet
+  /// VM host maintenance policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3636,7 +3915,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1885}
+  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
@@ -3676,14 +3955,15 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the Google Cloud Armor security policy for the specified instance. For
-  /// more information, see Google Cloud Armor Overview
+  /// Sets the Google Cloud Armor security policy for the specified instance.
+  /// For more information, seeGoogle
+  /// Cloud Armor Overview
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setSecurityPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone scoping this request.
-  /// @param instance  Name of the Instance resource to which the security policy should be set.
-  ///  The name should conform to RFC1035.
+  /// @param instance  Name of the Instance resource to which the security policy should be
+  ///  set. The name should conform to RFC1035.
   /// @param instances_set_security_policy_request_resource  The InstancesSetSecurityPolicyRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -3705,7 +3985,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1922}
+  /// [google.cloud.cpp.compute.instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3736,8 +4016,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the Google Cloud Armor security policy for the specified instance. For
-  /// more information, see Google Cloud Armor Overview
+  /// Sets the Google Cloud Armor security policy for the specified instance.
+  /// For more information, seeGoogle
+  /// Cloud Armor Overview
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setSecurityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3766,7 +4047,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1922}
+  /// [google.cloud.cpp.compute.instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3806,8 +4087,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the service account on the instance. For more information, read
-  /// Changing the service account and access scopes for an instance.
+  /// Sets the service account on the instance. For more information,
+  /// readChanging
+  /// the service account and access scopes for an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setServiceAccount
   ///
   /// @param project  Project ID for this request.
@@ -3834,7 +4116,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1961}
+  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3865,8 +4147,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the service account on the instance. For more information, read
-  /// Changing the service account and access scopes for an instance.
+  /// Sets the service account on the instance. For more information,
+  /// readChanging
+  /// the service account and access scopes for an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setServiceAccount
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -3895,7 +4178,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1961}
+  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3935,9 +4218,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the Shielded Instance integrity policy for an instance. You can only
-  /// use this method on a running instance. This method supports PATCH semantics
-  /// and uses the JSON merge patch format and processing rules.
+  /// Sets the Shielded Instance integrity policy for an instance. You can
+  /// only use this method on a running instance. This method
+  /// supports PATCH semantics and uses the JSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setShieldedInstanceIntegrityPolicy
   ///
   /// @param project  Project ID for this request.
@@ -3964,7 +4248,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1999}
+  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2316}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3996,9 +4280,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets the Shielded Instance integrity policy for an instance. You can only
-  /// use this method on a running instance. This method supports PATCH semantics
-  /// and uses the JSON merge patch format and processing rules.
+  /// Sets the Shielded Instance integrity policy for an instance. You can
+  /// only use this method on a running instance. This method
+  /// supports PATCH semantics and uses the JSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setShieldedInstanceIntegrityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4027,7 +4312,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1999}
+  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2316}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -4070,8 +4355,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets network tags for the specified instance to the data included in the
-  /// request.
+  /// Sets network tags
+  /// for the specified instance to the data included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setTags
   ///
   /// @param project  Project ID for this request.
@@ -4098,7 +4383,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2037}
+  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2357}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
@@ -4126,8 +4411,8 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Sets network tags for the specified instance to the data included in the
-  /// request.
+  /// Sets network tags
+  /// for the specified instance to the data included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setTags
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4156,7 +4441,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2037}
+  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2357}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
@@ -4221,7 +4506,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2074}
+  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2397}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -4275,7 +4560,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2074}
+  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2397}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -4316,8 +4601,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Starts an instance that was stopped using the instances().stop method. For
-  /// more information, see Restart an instance.
+  /// Starts an instance that was stopped using theinstances().stop
+  /// method. For more information, seeRestart an
+  /// instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/start
   ///
   /// @param project  Project ID for this request.
@@ -4343,7 +4629,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2112}
+  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2438}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
@@ -4367,8 +4653,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Starts an instance that was stopped using the instances().stop method. For
-  /// more information, see Restart an instance.
+  /// Starts an instance that was stopped using theinstances().stop
+  /// method. For more information, seeRestart an
+  /// instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/start
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4397,7 +4684,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2112}
+  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2438}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
@@ -4435,8 +4722,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Starts an instance that was stopped using the instances().stop method. For
-  /// more information, see Restart an instance.
+  /// Starts an instance that was stopped using theinstances().stop
+  /// method. For more information, seeRestart an
+  /// instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/startWithEncryptionKey
   ///
   /// @param project  Project ID for this request.
@@ -4463,7 +4751,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2145}
+  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2474}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -4496,8 +4784,9 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Starts an instance that was stopped using the instances().stop method. For
-  /// more information, see Restart an instance.
+  /// Starts an instance that was stopped using theinstances().stop
+  /// method. For more information, seeRestart an
+  /// instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/startWithEncryptionKey
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4526,7 +4815,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2145}
+  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2474}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -4567,12 +4856,12 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Stops a running instance, shutting it down cleanly, and allows you to
-  /// restart the instance at a later time. Stopped instances do not incur VM
-  /// usage charges while they are stopped. However, resources that the VM is
+  /// Stops a running instance, shutting it down cleanly, and allows
+  /// you to restart the instance at a later time. Stopped instances do not incur
+  /// VM usage charges while they are stopped. However, resources that the VM is
   /// using, such as persistent disks and static IP addresses, will continue to
-  /// be charged until they are deleted. For more information, see Stopping an
-  /// instance.
+  /// be charged until they are deleted. For more information, seeStopping
+  /// an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/stop
   ///
   /// @param project  Project ID for this request.
@@ -4598,7 +4887,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2183}
+  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2515}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
@@ -4622,12 +4911,12 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Stops a running instance, shutting it down cleanly, and allows you to
-  /// restart the instance at a later time. Stopped instances do not incur VM
-  /// usage charges while they are stopped. However, resources that the VM is
+  /// Stops a running instance, shutting it down cleanly, and allows
+  /// you to restart the instance at a later time. Stopped instances do not incur
+  /// VM usage charges while they are stopped. However, resources that the VM is
   /// using, such as persistent disks and static IP addresses, will continue to
-  /// be charged until they are deleted. For more information, see Stopping an
-  /// instance.
+  /// be charged until they are deleted. For more information, seeStopping
+  /// an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/stop
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4656,7 +4945,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2183}
+  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2515}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
@@ -4699,8 +4988,9 @@ class InstancesClient {
   /// instances have no compute costs (cores or RAM), and incur only storage
   /// charges for the saved VM memory and localSSD data. Any charged resources
   /// the virtual machine was using, such as persistent disks and static IP
-  /// addresses, will continue to be charged while the instance is suspended. For
-  /// more information, see Suspending and resuming an instance.
+  /// addresses, will continue to be charged while the instance is suspended.
+  /// For more information, see
+  /// Suspending and resuming an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/suspend
   ///
   /// @param project  Project ID for this request.
@@ -4726,7 +5016,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2221}
+  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2559}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
@@ -4755,8 +5045,9 @@ class InstancesClient {
   /// instances have no compute costs (cores or RAM), and incur only storage
   /// charges for the saved VM memory and localSSD data. Any charged resources
   /// the virtual machine was using, such as persistent disks and static IP
-  /// addresses, will continue to be charged while the instance is suspended. For
-  /// more information, see Suspending and resuming an instance.
+  /// addresses, will continue to be charged while the instance is suspended.
+  /// For more information, see
+  /// Suspending and resuming an instance.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/suspend
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4785,7 +5076,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2221}
+  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2559}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
@@ -4843,8 +5134,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2259}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2600}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -4879,8 +5170,8 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2259}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2600}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -4891,8 +5182,9 @@ class InstancesClient {
   // clang-format off
   ///
   /// Updates an instance only if the necessary resources are available. This
-  /// method can update only a specific set of instance properties. See Updating
-  /// a running instance for a list of updatable instance properties.
+  /// method can update only a specific set of instance properties. See
+  /// Updating a running instance for a list of updatable instance
+  /// properties.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/update
   ///
   /// @param project  Project ID for this request.
@@ -4919,7 +5211,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2355}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
@@ -4948,8 +5240,9 @@ class InstancesClient {
   // clang-format off
   ///
   /// Updates an instance only if the necessary resources are available. This
-  /// method can update only a specific set of instance properties. See Updating
-  /// a running instance for a list of updatable instance properties.
+  /// method can update only a specific set of instance properties. See
+  /// Updating a running instance for a list of updatable instance
+  /// properties.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -4978,7 +5271,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2355}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
@@ -5019,8 +5312,9 @@ class InstancesClient {
   // clang-format off
   ///
   /// Updates the specified access config from an instance's network interface
-  /// with the data included in the request. This method supports PATCH semantics
-  /// and uses the JSON merge patch format and processing rules.
+  /// with the data included in the request. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateAccessConfig
   ///
   /// @param project  Project ID for this request.
@@ -5048,7 +5342,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2277}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2618}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5080,8 +5374,9 @@ class InstancesClient {
   // clang-format off
   ///
   /// Updates the specified access config from an instance's network interface
-  /// with the data included in the request. This method supports PATCH semantics
-  /// and uses the JSON merge patch format and processing rules.
+  /// with the data included in the request. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateAccessConfig
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -5110,7 +5405,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2277}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2618}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5151,9 +5446,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Updates the Display config for a VM instance. You can only use this method
-  /// on a stopped VM instance. This method supports PATCH semantics and uses the
-  /// JSON merge patch format and processing rules.
+  /// Updates the Display config for a VM instance. You can
+  /// only use this method on a stopped VM instance. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateDisplayDevice
   ///
   /// @param project  Project ID for this request.
@@ -5180,7 +5476,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2318}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2662}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5210,9 +5506,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Updates the Display config for a VM instance. You can only use this method
-  /// on a stopped VM instance. This method supports PATCH semantics and uses the
-  /// JSON merge patch format and processing rules.
+  /// Updates the Display config for a VM instance. You can
+  /// only use this method on a stopped VM instance. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateDisplayDevice
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -5241,7 +5538,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2318}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2662}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5283,10 +5580,11 @@ class InstancesClient {
   // clang-format off
   ///
   /// Updates an instance's network interface. This method can only update an
-  /// interface's alias IP range and attached network. See Modifying alias IP
-  /// ranges for an existing instance for instructions on changing alias IP
-  /// ranges. See Migrating a VM between networks for instructions on migrating
-  /// an interface. This method follows PATCH semantics.
+  /// interface's alias IP range and attached network. See Modifying
+  /// alias IP ranges for an existing instance for instructions on
+  /// changing alias IP ranges. See Migrating
+  /// a VM between networks for instructions on migrating an interface.
+  /// This method follows PATCH semantics.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateNetworkInterface
   ///
   /// @param project  Project ID for this request.
@@ -5314,7 +5612,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2412}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2768}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5346,10 +5644,11 @@ class InstancesClient {
   // clang-format off
   ///
   /// Updates an instance's network interface. This method can only update an
-  /// interface's alias IP range and attached network. See Modifying alias IP
-  /// ranges for an existing instance for instructions on changing alias IP
-  /// ranges. See Migrating a VM between networks for instructions on migrating
-  /// an interface. This method follows PATCH semantics.
+  /// interface's alias IP range and attached network. See Modifying
+  /// alias IP ranges for an existing instance for instructions on
+  /// changing alias IP ranges. See Migrating
+  /// a VM between networks for instructions on migrating an interface.
+  /// This method follows PATCH semantics.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateNetworkInterface
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -5378,7 +5677,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2412}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2768}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5419,9 +5718,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Updates the Shielded Instance config for an instance. You can only use this
-  /// method on a stopped instance. This method supports PATCH semantics and uses
-  /// the JSON merge patch format and processing rules.
+  /// Updates the Shielded Instance config for an instance. You can
+  /// only use this method on a stopped instance. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateShieldedInstanceConfig
   ///
   /// @param project  Project ID for this request.
@@ -5448,7 +5748,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2453}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2812}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -5480,9 +5780,10 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// Updates the Shielded Instance config for an instance. You can only use this
-  /// method on a stopped instance. This method supports PATCH semantics and uses
-  /// the JSON merge patch format and processing rules.
+  /// Updates the Shielded Instance config for an instance. You can
+  /// only use this method on a stopped instance. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateShieldedInstanceConfig
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -5511,7 +5812,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2453}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2812}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

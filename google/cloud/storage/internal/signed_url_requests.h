@@ -21,10 +21,10 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/status.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <iosfwd>
 #include <map>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -378,7 +378,7 @@ class V4SignUrlRequest {
   std::chrono::system_clock::time_point timestamp_;
   std::chrono::seconds expires_;
   bool virtual_host_name_;
-  absl::optional<std::string> domain_named_bucket_;
+  std::optional<std::string> domain_named_bucket_;
 };
 
 std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r);

@@ -88,7 +88,10 @@ class ProjectServiceClient {
   // clang-format off
   ///
   /// RPC to get the service account for a project used for interactions with
-  /// Google Cloud KMS
+  /// Google Cloud KMS. Requires the `bigquery.jobs.create` permission on the
+  /// project resource. This permission is required to authorize the retrieval
+  /// of the project's service identity for technical management tasks like
+  /// encryption configuration.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -109,8 +112,8 @@ class ProjectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetServiceAccountRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L46}
-  /// [google.cloud.bigquery.v2.GetServiceAccountResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L52}
+  /// [google.cloud.bigquery.v2.GetServiceAccountRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L49}
+  /// [google.cloud.bigquery.v2.GetServiceAccountResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>

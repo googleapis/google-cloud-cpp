@@ -24,12 +24,14 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <functional>
+#include <map>
 #include <memory>
 #include <mutex>
+#include <optional>
+#include <set>
 #include <unordered_map>
 
 namespace google {
@@ -74,7 +76,7 @@ class ObjectDescriptorImpl
 
   // Return the object metadata. This is only available after the first `Read()`
   // returns.
-  absl::optional<google::storage::v2::Object> metadata() const override;
+  std::optional<google::storage::v2::Object> metadata() const override;
 
   // Start a new ranged read.
   std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override;
@@ -103,7 +105,7 @@ class ObjectDescriptorImpl
   void DoRead(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnRead(
       StreamIterator it,
-      absl::optional<google::storage::v2::BidiReadObjectResponse> response);
+      std::optional<google::storage::v2::BidiReadObjectResponse> response);
   void DoFinish(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnFinish(StreamIterator it, Status const& status);
   void Resume(StreamIterator it, google::rpc::Status const& proto_status);
@@ -121,8 +123,34 @@ class ObjectDescriptorImpl
 
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
-  absl::optional<google::storage::v2::Object> metadata_;
+  std::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
+
+  // Information about a pre-warmed range that has not been claimed yet.
+  struct PrewarmedRange {
+    std::shared_ptr<ReadRange> range;
+    std::int64_t read_id;
+  };
+  // Cache of pre-warmed ranges, keyed by (offset, length).
+  using PrewarmedRangesMap =
+      std::map<std::pair<std::int64_t, std::int64_t>, PrewarmedRange>;
+  PrewarmedRangesMap prewarmed_ranges_;
+
+  struct UnclaimedRangeState {
+    std::size_t bytes_buffered;
+    PrewarmedRangesMap::iterator cache_it;
+  };
+
+  // Map of read_id to unclaimed range state (bytes buffered and original key).
+  std::unordered_map<std::int64_t, UnclaimedRangeState> unclaimed_ranges_;
+  // Set capturing tombstones for evicted pre-warmed ranges.
+  std::set<std::pair<std::int64_t, std::int64_t>> evicted_ranges_;
+  // Total bytes currently buffered across all unclaimed pre-warmed ranges.
+  std::size_t total_prewarmed_bytes_buffered_ = 0;
+  // Maximum bytes allowed to be buffered across all unclaimed pre-warmed ranges
+  // before we start evicting them.
+  std::size_t max_prewarmed_buffer_size_ =
+      5 * 1024 * 1024;  // Default 5 MiB pacing limit
 
   Options options_;
   std::unique_ptr<StreamManager> stream_manager_;
@@ -131,6 +159,7 @@ class ObjectDescriptorImpl
       google::cloud::StatusOr<storage_internal::OpenStreamResult>>
       pending_stream_;
   bool cancelled_ = false;
+  bool has_initial_read_ranges_ = false;
   std::function<bool()> transport_ok_;
 };
 

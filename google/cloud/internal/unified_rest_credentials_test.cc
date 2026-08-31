@@ -262,7 +262,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsAuthorizedUser) {
 TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
   auto const filename = TempKeyFileName();
   auto const env =
-      ScopedEnvironment(oauth2_internal::GoogleAdcEnvVar(), absl::nullopt);
+      ScopedEnvironment(oauth2_internal::GoogleAdcEnvVar(), std::nullopt);
   auto const override_default_path =
       ScopedEnvironment(oauth2_internal::GoogleGcloudAdcFileEnvVar(), filename);
   auto const now = std::chrono::system_clock::now();
@@ -453,7 +453,7 @@ TEST(UnifiedRestCredentialsTest, ServiceAccount) {
   EXPECT_CALL(client_factory, Call).Times(0);
 
   auto const config =
-      internal::ServiceAccountConfig(contents.dump(), absl::nullopt, Options{});
+      internal::ServiceAccountConfig(contents.dump(), std::nullopt, Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto access_token = credentials->GetToken(now);
   ASSERT_STATUS_OK(access_token);

@@ -41,6 +41,12 @@ SqlConnectServiceConnection::GetConnectSettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+SqlConnectServiceConnection::ResolveConnectSettings(
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceConnection::GenerateEphemeralCert(
     google::cloud::sql::v1::GenerateEphemeralCertRequest const&) {

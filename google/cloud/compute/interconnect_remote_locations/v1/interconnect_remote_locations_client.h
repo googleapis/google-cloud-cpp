@@ -95,7 +95,7 @@ class InterconnectRemoteLocationsClient {
   // clang-format off
   ///
   /// Returns the details for the specified interconnect remote location. Gets a
-  /// list of available interconnect remote locations by making a list() request.
+  /// list of available interconnect remote locations by making alist() request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectRemoteLocations/get
   ///
   /// @param project  Project ID for this request.
@@ -114,7 +114,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L63}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -125,7 +125,7 @@ class InterconnectRemoteLocationsClient {
   // clang-format off
   ///
   /// Returns the details for the specified interconnect remote location. Gets a
-  /// list of available interconnect remote locations by making a list() request.
+  /// list of available interconnect remote locations by making alist() request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectRemoteLocations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -148,7 +148,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L63}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -187,7 +187,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L76}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -229,7 +229,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L76}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>

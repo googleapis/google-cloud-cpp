@@ -303,6 +303,13 @@ DefaultSqlInstancesServiceRestStub::Patch(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"reconcile_psc_networking",
+                          (request.reconcile_psc_networking() ? "1" : "0")});
+  query_params.push_back(
+      {"reconcile_psc_networking_force",
+       (request.reconcile_psc_networking_force() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

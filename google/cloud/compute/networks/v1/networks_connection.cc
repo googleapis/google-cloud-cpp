@@ -61,6 +61,31 @@ NetworksConnection::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksConnection::CancelRequestRemovePeering(
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksConnection::CancelRequestRemovePeering(
+    NoAwaitTag, google::cloud::cpp::compute::networks::v1::
+                    CancelRequestRemovePeeringRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksConnection::CancelRequestRemovePeering(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksConnection::DeleteNetwork(
     google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&) {
   return google::cloud::make_ready_future<
@@ -179,6 +204,31 @@ NetworksConnection::RemovePeering(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksConnection::RemovePeering(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksConnection::RequestRemovePeering(
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksConnection::RequestRemovePeering(
+    NoAwaitTag, google::cloud::cpp::compute::networks::v1::
+                    RequestRemovePeeringRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksConnection::RequestRemovePeering(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(

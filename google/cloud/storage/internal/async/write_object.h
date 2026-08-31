@@ -85,7 +85,7 @@ class WriteObject : public std::enable_shared_from_this<WriteObject> {
   void OnStart(bool ok);
   void OnWrite(bool ok);
   void OnRead(
-      absl::optional<google::storage::v2::BidiWriteObjectResponse> response);
+      std::optional<google::storage::v2::BidiWriteObjectResponse> response);
   void DoFinish();
   void OnFinish(Status status);
 

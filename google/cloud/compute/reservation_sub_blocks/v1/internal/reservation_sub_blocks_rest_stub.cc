@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/reservation_sub_blocks/v1/internal/reservation_sub_blocks_rest_stub.h"
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +36,16 @@ DefaultReservationSubBlocksRestStub::DefaultReservationSubBlocksRestStub(
     Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
+      operations_(rest_internal::MakePooledRestClient(
+          options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultReservationSubBlocksRestStub::DefaultReservationSubBlocksRestStub(
-    std::shared_ptr<rest_internal::RestClient> service, Options options)
-    : service_(std::move(service)), options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service,
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
+    : service_(std::move(service)),
+      operations_(std::move(operations)),
+      options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationSubBlocksGetResponse>
 DefaultReservationSubBlocksRestStub::GetReservationSubBlocksGetResponse(
@@ -48,6 +54,9 @@ DefaultReservationSubBlocksRestStub::GetReservationSubBlocksGetResponse(
     google::cloud::cpp::compute::reservation_sub_blocks::v1::
         GetReservationSubBlocksGetResponseRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"view", request.view()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ReservationSubBlocksGetResponse>(
       *service_, rest_context, request, false,
@@ -57,6 +66,92 @@ DefaultReservationSubBlocksRestStub::GetReservationSubBlocksGetResponse(
                    request.zone(), "/", request.parent_name(), "/",
                    "reservationSubBlocks", "/",
                    request.reservation_sub_block()),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+DefaultReservationSubBlocksRestStub::GetIamPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", request.parent_resource(), "/",
+                   "reservationSubBlocks", "/", request.resource(), "/",
+                   "getIamPolicy"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultReservationSubBlocksRestStub::AsyncGetVersion(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.reservation_sub_blocks_get_version_request_resource(),
+                false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/",
+                             request.parent_name(), "/", "reservationSubBlocks",
+                             "/", request.reservation_sub_block(), "/",
+                             "getVersion"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationSubBlocksRestStub::GetVersion(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.reservation_sub_blocks_get_version_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", request.parent_name(), "/",
+                   "reservationSubBlocks", "/", request.reservation_sub_block(),
+                   "/", "getVersion"),
       std::move(query_params));
 }
 
@@ -85,6 +180,224 @@ DefaultReservationSubBlocksRestStub::ListReservationSubBlocks(
                    request.zone(), "/", request.parent_name(), "/",
                    "reservationSubBlocks"),
       std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultReservationSubBlocksRestStub::AsyncPerformMaintenance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/",
+                             request.parent_name(), "/", "reservationSubBlocks",
+                             "/", request.reservation_sub_block(), "/",
+                             "performMaintenance"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationSubBlocksRestStub::PerformMaintenance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", request.parent_name(), "/",
+                   "reservationSubBlocks", "/", request.reservation_sub_block(),
+                   "/", "performMaintenance"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultReservationSubBlocksRestStub::AsyncReportFaulty(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.reservation_sub_blocks_report_faulty_request_resource(),
+                false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/",
+                             request.parent_name(), "/", "reservationSubBlocks",
+                             "/", request.reservation_sub_block(), "/",
+                             "reportFaulty"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationSubBlocksRestStub::ReportFaulty(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.reservation_sub_blocks_report_faulty_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", request.parent_name(), "/",
+                   "reservationSubBlocks", "/", request.reservation_sub_block(),
+                   "/", "reportFaulty"),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+DefaultReservationSubBlocksRestStub::SetIamPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        SetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
+      *service_, rest_context,
+      request.zone_set_nested_policy_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", request.parent_resource(), "/",
+                   "reservationSubBlocks", "/", request.resource(), "/",
+                   "setIamPolicy"),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+DefaultReservationSubBlocksRestStub::TestIamPermissions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", request.parent_resource(), "/",
+                   "reservationSubBlocks", "/", request.resource(), "/",
+                   "testIamPermissions"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultReservationSubBlocksRestStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request, false,
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/projects/", request.project(), "/zones/",
+                             request.zone(), "/operations/",
+                             request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<Status> DefaultReservationSubBlocksRestStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
+  promise<StatusOr<google::protobuf::Empty>> p;
+  future<StatusOr<google::protobuf::Empty>> f = p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat("/compute/",
+                         rest_internal::DetermineApiVersion("v1", *options),
+                         "/projects/", request.project(), "/zones/",
+                         request.zone(), "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get().status();
+  });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -106,7 +106,7 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L92}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L99}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& project, std::string const& zone,
@@ -134,7 +134,7 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L92}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L99}
   ///
   // clang-format on
   Status DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::
@@ -163,8 +163,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L107}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L114}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -195,8 +195,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L107}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L114}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -206,8 +206,8 @@ class ZoneOperationsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of Operation resources contained within the specified
-  /// zone.
+  /// Retrieves a list of Operation resources contained within
+  /// the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/list
   ///
   /// @param project  Project ID for this request.
@@ -234,8 +234,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
-  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L129}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
+  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L136}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
@@ -243,8 +243,8 @@ class ZoneOperationsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of Operation resources contained within the specified
-  /// zone.
+  /// Retrieves a list of Operation resources contained within
+  /// the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -275,8 +275,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
-  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L129}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
+  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L136}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
@@ -286,16 +286,23 @@ class ZoneOperationsClient {
 
   // clang-format off
   ///
-  /// Waits for the specified Operation resource to return as `DONE` or for the
-  /// request to approach the 2 minute deadline, and retrieves the specified
-  /// Operation resource. This method waits for no more than the 2 minutes and
-  /// then returns the current state of the operation, which might be `DONE` or
-  /// still in progress. This method is called on a best-effort basis.
-  /// Specifically: - In uncommon cases, when the server is overloaded, the
-  /// request might return before the default deadline is reached, or might
-  /// return after zero seconds. - If the default deadline is reached, there is
-  /// no guarantee that the operation is actually done when the method returns.
-  /// Be prepared to retry if the operation is not `DONE`.
+  /// Waits for the specified Operation resource to return as `DONE`
+  /// or for the request to approach the 2 minute deadline, and retrieves the
+  /// specified Operation resource. This method waits for no more than the
+  /// 2 minutes and then returns the current state of the
+  /// operation, which might be `DONE` or still in progress.
+  ///
+  /// This method is called on a best-effort basis. Specifically:
+  ///
+  ///
+  ///     - In uncommon cases, when the server is overloaded, the request might
+  ///     return before the default deadline is reached, or might return after
+  /// zero
+  ///     seconds.
+  ///    - If the default deadline is reached, there is no guarantee that the
+  ///     operation is actually done when the method returns. Be prepared to
+  /// retry
+  ///     if the operation is not `DONE`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/wait
   ///
   /// @param project  Project ID for this request.
@@ -315,8 +322,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
-  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L200}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
+  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -325,16 +332,23 @@ class ZoneOperationsClient {
 
   // clang-format off
   ///
-  /// Waits for the specified Operation resource to return as `DONE` or for the
-  /// request to approach the 2 minute deadline, and retrieves the specified
-  /// Operation resource. This method waits for no more than the 2 minutes and
-  /// then returns the current state of the operation, which might be `DONE` or
-  /// still in progress. This method is called on a best-effort basis.
-  /// Specifically: - In uncommon cases, when the server is overloaded, the
-  /// request might return before the default deadline is reached, or might
-  /// return after zero seconds. - If the default deadline is reached, there is
-  /// no guarantee that the operation is actually done when the method returns.
-  /// Be prepared to retry if the operation is not `DONE`.
+  /// Waits for the specified Operation resource to return as `DONE`
+  /// or for the request to approach the 2 minute deadline, and retrieves the
+  /// specified Operation resource. This method waits for no more than the
+  /// 2 minutes and then returns the current state of the
+  /// operation, which might be `DONE` or still in progress.
+  ///
+  /// This method is called on a best-effort basis. Specifically:
+  ///
+  ///
+  ///     - In uncommon cases, when the server is overloaded, the request might
+  ///     return before the default deadline is reached, or might return after
+  /// zero
+  ///     seconds.
+  ///    - If the default deadline is reached, there is no guarantee that the
+  ///     operation is actually done when the method returns. Be prepared to
+  /// retry
+  ///     if the operation is not `DONE`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/wait
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -356,8 +370,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
-  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L200}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
+  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(

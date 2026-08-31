@@ -103,7 +103,7 @@ class DiscoveryResource {
   nlohmann::json json_;
   std::map<std::string, DiscoveryTypeVertex*> request_types_;
   std::map<std::string, DiscoveryTypeVertex*> response_types_;
-  absl::optional<StatusOr<std::string>> service_api_version_;
+  std::optional<StatusOr<std::string>> service_api_version_;
 };
 
 }  // namespace generator_internal

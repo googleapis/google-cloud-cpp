@@ -18,6 +18,9 @@
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/client_schema_metrics.h"
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "absl/base/call_once.h"
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
@@ -132,6 +135,11 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& instance_name,
       std::string const& app_profile) override;
 
+  std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility()
+      const {
+    return direct_access_compatibility_;
+  }
+
  private:
   void InitializeProvider(
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
@@ -140,6 +148,8 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   std::string client_uid_;
   std::shared_ptr<OperationContext::Clock> clock_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
+  ClientResourceLabels client_resource_labels_;
+  std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility_;
 
   // These vectors are initialized exactly once and the initialization is
   // delayed until the first time the corresponding method is called.
@@ -157,6 +167,17 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   MetricHolder prepare_query_metrics_;
   MetricHolder execute_query_metrics_;
 };
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics);
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    ClientResourceLabels const& client_resource_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics);
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 

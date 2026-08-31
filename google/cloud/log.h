@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOG_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <atomic>
 #include <chrono>
 #include <cstdlib>
@@ -25,6 +24,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <thread>
@@ -143,7 +143,7 @@ enum class Severity : int {
 };
 
 /// Convert a human-readable representation to a Severity.
-absl::optional<Severity> ParseSeverity(std::string const& name);
+std::optional<Severity> ParseSeverity(std::string const& name);
 
 /// Streaming operator, writes a human-readable representation.
 std::ostream& operator<<(std::ostream& os, Severity x);

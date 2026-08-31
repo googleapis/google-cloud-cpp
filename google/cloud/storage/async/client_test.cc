@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
@@ -59,6 +60,76 @@ auto TestProtoObject() {
   result.set_name("test-object");
   result.set_size(0);
   return result;
+}
+
+auto TestProtoBucket() {
+  google::storage::v2::Bucket result;
+  result.set_name("projects/_/buckets/test-bucket");
+  return result;
+}
+
+TEST(AsyncClient, GetBucket1) {
+  auto constexpr kExpectedRequest = R"pb(
+    name: "projects/_/buckets/test-bucket"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](AsyncConnection::GetBucketParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::GetBucketRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoBucket()));
+      });
+
+  auto client = AsyncClient(mock);
+  auto response = client
+                      .GetBucket(BucketName("test-bucket"),
+                                 Options{}
+                                     .set<TestOption<1>>("O1-function")
+                                     .set<TestOption<2>>("O2-function"))
+                      .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(TestProtoBucket()));
+}
+
+TEST(AsyncClient, GetBucket2) {
+  auto constexpr kExpectedRequest = R"pb(
+    name: "projects/_/buckets/test-bucket"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](AsyncConnection::GetBucketParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::GetBucketRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoBucket()));
+      });
+
+  auto request = google::storage::v2::GetBucketRequest{};
+  request.set_name("projects/_/buckets/test-bucket");
+  auto client = AsyncClient(mock);
+  auto response =
+      client
+          .GetBucket(std::move(request), Options{}
+                                             .set<TestOption<1>>("O1-function")
+                                             .set<TestOption<2>>("O2-function"))
+          .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(TestProtoBucket()));
 }
 
 TEST(AsyncClient, InsertObject1) {
@@ -218,6 +289,43 @@ TEST(AsyncClient, Open) {
   EXPECT_THAT(
       p, VariantWith<ReadPayload>(ResultOf(
              "empty response", [](auto const& p) { return p.size(); }, 0)));
+}
+
+TEST(AsyncClient, OpenWithInitialReadRanges) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+
+  EXPECT_CALL(*mock, Open).WillOnce([&](AsyncConnection::OpenParams const& p) {
+    EXPECT_TRUE(p.options.has<storage_internal::ReadRangesOption>());
+    auto const& ranges = p.options.get<storage_internal::ReadRangesOption>();
+    EXPECT_EQ(ranges.size(), 2);
+    if (ranges.size() >= 2) {
+      EXPECT_EQ(ranges[0].offset, 0);
+      EXPECT_EQ(ranges[0].length, 100);
+      EXPECT_EQ(ranges[1].offset, 1000);
+      EXPECT_EQ(ranges[1].length, 200);
+    }
+
+    auto expected = google::storage::v2::BidiReadObjectSpec{};
+    EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+    EXPECT_THAT(p.read_spec, IsProtoEqual(expected));
+
+    auto descriptor = std::make_shared<MockAsyncObjectDescriptorConnection>();
+    return make_ready_future(make_status_or(
+        std::shared_ptr<ObjectDescriptorConnection>(std::move(descriptor))));
+  });
+
+  auto client = AsyncClient(mock);
+  AsyncClient::InitialReadRanges config;
+  config.initial_ranges = {{0, 100}, {1000, 200}};
+  auto descriptor =
+      client.Open(BucketName("test-bucket"), "test-object", std::move(config))
+          .get();
+  ASSERT_STATUS_OK(descriptor);
 }
 
 TEST(AsyncClient, OpenWithInvalidBucket) {

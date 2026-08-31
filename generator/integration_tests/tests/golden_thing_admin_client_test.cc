@@ -599,7 +599,7 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterCancelled) {
   auto response = client.SetIamPolicy(
       expected_database, [etag_old](::google::iam::v1::Policy const& policy) {
         EXPECT_EQ(etag_old, policy.etag());
-        return absl::nullopt;
+        return std::nullopt;
       });
   ASSERT_THAT(response, Not(IsOk()));
   EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));

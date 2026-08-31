@@ -54,6 +54,11 @@ Idempotency RoutesConnectionIdempotencyPolicy::ListRoutes(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RoutesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<RoutesConnectionIdempotencyPolicy>
 MakeDefaultRoutesConnectionIdempotencyPolicy() {
   return std::make_unique<RoutesConnectionIdempotencyPolicy>();

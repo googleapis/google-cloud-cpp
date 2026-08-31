@@ -226,6 +226,29 @@ KeyManagementServiceAuth::ImportCryptoKeyVersion(
   return child_->ImportCryptoKeyVersion(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceAuth::ImportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                         request);
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceAuth::ExportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                         request);
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceAuth::CreateImportJob(
     grpc::ClientContext& context, Options const& options,

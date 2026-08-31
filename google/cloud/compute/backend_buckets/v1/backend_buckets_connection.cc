@@ -61,6 +61,16 @@ BackendBucketsConnection::AddSignedUrlKey(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+BackendBucketsConnection::AggregatedListBackendBuckets(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::BackendBucketsScopedList>>>();
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -154,6 +164,14 @@ StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
 BackendBucketsConnection::ListBackendBuckets(
     google::cloud::cpp::compute::backend_buckets::v1::
         ListBackendBucketsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendBucket>>();
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+BackendBucketsConnection::ListUsable(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        ListUsableRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::BackendBucket>>();
 }

@@ -35,6 +35,22 @@ RegionHealthCheckServicesRestLogging::RegionHealthCheckServicesRestLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
+StatusOr<google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+RegionHealthCheckServicesRestLogging::AggregatedListRegionHealthCheckServices(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        AggregatedListRegionHealthCheckServicesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::region_health_check_services::v1::
+              AggregatedListRegionHealthCheckServicesRequest const& request) {
+        return child_->AggregatedListRegionHealthCheckServices(
+            rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesRestLogging::AsyncDeleteHealthCheckService(
     CompletionQueue& cq,
@@ -162,6 +178,20 @@ RegionHealthCheckServicesRestLogging::PatchHealthCheckService(
              google::cloud::cpp::compute::region_health_check_services::v1::
                  PatchHealthCheckServiceRequest const& request) {
         return child_->PatchHealthCheckService(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_health_check_services::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

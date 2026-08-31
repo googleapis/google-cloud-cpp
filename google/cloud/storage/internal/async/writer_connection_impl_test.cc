@@ -14,9 +14,11 @@
 
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/internal/async/write_object.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -273,12 +275,19 @@ TEST(AsyncWriterConnectionTest, FinalizeEmpty) {
                   "test-only-algo");
         return sequencer.PushBack("Write");
       });
-  EXPECT_CALL(*mock, Read).WillOnce([&]() {
-    return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
-    });
-  });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(MakeTestResponse());
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
       if (f.get()) return Status{};
@@ -296,16 +305,20 @@ TEST(AsyncWriterConnectionTest, FinalizeEmpty) {
   ASSERT_THAT(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  ASSERT_THAT(next.second, "Read");
+  ASSERT_THAT(next.second, "Read1");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
   auto object = response.get();
   EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
       << "=" << object->DebugString();
 
   tested = {};
-  next = sequencer.PopFrontWithName();
-  ASSERT_THAT(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST(AsyncWriterConnectionTest, FinalizeFails) {
@@ -375,8 +388,8 @@ TEST(AsyncWriterConnectionTest, QueryFinalFails) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(MakeTestResponse());
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -413,8 +426,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalFailsWithoutError) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(MakeTestResponse());
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -449,12 +462,19 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalMissingResource) {
   EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
     return sequencer.PushBack("Write");
   });
-  EXPECT_CALL(*mock, Read).WillOnce([&]() {
-    return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(Response{});
-    });
-  });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(Response{});
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
       if (f.get()) return Status{};
@@ -472,14 +492,18 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalMissingResource) {
   ASSERT_THAT(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  ASSERT_THAT(next.second, "Read");
+  ASSERT_THAT(next.second, "Read1");
   next.first.set_value(true);
-  EXPECT_THAT(response.get(), StatusIs(StatusCode::kInternal));
-
-  tested.reset();
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(true);
+
+  EXPECT_THAT(response.get(), StatusIs(StatusCode::kInternal));
+
+  tested = {};
 }
 
 TEST(AsyncWriterConnectionTest, FlushEmpty) {
@@ -497,10 +521,10 @@ TEST(AsyncWriterConnectionTest, FlushEmpty) {
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
+      if (!f.get()) return std::optional<Response>();
       auto response = Response{};
       response.set_persisted_size(16384);
-      return absl::make_optional(std::move(response));
+      return std::make_optional(std::move(response));
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -519,12 +543,12 @@ TEST(AsyncWriterConnectionTest, FlushEmpty) {
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
   next.first.set_value(true);
-  EXPECT_THAT(flush.get(), IsOk());
-
-  auto query = tested->Query();
   next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
   next.first.set_value(true);
+  EXPECT_THAT(flush.get(), IsOk());
+
+  auto query = tested->Query();
   EXPECT_THAT(query.get(), IsOkAndHolds(16384));
 
   tested = {};
@@ -591,13 +615,16 @@ TEST(AsyncWriterConnectionTest, UnexpectedFlushFailsWithoutError) {
   EXPECT_THAT(response.get(), StatusIs(StatusCode::kInternal));
 }
 
-TEST(AsyncWriterConnectionTest, QueryFails) {
+TEST(AsyncWriterConnectionTest, FlushFailsOnRead) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
+    return sequencer.PushBack("Write");
+  });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
@@ -606,28 +633,35 @@ TEST(AsyncWriterConnectionTest, QueryFails) {
     });
   });
   auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
       TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
-  auto query = tested->Query();
+  auto flush = tested->Flush(WritePayload{std::string("fake-payload-data")});
   auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
   next.first.set_value(false);  // Detect error from Read()
+
   next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(false);  // Return error from Finish()
-  EXPECT_THAT(query.get(), StatusIs(PermanentError().code()));
+  EXPECT_THAT(flush.get(), StatusIs(PermanentError().code()));
 }
 
-TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
+TEST(AsyncWriterConnectionTest, UnexpectedFlushFailsOnReadWithoutError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
+    return sequencer.PushBack("Write");
+  });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
@@ -636,28 +670,35 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
     });
   });
   auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
       TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
-  auto query = tested->Query();
+  auto flush = tested->Flush(WritePayload{std::string("fake-payload-data")});
   auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
   next.first.set_value(false);  // Detect error from Read()
+
   next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(true);  // Return success from Finish()
-  EXPECT_THAT(query.get(), StatusIs(StatusCode::kInternal));
+  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kInternal));
 }
 
-TEST(AsyncWriterConnectionTest, QueryFailsWithRedirect) {
+TEST(AsyncWriterConnectionTest, FlushFailsWithRedirect) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
+    return sequencer.PushBack("Write");
+  });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
 
   google::rpc::Status rpc_status;
@@ -681,17 +722,23 @@ TEST(AsyncWriterConnectionTest, QueryFailsWithRedirect) {
     });
   });
   auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
       TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
-  auto query = tested->Query();
+  auto flush = tested->Flush(WritePayload{std::string("fake-payload-data")});
   auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
   next.first.set_value(false);  // Detect error from Read()
+
   next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(false);  // Return error from Finish()
-  EXPECT_THAT(query.get(), StatusIs(StatusCode::kAborted));
+  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kAborted));
 }
 
 TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
@@ -707,12 +754,19 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
         EXPECT_FALSE(request.has_object_checksums());
         return sequencer.PushBack("Write");
       });
-  EXPECT_CALL(*mock, Read).WillOnce([&]() {
-    return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
-    });
-  });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(MakeTestResponse());
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
       if (f.get()) return Status{};
@@ -732,16 +786,296 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
   ASSERT_THAT(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  ASSERT_THAT(next.second, "Read");
+  ASSERT_THAT(next.second, "Read1");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
   auto object = response.get();
   EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
       << "=" << object->DebugString();
 
   tested = {};
+}
+
+TEST(AsyncWriterConnectionTest, FinalizeAppendableWithExpectedChecksum) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().crc32c(), 123456);
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(MakeTestResponse());
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto request = MakeRequest();
+  request.mutable_write_object_spec()->set_appendable(true);
+
+  auto options = internal::MakeImmutableOptions(
+      Options{}.set<storage::UseCrc32cValueOption>(123456));
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      options, std::move(request), std::move(mock), hash, 1024);
+  auto response = tested->Finalize(WritePayload{});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(true);
+
+  auto object = response.get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
+
+  tested = {};
+}
+
+TEST(AsyncWriterConnectionTest,
+     FinalizeAppendableWithExpectedChecksumFromCurrentOptions) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().crc32c(), 654321);
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(MakeTestResponse());
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  // It shouldn't call Finish() because we use kFinalize!
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto request = MakeRequest();
+  request.mutable_write_object_spec()->set_appendable(true);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), std::move(request), std::move(mock), hash, 1024);
+
+  internal::OptionsSpan span(
+      Options{}.set<storage::UseCrc32cValueOption>(654321));
+  auto response = tested->Finalize(WritePayload{});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto object = response.get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
+
+  tested = {};
+}
+
+TEST(AsyncWriterConnectionTest,
+     FinalizeNonAppendableWithExpectedChecksumFromCurrentOptions) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().crc32c(), 654321);
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(MakeTestResponse());
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  // It shouldn't call Finish() because we use kFinalize!
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto request = MakeRequest();
+  // Ensure it's explicitly not appendable.
+  request.mutable_write_object_spec()->set_appendable(false);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), std::move(request), std::move(mock), hash, 1024);
+
+  internal::OptionsSpan span(
+      Options{}.set<storage::UseCrc32cValueOption>(654321));
+  auto response = tested->Finalize(WritePayload{});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto object = response.get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
+
+  tested = {};
+}
+
+TEST(AsyncWriterConnectionTest,
+     FinalizeNonAppendableWithExpectedMD5FromCurrentOptions) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().md5_hash(), "test-md5");
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(MakeTestResponse());
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  // It shouldn't call Finish() because we use kFinalize!
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto request = MakeRequest();
+  // Ensure it's explicitly not appendable.
+  request.mutable_write_object_spec()->set_appendable(false);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), std::move(request), std::move(mock), hash, 1024);
+
+  internal::OptionsSpan span(
+      Options{}.set<storage::UseMD5ValueOption>("test-md5"));
+  auto response = tested->Finalize(WritePayload{});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto object = response.get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
+
+  tested = {};
 }
 
 TEST(AsyncWriterConnectionTest, ResumeWithHandle) {
@@ -786,56 +1120,6 @@ TEST(AsyncWriterConnectionTest, ResumeWithHandle) {
   ASSERT_EQ(seen_handles.size(), 1);
   EXPECT_EQ(seen_handles[0], "test-handle");
 }
-TEST(AsyncWriterConnectionTest, QueryUpdatesHandle) {
-  AsyncSequencer<bool> sequencer;
-  auto mock = std::make_unique<MockStream>();
-  std::vector<std::string> seen_handles;
-
-  EXPECT_CALL(*mock, Write)
-      .Times(1)
-      .WillRepeatedly([&](Request const& req, grpc::WriteOptions) {
-        EXPECT_TRUE(req.has_append_object_spec());
-        EXPECT_TRUE(req.append_object_spec().has_write_handle());
-        seen_handles.push_back(
-            req.append_object_spec().write_handle().handle());
-        return sequencer.PushBack("Write");
-      });
-
-  EXPECT_CALL(*mock, Read).WillOnce([&]() {
-    Response resp;
-    resp.mutable_write_handle()->set_handle("queried-handle");
-    resp.set_persisted_size(42);
-    return make_ready_future(absl::make_optional(std::move(resp)));
-  });
-
-  EXPECT_CALL(*mock, Cancel).Times(1);
-  EXPECT_CALL(*mock, Finish).WillOnce([] {
-    return make_ready_future(Status{});
-  });
-
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-
-  google::storage::v2::BidiWriteObjectRequest req;
-  req.mutable_append_object_spec()->set_bucket("bucket");
-  req.mutable_append_object_spec()->set_object("object");
-
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), req, std::move(mock), hash, 0);
-
-  // Query should update the internal handle.
-  EXPECT_THAT(tested->Query().get(), IsOkAndHolds(42));
-
-  // Write should now use the handle from the Query response.
-  auto result = tested->Write(WritePayload("payload"));
-  auto next = sequencer.PopFrontWithName();
-  ASSERT_THAT(next.second, "Write");
-  next.first.set_value(true);
-  EXPECT_STATUS_OK(result.get());
-
-  ASSERT_EQ(seen_handles.size(), 1);
-  EXPECT_EQ(seen_handles[0], "queried-handle");
-}
 
 TEST(AsyncWriterConnectionTest, CloseEmpty) {
   AsyncSequencer<bool> sequencer;
@@ -849,6 +1133,19 @@ TEST(AsyncWriterConnectionTest, CloseEmpty) {
         EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
                   "test-only-algo");
         return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          if (!f.get()) return std::optional<Response>();
+          return std::make_optional(Response{});
+        });
+      })
+      .WillOnce([&] {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
       });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
@@ -865,6 +1162,14 @@ TEST(AsyncWriterConnectionTest, CloseEmpty) {
   auto close = tested->Close(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read1");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
   next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
@@ -902,6 +1207,158 @@ TEST(AsyncWriterConnectionTest, CloseError) {
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(false);  // Return error from Finish()
   EXPECT_THAT(response.get(), StatusIs(PermanentError().code()));
+}
+
+TEST(AsyncWriterConnectionTest, CloseMultipleResponsesBeforeEOF) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write");
+      });
+
+  // Simulate the scenario where Close() prompts the server to return multiple
+  // intermediate response messages before sending EOF. The client should
+  // successfully consume all responses and complete Finish() cleanly without
+  // hanging.
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          f.get();
+          return std::make_optional(Response{});
+        });
+      })
+      .WillOnce([&] {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          auto r = Response{};
+          r.mutable_write_handle()->set_handle("intermediate-handle");
+          return std::make_optional(r);
+        });
+      })
+      .WillOnce([&] {
+        return sequencer.PushBack("Read3").then([](auto f) {
+          f.get();
+          return std::optional<Response>();
+        });
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto close = tested->Close(WritePayload{});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read1");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read2");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read3");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(close.get(), IsOk());
+  tested = {};
+}
+
+TEST(AsyncWriterConnectionTest, FlushConsumesIntermediateMessagesBeforeSize) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+
+  EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
+    return sequencer.PushBack("Write");
+  });
+
+  // We simulate a scenario where Flush() causes GCS to send
+  // multiple responses. The first is an intermediate message (no size).
+  // The second is the actual persisted_size response.
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          f.get();
+          auto r = Response{};
+          r.mutable_write_handle()->set_handle("intermediate-handle");
+          return std::make_optional(r);
+        });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          auto r = Response{};
+          r.set_persisted_size(1024);
+          return std::make_optional(r);
+        });
+      });
+
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+
+  Request request;
+  request.mutable_write_object_spec()->mutable_resource()->set_bucket(
+      "test-bucket");
+  request.mutable_write_object_spec()->mutable_resource()->set_name(
+      "test-object");
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), request, std::move(mock), hash,
+      /*persisted_size=*/0);
+
+  auto flush = tested->Flush(WritePayload{std::string("fake-payload")});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Write");
+  next.first.set_value(true);
+
+  // The client requests the first read. We satisfy it with the intermediate
+  // message.
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+
+  // The client requests the second read. We satisfy it with the persisted_size.
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+
+  // The flush should finally resolve successfully.
+  auto result = flush.get();
+  EXPECT_STATUS_OK(result);
+
+  tested.reset();
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

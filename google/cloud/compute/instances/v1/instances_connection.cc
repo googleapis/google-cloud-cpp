@@ -61,6 +61,31 @@ InstancesConnection::AddAccessConfig(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::AddNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesConnection::AddNetworkInterface(
+    NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                    AddNetworkInterfaceRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::AddNetworkInterface(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::AddResourcePolicies(
     google::cloud::cpp::compute::instances::v1::
         AddResourcePoliciesRequest const&) {
@@ -186,6 +211,31 @@ InstancesConnection::DeleteAccessConfig(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::DeleteAccessConfig(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::DeleteNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesConnection::DeleteNetworkInterface(
+    NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                    DeleteNetworkInterfaceRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::DeleteNetworkInterface(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(

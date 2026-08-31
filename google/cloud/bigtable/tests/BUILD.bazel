@@ -39,6 +39,7 @@ VARIATIONS = {
         "//:bigtable",
         "//:common",
         "//:grpc_utils",
+        "//ci/otel_collector",
         "//google/cloud/bigtable:bigtable_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@googletest//:gtest_main",

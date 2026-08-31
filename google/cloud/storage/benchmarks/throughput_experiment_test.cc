@@ -68,9 +68,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
     ThroughputExperimentConfig config{
-        OpType::kOpInsert,       16 * kKiB,    1 * kMiB,
+        OpType::kOpInsert,       16 * kKiB,   1 * kMiB,
         /*enable_crc32c=*/false,
-        /*enable_md5=*/false,    absl::nullopt};
+        /*enable_md5=*/false,    std::nullopt};
     auto result = e->Run(bucket_name_, object_name, config);
     ASSERT_STATUS_OK(result.status);
     auto status = client.DeleteObject(bucket_name_, object_name);

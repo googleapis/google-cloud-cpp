@@ -44,12 +44,20 @@ class RoutersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request);
 
+  virtual google::cloud::Idempotency DeleteNamedSet(
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteRoutePolicy(
       google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
           request);
 
   virtual google::cloud::Idempotency GetRouter(
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetNamedSet(
+      google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
           request);
 
   virtual google::cloud::Idempotency GetNatIpInfo(
@@ -79,12 +87,20 @@ class RoutersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListNamedSets(
+      google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListRoutePolicies(
       google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
           request);
 
   virtual google::cloud::Idempotency PatchRouter(
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency PatchNamedSet(
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
           request);
 
   virtual google::cloud::Idempotency PatchRoutePolicy(
@@ -96,6 +112,10 @@ class RoutersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateRouter(
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateNamedSet(
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
           request);
 
   virtual google::cloud::Idempotency UpdateRoutePolicy(

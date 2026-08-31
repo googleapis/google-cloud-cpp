@@ -23,6 +23,7 @@
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include <iostream>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,7 @@ namespace {
 // that we need to introduce additional in the future if we come across other
 // LRO defining conventions.
 // https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
-absl::optional<std::string> DetermineLongRunningOperationService(
+std::optional<std::string> DetermineLongRunningOperationService(
     nlohmann::json const& method_json, std::vector<std::string> const& params,
     std::set<std::string> const& operation_services,
     std::string const& resource_name) {
@@ -56,7 +57,7 @@ absl::optional<std::string> DetermineLongRunningOperationService(
     }
     return "GlobalOrganizationOperations";
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 }  // namespace
@@ -335,6 +336,11 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
 
     std::string method_description = method_json.value("description", "");
     if (!method_description.empty()) {
+      static std::regex const kRelativeLinkRegex(
+          R"(\]\(/([a-zA-Z0-9_#/-]+)\))");
+      method_description =
+          std::regex_replace(method_description, kRelativeLinkRegex,
+                             "](https://cloud.google.com/$1)");
       rpc_text.push_back(FormatCommentBlock(method_description, 1));
     }
     auto constexpr kMethodLinkComments =

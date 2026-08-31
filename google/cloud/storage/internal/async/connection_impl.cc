@@ -19,13 +19,16 @@
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/retry_policy.h"
+#include "google/cloud/storage/internal/async/checksum_helpers.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/open_object.h"
 #include "google/cloud/storage/internal/async/open_stream.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
@@ -57,6 +60,7 @@
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <set>
 #include <utility>
 
 namespace google {
@@ -80,14 +84,18 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
 }
 
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
-    Options const& options) {
+    Options const& options,
+    storage_internal::ChecksumSettings const& settings) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
+
   if (options.has<storage::UseCrc32cValueOption>()) {
     crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
         storage::internal::HashValues{
             Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
             /*.md5=*/{}});
-  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
+  } else if (enable_crc32c) {
     crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
   }
 
@@ -97,7 +105,7 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
         storage::internal::HashValues{
             /*.crc32=*/{},
             MD5FromProto(options.get<storage::UseMD5ValueOption>())});
-  } else if (options.get<storage::EnableMD5ValidationOption>()) {
+  } else if (enable_md5) {
     md5 = storage::internal::MD5HashFunction::Create();
   }
 
@@ -110,47 +118,6 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
-StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
-    google::cloud::internal::ImmutableOptions const& current,
-    google::storage::v2::BidiWriteObjectRequest request,
-    std::int64_t persisted_size,
-    std::function<future<StatusOr<WriteObject::WriteResult>>(
-        google::storage::v2::BidiWriteObjectRequest)>
-        factory,
-    StatusOr<WriteObject::WriteResult> rpc) {
-  if (!rpc) return std::move(rpc).status();
-
-  std::shared_ptr<storage::internal::HashFunction> hash;
-  std::unique_ptr<AsyncWriterConnectionImpl> impl;
-
-  if (rpc->first_response.has_resource()) {
-    auto const& resource = rpc->first_response.resource();
-    if (current->get<storage::EnableCrc32cValidationOption>() &&
-        resource.has_checksums() && resource.checksums().has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
-          resource.checksums().crc32c(), resource.size());
-    } else {
-      hash = CreateHashFunction(*current);
-    }
-    impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, resource, false);
-  } else {
-    persisted_size = rpc->first_response.persisted_size();
-    hash = CreateHashFunction(*current);
-    auto checksums = rpc->first_response.has_persisted_data_checksums()
-                         ? absl::make_optional(
-                               rpc->first_response.persisted_data_checksums())
-                         : absl::nullopt;
-    impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, persisted_size, false,
-        checksums);
-  }
-  return MakeWriterConnectionResumed(std::move(factory), std::move(impl),
-                                     std::move(request), std::move(hash),
-                                     rpc->first_response, *current);
-}
-
 std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
     google::storage::v2::ReadObjectRequest const& request,
     Options const& options) {
@@ -158,9 +125,9 @@ std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
       request.read_limit() != 0 || request.read_offset() != 0;
   if (is_ranged_read) return storage::internal::CreateNullHashValidator();
 
-  auto const enable_crc32c =
-      options.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options.get<storage::EnableMD5ValidationOption>();
+  auto const settings = GetDownloadChecksumSettings(options);
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
 
   if (enable_crc32c && enable_md5) {
     return std::make_unique<storage::internal::CompositeValidator>(
@@ -186,6 +153,27 @@ AsyncConnectionImpl::AsyncConnectionImpl(
       stub_(std::move(stub)),
       options_(std::move(options)) {}
 
+future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
+    GetBucketParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto request = std::move(p.request);
+  auto const idempotency = idempotency_policy(*current)->GetBucket(request);
+
+  auto call = [stub = stub_](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
+                  google::storage::v2::GetBucketRequest const& request) {
+    return stub->AsyncGetBucket(cq, std::move(context), std::move(options),
+                                request);
+  };
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  return google::cloud::internal::AsyncRetryLoop(
+      std::move(retry), std::move(backoff), idempotency, cq_, std::move(call),
+      std::move(current), std::move(request), __func__);
+}
+
 future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
     InsertObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
@@ -208,7 +196,8 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
         options->get<storage::TransferStallMinimumRateOption>(),
         google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
-    auto hash_function = CreateHashFunction(*options);
+    auto hash_function =
+        CreateHashFunction(*options, GetUploadChecksumSettings(*options));
     ApplyRoutingHeaders(*context, request.write_object_spec());
     AddIdempotencyToken(*context, id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
@@ -234,6 +223,18 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
   *initial_request.mutable_read_object_spec() = p.read_spec;
   auto current = internal::MakeImmutableOptions(p.options);
+  // If pre-warmed ranges are configured, populate the initial request
+  // with these ranges to start downloading them as soon as the stream opens.
+  if (current->has<ReadRangesOption>()) {
+    auto const& ranges = current->get<ReadRangesOption>();
+    for (auto const& r : DeduplicateRanges(ranges)) {
+      auto* proto_range = initial_request.add_read_ranges();
+      proto_range->set_read_offset(r.config.offset);
+      proto_range->set_read_length(r.config.length);
+      // Generate sequential IDs starting at 1. The receiver must match these.
+      proto_range->set_read_id(r.read_id);
+    }
+  }
   // Get the policy factory and immediately create a policy.
   auto resume_policy = current->get<storage::ResumePolicyOption>()();
 
@@ -312,12 +313,13 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   // Create the hash function and validator based on the original request. Note
   // that p.request will be moved-from, so we have to do it relatively early in
   // this function.
+  auto const settings = GetDownloadChecksumSettings(*current);
   auto hash_function =
       std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-          CreateHashFunction(*current));
+          CreateHashFunction(*current, settings));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
-  absl::optional<std::int64_t> requested_length;
+  std::optional<std::int64_t> requested_length;
   if (p.request.read_limit() > 0) {
     requested_length = p.request.read_limit();
   }
@@ -363,7 +365,8 @@ future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
-  std::int64_t persisted_size = 0;
+  std::shared_ptr<storage::internal::HashFunction> hash_function =
+      CreateHashFunction(*current, GetUploadChecksumSettings(*current));
   auto retry =
       std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
   auto backoff =
@@ -450,11 +453,24 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
 
   auto pending = factory(std::move(request));
   return pending.then(
-      [current, request = std::move(p.request), persisted_size,
+      [current, request = std::move(p.request), hash = std::move(hash_function),
        fa = std::move(factory)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-        return MakeAppendableWriter(current, std::move(request), persisted_size,
-                                    std::move(fa), f.get());
+        auto rpc = f.get();
+        if (!rpc) return std::move(rpc).status();
+        std::unique_ptr<AsyncWriterConnectionImpl> impl;
+        if (rpc->first_response.has_resource()) {
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash,
+              rpc->first_response.resource(), false);
+        } else {
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash,
+              rpc->first_response.persisted_size(), false);
+        }
+        return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
+                                           std::move(request), std::move(hash),
+                                           rpc->first_response, *current);
       });
 }
 
@@ -730,7 +746,8 @@ AsyncConnectionImpl::StartUnbufferedUploadImpl(
         StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::move(response).status()));
   }
-  auto hash_function = CreateHashFunction(*current);
+  auto hash_function =
+      CreateHashFunction(*current, GetUploadChecksumSettings(*current));
   auto configure =
       [current, upload = response->upload_id()](grpc::ClientContext& context) {
         ApplyResumableUploadRoutingHeader(context, upload);
@@ -768,7 +785,8 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
   // the upload resumes from the beginning of the file.
   auto hash_function = storage::internal::CreateNullHashFunction();
   if (response->persisted_size() == 0) {
-    hash_function = CreateHashFunction(*current);
+    hash_function =
+        CreateHashFunction(*current, GetUploadChecksumSettings(*current));
   }
   auto configure =
       [current, upload_id = query.upload_id()](grpc::ClientContext& context) {

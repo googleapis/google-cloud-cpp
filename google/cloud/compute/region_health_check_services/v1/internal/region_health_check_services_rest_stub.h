@@ -38,6 +38,14 @@ class RegionHealthCheckServicesRestStub {
  public:
   virtual ~RegionHealthCheckServicesRestStub() = default;
 
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+  AggregatedListRegionHealthCheckServices(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          AggregatedListRegionHealthCheckServicesRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteHealthCheckService(
       google::cloud::CompletionQueue& cq,
@@ -97,6 +105,12 @@ class RegionHealthCheckServicesRestStub {
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -122,6 +136,14 @@ class DefaultRegionHealthCheckServicesRestStub
   DefaultRegionHealthCheckServicesRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
+
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+  AggregatedListRegionHealthCheckServices(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          AggregatedListRegionHealthCheckServicesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteHealthCheckService(
@@ -178,6 +200,12 @@ class DefaultRegionHealthCheckServicesRestStub
       Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

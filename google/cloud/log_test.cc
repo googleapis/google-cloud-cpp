@@ -167,7 +167,7 @@ TEST(LogSinkTest, FlushMultipleBackends) {
 }
 
 TEST(LogSinkTest, LogDefaultInstance) {
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment config(kLogConfig, std::nullopt);
   ScopedEnvironment env(kEnableClog, "anyvalue");
 
   auto backend = std::make_shared<MockLogBackend>();
@@ -218,7 +218,7 @@ TEST(LogSinkTest, ClogEnvironment) {
   auto old_style = testing::FLAGS_gtest_death_test_style;
   testing::FLAGS_gtest_death_test_style = "threadsafe";
 
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment config(kLogConfig, std::nullopt);
   ScopedEnvironment env(kEnableClog, "anyvalue");
 
   auto f = [] {

@@ -24,7 +24,7 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-absl::optional<Project> MonitoringProject(
+std::optional<Project> MonitoringProject(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options) {
   auto project = MonitoringProject(resource);
@@ -32,36 +32,36 @@ absl::optional<Project> MonitoringProject(
   project = MonitoringProject(options);
   if (project) return project;
   auto const& credentials = options.get<UnifiedCredentialsOption>();
-  if (!credentials) return absl::nullopt;
+  if (!credentials) return std::nullopt;
   return MonitoringProject(*credentials);
 }
 
-absl::optional<Project> MonitoringProject(Credentials const& credentials) {
+std::optional<Project> MonitoringProject(Credentials const& credentials) {
   auto rest_credentials =
       google::cloud::rest_internal::MapCredentials(credentials);
   auto project_id = rest_credentials->project_id();
-  if (!project_id) return absl::nullopt;
+  if (!project_id) return std::nullopt;
   return Project(*std::move(project_id));
 }
 
-absl::optional<Project> MonitoringProject(
+std::optional<Project> MonitoringProject(
     opentelemetry::sdk::resource::Resource const& resource) {
   namespace sc = ::opentelemetry::semconv;
   auto const& attributes = resource.GetAttributes();
   auto l = attributes.find(sc::cloud::kCloudProvider);
   if (l == attributes.end() ||
       opentelemetry::nostd::get<std::string>(l->second) != "gcp") {
-    return absl::nullopt;
+    return std::nullopt;
   }
   l = attributes.find(sc::cloud::kCloudAccountId);
-  if (l == attributes.end()) return absl::nullopt;
+  if (l == attributes.end()) return std::nullopt;
   return Project(opentelemetry::nostd::get<std::string>(l->second));
 }
 
-absl::optional<Project> MonitoringProject(Options const& options) {
-  if (!options.has<storage::ProjectIdOption>()) return absl::nullopt;
+std::optional<Project> MonitoringProject(Options const& options) {
+  if (!options.has<storage::ProjectIdOption>()) return std::nullopt;
   auto project_id = options.get<storage::ProjectIdOption>();
-  if (project_id.empty()) return absl::nullopt;
+  if (project_id.empty()) return std::nullopt;
   return Project(std::move(project_id));
 }
 

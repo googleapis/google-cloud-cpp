@@ -37,9 +37,9 @@
 #include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <map>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -77,7 +77,7 @@ class BucketMetadata {
   ///@{
   bool has_autoclass() const { return autoclass_.has_value(); }
   BucketAutoclass const& autoclass() const { return *autoclass_; }
-  absl::optional<BucketAutoclass> const& autoclass_as_optional() const {
+  std::optional<BucketAutoclass> const& autoclass_as_optional() const {
     return autoclass_;
   }
   BucketMetadata& set_autoclass(BucketAutoclass v) {
@@ -98,7 +98,7 @@ class BucketMetadata {
   ///@{
   bool has_billing() const { return billing_.has_value(); }
   BucketBilling const& billing() const { return *billing_; }
-  absl::optional<BucketBilling> const& billing_as_optional() const {
+  std::optional<BucketBilling> const& billing_as_optional() const {
     return billing_;
   }
   BucketMetadata& set_billing(BucketBilling const& v) {
@@ -193,7 +193,7 @@ class BucketMetadata {
   ///@{
   bool has_encryption() const { return encryption_.has_value(); }
   BucketEncryption const& encryption() const { return *encryption_; }
-  absl::optional<BucketEncryption> const& encryption_as_optional() const {
+  std::optional<BucketEncryption> const& encryption_as_optional() const {
     return encryption_;
   }
   BucketMetadata& set_encryption(BucketEncryption v) {
@@ -224,7 +224,7 @@ class BucketMetadata {
   BucketHierarchicalNamespace const& hierarchical_namespace() const {
     return *hierarchical_namespace_;
   }
-  absl::optional<BucketHierarchicalNamespace> const&
+  std::optional<BucketHierarchicalNamespace> const&
   hierarchical_namespace_as_optional() const {
     return hierarchical_namespace_;
   }
@@ -255,7 +255,7 @@ class BucketMetadata {
   BucketIamConfiguration const& iam_configuration() const {
     return *iam_configuration_;
   }
-  absl::optional<BucketIamConfiguration> const& iam_configuration_as_optional()
+  std::optional<BucketIamConfiguration> const& iam_configuration_as_optional()
       const {
     return iam_configuration_;
   }
@@ -340,7 +340,7 @@ class BucketMetadata {
   ///@{
   bool has_lifecycle() const { return lifecycle_.has_value(); }
   BucketLifecycle const& lifecycle() const { return *lifecycle_; }
-  absl::optional<BucketLifecycle> const& lifecycle_as_optional() const {
+  std::optional<BucketLifecycle> const& lifecycle_as_optional() const {
     return lifecycle_;
   }
   BucketMetadata& set_lifecycle(BucketLifecycle v) {
@@ -375,7 +375,7 @@ class BucketMetadata {
   ///@{
   bool has_logging() const { return logging_.has_value(); }
   BucketLogging const& logging() const { return *logging_; }
-  absl::optional<BucketLogging> const& logging_as_optional() const {
+  std::optional<BucketLogging> const& logging_as_optional() const {
     return logging_;
   }
   BucketMetadata& set_logging(BucketLogging v) {
@@ -479,7 +479,7 @@ class BucketMetadata {
   BucketRetentionPolicy const& retention_policy() const {
     return *retention_policy_;
   }
-  absl::optional<BucketRetentionPolicy> const& retention_policy_as_optional()
+  std::optional<BucketRetentionPolicy> const& retention_policy_as_optional()
       const {
     return retention_policy_;
   }
@@ -523,7 +523,7 @@ class BucketMetadata {
   BucketSoftDeletePolicy const& soft_delete_policy() const {
     return *soft_delete_policy_;
   }
-  absl::optional<BucketSoftDeletePolicy> const& soft_delete_policy_as_optional()
+  std::optional<BucketSoftDeletePolicy> const& soft_delete_policy_as_optional()
       const {
     return soft_delete_policy_;
   }
@@ -582,7 +582,7 @@ class BucketMetadata {
 
   /// @name Accessors and modifiers for versioning configuration.
   ///@{
-  absl::optional<BucketVersioning> const& versioning() const {
+  std::optional<BucketVersioning> const& versioning() const {
     return versioning_;
   }
   bool has_versioning() const { return versioning_.has_value(); }
@@ -598,7 +598,7 @@ class BucketMetadata {
     versioning_.reset();
     return *this;
   }
-  BucketMetadata& set_versioning(absl::optional<BucketVersioning> v) {
+  BucketMetadata& set_versioning(std::optional<BucketVersioning> v) {
     versioning_ = std::move(v);
     return *this;
   }
@@ -608,7 +608,7 @@ class BucketMetadata {
   ///@{
   bool has_website() const { return website_.has_value(); }
   BucketWebsite const& website() const { return *website_; }
-  absl::optional<BucketWebsite> const& website_as_optional() const {
+  std::optional<BucketWebsite> const& website_as_optional() const {
     return website_;
   }
   BucketMetadata& set_website(BucketWebsite v) {
@@ -629,7 +629,7 @@ class BucketMetadata {
   BucketCustomPlacementConfig const& custom_placement_config() const {
     return *custom_placement_config_;
   }
-  absl::optional<BucketCustomPlacementConfig> const&
+  std::optional<BucketCustomPlacementConfig> const&
   custom_placement_config_as_optional() const {
     return custom_placement_config_;
   }
@@ -654,37 +654,37 @@ class BucketMetadata {
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
-  absl::optional<BucketAutoclass> autoclass_;
-  absl::optional<BucketBilling> billing_;
+  std::optional<BucketAutoclass> autoclass_;
+  std::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
-  absl::optional<BucketCustomPlacementConfig> custom_placement_config_;
+  std::optional<BucketCustomPlacementConfig> custom_placement_config_;
   std::vector<ObjectAccessControl> default_acl_;
   bool default_event_based_hold_ = false;
-  absl::optional<BucketEncryption> encryption_;
+  std::optional<BucketEncryption> encryption_;
   std::string etag_;
-  absl::optional<BucketHierarchicalNamespace> hierarchical_namespace_;
-  absl::optional<BucketIamConfiguration> iam_configuration_;
+  std::optional<BucketHierarchicalNamespace> hierarchical_namespace_;
+  std::optional<BucketIamConfiguration> iam_configuration_;
   std::string id_;
   std::string kind_;
   std::map<std::string, std::string> labels_;
-  absl::optional<BucketLifecycle> lifecycle_;
+  std::optional<BucketLifecycle> lifecycle_;
   std::string location_;
   std::string location_type_;
-  absl::optional<BucketLogging> logging_;
+  std::optional<BucketLogging> logging_;
   std::int64_t metageneration_{0};
   std::string name_;
-  absl::optional<BucketObjectRetention> object_retention_;
-  absl::optional<Owner> owner_;
+  std::optional<BucketObjectRetention> object_retention_;
+  std::optional<Owner> owner_;
   std::int64_t project_number_ = 0;
-  absl::optional<BucketRetentionPolicy> retention_policy_;
+  std::optional<BucketRetentionPolicy> retention_policy_;
   std::string rpo_;
   std::string self_link_;
-  absl::optional<BucketSoftDeletePolicy> soft_delete_policy_;
+  std::optional<BucketSoftDeletePolicy> soft_delete_policy_;
   std::string storage_class_;
   std::chrono::system_clock::time_point time_created_;
   std::chrono::system_clock::time_point updated_;
-  absl::optional<BucketVersioning> versioning_;
-  absl::optional<BucketWebsite> website_;
+  std::optional<BucketVersioning> versioning_;
+  std::optional<BucketWebsite> website_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

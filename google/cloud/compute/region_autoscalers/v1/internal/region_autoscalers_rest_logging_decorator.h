@@ -97,6 +97,12 @@ class RegionAutoscalersRestLogging : public RegionAutoscalersRestStub {
       google::cloud::cpp::compute::region_autoscalers::v1::
           PatchAutoscalerRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_autoscalers::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,

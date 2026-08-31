@@ -192,6 +192,13 @@ class MockAutoscalersConnection
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::autoscalers::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

@@ -162,6 +162,16 @@ HealthChecksTracingConnection::PatchHealthCheck(
                            child_->PatchHealthCheck(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+HealthChecksTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::health_checks::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_health_checks_v1::HealthChecksConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksTracingConnection::UpdateHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::

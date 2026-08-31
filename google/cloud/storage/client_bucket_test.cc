@@ -66,7 +66,7 @@ Status PermanentError() {
 class BucketTest : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(BucketTest, ListBucketsNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -80,7 +80,7 @@ TEST_F(BucketTest, ListBucketsNoProject) {
 }
 
 TEST_F(BucketTest, ListBucketsProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::ListBucketsRequest::project_id,
@@ -219,7 +219,7 @@ TEST_F(BucketTest, CreateBucket) {
 }
 
 TEST_F(BucketTest, CreateBucketNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -233,7 +233,7 @@ TEST_F(BucketTest, CreateBucketNoProject) {
 }
 
 TEST_F(BucketTest, CreateBucketProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::CreateBucketRequest::project_id,

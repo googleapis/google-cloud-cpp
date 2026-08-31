@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/checksum_helpers.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
@@ -119,7 +121,7 @@ Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
   return {};
 }
 
-absl::optional<std::string> GetEmulator() {
+std::optional<std::string> GetEmulator() {
   auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   if (emulator) return emulator;
   return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
@@ -378,8 +380,16 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMediaMultipart(
         request.GetOption<WithObjectMetadata>().value());
   }
 
-  request.hash_function().Update(/*offset=*/0, request.payload());
-  auto hashes = storage::internal::FinishHashes(request);
+  auto const settings =
+      storage::internal::GetUploadChecksumSettings(request, options);
+  auto disable_md5 = storage::DisableMD5Hash(settings.md5);
+  auto disable_crc32c = storage::DisableCrc32cChecksum(settings.crc32c);
+  auto hash_function = storage::internal::CreateHashFunction(
+      request.GetOption<storage::Crc32cChecksumValue>(), disable_crc32c,
+      request.GetOption<storage::MD5HashValue>(), disable_md5);
+
+  hash_function->Update(/*offset=*/0, request.payload());
+  auto hashes = hash_function->Finish();
   if (!hashes.crc32c.empty()) metadata["crc32c"] = hashes.crc32c;
   if (!hashes.md5.empty()) metadata["md5Hash"] = hashes.md5;
 
@@ -447,13 +457,14 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMedia(
     return InsertObjectMediaMultipart(context, options, request);
   }
 
-  // If the application has set an explicit hash value we need to use multipart
-  // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
-  // dependent on each other.
-  if (!request.GetOption<DisableMD5Hash>().value_or(false) ||
-      !request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
-      request.HasOption<MD5HashValue>() ||
-      request.HasOption<Crc32cChecksumValue>()) {
+  // If the application has set an explicit hash value, or if it requires
+  // computing the MD5 hash or CRC32C checksum, we need to use multipart
+  // uploads.
+  auto const settings =
+      storage::internal::GetUploadChecksumSettings(request, options);
+  if (!settings.md5 || !settings.crc32c || request.HasOption<MD5HashValue>() ||
+      request.HasOption<Crc32cChecksumValue>() ||
+      options.has<PrecomputedChecksumsOption>()) {
     return InsertObjectMediaMultipart(context, options, request);
   }
 
@@ -706,6 +717,17 @@ StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
   }
   if (request.HasOption<MD5HashValue>()) {
     resource["md5Hash"] = request.GetOption<MD5HashValue>().value();
+  }
+
+  if (options.has<PrecomputedChecksumsOption>()) {
+    auto const& checksums = options.get<PrecomputedChecksumsOption>();
+    if (!request.HasOption<Crc32cChecksumValue>() &&
+        !checksums.crc32c.empty()) {
+      resource["crc32c"] = checksums.crc32c;
+    }
+    if (!request.HasOption<MD5HashValue>() && !checksums.md5.empty()) {
+      resource["md5Hash"] = checksums.md5;
+    }
   }
 
   if (resource.empty()) {
@@ -1265,3 +1287,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"

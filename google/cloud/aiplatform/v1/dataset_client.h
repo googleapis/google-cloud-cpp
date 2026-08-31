@@ -287,7 +287,7 @@ class DatasetServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L312}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
@@ -909,7 +909,7 @@ class DatasetServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.UpdateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L329}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(

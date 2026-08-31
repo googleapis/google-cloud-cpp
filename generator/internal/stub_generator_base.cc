@@ -15,6 +15,7 @@
 #include "generator/internal/stub_generator_base.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
+#include "absl/strings/str_cat.h"
 #include <google/protobuf/descriptor.h>
 
 namespace google {
@@ -36,59 +37,63 @@ StubGeneratorBase::StubGeneratorBase(
 void StubGeneratorBase::HeaderPrintPublicMethods() {
   for (auto const& method : methods()) {
     if (IsStreamingWrite(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       $request_type$,
       $response_type$>>
   $method_name$(
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options) override;
+      Options const& options$op_ctx_shared_decl$) override;
 )""");
       continue;
     }
     if (IsBidirStreaming(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) override;
+      google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) override;
 )""");
       continue;
     }
     if (IsLongrunningOperation(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) override;
-)""");
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      $request_type$ const& request$op_ctx_shared_decl$) override;
+
   StatusOr<google::longrunning::Operation> $method_name$(
       grpc::ClientContext& context,
       Options options,
-      $request_type$ const& request) override;
+      $request_type$ const& request$op_ctx_decl$) override;
 )""");
       continue;
     }
     if (IsStreamingRead(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
   $method_name$(
       std::shared_ptr<grpc::ClientContext> context,
       Options const& options,
-      $request_type$ const& request) override;
+      $request_type$ const& request$op_ctx_shared_decl$) override;
 )""");
       continue;
     }
-    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+    HeaderPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
   $return_type$ $method_name$(
       grpc::ClientContext& context,
       Options const& options,
-      $request_type$ const& request) override;
+      $request_type$ const& request$op_ctx_decl$) override;
 )""");
   }
 
@@ -96,52 +101,54 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
     // Nothing to do, these are always asynchronous.
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
-      auto constexpr kDeclaration = R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) override;
-)""";
-      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      $request_type$ const& request$op_ctx_shared_decl$) override;
+)""");
       continue;
     }
     if (IsStreamingWrite(method)) {
-      auto constexpr kDeclaration = R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       $request_type$, $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) override;
-)""";
-      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) override;
+)""");
       continue;
     }
-    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+    HeaderPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
   future<$return_type$> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) override;
+      $request_type$ const& request$op_ctx_shared_decl$) override;
 )""");
   }
 
   if (HasLongrunningMethod()) {
-    HeaderPrint(R"""(
+    HeaderPrint(
+        R"""(
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::longrunning::GetOperationRequest const& request) override;
+      google::longrunning::GetOperationRequest const& request$op_ctx_shared_decl$) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::longrunning::CancelOperationRequest const& request) override;
+      google::longrunning::CancelOperationRequest const& request$op_ctx_shared_decl$) override;
 )""");
   }
 }

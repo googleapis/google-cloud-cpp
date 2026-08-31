@@ -17,9 +17,9 @@
 
 #include "google/cloud/internal/retry_info.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <iostream>
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 
@@ -198,10 +198,10 @@ class Status;
 class ErrorInfo;
 namespace internal {
 void AddMetadata(ErrorInfo&, std::string const& key, std::string value);
-void SetRetryInfo(Status& status, absl::optional<RetryInfo> retry_info);
-absl::optional<RetryInfo> GetRetryInfo(Status const& status);
+void SetRetryInfo(Status& status, std::optional<RetryInfo> retry_info);
+std::optional<RetryInfo> GetRetryInfo(Status const& status);
 void SetPayload(Status&, std::string key, std::string payload);
-absl::optional<std::string> GetPayload(Status const&, std::string const& key);
+std::optional<std::string> GetPayload(Status const&, std::string const& key);
 }  // namespace internal
 
 /**
@@ -361,12 +361,12 @@ class Status {
  private:
   static bool Equals(Status const& a, Status const& b);
   friend void internal::SetRetryInfo(Status&,
-                                     absl::optional<internal::RetryInfo>);
-  friend absl::optional<internal::RetryInfo> internal::GetRetryInfo(
+                                     std::optional<internal::RetryInfo>);
+  friend std::optional<internal::RetryInfo> internal::GetRetryInfo(
       Status const&);
   friend void internal::SetPayload(Status&, std::string, std::string);
-  friend absl::optional<std::string> internal::GetPayload(Status const&,
-                                                          std::string const&);
+  friend std::optional<std::string> internal::GetPayload(Status const&,
+                                                         std::string const&);
 
   class Impl;
   // A null `impl_` is an OK status. Only non-OK Statuses allocate an Impl.

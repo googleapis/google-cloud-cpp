@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_CREATE_DATASET_OPTIONS_H
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
-#include "absl/types/optional.h"
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <vector>
 

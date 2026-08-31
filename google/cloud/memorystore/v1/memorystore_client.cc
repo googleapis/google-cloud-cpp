@@ -448,6 +448,301 @@ MemorystoreClient::BackupInstance(
   return connection_->BackupInstance(operation);
 }
 
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::StartMigration(
+    google::cloud::memorystore::v1::StartMigrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartMigration(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::StartMigration(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartMigration(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::StartMigration(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartMigration(operation);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::FinishMigration(std::string const& name, bool force,
+                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::FinishMigrationRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->FinishMigration(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::FinishMigration(
+    NoAwaitTag, std::string const& name, bool force, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::FinishMigrationRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->FinishMigration(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::FinishMigration(
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FinishMigration(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::FinishMigration(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FinishMigration(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::FinishMigration(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FinishMigration(operation);
+}
+
+StreamRange<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreClient::ListTokenAuthUsers(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::ListTokenAuthUsersRequest request;
+  request.set_parent(parent);
+  return connection_->ListTokenAuthUsers(request);
+}
+
+StreamRange<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreClient::ListTokenAuthUsers(
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTokenAuthUsers(std::move(request));
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreClient::GetTokenAuthUser(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::GetTokenAuthUserRequest request;
+  request.set_name(name);
+  return connection_->GetTokenAuthUser(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreClient::GetTokenAuthUser(
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTokenAuthUser(request);
+}
+
+StreamRange<google::cloud::memorystore::v1::AuthToken>
+MemorystoreClient::ListAuthTokens(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::ListAuthTokensRequest request;
+  request.set_parent(parent);
+  return connection_->ListAuthTokens(request);
+}
+
+StreamRange<google::cloud::memorystore::v1::AuthToken>
+MemorystoreClient::ListAuthTokens(
+    google::cloud::memorystore::v1::ListAuthTokensRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAuthTokens(std::move(request));
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreClient::GetAuthToken(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::GetAuthTokenRequest request;
+  request.set_name(name);
+  return connection_->GetAuthToken(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreClient::GetAuthToken(
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAuthToken(request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::AddTokenAuthUser(std::string const& instance,
+                                    std::string const& token_auth_user,
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::AddTokenAuthUserRequest request;
+  request.set_instance(instance);
+  request.set_token_auth_user(token_auth_user);
+  return connection_->AddTokenAuthUser(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::AddTokenAuthUser(
+    NoAwaitTag, std::string const& instance, std::string const& token_auth_user,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::AddTokenAuthUserRequest request;
+  request.set_instance(instance);
+  request.set_token_auth_user(token_auth_user);
+  return connection_->AddTokenAuthUser(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::AddTokenAuthUser(
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddTokenAuthUser(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddTokenAuthUser(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreClient::AddTokenAuthUser(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddTokenAuthUser(operation);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteTokenAuthUser(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::DeleteTokenAuthUserRequest request;
+  request.set_name(name);
+  return connection_->DeleteTokenAuthUser(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::DeleteTokenAuthUser(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::DeleteTokenAuthUserRequest request;
+  request.set_name(name);
+  return connection_->DeleteTokenAuthUser(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteTokenAuthUser(
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTokenAuthUser(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTokenAuthUser(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteTokenAuthUser(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTokenAuthUser(operation);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreClient::AddAuthToken(
+    std::string const& token_auth_user,
+    google::cloud::memorystore::v1::AuthToken const& auth_token, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::AddAuthTokenRequest request;
+  request.set_token_auth_user(token_auth_user);
+  *request.mutable_auth_token() = auth_token;
+  return connection_->AddAuthToken(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::AddAuthToken(
+    NoAwaitTag, std::string const& token_auth_user,
+    google::cloud::memorystore::v1::AuthToken const& auth_token, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::AddAuthTokenRequest request;
+  request.set_token_auth_user(token_auth_user);
+  *request.mutable_auth_token() = auth_token;
+  return connection_->AddAuthToken(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreClient::AddAuthToken(
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAuthToken(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::AddAuthToken(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAuthToken(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreClient::AddAuthToken(google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAuthToken(operation);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteAuthToken(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::DeleteAuthTokenRequest request;
+  request.set_name(name);
+  return connection_->DeleteAuthToken(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::DeleteAuthToken(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::DeleteAuthTokenRequest request;
+  request.set_name(name);
+  return connection_->DeleteAuthToken(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteAuthToken(
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthToken(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::DeleteAuthToken(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthToken(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteAuthToken(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthToken(operation);
+}
+
 StreamRange<google::cloud::location::Location> MemorystoreClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -93,7 +93,7 @@ TEST(DebugFormatter, Truncated) {
 }
 
 TEST(DebugFormatter, TimePoint) {
-  absl::optional<std::chrono::system_clock::time_point> tp =
+  std::optional<std::chrono::system_clock::time_point> tp =
       std::chrono::system_clock::from_time_t(1681165293) +
       std::chrono::microseconds(123456);
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
@@ -112,7 +112,7 @@ TEST(DebugFormatter, TimePoint) {
             R"( "2023-04-10T22:21:33.123456Z")"
             R"( })"
             R"( })");
-  tp = absl::nullopt;
+  tp = std::nullopt;
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", tp)
                 .Build(),
@@ -207,7 +207,7 @@ TEST(DebugFormatter, Multimap) {
 }
 
 TEST(DebugFormatter, Optional) {
-  absl::optional<SubMessage> m = SubMessage{3.14159};
+  std::optional<SubMessage> m = SubMessage{3.14159};
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", m)
                 .Build(),
@@ -216,7 +216,7 @@ TEST(DebugFormatter, Optional) {
             R"( sub_field: 3.14159)"
             R"( })"
             R"( })");
-  m = absl::nullopt;
+  m = std::nullopt;
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", m)
                 .Build(),

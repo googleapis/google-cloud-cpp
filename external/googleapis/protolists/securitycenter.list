@@ -1,4 +1,7 @@
 @googleapis//google/cloud/securitycenter/v1:access.proto
+@googleapis//google/cloud/securitycenter/v1:agent.proto
+@googleapis//google/cloud/securitycenter/v1:agent_anomaly.proto
+@googleapis//google/cloud/securitycenter/v1:agent_session.proto
 @googleapis//google/cloud/securitycenter/v1:application.proto
 @googleapis//google/cloud/securitycenter/v1:asset.proto
 @googleapis//google/cloud/securitycenter/v1:attack_exposure.proto
@@ -55,6 +58,9 @@
 @googleapis//google/cloud/securitycenter/v1:vulnerability.proto
 @googleapis//google/cloud/securitycenter/v2:access.proto
 @googleapis//google/cloud/securitycenter/v2:affected_resources.proto
+@googleapis//google/cloud/securitycenter/v2:agent.proto
+@googleapis//google/cloud/securitycenter/v2:agent_anomaly.proto
+@googleapis//google/cloud/securitycenter/v2:agent_session.proto
 @googleapis//google/cloud/securitycenter/v2:ai_model.proto
 @googleapis//google/cloud/securitycenter/v2:application.proto
 @googleapis//google/cloud/securitycenter/v2:attack_exposure.proto

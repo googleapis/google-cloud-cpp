@@ -207,6 +207,13 @@ ReservationServiceConnectionIdempotencyPolicy::ListReservationGroups(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::UpdateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        UpdateReservationGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>
 MakeDefaultReservationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ReservationServiceConnectionIdempotencyPolicy>();

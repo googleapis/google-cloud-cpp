@@ -53,6 +53,16 @@ class MockLicenseCodesConnection
                    GetLicenseCodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::license_codes::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::license_codes::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
       TestIamPermissions,

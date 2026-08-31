@@ -34,11 +34,13 @@ std::shared_ptr<storage::internal::StorageConnection> DecorateConnection(
 }
 
 std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
-    Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub) {
+    Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub,
+    TracingConnection::AsyncRunner runner) {
   std::shared_ptr<storage::internal::StorageConnection> connection =
       storage::internal::StorageConnectionImpl::Create(std::move(stub), opts);
   if (google::cloud::internal::TracingEnabled(opts)) {
-    connection = storage_internal::MakeTracingClient(std::move(connection));
+    connection = storage_internal::MakeTracingClient(std::move(connection),
+                                                     std::move(runner));
   }
   return connection;
 }

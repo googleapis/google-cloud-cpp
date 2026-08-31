@@ -27,7 +27,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-absl::optional<std::string> GetEnv(char const* variable) {
+std::optional<std::string> GetEnv(char const* variable) {
 #if defined(_MSC_VER)
   // With MSVC, std::getenv() is not thread-safe. It returns a pointer that can
   // be invalidated by _putenv_s(). We must use the thread-safe alternative,
@@ -39,7 +39,7 @@ absl::optional<std::string> GetEnv(char const* variable) {
 #else
   char* buffer = std::getenv(variable);
 #endif  // _MSC_VER
-  if (buffer == nullptr) return absl::nullopt;
+  if (buffer == nullptr) return std::nullopt;
   return std::string{buffer};
 }
 

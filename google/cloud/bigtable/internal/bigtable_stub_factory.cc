@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -64,8 +65,8 @@ std::string CreateFeaturesMetadata(bool is_direct_path) {
   return internal::UrlsafeBase64EncodeWithPadding(proto.SerializeAsString());
 }
 
-std::string FeaturesMetadata() {
-  if (bigtable::internal::IsDirectPath()) {
+std::string const& FeaturesMetadata(Options const& options) {
+  if (bigtable::internal::IsDirectPath(options)) {
     static auto const* const kDirectPathFeatures =
         new std::string(CreateFeaturesMetadata(true));
     return *kDirectPathFeatures;
@@ -84,7 +85,7 @@ std::shared_ptr<BigtableStub> ApplyCommonDecorators(
   stub = std::make_shared<BigtableMetadata>(
       std::move(stub),
       std::multimap<std::string, std::string>{
-          {"bigtable-features", FeaturesMetadata()}},
+          {"bigtable-features", FeaturesMetadata(options)}},
       internal::HandCraftedLibClientHeader());
   if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
@@ -147,8 +148,9 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
       grpc::ClientContext client_context;
       google::bigtable::v2::PingAndWarmRequest request;
       request.set_name(std::string{instance_name});
-      auto response =
-          stub->PingAndWarm(client_context, options, std::move(request));
+      OperationContext op_ctx;
+      auto response = stub->PingAndWarm(client_context, options,
+                                        std::move(request), op_ctx);
       if (!response.ok()) return response.status();
     }
 
@@ -176,7 +178,10 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
           std::move(children), std::move(refresh_state),
           std::move(refreshing_channel_stub_factory),
           options.get<
-              bigtable::experimental::DynamicChannelPoolSizingPolicyOption>()));
+              bigtable::experimental::DynamicChannelPoolSizingPolicyOption>(),
+          bigtable::internal::IsDirectPath(options)
+              ? TransportType::kDirectPath
+              : TransportType::kCloudPath));
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(

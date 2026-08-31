@@ -40,6 +40,13 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::AddSignedUrlKey(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+BackendBucketsConnectionIdempotencyPolicy::AggregatedListBackendBuckets(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
         DeleteBackendBucketRequest const&) {
@@ -73,6 +80,12 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::InsertBackendBucket(
 Idempotency BackendBucketsConnectionIdempotencyPolicy::ListBackendBuckets(
     google::cloud::cpp::compute::backend_buckets::v1::
         ListBackendBucketsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackendBucketsConnectionIdempotencyPolicy::ListUsable(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        ListUsableRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

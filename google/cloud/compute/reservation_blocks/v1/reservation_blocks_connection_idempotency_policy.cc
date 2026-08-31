@@ -41,6 +41,12 @@ ReservationBlocksConnectionIdempotencyPolicy::GetReservationBlocksGetResponse(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ReservationBlocksConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency ReservationBlocksConnectionIdempotencyPolicy::ListReservationBlocks(
     google::cloud::cpp::compute::reservation_blocks::v1::
         ListReservationBlocksRequest) {  // NOLINT
@@ -50,6 +56,18 @@ Idempotency ReservationBlocksConnectionIdempotencyPolicy::ListReservationBlocks(
 Idempotency ReservationBlocksConnectionIdempotencyPolicy::PerformMaintenance(
     google::cloud::cpp::compute::reservation_blocks::v1::
         PerformMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ReservationBlocksConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        SetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ReservationBlocksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

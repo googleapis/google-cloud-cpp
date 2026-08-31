@@ -13,6 +13,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlAvailableDatabaseVersionsServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SQL_BACKUPS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlBackupsServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_SQL_BACKUP_RUNS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlBackupRunsServiceConnection()`.
@@ -28,6 +32,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_SQL_EVENTS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlEventsServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SQL_FEATURE_ELIGIBILITY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlFeatureEligibilityServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SQL_FLAGS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")

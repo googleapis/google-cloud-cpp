@@ -97,6 +97,12 @@ RoutesConnection::ListRoutes(
       StreamRange<google::cloud::cpp::compute::v1::Route>>();
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RoutesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_routes_v1
 }  // namespace cloud

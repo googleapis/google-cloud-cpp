@@ -47,7 +47,7 @@ auto FullResource() {
 auto TestOptions(Options opts = {}) {
   // In CI builds this environment variable may be set and affect the behavior
   // in ways we do not need to (re)test here.
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   opts.set<storage_experimental::EnableGrpcMetricsOption>(true)
       .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
           "unused",

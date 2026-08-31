@@ -34,11 +34,11 @@ TEST(ComposeSourceObject, IOStream) {
     return std::move(os).str();
   };
   EXPECT_THAT(
-      to_string(ComposeSourceObject{"name", absl::nullopt, absl::nullopt}),
+      to_string(ComposeSourceObject{"name", std::nullopt, std::nullopt}),
       "ComposeSourceObject={object_name=name}");
-  EXPECT_THAT(to_string(ComposeSourceObject{"name", 42, absl::nullopt}),
+  EXPECT_THAT(to_string(ComposeSourceObject{"name", 42, std::nullopt}),
               "ComposeSourceObject={object_name=name, generation=42}");
-  EXPECT_THAT(to_string(ComposeSourceObject{"name", absl::nullopt, 42}),
+  EXPECT_THAT(to_string(ComposeSourceObject{"name", std::nullopt, 42}),
               "ComposeSourceObject={object_name=name, if_generation_match=42}");
   EXPECT_THAT(to_string(ComposeSourceObject{"name", 7, 42}),
               "ComposeSourceObject={object_name=name, generation=7, "

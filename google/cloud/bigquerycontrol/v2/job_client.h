@@ -89,6 +89,12 @@ class JobServiceClient {
   /// the client will need to poll for the job status to see if the cancel
   /// completed successfully. Cancelled jobs may still incur costs.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.jobs.update` permission on the job resource.
+  /// If the user matches the creator of the job, the `bigquery.jobs.create`
+  /// permission on the project is required instead.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -108,8 +114,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.CancelJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L171}
-  /// [google.cloud.bigquery.v2.JobCancelResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L191}
+  /// [google.cloud.bigquery.v2.CancelJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L236}
+  /// [google.cloud.bigquery.v2.JobCancelResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L256}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::JobCancelResponse> CancelJob(
@@ -121,6 +127,12 @@ class JobServiceClient {
   /// Returns information about a specific job. Job information is available for
   /// a six month period after creation. Requires that you're the person who ran
   /// the job, or have the Is Owner project role.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.jobs.get` permission on the job resource.
+  /// If the user matches the creator of the job, the `bigquery.jobs.create`
+  /// permission on the project is required instead.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -141,8 +153,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L200}
-  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L126}
+  /// [google.cloud.bigquery.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L265}
+  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Job> GetJob(
@@ -163,6 +175,20 @@ class JobServiceClient {
   ///   accepts the job configuration and the data as two distinct multipart MIME
   ///   parts.
   ///
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.jobs.create` permission on the project resource.
+  ///
+  /// Additional permissions are required depending on the job type:
+  ///
+  /// - **Load, Export, and Copy jobs**: Generally require data-level
+  ///   permissions such as `bigquery.tables.export` or access to external
+  ///   storage.
+  /// - **Query jobs**: Permissions are dependent on the SQL statement.
+  ///   Complex queries (DDL, DCL) may require additional permissions to
+  ///   create reservations, modify IAM policies, or update project settings.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -182,8 +208,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L222}
-  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L126}
+  /// [google.cloud.bigquery.v2.InsertJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L287}
+  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Job> InsertJob(
@@ -194,6 +220,10 @@ class JobServiceClient {
   ///
   /// Requests the deletion of the metadata of a job. This call returns when the
   /// job's metadata is deleted.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.jobs.delete` permission on the job resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +242,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L231}
+  /// [google.cloud.bigquery.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L296}
   ///
   // clang-format on
   Status DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request,
@@ -225,6 +255,18 @@ class JobServiceClient {
   /// in reverse chronological order, by job creation time. Requires the Can View
   /// project role, or the Is Owner project role if you set the allUsers
   /// property.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires no specific IAM permission(s) to use this method. Users are able
+  /// to list the jobs they created.
+  ///
+  /// Additional access is granted based on the following permissions:
+  ///
+  /// - Users with the `bigquery.jobs.listAll` permission can list all jobs with
+  ///   all metadata.
+  /// - Users with the `bigquery.jobs.list` permission can list all jobs, but
+  ///   with redacted information for jobs they did not create.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -254,8 +296,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListFormatJob]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L326}
-  /// [google.cloud.bigquery.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L250}
+  /// [google.cloud.bigquery.v2.ListFormatJob]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L391}
+  /// [google.cloud.bigquery.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L315}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatJob> ListJobs(
@@ -264,6 +306,19 @@ class JobServiceClient {
   // clang-format off
   ///
   /// RPC to get the results of a query job.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) to use this method:
+  ///
+  ///  - `bigquery.jobs.get` on the job.
+  ///  - `bigquery.tables.getData` on the destination table.
+  ///
+  /// If the user matches the creator of the job, the following IAM permission(s)
+  /// are required instead:
+  ///
+  ///  - `bigquery.jobs.create` on the project.
+  ///  - `bigquery.tables.getData` on the destination table.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -284,8 +339,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetQueryResultsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L383}
-  /// [google.cloud.bigquery.v2.GetQueryResultsResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L434}
+  /// [google.cloud.bigquery.v2.GetQueryResultsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L448}
+  /// [google.cloud.bigquery.v2.GetQueryResultsResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L499}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
@@ -297,6 +352,15 @@ class JobServiceClient {
   ///
   /// Runs a BigQuery SQL query synchronously and returns query results if the
   /// query completes within a specified timeout.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.jobs.create` permission on the project resource.
+  ///
+  /// Data-level permissions are highly dependent on the SQL statement being
+  /// executed. While standard queries require data access (such as
+  /// `bigquery.tables.getData`), complex operations like DDL or DCL may require
+  /// permissions to manage reservations, IAM policies, or project settings.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -317,8 +381,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L496}
-  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L700}
+  /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L561}
+  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L809}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(

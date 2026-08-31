@@ -106,6 +106,18 @@ class SnapshotsRestConnectionImpl
   TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
                          TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   static std::unique_ptr<compute_snapshots_v1::SnapshotsRetryPolicy>
   retry_policy(Options const& options) {

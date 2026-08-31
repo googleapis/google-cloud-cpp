@@ -14,8 +14,10 @@
 
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -40,9 +42,9 @@ Options TestOptions() {
 TEST(GrpcPluginTest, DefaultCreatesGrpc) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
-      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   auto config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", std::nullopt);
   auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
@@ -53,9 +55,9 @@ TEST(GrpcPluginTest, DefaultCreatesGrpc) {
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
-      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   auto config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", std::nullopt);
   auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
@@ -95,6 +97,23 @@ TEST(GrpcPluginTest, GrpcMetricsExcludedLabelsOptionSingle) {
       opts.get<storage_experimental::GrpcMetricsExcludedLabelsOption>().size());
   EXPECT_EQ(expected,
             opts.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());
+}
+
+TEST(GrpcPluginTest, GrpcBackgroundThreadsFactoryOptionWithTracing) {
+  struct Fake : google::cloud::BackgroundThreads {
+    google::cloud::CompletionQueue cq() const override { return {}; }
+  };
+  bool invoked = false;
+  auto factory = [&invoked] {
+    invoked = true;
+    return std::make_unique<Fake>();
+  };
+  auto logging = ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", "1");
+  auto client = MakeGrpcClient(
+      TestOptions()
+          .set<GrpcBackgroundThreadsFactoryOption>(factory)
+          .set<storage_experimental::OTelSpanEnrichmentOption>(true));
+  EXPECT_TRUE(invoked);
 }
 
 }  // namespace

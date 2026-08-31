@@ -41,6 +41,10 @@ class BackendBucketsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_buckets::v1::
           AddSignedUrlKeyRequest const& request);
 
+  virtual google::cloud::Idempotency AggregatedListBackendBuckets(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AggregatedListBackendBucketsRequest request);
+
   virtual google::cloud::Idempotency DeleteBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteBackendBucketRequest const& request);
@@ -64,6 +68,10 @@ class BackendBucketsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListBackendBuckets(
       google::cloud::cpp::compute::backend_buckets::v1::
           ListBackendBucketsRequest request);
+
+  virtual google::cloud::Idempotency ListUsable(
+      google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest
+          request);
 
   virtual google::cloud::Idempotency PatchBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::

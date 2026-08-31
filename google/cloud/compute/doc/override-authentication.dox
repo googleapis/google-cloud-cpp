@@ -15,9 +15,11 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-service-account-snippet)
 - [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-service-account-snippet)
+- [\c compute_advice_v1::AdviceClient](@ref compute_advice_v1::AdviceClient-service-account-snippet)
 - [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-service-account-snippet)
 - [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-service-account-snippet)
 - [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-service-account-snippet)
+- [\c compute_cross_site_networks_v1::CrossSiteNetworksClient](@ref compute_cross_site_networks_v1::CrossSiteNetworksClient-service-account-snippet)
 - [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-service-account-snippet)
 - [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-service-account-snippet)
 - [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-service-account-snippet)
@@ -30,7 +32,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-service-account-snippet)
 - [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-service-account-snippet)
 - [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-service-account-snippet)
+- [\c compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient](@ref compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient-service-account-snippet)
 - [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-service-account-snippet)
+- [\c compute_hosts_v1::HostsClient](@ref compute_hosts_v1::HostsClient-service-account-snippet)
 - [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-service-account-snippet)
 - [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-service-account-snippet)
 - [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-service-account-snippet)
@@ -41,6 +45,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-service-account-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-service-account-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-service-account-snippet)
+- [\c compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient](@ref compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient-service-account-snippet)
 - [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-service-account-snippet)
 - [\c compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient](@ref compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-service-account-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet)
@@ -61,27 +66,37 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-service-account-snippet)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-service-account-snippet)
 - [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-service-account-snippet)
+- [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-service-account-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-service-account-snippet)
+- [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-service-account-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-service-account-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-service-account-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-service-account-snippet)
 - [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-service-account-snippet)
+- [\c compute_region_backend_buckets_v1::RegionBackendBucketsClient](@ref compute_region_backend_buckets_v1::RegionBackendBucketsClient-service-account-snippet)
 - [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-service-account-snippet)
 - [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-service-account-snippet)
+- [\c compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient](@ref compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient-service-account-snippet)
 - [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-service-account-snippet)
 - [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-service-account-snippet)
+- [\c compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient](@ref compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient-service-account-snippet)
 - [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-service-account-snippet)
 - [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-service-account-snippet)
+- [\c compute_region_health_sources_v1::RegionHealthSourcesClient](@ref compute_region_health_sources_v1::RegionHealthSourcesClient-service-account-snippet)
+- [\c compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient](@ref compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient-service-account-snippet)
 - [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-service-account-snippet)
 - [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-service-account-snippet)
 - [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-service-account-snippet)
 - [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-service-account-snippet)
+- [\c compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient](@ref compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient-service-account-snippet)
 - [\c compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient](@ref compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-service-account-snippet)
 - [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-service-account-snippet)
 - [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-service-account-snippet)
 - [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-service-account-snippet)
 - [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-service-account-snippet)
 - [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-service-account-snippet)
+- [\c compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient](@ref compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient-service-account-snippet)
+- [\c compute_region_snapshots_v1::RegionSnapshotsClient](@ref compute_region_snapshots_v1::RegionSnapshotsClient-service-account-snippet)
 - [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-service-account-snippet)
 - [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-service-account-snippet)
 - [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-service-account-snippet)
@@ -90,10 +105,14 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-service-account-snippet)
 - [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-service-account-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-service-account-snippet)
+- [\c compute_reliability_risks_v1::ReliabilityRisksClient](@ref compute_reliability_risks_v1::ReliabilityRisksClient-service-account-snippet)
 - [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-service-account-snippet)
+- [\c compute_reservation_slots_v1::ReservationSlotsClient](@ref compute_reservation_slots_v1::ReservationSlotsClient-service-account-snippet)
 - [\c compute_reservation_sub_blocks_v1::ReservationSubBlocksClient](@ref compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-service-account-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-service-account-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-service-account-snippet)
+- [\c compute_rollout_plans_v1::RolloutPlansClient](@ref compute_rollout_plans_v1::RolloutPlansClient-service-account-snippet)
+- [\c compute_rollouts_v1::RolloutsClient](@ref compute_rollouts_v1::RolloutsClient-service-account-snippet)
 - [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-service-account-snippet)
 - [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-service-account-snippet)
 - [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-service-account-snippet)
@@ -116,7 +135,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-service-account-snippet)
 - [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-service-account-snippet)
 - [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-service-account-snippet)
+- [\c compute_wire_groups_v1::WireGroupsClient](@ref compute_wire_groups_v1::WireGroupsClient-service-account-snippet)
 - [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-service-account-snippet)
+- [\c compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient](@ref compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient-service-account-snippet)
 - [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
@@ -147,6 +168,12 @@ guide for more details.
 
 */
 
+/*! @page compute_advice_v1::AdviceClient-service-account-snippet Override compute_advice_v1::AdviceClient Authentication Defaults
+
+@snippet google/cloud/compute/advice/v1/samples/advice_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_autoscalers_v1::AutoscalersClient-service-account-snippet Override compute_autoscalers_v1::AutoscalersClient Authentication Defaults
 
 @snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc with-service-account
@@ -162,6 +189,12 @@ guide for more details.
 /*! @page compute_backend_services_v1::BackendServicesClient-service-account-snippet Override compute_backend_services_v1::BackendServicesClient Authentication Defaults
 
 @snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_cross_site_networks_v1::CrossSiteNetworksClient-service-account-snippet Override compute_cross_site_networks_v1::CrossSiteNetworksClient Authentication Defaults
+
+@snippet google/cloud/compute/cross_site_networks/v1/samples/cross_site_networks_client_samples.cc with-service-account
 
 */
 
@@ -237,9 +270,21 @@ guide for more details.
 
 */
 
+/*! @page compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient-service-account-snippet Override compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/global_vm_extension_policies/v1/samples/global_vm_extension_policies_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_health_checks_v1::HealthChecksClient-service-account-snippet Override compute_health_checks_v1::HealthChecksClient Authentication Defaults
 
 @snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_hosts_v1::HostsClient-service-account-snippet Override compute_hosts_v1::HostsClient Authentication Defaults
+
+@snippet google/cloud/compute/hosts/v1/samples/hosts_client_samples.cc with-service-account
 
 */
 
@@ -300,6 +345,12 @@ guide for more details.
 /*! @page compute_instances_v1::InstancesClient-service-account-snippet Override compute_instances_v1::InstancesClient Authentication Defaults
 
 @snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient-service-account-snippet Override compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/instant_snapshot_groups/v1/samples/instant_snapshot_groups_client_samples.cc with-service-account
 
 */
 
@@ -423,9 +474,21 @@ guide for more details.
 
 */
 
+/*! @page compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-service-account-snippet Override compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/organization_security_policies/v1/samples/organization_security_policies_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-service-account-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Authentication Defaults
 
 @snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_preview_features_v1::PreviewFeaturesClient-service-account-snippet Override compute_preview_features_v1::PreviewFeaturesClient Authentication Defaults
+
+@snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc with-service-account
 
 */
 
@@ -453,6 +516,12 @@ guide for more details.
 
 */
 
+/*! @page compute_region_backend_buckets_v1::RegionBackendBucketsClient-service-account-snippet Override compute_region_backend_buckets_v1::RegionBackendBucketsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_backend_buckets/v1/samples/region_backend_buckets_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_region_backend_services_v1::RegionBackendServicesClient-service-account-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Authentication Defaults
 
 @snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc with-service-account
@@ -462,6 +531,12 @@ guide for more details.
 /*! @page compute_region_commitments_v1::RegionCommitmentsClient-service-account-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Authentication Defaults
 
 @snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient-service-account-snippet Override compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient Authentication Defaults
+
+@snippet google/cloud/compute/region_composite_health_checks/v1/samples/region_composite_health_checks_client_samples.cc with-service-account
 
 */
 
@@ -477,6 +552,12 @@ guide for more details.
 
 */
 
+/*! @page compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient-service-account-snippet Override compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_health_aggregation_policies/v1/samples/region_health_aggregation_policies_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-service-account-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Authentication Defaults
 
 @snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc with-service-account
@@ -486,6 +567,18 @@ guide for more details.
 /*! @page compute_region_health_checks_v1::RegionHealthChecksClient-service-account-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Authentication Defaults
 
 @snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_health_sources_v1::RegionHealthSourcesClient-service-account-snippet Override compute_region_health_sources_v1::RegionHealthSourcesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_health_sources/v1/samples/region_health_sources_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient-service-account-snippet Override compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instance_group_manager_resize_requests/v1/samples/region_instance_group_manager_resize_requests_client_samples.cc with-service-account
 
 */
 
@@ -510,6 +603,12 @@ guide for more details.
 /*! @page compute_region_instances_v1::RegionInstancesClient-service-account-snippet Override compute_region_instances_v1::RegionInstancesClient Authentication Defaults
 
 @snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient-service-account-snippet Override compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instant_snapshot_groups/v1/samples/region_instant_snapshot_groups_client_samples.cc with-service-account
 
 */
 
@@ -546,6 +645,18 @@ guide for more details.
 /*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-service-account-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Authentication Defaults
 
 @snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient-service-account-snippet Override compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_snapshot_settings/v1/samples/region_snapshot_settings_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_snapshots_v1::RegionSnapshotsClient-service-account-snippet Override compute_region_snapshots_v1::RegionSnapshotsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_snapshots/v1/samples/region_snapshots_client_samples.cc with-service-account
 
 */
 
@@ -597,9 +708,21 @@ guide for more details.
 
 */
 
+/*! @page compute_reliability_risks_v1::ReliabilityRisksClient-service-account-snippet Override compute_reliability_risks_v1::ReliabilityRisksClient Authentication Defaults
+
+@snippet google/cloud/compute/reliability_risks/v1/samples/reliability_risks_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_reservation_blocks_v1::ReservationBlocksClient-service-account-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Authentication Defaults
 
 @snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_reservation_slots_v1::ReservationSlotsClient-service-account-snippet Override compute_reservation_slots_v1::ReservationSlotsClient Authentication Defaults
+
+@snippet google/cloud/compute/reservation_slots/v1/samples/reservation_slots_client_samples.cc with-service-account
 
 */
 
@@ -618,6 +741,18 @@ guide for more details.
 /*! @page compute_resource_policies_v1::ResourcePoliciesClient-service-account-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Authentication Defaults
 
 @snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_rollout_plans_v1::RolloutPlansClient-service-account-snippet Override compute_rollout_plans_v1::RolloutPlansClient Authentication Defaults
+
+@snippet google/cloud/compute/rollout_plans/v1/samples/rollout_plans_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_rollouts_v1::RolloutsClient-service-account-snippet Override compute_rollouts_v1::RolloutsClient Authentication Defaults
+
+@snippet google/cloud/compute/rollouts/v1/samples/rollouts_client_samples.cc with-service-account
 
 */
 
@@ -753,9 +888,21 @@ guide for more details.
 
 */
 
+/*! @page compute_wire_groups_v1::WireGroupsClient-service-account-snippet Override compute_wire_groups_v1::WireGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/wire_groups/v1/samples/wire_groups_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_zone_operations_v1::ZoneOperationsClient-service-account-snippet Override compute_zone_operations_v1::ZoneOperationsClient Authentication Defaults
 
 @snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient-service-account-snippet Override compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/zone_vm_extension_policies/v1/samples/zone_vm_extension_policies_client_samples.cc with-service-account
 
 */
 

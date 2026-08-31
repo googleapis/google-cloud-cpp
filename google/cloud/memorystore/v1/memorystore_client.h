@@ -116,8 +116,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1364}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1697}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
@@ -155,8 +155,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1364}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1697}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
@@ -182,8 +182,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1405}
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
+  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1738}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
@@ -212,8 +212,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1405}
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
+  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1738}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
@@ -257,8 +257,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1417}
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
+  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1750}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
@@ -312,8 +312,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1417}
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
+  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1750}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
@@ -375,8 +375,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1462}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1795}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
@@ -428,8 +428,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1462}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1795}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
@@ -490,8 +490,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1491}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
+  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1824}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -541,8 +541,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1491}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
+  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1824}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -599,8 +599,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1703}
-  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1690}
+  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2232}
+  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2023}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
@@ -629,8 +629,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1703}
-  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1690}
+  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2232}
+  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2023}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
@@ -660,8 +660,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1771}
-  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1736}
+  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2299}
+  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2265}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
@@ -692,8 +692,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1771}
-  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1736}
+  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2299}
+  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2265}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
@@ -732,8 +732,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1331}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1664}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -790,8 +790,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1331}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1664}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -864,8 +864,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
-  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1521}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1018}
+  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1854}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::BackupCollection>
@@ -907,8 +907,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
-  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1521}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1018}
+  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1854}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::BackupCollection>
@@ -936,8 +936,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
-  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1570}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1018}
+  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1903}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::BackupCollection>
@@ -966,8 +966,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
-  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1570}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1018}
+  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1903}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::BackupCollection>
@@ -1003,8 +1003,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
-  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1583}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1076}
+  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1916}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
@@ -1042,8 +1042,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
-  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1583}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1076}
+  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1916}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
@@ -1069,8 +1069,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
-  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1621}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1076}
+  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1954}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
@@ -1099,8 +1099,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
-  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1621}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1076}
+  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1954}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
@@ -1133,8 +1133,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1633}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
+  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1966}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -1185,8 +1185,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1633}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
+  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1966}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -1253,8 +1253,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
-  /// [google.cloud.memorystore.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1651}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1076}
+  /// [google.cloud.memorystore.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1984}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
@@ -1327,8 +1327,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1669}
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
+  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2002}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
@@ -1389,8 +1389,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1669}
-  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
+  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2002}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
@@ -1424,6 +1424,938 @@ class MemorystoreClient {
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
       google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates the migration of a source instance to the target Memorystore
+  /// instance.
+  ///
+  /// After the successful completion of this operation, the target instance
+  /// will:
+  /// 1. Set up replication with the source instance and replicate any writes to
+  /// the source instance.
+  /// 2. Only allow reads.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.StartMigrationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  /// [google.cloud.memorystore.v1.StartMigrationRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L861}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> StartMigration(
+      google::cloud::memorystore::v1::StartMigrationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StartMigration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StartMigration(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StartMigration
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> StartMigration(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Finalizes the migration process.
+  ///
+  /// After the successful completion of this operation, the target instance
+  /// will:
+  /// 1. Stop replicating from the source instance.
+  /// 2. Allow both reads and writes.
+  ///
+  /// @param name  Required. The resource name of the instance to finalize migration on.
+  ///  Format: projects/{project}/locations/{location}/instances/{instance}
+  /// @param force  Optional. By default, the `FinishMigration` operation ensures the target
+  ///  replication offset to catch up to the source offset as of the time of the
+  ///  call. Set this field to `true` to bypass this offset verification check.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.FinishMigrationRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L881}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> FinishMigration(
+      std::string const& name, bool force, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief FinishMigration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> FinishMigration(
+      NoAwaitTag, std::string const& name, bool force, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Finalizes the migration process.
+  ///
+  /// After the successful completion of this operation, the target instance
+  /// will:
+  /// 1. Stop replicating from the source instance.
+  /// 2. Allow both reads and writes.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.FinishMigrationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.FinishMigrationRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L881}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> FinishMigration(
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief FinishMigration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> FinishMigration(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief FinishMigration
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> FinishMigration(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the token auth users for a token based auth enabled instance.
+  ///
+  /// @param parent  Required. The parent to list token auth users from.
+  ///  Format: projects/{project}/locations/{location}/instances/{instance}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.memorystore.v1.TokenAuthUser], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.ListTokenAuthUsersRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2036}
+  /// [google.cloud.memorystore.v1.TokenAuthUser]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1282}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::memorystore::v1::TokenAuthUser> ListTokenAuthUsers(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the token auth users for a token based auth enabled instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.ListTokenAuthUsersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.memorystore.v1.TokenAuthUser], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.ListTokenAuthUsersRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2036}
+  /// [google.cloud.memorystore.v1.TokenAuthUser]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1282}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::memorystore::v1::TokenAuthUser> ListTokenAuthUsers(
+      google::cloud::memorystore::v1::ListTokenAuthUsersRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a specific token auth user for a token based auth enabled instance.
+  ///
+  /// @param name  Required. The name of token auth user for a basic auth enabled instance.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/instances/{instance}/tokenAuthUsers/{token_auth_user}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.memorystore.v1.TokenAuthUser])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.GetTokenAuthUserRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2080}
+  /// [google.cloud.memorystore.v1.TokenAuthUser]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1282}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::memorystore::v1::TokenAuthUser> GetTokenAuthUser(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a specific token auth user for a token based auth enabled instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.GetTokenAuthUserRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.memorystore.v1.TokenAuthUser])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.GetTokenAuthUserRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2080}
+  /// [google.cloud.memorystore.v1.TokenAuthUser]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1282}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::memorystore::v1::TokenAuthUser> GetTokenAuthUser(
+      google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the auth tokens for a specific token auth user.
+  ///
+  /// @param parent  Required. The parent to list auth tokens from.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/instances/{instance}/tokenAuthUsers/{token_auth_user}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.memorystore.v1.AuthToken], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AuthToken]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1317}
+  /// [google.cloud.memorystore.v1.ListAuthTokensRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2093}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::memorystore::v1::AuthToken> ListAuthTokens(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the auth tokens for a specific token auth user.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.ListAuthTokensRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.memorystore.v1.AuthToken], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AuthToken]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1317}
+  /// [google.cloud.memorystore.v1.ListAuthTokensRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2093}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::memorystore::v1::AuthToken> ListAuthTokens(
+      google::cloud::memorystore::v1::ListAuthTokensRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a token based auth enabled instance's auth token for a given user.
+  ///
+  /// @param name  Required. The name of token auth user for a token auth enabled instance.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/instances/{instance}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.memorystore.v1.AuthToken])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AuthToken]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1317}
+  /// [google.cloud.memorystore.v1.GetAuthTokenRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2140}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::memorystore::v1::AuthToken> GetAuthToken(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a token based auth enabled instance's auth token for a given user.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.GetAuthTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.memorystore.v1.AuthToken])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AuthToken]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1317}
+  /// [google.cloud.memorystore.v1.GetAuthTokenRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2140}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::memorystore::v1::AuthToken> GetAuthToken(
+      google::cloud::memorystore::v1::GetAuthTokenRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Adds a token auth user for a token based auth enabled instance.
+  ///
+  /// @param instance  Required. The instance resource that this token auth user will be added
+  ///  for. Format: projects/{project}/locations/{location}/instances/{instance}
+  /// @param token_auth_user  Required. The name of the token auth user to add.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AddTokenAuthUserRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2153}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> AddTokenAuthUser(
+      std::string const& instance, std::string const& token_auth_user,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddTokenAuthUser
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      NoAwaitTag, std::string const& instance,
+      std::string const& token_auth_user, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Adds a token auth user for a token based auth enabled instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.AddTokenAuthUserRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AddTokenAuthUserRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2153}
+  /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L408}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> AddTokenAuthUser(
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddTokenAuthUser
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddTokenAuthUser
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> AddTokenAuthUser(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a token auth user for a token based auth enabled instance.
+  ///
+  /// @param name  Required. The name of the token auth user to delete.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/instances/{instance}/tokenAuthUsers/{token_auth_user}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.DeleteTokenAuthUserRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2168}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteTokenAuthUser
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a token auth user for a token based auth enabled instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.DeleteTokenAuthUserRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.DeleteTokenAuthUserRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2168}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteTokenAuthUser
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteTokenAuthUser
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Adds a token for a user of a token based auth enabled instance.
+  ///
+  /// @param token_auth_user  Required. The name of the token auth user resource that this token will be
+  ///  added for.
+  /// @param auth_token  Required. The auth token to add.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.TokenAuthUser] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AddAuthTokenRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2204}
+  /// [google.cloud.memorystore.v1.TokenAuthUser]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1282}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>> AddAuthToken(
+      std::string const& token_auth_user,
+      google::cloud::memorystore::v1::AuthToken const& auth_token,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddAuthToken
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> AddAuthToken(
+      NoAwaitTag, std::string const& token_auth_user,
+      google::cloud::memorystore::v1::AuthToken const& auth_token,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Adds a token for a user of a token based auth enabled instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.AddAuthTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.TokenAuthUser] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.AddAuthTokenRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2204}
+  /// [google.cloud.memorystore.v1.TokenAuthUser]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1282}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>> AddAuthToken(
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddAuthToken
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> AddAuthToken(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AddAuthToken
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>> AddAuthToken(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a token for a user of a token based auth enabled instance.
+  ///
+  /// @param name  Required. The name of the token auth user resource that this token will be
+  ///  deleted from. Format:
+  ///  projects/{project}/locations/{location}/instances/{instance}/tokenAuthUsers/{token_auth_user}/authTokens/{name}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.DeleteAuthTokenRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2219}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthToken
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a token for a user of a token based auth enabled instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.memorystore.v1.DeleteAuthTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.memorystore.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.memorystore.v1.DeleteAuthTokenRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2219}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L2312}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthToken
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthToken
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///

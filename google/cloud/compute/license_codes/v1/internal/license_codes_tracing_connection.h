@@ -42,6 +42,14 @@ class LicenseCodesTracingConnection
       google::cloud::cpp::compute::license_codes::v1::
           GetLicenseCodeRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::
                          TestIamPermissionsRequest const& request) override;

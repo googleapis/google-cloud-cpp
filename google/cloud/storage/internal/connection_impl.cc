@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/connection_impl.h"
+#include "google/cloud/storage/internal/hedged_object_read_source.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/filesystem.h"
@@ -20,6 +22,7 @@
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include <algorithm>
 #include <chrono>
 #include <fstream>
 #include <functional>
@@ -154,7 +157,27 @@ std::shared_ptr<StorageConnectionImpl> StorageConnectionImpl::Create(
 StorageConnectionImpl::StorageConnectionImpl(
     std::unique_ptr<storage_internal::GenericStub> stub, Options options)
     : stub_(std::move(stub)),
-      options_(MergeOptions(std::move(options), stub_->options())) {}
+      options_(MergeOptions(std::move(options), stub_->options())) {
+  if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
+    // The pool only runs stream-open attempts: one primary and (at most) a few
+    // hedges per stream being opened. Size it to the number of connections the
+    // REST layer can use, falling back to the hardware concurrency when the
+    // connection pool is unbounded (`ConnectionPoolSizeOption == 0`).
+    auto pool_size = options_.get<ConnectionPoolSizeOption>();
+    if (pool_size == 0) {
+      pool_size =
+          (std::max<std::size_t>)(4, std::thread::hardware_concurrency());
+    }
+    auto const max_threads = 2 * pool_size;
+    auto const rate_limit =
+        options_.get<storage_experimental::ReadHedgeRateLimitOption>();
+    auto const max_concurrent =
+        options_.get<storage_experimental::MaxConcurrentHedgesOption>();
+    // Allow bursts of up to one second worth of hedges.
+    hedge_pool_ = std::make_shared<HedgingThreadPool>(
+        max_threads, rate_limit, rate_limit, max_concurrent);
+  }
+}
 
 Options StorageConnectionImpl::options() const { return options_; }
 
@@ -391,15 +414,37 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
         *current, request, where);
   };
 
-  auto retry_policy = current->get<RetryPolicyOption>()->clone();
-  auto backoff_policy = current->get<BackoffPolicyOption>()->clone();
-  auto child = factory(request, *retry_policy, *backoff_policy);
-  if (!child) return child;
+  auto retry_source_factory =
+      [factory, current,
+       request]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    auto retry_policy = current->get<RetryPolicyOption>()->clone();
+    auto backoff_policy = current->get<BackoffPolicyOption>()->clone();
+    auto child = factory(request, *retry_policy, *backoff_policy);
+    if (!child) return child;
+    return std::unique_ptr<ObjectReadSource>(
+        std::make_unique<RetryObjectReadSource>(
+            factory, current, request, *std::move(child),
+            std::move(retry_policy), std::move(backoff_policy)));
+  };
 
+  auto const enable_hedging =
+      current->get<storage_experimental::EnableReadHedgingOption>();
+  auto const delay = current->get<storage_experimental::ReadHedgeDelayOption>();
+  auto const max_hedges =
+      current->get<storage_experimental::MaxReadHedgesOption>();
+  auto const max_buffer =
+      current->get<storage_experimental::MaximumHedgeBufferOption>();
+
+  if (!enable_hedging || max_hedges <= 0 || !hedge_pool_) {
+    return retry_source_factory();
+  }
+
+  // `max_buffer` bounds the size of an individual read, which is only known
+  // when the application calls `Read()`; the source applies it there.
   return std::unique_ptr<ObjectReadSource>(
-      std::make_unique<RetryObjectReadSource>(
-          std::move(factory), std::move(current), request, *std::move(child),
-          std::move(retry_policy), std::move(backoff_policy)));
+      std::make_unique<HedgedObjectReadSource>(hedge_pool_,
+                                               std::move(retry_source_factory),
+                                               delay, max_hedges, max_buffer));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(
@@ -1392,3 +1437,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

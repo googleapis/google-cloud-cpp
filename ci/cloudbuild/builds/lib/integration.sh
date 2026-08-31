@@ -29,9 +29,11 @@ source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
-python3 -m pip uninstall -y --quiet googleapis-storage-testbench
-python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  "git+https://github.com/googleapis/storage-testbench@v0.61.0"
+if python3 -m pip --version >/dev/null 2>&1; then
+  python3 -m pip uninstall -y --quiet googleapis-storage-testbench || true
+  python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
+    "git+https://github.com/googleapis/storage-testbench@v0.61.0" || true
+fi
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -166,7 +168,7 @@ function integration::bazel_args() {
 #   mapfile -t integration_args < <(integration::bazel_args)
 #   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
-# Runs Pub/Sub integration tests (including Pub/Sub Lite if BAZEL_TARGETS is default).
+# Runs Pub/Sub integration tests.
 function integration::bazel_pubsub_with_emulators() {
   local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
@@ -192,7 +194,7 @@ function integration::bazel_pubsub_with_emulators() {
   io::log_h2 "Running Pub/Sub production integration tests"
   bazel "${verb}" "${args[@]}" \
     --test_tag_filters="${production_tests_tag_filters}" \
-    "google/cloud/pubsublite/..."
+    "google/cloud/pubsub/..."
 }
 
 # Runs Storage integration tests.

@@ -215,6 +215,12 @@ Idempotency ClusterManagerConnectionIdempotencyPolicy::FetchNodePoolUpgradeInfo(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ClusterManagerConnectionIdempotencyPolicy::CompleteControlPlaneUpgrade(
+    google::container::v1::CompleteControlPlaneUpgradeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 MakeDefaultClusterManagerConnectionIdempotencyPolicy() {
   return std::make_unique<ClusterManagerConnectionIdempotencyPolicy>();

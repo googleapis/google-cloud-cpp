@@ -71,6 +71,9 @@ class StorageControlConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListManagedFolders(
       google::storage::control::v2::ListManagedFoldersRequest request);
 
+  virtual google::cloud::Idempotency UpdateManagedFolder(
+      google::storage::control::v2::UpdateManagedFolderRequest const& request);
+
   virtual google::cloud::Idempotency CreateAnywhereCache(
       google::storage::control::v2::CreateAnywhereCacheRequest const& request);
 
@@ -91,6 +94,21 @@ class StorageControlConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListAnywhereCaches(
       google::storage::control::v2::ListAnywhereCachesRequest request);
+
+  virtual google::cloud::Idempotency CreateRapidCache(
+      google::storage::control::v2::CreateRapidCacheRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateRapidCache(
+      google::storage::control::v2::UpdateRapidCacheRequest const& request);
+
+  virtual google::cloud::Idempotency DisableRapidCache(
+      google::storage::control::v2::DisableRapidCacheRequest const& request);
+
+  virtual google::cloud::Idempotency GetRapidCache(
+      google::storage::control::v2::GetRapidCacheRequest const& request);
+
+  virtual google::cloud::Idempotency ListRapidCaches(
+      google::storage::control::v2::ListRapidCachesRequest request);
 
   virtual google::cloud::Idempotency GetProjectIntelligenceConfig(
       google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
@@ -142,6 +160,10 @@ class StorageControlConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListIntelligenceFindingRevisions(
       google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+          request);
+
+  virtual google::cloud::Idempotency ViewObjectFullContext(
+      google::storage::control::v2::ViewObjectFullContextRequest const&
           request);
 };
 

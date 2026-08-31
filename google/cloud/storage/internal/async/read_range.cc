@@ -19,26 +19,45 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
 #include <iostream>
+#include <set>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::vector<DedupedReadRange> DeduplicateRanges(
+    std::vector<ReadRangeConfig> const& ranges, std::int64_t initial_id) {
+  std::vector<DedupedReadRange> deduped;
+  deduped.reserve(ranges.size());
+  std::int64_t id = initial_id;
+  std::set<std::pair<std::int64_t, std::int64_t>> seen_ranges;
+  for (auto const& r : ranges) {
+    auto range_key = std::make_pair(r.offset, r.length);
+    if (!seen_ranges.insert(range_key).second) {
+      continue;
+    }
+    ++id;
+    deduped.push_back({r, id});
+  }
+  return deduped;
+}
+
 bool ReadRange::IsDone() const {
   std::lock_guard<std::mutex> lk(mu_);
   return status_.has_value();
 }
 
-absl::optional<google::storage::v2::ReadRange> ReadRange::RangeForResume(
+std::optional<google::storage::v2::ReadRange> ReadRange::RangeForResume(
     std::int64_t read_id) const {
   auto range = google::storage::v2::ReadRange{};
   range.set_read_id(read_id);
   std::lock_guard<std::mutex> lk(mu_);
-  if (status_.has_value()) return absl::nullopt;
+  if (status_.has_value()) return std::nullopt;
   if (requested_length_.has_value() && *requested_length_ >= 0 &&
       received_bytes_ >= *requested_length_) {
-    return absl::nullopt;
+    return std::nullopt;
   }
   range.set_read_offset(offset_);
   range.set_read_length(length_);
@@ -75,7 +94,7 @@ void ReadRange::OnFinish(Status status) {
 
 void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
                        bool is_transcoded,
-                       absl::optional<std::int64_t> object_size) {
+                       std::optional<std::int64_t> object_size) {
   std::unique_lock<std::mutex> lk(mu_);
   is_transcoded_ = is_transcoded_ || is_transcoded;
   if (object_size.has_value()) object_size_ = object_size;

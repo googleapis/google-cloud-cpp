@@ -17,6 +17,7 @@ set -euo pipefail
 
 declare -A -r LIBRARIES=(
   ["accessapproval"]="@googleapis//google/cloud/accessapproval/v1:accessapproval_cc_grpc"
+  ["agentidentity"]="@googleapis//google/cloud/agentidentity/v1:agentidentity_cc_grpc"
   ["agentregistry"]="@googleapis//google/cloud/agentregistry/v1:agentregistry_cc_grpc"
   ["accesscontextmanager"]="$(
     printf ",%s" \
@@ -63,6 +64,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc" \
       "@googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc"
   )"
+  ["biglake"]="@googleapis//google/cloud/biglake/hive/v1:hive_cc_grpc"
   ["bigquery"]="$(
     # This is long enough that it needs to be kept in alphabetical order
     printf ",%s" \
@@ -160,6 +162,7 @@ declare -A -r LIBRARIES=(
   )"
   ["filestore"]="@googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
   ["financialservices"]="@googleapis//google/cloud/financialservices/v1:financialservices_cc_grpc"
+  ["ftp"]="@googleapis//google/cloud/ftp/v1:ftp_cc_proto"
   ["functions"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/functions/v1:functions_cc_grpc" \
@@ -246,7 +249,6 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/oslogin/common:common_cc_grpc"
   )"
   ["parametermanager"]="@googleapis//google/cloud/parametermanager/v1:parametermanager_cc_grpc"
-  ["parallelstore"]="@googleapis//google/cloud/parallelstore/v1:parallelstore_cc_grpc"
   ["policysimulator"]="@googleapis//google/cloud/policysimulator/v1:policysimulator_cc_grpc"
   ["policytroubleshooter"]="$(
     printf ",%s" \
@@ -258,7 +260,6 @@ declare -A -r LIBRARIES=(
   ["profiler"]="@googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
   ["publicca"]="@googleapis//google/cloud/security/publicca/v1:publicca_cc_grpc"
   ["pubsub"]="@googleapis//google/pubsub/v1:pubsub_cc_grpc"
-  ["pubsublite"]="@googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc"
   ["rapidmigrationassessment"]="@googleapis//google/cloud/rapidmigrationassessment/v1:rapidmigrationassessment_cc_grpc"
   ["recaptchaenterprise"]="@googleapis//google/cloud/recaptchaenterprise/v1:recaptchaenterprise_cc_grpc"
   ["recommender"]="$(
@@ -356,6 +357,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/workflows/type:type_cc_grpc" \
       "@googleapis//google/cloud/workflows/executions/v1:executions_cc_grpc"
   )"
+  ["workloadidentity"]="@googleapis//google/cloud/workloadidentity/v1:workloadidentity_cc_grpc"
   ["workloadmanager"]="@googleapis//google/cloud/workloadmanager/v1:workloadmanager_cc_grpc"
   ["workstations"]="$(
     printf ",%s" \

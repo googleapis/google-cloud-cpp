@@ -215,6 +215,31 @@ DefaultSecretManagerServiceStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+DefaultSecretManagerServiceStub::EnableManagedRotation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request) {
+  google::cloud::secretmanager::v1::SecretVersion response;
+  auto status = grpc_stub_->EnableManagedRotation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+DefaultSecretManagerServiceStub::RotateSecret(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request) {
+  google::cloud::secretmanager::v1::SecretVersion response;
+  auto status = grpc_stub_->RotateSecret(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultSecretManagerServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

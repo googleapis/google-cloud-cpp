@@ -77,6 +77,10 @@ class RegionInstanceGroupsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_instance_groups::v1::
+                         TestIamPermissionsRequest const& request) override;
+
  private:
   static std::unique_ptr<
       compute_region_instance_groups_v1::RegionInstanceGroupsRetryPolicy>

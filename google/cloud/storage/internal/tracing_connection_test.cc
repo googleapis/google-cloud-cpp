@@ -22,6 +22,7 @@
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <thread>
 #include <utility>
 
 namespace google {
@@ -33,7 +34,9 @@ namespace {
 using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -54,10 +57,36 @@ TEST(TracingClientTest, Options) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, options).WillOnce(Return(Options{}.set<TestOption>(42)));
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(Return(Options{}.set<TestOption>(42)));
   auto under_test = TracingConnection(mock);
   auto const options = under_test.options();
   EXPECT_EQ(42, options.get<TestOption>());
+}
+
+TEST(TracingClientTest, CustomAsyncRunner) {
+  bool invoked = false;
+  auto runner = [&invoked](std::function<void()> const& f) {
+    invoked = true;
+    f();
+  };
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    return metadata;
+  });
+  EXPECT_CALL(*mock, DeleteBucket)
+      .WillOnce(
+          testing::Return(make_status_or(storage::internal::EmptyResponse{})));
+
+  auto under_test = TracingConnection(mock, runner);
+  (void)under_test.DeleteBucket(
+      storage::internal::DeleteBucketRequest("test-bucket"));
+  EXPECT_TRUE(invoked);
 }
 
 TEST(TracingClientTest, ListBuckets) {
@@ -105,6 +134,35 @@ TEST(TracingClientTest, CreateBucket) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, CreateBucketSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, CreateBucket).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual =
+      under_test.CreateBucket(storage::internal::CreateBucketRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("storage::Client::CreateBucket"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
 TEST(TracingClientTest, GetBucketMetadata) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
@@ -126,6 +184,88 @@ TEST(TracingClientTest, GetBucketMetadata) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, GetBucketMetadataSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("storage::Client::GetBucketMetadata"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
+TEST(TracingClientTest, BucketMetadataCacheSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+
+  std::promise<void> bg_fetch_done;
+  auto bg_fetch_future = bg_fetch_done.get_future();
+
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return TransientError();
+  });
+
+  EXPECT_CALL(*mock, GetBucketMetadata)
+      .WillOnce([&bg_fetch_done](auto const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        storage::BucketMetadata metadata;
+        metadata.set_name("test-bucket");
+        metadata.set_project_number(123456);
+        metadata.set_location("us-east1");
+        metadata.set_location_type("regional");
+        bg_fetch_done.set_value();
+        return metadata;
+      });
+
+  auto under_test = TracingConnection(mock);
+
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
+
+  bg_fetch_future.wait_for(std::chrono::seconds(5));
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+  EXPECT_CALL(*mock, DeleteObject).WillOnce([](auto const&) {
+    return PermanentError();
+  });
+
+  // Clear spans from GetObjectMetadata
+  (void)span_catcher->GetSpans();
+
+  (void)under_test.DeleteObject(
+      storage::internal::DeleteObjectRequest("test-bucket", "test-object"));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanNamed("storage::Client::DeleteObject"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
 }
 
 TEST(TracingClientTest, DeleteBucket) {
@@ -174,6 +314,35 @@ TEST(TracingClientTest, UpdateBucket) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, UpdateBucketSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, UpdateBucket).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual =
+      under_test.UpdateBucket(storage::internal::UpdateBucketRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("storage::Client::UpdateBucket"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
 TEST(TracingClientTest, PatchBucket) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
@@ -194,6 +363,34 @@ TEST(TracingClientTest, PatchBucket) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, PatchBucketSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, PatchBucket).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.PatchBucket(storage::internal::PatchBucketRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("storage::Client::PatchBucket"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
 }
 
 TEST(TracingClientTest, GetNativeBucketIamPolicy) {
@@ -288,6 +485,35 @@ TEST(TracingClientTest, LockBucketRetentionPolicy) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, LockBucketRetentionPolicySuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, LockBucketRetentionPolicy).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.LockBucketRetentionPolicy(
+      storage::internal::LockBucketRetentionPolicyRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("storage::Client::LockBucketRetentionPolicy"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
 }
 
 TEST(TracingClientTest, InsertObjectMedia) {
@@ -1482,6 +1708,97 @@ TEST(TracingClientTest, DeleteNotification) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, BucketMetadataMaybeInvalidateBucketLevelEvict) {
+  auto mock = std::make_shared<MockClient>();
+
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  // Seed cache
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+
+  auto under_test = TracingConnection(mock);
+  (void)under_test.GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+
+  // Fail a bucket-level operation with 404 (DeleteBucket)
+  EXPECT_CALL(*mock, DeleteBucket).WillOnce([](auto const&) {
+    return Status(StatusCode::kNotFound, "Bucket not found");
+  });
+  (void)under_test.DeleteBucket(
+      storage::internal::DeleteBucketRequest("test-bucket"));
+
+  // Verify that the cache entry was evicted.
+  testing::Mock::VerifyAndClearExpectations(mock.get());
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return storage::ObjectMetadata();
+  });
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    return Status(StatusCode::kNotFound, "Bucket not found");
+  });
+
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
+}
+
+TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
+  auto mock = std::make_shared<MockClient>();
+
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  // Seed cache
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+
+  auto under_test = TracingConnection(mock);
+  (void)under_test.GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+
+  // Fail an object-level operation with 404 (GetObjectMetadata)
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return Status(StatusCode::kNotFound, "Object not found");
+  });
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
+
+  // Verify that the cache entry was NOT evicted.
+  testing::Mock::VerifyAndClearExpectations(mock.get());
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return storage::ObjectMetadata();
+  });
+  EXPECT_CALL(*mock, GetBucketMetadata).Times(0);
+
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
 }
 
 }  // namespace

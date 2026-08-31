@@ -258,11 +258,11 @@ std::string MakeGrpcHttpProxy(ProxyConfig const& config);
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 
 /// Helper function to extract the first instance of an integer channel argument
-absl::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
-                                          std::string const& key);
+std::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
+                                         std::string const& key);
 
 /// Helper function to extract the first instance of a string channel argument
-absl::optional<std::string> GetStringChannelArgument(
+std::optional<std::string> GetStringChannelArgument(
     grpc::ChannelArguments const& args, std::string const& key);
 
 /**

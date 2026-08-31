@@ -240,11 +240,6 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       if (!service.omit_client() &&
           !std::any_of(kOmittedDocDirs.begin(), kOmittedDocDirs.end(),
                        [&](auto s) {
-                         // TODO(#15652): Remove when service is turned down.
-                         if (absl::StartsWith(service.product_path(),
-                                              "google/cloud/pubsublite")) {
-                           return false;
-                         }
                          return absl::StartsWith(service.product_path(), s);
                        })) {
         GenerateScaffold(
@@ -307,6 +302,10 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (service.generate_round_robin_decorator()) {
       args.emplace_back(
           "--cpp_codegen_opt=generate_round_robin_decorator=true");
+    }
+    if (service.experimental_bigtable_operation_context()) {
+      args.emplace_back(
+          "--cpp_codegen_opt=experimental_bigtable_operation_context=true");
     }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());

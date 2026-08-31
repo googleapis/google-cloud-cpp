@@ -479,6 +479,22 @@ FirewallsRestConnectionImpl::PatchFirewall(
       });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+FirewallsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::firewalls::v1::TestIamPermissionsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestConnectionImpl::UpdateFirewall(
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&

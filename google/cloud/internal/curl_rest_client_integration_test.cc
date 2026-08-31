@@ -79,7 +79,7 @@ class RestClientIntegrationTest : public ::testing::Test {
   static void VerifyJsonPayloadResponse(
       std::string const& method, std::string const& json_payload,
       StatusOr<std::unique_ptr<RestResponse>> response_status,
-      absl::optional<std::size_t> const& request_content_length) {
+      std::optional<std::size_t> const& request_content_length) {
     ASSERT_STATUS_OK(response_status);
     auto response = std::move(response_status.value());
     EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));

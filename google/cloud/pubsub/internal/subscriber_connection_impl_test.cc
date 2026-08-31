@@ -119,12 +119,12 @@ StreamingPullMock MakeAsyncStreamingPullMock(
     auto generator = std::make_shared<MessageGenerator>();
     auto read_response = [cq, generator]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([generator](auto) {
-        return absl::make_optional(generator->Generate(10));
+        return std::make_optional(generator->Generate(10));
       });
     };
     auto canceled_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
-          [](auto) { return absl::optional<Response>{}; });
+          [](auto) { return std::optional<Response>{}; });
     };
     auto finish_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](auto) { return Status{}; });

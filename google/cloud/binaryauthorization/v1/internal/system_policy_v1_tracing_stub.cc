@@ -46,6 +46,41 @@ SystemPolicyV1TracingStub::GetSystemPolicy(
                            child_->GetSystemPolicy(context, options, request));
 }
 
+StatusOr<google::iam::v1::Policy> SystemPolicyV1TracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.SystemPolicyV1", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> SystemPolicyV1TracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.SystemPolicyV1", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+SystemPolicyV1TracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.SystemPolicyV1",
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
+}
+
 std::shared_ptr<SystemPolicyV1Stub> MakeSystemPolicyV1TracingStub(
     std::shared_ptr<SystemPolicyV1Stub> stub) {
   return std::make_shared<SystemPolicyV1TracingStub>(std::move(stub));

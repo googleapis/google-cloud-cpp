@@ -36,7 +36,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 
-absl::optional<std::string> EmulatorEndpoint() {
+std::optional<std::string> EmulatorEndpoint() {
   return GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
 }
 

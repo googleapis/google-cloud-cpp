@@ -128,6 +128,45 @@ Status BinauthzManagementServiceV1TracingStub::DeleteAttestor(
                            child_->DeleteAttestor(context, options, request));
 }
 
+StatusOr<google::iam::v1::Policy>
+BinauthzManagementServiceV1TracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy>
+BinauthzManagementServiceV1TracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+BinauthzManagementServiceV1TracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
+}
+
 std::shared_ptr<BinauthzManagementServiceV1Stub>
 MakeBinauthzManagementServiceV1TracingStub(
     std::shared_ptr<BinauthzManagementServiceV1Stub> stub) {

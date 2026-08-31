@@ -48,6 +48,37 @@ DefaultRegionHealthCheckServicesRestStub::
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
+StatusOr<google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+DefaultRegionHealthCheckServicesRestStub::
+    AggregatedListRegionHealthCheckServices(
+        google::cloud::rest_internal::RestContext& rest_context,
+        Options const& options,
+        google::cloud::cpp::compute::region_health_check_services::v1::
+            AggregatedListRegionHealthCheckServicesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
+                   "healthCheckServices"),
+      std::move(query_params));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionHealthCheckServicesRestStub::AsyncDeleteHealthCheckService(
     CompletionQueue& cq,
@@ -263,6 +294,25 @@ DefaultRegionHealthCheckServicesRestStub::PatchHealthCheckService(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthCheckServices", "/",
                    request.health_check_service()),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+DefaultRegionHealthCheckServicesRestStub::TestIamPermissions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "healthCheckServices", "/",
+                   request.resource(), "/", "testIamPermissions"),
       std::move(query_params));
 }
 

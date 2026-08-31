@@ -126,16 +126,22 @@ int DefaultConnectionPoolSize() {
                     cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
 }
 
-bool IsDirectPath() {
-  auto const direct_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
-          .value_or("");
+bool IsDirectPath(Options const& options) {
+  std::optional<std::string> const direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   // Bigtable specific env var for Direct Path support used by all clients.
-  auto const cbt_direct_path =
-      google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH").value_or("");
-  return absl::c_any_of(absl::StrSplit(direct_path, ','),
-                        [](absl::string_view v) { return v == "bigtable"; }) ||
-         cbt_direct_path == "true";
+  std::optional<std::string> const cbt_direct_path =
+      google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
+  if (cbt_direct_path.has_value()) {
+    if (*cbt_direct_path == "false") return false;
+    if (*cbt_direct_path == "true") return true;
+  }
+  if (direct_path.has_value()) {
+    return absl::c_any_of(absl::StrSplit(*direct_path, ','),
+                          [](absl::string_view v) { return v == "bigtable"; });
+  }
+  return options.get<experimental::DirectPathModeOption>() ==
+         experimental::DirectPathMode::kEnabled;
 }
 
 Options HandleUniverseDomain(Options opts) {
@@ -184,10 +190,10 @@ Options DefaultOptions(Options opts) {
   }
 
   // Set the specific data endpoints if Direct Path is enabled.
-  if (IsDirectPath()) {
+  if (IsDirectPath(opts)) {
     opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-            "google-c2p:///bigtable.googleapis.com")
-        .set<AuthorityOption>("bigtable.googleapis.com");
+            DefaultDirectPathDataEndpoint())
+        .set<AuthorityOption>(DefaultDirectPathAuthority());
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
@@ -244,6 +250,19 @@ Options DefaultOptions(Options opts) {
         (opts.get<MetricsPeriodOption>() < std::chrono::seconds(5))) {
       opts.set<MetricsPeriodOption>(std::chrono::seconds(60));
     }
+  }
+
+  if (!opts.has<experimental::DirectPathProbeTimeoutOption>()) {
+    opts.set<experimental::DirectPathProbeTimeoutOption>(
+        DefaultDirectPathProbeTimeout());
+  }
+  if (!opts.has<experimental::DirectPathDiagnosticsTimeoutOption>()) {
+    opts.set<experimental::DirectPathDiagnosticsTimeoutOption>(
+        DefaultDirectPathDiagnosticsTimeout());
+  }
+  if (!opts.has<experimental::DirectPathInitializationModeOption>()) {
+    opts.set<experimental::DirectPathInitializationModeOption>(
+        DefaultDirectPathInitializationMode());
   }
 
   return opts;
@@ -315,6 +334,20 @@ Options DefaultTableAdminOptions(Options opts) {
   return opts.set<EndpointOption>(
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
 }
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+Options MetricsExporterConnectionOptions(Options options) {
+  options.unset<EndpointOption>();
+  options.unset<AuthorityOption>();
+  auto collector = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR");
+  if (collector.has_value()) {
+    options.set<google::cloud::UnifiedCredentialsOption>(
+        google::cloud::MakeInsecureCredentials());
+  }
+  return options;
+}
+#endif
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

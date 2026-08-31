@@ -147,12 +147,12 @@ class GlobalOrganizationOperationsClient {
 
   // clang-format off
   ///
-  /// Retrieves the specified Operations resource. Gets a list of operations by
-  /// making a `list()` request.
+  /// Retrieves the specified Operations resource. Gets a list of operations
+  /// by making a `list()` request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/get
   ///
-  /// @param operation  Name of the Operations resource to return, or its unique numeric
-  ///  identifier.
+  /// @param operation  Name of the Operations resource to return. Parent is derived from this
+  ///  field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -167,7 +167,7 @@ class GlobalOrganizationOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -175,8 +175,8 @@ class GlobalOrganizationOperationsClient {
 
   // clang-format off
   ///
-  /// Retrieves the specified Operations resource. Gets a list of operations by
-  /// making a `list()` request.
+  /// Retrieves the specified Operations resource. Gets a list of operations
+  /// by making a `list()` request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -199,7 +199,7 @@ class GlobalOrganizationOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -242,7 +242,7 @@ class GlobalOrganizationOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L95}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation>

@@ -43,7 +43,9 @@ otel_internal::ResourceFilterDataFn MakeResourceFilterFn(
   if (excluded.empty()) return nullptr;
 
   // Capture by value to avoid dangling reference in the lambda.
-  return [excluded = std::move(excluded)](std::string const& key) -> bool {
+  return [excluded = std::move(excluded)](
+             std::string const& key,
+             opentelemetry::sdk::metrics::PointAttributes const&) -> bool {
     return excluded.count(key) > 0;
   };
 }

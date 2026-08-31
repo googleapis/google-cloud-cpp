@@ -91,10 +91,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "3b5b49006181f5f8ff626ef8ddceaa95e9bb8ad294f7b5d7b11ea9f7ddaf8c59",
+        sha256 = "37cdfbc6faefea94f7b37760a305c98c08981116c2bc9e821e3b423221fad8c8",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.9.0/bazel-skylib-1.9.0.tar.gz",
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.9.0/bazel-skylib-1.9.0.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.9.2/bazel-skylib-1.9.2.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.9.2/bazel-skylib-1.9.2.tar.gz",
         ],
     )
 
@@ -136,10 +136,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/b6f9ff05aaec18070232a1ab36da98e684bc7909.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/d10ac9249540add035ce07b6a54028ab643e1532.tar.gz",
         ],
-        sha256 = "91788c6f956a0a409abe89a304c123cff73cb0ebb46b494e56d7ac9ece86f8cf",
-        strip_prefix = "googleapis-b6f9ff05aaec18070232a1ab36da98e684bc7909",
+        sha256 = "5edf8777a0def8f0d845b3620cc3489b41f9c034d64fd86cc24f4e7b9388048f",
+        strip_prefix = "googleapis-d10ac9249540add035ce07b6a54028ab643e1532",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         patches = [
@@ -196,10 +196,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "763f4a3f6b03469fdb00a77a333dd0b5546d3ee1fa29db373128c08fee73e0e8",
+        sha256 = "c3e253237109ab2e2a8d3cb075688b98a6e6fce43d849849648e8e3a84f20d6f",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.61.1/rules_go-v0.61.1.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.61.1/rules_go-v0.61.1.zip",
+            "https://mirror.bazel.build/github.com/bazel-contrib/rules_go/releases/download/v0.63.0/rules_go-v0.63.0.zip",
+            "https://github.com/bazel-contrib/rules_go/releases/download/v0.63.0/rules_go-v0.63.0.zip",
         ],
         patch_args = ["-p1"],
     )

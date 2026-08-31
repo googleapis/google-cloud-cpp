@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/testing/upload_hash_cases.h"
 #include <vector>
 
@@ -66,3 +67,5 @@ std::vector<UploadHashCase> UploadHashCases() {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"

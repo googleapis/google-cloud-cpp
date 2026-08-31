@@ -227,6 +227,15 @@ class BinauthzManagementServiceV1Connection {
   virtual Status DeleteAttestor(
       google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
           request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**

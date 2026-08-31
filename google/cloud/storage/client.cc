@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/base64.h"
@@ -139,10 +140,17 @@ ObjectWriteStream Client::WriteObjectImpl(
       connection_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),
-      internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(""),
-          request.GetOption<MD5HashValue>().value_or(""),
-      },
+      [&]() {
+        auto crc = request.GetOption<Crc32cChecksumValue>().value_or("");
+        auto md5 = request.GetOption<MD5HashValue>().value_or("");
+        if ((crc.empty() || md5.empty()) &&
+            current.has<PrecomputedChecksumsOption>()) {
+          auto const& checksums = current.get<PrecomputedChecksumsOption>();
+          if (crc.empty()) crc = checksums.crc32c;
+          if (md5.empty()) md5 = checksums.md5;
+        }
+        return internal::HashValues{std::move(crc), std::move(md5)};
+      }(),
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
           AutoFinalizeConfig::kEnabled)));
@@ -472,7 +480,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 
-absl::optional<std::string> GetEmulator() {
+std::optional<std::string> GetEmulator() {
   auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   if (emulator) return emulator;
   return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
@@ -555,7 +563,8 @@ Options DefaultOptions(Options opts) {
                                    STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
                                    STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
               .clone())
-      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone())
+      .set<storage_experimental::OTelSpanEnrichmentOption>(true);
 
   o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
   // If the application did not set `DownloadStallTimeoutOption` then use the
@@ -570,6 +579,26 @@ Options DefaultOptions(Options opts) {
   if (emulator.has_value()) {
     o.set<RestEndpointOption>(*emulator).set<IamEndpointOption>(*emulator +
                                                                 "/iamapi");
+  }
+
+  if (!o.has<storage_experimental::EnableReadHedgingOption>()) {
+    o.set<storage_experimental::EnableReadHedgingOption>(false);
+  }
+  if (!o.has<storage_experimental::ReadHedgeRateLimitOption>()) {
+    o.set<storage_experimental::ReadHedgeRateLimitOption>(0.0);
+  }
+  if (!o.has<storage_experimental::MaxConcurrentHedgesOption>()) {
+    o.set<storage_experimental::MaxConcurrentHedgesOption>(0);
+  }
+  if (!o.has<storage_experimental::MaximumHedgeBufferOption>()) {
+    o.set<storage_experimental::MaximumHedgeBufferOption>(64 * 1024 * 1024);
+  }
+  if (!o.has<storage_experimental::ReadHedgeDelayOption>()) {
+    o.set<storage_experimental::ReadHedgeDelayOption>(
+        std::chrono::milliseconds(500));
+  }
+  if (!o.has<storage_experimental::MaxReadHedgesOption>()) {
+    o.set<storage_experimental::MaxReadHedgesOption>(2);
   }
 
   auto logging = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
@@ -622,6 +651,12 @@ Options DefaultOptions(Options opts) {
   }
   if (o.has<internal::CAPathOption>()) {
     rest_defaults.set<rest::CAPathOption>(o.get<internal::CAPathOption>());
+  }
+
+  // The (experimental) connect timeout is mapped the same way.
+  if (o.has<storage_experimental::HttpConnectTimeoutOption>()) {
+    rest_defaults.set<rest::HttpConnectTimeoutOption>(
+        o.get<storage_experimental::HttpConnectTimeoutOption>());
   }
 
   return google::cloud::internal::MergeOptions(std::move(o),
@@ -699,3 +734,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"

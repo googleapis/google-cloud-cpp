@@ -126,6 +126,20 @@ KeyManagementServiceConnectionIdempotencyPolicy::ImportCryptoKeyVersion(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::
+    ImportTrustedKeyWrappedCryptoKeyVersion(
+        google::cloud::kms::v1::
+            ImportTrustedKeyWrappedCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::
+    ExportTrustedKeyWrappedCryptoKeyVersion(
+        google::cloud::kms::v1::
+            ExportTrustedKeyWrappedCryptoKeyVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateImportJob(
     google::cloud::kms::v1::CreateImportJobRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -214,7 +214,9 @@ void SetLongrunningOperationServiceVars(
             "google::cloud::cpp::compute::global_organization_operations::v1::"
             "DeleteOperationRequest";
         service_vars["longrunning_set_operation_fields"] = R"""(
+      // clang-format off
       r.set_operation(op);
+      // clang-format on
 )""";
         service_vars["longrunning_await_set_operation_fields"] = R"""(
       r.set_operation(info.operation);

@@ -54,6 +54,21 @@ class NetworksRestMetadata : public NetworksRestStub {
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncCancelRequestRemovePeering(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CancelRequestRemovePeering(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -135,6 +150,20 @@ class NetworksRestMetadata : public NetworksRestStub {
       Options const& options,
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRequestRemovePeering(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::networks::v1::
+          RequestRemovePeeringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RequestRemovePeering(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::networks::v1::
+          RequestRemovePeeringRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSwitchToCustomMode(

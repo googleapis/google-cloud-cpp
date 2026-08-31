@@ -109,12 +109,44 @@ class SqlConnectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.ConnectSettings]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L73}
-  /// [google.cloud.sql.v1.GetConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L59}
+  /// [google.cloud.sql.v1.ConnectSettings]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L91}
+  /// [google.cloud.sql.v1.GetConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L68}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::sql::v1::GetConnectSettingsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves connect settings about a Cloud SQL instance using the instance
+  /// DNS name.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.ResolveConnectSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.ConnectSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.ConnectSettings]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L91}
+  /// [google.cloud.sql.v1.ResolveConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L82}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::sql::v1::ConnectSettings> ResolveConnectSettings(
+      google::cloud::sql::v1::ResolveConnectSettingsRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -143,8 +175,8 @@ class SqlConnectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L188}
-  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L213}
+  /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L213}
+  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L238}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>

@@ -127,6 +127,13 @@ RegionHealthChecksConnection::PatchHealthCheck(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthChecksConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_health_checks::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksConnection::UpdateHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::

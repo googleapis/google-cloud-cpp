@@ -45,6 +45,12 @@ class ReservationBlocksRestStub {
       google::cloud::cpp::compute::reservation_blocks::v1::
           GetReservationBlocksGetResponseRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetIamPolicyRequest const& request) = 0;
+
   virtual StatusOr<
       google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
   ListReservationBlocks(google::cloud::rest_internal::RestContext& rest_context,
@@ -65,6 +71,18 @@ class ReservationBlocksRestStub {
                      Options const& options,
                      google::cloud::cpp::compute::reservation_blocks::v1::
                          PerformMaintenanceRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          SetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::reservation_blocks::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
@@ -98,6 +116,12 @@ class DefaultReservationBlocksRestStub : public ReservationBlocksRestStub {
       google::cloud::cpp::compute::reservation_blocks::v1::
           GetReservationBlocksGetResponseRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetIamPolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
   ListReservationBlocks(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -118,6 +142,18 @@ class DefaultReservationBlocksRestStub : public ReservationBlocksRestStub {
       Options const& options,
       google::cloud::cpp::compute::reservation_blocks::v1::
           PerformMaintenanceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::reservation_blocks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

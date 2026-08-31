@@ -36,7 +36,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-absl::optional<std::string> IncludePathForWellKnownProtobufType(
+std::optional<std::string> IncludePathForWellKnownProtobufType(
     google::protobuf::FieldDescriptor const& parameter) {
   // This hash is not intended to be comprehensive. Problematic types and their
   // includes should be added as needed.
@@ -102,6 +102,11 @@ ServiceCodeGenerator::EndpointLocationStyle() const {
 
 bool ServiceCodeGenerator::IsExperimental() const {
   auto iter = vars().find("experimental");
+  return iter != vars().end() && iter->second == "true";
+}
+
+bool ServiceCodeGenerator::HasExperimentalBigtableOperationContext() const {
+  auto iter = vars().find("experimental_bigtable_operation_context");
   return iter != vars().end() && iter->second == "true";
 }
 

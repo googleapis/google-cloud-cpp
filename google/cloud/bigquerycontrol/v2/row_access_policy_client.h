@@ -92,6 +92,10 @@ class RowAccessPolicyServiceClient {
   ///
   /// Lists all row access policies on the specified table.
   ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.rowAccessPolicies.list` permission on the table.
+  ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
@@ -120,8 +124,8 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L91}
-  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
+  /// [google.cloud.bigquery.v2.ListRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L129}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L250}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
@@ -132,6 +136,10 @@ class RowAccessPolicyServiceClient {
   // clang-format off
   ///
   /// Gets the specified row access policy by policy ID.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the `bigquery.rowAccessPolicies.get` permission on the table.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -152,8 +160,8 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L120}
-  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
+  /// [google.cloud.bigquery.v2.GetRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L158}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L250}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> GetRowAccessPolicy(
@@ -163,6 +171,14 @@ class RowAccessPolicyServiceClient {
   // clang-format off
   ///
   /// Creates a row access policy.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) on the table:
+  ///
+  ///  - `bigquery.rowAccessPolicies.create`
+  ///  - `bigquery.rowAccessPolicies.setIamPolicy`
+  ///  - `bigquery.tables.getData`
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -183,8 +199,8 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.CreateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L135}
-  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
+  /// [google.cloud.bigquery.v2.CreateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L173}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L250}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> CreateRowAccessPolicy(
@@ -194,6 +210,14 @@ class RowAccessPolicyServiceClient {
   // clang-format off
   ///
   /// Updates a row access policy.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) on the table:
+  ///
+  ///  - `bigquery.rowAccessPolicies.update`
+  ///  - `bigquery.rowAccessPolicies.setIamPolicy`
+  ///  - `bigquery.tables.getData`
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,8 +238,8 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
-  /// [google.cloud.bigquery.v2.UpdateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L151}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L250}
+  /// [google.cloud.bigquery.v2.UpdateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L189}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> UpdateRowAccessPolicy(
@@ -225,6 +249,13 @@ class RowAccessPolicyServiceClient {
   // clang-format off
   ///
   /// Deletes a row access policy.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) on the table:
+  ///
+  ///  - `bigquery.rowAccessPolicies.delete`
+  ///  - `bigquery.rowAccessPolicies.setIamPolicy`
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -243,7 +274,7 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L170}
+  /// [google.cloud.bigquery.v2.DeleteRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L208}
   ///
   // clang-format on
   Status DeleteRowAccessPolicy(
@@ -253,6 +284,13 @@ class RowAccessPolicyServiceClient {
   // clang-format off
   ///
   /// Deletes provided row access policies.
+  ///
+  /// # IAM Permissions
+  ///
+  /// Requires the following IAM permission(s) on the table:
+  ///
+  ///  - `bigquery.rowAccessPolicies.delete`
+  ///  - `bigquery.rowAccessPolicies.setIamPolicy`
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -271,7 +309,7 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.BatchDeleteRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L190}
+  /// [google.cloud.bigquery.v2.BatchDeleteRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L228}
   ///
   // clang-format on
   Status BatchDeleteRowAccessPolicies(

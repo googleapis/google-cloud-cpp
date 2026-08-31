@@ -64,6 +64,10 @@ class TargetTcpProxiesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetProxyHeader(
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<TargetTcpProxiesConnectionIdempotencyPolicy>

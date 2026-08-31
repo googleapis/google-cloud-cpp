@@ -161,6 +161,17 @@ BackendServicesTracingConnection::GetBackendService(
   return internal::EndSpan(*span, child_->GetBackendService(request));
 }
 
+Status BackendServicesTracingConnection::GetEffectiveSecurityPolicies(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_services_v1::BackendServicesConnection::"
+      "GetEffectiveSecurityPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetEffectiveSecurityPolicies(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesTracingConnection::GetHealth(
     google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&

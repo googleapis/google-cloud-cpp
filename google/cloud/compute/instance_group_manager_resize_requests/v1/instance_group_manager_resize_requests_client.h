@@ -102,12 +102,12 @@ class InstanceGroupManagerResizeRequestsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/cancel
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. The name
-  ///  should conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. The name should conform to RFC1035
-  ///  or be a resource ID.
-  /// @param resize_request  The name of the resize request to cancel. The name should conform to
-  ///  RFC1035 or be a resource ID.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located. The name should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  The name should conform to RFC1035 or be a resource ID.
+  /// @param resize_request  The name of the resize request to cancel.
+  ///  The name should conform to RFC1035 or be a resource ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -128,7 +128,7 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L113}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
@@ -186,7 +186,7 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L113}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
@@ -232,12 +232,12 @@ class InstanceGroupManagerResizeRequestsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/delete
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. The name
-  ///  should conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. The name should conform to RFC1035
-  ///  or be a resource ID.
-  /// @param resize_request  The name of the resize request to delete. The name should conform to
-  ///  RFC1035 or be a resource ID.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located. The name should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  The name should conform to RFC1035 or be a resource ID.
+  /// @param resize_request  The name of the resize request to delete.
+  ///  The name should conform to RFC1035 or be a resource ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -258,7 +258,7 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L155}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L159}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -317,7 +317,7 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L155}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L159}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -364,12 +364,12 @@ class InstanceGroupManagerResizeRequestsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/get
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  Name of the href="/compute/docs/regions-zones/#available">zone scoping this
-  ///  request. Name should conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group. Name should conform to RFC1035 or
-  ///  be a resource ID.
-  /// @param resize_request  The name of the resize request. Name should conform to RFC1035 or be a
-  ///  resource ID.
+  /// @param zone  Name of the href="/compute/docs/regions-zones/#available">zone
+  ///  scoping this request. Name should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group.
+  ///  Name should conform to RFC1035 or be a resource ID.
+  /// @param resize_request  The name of the resize request.
+  ///  Name should conform to RFC1035 or be a resource ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -383,8 +383,8 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L197}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L31}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L204}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>
@@ -417,8 +417,8 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L197}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L31}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L204}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>
@@ -429,15 +429,17 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// Creates a new resize request that starts provisioning VMs immediately or
-  /// queues VM creation.
+  /// Creates a new resize request that starts provisioning VMs immediately
+  /// or queues VM creation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/insert
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located and where
-  ///  the resize request will be created. Name should conform to RFC1035.
-  /// @param instance_group_manager  The name of the managed instance group to which the resize request will be
-  ///  added. Name should conform to RFC1035 or be a resource ID.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located and where the resize request will be created.
+  ///  Name should conform to RFC1035.
+  /// @param instance_group_manager  The name of the managed instance group to which the resize request will
+  ///  be added.
+  ///  Name should conform to RFC1035 or be a resource ID.
   /// @param instance_group_manager_resize_request_resource  The InstanceGroupManagerResizeRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -459,7 +461,7 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L220}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L227}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -491,8 +493,8 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// Creates a new resize request that starts provisioning VMs immediately or
-  /// queues VM creation.
+  /// Creates a new resize request that starts provisioning VMs immediately
+  /// or queues VM creation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -521,7 +523,7 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L220}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L227}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -564,13 +566,13 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of resize requests that are contained in the managed
-  /// instance group.
+  /// Retrieves a list of resize requests that are contained in the
+  /// managed instance group.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/list
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the managed instance group is located. The name
-  ///  should conform to RFC1035.
+  /// @param zone  The name of thezone where the managed
+  ///  instance group is located. The name should conform to RFC1035.
   /// @param instance_group_manager  The name of the managed instance group. The name should conform to RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -594,8 +596,8 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.ListInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L262}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L31}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.ListInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L274}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L33}
   ///
   // clang-format on
   StreamRange<
@@ -606,8 +608,8 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of resize requests that are contained in the managed
-  /// instance group.
+  /// Retrieves a list of resize requests that are contained in the
+  /// managed instance group.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagerResizeRequests/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -638,8 +640,8 @@ class InstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.ListInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L262}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L31}
+  /// [google.cloud.cpp.compute.instance_group_manager_resize_requests.v1.ListInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto#L274}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L33}
   ///
   // clang-format on
   StreamRange<

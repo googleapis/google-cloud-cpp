@@ -94,6 +94,18 @@ class SnapshotsTracingConnection
   TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
                          TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   std::shared_ptr<compute_snapshots_v1::SnapshotsConnection> child_;
 };

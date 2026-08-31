@@ -14,10 +14,10 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MOCKS_MOCK_ASYNC_STREAMING_READ_WRITE_RPC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MOCKS_MOCK_ASYNC_STREAMING_READ_WRITE_RPC_H
-
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -29,7 +29,7 @@ class MockAsyncStreamingReadWriteRpc
     : public google::cloud::AsyncStreamingReadWriteRpc<RequestType,
                                                        ResponseType> {
  public:
-  MOCK_METHOD(future<absl::optional<ResponseType>>, Read, (), (override));
+  MOCK_METHOD(future<std::optional<ResponseType>>, Read, (), (override));
   MOCK_METHOD(future<bool>, Write, (RequestType const&, grpc::WriteOptions),
               (override));
   MOCK_METHOD(future<bool>, WritesDone, (), (override));

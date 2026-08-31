@@ -15,7 +15,7 @@
 #include "generator/internal/resolve_comment_references.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
-#include "absl/types/optional.h"
+#include <optional>
 #include <regex>
 
 namespace google {
@@ -24,9 +24,9 @@ namespace generator_internal {
 namespace {
 
 template <typename Descriptor>
-absl::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
+std::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
     Descriptor const* d) {
-  if (d == nullptr) return absl::nullopt;
+  if (d == nullptr) return std::nullopt;
   google::protobuf::SourceLocation loc;
   d->GetSourceLocation(&loc);
   return std::make_pair(std::string{d->full_name()},
@@ -34,11 +34,11 @@ absl::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
                                                 loc.start_line + 1});
 }
 
-absl::optional<std::pair<std::string, ProtoDefinitionLocation>>
+std::optional<std::pair<std::string, ProtoDefinitionLocation>>
 FindByAlternativeEnumValueName(google::protobuf::DescriptorPool const& pool,
                                std::string const& name) {
   std::vector<absl::string_view> components = absl::StrSplit(name, '.');
-  if (components.size() < 2) return absl::nullopt;
+  if (components.size() < 2) return std::nullopt;
   components.erase(std::next(components.begin(), components.size() - 2));
   auto alternative = absl::StrJoin(components, ".");
   auto result = GetLocation(pool.FindEnumValueByName(alternative));
@@ -48,7 +48,7 @@ FindByAlternativeEnumValueName(google::protobuf::DescriptorPool const& pool,
 
 /// Search @p pool for an entity called @p name and return its fully qualified
 /// name and location.
-absl::optional<std::pair<std::string, ProtoDefinitionLocation>> FindByName(
+std::optional<std::pair<std::string, ProtoDefinitionLocation>> FindByName(
     google::protobuf::DescriptorPool const& pool, std::string const& name) {
   auto location = GetLocation(pool.FindEnumTypeByName(name));
   if (location.has_value()) return location;

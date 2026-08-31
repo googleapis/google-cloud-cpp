@@ -564,6 +564,45 @@ KeyManagementServiceConnectionImpl::ImportCryptoKeyVersion(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceConnectionImpl::ImportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportTrustedKeyWrappedCryptoKeyVersion(
+          request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::kms::v1::
+              ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+        return stub_->ImportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                              request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceConnectionImpl::ExportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportTrustedKeyWrappedCryptoKeyVersion(
+          request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::kms::v1::
+              ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+        return stub_->ExportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                              request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceConnectionImpl::CreateImportJob(
     google::cloud::kms::v1::CreateImportJobRequest const& request) {

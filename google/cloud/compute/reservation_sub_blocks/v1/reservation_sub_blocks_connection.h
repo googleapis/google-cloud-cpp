@@ -24,8 +24,11 @@
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h"
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -196,9 +199,56 @@ class ReservationSubBlocksConnection {
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           GetReservationSubBlocksGetResponseRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetIamPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  GetVersion(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                 GetVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetVersion(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                      GetVersionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  GetVersion(google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
   ListReservationSubBlocks(google::cloud::cpp::compute::reservation_sub_blocks::
                                v1::ListReservationSubBlocksRequest request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         PerformMaintenanceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag,
+                     google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         PerformMaintenanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ReportFaulty(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                   ReportFaultyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> ReportFaulty(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                      ReportFaultyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ReportFaulty(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

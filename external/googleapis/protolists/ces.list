@@ -1,4 +1,5 @@
 @googleapis//google/cloud/ces/v1:agent.proto
+@googleapis//google/cloud/ces/v1:agent_card.proto
 @googleapis//google/cloud/ces/v1:agent_service.proto
 @googleapis//google/cloud/ces/v1:agent_tool.proto
 @googleapis//google/cloud/ces/v1:agent_transfers.proto
@@ -22,6 +23,7 @@
 @googleapis//google/cloud/ces/v1:guardrail.proto
 @googleapis//google/cloud/ces/v1:mcp_tool.proto
 @googleapis//google/cloud/ces/v1:mcp_toolset.proto
+@googleapis//google/cloud/ces/v1:mocks.proto
 @googleapis//google/cloud/ces/v1:omnichannel.proto
 @googleapis//google/cloud/ces/v1:omnichannel_service.proto
 @googleapis//google/cloud/ces/v1:open_api_tool.proto

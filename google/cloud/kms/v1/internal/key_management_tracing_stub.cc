@@ -270,6 +270,35 @@ KeyManagementServiceTracingStub::ImportCryptoKeyVersion(
       child_->ImportCryptoKeyVersion(context, options, request));
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceTracingStub::ImportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "ImportTrustedKeyWrappedCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportTrustedKeyWrappedCryptoKeyVersion(
+                               context, options, request));
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceTracingStub::ExportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "ExportTrustedKeyWrappedCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportTrustedKeyWrappedCryptoKeyVersion(
+                               context, options, request));
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceTracingStub::CreateImportJob(
     grpc::ClientContext& context, Options const& options,

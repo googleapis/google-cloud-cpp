@@ -199,7 +199,7 @@ class DataConnection {
  *     function.
  */
 std::shared_ptr<DataConnection> MakeDataConnection(
-    std::vector<InstanceResource> instances, Options options = {});
+    std::vector<InstanceResource> const& instances, Options options = {});
 
 /**
  * Returns a `DataConnection` object that can be used for interacting with

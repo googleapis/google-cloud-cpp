@@ -175,6 +175,36 @@ SnapshotsTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsTracingConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::UpdateKmsKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateKmsKey(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsTracingConnection::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::UpdateKmsKey");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateKmsKey(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsTracingConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::UpdateKmsKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateKmsKey(operation));
+}
+
 std::shared_ptr<compute_snapshots_v1::SnapshotsConnection>
 MakeSnapshotsTracingConnection(
     std::shared_ptr<compute_snapshots_v1::SnapshotsConnection> conn) {
