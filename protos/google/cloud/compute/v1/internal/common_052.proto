@@ -595,7 +595,7 @@ message FutureReservationsAggregatedListResponse {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [debug_redact = true, json_name = "key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -731,7 +731,7 @@ message FutureReservationsListResponse {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [debug_redact = true, json_name = "key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];
@@ -843,7 +843,7 @@ message FutureReservationsScopedList {
       // warning about invalid network settings (for example, if an instance
       // attempts to perform IP forwarding but is not enabled for IP
       // forwarding).
-      optional string key = 1 [debug_redact = true, json_name = "key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
       optional string value = 2 [json_name = "value"];

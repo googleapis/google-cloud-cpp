@@ -41,7 +41,7 @@ message Metadata {
     // to
     // avoid ambiguity, keys must not conflict with any other metadata keys
     // for the project.
-    optional string key = 1 [debug_redact = true, json_name = "key"];
+    optional string key = 1 [json_name = "key"];
 
     // Value for the metadata entry. These are free-form strings, and only
     // have meaning as interpreted by the image running in the instance. The
