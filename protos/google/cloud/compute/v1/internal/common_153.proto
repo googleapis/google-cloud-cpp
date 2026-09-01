@@ -231,7 +231,7 @@ message SslPolicy {
   // DEFERRED: Disabled until October 2027, enabled afterward.
   // ENABLED: Enabled now.
   optional string post_quantum_key_exchange = 14
-      [json_name = "postQuantumKeyExchange"];
+      [debug_redact = true, json_name = "postQuantumKeyExchange"];
 
   // Profile specifies the set of SSL features that can be used by the load
   // balancer when negotiating SSL with clients. This can be one ofCOMPATIBLE,

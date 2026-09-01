@@ -495,7 +495,8 @@ message SecurityPolicyRecaptchaOptionsConfig {
   // site key. If not specified, a Google-managed site key is used.
   // This field is only supported in Global Security Policies of type
   // CLOUD_ARMOR.
-  optional string redirect_site_key = 1 [json_name = "redirectSiteKey"];
+  optional string redirect_site_key = 1
+      [debug_redact = true, json_name = "redirectSiteKey"];
 }
 
 // Represents a rule that describes one or more match conditions along with
@@ -874,7 +875,8 @@ message SecurityPolicyRuleRateLimitOptions {
   // TLS_JA4_FINGERPRINT:
   // USER_IP:
   // XFF_IP:
-  optional string enforce_on_key = 4 [json_name = "enforceOnKey"];
+  optional string enforce_on_key = 4
+      [debug_redact = true, json_name = "enforceOnKey"];
 
   // If specified, any combination of values of
   // enforce_on_key_type/enforce_on_key_name is treated as the key on which
@@ -889,7 +891,8 @@ message SecurityPolicyRuleRateLimitOptions {
   // value.
   // HTTP_COOKIE -- Name of the HTTP cookie whose value is taken as the key
   // value.
-  optional string enforce_on_key_name = 5 [json_name = "enforceOnKeyName"];
+  optional string enforce_on_key_name = 5
+      [debug_redact = true, json_name = "enforceOnKeyName"];
 
   // Action to take for requests that are above the configured rate limit
   // threshold, to either deny with a specified HTTP response code, or
@@ -919,7 +922,8 @@ message SecurityPolicyRuleRateLimitOptionsEnforceOnKeyConfig {
   // HTTP_HEADER -- Name of the HTTP header whose value is taken as the
   // key value. HTTP_COOKIE -- Name of the HTTP cookie whose value is
   // taken as the key value.
-  optional string enforce_on_key_name = 1 [json_name = "enforceOnKeyName"];
+  optional string enforce_on_key_name = 1
+      [debug_redact = true, json_name = "enforceOnKeyName"];
 
   // Determines the key to enforce the rate_limit_threshold on. Possible
   // values are:
@@ -974,7 +978,8 @@ message SecurityPolicyRuleRateLimitOptionsEnforceOnKeyConfig {
   // TLS_JA4_FINGERPRINT:
   // USER_IP:
   // XFF_IP:
-  optional string enforce_on_key_type = 2 [json_name = "enforceOnKeyType"];
+  optional string enforce_on_key_type = 2
+      [debug_redact = true, json_name = "enforceOnKeyType"];
 }
 
 message SecurityPolicyRuleRateLimitOptionsThreshold {

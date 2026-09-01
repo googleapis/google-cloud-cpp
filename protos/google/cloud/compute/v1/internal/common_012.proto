@@ -255,7 +255,8 @@ message BackendBucketCdnPolicy {
       [json_name = "signedUrlCacheMaxAgeSec"];
 
   // [Output Only] Names of the keys for signing request URLs.
-  repeated string signed_url_key_names = 12 [json_name = "signedUrlKeyNames"];
+  repeated string signed_url_key_names = 12
+      [debug_redact = true, json_name = "signedUrlKeyNames"];
 }
 
 // Bypass the cache when the specified request headers are present,

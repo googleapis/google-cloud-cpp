@@ -319,7 +319,8 @@ message InterconnectAttachment {
   // The opaque identifier of a PARTNER attachment used to initiate
   // provisioning with a selected partner.
   // Of the form "XXXXX/region/domain"
-  optional string pairing_key = 24 [json_name = "pairingKey"];
+  optional string pairing_key = 24
+      [debug_redact = true, json_name = "pairingKey"];
 
   // Input only. [Input Only] Additional params passed with the request, but not
   // persisted

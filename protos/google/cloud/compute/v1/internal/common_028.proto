@@ -34,7 +34,8 @@ message CustomerEncryptionKey {
   // "kmsKeyName": "projects/kms_project_id/locations/region/keyRings/
   // key_region/cryptoKeys/key
   // /cryptoKeyVersions/1
-  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
+  optional string kms_key_name = 1
+      [debug_redact = true, json_name = "kmsKeyName"];
 
   // The service account being used for the encryption request for the given KMS
   // key. If absent, the Compute Engine default service account is used.
@@ -42,7 +43,7 @@ message CustomerEncryptionKey {
   //
   // "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/
   optional string kms_key_service_account = 2
-      [json_name = "kmsKeyServiceAccount"];
+      [debug_redact = true, json_name = "kmsKeyServiceAccount"];
 
   // [DEPRECATED] CSEK is no longer supported. Use CMEK instead.
   // Specifies a 256-bit customer-supplied
@@ -53,7 +54,7 @@ message CustomerEncryptionKey {
   //
   // "rawKey":
   // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0="
-  optional string raw_key = 3 [json_name = "rawKey"];
+  optional string raw_key = 3 [debug_redact = true, json_name = "rawKey"];
 
   // [DEPRECATED] CSEK is no longer supported. Use CMEK instead.
   // Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
@@ -78,7 +79,8 @@ message CustomerEncryptionKey {
   //
   //
   // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
-  optional string rsa_encrypted_key = 4 [json_name = "rsaEncryptedKey"];
+  optional string rsa_encrypted_key = 4
+      [debug_redact = true, json_name = "rsaEncryptedKey"];
 
   // [DEPRECATED] CSEK is no longer supported. Use CMEK instead.
   // [Output only] TheRFC

@@ -124,7 +124,8 @@ class DiscoveryTypeVertex {
   // Formats any field options as indicated by the field_json.
   static std::string FormatFieldOptions(std::string const& field_name,
                                         std::string const& json_field_name,
-                                        nlohmann::json const& field_json);
+                                        nlohmann::json const& field_json,
+                                        bool has_sibling_value);
 
   // Determines the correct field_number to use for the specified field.
   static StatusOr<int> GetFieldNumber(
@@ -153,8 +154,8 @@ class DiscoveryTypeVertex {
       std::string json_field_name, int indent_level,
       MessageProperties& message_properties,
       google::protobuf::Descriptor const* message_descriptor,
-      std::set<std::string>& current_field_names,
-      std::string const& indent) const;
+      std::set<std::string>& current_field_names, std::string const& indent,
+      bool has_sibling_value) const;
 
   std::string name_;
   std::string package_name_;

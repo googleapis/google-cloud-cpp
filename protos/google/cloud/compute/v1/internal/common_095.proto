@@ -470,7 +470,7 @@ message SourceInstanceProperties {
   // NONE: Indicates user chose no operation.
   // STOP: Indicates user chose to opt for VM shutdown on key revocation.
   optional string key_revocation_action_type = 6
-      [json_name = "keyRevocationActionType"];
+      [debug_redact = true, json_name = "keyRevocationActionType"];
 
   // Labels to apply to instances that are created from this machine image.
   map<string, string> labels = 7 [json_name = "labels"];
@@ -504,7 +504,7 @@ message SourceInstanceProperties {
   // unused.
   // SHUTDOWN: Indicates user chose to opt for VM shutdown on key revocation.
   optional string post_key_revocation_action_type = 15
-      [json_name = "postKeyRevocationActionType"];
+      [debug_redact = true, json_name = "postKeyRevocationActionType"];
 
   // Specifies the scheduling options for the instances that are created from
   // this machine image.

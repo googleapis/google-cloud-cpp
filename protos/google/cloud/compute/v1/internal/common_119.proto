@@ -36,7 +36,8 @@ message RegionDiskUpdateKmsKeyRequest {
   //
   // Where project is the project ID or
   // project number.
-  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
+  optional string kms_key_name = 1
+      [debug_redact = true, json_name = "kmsKeyName"];
 }
 
 message RegionDisksAddResourcePoliciesRequest {

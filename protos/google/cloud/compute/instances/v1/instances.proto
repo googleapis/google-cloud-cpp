@@ -1262,7 +1262,8 @@ message GetGuestAttributesRequest {
   optional string query_path = 3 [json_name = "queryPath"];
 
   // Specifies the key for the guest attributes entry.
-  optional string variable_key = 4 [json_name = "variableKey"];
+  optional string variable_key = 4
+      [debug_redact = true, json_name = "variableKey"];
 
   // The name of the zone for this request.
   string zone = 5 [(google.api.field_behavior) = REQUIRED, json_name = "zone"];

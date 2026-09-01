@@ -774,7 +774,7 @@ message RouterBgpPeer {
   // name of one of the entries in the Router.md5_authentication_keys. The
   // field must comply with RFC1035.
   optional string md5_authentication_key_name = 12
-      [json_name = "md5AuthenticationKeyName"];
+      [debug_redact = true, json_name = "md5AuthenticationKeyName"];
 
   // Name of this BGP peer.
   // The name must be 1-63 characters long, and comply withRFC1035.
@@ -1092,7 +1092,7 @@ message RouterMd5AuthenticationKey {
   // copy the value from the previous configuration. This is allowed if the
   // key with the same name existed before the operation. Maximum length is 80
   // characters. Can only contain printable ASCII characters.
-  optional string key = 1 [json_name = "key"];
+  optional string key = 1 [debug_redact = true, json_name = "key"];
 
   // Name used to identify the key.
   //

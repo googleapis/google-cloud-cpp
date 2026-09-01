@@ -112,9 +112,9 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsEmpty) {
   auto constexpr kOptionalEmptyFieldJson = R"""({})""";
   auto json = nlohmann::json::parse(kOptionalEmptyFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
-      Eq(" [json_name=\"testField\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField",
+                                                      json, false),
+              Eq(" [json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequired) {
@@ -127,7 +127,8 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequired) {
   auto json = nlohmann::json::parse(kOptionalRequiredFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
   EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json,
+                                              false),
       Eq(" [(google.api.field_behavior) = REQUIRED,json_name=\"testField\"]"));
 }
 
@@ -141,10 +142,10 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsOperationRequestField) {
   auto json =
       nlohmann::json::parse(kOptionalOperationRequestFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
-      Eq(" [(google.cloud.operation_request_field) = "
-         "\"test_field\",json_name=\"testField\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField",
+                                                      json, false),
+              Eq(" [(google.cloud.operation_request_field) = "
+                 "\"test_field\",json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredOperationRequestField) {
@@ -158,11 +159,11 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredOperationRequestField) {
   auto json =
       nlohmann::json::parse(kOptionalOperationRequestFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
-      Eq(" [(google.api.field_behavior) = "
-         "REQUIRED,(google.cloud.operation_request_field) = "
-         "\"test_field\",json_name=\"testField\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField",
+                                                      json, false),
+              Eq(" [(google.api.field_behavior) = "
+                 "REQUIRED,(google.cloud.operation_request_field) = "
+                 "\"test_field\",json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
@@ -176,10 +177,160 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
   auto json =
       nlohmann::json::parse(kRequiredIsResourceFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField",
+                                                      json, false),
+              Eq(" [(google.api.field_behavior) = "
+                 "REQUIRED,json_name=\"__json_request_body\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactString) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
   EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json, false),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactBytes) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "bytes"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json, false),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayString) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "array",
+  "items": {
+    "type": "string"
+  }
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json, false),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactArrayBytes) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "array",
+  "items": {
+    "type": "bytes"
+  }
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json, false),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactNonMatches) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("monkey", "monkey", json, false),
+      Eq(" [json_name=\"monkey\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("keyboard", "keyboard",
+                                                      json, false),
+              Eq(" [json_name=\"keyboard\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("hockey", "hockey", json, false),
+      Eq(" [json_name=\"hockey\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("keypad", "keypad", json, false),
+      Eq(" [json_name=\"keypad\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest,
+     FormatFieldOptionsDebugRedactNonStringNotRedacted) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "integer"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("key_id", "keyId", json, false),
+      Eq(" [json_name=\"keyId\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsDebugRedactRequired) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string",
+  "required": true
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json, false),
       Eq(" [(google.api.field_behavior) = "
-         "REQUIRED,json_name=\"__json_request_body\"]"));
+         "REQUIRED,debug_redact = true,json_name=\"rawKey\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest,
+     FormatFieldOptionsDebugRedactKeyWithSiblingValueNotRedacted) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("key", "key", json, true),
+              Eq(" [json_name=\"key\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest,
+     FormatFieldOptionsDebugRedactKeyWithoutSiblingValueRedacted) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("key", "key", json, false),
+      Eq(" [debug_redact = true,json_name=\"key\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest,
+     FormatFieldOptionsDebugRedactKeyCompoundWithSiblingValueRedacted) {
+  auto constexpr kFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("raw_key", "rawKey", json, true),
+      Eq(" [debug_redact = true,json_name=\"rawKey\"]"));
 }
 
 struct DetermineTypesSuccess {
@@ -1310,6 +1461,78 @@ message TestSchema {
                        HasSubstr("Message: test.package.TestSchema has field: "
                                  "existing_field whose type has changed from: "
                                  "optional string to: optional double")));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufCustomerEncryptionKey) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "id": "CustomerEncryptionKey",
+  "properties": {
+    "kmsKeyName": {
+      "type": "string"
+    },
+    "rawKey": {
+      "type": "string"
+    },
+    "rsaEncryptedKey": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string"
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message CustomerEncryptionKey {
+  optional string kms_key_name = 1 [debug_redact = true,json_name="kmsKeyName"];
+
+  optional string raw_key = 2 [debug_redact = true,json_name="rawKey"];
+
+  optional string rsa_encrypted_key = 3 [debug_redact = true,json_name="rsaEncryptedKey"];
+
+  optional string sha256 = 4 [json_name="sha256"];
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("CustomerEncryptionKey", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_THAT(result, ::google::cloud::testing_util::IsOk());
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMapItemsKeyValuePair) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "id": "DataItem",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message DataItem {
+  optional string key = 1 [json_name="key"];
+
+  optional string value = 2 [json_name="value"];
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("DataItem", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_THAT(result, ::google::cloud::testing_util::IsOk());
+  EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
 }  // namespace
