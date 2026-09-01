@@ -14,7 +14,6 @@
 
 // TODO(#16404): Remove deprecation disable include.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/storage/async/options.h"

@@ -14,7 +14,6 @@
 
 // TODO(#16404): Remove deprecation disable include.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
