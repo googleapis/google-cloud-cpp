@@ -102,8 +102,8 @@ if ! curl -fsSL "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${TEMP_JSON}"; then
 fi
 
 # Ensure the discovery document ends with a trailing newline.
-if [[ -s "${TEMP_JSON}" && -n "$(tail -c1 "${TEMP_JSON}")" ]]; then
-  echo "" >>"${TEMP_JSON}"
+if [[ -s "${TEMP_JSON}" && -n "$(tail -c 1 "${TEMP_JSON}")" ]]; then
+  echo >>"${TEMP_JSON}"
 fi
 
 REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${TEMP_JSON}")
