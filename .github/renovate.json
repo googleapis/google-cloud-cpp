@@ -40,6 +40,11 @@
       "enabled": false
     },
     {
+      "matchFileNames": ["bazel/workspace0.bzl"],
+      "matchPackageNames": ["com_github_grpc_grpc", "grpc/grpc", "grpc"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["com_google_absl", "abseil/abseil-cpp", "abseil-cpp"],
       "groupName": "Abseil",
       "versioning": "loose",
