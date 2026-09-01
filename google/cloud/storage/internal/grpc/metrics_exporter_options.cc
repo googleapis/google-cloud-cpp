@@ -19,12 +19,12 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/universe_domain_options.h"
-#include "absl/types/variant.h"
 #include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <algorithm>
 #include <type_traits>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
             std::string const& name, std::string default_value) {
   auto const l = attributes.find(name);
   if (l == attributes.end()) return default_value;
-  return absl::get<std::string>(l->second);
+  return std::get<std::string>(l->second);
 }
 
 }  // namespace

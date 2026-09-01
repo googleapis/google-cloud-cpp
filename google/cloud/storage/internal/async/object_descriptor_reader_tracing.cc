@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <memory>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -59,8 +60,8 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
             auto f) -> ReadResponse {
           auto result = f.get();
           internal::DetachOTelContext(oc);
-          if (!absl::holds_alternative<Status>(result)) {
-            auto const& payload = absl::get<storage::ReadPayload>(result);
+          if (!std::holds_alternative<Status>(result)) {
+            auto const& payload = std::get<storage::ReadPayload>(result);
 
             span->AddEvent(
                 "gl-cpp.read-range",
@@ -73,7 +74,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
                 {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                  {sc::thread::kThreadId, internal::CurrentThreadId()}});
             return internal::EndSpan(*span,
-                                     absl::get<Status>(std::move(result)));
+                                     std::get<Status>(std::move(result)));
           }
           return result;
         });

@@ -50,7 +50,7 @@ FeaturestoreOnlineServingServiceConnection::StreamingReadFeatureValues(
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
-      []() -> absl::variant<
+      []() -> std::variant<
                Status,
                google::cloud::aiplatform::v1::ReadFeatureValuesResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");

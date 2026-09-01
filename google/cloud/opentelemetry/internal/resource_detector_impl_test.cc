@@ -348,7 +348,7 @@ TEST(ResourceDetector, GkeZone) {
 }
 
 TEST(ResourceDetector, CloudFunctions) {
-  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", absl::nullopt);
+  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", std::nullopt);
   testing_util::ScopedEnvironment e2("FUNCTION_TARGET", "set");
   testing_util::ScopedEnvironment e3("K_SERVICE", "test-service");
   testing_util::ScopedEnvironment e4("K_REVISION", "test-version");
@@ -381,8 +381,8 @@ TEST(ResourceDetector, CloudFunctions) {
 }
 
 TEST(ResourceDetector, CloudRun) {
-  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", absl::nullopt);
-  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", absl::nullopt);
+  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", std::nullopt);
+  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", std::nullopt);
   testing_util::ScopedEnvironment e3("K_CONFIGURATION", "set");
   testing_util::ScopedEnvironment e4("K_SERVICE", "test-service");
   testing_util::ScopedEnvironment e5("K_REVISION", "test-version");
@@ -415,9 +415,9 @@ TEST(ResourceDetector, CloudRun) {
 }
 
 TEST(ResourceDetector, Gae) {
-  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", absl::nullopt);
-  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", absl::nullopt);
-  testing_util::ScopedEnvironment e3("K_CONFIGURATION", absl::nullopt);
+  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", std::nullopt);
+  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", std::nullopt);
+  testing_util::ScopedEnvironment e3("K_CONFIGURATION", std::nullopt);
   testing_util::ScopedEnvironment e4("GAE_SERVICE", "test-service");
   testing_util::ScopedEnvironment e5("GAE_VERSION", "test-version");
   testing_util::ScopedEnvironment e6("GAE_INSTANCE", "test-instance");
@@ -452,10 +452,10 @@ TEST(ResourceDetector, Gae) {
 }
 
 TEST(ResourceDetector, Gce) {
-  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", absl::nullopt);
-  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", absl::nullopt);
-  testing_util::ScopedEnvironment e3("K_CONFIGURATION", absl::nullopt);
-  testing_util::ScopedEnvironment e4("GAE_SERVICE", absl::nullopt);
+  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", std::nullopt);
+  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", std::nullopt);
+  testing_util::ScopedEnvironment e3("K_CONFIGURATION", std::nullopt);
+  testing_util::ScopedEnvironment e4("GAE_SERVICE", std::nullopt);
   auto constexpr kPayload = R"json({
   "instance": {
     "id": 1020304050607080900,
@@ -490,10 +490,10 @@ TEST(ResourceDetector, Gce) {
 }
 
 TEST(ResourceDetector, CachesAttributes) {
-  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", absl::nullopt);
-  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", absl::nullopt);
-  testing_util::ScopedEnvironment e3("K_CONFIGURATION", absl::nullopt);
-  testing_util::ScopedEnvironment e4("GAE_SERVICE", absl::nullopt);
+  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", std::nullopt);
+  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", std::nullopt);
+  testing_util::ScopedEnvironment e3("K_CONFIGURATION", std::nullopt);
+  testing_util::ScopedEnvironment e4("GAE_SERVICE", std::nullopt);
   auto constexpr kPayload = R"json({
   "instance": {
     "id": 1020304050607080900,

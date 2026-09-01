@@ -70,7 +70,7 @@ double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
 
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequestsHelper(
     std::string const& project,
-    absl::optional<google::api::MonitoredResource> const& mr_proto,
+    std::optional<google::api::MonitoredResource> const& mr_proto,
     std::vector<google::monitoring::v3::TimeSeries> tss) {
   std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
   for (auto& ts : tss) {
@@ -101,30 +101,30 @@ void ToTimeSeriesHelper(
         struct Visitor {
           opentelemetry::sdk::metrics::MetricData const& metric_data;
 
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+          std::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::SumPointData const& point) {
             return ToTimeSeries(metric_data, point);
           }
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+          std::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::LastValuePointData const& point) {
             return ToTimeSeries(metric_data, point);
           }
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+          std::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::HistogramPointData const& point) {
             return ToTimeSeries(metric_data, point);
           }
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || \
     (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 21)
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+          std::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::
                   Base2ExponentialHistogramPointData const&) {
             // TODO(#xxxxx): Add support for exponential histograms.
-            return absl::nullopt;
+            return std::nullopt;
           }
 #endif
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+          std::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::DropPointData const&) {
-            return absl::nullopt;
+            return std::nullopt;
           }
         };
         auto ts = std::visit(Visitor{metric_data}, pda.point_data);
@@ -269,7 +269,7 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 
 google::api::MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    absl::optional<google::api::MonitoredResource> const& mr_proto) {
+    std::optional<google::api::MonitoredResource> const& mr_proto) {
   if (mr_proto) return *mr_proto;
   google::api::MonitoredResource resource;
   if (data.resource_) {
@@ -343,7 +343,7 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     std::string const& project,
     std::vector<google::monitoring::v3::TimeSeries> tss) {
-  return ToRequestsHelper(project, absl::nullopt, std::move(tss));
+  return ToRequestsHelper(project, std::nullopt, std::move(tss));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -88,7 +88,7 @@ ConversationalSearchServiceConnection::StreamAnswerQuery(
   return google::cloud::internal::MakeStreamRange<
       google::cloud::discoveryengine::v1::AnswerQueryResponse>(
       []()
-          -> absl::variant<
+          -> std::variant<
               Status, google::cloud::discoveryengine::v1::AnswerQueryResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });

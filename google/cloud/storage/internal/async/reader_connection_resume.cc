@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -55,9 +56,9 @@ future<ReadResponse> AsyncReaderConnectionResume::Read(
 }
 
 future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
-  if (absl::holds_alternative<storage::ReadPayload>(r)) {
+  if (std::holds_alternative<storage::ReadPayload>(r)) {
     resume_policy_->OnStartSuccess();
-    auto response = absl::get<storage::ReadPayload>(std::move(r));
+    auto response = std::get<storage::ReadPayload>(std::move(r));
     hash_validator_->ProcessHashValues(
         ReadPayloadImpl::GetObjectHashes(response).value_or(
             storage::internal::HashValues{}));
@@ -74,7 +75,7 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
     }
     return make_ready_future(ReadResponse(std::move(response)));
   }
-  auto const& status = absl::get<Status>(r);
+  auto const& status = std::get<Status>(r);
   if (status.ok()) {
     CheckOverrun();
     // The download finished. Validate the hash results, if any.

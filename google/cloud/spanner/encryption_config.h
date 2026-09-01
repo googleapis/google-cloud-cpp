@@ -17,7 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/kms_key_name.h"
-#include "absl/types/variant.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -57,8 +57,8 @@ class CustomerManagedEncryption {
  *  - `DatabaseAdminClient::CreateBackup()`
  *  - `DatabaseAdminClient::RestoreDatabase()`
  */
-using EncryptionConfig = absl::variant<DefaultEncryption, GoogleEncryption,
-                                       CustomerManagedEncryption>;
+using EncryptionConfig = std::variant<DefaultEncryption, GoogleEncryption,
+                                      CustomerManagedEncryption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

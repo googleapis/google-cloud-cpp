@@ -18,11 +18,11 @@
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/message.h>
 #include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/grpcpp.h>
 #include <map>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -73,13 +73,13 @@ class ValidateMetadataFixture {
   /**
    * Get the `authority` field from `ClientContext`.
    *
-   * With older versions of gRPC this returns `absl::nullopt`, the caller may
+   * With older versions of gRPC this returns `std::nullopt`, the caller may
    * want to skip the rest of the test.
    *
    * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
    *   cannot reuse @p context for other RPCs or other calls to this function.
    */
-  absl::optional<std::string> GetAuthority(grpc::ClientContext& client_context);
+  std::optional<std::string> GetAuthority(grpc::ClientContext& client_context);
 
   /**
    * Set server metadata on a `ClientContext`.
@@ -112,8 +112,8 @@ class ValidateMetadataFixture {
       grpc::ClientContext& context, std::string const& method_name,
       google::protobuf::Message const& request,
       std::string const& api_client_header,
-      absl::optional<std::string> const& resource_name = {},
-      absl::optional<std::string> const& resource_prefix_header = {});
+      std::optional<std::string> const& resource_name = {},
+      std::optional<std::string> const& resource_prefix_header = {});
 
  private:
   /**

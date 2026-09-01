@@ -49,12 +49,12 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
-#include "absl/types/variant.h"
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
 #include <map>
 #include <memory>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -79,7 +79,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct GOOGLE_CLOUD_CPP_DEPRECATED("Multiplex Sessions are always enabled")
     EnableMultiplexedSessionOption {
-  using Type = absl::monostate;
+  using Type = std::monostate;
 };
 
 /**
@@ -392,7 +392,7 @@ struct PartitionDataBoostOption {
  * be excluded from serving the request.
  */
 struct DirectedReadOption {
-  using Type = absl::variant<absl::monostate, IncludeReplicas, ExcludeReplicas>;
+  using Type = std::variant<std::monostate, IncludeReplicas, ExcludeReplicas>;
 };
 
 /**

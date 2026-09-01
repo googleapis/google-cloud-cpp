@@ -51,8 +51,8 @@ otel_internal::ResourceFilterDataFn MakeResourceFilterFn(
 }
 
 otel_internal::MonitoredResourceFromDataFn MakeDynamicResourceFn(
-    Options const& options, absl::optional<Project> const& project,
-    absl::optional<google::api::MonitoredResource> const& mr_proto) {
+    Options const& options, std::optional<Project> const& project,
+    std::optional<google::api::MonitoredResource> const& mr_proto) {
   if (!options.has<otel_internal::ResourceFilterDataFnOption>()) {
     return nullptr;
   }

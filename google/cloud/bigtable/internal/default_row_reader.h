@@ -26,13 +26,13 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <cinttypes>
 #include <functional>
 #include <string>
 #include <thread>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -68,11 +68,11 @@ class DefaultRowReader : public RowReaderImpl {
    *
    * This call possibly blocks waiting for data until a full row is available.
    */
-  absl::variant<Status, bigtable::Row> Advance() override;
+  std::variant<Status, bigtable::Row> Advance() override;
 
  private:
   /// Called by Advance(), does not handle retries.
-  absl::variant<Status, bigtable::Row> AdvanceOrFail();
+  std::variant<Status, bigtable::Row> AdvanceOrFail();
 
   /**
    * Move the `processed_chunks_count_` index to the next chunk,

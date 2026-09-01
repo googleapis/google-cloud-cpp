@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TYPE_LIST_H
 
 #include "google/cloud/version.h"
-#include "absl/meta/type_traits.h"
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -93,7 +92,7 @@ struct TypeListHasType;
 
 template <typename... Us, typename T>
 struct TypeListHasType<TypeList<Us...>, T>
-    : absl::disjunction<std::is_same<T, Us>...> {};
+    : std::disjunction<std::is_same<T, Us>...> {};
 
 template <template <typename> class Predicate, typename List>
 struct TypeListFilter;

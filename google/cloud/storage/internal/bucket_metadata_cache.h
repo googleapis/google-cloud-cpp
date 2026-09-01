@@ -18,11 +18,11 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <cstddef>
 #include <list>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -54,7 +54,7 @@ class BucketMetadataCache {
 
   static std::string NormalizeBucketName(std::string const& bucket);
 
-  absl::optional<BucketCacheEntry> Get(std::string const& bucket_name);
+  std::optional<BucketCacheEntry> Get(std::string const& bucket_name);
   void Put(std::string const& bucket_name, BucketCacheEntry entry);
   void Invalidate(std::string const& bucket_name);
   void Clear();

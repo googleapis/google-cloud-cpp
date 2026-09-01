@@ -20,12 +20,12 @@
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <chrono>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -86,11 +86,11 @@ class MonitoringExporter final
       std::vector<google::monitoring::v3::CreateTimeSeriesRequest> const&
           requests);
 
-  absl::optional<Project> project_;
+  std::optional<Project> project_;
   monitoring_v3::MetricServiceClient client_;
   otel::MetricNameFormatterOption::Type formatter_;
   bool use_service_time_series_;
-  absl::optional<google::api::MonitoredResource> mr_proto_;
+  std::optional<google::api::MonitoredResource> mr_proto_;
   otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn_;
   otel_internal::ResourceFilterDataFn resource_filter_fn_;
 };

@@ -320,7 +320,7 @@ TensorboardServiceConnection::ReadTensorboardBlobData(
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
-      []() -> absl::variant<
+      []() -> std::variant<
                Status,
                google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");

@@ -286,7 +286,7 @@ class FakeReader {
 
   ~FakeReader() { EXPECT_THAT(span_, IsActive()); }
 
-  absl::variant<Status, int> operator()(Options const&) {
+  std::variant<Status, int> operator()(Options const&) {
     EXPECT_THAT(span_, IsActive());
     return 1;
   }

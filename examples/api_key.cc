@@ -33,6 +33,7 @@
 #include "absl/strings/str_split.h"
 #include <chrono>
 #include <iostream>
+#include <optional>
 #include <string>
 #include <thread>
 #include <vector>
@@ -147,7 +148,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     // When we authenticate with an API key, we do not have (or need)
     // credentials. Using a quota project requires credentials, so disable it.
     google::cloud::testing_util::ScopedEnvironment overlay(
-        "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+        "GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
 
     try {
       AuthenticateWithApiKey({project_id, key.key_string()});

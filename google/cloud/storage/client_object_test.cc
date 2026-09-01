@@ -26,6 +26,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -204,7 +205,7 @@ TEST_F(ObjectTest, ListObjectsAndPrefixes) {
       "test-bucket-name", Options{}.set<UserProjectOption>("u-p-test"));
   for (auto&& o : list) {
     EXPECT_STATUS_OK(o);
-    names.push_back(absl::get<ObjectMetadata>(*o).name());
+    names.push_back(std::get<ObjectMetadata>(*o).name());
   }
   EXPECT_THAT(names, ElementsAre("object-1", "object-2", "object-3"));
 }

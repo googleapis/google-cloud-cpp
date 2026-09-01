@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include <memory>
 #include <utility>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -46,7 +47,7 @@ class Discard : public std::enable_shared_from_this<Discard> {
     self->impl_->Read().then([self](auto f) mutable {
       auto s = std::move(self);
       auto response = f.get();
-      if (absl::holds_alternative<Status>(response)) return;
+      if (std::holds_alternative<Status>(response)) return;
       s->Loop();
     });
   }
@@ -84,8 +85,8 @@ future<StatusOr<std::pair<ReadPayload, AsyncToken>>> AsyncReader::Read(
   };
   return impl_->Read().then([this, v = Visitor{std::move(t)}](auto f) mutable {
     auto response = f.get();
-    if (absl::holds_alternative<Status>(response)) finished_ = true;
-    return absl::visit(std::move(v), std::move(response));
+    if (std::holds_alternative<Status>(response)) finished_ = true;
+    return std::visit(std::move(v), std::move(response));
   });
 }
 

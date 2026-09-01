@@ -30,6 +30,7 @@
 #include <google/protobuf/descriptor.h>
 #include <optional>
 #include <regex>
+#include <variant>
 #include <vector>
 
 using ::google::protobuf::MethodDescriptor;
@@ -96,7 +97,7 @@ struct RestPathVisitor {
 void RestPathVisitorHelper(
     std::optional<std::string> api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
-  absl::visit(RestPathVisitor{std::move(api_version), path}, s.value);
+  std::visit(RestPathVisitor{std::move(api_version), path}, s.value);
 }
 
 std::string FormatQueryParameterCode(
@@ -319,15 +320,15 @@ HttpExtensionInfo ParseHttpExtension(google::api::HttpRule const& http_rule) {
   };
   auto segment_formatter = [](std::string* out,
                               std::shared_ptr<PathTemplate::Segment> const& s) {
-    out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
+    out->append(std::visit(SegmentAsStringVisitor{}, s->value));
   };
 
   auto api_version = FormatApiVersionFromUrlPattern(info.url_path);
   auto rest_path_visitor =
       RestPathVisitor(std::move(api_version), info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
-    if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
-      auto v = absl::get<PathTemplate::Variable>(s->value);
+    if (std::holds_alternative<PathTemplate::Variable>(s->value)) {
+      auto v = std::get<PathTemplate::Variable>(s->value);
       if (v.segments.empty()) {
         info.field_substitutions.emplace_back(v.field_path, v.field_path);
       } else {
@@ -336,7 +337,7 @@ HttpExtensionInfo ParseHttpExtension(google::api::HttpRule const& http_rule) {
       }
     }
 
-    absl::visit(rest_path_visitor, s->value);
+    std::visit(rest_path_visitor, s->value);
   }
 
   info.rest_path_verb = parsed_http_rule->verb;

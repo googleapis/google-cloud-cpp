@@ -32,6 +32,7 @@
 #include <gmock/gmock.h>
 #include <iomanip>
 #include <iostream>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -267,7 +268,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
@@ -377,7 +378,7 @@ TEST_P(AsyncConnectionImplUploadHashTest,
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
@@ -485,7 +486,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
 
   auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
@@ -609,7 +610,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   // The `Finalize()` call triggers a `Flush()` first.
@@ -726,7 +727,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
@@ -834,7 +835,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
 
   auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();

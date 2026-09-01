@@ -17,6 +17,7 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <sstream>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -65,21 +66,21 @@ bool SameValues(PathTemplate::Segment const& a,
   struct Visitor {
     PathTemplate::Segment const& a;
     bool operator()(PathTemplate::Match const&) {
-      return absl::holds_alternative<PathTemplate::Match>(a.value);
+      return std::holds_alternative<PathTemplate::Match>(a.value);
     }
     bool operator()(PathTemplate::MatchRecursive const&) {
-      return absl::holds_alternative<PathTemplate::MatchRecursive>(a.value);
+      return std::holds_alternative<PathTemplate::MatchRecursive>(a.value);
     }
     bool operator()(std::string const& s) {
-      return absl::holds_alternative<std::string>(a.value) &&
-             absl::get<std::string>(a.value) == s;
+      return std::holds_alternative<std::string>(a.value) &&
+             std::get<std::string>(a.value) == s;
     }
     bool operator()(PathTemplate::Variable const& v) {
-      return absl::holds_alternative<PathTemplate::Variable>(a.value) &&
-             SameValues(absl::get<PathTemplate::Variable>(a.value), v);
+      return std::holds_alternative<PathTemplate::Variable>(a.value) &&
+             SameValues(std::get<PathTemplate::Variable>(a.value), v);
     }
   };
-  return absl::visit(Visitor{a}, b.value);
+  return std::visit(Visitor{a}, b.value);
 }
 
 bool SameValues(PathTemplate const& a, PathTemplate const& b) {

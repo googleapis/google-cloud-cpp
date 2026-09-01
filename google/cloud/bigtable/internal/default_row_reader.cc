@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -94,7 +95,7 @@ bool DefaultRowReader::NextChunk() {
   return true;
 }
 
-absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
+std::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   // We only want to call ElementRequest if an RPC has previously been
   // made.
   if (stream_is_open_) {
@@ -107,12 +108,12 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   }
   while (true) {
     auto variant = AdvanceOrFail();
-    if (absl::holds_alternative<bigtable::Row>(variant)) {
+    if (std::holds_alternative<bigtable::Row>(variant)) {
       operation_context_->ElementDelivery(*client_context_);
-      return absl::get<bigtable::Row>(std::move(variant));
+      return std::get<bigtable::Row>(std::move(variant));
     }
 
-    auto status = absl::get<Status>(std::move(variant));
+    auto status = std::get<Status>(std::move(variant));
     if (status.ok()) return Status{};
 
     // In the unlikely case when we have already reached the requested
@@ -151,7 +152,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   }
 }
 
-absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
+std::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
   grpc::Status grpc_status;
   if (!stream_) MakeRequest();
   while (!parser_->HasNext()) {

@@ -40,8 +40,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/meta/type_traits.h"
 #include <string>
+#include <type_traits>
 #include <vector>
 
 namespace google {
@@ -157,13 +157,13 @@ class Table {
   /// A meta function to check if @p P is a valid Policy type.
   template <typename P>
   struct ValidPolicy
-      : absl::disjunction<std::is_base_of<RPCBackoffPolicy, P>,
-                          std::is_base_of<RPCRetryPolicy, P>,
-                          std::is_base_of<IdempotentMutationPolicy, P>> {};
+      : std::disjunction<std::is_base_of<RPCBackoffPolicy, P>,
+                         std::is_base_of<RPCRetryPolicy, P>,
+                         std::is_base_of<IdempotentMutationPolicy, P>> {};
 
   /// A meta function to check if all the @p Policies are valid policy types.
   template <typename... Policies>
-  struct ValidPolicies : absl::conjunction<ValidPolicy<Policies>...> {};
+  struct ValidPolicies : std::conjunction<ValidPolicy<Policies>...> {};
 
  public:
   /**
@@ -589,7 +589,7 @@ class Table {
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        absl::conjunction<absl::disjunction<
+        std::conjunction<std::disjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
             std::is_same<std::decay_t<Args>, Options>>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
@@ -643,7 +643,7 @@ class Table {
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        absl::conjunction<absl::disjunction<
+        std::conjunction<std::disjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
             std::is_same<std::decay_t<Args>, Options>>...>::value,
         "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "

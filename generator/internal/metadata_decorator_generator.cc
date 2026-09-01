@@ -82,7 +82,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
       text += "      },\n";
       // In the special match-all case, we do not bother to set a regex.
       if (rp.pattern == "(.*)") {
-        text += "      absl::nullopt},\n";
+        text += "      std::nullopt},\n";
       } else {
         text += "      std::regex{\"" + rp.pattern + "\", std::regex::optimize}},\n";
       }

@@ -112,7 +112,6 @@ target_link_libraries(
     PUBLIC absl::function_ref
            absl::memory
            absl::time
-           absl::variant
            google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
@@ -183,7 +182,6 @@ google_cloud_cpp_add_pkgconfig(
     "absl_strings"
     "absl_time"
     "absl_time_zone"
-    "absl_variant"
     "openssl")
 # Create and install the CMake configuration files.
 configure_file("config-grpc-utils.cmake.in"
@@ -208,7 +206,6 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing
                 google-cloud-cpp::common
-                absl::variant
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
@@ -308,7 +305,6 @@ if (BUILD_TESTING)
                     google_cloud_cpp_testing
                     google-cloud-cpp::common
                     google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
-                    absl::variant
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest

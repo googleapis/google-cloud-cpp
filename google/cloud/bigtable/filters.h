@@ -16,11 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H
 
 #include "google/cloud/bigtable/version.h"
-#include "absl/meta/type_traits.h"
 #include "google/bigtable/v2/data.pb.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <chrono>
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -572,7 +572,7 @@ class Filter {
     // just letting the compiler figure things out 3 levels deep
     // as it recurses on append_types().
     static_assert(
-        absl::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
+        std::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
         "The arguments passed to Chain(...) must be convertible to Filter");
     Filter tmp;
     auto& chain = *tmp.filter_.mutable_chain();
@@ -636,7 +636,7 @@ class Filter {
   template <typename... FilterTypes>
   static Filter Interleave(FilterTypes&&... streams) {
     static_assert(
-        absl::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
+        std::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
         "The arguments passed to Interleave(...) must be convertible"
         " to Filter");
     Filter tmp;

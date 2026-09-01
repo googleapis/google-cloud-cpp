@@ -33,7 +33,7 @@ StatusOr<Dataset> DatasetConnection::GetDataset(GetDatasetRequest const&) {
 StreamRange<ListFormatDataset> DatasetConnection::ListDatasets(
     ListDatasetsRequest const&) {
   return google::cloud::internal::MakeStreamRange<ListFormatDataset>(
-      []() -> absl::variant<Status, ListFormatDataset> {
+      []() -> std::variant<Status, ListFormatDataset> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

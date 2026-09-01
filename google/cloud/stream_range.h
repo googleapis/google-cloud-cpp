@@ -20,10 +20,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
 #include <functional>
 #include <iterator>
 #include <utility>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -54,11 +54,11 @@ namespace internal {
  * @endcode
  */
 template <typename T>
-using StreamReader = std::function<absl::variant<Status, T>()>;
+using StreamReader = std::function<std::variant<Status, T>()>;
 
 template <typename T>
 using StreamReaderExplicit =
-    std::function<absl::variant<Status, T>(Options const&)>;
+    std::function<std::variant<Status, T>(Options const&)>;
 
 // Defined below.
 template <typename T>
@@ -205,7 +205,7 @@ class StreamRange {
     };
     internal::ScopedCallContext scope(call_context_);
     auto v = reader_(*call_context_.options);
-    absl::visit(UnpackVariant{*this}, std::move(v));
+    std::visit(UnpackVariant{*this}, std::move(v));
   }
 
   template <typename U>

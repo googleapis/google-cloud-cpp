@@ -636,8 +636,8 @@ LineageConnectionImpl::SearchLineageStreaming(
   return internal::MakeStreamRange<
       google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<Status, google::cloud::datacatalog::lineage::v1::
-                                       SearchLineageStreamingResponse> {
+          -> std::variant<Status, google::cloud::datacatalog::lineage::v1::
+                                      SearchLineageStreamingResponse> {
         google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse
             response;
         auto status = resumable->Read(&response);

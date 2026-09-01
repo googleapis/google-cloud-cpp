@@ -17,6 +17,7 @@
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/log.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -133,7 +134,7 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
     TypeKind type_kind;
     nlohmann::json& j;
 
-    void operator()(absl::monostate const&) {
+    void operator()(std::monostate const&) {
       j = nlohmann::json{{"typeKind", std::move(type_kind.value)}};
     }
     void operator()(std::shared_ptr<StandardSqlDataType> const& type) {
@@ -148,7 +149,7 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
     }
   };
 
-  absl::visit(Visitor{t.type_kind, j}, t.sub_type);
+  std::visit(Visitor{t.type_kind, j}, t.sub_type);
 }
 
 void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
@@ -185,7 +186,7 @@ void to_json(nlohmann::json& j, Value const& v) {
   struct Visitor {
     nlohmann::json& j;
 
-    void operator()(absl::monostate const&) {
+    void operator()(std::monostate const&) {
       // Nothing to do.
     }
     void operator()(double const& val) {
@@ -205,7 +206,7 @@ void to_json(nlohmann::json& j, Value const& v) {
     }
   };
 
-  absl::visit(Visitor{j}, v.value_kind);
+  std::visit(Visitor{j}, v.value_kind);
 }
 
 void from_json(nlohmann::json const& j, Value& v) {
@@ -493,7 +494,7 @@ std::string StandardSqlDataType::DebugString(absl::string_view name,
 std::string Value::DebugString(absl::string_view name,
                                TracingOptions const& options,
                                int indent) const {
-  return absl::visit(ValueKindDebugString{name, options, indent}, value_kind);
+  return std::visit(ValueKindDebugString{name, options, indent}, value_kind);
 }
 
 std::string SystemVariables::DebugString(absl::string_view name,

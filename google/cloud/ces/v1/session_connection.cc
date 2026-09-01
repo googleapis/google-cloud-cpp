@@ -49,8 +49,7 @@ SessionServiceConnection::StreamRunSession(
     google::cloud::ces::v1::RunSessionRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::ces::v1::RunSessionResponse>(
-      []()
-          -> absl::variant<Status, google::cloud::ces::v1::RunSessionResponse> {
+      []() -> std::variant<Status, google::cloud::ces::v1::RunSessionResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

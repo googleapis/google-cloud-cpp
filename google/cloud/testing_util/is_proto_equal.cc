@@ -20,18 +20,18 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
-absl::optional<std::string> CompareProtos(
+std::optional<std::string> CompareProtos(
     google::protobuf::Message const& arg,
     google::protobuf::Message const& value) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return absl::nullopt;
+  if (result) return std::nullopt;
   return delta;
 }
 
-absl::optional<std::string> CompareProtosApproximately(
+std::optional<std::string> CompareProtosApproximately(
     google::protobuf::Message const& arg,
     google::protobuf::Message const& value) {
   std::string delta;
@@ -43,11 +43,11 @@ absl::optional<std::string> CompareProtosApproximately(
   differencer.set_field_comparator(&comparator);
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return absl::nullopt;
+  if (result) return std::nullopt;
   return delta;
 }
 
-absl::optional<std::string> CompareProtosApproximately(
+std::optional<std::string> CompareProtosApproximately(
     google::protobuf::Message const& arg,
     google::protobuf::Message const& value, double fraction, double margin) {
   std::string delta;
@@ -59,7 +59,7 @@ absl::optional<std::string> CompareProtosApproximately(
   differencer.set_field_comparator(&comparator);
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return absl::nullopt;
+  if (result) return std::nullopt;
   return delta;
 }
 

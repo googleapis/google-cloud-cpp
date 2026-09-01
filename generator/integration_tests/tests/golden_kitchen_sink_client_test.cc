@@ -239,7 +239,7 @@ TEST(GoldenKitchenSinkClientTest, StreamingRead) {
                     Contains("test-only/1.0"));
         EXPECT_THAT(request.stream(), "test-only-stream-name");
         return google::cloud::internal::MakeStreamRange<Response>(
-            []() -> absl::variant<Status, Response> {
+            []() -> std::variant<Status, Response> {
               return Status(StatusCode::kPermissionDenied, "uh-oh");
             });
       });

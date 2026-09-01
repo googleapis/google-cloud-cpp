@@ -1057,7 +1057,7 @@ TensorboardServiceConnectionImpl::ReadTensorboardBlobData(
   return internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status,
               google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse> {
         google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse response;

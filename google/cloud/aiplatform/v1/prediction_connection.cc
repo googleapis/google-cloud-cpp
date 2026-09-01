@@ -53,7 +53,7 @@ StreamRange<google::api::HttpBody>
 PredictionServiceConnection::StreamRawPredict(
     google::cloud::aiplatform::v1::StreamRawPredictRequest const&) {
   return google::cloud::internal::MakeStreamRange<google::api::HttpBody>(
-      []() -> absl::variant<Status, google::api::HttpBody> {
+      []() -> std::variant<Status, google::api::HttpBody> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }
@@ -109,7 +109,7 @@ PredictionServiceConnection::ServerStreamingPredict(
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::StreamingPredictResponse>(
       []()
-          -> absl::variant<
+          -> std::variant<
               Status, google::cloud::aiplatform::v1::StreamingPredictResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
@@ -143,7 +143,7 @@ PredictionServiceConnection::StreamGenerateContent(
     google::cloud::aiplatform::v1::GenerateContentRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::GenerateContentResponse>(
-      []() -> absl::variant<
+      []() -> std::variant<
                Status, google::cloud::aiplatform::v1::GenerateContentResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
