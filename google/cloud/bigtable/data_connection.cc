@@ -157,14 +157,6 @@ DataConnectionComponents MakeDataConnectionComponents(
 
 std::shared_ptr<bigtable::DataConnection> MakeSingleStubDataConnection(
     DataConnectionComponents components) {
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  if (components.direct_access_compatibility != nullptr) {
-    components.direct_access_compatibility->Record(
-        opentelemetry::context::RuntimeContext::GetCurrent(), 0,
-        bigtable_internal::DirectAccessCompatibilityLabels{
-            "", "manually_disabled"});
-  }
-#endif
   std::shared_ptr<bigtable_internal::BigtableStub> stub =
       bigtable_internal::CreateBigtableStub(std::move(components.auth),
                                             components.background->cq(),
@@ -194,7 +186,7 @@ std::shared_ptr<bigtable::DataConnection> MakeInstanceAffinityDataConnection(
       affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
           instances, stub_creation_fn);
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  if (components.direct_access_compatibility != nullptr) {
+  if (!instances.empty() && components.direct_access_compatibility != nullptr) {
     components.direct_access_compatibility->Record(
         opentelemetry::context::RuntimeContext::GetCurrent(), 0,
         bigtable_internal::DirectAccessCompatibilityLabels{
