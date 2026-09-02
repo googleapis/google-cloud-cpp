@@ -100,13 +100,33 @@ Options DefaultOptionsGrpc(
   auto const ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
 
-  // Set default to direct connectivity if we can detect we are running in GCP
-  // and there is not already a set endpoint or unviverse domain endpoint.
-  if ((!options.has<EndpointOption>() &&
-       !options.has<internal::UniverseDomainOption>()) &&
-      (gcp_detector->IsGoogleCloudBios() ||
-       gcp_detector->IsGoogleCloudServerless())) {
-    options.set<EndpointOption>("google-c2p:///storage.googleapis.com");
+  if (!options
+           .has<storage_experimental::DirectPathXdsOverInterconnectOption>()) {
+    auto const env =
+        GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT");
+    if (env.has_value() && *env == "true") {
+      options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          true);
+    }
+  }
+  auto const direct_path_interconnect =
+      options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
+
+  // Set default to direct connectivity if DirectPath over Interconnect is
+  // enabled, or if running in GCP and no endpoint or universe domain is
+  // explicitly configured.
+  if (!options.has<EndpointOption>() &&
+      !options.has<internal::UniverseDomainOption>()) {
+    if (direct_path_interconnect) {
+      options.set<EndpointOption>(
+          "google-c2p:///storage-direct.googleapis.com?force-xds");
+      if (!options.has<AuthorityOption>()) {
+        options.set<AuthorityOption>("storage.googleapis.com");
+      }
+    } else if (gcp_detector->IsGoogleCloudBios() ||
+               gcp_detector->IsGoogleCloudServerless()) {
+      options.set<EndpointOption>("google-c2p:///storage.googleapis.com");
+    }
   }
 
   options = google::cloud::internal::MergeOptions(
