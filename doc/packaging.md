@@ -342,7 +342,7 @@ sudo ldconfig
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
 sudo dnf makecache && sudo dnf install -y c-ares-devel re2-devel
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -512,7 +512,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -708,7 +708,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -836,7 +836,7 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1073,7 +1073,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1233,7 +1233,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1442,7 +1442,7 @@ install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0-pre1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
