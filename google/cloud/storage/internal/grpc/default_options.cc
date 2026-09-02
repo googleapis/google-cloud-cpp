@@ -109,7 +109,7 @@ Options DefaultOptionsGrpc(
           true);
     }
   }
-  auto const direct_path_interconnect =
+  bool const direct_path_interconnect =
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
 
   // Set default to direct connectivity if DirectPath over Interconnect is
