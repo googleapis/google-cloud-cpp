@@ -128,6 +128,17 @@ struct GrpcMetricsExcludedLabelsOption {
   using Type = std::set<std::string>;
 };
 
+/**
+ * Option to attempt DirectPath over Interconnect.
+ *
+ * When this option is enabled, the client bypasses GCE VM environment/BIOS
+ * checks and configures the gRPC channel to target
+ * `google-c2p:///storage-direct.googleapis.com?force-xds` with standard TLS.
+ */
+struct DirectPathXdsOverInterconnectOption {
+  using Type = bool;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
