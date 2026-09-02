@@ -45,6 +45,9 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
                 HedgedObjectReadSource::ChildFactory const& factory,
                 std::size_t n, bool resolve_on_open_error,
                 std::shared_ptr<HedgingThreadPool> release_slot) {
+  // Releases the acquired hedge concurrency slot upon function exit across
+  // all code paths (early return on open/allocation error, race winner, or
+  // race loser). For primary attempts, release_slot is nullptr.
   struct SlotGuard {
     std::shared_ptr<HedgingThreadPool> pool;
     ~SlotGuard() {
@@ -113,7 +116,9 @@ StatusOr<HttpResponse> HedgedObjectReadSource::Close() {
 
 StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
                                                         std::size_t n) {
-  if (is_closed_) return ReadSourceResult{};
+  if (is_closed_) {
+    return ReadSourceResult{0, HttpResponse{HttpStatusCode::kOk, {}, {}}};
+  }
 
   // Only the stream open is hedged. Once a child has won the race all
   // subsequent reads continue on it, at its current offset, without any
@@ -142,9 +147,20 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
   // complete either way.
   if (!read_pool_->Enqueue(primary)) primary();
 
-  for (int hedges_dispatched = 0; hedges_dispatched != max_hedges_;) {
+  for (int hedges_dispatched = 0; hedges_dispatched < max_hedges_;) {
     if (future.wait_for(delay_) != std::future_status::timeout) break;
-    if (!hedge_pool_->TryAcquireHedgeToken()) continue;
+    if (!hedge_pool_->TryAcquireHedgeToken()) {
+      // When delay_ is 0ms (or token acquisition fails), back off briefly on
+      // the future instead of busy-spinning if tokens or concurrency slots are
+      // temporarily exhausted.
+      if (delay_ == std::chrono::milliseconds::zero()) {
+        if (future.wait_for(std::chrono::milliseconds(10)) !=
+            std::future_status::timeout) {
+          break;
+        }
+      }
+      continue;
+    }
     auto hedge = [state, factory = child_factory_, n, pool = hedge_pool_] {
       RunAttempt(state, factory, n, /*resolve_on_open_error=*/false, pool);
     };

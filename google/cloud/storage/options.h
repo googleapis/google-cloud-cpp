@@ -115,7 +115,8 @@ struct MaxReadHedgesOption {
  * The maximum number of threads in the thread pool used for primary reads
  * when `EnableReadHedgingOption` is enabled.
  *
- * Sizing defaults to at least 64 threads or 4x hardware concurrency.
+ * Set to 0 for automatic sizing (defaults to at least 64 threads or 4x hardware
+ * concurrency).
  *
  * @ingroup storage-options
  */
@@ -127,8 +128,8 @@ struct ReadThreadPoolSizeOption {
  * The maximum number of threads in the thread pool used for speculative
  * hedged requests when `EnableReadHedgingOption` is enabled.
  *
- * Sizing defaults to `MaxConcurrentHedgesOption` if set, or at least 16
- * threads or 2x hardware concurrency.
+ * Set to 0 for automatic sizing (defaults to `MaxConcurrentHedgesOption` if
+ * set, or at least 16 threads or 2x hardware concurrency).
  *
  * @ingroup storage-options
  */

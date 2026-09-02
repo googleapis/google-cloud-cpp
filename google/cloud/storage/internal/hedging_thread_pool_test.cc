@@ -179,6 +179,16 @@ TEST(HedgingThreadPoolTest, FractionalRateLimiter) {
   EXPECT_FALSE(pool.TryAcquireHedgeToken());
 }
 
+TEST(HedgingThreadPoolTest, ZeroRateLimitDisablesRateLimiting) {
+  // A rate limit of 0.0 disables rate limiting, allowing unlimited
+  // acquisitions.
+  HedgingThreadPool pool(5, 0.0, 0.0, 0);
+
+  for (int i = 0; i < 100; ++i) {
+    EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  }
+}
+
 TEST(HedgingThreadPoolTest, SafeDestructionOnWorkerThread) {
   TestSafeDestructionOnWorkerThread(
       std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0));

@@ -135,15 +135,28 @@ class ThreadPool {
 };
 
 /**
- * A dedicated thread pool with integrated hedge throttling.
+ * Coordinates and bounds speculative hedged requests across a storage client.
  *
  * Hedged requests are gated by `TryAcquireHedgeToken()`, which enforces two
- * limits: a maximum number of concurrently active hedges, and a maximum rate of
- * new hedges per second (a token bucket). Task execution is dispatched onto a
- * dedicated internal `ThreadPool`.
+ * limits: a maximum number of concurrently active hedges (when
+ * `max_concurrent > 0`), and a maximum rate of new hedges per second via a
+ * token bucket (when `rate_limit > 0.0`). Setting `rate_limit <= 0.0` disables
+ * rate limiting (unlimited hedges per second). Task execution is dispatched
+ * onto a dedicated internal `ThreadPool`.
  */
 class HedgingThreadPool {
  public:
+  /**
+   * Constructs a `HedgingThreadPool`.
+   *
+   * @param max_threads the worker pool thread limit. Clamped to at least 1.
+   * @param rate_limit the token bucket refill rate in tokens/sec. When <= 0.0,
+   *     rate limiting is disabled (unlimited hedges per second).
+   * @param capacity the maximum burst capacity in tokens. Clamped to at
+   *     least 1.0.
+   * @param max_concurrent the ceiling on concurrently active hedges. When <= 0,
+   *     concurrency limiting is disabled.
+   */
   HedgingThreadPool(std::size_t max_threads, double rate_limit, double capacity,
                     std::int64_t max_concurrent)
       : rate_limit_(rate_limit),
@@ -175,7 +188,8 @@ class HedgingThreadPool {
    * On success the caller *must* eventually call `ReleaseHedgeSlot()`.
    */
   bool TryAcquireHedgeToken() {
-    // Gate 1: the ceiling on concurrently active hedges.
+    // Gate 1: the ceiling on concurrently active hedges. When
+    // max_concurrent_hedges_ <= 0, concurrency limiting is disabled.
     if (max_concurrent_hedges_ > 0) {
       std::int64_t current =
           active_concurrent_hedges_.load(std::memory_order_relaxed);
@@ -185,7 +199,8 @@ class HedgingThreadPool {
           current, current + 1, std::memory_order_relaxed));
     }
 
-    // Gate 2: the rate limit on new hedges (token bucket).
+    // Gate 2: the rate limit on new hedges (token bucket). When
+    // rate_limit_ <= 0.0, rate limiting is disabled.
     if (rate_limit_ > 0.0) {
       std::lock_guard<std::mutex> lock(limiter_mutex_);
       Refill();
@@ -219,14 +234,14 @@ class HedgingThreadPool {
     tokens_ = (std::min)(tokens_capacity_, tokens_ + elapsed * rate_limit_);
   }
 
-  // Token bucket rate limiter.
+  // Token bucket rate limiter. A rate_limit_ <= 0.0 disables rate limiting.
   double rate_limit_;
   double tokens_capacity_;
   double tokens_;
   std::chrono::steady_clock::time_point last_refill_;
   std::mutex limiter_mutex_;
 
-  // Concurrency limiter.
+  // Concurrency limiter. A max_concurrent_hedges_ <= 0 disables limit.
   std::int64_t const max_concurrent_hedges_;
   std::atomic<std::int64_t> active_concurrent_hedges_{0};
 
