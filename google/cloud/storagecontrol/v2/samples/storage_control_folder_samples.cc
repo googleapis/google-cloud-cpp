@@ -30,8 +30,9 @@ void RemoveStaleFolders(
     google::cloud::storagecontrol_v2::StorageControlClient client,
     std::string const& bucket_name, std::string const& prefix,
     std::chrono::system_clock::time_point created_time_limit) {
-  std::regex re(prefix + R"re(-(recursive-)?[a-z]{16,32})re");
   auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
+  std::regex re(parent + "/folders/" + prefix +
+                R"re(-(recursive-)?[a-z]{32})re");
   for (auto folder : client.ListFolders(parent)) {
     if (!folder) throw std::move(folder).status();
     if (!std::regex_match(folder->name(), re)) continue;
@@ -142,10 +143,11 @@ void DeleteFolderRecursive(
      std::string const& bucket_name, std::string const& folder_id) {
     auto const name = std::string{"projects/_/buckets/"} + bucket_name +
                       "/folders/" + folder_id;
-    google::cloud::StatusOr<
-        google::storage::control::v2::DeleteFolderRecursiveMetadata>
-        status = client.DeleteFolderRecursive(name).get();
-    if (!status.ok()) throw std::move(status).status();
+    // Start a delete folder recursive operation and block until it completes.
+    // Real applications may want to setup a callback, wait on a coroutine, or
+    // poll until it completes.
+    auto result = client.DeleteFolderRecursive(name).get();
+    if (!result) throw std::move(result).status();
 
     std::cout << "Deleted folder recursively: " << folder_id << "\n";
   }
@@ -199,7 +201,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto const recursive_parent_id =
       prefix + "-recursive-" +
-      google::cloud::internal::Sample(generator, 16,
+      google::cloud::internal::Sample(generator, 32,
                                       "abcdefghijklmnopqrstuvwxyz");
   auto const recursive_child_id = recursive_parent_id + "/child";
 
@@ -213,11 +215,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteFolderRecursive() example" << std::endl;
   DeleteFolderRecursive(client, {bucket_name, recursive_parent_id});
 
-  // Verify deletion by checking that getting the parent folder fails with
-  // NOT_FOUND.
+  // Verify deletion by checking that getting the parent and child folders fail
+  // with NOT_FOUND.
   try {
     GetFolder(client, {bucket_name, recursive_parent_id});
     throw std::runtime_error("Parent folder was not deleted recursively");
+  } catch (google::cloud::Status const& status) {
+    if (status.code() != google::cloud::StatusCode::kNotFound) {
+      throw;
+    }
+  }
+
+  try {
+    GetFolder(client, {bucket_name, recursive_child_id});
+    throw std::runtime_error("Child folder was not deleted recursively");
   } catch (google::cloud::Status const& status) {
     if (status.code() != google::cloud::StatusCode::kNotFound) {
       throw;
