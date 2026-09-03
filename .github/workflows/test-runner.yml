@@ -45,20 +45,22 @@ jobs:
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
     steps:
-      - name: Verify PR author permissions
-        if: github.event_name == 'pull_request_target'
+      - name: Verify author permissions
+        if: >-
+          github.event_name == 'pull_request_target' ||
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/ci-gha'))
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
         run: |
-          permission=$(gh api "repos/${{ github.repository }}/collaborators/${PR_AUTHOR}/permission" --jq '.permission')
-          echo "PR author: ${PR_AUTHOR}, permission: ${permission}"
+          permission=$(gh api "repos/${{ github.repository }}/collaborators/${AUTHOR}/permission" --jq '.permission')
+          echo "Author: ${AUTHOR}, permission: ${permission}"
           case "${permission}" in
             admin|write|maintain)
               echo "Author is trusted."
               ;;
             *)
-              echo "::error::PR author '${PR_AUTHOR}' is not trusted (permission: '${permission}')."
+              echo "::error::Author '${AUTHOR}' is not trusted (permission: '${permission}')."
               exit 1
               ;;
           esac
