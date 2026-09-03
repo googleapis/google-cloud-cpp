@@ -53,7 +53,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
         run: |
-          permission=$(gh api "repos/${{ github.repository }}/collaborators/${AUTHOR}/permission" --jq '.permission')
+          permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${AUTHOR}/permission" --jq '.permission')
           echo "Author: ${AUTHOR}, permission: ${permission}"
           case "${permission}" in
             admin|write|maintain)
@@ -64,13 +64,12 @@ jobs:
               exit 1
               ;;
           esac
-      # zizmor: ignore[template-injection]
       - name: Save Pull Request
         id: save-pull-request
-        # zizmor: ignore[template-injection]
-        # zizmor: ignore[template-injection]
-        run: >
-          echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
+        env:
+          PR_SHA: ${{ github.event.pull_request.head.sha || github.ref }}
+        run: |
+          echo "sha=${PR_SHA}" >> "${GITHUB_OUTPUT}"
 
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
   # job requires approval, these blocks all the other jobs. The jobs are defined
