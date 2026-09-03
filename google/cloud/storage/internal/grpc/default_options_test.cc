@@ -54,6 +54,7 @@ TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
       {"storage.googleapis.com", 4, std::numeric_limits<int>::max()},
       {"google-c2p:///storage.googleapis.com", 1, 1},
       {"google-c2p-experimental:///storage.googleapis.com", 1, 1},
+      {"google-c2p:///storage-direct.googleapis.com?force-xds", 1, 1},
   };
 
   for (auto const& test : cases) {
@@ -93,6 +94,148 @@ TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPath) {
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+}
+
+TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPathOverInterconnectOption) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          true),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(),
+            "google-c2p:///storage-direct.googleapis.com?force-xds");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+}
+
+TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPathOverInterconnectEnvVar) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        "true");
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(Options{}, mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(),
+            "google-c2p:///storage-direct.googleapis.com?force-xds");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+}
+
+TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPathOverInterconnectDisabled) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          false),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+}
+
+TEST(DefaultOptionsGrpc,
+     DefaultEndpointsDirectPathOverInterconnectUserEndpointOverride) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true)
+          .set<EndpointOption>("custom-endpoint")
+          .set<AuthorityOption>("custom-authority"),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(), "custom-endpoint");
+  EXPECT_EQ(options.get<AuthorityOption>(), "custom-authority");
+}
+
+TEST(DefaultOptionsGrpc,
+     DefaultEndpointsDirectPathOverInterconnectUniverseDomainOverride) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true)
+          .set<internal::UniverseDomainOption>("my-ud.net"),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
+}
+
+TEST(
+    DefaultOptionsGrpc,
+    DefaultEndpointsDirectPathOverInterconnectProgrammaticFalseOverridesEnvVar) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        "true");
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          false),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(
+      options.get<storage_experimental::DirectPathXdsOverInterconnectOption>());
+  EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+}
+
+TEST(DefaultOptionsGrpc,
+     DefaultEndpointsDirectPathOverInterconnectPreservesCustomAuthority) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true)
+          .set<AuthorityOption>("custom-authority"),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(),
+            "google-c2p:///storage-direct.googleapis.com?force-xds");
+  EXPECT_EQ(options.get<AuthorityOption>(), "custom-authority");
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+}
+
+TEST(DefaultOptionsGrpc,
+     DefaultEndpointsDirectPathOverInterconnectUniverseDomainEnvVar) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "my-ud.net");
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  auto options = DefaultOptionsGrpc(
+      Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          true),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
 }
 
 TEST(DefaultOptionsGrpc, EndpointOptionsOverrideDefaults) {
