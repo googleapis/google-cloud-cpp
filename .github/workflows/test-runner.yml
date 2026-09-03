@@ -41,27 +41,35 @@ jobs:
           (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
       }}
     name: Save PR ref
-    if: >-
-      ${{
-          ((github.event.pull_request.author_association == 'OWNER' ||
-           github.event.pull_request.author_association == 'MEMBER' ||
-           github.event.pull_request.author_association == 'COLLABORATOR') &&
-          github.event_name == 'pull_request_target') ||
-          github.event_name == 'push' ||
-          github.event_name == 'schedule'
-
-      }}
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
     steps:
-      # zizmor: ignore[template-injection]
+      - name: Verify author permissions
+        if: >-
+          github.event_name == 'pull_request_target' ||
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/ci-gha'))
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
+        run: |
+          permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${AUTHOR}/permission" --jq '.permission')
+          echo "Author: ${AUTHOR}, permission: ${permission}"
+          case "${permission}" in
+            admin|write|maintain)
+              echo "Author is trusted."
+              ;;
+            *)
+              echo "::error::Author '${AUTHOR}' is not trusted (permission: '${permission}')."
+              exit 1
+              ;;
+          esac
       - name: Save Pull Request
         id: save-pull-request
-        # zizmor: ignore[template-injection]
-        # zizmor: ignore[template-injection]
-        run: >
-          echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
+        env:
+          PR_SHA: ${{ github.event.pull_request.head.sha || github.ref }}
+        run: |
+          echo "sha=${PR_SHA}" >> "${GITHUB_OUTPUT}"
 
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
   # job requires approval, these blocks all the other jobs. The jobs are defined
