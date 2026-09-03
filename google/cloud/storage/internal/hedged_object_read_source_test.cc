@@ -272,6 +272,9 @@ TEST(HedgedObjectReadSourceTest,
 }
 
 TEST(HedgedObjectReadSourceTest, HedgeOpenFailureReleasesSlot) {
+  GTEST_SKIP() << "Flaky test: "
+                  "https://github.com/googleapis/google-cloud-cpp/issues/16413";
+
   // Verify that if a hedge attempt fails during stream opening (factory()
   // error), the hedge concurrency slot is released via RAII (SlotGuard) and is
   // not leaked.
