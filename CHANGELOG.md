@@ -7,7 +7,7 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.9.0 - TBD
+## v3.9.0 - 2026-09 
 
 ### Dependency version update
 
@@ -21,6 +21,26 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Cloud FTP API](/google/cloud/ftp/README.md)
 - [Lakehouse API](/google/cloud/biglake/README.md)
 - [Workload Identity API](/google/cloud/workloadidentity/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- feat(bigtable): enable directpath probe and cloudpath fallback with diagnostics ([#16388](https://github.com/googleapis/google-cloud-cpp/pull/16388))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): separate read and hedging thread pools ([#16389](https://github.com/googleapis/google-cloud-cpp/pull/16389))
+- fix!: require minimum libcurl 8.7.1 to fix curl bug ([#16375](https://github.com/googleapis/google-cloud-cpp/pull/16375))
+- fix(storage): guard against overlapping stream requests in AsyncWriterConnectionBuffered ([#16364](https://github.com/googleapis/google-cloud-cpp/pull/16364))
+- feat(storage): Add more test coverage for initial read ranges in AsyncClient::Open() ([#16357](https://github.com/googleapis/google-cloud-cpp/pull/16357))
+- feat(storage): implement TTFB speculative hedging with configurable connect timeouts ([#16344](https://github.com/googleapis/google-cloud-cpp/pull/16344))
+- fix(storage): do not retry permanent errors in async writer resume ([#16340](https://github.com/googleapis/google-cloud-cpp/pull/16340))
+- feat(storage): expose initial read ranges in AsyncClient ([#16341](https://github.com/googleapis/google-cloud-cpp/pull/16341))
+- fix(storage): do not close object descriptor span on reader completion ([#16321](https://github.com/googleapis/google-cloud-cpp/pull/16321))
+- feat(storage): add telemetry for pre-warmed ranges in ObjectDescriptorImpl ([#16323](https://github.com/googleapis/google-cloud-cpp/pull/16323))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-08-25T16:39:57-07:00](https://github.com/googleapis/googleapis/tree/d10ac9249540add035ce07b6a54028ab643e1532)
 
 ## v3.8.0 - 2026-08
 
