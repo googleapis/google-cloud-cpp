@@ -41,20 +41,27 @@ jobs:
           (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
       }}
     name: Save PR ref
-    if: >-
-      ${{
-          ((github.event.pull_request.author_association == 'OWNER' ||
-           github.event.pull_request.author_association == 'MEMBER' ||
-           github.event.pull_request.author_association == 'COLLABORATOR') &&
-          github.event_name == 'pull_request_target') ||
-          github.event_name == 'push' ||
-          github.event_name == 'schedule'
-
-      }}
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
     steps:
+      - name: Verify PR author permissions
+        if: github.event_name == 'pull_request_target'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          permission=$(gh api "repos/${{ github.repository }}/collaborators/${PR_AUTHOR}/permission" --jq '.permission')
+          echo "PR author: ${PR_AUTHOR}, permission: ${permission}"
+          case "${permission}" in
+            admin|write|maintain)
+              echo "Author is trusted."
+              ;;
+            *)
+              echo "::error::PR author '${PR_AUTHOR}' is not trusted (permission: '${permission}')."
+              exit 1
+              ;;
+          esac
       # zizmor: ignore[template-injection]
       - name: Save Pull Request
         id: save-pull-request
