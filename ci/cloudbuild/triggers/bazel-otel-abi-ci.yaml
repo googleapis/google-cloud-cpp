@@ -19,9 +19,9 @@ github:
   push:
     branch: main
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-otel-abi-2-ci
+name: bazel-otel-abi-ci
 substitutions:
-  _BUILD_NAME: bazel-otel-abi-2
+  _BUILD_NAME: bazel-otel-abi
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: ci
 tags:

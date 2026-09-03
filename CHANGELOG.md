@@ -13,6 +13,19 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 - Updated minimum version of libcurl from 7.74.0 to 8.7.1. This was done primarily to avoid a known bug introduced in libcurl 8.5.0. For more information, see [Issue #16343](https://github.com/googleapis/google-cloud-cpp/issues/16343).
 
+### OpenTelemetry default ABI version update
+
+#### Updated the default OpenTelemetry C++ ABI version expected by google-cloud-cpp to 2 (`OPENTELEMETRY_ABI_VERSION_NO=2`).
+
+  * In Bazel builds, 
+    - google-cloud-cpp provides a `--//:otel_abi_version_no` flag that defaults
+    to `2`.
+    - **NOTE**: Bazel users not already specifying `--@opentelemetry-cpp//api:abi_version_no=2` will need to add it.
+    - Downstream consumers requiring ABI version 1 can configure
+    `--//:otel_abi_version_no=1` and `--@opentelemetry-cpp//api:abi_version_no=1`.
+  * In CMake builds, downstream consumers requiring ABI version 1 can configure
+    `-DGOOGLE_CLOUD_CPP_OPENTELEMETRY_ABI_VERSION=1`.
+
 ### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,

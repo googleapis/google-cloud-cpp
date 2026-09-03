@@ -31,3 +31,6 @@ build --experimental_convenience_symlinks=ignore
 # TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
 #     `apple_rules`.
 common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
+
+# Default to OpenTelemetry ABI version 2
+build --@opentelemetry-cpp//api:abi_version_no=2

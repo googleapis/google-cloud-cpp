@@ -36,5 +36,7 @@ args+=(
   --test_tag_filters=-integration-test
   # Necessary for workspace builds with newer rules_cc.
   --repositories_without_autoloads=cc_compatibility_proxy
+  # WORKSPACE builds use opentelemetry-cpp v1.20.0 (ABI 1)
+  --config=otel1
 )
 io::run bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"

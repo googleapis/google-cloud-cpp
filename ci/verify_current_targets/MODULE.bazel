@@ -1,6 +1,8 @@
 module(name = "google-cloud-cpp-verify-current-targets")
 
 bazel_dep(name = "google_cloud_cpp", version = "0.0.0")
+bazel_dep(name = "opentelemetry-cpp", version = "1.24.0")
+
 local_path_override(
     module_name = "google_cloud_cpp",
     path = "../..",

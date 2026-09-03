@@ -1,4 +1,6 @@
-# Copyright 2021 Google LLC
+#!/bin/bash
+#
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,18 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-filename: ci/cloudbuild/cloudbuild.yaml
-github:
-  name: google-cloud-cpp
-  owner: googleapis
-  pullRequest:
-    branch: main
-    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-otel-abi-2-pr
-substitutions:
-  _BUILD_NAME: bazel-otel-abi-2
-  _DISTRO: fedora-latest-bazel
-  _TRIGGER_TYPE: pr
-tags:
-- pr
+set -euo pipefail
+
+source "$(dirname "$0")/../../lib/init.sh"
+source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
+
+mapfile -t args < <(bazel::common_args)
+args+=("--config=otel1" "--@opentelemetry-cpp//api:abi_version_no=1")
+io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"

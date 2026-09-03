@@ -21,6 +21,13 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#if defined(GOOGLE_CLOUD_CPP_OTEL_ABI_MISMATCH_2_1)
+#warning \
+    "google-cloud-cpp is configured for OpenTelemetry ABI v2 (//:otel_abi_version_no=2), but @opentelemetry-cpp//api:abi_version_no is 1. Please add `--@opentelemetry-cpp//api:abi_version_no=2` to your build command or .bazelrc."
+#elif defined(GOOGLE_CLOUD_CPP_OTEL_ABI_MISMATCH_1_2)
+#warning \
+    "google-cloud-cpp is configured for OpenTelemetry ABI v1 (//:otel_abi_version_no=1), but @opentelemetry-cpp//api:abi_version_no is 2. Please add `--@opentelemetry-cpp//api:abi_version_no=1` or configure matching ABI flags."
+#endif
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/string_view.h>

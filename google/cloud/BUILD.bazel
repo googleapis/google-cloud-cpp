@@ -54,6 +54,11 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    defines = select({
+        "//:otel_abi_mismatch_2_1": ["GOOGLE_CLOUD_CPP_OTEL_ABI_MISMATCH_2_1"],
+        "//:otel_abi_mismatch_1_2": ["GOOGLE_CLOUD_CPP_OTEL_ABI_MISMATCH_1_2"],
+        "//conditions:default": [],
+    }),
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
