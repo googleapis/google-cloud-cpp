@@ -159,23 +159,29 @@ StorageConnectionImpl::StorageConnectionImpl(
     : stub_(std::move(stub)),
       options_(MergeOptions(std::move(options), stub_->options())) {
   if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
-    // The pool only runs stream-open attempts: one primary and (at most) a few
-    // hedges per stream being opened. Size it to the number of connections the
-    // REST layer can use, falling back to the hardware concurrency when the
-    // connection pool is unbounded (`ConnectionPoolSizeOption == 0`).
-    auto pool_size = options_.get<ConnectionPoolSizeOption>();
-    if (pool_size == 0) {
-      pool_size =
-          (std::max<std::size_t>)(4, std::thread::hardware_concurrency());
-    }
-    auto const max_threads = 2 * pool_size;
-    auto const rate_limit =
-        options_.get<storage_experimental::ReadHedgeRateLimitOption>();
-    auto const max_concurrent =
+    // `DefaultOptions()` normally resolves these, but a connection can be
+    // built without it, in which case the option is left at 0 ("automatic").
+    // A pool sized 0 would accept reads it never runs, hanging the caller.
+    std::size_t read_threads =
+        options_.get<storage_experimental::ReadThreadPoolSizeOption>();
+    if (read_threads == 0) read_threads = DefaultReadThreadPoolSize();
+    // The read pool only ever has one thread per in-flight application read,
+    // and each one blocks inside a synchronous read. Once it saturates, new
+    // primaries queue behind blocked ones and reads degrade to hedge-only.
+    read_pool_ = std::make_shared<ThreadPool>(read_threads);
+
+    std::int64_t const max_concurrent =
         options_.get<storage_experimental::MaxConcurrentHedgesOption>();
+    std::size_t hedge_threads =
+        options_.get<storage_experimental::HedgingThreadPoolSizeOption>();
+    if (hedge_threads == 0) {
+      hedge_threads = DefaultHedgingThreadPoolSize(max_concurrent);
+    }
+    double const rate_limit =
+        options_.get<storage_experimental::ReadHedgeRateLimitOption>();
     // Allow bursts of up to one second worth of hedges.
     hedge_pool_ = std::make_shared<HedgingThreadPool>(
-        max_threads, rate_limit, rate_limit, max_concurrent);
+        hedge_threads, rate_limit, rate_limit, max_concurrent);
   }
 }
 
@@ -435,14 +441,14 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
   auto const max_buffer =
       current->get<storage_experimental::MaximumHedgeBufferOption>();
 
-  if (!enable_hedging || max_hedges <= 0 || !hedge_pool_) {
+  if (!enable_hedging || max_hedges <= 0 || !hedge_pool_ || !read_pool_) {
     return retry_source_factory();
   }
 
   // `max_buffer` bounds the size of an individual read, which is only known
   // when the application calls `Read()`; the source applies it there.
   return std::unique_ptr<ObjectReadSource>(
-      std::make_unique<HedgedObjectReadSource>(hedge_pool_,
+      std::make_unique<HedgedObjectReadSource>(read_pool_, hedge_pool_,
                                                std::move(retry_source_factory),
                                                delay, max_hedges, max_buffer));
 }
