@@ -262,10 +262,10 @@ def gl_cpp_workspace0(name = None):
     http_archive(
         name = "opentelemetry-cpp",
         urls = [
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.28.0.tar.gz",
         ],
-        sha256 = "4b6eeb852f075133c21b95948017f13a3e21740e55b921d27e42970a47314297",
-        strip_prefix = "opentelemetry-cpp-1.20.0",
+        sha256 = "8c359919175d77c502515f5a783907d031cc6a172e44426dbe9bee3c1532201e",
+        strip_prefix = "opentelemetry-cpp-1.28.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",
