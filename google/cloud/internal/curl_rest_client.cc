@@ -133,6 +133,9 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl = std::make_unique<CurlImpl>(std::move(handle), handle_factory_,
                                          options, pqc_ec_curves_);
+  if (context.cancellation_token()) {
+    impl->SetCancellationToken(context.cancellation_token());
+  }
   if (credentials_) {
     auto auth_headers = credentials_->AuthenticationHeaders(
         std::chrono::system_clock::now(), endpoint_address_);

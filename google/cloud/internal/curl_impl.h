@@ -29,10 +29,12 @@
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
 #include <array>
+#include <atomic>
 #include <chrono>
 #include <cstdint>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <optional>
 #include <string>
 #include <vector>
@@ -80,9 +82,11 @@ class CurlImpl {
   ~CurlImpl();
 
   CurlImpl(CurlImpl const&) = delete;
-  CurlImpl(CurlImpl&&) = default;
+  // Not movable: `multi_mu_` synchronizes Cancel(), which may run on a
+  // different thread, with the handoff of `multi_` back to the pool.
+  CurlImpl(CurlImpl&&) = delete;
   CurlImpl& operator=(CurlImpl const&) = delete;
-  CurlImpl& operator=(CurlImpl&&) = default;
+  CurlImpl& operator=(CurlImpl&&) = delete;
 
   void SetHeader(HttpHeader header);
   void SetHeaders(HttpHeaders const& headers);
@@ -104,6 +108,10 @@ class CurlImpl {
 
   bool HasUnreadData() const;
   StatusOr<std::size_t> Read(absl::Span<char> output);
+
+  void SetCancellationToken(std::shared_ptr<std::atomic<bool>> token);
+  void Cancel();
+  int TransferInfoCallback();
 
   // Called from libcurl callbacks for received data.
   std::size_t WriteCallback(absl::Span<char> response);
@@ -132,6 +140,10 @@ class CurlImpl {
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
+  // Take ownership of `multi_` away from this request, synchronizing with any
+  // concurrent Cancel(). Call this instead of `std::move(multi_)` before
+  // returning the handle to the pool.
+  CurlMulti ReleaseMulti();
   // Perform at least part of the request.
   StatusOr<int> PerformWork();
   // Loop on PerformWork until a condition is met.
@@ -146,7 +158,16 @@ class CurlImpl {
   std::vector<HttpHeader> pending_request_headers_;
   CurlHeaders request_headers_;
   CurlHandle handle_;
+  // Guards the handoff of `multi_` back to the pool against a concurrent
+  // Cancel(), which calls `curl_multi_wakeup()` on it from another thread.
+  std::mutex multi_mu_;
   CurlMulti multi_;
+  std::shared_ptr<std::atomic<bool>> cancellation_token_ =
+      std::make_shared<std::atomic<bool>>(false);
+  // True once an external cancellation token was installed, i.e. some other
+  // thread may call Cancel() on this transfer. Only read and written on the
+  // transfer thread.
+  bool cancellable_ = false;
 
   bool logging_enabled_;
   bool follow_location_;

@@ -34,6 +34,7 @@ class MockHttpPayload : public rest_internal::HttpPayload {
               (override));
   MOCK_METHOD((std::multimap<std::string, std::string>), DebugHeaders, (),
               (const, override));
+  MOCK_METHOD(void, Cancel, (), (override));
 };
 
 template <typename Collection>

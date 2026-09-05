@@ -124,6 +124,17 @@ TEST(TracingHttpPayload, Failure) {
           SpanHasEvents(MakeReadMatcher(16, 16), MakeReadMatcher(16)))));
 }
 
+TEST(TracingHttpPayload, Cancel) {
+  auto impl = std::make_unique<MockHttpPayload>();
+  EXPECT_CALL(*impl, Cancel).Times(1);
+
+  RestRequest request("https://example.com/ignored");
+  auto span = MakeSpanHttp(request, "GET");
+
+  TracingHttpPayload payload(std::move(impl), std::move(span));
+  payload.Cancel();
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

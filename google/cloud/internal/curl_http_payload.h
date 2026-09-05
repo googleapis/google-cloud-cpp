@@ -45,6 +45,8 @@ class CurlHttpPayload : public HttpPayload {
 
   std::multimap<std::string, std::string> DebugHeaders() const override;
 
+  void Cancel() override;
+
  private:
   friend class CurlRestResponse;
   CurlHttpPayload(std::unique_ptr<CurlImpl> impl, Options options);

@@ -18,7 +18,9 @@
 #include "google/cloud/internal/http_header.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <atomic>
 #include <chrono>
+#include <memory>
 #include <optional>
 #include <string>
 #include <utility>
@@ -106,10 +108,18 @@ class RestContext {
     appconnect_time_ = us;
   }
 
+  std::shared_ptr<std::atomic<bool>> cancellation_token() const {
+    return cancellation_token_;
+  }
+  void set_cancellation_token(std::shared_ptr<std::atomic<bool>> token) {
+    cancellation_token_ = std::move(token);
+  }
+
  private:
   friend bool operator==(RestContext const& lhs, RestContext const& rhs);
   Options options_;
   HttpHeaders headers_;
+  std::shared_ptr<std::atomic<bool>> cancellation_token_;
   std::optional<std::string> local_ip_address_;
   std::optional<std::int32_t> local_port_;
   std::optional<std::string> primary_ip_address_;
