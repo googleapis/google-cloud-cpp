@@ -256,6 +256,86 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kOk));
 }
 
+// Verifies that multiple queued Flush() operations track cumulative byte
+// offsets and that each flush future is satisfied only when the server's
+// persisted_size reaches or exceeds its target offset.
+TEST(WriteConnectionResumed, InterleavedMultiFlush) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+  auto const payload1 = TestPayload(1024);
+  auto const payload2 = TestPayload(1024);
+
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(*mock, Flush)
+      .WillOnce([&, mock_persisted_size, payload1](auto const& p) {
+        EXPECT_EQ(p.payload(), payload1.payload());
+        return sequencer.PushBack("Flush1").then([mock_persisted_size](auto f) {
+          if (!f.get()) return TransientError();
+          *mock_persisted_size = 1024;
+          return Status{};
+        });
+      })
+      .WillOnce([&, mock_persisted_size, payload2](auto const& p) {
+        EXPECT_EQ(p.payload(), payload2.payload());
+        return sequencer.PushBack("Flush2").then([mock_persisted_size](auto f) {
+          if (!f.get()) return TransientError();
+          *mock_persisted_size = 2048;
+          return Status{};
+        });
+      })
+      .WillOnce([&](auto const& p) {
+        EXPECT_TRUE(p.payload().empty());
+        return sequencer.PushBack("Flush3").then([](auto) { return Status{}; });
+      });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
+
+  // Issue first Flush() of 1024 bytes.
+  auto f1 = connection->Flush(payload1);
+  ASSERT_FALSE(f1.is_ready());
+
+  // Issue second Flush() of 1024 bytes while the first is still in-flight.
+  auto f2 = connection->Flush(payload2);
+  ASSERT_FALSE(f2.is_ready());
+
+  // Complete first flush on mock (persisted_size reaches 1024).
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(true);
+
+  // f1 must be ready with OK, while f2 must remain pending because its target
+  // offset (2048 bytes) has not yet been reached.
+  ASSERT_TRUE(f1.is_ready());
+  EXPECT_THAT(f1.get(), StatusIs(StatusCode::kOk));
+  ASSERT_FALSE(f2.is_ready());
+
+  // Complete second flush on mock (persisted_size reaches 2048).
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush2");
+  next.first.set_value(true);
+
+  // Complete trailing empty flush.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush3");
+  next.first.set_value(true);
+
+  // Now f2 must also be ready with OK.
+  ASSERT_TRUE(f2.is_ready());
+  EXPECT_THAT(f2.get(), StatusIs(StatusCode::kOk));
+}
+
 TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();

@@ -158,9 +158,12 @@ class AsyncWriterConnectionResumedState
     // Create a new promise for this flush operation.
     promise<Status> current_flush_promise;
     auto f = current_flush_promise.get_future();
-    pending_flush_promises_.push_back(std::move(current_flush_promise));
-
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
+    auto const target_offset =
+        buffer_offset_ + static_cast<std::int64_t>(resend_buffer_.size());
+    pending_flush_promises_.push_back(
+        PendingFlush{std::move(current_flush_promise), target_offset});
+
     flush_ = true;
     HandleNewData(std::move(lk), true);
     // Return the future associated with the new promise.
@@ -344,7 +347,8 @@ class AsyncWriterConnectionResumedState
     }
     lk.unlock();
     OnQuery(persisted_size);
-    SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
+    SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result),
+               persisted_size);
   }
 
   void OnQuery(StatusOr<std::int64_t> persisted_size) {
@@ -565,7 +569,7 @@ class AsyncWriterConnectionResumedState
     lk.unlock();
     // Notify handlers and pending flushes *after* releasing the lock.
     for (auto& h : handlers) h->Execute(Status{});
-    for (auto& pf : pending_flushes) pf.set_value(Status{});  // Success
+    for (auto& pf : pending_flushes) pf.p.set_value(Status{});  // Success
     p.set_value(std::move(object));  // Set value on the moved promise
   }
 
@@ -589,34 +593,30 @@ class AsyncWriterConnectionResumedState
     lk.unlock();
     // Notify handlers and pending flushes after releasing the lock.
     for (auto& h : handlers) h->Execute(status);
-    for (auto& pf : pending_flushes) pf.set_value(status);
+    for (auto& pf : pending_flushes) pf.p.set_value(status);
     p.set_value(std::move(status));  // Set value on the moved promise.
   }
 
-  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
+  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result,
+                  std::int64_t persisted_size) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
     // Do NOT reset finalize_ or finalizing_ here.
     auto handlers = ClearHandlers(lk);
-    // Dequeue the promise corresponding to an explicit Flush() call, if any.
-    if (pending_flush_promises_.empty()) {
-      // This can happen if SetError cleared the queue first, or if this
-      // flush was triggered internally by buffer size (not by an explicit
-      // Flush() call) and thus has no promise in the queue.
-      flush_ = false;
-      lk.unlock();
-      for (auto& h : handlers) h->Execute(Status{});
-      return;
+    std::vector<promise<Status>> flushes_to_complete;
+    while (!pending_flush_promises_.empty() &&
+           pending_flush_promises_.front().target_offset <= persisted_size) {
+      flushes_to_complete.push_back(
+          std::move(pending_flush_promises_.front().p));
+      pending_flush_promises_.pop_front();
     }
-    auto flushed = std::move(pending_flush_promises_.front());
-    pending_flush_promises_.pop_front();
     if (pending_flush_promises_.empty()) {
       flush_ = false;
     }
     lk.unlock();  // Unlock only once before notifying
-    // Notify handlers and the specific flush promise *after* releasing the
+    // Notify handlers and the specific flush promises *after* releasing the
     // lock.
     for (auto& h : handlers) h->Execute(Status{});
-    flushed.set_value(result);
+    for (auto& f : flushes_to_complete) f.set_value(result);
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
@@ -656,7 +656,7 @@ class AsyncWriterConnectionResumedState
     for (auto& h : handlers) h->Execute(status);
     // Set error on all pending flush promises.
     for (auto& pf : pending_flushes) {
-      pf.set_value(status);
+      pf.p.set_value(status);
     }
     // Set error on the moved promises *once*.
     if (complete_finalized) {
@@ -726,8 +726,17 @@ class AsyncWriterConnectionResumedState
   // closed_.
   future<Status> closed_future_;
 
+  // Tracks an outstanding `Flush()` promise alongside the stream offset at the
+  // time `Flush()` was called. The target offset is used to satisfy promises
+  // once all data buffered at the time of the `Flush()` call has been
+  // persisted.
+  struct PendingFlush {
+    promise<Status> p;
+    std::int64_t target_offset;
+  };
+
   // Queue of promises for outstanding Flush() calls.
-  std::deque<promise<Status>> pending_flush_promises_;
+  std::deque<PendingFlush> pending_flush_promises_;
 
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.

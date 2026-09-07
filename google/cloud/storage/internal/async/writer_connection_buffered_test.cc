@@ -824,6 +824,74 @@ TEST(WriteConnectionBuffered, FlushResumesAndDoesNotCompletePrematurely) {
   EXPECT_STATUS_OK(f.get());
 }
 
+// Verifies that multiple queued Flush() operations track their
+// respective cumulative byte offsets and that each flush future is satisfied
+// only when the server's persisted_size reaches or exceeds its target offset.
+TEST(WriteConnectionBuffered, InterleavedMultiFlush) {
+  AsyncSequencer<bool> sequencer;
+
+  auto expected_write_size = [](std::size_t n) {
+    return ResultOf(
+        "payload size", [](auto payload) { return payload.size(); }, Eq(n));
+  };
+
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
+
+  // Expect two 32 KiB flushes in sequence.
+  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush1").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 32 * 1024;
+          return Status{};
+        });
+      })
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush2").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 64 * 1024;
+          return Status{};
+        });
+      });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Issue first Flush() of 32 KiB.
+  auto f1 = connection->Flush(TestPayload(32 * 1024));
+  ASSERT_FALSE(f1.is_ready());
+
+  // Issue second Flush() of 32 KiB while the first is still in-flight.
+  auto f2 = connection->Flush(TestPayload(32 * 1024));
+  ASSERT_FALSE(f2.is_ready());
+
+  // Complete the first flush on the mock (persisted_size reaches 32 KiB).
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(true);
+
+  // f1 must be satisfied with OK, while f2 must remain pending because its
+  // target offset (64 KiB) has not yet been reached.
+  ASSERT_TRUE(f1.is_ready());
+  EXPECT_STATUS_OK(f1.get());
+  ASSERT_FALSE(f2.is_ready());
+
+  // Complete the second flush on the mock (persisted_size reaches 64 KiB).
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush2");
+  next.first.set_value(true);
+
+  // Now f2 must also be satisfied with OK.
+  ASSERT_TRUE(f2.is_ready());
+  EXPECT_STATUS_OK(f2.get());
+}
+
 TEST(WriteConnectionBuffered, FinalizeWhileFlushing) {
   AsyncSequencer<bool> sequencer;
 
