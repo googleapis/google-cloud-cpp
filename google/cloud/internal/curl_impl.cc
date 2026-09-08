@@ -18,6 +18,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_writev.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -30,6 +31,7 @@
 #include <curl/easy.h>
 #include <algorithm>
 #include <sstream>
+#include <string_view>
 #include <thread>
 
 // Note that TRACE-level messages are disabled by default, even in
@@ -90,6 +92,25 @@ Status AsStatus(CURLMcode result, char const* where) {
 }
 
 }  // namespace
+
+std::string MakeNoProxyValue(std::optional<std::string> const& no_proxy,
+                             std::optional<std::string> const& no_proxy_upper) {
+  std::vector<std::string_view> parts = {"metadata.google.internal"};
+  if (no_proxy && !no_proxy->empty()) {
+    parts.push_back(*no_proxy);
+  }
+  if (no_proxy_upper && !no_proxy_upper->empty()) {
+    parts.push_back(*no_proxy_upper);
+  }
+  return absl::StrJoin(parts, ",");
+}
+
+std::string NoProxyValue() {
+  static std::string const* const kNoProxyValue =
+      new std::string(MakeNoProxyValue(internal::GetEnv("no_proxy"),
+                                       internal::GetEnv("NO_PROXY")));
+  return *kNoProxyValue;
+}
 
 extern "C" {  // libcurl callbacks
 
@@ -397,7 +418,8 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
 
 #ifndef GOOGLE_CLOUD_CPP_WINDOWS_BAZEL_CI_WORKAROUND
 #if CURL_AT_LEAST_VERSION(7, 19, 4)
-  status = handle_.SetOption(CURLOPT_NOPROXY, "metadata.google.internal");
+  std::string const no_proxy = NoProxyValue();
+  status = handle_.SetOption(CURLOPT_NOPROXY, no_proxy.c_str());
   if (!status.ok()) return OnTransferError(context, std::move(status));
 #endif
 #endif
