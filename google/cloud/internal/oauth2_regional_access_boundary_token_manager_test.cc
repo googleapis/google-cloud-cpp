@@ -196,7 +196,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   step.set_value();
 
   while (manager->IsRefreshPending()) {
-    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 
   header =
@@ -265,7 +265,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   step2.set_value();
 
   while (manager->IsRefreshPending()) {
-    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
@@ -323,7 +323,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
 
   // Wait for the background thread to finish and enter cooldown.
   while (manager->IsRefreshPending()) {
-    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
@@ -352,7 +352,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   attempt3.set_value();
 
   while (manager->IsRefreshPending()) {
-    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
