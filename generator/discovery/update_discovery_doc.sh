@@ -20,10 +20,13 @@ source "$(dirname "$0")/../../ci/lib/init.sh"
 source module ci/lib/io.sh
 
 function print_service_textproto() {
-  service_proto_path="${1#protos/}"
-  product_path="${service_proto_path%/*.proto}"
+  local service_proto_path="${1#protos/}"
+  local product_path="${service_proto_path%/*.proto}"
+  local initial_copyright_year
   initial_copyright_year=$(date +"%Y")
 
+  local tmp
+  tmp="$(mktemp)"
   (
     sed -n '/# update_discovery_doc.sh additions/q;p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
     cat <<_EOF_
@@ -38,7 +41,8 @@ function print_service_textproto() {
 
 _EOF_
     sed -n '/# update_discovery_doc.sh additions/,$p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
-  ) | sponge "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
+  ) >"${tmp}"
+  mv "${tmp}" "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
 }
 
 function add_service_directory() {
