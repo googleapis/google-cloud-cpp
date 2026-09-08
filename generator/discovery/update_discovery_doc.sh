@@ -26,7 +26,7 @@ function print_service_textproto() {
   initial_copyright_year=$(date +"%Y")
 
   local tmp
-  tmp="$(mktemp)"
+  tmp="$(mktemp "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}.XXXXXX")"
   (
     sed -n '/# update_discovery_doc.sh additions/q;p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
     cat <<_EOF_
