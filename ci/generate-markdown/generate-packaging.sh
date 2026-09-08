@@ -38,7 +38,6 @@ file="doc/packaging.md"
     "demo-ubuntu-24.04.Dockerfile,Ubuntu (24.04 LTS - Noble Numbat)"
     "demo-ubuntu-jammy.Dockerfile,Ubuntu (22.04 LTS - Jammy Jellyfish)"
     "demo-debian-bookworm.Dockerfile,Debian (12 - Bookworm)"
-    "demo-debian-bullseye.Dockerfile,Debian (11 - Bullseye)"
     "demo-rockylinux-9.Dockerfile,Rocky Linux (9)"
   )
   for distro in "${DOCKER_DISTROS[@]}"; do
