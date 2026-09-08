@@ -93,18 +93,23 @@ Status AsStatus(CURLMcode result, char const* where) {
 
 }  // namespace
 
-std::string NoProxyValue() {
+std::string MakeNoProxyValue(std::optional<std::string> const& no_proxy,
+                             std::optional<std::string> const& no_proxy_upper) {
   std::vector<std::string_view> parts = {"metadata.google.internal"};
-  std::optional<std::string> const no_proxy = internal::GetEnv("no_proxy");
   if (no_proxy && !no_proxy->empty()) {
     parts.push_back(*no_proxy);
   }
-  std::optional<std::string> const no_proxy_upper =
-      internal::GetEnv("NO_PROXY");
   if (no_proxy_upper && !no_proxy_upper->empty()) {
     parts.push_back(*no_proxy_upper);
   }
   return absl::StrJoin(parts, ",");
+}
+
+std::string NoProxyValue() {
+  static std::string const* const kNoProxyValue =
+      new std::string(MakeNoProxyValue(internal::GetEnv("no_proxy"),
+                                       internal::GetEnv("NO_PROXY")));
+  return *kNoProxyValue;
 }
 
 extern "C" {  // libcurl callbacks

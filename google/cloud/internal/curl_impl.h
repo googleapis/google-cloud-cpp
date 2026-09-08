@@ -43,7 +43,16 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Returns a comma-delimited string containing the Google metadata server
+// and any values from the provided `no_proxy` and `NO_PROXY` strings.
+// NOTE: This function is only exposed for testing. Use NoProxyValue in
+//     non test code.
+std::string MakeNoProxyValue(std::optional<std::string> const& no_proxy,
+                             std::optional<std::string> const& no_proxy_upper);
+
+// Returns a comma-delimited string containing the Google metadata server
 // and any values from the `no_proxy` and `NO_PROXY` environment variables.
+// NOTE: This functions caches the result of MakeNoProxyValue to improve
+//     performance.
 std::string NoProxyValue();
 
 // libcurl will never pass a block larger than CURL_MAX_WRITE_SIZE to the

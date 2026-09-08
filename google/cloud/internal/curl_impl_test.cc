@@ -15,7 +15,6 @@
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <vector>
 
@@ -393,37 +392,33 @@ TEST_F(CurlImplTest, MergeAndWriteHeadersDoNotMergeContentLength) {
   EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
 }
 
-TEST(NoProxyValueTest, NoProxyValueDefault) {
-  testing_util::ScopedEnvironment env_lower("no_proxy", std::nullopt);
-  testing_util::ScopedEnvironment env_upper("NO_PROXY", std::nullopt);
-  EXPECT_THAT(NoProxyValue(), testing::Eq("metadata.google.internal"));
+TEST(NoProxyValueTest, MakeNoProxyValueDefault) {
+  EXPECT_THAT(MakeNoProxyValue(std::nullopt, std::nullopt),
+              testing::Eq("metadata.google.internal"));
 }
 
-TEST(NoProxyValueTest, NoProxyValueLowerOnly) {
-  testing_util::ScopedEnvironment env_lower("no_proxy", "localhost,127.0.0.1");
-  testing_util::ScopedEnvironment env_upper("NO_PROXY", std::nullopt);
-  EXPECT_THAT(NoProxyValue(),
+TEST(NoProxyValueTest, MakeNoProxyValueLowerOnly) {
+  EXPECT_THAT(MakeNoProxyValue("localhost,127.0.0.1", std::nullopt),
               testing::Eq("metadata.google.internal,localhost,127.0.0.1"));
 }
 
-TEST(NoProxyValueTest, NoProxyValueUpperOnly) {
-  testing_util::ScopedEnvironment env_lower("no_proxy", std::nullopt);
-  testing_util::ScopedEnvironment env_upper("NO_PROXY", "10.0.0.0/8");
-  EXPECT_THAT(NoProxyValue(),
+TEST(NoProxyValueTest, MakeNoProxyValueUpperOnly) {
+  EXPECT_THAT(MakeNoProxyValue(std::nullopt, "10.0.0.0/8"),
               testing::Eq("metadata.google.internal,10.0.0.0/8"));
 }
 
-TEST(NoProxyValueTest, NoProxyValueBothSet) {
-  testing_util::ScopedEnvironment env_lower("no_proxy", "localhost");
-  testing_util::ScopedEnvironment env_upper("NO_PROXY", "10.0.0.0/8");
-  EXPECT_THAT(NoProxyValue(),
+TEST(NoProxyValueTest, MakeNoProxyValueBothSet) {
+  EXPECT_THAT(MakeNoProxyValue("localhost", "10.0.0.0/8"),
               testing::Eq("metadata.google.internal,localhost,10.0.0.0/8"));
 }
 
-TEST(NoProxyValueTest, NoProxyValueEmpty) {
-  testing_util::ScopedEnvironment env_lower("no_proxy", "");
-  testing_util::ScopedEnvironment env_upper("NO_PROXY", "");
-  EXPECT_THAT(NoProxyValue(), testing::Eq("metadata.google.internal"));
+TEST(NoProxyValueTest, MakeNoProxyValueEmpty) {
+  EXPECT_THAT(MakeNoProxyValue("", ""),
+              testing::Eq("metadata.google.internal"));
+}
+
+TEST(NoProxyValueTest, NoProxyValue) {
+  EXPECT_THAT(NoProxyValue(), testing::HasSubstr("metadata.google.internal"));
 }
 
 }  // namespace
