@@ -441,7 +441,7 @@ TEST(OpenImpl, TimeoutCancellation) {
       mock, cq, std::make_shared<grpc::ClientContext>(),
       internal::MakeImmutableOptions(std::move(options)),
       google::storage::v2::BidiReadObjectRequest{});
-  auto pending = coro->Call();
+  future<StatusOr<OpenStreamResult>> pending = coro->Call();
 
   auto timer1 = sequencer.PopFrontWithName();
   EXPECT_EQ(timer1.second, "MakeRelativeTimer");
@@ -468,7 +468,7 @@ TEST(OpenImpl, TimeoutCancellation) {
   EXPECT_EQ(finish.second, "Finish");
   finish.first.set_value(true);
 
-  auto response = pending.get();
+  StatusOr<OpenStreamResult> response = pending.get();
   EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
 }
 

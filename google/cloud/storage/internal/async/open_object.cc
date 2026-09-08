@@ -62,11 +62,11 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
     google::storage::v2::BidiReadObjectRequest const& request) {
   auto p = RequestParams(request);
   if (!p.empty()) context->AddMetadata("x-goog-request-params", std::move(p));
-  auto timeout = ScaleStallTimeout(
+  std::chrono::milliseconds const timeout = ScaleStallTimeout(
       options->get<storage::DownloadStallTimeoutOption>(),
       options->get<storage::DownloadStallMinimumRateOption>(),
       google::storage::v2::ServiceConstants::MAX_READ_CHUNK_BYTES);
-  auto rpc =
+  std::unique_ptr<OpenStream::StreamingRpc> rpc =
       stub.AsyncBidiReadObject(cq, std::move(context), std::move(options));
   return std::make_unique<
       google::cloud::internal::AsyncStreamingReadWriteRpcTimeout<
