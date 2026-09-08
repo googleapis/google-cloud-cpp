@@ -42,13 +42,14 @@ jobs:
           # Check if a new commit was made (HEAD differs from origin/main)
           if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
             echo "Changes detected. Pushing branch automation/update-compute-discovery..."
-            git push origin HEAD:automation/update-compute-discovery --force
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:automation/update-compute-discovery --force
 
             echo "Checking if a PR is already open..."
-            if ! gh pr list --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
+            if ! gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
               echo "Opening new PR..."
               BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
               gh pr create \
+                --repo "${GITHUB_REPOSITORY}" \
                 --title "feat(compute): update discovery doc and generate new services" \
                 --body "$(printf '%b' "$BODY")" \
                 --base main \
