@@ -42,6 +42,10 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// Returns a comma-delimited string containing the Google metadata server
+// and any values from the `no_proxy` and `NO_PROXY` environment variables.
+std::string NoProxyValue();
+
 // libcurl will never pass a block larger than CURL_MAX_WRITE_SIZE to the
 // [write callback](https://curl.se/libcurl/c/CURLOPT_WRITEFUNCTION.html).
 // However, CurlImpl::Read() may not be given a buffer large enough to
