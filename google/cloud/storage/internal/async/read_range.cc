@@ -110,7 +110,13 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
 
   offset_ += content.size();
   received_bytes_ += content.size();
-  if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
+  if (length_ != 0) {
+    length_ -= std::min<std::int64_t>(content.size(), length_);
+    // When the remaining requested length reaches zero on a bounded read, mark
+    // range_end as true to complete the range without waiting for an additional
+    // empty end-of-range message from the server.
+    if (length_ == 0) data.set_range_end(true);
+  }
   auto p = ReadPayloadImpl::Make(std::move(content));
 
   bool satisfied = requested_length_.has_value() && *requested_length_ >= 0 &&
