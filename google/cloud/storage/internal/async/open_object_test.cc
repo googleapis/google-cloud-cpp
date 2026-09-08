@@ -14,14 +14,17 @@
 
 #include "google/cloud/storage/internal/async/open_object.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <chrono>
 #include <memory>
 
 namespace google {
@@ -35,6 +38,7 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
@@ -46,6 +50,16 @@ using ::testing::Pair;
 using MockStream = google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
     google::storage::v2::BidiReadObjectResponse>;
+
+StatusOr<std::chrono::system_clock::time_point> CancelledTimer() {
+  return internal::CancelledError("test-only", GCP_ERROR_INFO());
+}
+
+StatusOr<std::chrono::system_clock::time_point> MakeTimerStatus(
+    future<bool> f) {
+  if (!f.get()) return CancelledTimer();
+  return make_status_or(std::chrono::system_clock::now());
+}
 
 TEST(OpenImpl, RequestParams) {
   auto constexpr kPlain = R"pb(
@@ -388,6 +402,74 @@ TEST(OpenImpl, UnexpectedFinish) {
 
   auto response = pending.get();
   EXPECT_THAT(response, StatusIs(StatusCode::kInternal));
+}
+
+TEST(OpenImpl, TimeoutCancellation) {
+  AsyncSequencer<bool> sequencer;
+  MockStorageStub mock;
+  EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
+    });
+    EXPECT_CALL(*stream, Write).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Write").then([](auto f) { return f.get(); });
+    });
+    EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Read").then([](auto) {
+        return std::optional<google::storage::v2::BidiReadObjectResponse>();
+      });
+    });
+    EXPECT_CALL(*stream, Cancel).Times(testing::AtLeast(1));
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Finish").then([](auto) {
+        return Status(StatusCode::kCancelled, "Stream timeout");
+      });
+    });
+    return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([&sequencer](auto) {
+    return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
+  });
+
+  CompletionQueue cq(mock_cq);
+  Options options;
+  options.set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(1));
+  auto coro = std::make_shared<OpenObject>(
+      mock, cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions(std::move(options)),
+      google::storage::v2::BidiReadObjectRequest{});
+  auto pending = coro->Call();
+
+  auto timer1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer1.second, "MakeRelativeTimer");
+  auto start = sequencer.PopFrontWithName();
+  EXPECT_EQ(start.second, "Start");
+  start.first.set_value(true);
+  timer1.first.set_value(false);
+
+  auto timer2 = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer2.second, "MakeRelativeTimer");
+  auto write = sequencer.PopFrontWithName();
+  EXPECT_EQ(write.second, "Write");
+  write.first.set_value(true);
+  timer2.first.set_value(false);
+
+  auto timer3 = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer3.second, "MakeRelativeTimer");
+  auto read = sequencer.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+  timer3.first.set_value(true);
+  read.first.set_value(true);
+
+  auto finish = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish.second, "Finish");
+  finish.first.set_value(true);
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
 }
 
 }  // namespace
