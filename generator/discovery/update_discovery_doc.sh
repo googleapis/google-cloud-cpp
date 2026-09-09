@@ -178,8 +178,18 @@ if [[ -n "${NEW_FILES}" ]]; then
   done
 
   io::log_yellow "Adding new directories to ${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
-  CMAKE_BUILD_DIR=$(mktemp -d)
-  cmake -DGOOGLE_CLOUD_CPP_ENABLE=compute -S . -B "${CMAKE_BUILD_DIR}"
+  (
+    CMAKE_SCRIPT=$(mktemp)
+    trap 'rm -f "${CMAKE_SCRIPT}"' EXIT
+    cat <<EOF >"${CMAKE_SCRIPT}"
+cmake_minimum_required(VERSION 3.16)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_ROOT}/cmake")
+include(CreateBazelConfig)
+include("${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH}")
+export_list_to_bazel("${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}" YEAR 2023 service_dirs operation_service_dirs)
+EOF
+    cmake -P "${CMAKE_SCRIPT}"
+  )
 
   git commit -m"Update generator_config.textproto and service_dirs files" \
     "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}" \
