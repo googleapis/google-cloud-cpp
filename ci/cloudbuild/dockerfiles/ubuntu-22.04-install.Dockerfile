@@ -89,7 +89,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | 
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/googletest
-RUN curl -fsSL https://github.com/google/googletest/archive/v1.17.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.18.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
