@@ -54,10 +54,10 @@ python.toolchain(
 
 bazel_dep(name = "grpc", version = "1.83.0")
 
-# grpc v1.84.0-pre1
+# grpc v1.84.0-pre2
 git_override(
     module_name = "grpc",
-    commit = "56e86cb3b88de5b01cc5112e9c3c33be24c47aa5",
+    commit = "c633e391bb20236fa7bd07b3fcce600d66a3ca69",
     remote = "https://github.com/grpc/grpc.git",
 )
 
