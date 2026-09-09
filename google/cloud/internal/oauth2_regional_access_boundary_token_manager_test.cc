@@ -17,6 +17,7 @@
 #include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,6 +28,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::testing::A;
 using ::testing::Eq;
@@ -166,7 +168,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
               IsOkAndHolds(rest_internal::HttpHeader{
                   "x-allowed-locations", allowed_locations.encoded_locations}));
 
-  promise<void> sync_threads;
+  AsyncSequencer<void> sequencer;
   AllowedLocationsResponse refreshed_allowed_locations;
   refreshed_allowed_locations.locations = {"location2"};
   refreshed_allowed_locations.encoded_locations = "encoded-location-2";
@@ -174,9 +176,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   EXPECT_CALL(
       *mock_iam_stub_,
       AllowedLocations(A<WorkforceIdentityAllowedLocationsRequest const&>()))
-      .WillOnce([&, f = sync_threads.get_future()](
-                    WorkforceIdentityAllowedLocationsRequest const&) mutable {
-        f.get();
+      .WillOnce([&](WorkforceIdentityAllowedLocationsRequest const&) {
+        sequencer.PushBack().get();
         return refreshed_allowed_locations;
       });
 
@@ -190,10 +191,14 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
               IsOkAndHolds(rest_internal::HttpHeader{
                   "x-allowed-locations", allowed_locations.encoded_locations}));
   EXPECT_TRUE(manager->IsRefreshPending());
-  sync_threads.set_value();
 
-  // Give background thread a chance to call AllowedLocations.
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  promise<void> step = sequencer.PopFront();
+  step.set_value();
+
+  while (manager->IsRefreshPending()) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
+
   header =
       manager->AllowedLocations(fake_clock_->Now(), "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(rest_internal::HttpHeader{
@@ -233,13 +238,16 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   AllowedLocationsResponse response;
   response.locations = {"location1"};
   response.encoded_locations = "encoded-location";
+  AsyncSequencer<void> sequencer;
   EXPECT_CALL(
       *mock_iam_stub_,
       AllowedLocations(A<WorkloadIdentityAllowedLocationsRequest const&>()))
       .WillOnce([&](WorkloadIdentityAllowedLocationsRequest const&) {
+        sequencer.PushBack("attempt1").get();
         return internal::UnavailableError("unavailable");
       })
       .WillOnce([&](WorkloadIdentityAllowedLocationsRequest const&) {
+        sequencer.PushBack("attempt2").get();
         return response;
       });
 
@@ -250,9 +258,15 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
                                           "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
-  // Give the background thread a chance to run the future::then callback
-  // and update the token.
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  promise<void> step1 = sequencer.PopFront();
+  step1.set_value();
+
+  promise<void> step2 = sequencer.PopFront();
+  step2.set_value();
+
+  while (manager->IsRefreshPending()) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                      "service.googleapis.com");
@@ -268,24 +282,28 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   AllowedLocationsResponse response;
   response.locations = {"location1"};
   response.encoded_locations = "encoded-location";
+  AsyncSequencer<void> sequencer;
   EXPECT_CALL(
       *mock_iam_stub_,
       AllowedLocations(A<ServiceAccountAllowedLocationsRequest const&>()))
       .WillOnce([&](ServiceAccountAllowedLocationsRequest const&) {
+        sequencer.PushBack("attempt1").get();
         return internal::UnavailableError("unavailable");
       })
       .WillOnce([&](ServiceAccountAllowedLocationsRequest const&) {
+        sequencer.PushBack("attempt2").get();
         return internal::InternalError("uh oh");
       })
       .WillOnce([&](ServiceAccountAllowedLocationsRequest const&) {
+        sequencer.PushBack("attempt3").get();
         return response;
       });
 
   MockFunction<std::unique_ptr<BackoffPolicy>()> backoff_fn;
-  EXPECT_CALL(backoff_fn, Call).WillOnce([]() {
+  EXPECT_CALL(backoff_fn, Call).WillOnce([&]() {
     auto mock_backoff = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*mock_backoff, OnCompletion)
-        .WillOnce(Return(std::chrono::milliseconds(1000)));
+        .WillOnce(Return(std::chrono::milliseconds(100)));
     return mock_backoff;
   });
 
@@ -297,8 +315,16 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
                                           "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
-  // Give the background thread a chance to run and update the token.
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  promise<void> attempt1 = sequencer.PopFront();
+  attempt1.set_value();
+
+  promise<void> attempt2 = sequencer.PopFront();
+  attempt2.set_value();
+
+  // Wait for the background thread to finish and enter cooldown.
+  while (manager->IsRefreshPending()) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                      "service.googleapis.com");
@@ -312,15 +338,22 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
                                      "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
-  // With the mock backoff returning a short failure cooldown, let it expire.
-  std::this_thread::sleep_for(std::chrono::seconds(1));
+  // With the mock backoff returning a short failure cooldown (100ms), let it
+  // expire.
+  while (manager->IsOnCooldown()) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                      "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
-  // Give the background thread a chance to run and update the token.
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  promise<void> attempt3 = sequencer.PopFront();
+  attempt3.set_value();
+
+  while (manager->IsRefreshPending()) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
 
   header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                      "service.googleapis.com");
@@ -351,14 +384,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                           "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
-
-  // Give the background thread a chance to run the future::then callback
-  // and update the token.
-  std::this_thread::sleep_for(std::chrono::seconds(2));
-
-  header = manager->AllowedLocations(std::chrono::system_clock::now(),
-                                     "service.googleapis.com");
-  EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
+  EXPECT_FALSE(manager->IsRefreshPending());
 }
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest, DecoratorMethodPassThrough) {
