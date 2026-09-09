@@ -33,7 +33,16 @@ jobs:
 
       - name: Run checkers
         run: |
-          ci/cloudbuild/build.sh -t checkers-pr
+          status=0
+          ci/cloudbuild/build.sh -t checkers-pr || status=$?
+          if [[ ${status} -eq 111 ]]; then
+            echo "Checkers produced formatting and documentation updates. Committing changes..."
+            git add -A .
+            git commit -m "chore: apply formatting from checkers"
+          elif [[ ${status} -ne 0 ]]; then
+            echo "Checkers failed with unexpected exit code ${status}."
+            exit "${status}"
+          fi
 
       - name: Push branch and create Pull Request if changes exist
         env:
