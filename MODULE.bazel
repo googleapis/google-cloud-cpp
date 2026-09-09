@@ -53,6 +53,14 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.83.0")
+
+# grpc v1.84.0-pre1
+git_override(
+    module_name = "grpc",
+    commit = "56e86cb3b88de5b01cc5112e9c3c33be24c47aa5",
+    remote = "https://github.com/grpc/grpc.git",
+)
+
 bazel_dep(name = "googleapis", version = "0.0.0-20260825-d10ac924")
 bazel_dep(name = "googleapis-cc", version = "1.1.5")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")
