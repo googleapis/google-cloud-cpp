@@ -347,13 +347,12 @@ class AsyncWriterConnectionResumedState
     }
     lk.unlock();
     OnQuery(persisted_size);
-    SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result),
-               persisted_size);
   }
 
   void OnQuery(StatusOr<std::int64_t> persisted_size) {
     if (!persisted_size) return Resume(std::move(persisted_size).status());
-    return OnQuery(std::unique_lock<std::mutex>(mu_), *persisted_size);
+    return OnQuery(std::unique_lock<std::mutex>(mu_), *persisted_size,
+                   /*is_resume=*/false);
   }
 
   auto ClearHandlers(std::unique_lock<std::mutex> const& /* lk */) {
@@ -369,7 +368,8 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
-  void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
+  void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size,
+               bool is_resume = false) {
     auto handle = impl_->WriteHandle();
     if (handle) {
       latest_write_handle_ = *std::move(handle);
@@ -388,7 +388,7 @@ class AsyncWriterConnectionResumedState
     }
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
-    if (state_ == State::kResuming) {
+    if (state_ == State::kResuming || is_resume) {
       // Since the buffer has been modified to start exactly at the point of the
       // resume, the next write on this new stream should start from the
       // beginning of this truncated buffer.
@@ -406,8 +406,21 @@ class AsyncWriterConnectionResumedState
     }
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = ClearHandlersIfEmpty(lk);
+    if (is_resume) {
+      state_ = State::kIdle;
+      StartWriting(std::move(lk));
+      // The notifications are deferred until the lock is released, as they
+      // might call back and try to acquire the lock.
+      for (auto const& h : handlers) {
+        h->Execute(Status{});
+      }
+      return;
+    }
+    // SetFlushed will release the lock before returning.
+    SetFlushed(std::move(lk), Status{}, persisted_size);
+    // Re-acquire the lock to resume writing now that flush_ has been updated.
     state_ = State::kIdle;
-    StartWriting(std::move(lk));
+    StartWriting(std::unique_lock<std::mutex>(mu_));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
     for (auto const& h : handlers) {
@@ -539,7 +552,7 @@ class AsyncWriterConnectionResumedState
         options_, initial_request_, std::move(res->stream), hash_function_,
         persisted_offset, false);
     // OnQuery will restart the WriteLoop if necessary.
-    OnQuery(std::move(lk), persisted_offset);
+    OnQuery(std::move(lk), persisted_offset, /*is_resume=*/true);
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,

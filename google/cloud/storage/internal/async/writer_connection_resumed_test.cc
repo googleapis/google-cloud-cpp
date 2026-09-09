@@ -225,10 +225,6 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
           *mock_persisted_size = 1024;
           return Status{};
         });
-      })
-      .WillOnce([&](auto const& p) {
-        EXPECT_TRUE(p.payload().empty());
-        return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
       });
 
   MockFactory mock_factory;
@@ -288,10 +284,6 @@ TEST(WriteConnectionResumed, InterleavedMultiFlush) {
           *mock_persisted_size = 2048;
           return Status{};
         });
-      })
-      .WillOnce([&](auto const& p) {
-        EXPECT_TRUE(p.payload().empty());
-        return sequencer.PushBack("Flush3").then([](auto) { return Status{}; });
       });
 
   MockFactory mock_factory;
@@ -324,11 +316,6 @@ TEST(WriteConnectionResumed, InterleavedMultiFlush) {
   // Complete second flush on mock (persisted_size reaches 2048).
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush2");
-  next.first.set_value(true);
-
-  // Complete trailing empty flush.
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Flush3");
   next.first.set_value(true);
 
   // Now f2 must also be ready with OK.
@@ -630,13 +617,6 @@ TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
           }
           return TransientError();
         });
-      })
-      .WillOnce([&](auto const& p) {
-        // Ghost flush (internal implementation detail)
-        EXPECT_TRUE(p.payload().empty());
-        return sequencer.PushBack("GhostFlush").then([](auto) {
-          return Status{};
-        });
       });
 
   MockFactory mock_factory;
@@ -654,10 +634,6 @@ TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "GhostFlush");
   next.first.set_value(true);
 
   EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
@@ -723,29 +699,15 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
         return sequencer.PushBack("StreamWrite").then([](auto) {
           return true;
         });
-      })
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
-                    grpc::WriteOptions) {
-        EXPECT_TRUE(GetContent(request.checksummed_data()).empty());
-        EXPECT_TRUE(request.flush());
-        return sequencer.PushBack("GhostWrite").then([](auto) { return true; });
       });
 
   google::storage::v2::BidiWriteObjectResponse read_response1;
   read_response1.set_persisted_size(2048);
-  google::storage::v2::BidiWriteObjectResponse read_response2;
-  read_response2.set_persisted_size(2048);
-  EXPECT_CALL(*mock_stream_ptr, Read)
-      .WillOnce([&, read_response1]() {
-        return sequencer.PushBack("StreamRead1").then([read_response1](auto) {
-          return std::make_optional(read_response1);
-        });
-      })
-      .WillOnce([&, read_response2]() {
-        return sequencer.PushBack("StreamRead2").then([read_response2](auto) {
-          return std::make_optional(read_response2);
-        });
-      });
+  EXPECT_CALL(*mock_stream_ptr, Read).WillOnce([&, read_response1]() {
+    return sequencer.PushBack("StreamRead1").then([read_response1](auto) {
+      return std::make_optional(read_response1);
+    });
+  });
 
   EXPECT_CALL(*mock_stream_ptr, Finish)
       .WillOnce(Return(make_ready_future(Status{})));
@@ -771,14 +733,6 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StreamRead1");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "GhostWrite");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "StreamRead2");
   next.first.set_value(true);
 
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kOk));
@@ -838,27 +792,15 @@ TEST(WriterConnectionResumed, ResumeUsesSizeFromFirstResponse) {
         return sequencer.PushBack("StateLookupWrite").then([](auto) {
           return true;
         });
-      })
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
-                    grpc::WriteOptions) {
-        EXPECT_TRUE(GetContent(request.checksummed_data()).empty());
-        EXPECT_TRUE(request.flush());
-        return sequencer.PushBack("GhostWrite").then([](auto) { return true; });
       });
 
   google::storage::v2::BidiWriteObjectResponse read_response;
   read_response.set_persisted_size(2048);
-  EXPECT_CALL(*mock_stream_ptr, Read)
-      .WillOnce([&, read_response]() {
-        return sequencer.PushBack("StreamRead1").then([read_response](auto) {
-          return std::make_optional(read_response);
-        });
-      })
-      .WillOnce([&, read_response]() {
-        return sequencer.PushBack("StreamRead2").then([read_response](auto) {
-          return std::make_optional(read_response);
-        });
-      });
+  EXPECT_CALL(*mock_stream_ptr, Read).WillOnce([&, read_response]() {
+    return sequencer.PushBack("StreamRead1").then([read_response](auto) {
+      return std::make_optional(read_response);
+    });
+  });
 
   EXPECT_CALL(*mock_stream_ptr, Finish)
       .WillOnce(Return(make_ready_future(Status{})));
@@ -884,14 +826,6 @@ TEST(WriterConnectionResumed, ResumeUsesSizeFromFirstResponse) {
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StreamRead1");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "GhostWrite");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "StreamRead2");
   next.first.set_value(true);
 
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kOk));
@@ -954,27 +888,15 @@ TEST(WriterConnectionResumed, ResumeUsesChecksumsFromFirstResponse) {
         return sequencer.PushBack("StateLookupWrite").then([](auto) {
           return true;
         });
-      })
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
-                    grpc::WriteOptions) {
-        EXPECT_TRUE(GetContent(request.checksummed_data()).empty());
-        EXPECT_TRUE(request.flush());
-        return sequencer.PushBack("GhostWrite").then([](auto) { return true; });
       });
 
   google::storage::v2::BidiWriteObjectResponse read_response;
   read_response.set_persisted_size(2048);
-  EXPECT_CALL(*mock_stream_ptr, Read)
-      .WillOnce([&, read_response]() {
-        return sequencer.PushBack("StreamRead1").then([read_response](auto) {
-          return std::make_optional(read_response);
-        });
-      })
-      .WillOnce([&, read_response]() {
-        return sequencer.PushBack("StreamRead2").then([read_response](auto) {
-          return std::make_optional(read_response);
-        });
-      });
+  EXPECT_CALL(*mock_stream_ptr, Read).WillOnce([&, read_response]() {
+    return sequencer.PushBack("StreamRead1").then([read_response](auto) {
+      return std::make_optional(read_response);
+    });
+  });
 
   EXPECT_CALL(*mock_stream_ptr, Finish)
       .WillOnce(Return(make_ready_future(Status{})));
@@ -1000,14 +922,6 @@ TEST(WriterConnectionResumed, ResumeUsesChecksumsFromFirstResponse) {
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StreamRead1");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "GhostWrite");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "StreamRead2");
   next.first.set_value(true);
 
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kOk));
