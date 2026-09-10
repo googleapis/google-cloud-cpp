@@ -2400,7 +2400,7 @@ TEST(ObjectDescriptorImpl,
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
@@ -2511,7 +2511,7 @@ TEST(ObjectDescriptorImpl,
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(),
