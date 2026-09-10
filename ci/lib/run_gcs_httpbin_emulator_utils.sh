@@ -59,6 +59,7 @@ start_emulator() {
   gunicorn --bind "0.0.0.0:${port}" \
     --worker-class sync \
     --threads "$(nproc)" \
+    --timeout 180 \
     --access-logfile - \
     "testbench:run()" \
     >gcs_emulator.log 2>&1 </dev/null &
