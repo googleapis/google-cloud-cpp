@@ -9,6 +9,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.10.0 - TBD
 
+### Debian Bullseye EOL
+
+We have stopped supporting Debian 11 (Bullseye) as it has reached [EOL](https://www.debian.org/News/2026/20260831).
+
 ## v3.9.0 - 2026-09 
 
 ### Dependency version update
