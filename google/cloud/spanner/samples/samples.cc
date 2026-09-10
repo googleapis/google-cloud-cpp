@@ -3628,6 +3628,25 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
 }
 //! [END spanner_get_commit_stats]
 
+//! [START spanner_set_max_commit_delay]
+void SetMaxCommitDelay(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  auto update_albums = spanner::UpdateMutationBuilder(
+                           "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
+                           .EmplaceRow(1, 1, 200000)
+                           .EmplaceRow(2, 2, 400000)
+                           .Build();
+  google::cloud::StatusOr<spanner::CommitResult> commit =
+      client.Commit(spanner::Mutations{update_albums},
+                    google::cloud::Options{}.set<spanner::MaxCommitDelayOption>(
+                        std::chrono::milliseconds(100)));
+
+  if (!commit) throw std::move(commit).status();
+  std::cout << "Update was successful [spanner_set_max_commit_delay]\n";
+}
+//! [END spanner_set_max_commit_delay]
+
 //! [START spanner_dml_standard_insert]
 void DmlStandardInsert(google::cloud::spanner::Client client) {
   //! [execute-dml]
@@ -5325,6 +5344,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"isolation-level-setting", IsolationLevelSettingCommand},
       {"read-lock-mode-setting", ReadLockModeSettingCommand},
       make_command_entry("get-commit-stats", GetCommitStatistics),
+      make_command_entry("set-max-commit-delay", SetMaxCommitDelay),
       make_command_entry("dml-standard-insert", DmlStandardInsert),
       make_command_entry("dml-standard-update", DmlStandardUpdate),
       make_command_entry("dml-standard-update-with-timestamp",
@@ -6051,6 +6071,9 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_get_commit_stats");
   GetCommitStatistics(client);
+
+  SampleBanner("spanner_set_max_commit_delay");
+  SetMaxCommitDelay(client);
 
   SampleBanner("spanner_dml_standard_insert");
   DmlStandardInsert(client);
