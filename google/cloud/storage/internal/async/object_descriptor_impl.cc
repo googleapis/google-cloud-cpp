@@ -218,13 +218,21 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
 std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     ReadParams p) {
   // Full-object checksum validation (both CRC32C and MD5) is only supported for
-  // full-object reads (starting at offset 0 and reading the entire object).
+  // full-object reads (starting at offset 0 and reading the entire object) of
+  // finalized objects.
+  //
+  // For unfinalized objects, full-object checksum validation is bypassed
+  // because the object size and checksums can dynamically change as data is
+  // appended, while chunk-level CRC32C validation continues to protect data on
+  // the wire.
   //
   // Note that MD5 validation is not supported for partial/ranged reads because
   // GCS does not compute or send chunk-level MD5 checksums (unlike CRC32C,
   // which is validated per-chunk on the gRPC layer).
-  bool is_full_read = (p.start == 0 && metadata_.has_value() &&
-                       (p.length == 0 || p.length >= metadata_->size()));
+  bool const is_finalized =
+      metadata_.has_value() && metadata_->has_finalize_time();
+  bool const is_full_read = is_finalized && (p.start == 0) &&
+                            (p.length == 0 || p.length >= metadata_->size());
 
   auto hash_function = CreateHashFunction(is_full_read);
   auto hash_validator = CreateHashValidator(is_full_read);
