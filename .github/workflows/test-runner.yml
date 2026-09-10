@@ -32,10 +32,19 @@ on: # zizmor: ignore[dangerous-triggers]
     - cron: '0 5 * * 1,2,3,4,5'
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
-# PR or branch. That reduces billing, but it creates more noise about cancelled
-# jobs
+# PR or branch, or if a maintainer posts a new `/gharun` command.
+# Non-`/gharun` comments get unique group IDs (run_id) so they don't cancel active runs.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || (github.event.issue.number && format('pr-{0}', github.event.issue.number)) || github.head_ref || github.ref }}
+  group: >-
+    ${{
+      github.workflow
+    }}-${{
+      (github.event_name == 'issue_comment' && !contains(github.event.comment.body, '/gharun') && github.run_id) ||
+      (github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number)) ||
+      (github.event.issue.number && format('pr-{0}', github.event.issue.number)) ||
+      github.head_ref ||
+      github.ref
+    }}
   cancel-in-progress: true
 
 jobs:
