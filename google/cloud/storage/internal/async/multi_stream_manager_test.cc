@@ -233,6 +233,22 @@ TEST(MultiStreamManagerTest, EmptyAndSizeTransitions) {
   EXPECT_EQ(mgr.Size(), 1U);
 }
 
+TEST(MultiStreamManagerTest, FindTracksStreamMembership) {
+  auto mgr = MultiStreamManagerTest::MakeManager();
+  auto it1 = mgr.GetFirstStream();
+  auto s1 = it1->stream;
+  EXPECT_NE(mgr.Find(s1), mgr.End());
+
+  auto s2 = std::make_shared<FakeStream>();
+  mgr.AddStream(s2);
+  EXPECT_NE(mgr.Find(s1), mgr.End());
+  EXPECT_NE(mgr.Find(s2), mgr.End());
+
+  mgr.RemoveStreamAndNotifyRanges(it1, Status());
+  EXPECT_EQ(mgr.Find(s1), mgr.End());
+  EXPECT_NE(mgr.Find(s2), mgr.End());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

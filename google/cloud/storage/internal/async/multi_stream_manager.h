@@ -159,6 +159,13 @@ class MultiStreamManager {
     return false;
   }
 
+  StreamIterator Find(std::shared_ptr<StreamT> const& target) {
+    for (auto it = streams_.begin(); it != streams_.end(); ++it) {
+      if (it->stream == target) return it;
+    }
+    return streams_.end();
+  }
+
   bool Empty() const { return streams_.empty(); }
   ConstStreamIterator End() const { return streams_.end(); }
   std::size_t Size() const { return streams_.size(); }
