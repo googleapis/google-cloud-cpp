@@ -160,6 +160,7 @@ PostQueryResults MakePostQueryResults() {
   expected.kind = "query-kind";
   expected.num_dml_affected_rows = 5;
   expected.page_token = "np123";
+  expected.statement_type = "statement_type";
   expected.rows.push_back(MakeRowData());
 
   expected.schema = MakeTable().schema;
@@ -217,6 +218,7 @@ void AssertEquals(bigquery_v2_minimal_internal::PostQueryResults const& lhs,
   EXPECT_EQ(lhs.kind, rhs.kind);
   EXPECT_EQ(lhs.num_dml_affected_rows, rhs.num_dml_affected_rows);
   EXPECT_EQ(lhs.page_token, rhs.page_token);
+  EXPECT_EQ(lhs.statement_type, rhs.statement_type);
 
   ASSERT_THAT(lhs.schema.fields, Not(IsEmpty()));
   ASSERT_THAT(rhs.schema.fields, Not(IsEmpty()));

@@ -103,6 +103,7 @@ struct PostQueryResults {
 
   std::string kind;
   std::string page_token;
+  std::string statement_type;
 
   std::uint64_t total_rows = 0;
   std::int64_t total_bytes_processed = 0;

@@ -198,6 +198,7 @@ std::string PostQueryResults::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
       .StringField("page_token", page_token)
+      .StringField("statement_type", statement_type)
       .Field("total_rows", total_rows)
       .Field("total_bytes_processed", total_bytes_processed)
       .Field("num_dml_affected_rows", num_dml_affected_rows)
@@ -229,6 +230,7 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
   PostQueryResults query_results;
   query_results.kind = json->value("kind", "");
   query_results.page_token = json->value("pageToken", "");
+  SafeGetTo(query_results.statement_type, *json, "statementType");
   // May not be present in certain query scenarios (e.g in dry-run mode).
   if (json->contains("totalRows")) {
     query_results.total_rows =
@@ -288,6 +290,7 @@ void from_json(nlohmann::json const& j, SessionInfo& s) {
 void to_json(nlohmann::json& j, PostQueryResults const& q) {
   j = nlohmann::json{{"kind", q.kind},
                      {"pageToken", q.page_token},
+                     {"statementType", q.statement_type},
                      {"totalRows", q.total_rows},
                      {"totalBytesProcessed", q.total_bytes_processed},
                      {"numDmlAffectedRows", q.num_dml_affected_rows},
@@ -304,6 +307,7 @@ void to_json(nlohmann::json& j, PostQueryResults const& q) {
 void from_json(nlohmann::json const& j, PostQueryResults& q) {
   SafeGetTo(q.kind, j, "kind");
   SafeGetTo(q.page_token, j, "pageToken");
+  SafeGetTo(q.statement_type, j, "statementType");
   SafeGetTo(q.total_rows, j, "totalRows");
   SafeGetTo(q.total_bytes_processed, j, "totalBytesProcessed");
   SafeGetTo(q.num_dml_affected_rows, j, "numDmlAffectedRows");
