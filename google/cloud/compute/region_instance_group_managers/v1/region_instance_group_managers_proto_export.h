@@ -32,7 +32,7 @@
 #include "google/cloud/compute/v1/internal/common_049.pb.h"
 #include "google/cloud/compute/v1/internal/common_098.pb.h"
 #include "google/cloud/compute/v1/internal/common_110.pb.h"
-#include "google/cloud/compute/v1/internal/common_121.pb.h"
+#include "google/cloud/compute/v1/internal/common_123.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUP_MANAGERS_V1_REGION_INSTANCE_GROUP_MANAGERS_PROTO_EXPORT_H

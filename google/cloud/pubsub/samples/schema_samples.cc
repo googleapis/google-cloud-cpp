@@ -157,8 +157,7 @@ void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
     auto schema = client.GetSchema(request);
     if (!schema) throw std::move(schema).status();
 
-    std::cout << "The schema exists and its metadata is:"
-              << "\n"
+    std::cout << "The schema exists and its metadata is:" << "\n"
               << schema->DebugString() << "\n";
   }
   //! [END pubsub_get_schema] [get-schema]
@@ -180,8 +179,7 @@ void GetSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
     auto schema = client.GetSchema(request);
     if (!schema) throw std::move(schema).status();
 
-    std::cout << "The schema revision exists and its metadata is:"
-              << "\n"
+    std::cout << "The schema revision exists and its metadata is:" << "\n"
               << schema->DebugString() << "\n";
   }
   //! [END pubsub_get_schema_revision]
@@ -255,8 +253,7 @@ void DeleteSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
     auto schema = client.DeleteSchemaRevision(request);
     if (!schema) throw std::move(schema).status();
 
-    std::cout << "Deleted schema. Its metadata is:"
-              << "\n"
+    std::cout << "Deleted schema. Its metadata is:" << "\n"
               << schema->DebugString() << "\n";
   }
   //! [END pubsub_delete_schema_revision]

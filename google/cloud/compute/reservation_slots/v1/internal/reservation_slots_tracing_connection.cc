@@ -45,6 +45,36 @@ ReservationSlotsTracingConnection::GetReservationSlotsGetResponse(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsTracingConnection::GetHealth(
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_slots_v1::ReservationSlotsConnection::GetHealth");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->GetHealth(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSlotsTracingConnection::GetHealth(
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_slots_v1::ReservationSlotsConnection::GetHealth");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->GetHealth(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsTracingConnection::GetHealth(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_slots_v1::ReservationSlotsConnection::GetHealth");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->GetHealth(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationSlotsTracingConnection::GetVersion(
     google::cloud::cpp::compute::reservation_slots::v1::GetVersionRequest const&
         request) {

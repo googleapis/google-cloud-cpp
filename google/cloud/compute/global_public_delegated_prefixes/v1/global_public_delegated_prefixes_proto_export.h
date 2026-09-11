@@ -27,7 +27,7 @@
 
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_113.pb.h"
+#include "google/cloud/compute/v1/internal/common_115.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_PUBLIC_DELEGATED_PREFIXES_V1_GLOBAL_PUBLIC_DELEGATED_PREFIXES_PROTO_EXPORT_H

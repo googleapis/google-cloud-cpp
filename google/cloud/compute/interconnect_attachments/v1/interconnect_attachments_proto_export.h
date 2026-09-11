@@ -29,7 +29,7 @@
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
 #include "google/cloud/compute/v1/internal/common_085.pb.h"
 #include "google/cloud/compute/v1/internal/common_086.pb.h"
-#include "google/cloud/compute/v1/internal/common_125.pb.h"
+#include "google/cloud/compute/v1/internal/common_127.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_PROTO_EXPORT_H

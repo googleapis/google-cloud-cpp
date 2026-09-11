@@ -31,9 +31,9 @@
 #include "google/cloud/compute/v1/internal/common_040.pb.h"
 #include "google/cloud/compute/v1/internal/common_081.pb.h"
 #include "google/cloud/compute/v1/internal/common_082.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
-#include "google/cloud/compute/v1/internal/common_180.pb.h"
+#include "google/cloud/compute/v1/internal/common_173.pb.h"
 #include "google/cloud/compute/v1/internal/common_182.pb.h"
+#include "google/cloud/compute/v1/internal/common_184.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANT_SNAPSHOTS_V1_INSTANT_SNAPSHOTS_PROTO_EXPORT_H

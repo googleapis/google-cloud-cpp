@@ -49,6 +49,27 @@ ReservationSlotsRestMetadata::GetReservationSlotsGetResponse(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsRestMetadata::AsyncGetHealth(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetHealth(cq, std::move(rest_context), std::move(options),
+                                request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSlotsRestMetadata::GetHealth(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->GetHealth(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationSlotsRestMetadata::AsyncGetVersion(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

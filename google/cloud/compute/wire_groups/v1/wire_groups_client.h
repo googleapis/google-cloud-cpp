@@ -227,7 +227,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_179.proto#L60}
+  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_181.proto#L60}
   /// [google.cloud.cpp.compute.wire_groups.v1.GetWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L138}
   ///
   // clang-format on
@@ -259,7 +259,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_179.proto#L60}
+  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_181.proto#L60}
   /// [google.cloud.cpp.compute.wire_groups.v1.GetWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L138}
   ///
   // clang-format on
@@ -421,7 +421,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_179.proto#L60}
+  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_181.proto#L60}
   /// [google.cloud.cpp.compute.wire_groups.v1.ListWireGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L188}
   ///
   // clang-format on
@@ -462,7 +462,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_179.proto#L60}
+  /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_181.proto#L60}
   /// [google.cloud.cpp.compute.wire_groups.v1.ListWireGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L188}
   ///
   // clang-format on

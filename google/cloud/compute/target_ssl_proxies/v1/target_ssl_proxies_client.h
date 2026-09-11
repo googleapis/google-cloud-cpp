@@ -228,7 +228,7 @@ class TargetSslProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L198}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_167.proto#L58}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_169.proto#L58}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxy(
@@ -260,7 +260,7 @@ class TargetSslProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L198}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_167.proto#L58}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_169.proto#L58}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxy(
@@ -423,7 +423,7 @@ class TargetSslProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L238}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_167.proto#L58}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_169.proto#L58}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
@@ -464,7 +464,7 @@ class TargetSslProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L238}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_167.proto#L58}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_169.proto#L58}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
@@ -1136,7 +1136,7 @@ class TargetSslProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_ssl_proxies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L512}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_173.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1171,7 +1171,7 @@ class TargetSslProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_ssl_proxies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L512}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_173.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

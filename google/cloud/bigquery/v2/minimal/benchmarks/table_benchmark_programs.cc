@@ -165,15 +165,12 @@ int main(int argc, char* argv[]) {
     if (config.wants_help) {
       config.PrintUsage();
     }
-    std::cout << "Exiting..."
-              << "\n"
-              << std::flush;
+    std::cout << "Exiting..." << "\n" << std::flush;
     return 0;
   }
   std::cout << "# Table Benchmark STARTED For GetTable() and "
                "ListTables() APIs with test duration as ["
-            << config.test_duration.count() << "] seconds"
-            << "\n"
+            << config.test_duration.count() << "] seconds" << "\n"
             << std::flush;
 
   TableBenchmark benchmark(config);
@@ -229,9 +226,7 @@ int main(int argc, char* argv[]) {
                                    "GetTable()", combined.get_results);
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
                                    "ListTables()", combined.list_results);
-  std::cout << "# Table Benchmark ENDED"
-            << "\n"
-            << std::flush;
+  std::cout << "# Table Benchmark ENDED" << "\n" << std::flush;
 
   return 0;
 }

@@ -40,6 +40,25 @@ AdviceTracingConnection::CalendarMode(
   return internal::EndSpan(*span, child_->CalendarMode(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+AdviceTracingConnection::Capacity(
+    google::cloud::cpp::compute::advice::v1::CapacityRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_advice_v1::AdviceConnection::Capacity");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Capacity(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+AdviceTracingConnection::CapacityHistory(
+    google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_advice_v1::AdviceConnection::CapacityHistory");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CapacityHistory(request));
+}
+
 std::shared_ptr<compute_advice_v1::AdviceConnection>
 MakeAdviceTracingConnection(
     std::shared_ptr<compute_advice_v1::AdviceConnection> conn) {
