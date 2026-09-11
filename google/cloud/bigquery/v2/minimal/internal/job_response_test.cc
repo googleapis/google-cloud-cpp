@@ -1955,6 +1955,17 @@ TEST(CancelJobResponseTest, DebugString) {
 })");
 }
 
+TEST(PostQueryResultsTest, FromJson) {
+  auto const expected = MakePostQueryResults();
+  nlohmann::json j;
+  to_json(j, expected);
+
+  PostQueryResults actual;
+  from_json(j, actual);
+
+  bigquery_v2_minimal_testing::AssertEquals(expected, actual);
+}
+
 TEST(QueryResponseTest, Success) {
   BigQueryHttpResponse http_response;
   http_response.payload = MakeQueryResponsePayload();
