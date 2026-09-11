@@ -219,11 +219,9 @@ void from_json(nlohmann::json const& j, ArrowSchema& a) {
   if (j.contains("serializedSchema") && j["serializedSchema"].is_string()) {
     std::string b64 = j["serializedSchema"].get<std::string>();
     auto bytes = internal::UrlsafeBase64Decode(b64);
-    if (bytes) {
+    if (bytes.ok()) {
       a.serialized_schema.assign(
           reinterpret_cast<char const*>(bytes->data()), bytes->size());
-    } else {
-      a.serialized_schema = b64;
     }
   }
 }
@@ -240,11 +238,9 @@ void from_json(nlohmann::json const& j, ArrowRecordBatch& a) {
       j["serializedRecordBatch"].is_string()) {
     std::string b64 = j["serializedRecordBatch"].get<std::string>();
     auto bytes = internal::UrlsafeBase64Decode(b64);
-    if (bytes) {
+    if (bytes.ok()) {
       a.serialized_record_batch.assign(
           reinterpret_cast<char const*>(bytes->data()), bytes->size());
-    } else {
-      a.serialized_record_batch = b64;
     }
   }
   if (j.contains("rowCount")) {
