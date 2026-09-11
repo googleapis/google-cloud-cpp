@@ -24,7 +24,12 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
+#if __has_include(<grpcpp/version_info.h>)
+#include <grpcpp/version_info.h>
+#endif
+#include <nlohmann/json.hpp>
 #include <fstream>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -37,6 +42,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
@@ -188,6 +194,191 @@ TEST(UnifiedGrpcCredentialsTest, LoadCAInfoContents) {
   (void)std::remove(filename.c_str());  // remove the temporary file
   ASSERT_TRUE(contents.has_value());
   EXPECT_EQ(*contents, expected);
+}
+
+auto constexpr kWellFormattedECKey = R"""(-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIDGD4hNeIBG3lo4BKS1k4jpYhbnJSZwAuUwyK8wEiOP5oAoGCCqGSM49
+AwEHoUQDQgAEWK7gDAGAAzOfl6pHhpmvjbTeUPyclQk7+HgAWE6uGUtox/U8/sQQ
+X3IM7YomoAWiNKWwBVskpXWj7L9dLkqhyQ==
+-----END EC PRIVATE KEY-----
+)""";
+
+std::string MakeGDCHServiceAccountContents(std::string_view ca_cert_path) {
+  nlohmann::json j{
+      {"type", "gdch_service_account"},
+      {"format_version", "1"},
+      {"project", "test-project"},
+      {"private_key_id", "test-private-key-id"},
+      {"private_key", kWellFormattedECKey},
+      {"name", "test-name"},
+      {"token_uri", "https://test-token-uri.com/token"},
+  };
+  if (!ca_cert_path.empty()) {
+    j["ca_cert_path"] = ca_cert_path;
+  }
+  return j.dump();
+}
+
+std::string MakeGDCHServiceAccountContents() {
+  return MakeGDCHServiceAccountContents("");
+}
+
+TEST(UnifiedGrpcCredentialsTest, WithGDCHServiceAccountCredentialsFromJson) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  CompletionQueue cq;
+  std::string json_contents = MakeGDCHServiceAccountContents();
+  std::shared_ptr<Credentials> creds = MakeGDCHServiceAccountCredentials(
+      json_contents, "https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(context.credentials(), IsNull());
+}
+
+TEST(UnifiedGrpcCredentialsTest, WithGDCHServiceAccountCredentialsFromFile) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  std::string filename = CreateRandomFileName();
+  std::ofstream(filename) << MakeGDCHServiceAccountContents();
+  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
+
+  CompletionQueue cq;
+  std::shared_ptr<Credentials> creds =
+      MakeGDCHServiceAccountCredentials("https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  (void)std::remove(filename.c_str());
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(context.credentials(), IsNull());
+}
+
+TEST(UnifiedGrpcCredentialsTest, WithGDCHServiceAccountCredentialsMissingFile) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  std::string filename = CreateRandomFileName();
+  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
+
+  CompletionQueue cq;
+  std::shared_ptr<Credentials> creds =
+      MakeGDCHServiceAccountCredentials("https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnknown));
+}
+
+TEST(UnifiedGrpcCredentialsTest, WithGDCHServiceAccountCredentialsInvalidJson) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  CompletionQueue cq;
+  std::shared_ptr<Credentials> creds = MakeGDCHServiceAccountCredentials(
+      "invalid json", "https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, StatusIs(StatusCode::kInternal));
+}
+
+auto constexpr kCACertificate = R"""(
+-----BEGIN CERTIFICATE-----
+MIIEPTCCAyWgAwIBAgIUXa/2HsbYrolo1Cox/1SOqLDnNYQwDQYJKoZIhvcNAQEL
+BQAwga0xCzAJBgNVBAYTAlVTMREwDwYDVQQIDAhOZXcgWW9yazERMA8GA1UEBwwI
+TmV3IFlvcmsxGjAYBgNVBAoMEVRlc3QtT25seSBJbnZhbGlkMRIwEAYDVQQLDAlU
+ZXN0LU9ubHkxGjAYBgNVBAMMEVRlc3QtT25seSBJbnZhbGlkMSwwKgYJKoZIhvcN
+AQkBFh10ZXN0LW9ubHlAaW52YWxpZC5leGFtcGxlLmNvbTAeFw0yMTA1MjUxOTQy
+MTdaFw0zMTA1MjMxOTQyMTdaMIGtMQswCQYDVQQGEwJVUzERMA8GA1UECAwITmV3
+IFlvcmsxETAPBgNVBAcMCE5ldyBZb3JrMRowGAYDVQQKDBFUZXN0LU9ubHkgSW52
+YWxpZDESMBAGA1UECwwJVGVzdC1Pbmx5MRowGAYDVQQDDBFUZXN0LU9ubHkgSW52
+YWxpZDEsMCoGCSqGSIb3DQEJARYddGVzdC1vbmx5QGludmFsaWQuZXhhbXBsZS5j
+b20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDL66K2V2OQHcb2Ab7o
+ucWqb3iOF1IGvc6lzC2XeqrqCvYF5HB9jK+cWHDmeGjJMoYI35S2fp+Wzh3Qek0Y
+ilQBylUq91y2ZnqAmFu7gc83wWgWPHCkKPKTS5tcK5sQTbhBuaQBQs5hWCeNfZOy
+AtAU2ysNde79DwSXfq/e8NLRvaKsS8etqiLyfIuDWfXHzIDgAgyyi49m67fYnLYx
+y2W555Zh0vAnd4MQYh0SYQ64BgaUg59WLRYhsHN5r9D06JEur9uxMLmtiQy7UyL2
+xuw6u2y/+vcdTb9L9zaNEnITPl+3N23TG5KgBxLfKkHzNE7gS/w7ljS0ljNExuUO
+UZutAgMBAAGjUzBRMB0GA1UdDgQWBBS7T7DuKDv1Hz1e693kY7gLXSu8PjAfBgNV
+HSMEGDAWgBS7T7DuKDv1Hz1e693kY7gLXSu8PjAPBgNVHRMBAf8EBTADAQH/MA0G
+CSqGSIb3DQEBCwUAA4IBAQC/4HmQwp7KjKF5FEnlHG5Chqob/yiPkwbMDV1yKA+i
+ZMknQFgm8h0X4kLAbOiao71MPI5Zi5OQge6GoSXJJQYkesgdakPw6xkFfz9MsfCp
+zMKm7sKIIGNaPMMqMJJ/cciCRIzXKl6gcOkZLlIFU1T2uE764Lc08yXIY7eXkVo1
+8w4Gv6nH7uaQiESa2wt3TWGISG9wdDkcVG01tTr4jzq77yWuC1Ela2UvQK7AIWbK
+OB6Sby1bvjYv0kqjinu9AcSCHUHJ1sJaPD5DvAyKP7W01YedP4iqLxkTlIRjaikD
+KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
+-----END CERTIFICATE-----
+)""";
+
+TEST(UnifiedGrpcCredentialsTest,
+     WithGDCHServiceAccountCredentialsCustomCACertPath) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  std::string ca_filename = CreateRandomFileName();
+  std::ofstream(ca_filename) << kCACertificate;
+
+  std::string json_contents = MakeGDCHServiceAccountContents(ca_filename);
+  CompletionQueue cq;
+  std::shared_ptr<Credentials> creds = MakeGDCHServiceAccountCredentials(
+      json_contents, "https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  (void)std::remove(ca_filename.c_str());
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(context.credentials(), IsNull());
+}
+
+TEST(UnifiedGrpcCredentialsTest,
+     WithGDCHServiceAccountCredentialsMissingCACertFile) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  std::string ca_filename = CreateRandomFileName();
+  std::string json_contents = MakeGDCHServiceAccountContents(ca_filename);
+  CompletionQueue cq;
+  std::shared_ptr<Credentials> creds = MakeGDCHServiceAccountCredentials(
+      json_contents, "https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnknown,
+                               HasSubstr("Cannot open CA certificate file")));
 }
 
 }  // namespace

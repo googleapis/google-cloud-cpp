@@ -22,6 +22,10 @@
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
 #include <grpcpp/security/credentials.h>
+#if __has_include(<grpcpp/version_info.h>)
+#include <grpcpp/version_info.h>
+#endif
+#include <nlohmann/json.hpp>
 #include <fstream>
 
 namespace {
@@ -161,12 +165,76 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
               "or Access Token Credentials instead.",
               GCP_ERROR_INFO())});
     }
-    void visit(GDCHServiceAccountConfig const&) override {
+    void visit(GDCHServiceAccountConfig const& cfg) override {
+#if defined(GRPC_CPP_VERSION_MAJOR) && \
+    (GRPC_CPP_VERSION_MAJOR > 1 ||     \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR >= 84))
+      std::string json_contents;
+      if (cfg.file_path().has_value()) {
+        std::ifstream is(*cfg.file_path());
+        if (!is.is_open()) {
+          result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+              ErrorCredentialsConfig{UnknownError(
+                  "Cannot open credentials file " + *cfg.file_path(),
+                  GCP_ERROR_INFO())});
+          return;
+        }
+        json_contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+      } else if (!cfg.json_object().empty()) {
+        json_contents = cfg.json_object();
+      } else {
+        result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+            ErrorCredentialsConfig{
+                InternalError("GDCHServiceAccountConfig has neither "
+                              "json_object nor file_path",
+                              GCP_ERROR_INFO())});
+        return;
+      }
+
+      std::shared_ptr<grpc::CallCredentials> gdch_creds =
+          grpc::GDCHServiceAccountCredentials(json_contents, cfg.audience());
+      if (!gdch_creds) {
+        result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+            ErrorCredentialsConfig{InternalError(
+                "Error creating grpc::GDCHServiceAccountCredentials",
+                GCP_ERROR_INFO())});
+        return;
+      }
+
+      std::string ca_cert_path;
+      nlohmann::json j = nlohmann::json::parse(json_contents, nullptr, false);
+      if (!j.is_discarded() && j.is_object()) {
+        auto it = j.find("ca_cert_path");
+        if (it != j.end() && it->is_string()) {
+          ca_cert_path = it->get<std::string>();
+        }
+      }
+      grpc::SslCredentialsOptions ssl_options;
+      if (!ca_cert_path.empty()) {
+        std::ifstream is(ca_cert_path);
+        if (!is.is_open()) {
+          result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+              ErrorCredentialsConfig{UnknownError(
+                  "Cannot open CA certificate file " + ca_cert_path,
+                  GCP_ERROR_INFO())});
+          return;
+        }
+        ssl_options.pem_root_certs =
+            std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
+      } else {
+        std::optional<std::string> cainfo = LoadCAInfo(options);
+        if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
+      }
+      result = std::make_unique<GrpcChannelCredentialsAuthentication>(
+          grpc::CompositeChannelCredentials(grpc::SslCredentials(ssl_options),
+                                            gdch_creds));
+#else
+      (void)cfg;
       result = std::make_unique<GrpcErrorCredentialsAuthentication>(
-          ErrorCredentialsConfig{
-              UnimplementedError("GDCHServiceAccountCredentials are not yet "
-                                 "supported for gRPC endpoints",
-                                 GCP_ERROR_INFO())});
+          ErrorCredentialsConfig{UnimplementedError(
+              "GDCHServiceAccountCredentials require gRPC v1.84.0 or greater",
+              GCP_ERROR_INFO())});
+#endif
     }
 
   } visitor(std::move(cq), std::move(options));
