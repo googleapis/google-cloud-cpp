@@ -77,10 +77,14 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       options_(std::move(options)),
       has_initial_read_ranges_(options_.has<ReadRangesOption>()),
       transport_ok_(std::move(transport_ok)) {
+  auto initial_read_stream = std::make_shared<ReadStream>(
+      std::move(stream), resume_policy_prototype_->clone());
+  // Notify the resume policy that the initial stream was established
+  // successfully.
+  initial_read_stream->resume_policy->OnStartSuccess();
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
-      std::make_shared<ReadStream>(std::move(stream),
-                                   resume_policy_prototype_->clone()));
+      std::move(initial_read_stream));
   // Initialize the pacing limit from options if configured.
   if (options_.has<PreWarmBufferLimitOption>()) {
     max_prewarmed_buffer_size_ = options_.get<PreWarmBufferLimitOption>();
@@ -122,8 +126,9 @@ void ObjectDescriptorImpl::Start(
   std::unique_lock<std::mutex> lk(mu_);
   auto it = stream_manager_->GetFirstStream();
   if (it == stream_manager_->End()) return;
+  auto current_stream = it->stream->stream;
   lk.unlock();
-  OnRead(it, std::move(first_response));
+  OnRead(it, current_stream, std::move(first_response));
   // Acquire lock and queue the background stream if multi-stream optimization
   // is enabled.
   if (options_.get<storage::EnableMultiStreamOptimizationOption>()) {
@@ -204,14 +209,16 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     auto read_stream =
         std::make_shared<ReadStream>(std::move(stream_result->stream),
                                      self->resume_policy_prototype_->clone());
+    read_stream->resume_policy->OnStartSuccess();
 
     auto new_it = self->stream_manager_->AddStream(std::move(read_stream));
 
     // Now that we consumed pending_stream_, queue the next one immediately.
     self->AssurePendingStreamQueued(lk);
 
+    auto new_stream = new_it->stream->stream;
     lk.unlock();
-    self->OnRead(new_it, std::move(stream_result->first_response));
+    self->OnRead(new_it, new_stream, std::move(stream_result->first_response));
   });
 }
 
@@ -400,7 +407,7 @@ ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
 
 void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk,
                                  StreamIterator it) {
-  if (it->stream->write_pending ||
+  if (it->stream->resuming || it->stream->write_pending ||
       it->stream->next_request.read_ranges().empty()) {
     return;
   }
@@ -414,14 +421,22 @@ void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk,
   auto current_stream = it->stream->stream;
   lk.unlock();
   current_stream->Write(std::move(request))
-      .then([w = WeakFromThis(), it](auto f) {
-        if (auto self = w.lock()) self->OnWrite(it, f.get());
+      .then([w = WeakFromThis(), it, current_stream](auto f) {
+        if (auto self = w.lock()) self->OnWrite(it, current_stream, f.get());
       });
 }
 
-void ObjectDescriptorImpl::OnWrite(StreamIterator it, bool ok) {
+void ObjectDescriptorImpl::OnWrite(StreamIterator it,
+                                   std::shared_ptr<OpenStream> const& stream,
+                                   bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
-  if (!ok) return DoFinish(std::move(lk), it);
+  // Discard callbacks from stale or removed streams (e.g. if the stream was
+  // replaced during reconnection or removed after an error).
+  if (!stream_manager_->Contains(it) || !it->stream ||
+      it->stream->stream != stream) {
+    return;
+  }
+  if (!ok) return DoFinish(std::move(lk), it, stream);
   it->stream->write_pending = false;
   Flush(std::move(lk), it);
 }
@@ -436,18 +451,24 @@ void ObjectDescriptorImpl::DoRead(std::unique_lock<std::mutex> lk,
   // end of the block.
   auto current_stream = it->stream->stream;
   lk.unlock();
-  current_stream->Read().then([w = WeakFromThis(), it](auto f) {
-    if (auto self = w.lock()) self->OnRead(it, f.get());
+  current_stream->Read().then([w = WeakFromThis(), it, current_stream](auto f) {
+    if (auto self = w.lock()) self->OnRead(it, current_stream, f.get());
   });
 }
 
 void ObjectDescriptorImpl::OnRead(
-    StreamIterator it,
+    StreamIterator it, std::shared_ptr<OpenStream> const& stream,
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   std::unique_lock<std::mutex> lk(mu_);
+  // Discard callbacks from stale or removed streams (e.g. if the stream was
+  // replaced during reconnection or removed after an error).
+  if (!stream_manager_->Contains(it) || !it->stream ||
+      it->stream->stream != stream) {
+    return;
+  }
   it->stream->read_pending = false;
 
-  if (!response) return DoFinish(std::move(lk), it);
+  if (!response) return DoFinish(std::move(lk), it, stream);
   if (response->has_metadata()) {
     metadata_ = std::move(*response->mutable_metadata());
   }
@@ -527,12 +548,19 @@ void ObjectDescriptorImpl::OnRead(
     }
   }
   lk.lock();
+  if (!stream_manager_->Contains(it) || !it->stream) return;
   stream_manager_->CleanupDoneRanges(it);
   DoRead(std::move(lk), it);
 }
 
 void ObjectDescriptorImpl::DoFinish(std::unique_lock<std::mutex> lk,
-                                    StreamIterator it) {
+                                    StreamIterator it,
+                                    std::shared_ptr<OpenStream> const& stream) {
+  // Discard finish requests if the stream was already replaced or removed.
+  if (!stream_manager_->Contains(it) || !it->stream ||
+      it->stream->stream != stream) {
+    return;
+  }
   it->stream->read_pending = false;
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
@@ -541,16 +569,35 @@ void ObjectDescriptorImpl::DoFinish(std::unique_lock<std::mutex> lk,
   lk.unlock();
   auto pending = current_stream->Finish();
   if (!pending.valid()) return;
-  pending.then([w = WeakFromThis(), it](auto f) {
-    if (auto self = w.lock()) self->OnFinish(it, f.get());
+  pending.then([w = WeakFromThis(), it, current_stream](auto f) {
+    if (auto self = w.lock()) self->OnFinish(it, current_stream, f.get());
   });
 }
 
-void ObjectDescriptorImpl::OnFinish(StreamIterator it, Status const& status) {
+void ObjectDescriptorImpl::OnFinish(StreamIterator it,
+                                    std::shared_ptr<OpenStream> const& stream,
+                                    Status const& status) {
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    // Discard callbacks if cancelled or from stale/removed streams.
+    if (cancelled_ || !stream_manager_->Contains(it) || !it->stream ||
+        it->stream->stream != stream) {
+      return;
+    }
+  }
   auto proto_status = ExtractGrpcStatus(status);
 
-  if (IsResumable(it, status, proto_status)) return Resume(it, proto_status);
+  if (IsResumable(it, status, proto_status)) {
+    return Resume(it, proto_status);
+  }
   std::unique_lock<std::mutex> lk(mu_);
+  // Re-verify stream identity under lock because IsResumable() releases and
+  // re-acquires the mutex while notifying range callbacks, during which time
+  // another thread or callback could have modified or replaced the stream.
+  if (cancelled_ || !stream_manager_->Contains(it) || !it->stream ||
+      it->stream->stream != stream) {
+    return;
+  }
   stream_manager_->RemoveStreamAndNotifyRanges(it, status);
   // Since a stream died, we might want to ensure a replacement is queued.
   AssurePendingStreamQueued(lk);
@@ -559,6 +606,12 @@ void ObjectDescriptorImpl::OnFinish(StreamIterator it, Status const& status) {
 void ObjectDescriptorImpl::Resume(StreamIterator it,
                                   google::rpc::Status const& proto_status) {
   std::unique_lock<std::mutex> lk(mu_);
+  if (cancelled_ || !stream_manager_->Contains(it) || !it->stream) return;
+  // Set resuming flag to true to prevent any concurrent Flush() from writing
+  // to the dying stream while we establish a new one.
+  it->stream->resuming = true;
+  it->stream->next_request.Clear();
+  auto current_stream = it->stream->stream;
   // This call needs to happen inside the lock, as it may modify
   // `read_object_spec_`.
   ApplyRedirectErrors(read_object_spec_, proto_status);
@@ -570,31 +623,58 @@ void ObjectDescriptorImpl::Resume(StreamIterator it,
     *request.add_read_ranges() = *std::move(range);
   }
   lk.unlock();
-  make_stream_(std::move(request)).then([w = WeakFromThis(), it](auto f) {
-    if (auto self = w.lock()) self->OnResume(it, f.get());
-  });
+  make_stream_(std::move(request))
+      .then([w = WeakFromThis(), it, current_stream](auto f) {
+        if (auto self = w.lock()) self->OnResume(it, current_stream, f.get());
+      });
 }
 
-void ObjectDescriptorImpl::OnResume(StreamIterator it,
-                                    StatusOr<OpenStreamResult> result) {
-  if (!result) return OnFinish(it, std::move(result).status());
+void ObjectDescriptorImpl::OnResume(
+    StreamIterator it, std::shared_ptr<OpenStream> const& old_stream,
+    StatusOr<OpenStreamResult> result) {
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (cancelled_) {
+      if (result && result->stream) result->stream->Cancel();
+      return;
+    }
+  }
+  if (!result) return OnFinish(it, old_stream, std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
-  if (cancelled_) return;
+  // Discard resume responses if cancelled or if the stream entry was removed or
+  // already replaced.
+  if (cancelled_ || !stream_manager_->Contains(it) || !it->stream ||
+      it->stream->stream != old_stream) {
+    if (result->stream) result->stream->Cancel();
+    return;
+  }
 
+  // Preserve any Read() range requests that arrived concurrently while the
+  // reconnection was in flight.
+  auto queued_request = std::move(it->stream->next_request);
+
+  // Replace the old stream with the new stream and reset policy/state.
   it->stream = std::make_shared<ReadStream>(std::move(result->stream),
                                             resume_policy_prototype_->clone());
+  it->stream->resume_policy->OnStartSuccess();
   it->stream->write_pending = false;
   it->stream->read_pending = false;
+  it->stream->resuming = false;
+  it->stream->next_request = std::move(queued_request);
 
+  auto new_stream = it->stream->stream;
   // TODO(#15105) - this should be done without release the lock.
+  // Flush any queued range requests onto the newly active stream.
   Flush(std::move(lk), it);
-  OnRead(it, std::move(result->first_response));
+  // Process the first response received during stream establishment.
+  OnRead(it, new_stream, std::move(result->first_response));
 }
 
 bool ObjectDescriptorImpl::IsResumable(
     StreamIterator it, Status const& status,
     google::rpc::Status const& proto_status) {
   std::unique_lock<std::mutex> lk(mu_);
+  if (cancelled_ || !stream_manager_->Contains(it) || !it->stream) return false;
   for (auto const& any : proto_status.details()) {
     auto error = google::storage::v2::BidiReadObjectError{};
     if (!any.UnpackTo(&error)) continue;
@@ -614,10 +694,17 @@ bool ObjectDescriptorImpl::IsResumable(
       if (l != copy.end()) l->second->OnFinish(p.second);
     }
     lk.lock();
+    if (cancelled_ || !stream_manager_->Contains(it) || !it->stream) {
+      return true;
+    }
     stream_manager_->CleanupDoneRanges(it);
     return true;
   }
-  return it->stream->resume_policy->OnFinish(status) ==
+  auto effective_status = status;
+  if (status.code() == StatusCode::kCancelled) {
+    effective_status = Status(StatusCode::kUnavailable, status.message());
+  }
+  return it->stream->resume_policy->OnFinish(effective_status) ==
          storage::ResumePolicy::kContinue;
 }
 

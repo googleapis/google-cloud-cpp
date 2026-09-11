@@ -159,6 +159,13 @@ class MultiStreamManager {
     return false;
   }
 
+  bool Contains(StreamIterator target) const {
+    for (auto it = streams_.begin(); it != streams_.end(); ++it) {
+      if (it == target) return true;
+    }
+    return false;
+  }
+
   bool Empty() const { return streams_.empty(); }
   ConstStreamIterator End() const { return streams_.end(); }
   std::size_t Size() const { return streams_.size(); }

@@ -53,6 +53,7 @@ struct ReadStream : public storage_internal::StreamBase {
   google::storage::v2::BidiReadObjectRequest next_request;
   bool write_pending = false;
   bool read_pending = false;
+  bool resuming = false;
 };
 
 class ObjectDescriptorImpl
@@ -101,15 +102,20 @@ class ObjectDescriptorImpl
   void AssurePendingStreamQueued(std::unique_lock<std::mutex> const&);
 
   void Flush(std::unique_lock<std::mutex> lk, StreamIterator it);
-  void OnWrite(StreamIterator it, bool ok);
+  void OnWrite(StreamIterator it, std::shared_ptr<OpenStream> const& stream,
+               bool ok);
   void DoRead(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnRead(
-      StreamIterator it,
+      StreamIterator it, std::shared_ptr<OpenStream> const& stream,
       std::optional<google::storage::v2::BidiReadObjectResponse> response);
-  void DoFinish(std::unique_lock<std::mutex> lk, StreamIterator it);
-  void OnFinish(StreamIterator it, Status const& status);
+  void DoFinish(std::unique_lock<std::mutex> lk, StreamIterator it,
+                std::shared_ptr<OpenStream> const& stream);
+  void OnFinish(StreamIterator it, std::shared_ptr<OpenStream> const& stream,
+                Status const& status);
   void Resume(StreamIterator it, google::rpc::Status const& proto_status);
-  void OnResume(StreamIterator it, StatusOr<OpenStreamResult> result);
+  void OnResume(StreamIterator it,
+                std::shared_ptr<OpenStream> const& old_stream,
+                StatusOr<OpenStreamResult> result);
   bool IsResumable(StreamIterator it, Status const& status,
                    google::rpc::Status const& proto_status);
 
