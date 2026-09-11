@@ -197,4 +197,7 @@ EOF
     "${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
 fi
 
-git add -A . && git commit -m"Update generated code"
+git add -A -- ':!.github'
+if ! git diff --cached --quiet; then
+  git commit -m"Update generated code"
+fi
