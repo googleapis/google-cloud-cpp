@@ -41,6 +41,12 @@ ReservationSlotsConnectionIdempotencyPolicy::GetReservationSlotsGetResponse(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ReservationSlotsConnectionIdempotencyPolicy::GetHealth(
+    google::cloud::cpp::compute::reservation_slots::v1::
+        GetHealthRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ReservationSlotsConnectionIdempotencyPolicy::GetVersion(
     google::cloud::cpp::compute::reservation_slots::v1::
         GetVersionRequest const&) {

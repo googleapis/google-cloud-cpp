@@ -108,8 +108,8 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L54}
-  /// [google.cloud.cpp.compute.v1.CalendarModeAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L38}
+  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L80}
+  /// [google.cloud.cpp.compute.v1.CalendarModeAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L40}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CalendarModeAdviceResponse>
@@ -145,13 +145,145 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L54}
-  /// [google.cloud.cpp.compute.v1.CalendarModeAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L38}
+  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L80}
+  /// [google.cloud.cpp.compute.v1.CalendarModeAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L40}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CalendarModeAdviceResponse>
   CalendarMode(
       google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Advice on making real-time decisions (such as choosing zone or
+  /// machine types) during deployment to maximize your chances of obtaining
+  /// capacity.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/advice/capacity
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param capacity_advice_request_resource  The CapacityAdviceRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.CapacityAdviceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.advice.v1.CapacityRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L111}
+  /// [google.cloud.cpp.compute.v1.CapacityAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L165}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse> Capacity(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::CapacityAdviceRequest const&
+          capacity_advice_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Advice on making real-time decisions (such as choosing zone or
+  /// machine types) during deployment to maximize your chances of obtaining
+  /// capacity.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/advice/capacity
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.advice.v1.CapacityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.CapacityAdviceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.advice.v1.CapacityRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L111}
+  /// [google.cloud.cpp.compute.v1.CapacityAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L165}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse> Capacity(
+      google::cloud::cpp::compute::advice::v1::CapacityRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the capacity history.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/advice/capacityHistory
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region for this request.
+  /// @param capacity_history_request_resource  The CapacityHistoryRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.CapacityHistoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L96}
+  /// [google.cloud.cpp.compute.v1.CapacityHistoryResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L280}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+  CapacityHistory(std::string const& project, std::string const& region,
+                  google::cloud::cpp::compute::v1::CapacityHistoryRequest const&
+                      capacity_history_request_resource,
+                  Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the capacity history.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/advice/capacityHistory
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.CapacityHistoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L96}
+  /// [google.cloud.cpp.compute.v1.CapacityHistoryResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L280}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+  CapacityHistory(
+      google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
           request,
       Options opts = {});
 

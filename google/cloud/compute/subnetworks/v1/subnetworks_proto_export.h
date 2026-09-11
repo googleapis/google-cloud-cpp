@@ -29,10 +29,10 @@
 #include "google/cloud/compute/v1/internal/common_009.pb.h"
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
 #include "google/cloud/compute/v1/internal/common_040.pb.h"
-#include "google/cloud/compute/v1/internal/common_126.pb.h"
-#include "google/cloud/compute/v1/internal/common_158.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
-#include "google/cloud/compute/v1/internal/common_172.pb.h"
+#include "google/cloud/compute/v1/internal/common_128.pb.h"
+#include "google/cloud/compute/v1/internal/common_160.pb.h"
+#include "google/cloud/compute/v1/internal/common_173.pb.h"
+#include "google/cloud/compute/v1/internal/common_174.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SUBNETWORKS_V1_SUBNETWORKS_PROTO_EXPORT_H

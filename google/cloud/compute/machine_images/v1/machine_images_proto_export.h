@@ -38,7 +38,7 @@
 #include "google/cloud/compute/v1/internal/common_057.pb.h"
 #include "google/cloud/compute/v1/internal/common_095.pb.h"
 #include "google/cloud/compute/v1/internal/common_096.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
+#include "google/cloud/compute/v1/internal/common_173.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_PROTO_EXPORT_H

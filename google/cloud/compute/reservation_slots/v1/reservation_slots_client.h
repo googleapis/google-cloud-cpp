@@ -112,8 +112,8 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L90}
-  /// [google.cloud.cpp.compute.v1.ReservationSlotsGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L103}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L134}
+  /// [google.cloud.cpp.compute.v1.ReservationSlotsGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L103}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationSlotsGetResponse>
@@ -147,14 +147,139 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L90}
-  /// [google.cloud.cpp.compute.v1.ReservationSlotsGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L103}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L134}
+  /// [google.cloud.cpp.compute.v1.ReservationSlotsGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L103}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationSlotsGetResponse>
   GetReservationSlotsGetResponse(
       google::cloud::cpp::compute::reservation_slots::v1::
           GetReservationSlotsGetResponseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get health info on a reservation slot.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSlots/getHealth
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  Name of the zone for this request. Zone name should conform to RFC1035.
+  /// @param parent_name  The name of the parent reservation, parent block and parent sub-block. In
+  ///  the format of
+  ///  reservations/{reservation_name}/reservationBlocks/{reservation_block_name}/reservationSubBlocks/{reservation_sub_block_name}
+  /// @param reservation_slot  The name of the reservation slot.
+  ///  Name should conform to RFC1035 or be a resource ID.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L103}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
+      std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_slot,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief GetHealth
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetHealth(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_slot,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get health info on a reservation slot.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSlots/getHealth
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L103}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief GetHealth
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetHealth(
+      NoAwaitTag,
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief GetHealth
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -189,7 +314,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L110}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L154}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
@@ -248,7 +373,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L110}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L154}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
@@ -317,8 +442,8 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L157}
-  /// [google.cloud.cpp.compute.v1.ReservationSlot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L27}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L201}
+  /// [google.cloud.cpp.compute.v1.ReservationSlot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ReservationSlot>
@@ -358,8 +483,8 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L157}
-  /// [google.cloud.cpp.compute.v1.ReservationSlot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L27}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L201}
+  /// [google.cloud.cpp.compute.v1.ReservationSlot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ReservationSlot>
@@ -397,7 +522,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L266}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L310}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -458,7 +583,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L266}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L310}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

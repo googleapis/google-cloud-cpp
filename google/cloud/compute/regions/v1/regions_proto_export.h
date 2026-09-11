@@ -27,8 +27,8 @@
 
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_032.pb.h"
-#include "google/cloud/compute/v1/internal/common_115.pb.h"
-#include "google/cloud/compute/v1/internal/common_116.pb.h"
+#include "google/cloud/compute/v1/internal/common_117.pb.h"
+#include "google/cloud/compute/v1/internal/common_118.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_PROTO_EXPORT_H

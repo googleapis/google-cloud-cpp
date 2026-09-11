@@ -29,7 +29,8 @@
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
 #include "google/cloud/compute/v1/internal/common_034.pb.h"
 #include "google/cloud/compute/v1/internal/common_096.pb.h"
-#include "google/cloud/compute/v1/internal/common_115.pb.h"
+#include "google/cloud/compute/v1/internal/common_112.pb.h"
+#include "google/cloud/compute/v1/internal/common_117.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_PROJECTS_PROTO_EXPORT_H

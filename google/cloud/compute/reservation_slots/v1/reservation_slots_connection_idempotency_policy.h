@@ -41,6 +41,10 @@ class ReservationSlotsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::reservation_slots::v1::
           GetReservationSlotsGetResponseRequest const& request);
 
+  virtual google::cloud::Idempotency GetHealth(
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request);
+
   virtual google::cloud::Idempotency GetVersion(
       google::cloud::cpp::compute::reservation_slots::v1::
           GetVersionRequest const& request);

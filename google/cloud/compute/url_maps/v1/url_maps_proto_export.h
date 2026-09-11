@@ -31,7 +31,7 @@
 #include "google/cloud/compute/v1/internal/common_023.pb.h"
 #include "google/cloud/compute/v1/internal/common_038.pb.h"
 #include "google/cloud/compute/v1/internal/common_097.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
+#include "google/cloud/compute/v1/internal/common_173.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_PROTO_EXPORT_H

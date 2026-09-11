@@ -135,6 +135,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-retry-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-retry-snippet)
 - [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-retry-snippet)
+- [\c compute_project_views_v1::ProjectViewsClient](@ref compute_project_views_v1::ProjectViewsClient-retry-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-retry-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-retry-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-retry-snippet)
@@ -889,6 +890,18 @@ This shows how to override the retry policies for compute_preview_features_v1::P
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_project_views_v1::ProjectViewsClient-retry-snippet Override compute_project_views_v1::ProjectViewsClient Retry Policies
+
+This shows how to override the retry policies for compute_project_views_v1::ProjectViewsClient:
+
+@snippet google/cloud/compute/project_views/v1/samples/project_views_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/project_views/v1/samples/project_views_client_samples.cc custom-idempotency-policy
 
 */
 

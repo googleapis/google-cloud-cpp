@@ -41,6 +41,18 @@ AdviceConnection::CalendarMode(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+AdviceConnection::Capacity(
+    google::cloud::cpp::compute::advice::v1::CapacityRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+AdviceConnection::CapacityHistory(
+    google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_advice_v1
 }  // namespace cloud

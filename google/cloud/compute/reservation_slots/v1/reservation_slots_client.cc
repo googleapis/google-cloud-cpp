@@ -57,6 +57,62 @@ ReservationSlotsClient::GetReservationSlotsGetResponse(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsClient::GetHealth(std::string const& project,
+                                  std::string const& zone,
+                                  std::string const& parent_name,
+                                  std::string const& reservation_slot,
+                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_slot(reservation_slot);
+  return connection_->GetHealth(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSlotsClient::GetHealth(NoAwaitTag, std::string const& project,
+                                  std::string const& zone,
+                                  std::string const& parent_name,
+                                  std::string const& reservation_slot,
+                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_slot(reservation_slot);
+  return connection_->GetHealth(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsClient::GetHealth(
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetHealth(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSlotsClient::GetHealth(
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetHealth(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsClient::GetHealth(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetHealth(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationSlotsClient::GetVersion(
     std::string const& project, std::string const& zone,
     std::string const& parent_name, std::string const& reservation_slot,
