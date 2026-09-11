@@ -28,6 +28,7 @@ storage_client_testing_hdrs = [
     "testing/mock_resume_policy.h",
     "testing/mock_storage_stub.h",
     "testing/object_integration_test.h",
+    "testing/detect_sanitizers.h",
     "testing/random_names.h",
     "testing/remove_stale_buckets.h",
     "testing/retry_http_request.h",

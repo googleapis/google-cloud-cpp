@@ -114,9 +114,14 @@ TEST_F(ThreadIntegrationTest, Unshared) {
 
   // Clamp the thread count to the [8, 32] range. Sadly, `std::clamp` is a C++17
   // feature.
+#ifdef GCS_TEST_HAVE_SANITIZER
+  auto const thread_count = 4U;
+  auto const object_count = 5 * thread_count;
+#else
   auto const thread_count =
       (std::min)(32U, (std::max)(8U, std::thread::hardware_concurrency()));
   auto const object_count = 25 * thread_count;
+#endif
   std::vector<std::string> objects(object_count);
   std::generate(objects.begin(), objects.end(),
                 [this] { return MakeRandomObjectName(); });
