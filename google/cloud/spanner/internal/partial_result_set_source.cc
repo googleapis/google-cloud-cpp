@@ -58,32 +58,41 @@ void ExtractSubrangeAndAppend(Values& src, int start, Values& dst) {
 }  // namespace
 
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
-PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
-  std::unique_ptr<PartialResultSetSource> source(
-      new PartialResultSetSource(std::move(reader)));
+PartialResultSetSource::Create(
+    std::unique_ptr<PartialResultSetReader> reader,
+    std::shared_ptr<OperationContext> operation_context) {
+  std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
+      std::move(reader), std::move(operation_context)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
 
   // If the initial read finished the stream, and `Finish()` failed, then
   // creating the `PartialResultSetSource` should fail with the same error.
-  if (source->state_ == kFinished && !status.ok()) return status;
+  if (source->state_ == kFinished && !status.ok()) {
+    source->NotifyOnDone(status);
+    return status;
+  }
 
   // Otherwise we require that the first response contains the metadata.
   // Without it, creating the `PartialResultSetSource` should fail.
   if (!source->metadata_) {
-    return internal::InternalError(
+    auto err = internal::InternalError(
         "PartialResultSetSource response contained no metadata",
         GCP_ERROR_INFO());
+    source->NotifyOnDone(err);
+    return err;
   }
 
   return {std::move(source)};
 }
 
 PartialResultSetSource::PartialResultSetSource(
-    std::unique_ptr<PartialResultSetReader> reader)
+    std::unique_ptr<PartialResultSetReader> reader,
+    std::shared_ptr<OperationContext> operation_context)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
+      operation_context_(std::move(operation_context)),
       values_(std::make_optional(
           google::protobuf::Arena::Create<
               google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
@@ -91,6 +100,14 @@ PartialResultSetSource::PartialResultSetSource(
   if (options_.has<spanner::StreamingResumabilityBufferSizeOption>()) {
     values_space_limit_ =
         options_.get<spanner::StreamingResumabilityBufferSizeOption>();
+  }
+}
+
+void PartialResultSetSource::NotifyOnDone(Status const& status) {
+  if (on_done_called_) return;
+  on_done_called_ = true;
+  if (operation_context_) {
+    operation_context_->OnDone(status);
   }
 }
 
@@ -112,7 +129,9 @@ PartialResultSetSource::~PartialResultSetSource() {
           << status;
     }
     state_ = kFinished;
+    last_status_ = std::move(status);
   }
+  NotifyOnDone(last_status_);
 }
 
 StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
@@ -143,10 +162,16 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     rows_returned_ = 0;
   }
   while (usable_rows_ == 0) {
-    if (state_ == kFinished) return spanner::Row();
+    if (state_ == kFinished) {
+      NotifyOnDone(Status{});
+      return spanner::Row();
+    }
     internal::OptionsSpan span(options_);
     auto status = ReadFromStream();
-    if (!status.ok()) return status;
+    if (!status.ok()) {
+      NotifyOnDone(status);
+      return status;
+    }
   }
   auto value_it = (*values_)->begin() + rows_returned_ * columns_->size();
   ++rows_returned_;

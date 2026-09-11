@@ -31,7 +31,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class OperationContext : public google::cloud::internal::OperationContext {
  public:
-  OperationContext();
   OperationContext(std::shared_ptr<std::string const> static_prefix,
                    std::uint64_t request_index, std::string_view rpc_name);
 

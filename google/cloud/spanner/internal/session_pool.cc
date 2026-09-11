@@ -42,16 +42,21 @@ using ::google::cloud::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    google::cloud::CompletionQueue cq, Options opts) {
-  auto pool = std::shared_ptr<SessionPool>(new SessionPool(
-      std::move(db), std::move(stubs), std::move(cq), std::move(opts)));
+    google::cloud::CompletionQueue cq,
+    std::shared_ptr<SpannerOperationContextFactory> context_factory,
+    Options opts) {
+  auto pool = std::shared_ptr<SessionPool>(
+      new SessionPool(std::move(db), std::move(stubs), std::move(cq),
+                      std::move(context_factory), std::move(opts)));
   pool->Initialize();
   return pool;
 }
 
-SessionPool::SessionPool(spanner::Database db,
-                         std::vector<std::shared_ptr<SpannerStub>> stubs,
-                         google::cloud::CompletionQueue cq, Options opts)
+SessionPool::SessionPool(
+    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    google::cloud::CompletionQueue cq,
+    std::shared_ptr<SpannerOperationContextFactory> context_factory,
+    Options opts)
     : db_(std::move(db)),
       cq_(std::move(cq)),
       opts_(std::move(opts)),
@@ -76,7 +81,8 @@ SessionPool::SessionPool(spanner::Database db,
               ? opts_.get<spanner_internal::
                               MultiplexedSessionBackgroundWorkIntervalOption>()
               : std::chrono::minutes(10)),
-      channels_(stubs.size()) {
+      channels_(stubs.size()),
+      context_factory_(std::move(context_factory)) {
   if (stubs.empty()) {
     google::cloud::internal::ThrowInvalidArgument(
         "SessionPool requires a non-empty set of stubs");
@@ -87,7 +93,8 @@ SessionPool::SessionPool(spanner::Database db,
       GCP_ERROR_INFO());
 
   for (auto i = 0U; i < stubs.size(); ++i) {
-    channels_[i] = std::make_shared<Channel>(std::move(stubs[i]));
+    channels_[i] = std::make_shared<Channel>(std::move(stubs[i]),
+                                             static_cast<std::uint32_t>(i));
   }
   // `channels_` is never resized after this point.
   next_dissociated_stub_channel_ = channels_.begin();
@@ -131,7 +138,9 @@ SessionPool::~SessionPool() {
   // Multiplexed Sessions do not require an explicit Delete call.
   for (auto const& session : sessions_) {
     if (session->is_bad()) continue;
-    AsyncDeleteSession(cq_, GetStub(*session), session->session_name())
+    auto stub_and_channel = GetStub(*session);
+    AsyncDeleteSession(cq_, std::move(stub_and_channel.stub),
+                       stub_and_channel.channel_id, session->session_name())
         .then([](auto result) { auto status = result.get(); });
   }
 }
@@ -158,9 +167,9 @@ void SessionPool::ReplaceMultiplexedSession() {
   if (create_calls_in_progress_ == 0 &&
       (*multiplexed_session_)->creation_time() <= refresh_limit) {
     ++create_calls_in_progress_;
-    auto stub = GetStub(std::move(lk));
+    auto stub_and_channel = GetStub(std::move(lk));
     std::weak_ptr<SessionPool> pool = shared_from_this();
-    CreateMultiplexedSessionAsync(std::move(stub))
+    CreateMultiplexedSessionAsync(std::move(stub_and_channel))
         .then([pool](future<StatusOr<google::spanner::v1::Session>> response) {
           if (auto shared_pool = pool.lock()) {
             shared_pool->HandleMultiplexedCreateSessionDone(
@@ -208,8 +217,12 @@ void SessionPool::MaintainPoolSize() {
 // Refresh all sessions whose last-use time is older than the keep-alive
 // interval. Issues asynchronous RPCs, so this method does not block.
 void SessionPool::RefreshExpiringSessions() {
-  std::vector<std::pair<std::shared_ptr<SpannerStub>, std::string>>
-      sessions_to_refresh;
+  struct RefreshInfo {
+    std::shared_ptr<SpannerStub> stub;
+    std::uint32_t channel_id;
+    std::string session_name;
+  };
+  std::vector<RefreshInfo> sessions_to_refresh;
   auto now = clock_->Now();
   auto refresh_limit =
       now - opts_.get<spanner::SessionPoolKeepAliveIntervalOption>();
@@ -220,8 +233,11 @@ void SessionPool::RefreshExpiringSessions() {
       for (auto const& session : sessions_) {
         auto last_use_time = session->last_use_time();
         if (last_use_time <= refresh_limit) {
-          sessions_to_refresh.emplace_back(session->channel()->stub,
-                                           session->session_name());
+          auto const& channel = session->channel();
+          if (channel) {
+            sessions_to_refresh.push_back(
+                {channel->stub, channel->channel_id, session->session_name()});
+          }
           session->update_last_use_time();
         } else if (last_use_time < last_use_time_lower_bound_) {
           last_use_time_lower_bound_ = last_use_time;
@@ -232,7 +248,7 @@ void SessionPool::RefreshExpiringSessions() {
   std::weak_ptr<SessionPool> pool = shared_from_this();
   for (auto& refresh : sessions_to_refresh) {
     auto handler =
-        [pool, session_name = refresh.second](
+        [pool, session_name = refresh.session_name](
             future<StatusOr<google::spanner::v1::ResultSet>> result) {
           auto response = result.get();
           if (!response && IsSessionNotFound(response.status())) {
@@ -246,8 +262,8 @@ void SessionPool::RefreshExpiringSessions() {
             }
           }
         };
-    AsyncRefreshSession(cq_, std::move(refresh.first),
-                        std::move(refresh.second))
+    AsyncRefreshSession(cq_, std::move(refresh.stub), refresh.channel_id,
+                        std::move(refresh.session_name))
         .then(std::move(handler));
   }
 }
@@ -282,14 +298,14 @@ Status SessionPool::HandleMultiplexedCreateSessionDone(
 Status SessionPool::CreateMultiplexedSession(std::unique_lock<std::mutex>& lk) {
   if (create_calls_in_progress_ == 0) {
     create_calls_in_progress_++;
-    auto stub = GetStub(std::move(lk));
-    return CreateMultiplexedSessionSync(std::move(stub));
+    auto stub_and_channel = GetStub(std::move(lk));
+    return CreateMultiplexedSessionSync(std::move(stub_and_channel));
   }
   return Status{};
 }
 
 Status SessionPool::CreateMultiplexedSessionSync(
-    std::shared_ptr<SpannerStub> stub) {
+    SelectedStub const& selected_stub) {
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();
@@ -301,21 +317,25 @@ Status SessionPool::CreateMultiplexedSessionSync(
   if (!role.empty()) session->set_creator_role(role);
   session->set_multiplexed(true);
 
+  auto op_context = context_factory_->BackgroundCreateSession();
+  op_context->BindChannel(selected_stub.channel_id);
+  auto const& stub = selected_stub.stub;
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       google::cloud::Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context, Options const& options,
-              google::spanner::v1::CreateSessionRequest const& request) {
+      [&stub, &op_context](
+          grpc::ClientContext& context, Options const& options,
+          google::spanner::v1::CreateSessionRequest const& request) {
         RouteToLeader(context);  // always for CreateSession()
-        spanner_internal::OperationContext op_context;
-        return stub->CreateSession(context, options, request, op_context);
+        return stub->CreateSession(context, options, request, *op_context);
       },
       opts_, request, __func__);
+  op_context->OnDone(response.status());
   return HandleMultiplexedCreateSessionDone(std::move(response));
 }
 
 future<StatusOr<google::spanner::v1::Session>>
-SessionPool::CreateMultiplexedSessionAsync(std::shared_ptr<SpannerStub> stub) {
+SessionPool::CreateMultiplexedSessionAsync(SelectedStub const& selected_stub) {
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();
@@ -327,20 +347,30 @@ SessionPool::CreateMultiplexedSessionAsync(std::shared_ptr<SpannerStub> stub) {
   if (!role.empty()) session->set_creator_role(role);
   session->set_multiplexed(true);
 
+  auto op_context = context_factory_->BackgroundCreateSession();
+  op_context->BindChannel(selected_stub.channel_id);
+  auto const& stub = selected_stub.stub;
+
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      google::cloud::Idempotency::kIdempotent, cq_,
-      [&stub](CompletionQueue cq, std::shared_ptr<grpc::ClientContext> context,
-              internal::ImmutableOptions options,
-              google::spanner::v1::CreateSessionRequest const& request) {
-        RouteToLeader(*context);  // always for CreateSession()
-        auto op_context =
-            std::make_shared<spanner_internal::OperationContext>();
-        return stub->AsyncCreateSession(cq, std::move(context),
-                                        std::move(options), request,
-                                        std::move(op_context));
-      },
-      internal::SaveCurrentOptions(), std::move(request), __func__);
+             retry_policy_prototype_->clone(),
+             backoff_policy_prototype_->clone(),
+             google::cloud::Idempotency::kIdempotent, cq_,
+             [stub, op_context](
+                 CompletionQueue cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 internal::ImmutableOptions options,
+                 google::spanner::v1::CreateSessionRequest const& request) {
+               RouteToLeader(*context);  // always for CreateSession()
+               return stub->AsyncCreateSession(cq, std::move(context),
+                                               std::move(options), request,
+                                               op_context);
+             },
+             internal::SaveCurrentOptions(), std::move(request), __func__)
+      .then([op_context](future<StatusOr<google::spanner::v1::Session>> f) {
+        auto res = f.get();
+        op_context->OnDone(res.status());
+        return res;
+      });
 }
 
 /*
@@ -462,10 +492,10 @@ StatusOr<SessionHolder> SessionPool::Multiplexed(Session::Mode mode) {
       "multiplexed sessions are not enabled", GCP_ERROR_INFO());
 }
 
-std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
+SelectedStub SessionPool::GetStub(Session const& session) {
   if (!session.is_disassociated() && !session.is_multiplexed()) {
     auto const& channel = session.channel();
-    if (channel) return channel->stub;
+    if (channel) return {channel->stub, channel->channel_id};
   }
 
   // Multiplexed sessions, or sessions that were created for partitioned
@@ -477,15 +507,19 @@ std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
 // In order to maintain transaction/channel affinity, we leverage the
 // TransactionContext to make sure we use the same stub for the life of the
 // transaction.
-std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session,
-                                                  TransactionContext& context) {
-  if (context.stub.has_value()) return *(context.stub);
-  context.stub = GetStub(session);
-  return *context.stub;
+SelectedStub SessionPool::GetStub(Session const& session,
+                                  TransactionContext& context) {
+  if (context.stub.has_value() && context.channel_id.has_value()) {
+    return {*context.stub, *context.channel_id};
+  }
+  auto stub_and_channel = GetStub(session);
+  context.stub = stub_and_channel.stub;
+  context.channel_id = stub_and_channel.channel_id;
+  return stub_and_channel;
 }
 
 int SessionPool::total_sessions() const {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::scoped_lock<std::mutex> lk(mu_);
   return total_sessions_;
 }
 
@@ -553,13 +587,13 @@ StatusOr<SessionHolder> SessionPool::Allocate(std::unique_lock<std::mutex> lk,
   }
 }
 
-std::shared_ptr<SpannerStub> SessionPool::GetStub(
-    std::unique_lock<std::mutex>) {
-  auto stub = (*next_dissociated_stub_channel_)->stub;
+SelectedStub SessionPool::GetStub(std::unique_lock<std::mutex>) {
+  auto const& channel = *next_dissociated_stub_channel_;
+  auto stub_and_channel = SelectedStub{channel->stub, channel->channel_id};
   if (++next_dissociated_stub_channel_ == channels_.end()) {
     next_dissociated_stub_channel_ = channels_.begin();
   }
-  return stub;
+  return stub_and_channel;
 }
 
 void SessionPool::Release(std::unique_ptr<Session> session) {
@@ -595,16 +629,20 @@ Status SessionPool::CreateSessionsSync(
   request.set_session_count(std::int32_t{num_sessions});
   auto const& stub = channel->stub;
   auto const& current = internal::CurrentOptions();
+  auto op_context = context_factory_->BackgroundBatchCreateSessions();
+  op_context->BindChannel(channel->channel_id);
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       google::cloud::Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context, Options const& options,
-              google::spanner::v1::BatchCreateSessionsRequest const& request) {
+      [&stub, &op_context](
+          grpc::ClientContext& context, Options const& options,
+          google::spanner::v1::BatchCreateSessionsRequest const& request) {
         RouteToLeader(context);  // always for BatchCreateSessions()
-        spanner_internal::OperationContext op_context;
-        return stub->BatchCreateSessions(context, options, request, op_context);
+        return stub->BatchCreateSessions(context, options, request,
+                                         *op_context);
       },
       current, request, __func__);
+  op_context->OnDone(response.status());
   return HandleBatchCreateSessionsDone(channel, std::move(response));
 }
 
@@ -613,7 +651,8 @@ void SessionPool::CreateSessionsAsync(
     std::map<std::string, std::string> const& labels, std::string const& role,
     int num_sessions) {
   std::weak_ptr<SessionPool> pool = shared_from_this();
-  AsyncBatchCreateSessions(cq_, channel->stub, labels, role, num_sessions)
+  AsyncBatchCreateSessions(cq_, channel->stub, channel->channel_id, labels,
+                           role, num_sessions)
       .then(
           [pool, channel](
               future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
@@ -644,8 +683,8 @@ SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SessionPool::AsyncBatchCreateSessions(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
-    std::map<std::string, std::string> const& labels, std::string const& role,
-    int num_sessions) {
+    std::uint32_t channel_id, std::map<std::string, std::string> const& labels,
+    std::string const& role, int num_sessions) {
   google::spanner::v1::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
   if (!labels.empty()) {
@@ -656,46 +695,65 @@ SessionPool::AsyncBatchCreateSessions(
     request.mutable_session_template()->set_creator_role(role);
   }
   request.set_session_count(std::int32_t{num_sessions});
+  auto op_context = context_factory_->BackgroundBatchCreateSessions();
+  op_context->BindChannel(channel_id);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      Idempotency::kIdempotent, cq,
-      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-             internal::ImmutableOptions options,
-             google::spanner::v1::BatchCreateSessionsRequest const& request) {
-        RouteToLeader(*context);  // always for BatchCreateSessions()
-        auto op_context =
-            std::make_shared<spanner_internal::OperationContext>();
-        return stub->AsyncBatchCreateSessions(cq, std::move(context),
-                                              std::move(options), request,
-                                              std::move(op_context));
-      },
-      internal::SaveCurrentOptions(), std::move(request), __func__);
+             retry_policy_prototype_->clone(),
+             backoff_policy_prototype_->clone(), Idempotency::kIdempotent, cq,
+             [stub, op_context](
+                 CompletionQueue& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 internal::ImmutableOptions options,
+                 google::spanner::v1::BatchCreateSessionsRequest const&
+                     request) {
+               RouteToLeader(*context);  // always for BatchCreateSessions()
+               return stub->AsyncBatchCreateSessions(cq, std::move(context),
+                                                     std::move(options),
+                                                     request, op_context);
+             },
+             internal::SaveCurrentOptions(), std::move(request), __func__)
+      .then(
+          [op_context](
+              future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
+                  f) {
+            auto res = f.get();
+            op_context->OnDone(res.status());
+            return res;
+          });
 }
 
 future<Status> SessionPool::AsyncDeleteSession(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
-    std::string session_name) {
+    std::uint32_t channel_id, std::string session_name) {
   google::spanner::v1::DeleteSessionRequest request;
   request.set_name(std::move(session_name));
+  auto op_context = context_factory_->BackgroundDeleteSession();
+  op_context->BindChannel(channel_id);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      Idempotency::kIdempotent, cq,
-      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::spanner::v1::DeleteSessionRequest const& request) {
-        auto op_context =
-            std::make_shared<spanner_internal::OperationContext>();
-        return stub->AsyncDeleteSession(cq, std::move(context),
-                                        std::move(options), request,
-                                        std::move(op_context));
-      },
-      internal::SaveCurrentOptions(), std::move(request), __func__);
+             retry_policy_prototype_->clone(),
+             backoff_policy_prototype_->clone(), Idempotency::kIdempotent, cq,
+             [stub, op_context](
+                 CompletionQueue& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options,
+                 google::spanner::v1::DeleteSessionRequest const& request) {
+               return stub->AsyncDeleteSession(cq, std::move(context),
+                                               std::move(options), request,
+                                               op_context);
+             },
+             internal::SaveCurrentOptions(), std::move(request), __func__)
+      .then([op_context](future<Status> f) {
+        auto res = f.get();
+        op_context->OnDone(res);
+        return res;
+      });
 }
 
 /// Refresh the session `session_name` by executing a `SELECT 1` query on it.
 future<StatusOr<google::spanner::v1::ResultSet>>
 SessionPool::AsyncRefreshSession(CompletionQueue& cq,
                                  std::shared_ptr<SpannerStub> const& stub,
+                                 std::uint32_t channel_id,
                                  std::string session_name) {
   google::spanner::v1::ExecuteSqlRequest request;
   request.set_session(std::move(session_name));
@@ -703,19 +761,27 @@ SessionPool::AsyncRefreshSession(CompletionQueue& cq,
   request.set_sql("SELECT 1;");
   request.mutable_request_options()->set_priority(
       google::spanner::v1::RequestOptions::PRIORITY_LOW);
+  auto op_context = context_factory_->BackgroundRefreshSession();
+  op_context->BindChannel(channel_id);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      Idempotency::kIdempotent, cq,
-      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::spanner::v1::ExecuteSqlRequest const& request) {
-        // Read-only transaction, so no route-to-leader.
-        auto op_context =
-            std::make_shared<spanner_internal::OperationContext>();
-        return stub->AsyncExecuteSql(cq, std::move(context), std::move(options),
-                                     request, std::move(op_context));
-      },
-      internal::SaveCurrentOptions(), std::move(request), __func__);
+             retry_policy_prototype_->clone(),
+             backoff_policy_prototype_->clone(), Idempotency::kIdempotent, cq,
+             [stub, op_context](
+                 CompletionQueue& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options,
+                 google::spanner::v1::ExecuteSqlRequest const& request) {
+               // Read-only transaction, so no route-to-leader.
+               return stub->AsyncExecuteSql(cq, std::move(context),
+                                            std::move(options), request,
+                                            op_context);
+             },
+             internal::SaveCurrentOptions(), std::move(request), __func__)
+      .then([op_context](future<StatusOr<google::spanner::v1::ResultSet>> f) {
+        auto res = f.get();
+        op_context->OnDone(res.status());
+        return res;
+      });
 }
 
 Status SessionPool::HandleBatchCreateSessionsDone(
