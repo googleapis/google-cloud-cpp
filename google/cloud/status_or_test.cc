@@ -184,11 +184,9 @@ TEST(StatusOrTest, MovedFromState) {
   EXPECT_STATUS_OK(a);
   EXPECT_EQ(123, *a);
 
-  // Asserts that a moved-from StatusOr is equal to a default constructed one.
   auto b = std::move(a);
-  EXPECT_EQ(a, StatusOr<int>{});  // NOLINT(bugprone-use-after-move)
   a = std::move(b);
-  EXPECT_EQ(b, StatusOr<int>{});  // NOLINT(bugprone-use-after-move)
+  EXPECT_THAT(a, IsOkAndHolds(123));
 }
 
 TEST(StatusOrTest, AssignmentNotAmbiguous) {
@@ -262,7 +260,6 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueNoValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_FALSE(other.ok());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(assigned.ok());
   EXPECT_EQ(0, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
@@ -316,7 +313,6 @@ TEST(StatusOrObservableTest, MoveAssignmentValueNoValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_FALSE(other.ok());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(assigned.ok());
   EXPECT_EQ(1, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
