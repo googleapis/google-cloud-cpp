@@ -240,7 +240,7 @@ TEST(MultiStreamManagerTest, FindTracksStreamMembership) {
   EXPECT_NE(mgr.Find(s1), mgr.End());
 
   auto s2 = std::make_shared<FakeStream>();
-  auto it2 = mgr.AddStream(s2);
+  mgr.AddStream(s2);
   EXPECT_NE(mgr.Find(s1), mgr.End());
   EXPECT_NE(mgr.Find(s2), mgr.End());
 

@@ -126,8 +126,8 @@ void ObjectDescriptorImpl::Start(
   std::unique_lock<std::mutex> lk(mu_);
   auto it = stream_manager_->GetFirstStream();
   if (it == stream_manager_->End()) return;
-  auto read_stream = it->stream;
-  auto current_stream = read_stream->stream;
+  std::shared_ptr<ReadStream> read_stream = it->stream;
+  std::shared_ptr<OpenStream> current_stream = read_stream->stream;
   lk.unlock();
   OnRead(read_stream, current_stream, std::move(first_response));
   // Acquire lock and queue the background stream if multi-stream optimization
@@ -197,7 +197,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     auto self = w.lock();
     if (!self) return;
 
-    auto stream_result = f.get();
+    StatusOr<OpenStreamResult> stream_result = f.get();
     if (!stream_result) {
       // Stream creation failed.
       // The next call to AssurePendingStreamQueued will retry creation.
@@ -207,7 +207,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     std::unique_lock<std::mutex> lk(self->mu_);
     if (self->cancelled_) return;
 
-    auto read_stream =
+    std::shared_ptr<ReadStream> read_stream =
         std::make_shared<ReadStream>(std::move(stream_result->stream),
                                      self->resume_policy_prototype_->clone());
     read_stream->resume_policy->OnStartSuccess();
@@ -217,7 +217,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     // Now that we consumed pending_stream_, queue the next one immediately.
     self->AssurePendingStreamQueued(lk);
 
-    auto new_stream = read_stream->stream;
+    std::shared_ptr<OpenStream> new_stream = read_stream->stream;
     lk.unlock();
     self->OnRead(read_stream, new_stream,
                  std::move(stream_result->first_response));
@@ -317,10 +317,11 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
-  auto read_stream = it->stream;
-  auto const id = ++read_id_generator_;
+  std::shared_ptr<ReadStream> read_stream = it->stream;
+  std::int64_t const id = ++read_id_generator_;
   it->active_ranges.emplace(id, range);
-  auto& read_range = *read_stream->next_request.add_read_ranges();
+  google::storage::v2::ReadRange& read_range =
+      *read_stream->next_request.add_read_ranges();
   read_range.set_read_id(id);
   read_range.set_read_offset(p.start);
   read_range.set_read_length(p.length);
@@ -422,7 +423,7 @@ void ObjectDescriptorImpl::Flush(
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  auto current_stream = read_stream->stream;
+  std::shared_ptr<OpenStream> current_stream = read_stream->stream;
   lk.unlock();
   current_stream->Write(std::move(request))
       .then([w = WeakFromThis(), read_stream, current_stream](auto f) {
@@ -457,7 +458,7 @@ void ObjectDescriptorImpl::DoRead(
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  auto current_stream = read_stream->stream;
+  std::shared_ptr<OpenStream> current_stream = read_stream->stream;
   lk.unlock();
   current_stream->Read().then(
       [w = WeakFromThis(), read_stream, current_stream](auto f) {
@@ -501,12 +502,12 @@ void ObjectDescriptorImpl::OnRead(
   lk.unlock();
 
   for (auto& range_data : *response->mutable_object_data_ranges()) {
-    auto id = range_data.read_range().read_id();
+    std::int64_t id = range_data.read_range().read_id();
     auto const l = copy.find(id);
     if (l == copy.end()) continue;
 
     auto range = l->second;
-    auto chunk_size = range_data.checksummed_data().content().size();
+    std::size_t chunk_size = range_data.checksummed_data().content().size();
 
     bool evict = false;
     lk.lock();
@@ -584,9 +585,9 @@ void ObjectDescriptorImpl::DoFinish(
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  auto current_stream = it->stream->stream;
+  std::shared_ptr<OpenStream> current_stream = it->stream->stream;
   lk.unlock();
-  auto pending = current_stream->Finish();
+  future<Status> pending = current_stream->Finish();
   if (!pending.valid()) return;
   pending.then([w = WeakFromThis(), read_stream, current_stream](auto f) {
     if (auto self = w.lock()) {
@@ -608,7 +609,7 @@ void ObjectDescriptorImpl::OnFinish(
       return;
     }
   }
-  auto proto_status = ExtractGrpcStatus(status);
+  google::rpc::Status proto_status = ExtractGrpcStatus(status);
 
   if (IsResumable(read_stream, status, proto_status)) {
     return Resume(read_stream, proto_status);
@@ -639,14 +640,15 @@ void ObjectDescriptorImpl::Resume(
   // to the dying stream while we establish a new one.
   it->stream->resuming = true;
   it->stream->next_request.Clear();
-  auto current_stream = it->stream->stream;
+  std::shared_ptr<OpenStream> current_stream = it->stream->stream;
   // This call needs to happen inside the lock, as it may modify
   // `read_object_spec_`.
   ApplyRedirectErrors(read_object_spec_, proto_status);
-  auto request = google::storage::v2::BidiReadObjectRequest{};
+  google::storage::v2::BidiReadObjectRequest request;
   *request.mutable_read_object_spec() = read_object_spec_;
-  for (auto const& [read_id, range_ptr] : it->active_ranges) {
-    auto range = range_ptr->RangeForResume(read_id);
+  for (auto const& kv : it->active_ranges) {
+    std::optional<google::storage::v2::ReadRange> range =
+        kv.second->RangeForResume(kv.first);
     if (!range) continue;
     *request.add_read_ranges() = *std::move(range);
   }
@@ -685,10 +687,11 @@ void ObjectDescriptorImpl::OnResume(
 
   // Preserve any Read() range requests that arrived concurrently while the
   // reconnection was in flight.
-  auto queued_request = std::move(it->stream->next_request);
+  google::storage::v2::BidiReadObjectRequest queued_request =
+      std::move(it->stream->next_request);
 
   // Replace the old stream with the new stream and reset policy/state.
-  auto new_read_stream = std::make_shared<ReadStream>(
+  std::shared_ptr<ReadStream> new_read_stream = std::make_shared<ReadStream>(
       std::move(result->stream), resume_policy_prototype_->clone());
   new_read_stream->resume_policy->OnStartSuccess();
   new_read_stream->write_pending = false;
@@ -697,7 +700,7 @@ void ObjectDescriptorImpl::OnResume(
   new_read_stream->next_request = std::move(queued_request);
 
   it->stream = new_read_stream;
-  auto new_stream = new_read_stream->stream;
+  std::shared_ptr<OpenStream> new_stream = new_read_stream->stream;
 
   // TODO(#15105) - this should be done without release the lock.
   // Flush any queued range requests onto the newly active stream.
@@ -713,8 +716,8 @@ bool ObjectDescriptorImpl::IsResumable(
   if (cancelled_) return false;
   auto it = stream_manager_->Find(read_stream);
   if (it == stream_manager_->End() || !it->stream) return false;
-  for (auto const& any : proto_status.details()) {
-    auto error = google::storage::v2::BidiReadObjectError{};
+  for (google::protobuf::Any const& any : proto_status.details()) {
+    google::storage::v2::BidiReadObjectError error;
     if (!any.UnpackTo(&error)) continue;
 
     std::vector<std::pair<std::int64_t, Status>> notify;
@@ -727,9 +730,9 @@ bool ObjectDescriptorImpl::IsResumable(
 
     auto copy = it->active_ranges;
     lk.unlock();
-    for (auto const& [read_id, range_status] : notify) {
-      auto l = copy.find(read_id);
-      if (l != copy.end()) l->second->OnFinish(range_status);
+    for (auto const& p : notify) {
+      auto l = copy.find(p.first);
+      if (l != copy.end()) l->second->OnFinish(p.second);
     }
     lk.lock();
     if (cancelled_) return true;
@@ -738,7 +741,7 @@ bool ObjectDescriptorImpl::IsResumable(
     stream_manager_->CleanupDoneRanges(it_curr);
     return true;
   }
-  auto effective_status = status;
+  Status effective_status = status;
   if (status.code() == StatusCode::kCancelled) {
     effective_status = Status(StatusCode::kUnavailable, status.message());
   }
