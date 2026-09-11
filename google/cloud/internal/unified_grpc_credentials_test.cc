@@ -42,6 +42,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
@@ -202,7 +203,7 @@ X3IM7YomoAWiNKWwBVskpXWj7L9dLkqhyQ==
 -----END EC PRIVATE KEY-----
 )""";
 
-std::string MakeGDCHServiceAccountContents(std::string_view ca_cert_path = "") {
+std::string MakeGDCHServiceAccountContents(std::string_view ca_cert_path) {
   nlohmann::json j{
       {"type", "gdch_service_account"},
       {"format_version", "1"},
@@ -216,6 +217,10 @@ std::string MakeGDCHServiceAccountContents(std::string_view ca_cert_path = "") {
     j["ca_cert_path"] = ca_cert_path;
   }
   return j.dump();
+}
+
+std::string MakeGDCHServiceAccountContents() {
+  return MakeGDCHServiceAccountContents("");
 }
 
 TEST(UnifiedGrpcCredentialsTest, WithGDCHServiceAccountCredentialsFromJson) {
@@ -352,6 +357,28 @@ TEST(UnifiedGrpcCredentialsTest,
   Status status = auth->ConfigureContext(context);
   EXPECT_THAT(status, IsOk());
   EXPECT_THAT(context.credentials(), IsNull());
+}
+
+TEST(UnifiedGrpcCredentialsTest,
+     WithGDCHServiceAccountCredentialsMissingCACertFile) {
+#if !defined(GRPC_CPP_VERSION_MAJOR) || \
+    (GRPC_CPP_VERSION_MAJOR < 1 ||      \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR < 84))
+  GTEST_SKIP() << "GDCH credentials require gRPC >= 1.84.0";
+#endif
+  std::string ca_filename = CreateRandomFileName();
+  std::string json_contents = MakeGDCHServiceAccountContents(ca_filename);
+  CompletionQueue cq;
+  std::shared_ptr<Credentials> creds = MakeGDCHServiceAccountCredentials(
+      json_contents, "https://my-audience.com");
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(*creds, cq);
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  Status status = auth->ConfigureContext(context);
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnknown,
+                               HasSubstr("Cannot open CA certificate file")));
 }
 
 }  // namespace

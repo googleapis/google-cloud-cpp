@@ -204,15 +204,23 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
       std::string ca_cert_path;
       nlohmann::json j = nlohmann::json::parse(json_contents, nullptr, false);
       if (!j.is_discarded() && j.is_object()) {
-        ca_cert_path = j.value("ca_cert_path", "");
+        auto it = j.find("ca_cert_path");
+        if (it != j.end() && it->is_string()) {
+          ca_cert_path = it->get<std::string>();
+        }
       }
       grpc::SslCredentialsOptions ssl_options;
       if (!ca_cert_path.empty()) {
         std::ifstream is(ca_cert_path);
-        if (is.is_open()) {
-          ssl_options.pem_root_certs =
-              std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
+        if (!is.is_open()) {
+          result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+              ErrorCredentialsConfig{UnknownError(
+                  "Cannot open CA certificate file " + ca_cert_path,
+                  GCP_ERROR_INFO())});
+          return;
         }
+        ssl_options.pem_root_certs =
+            std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
       } else {
         std::optional<std::string> cainfo = LoadCAInfo(options);
         if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
