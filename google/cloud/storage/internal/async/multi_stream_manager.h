@@ -159,11 +159,11 @@ class MultiStreamManager {
     return false;
   }
 
-  bool Contains(StreamIterator target) const {
+  StreamIterator Find(std::shared_ptr<StreamT> const& target) {
     for (auto it = streams_.begin(); it != streams_.end(); ++it) {
-      if (it == target) return true;
+      if (it->stream == target) return it;
     }
-    return false;
+    return streams_.end();
   }
 
   bool Empty() const { return streams_.empty(); }

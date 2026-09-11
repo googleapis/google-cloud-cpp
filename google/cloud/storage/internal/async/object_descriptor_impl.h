@@ -101,23 +101,32 @@ class ObjectDescriptorImpl
   // invoked while holding `mu_`.
   void AssurePendingStreamQueued(std::unique_lock<std::mutex> const&);
 
-  void Flush(std::unique_lock<std::mutex> lk, StreamIterator it);
-  void OnWrite(StreamIterator it, std::shared_ptr<OpenStream> const& stream,
-               bool ok);
-  void DoRead(std::unique_lock<std::mutex> lk, StreamIterator it);
+  void Flush(std::unique_lock<std::mutex> lk,
+             std::shared_ptr<ReadStream> const& read_stream);
+  void OnWrite(std::shared_ptr<ReadStream> const& read_stream,
+               std::shared_ptr<OpenStream> const& stream, bool ok);
+  void DoRead(std::unique_lock<std::mutex> lk,
+              std::shared_ptr<ReadStream> const& read_stream);
   void OnRead(
-      StreamIterator it, std::shared_ptr<OpenStream> const& stream,
+      std::shared_ptr<ReadStream> const& read_stream,
+      std::shared_ptr<OpenStream> const& stream,
       std::optional<google::storage::v2::BidiReadObjectResponse> response);
-  void DoFinish(std::unique_lock<std::mutex> lk, StreamIterator it,
+  void DoFinish(std::unique_lock<std::mutex> lk,
+                std::shared_ptr<ReadStream> const& read_stream,
                 std::shared_ptr<OpenStream> const& stream);
-  void OnFinish(StreamIterator it, std::shared_ptr<OpenStream> const& stream,
+  void OnFinish(std::shared_ptr<ReadStream> const& read_stream,
+                std::shared_ptr<OpenStream> const& stream,
                 Status const& status);
-  void Resume(StreamIterator it, google::rpc::Status const& proto_status);
-  void OnResume(StreamIterator it,
+  void Resume(std::shared_ptr<ReadStream> const& read_stream,
+              google::rpc::Status const& proto_status);
+  void OnResume(std::shared_ptr<ReadStream> const& old_read_stream,
                 std::shared_ptr<OpenStream> const& old_stream,
                 StatusOr<OpenStreamResult> result);
-  bool IsResumable(StreamIterator it, Status const& status,
+  bool IsResumable(std::shared_ptr<ReadStream> const& read_stream,
+                   Status const& status,
                    google::rpc::Status const& proto_status);
+  bool ApplyPacingAndCheckEviction(std::int64_t id, std::size_t chunk_size,
+                                   StreamIterator it);
 
   std::shared_ptr<storage::internal::HashFunction> CreateHashFunction(
       bool is_full_read) const;
