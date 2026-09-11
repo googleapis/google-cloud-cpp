@@ -1,5 +1,7 @@
 permissions:
   contents: read
+  pull-requests: read
+  issues: read
 
 name: "gha: macOS & Windows"
 
@@ -22,19 +24,27 @@ on: # zizmor: ignore[dangerous-triggers]
     - opened
     - synchronize
     - reopened
+  # Allow trusted maintainers to trigger this workflow on external PRs by
+  # commenting `/gharun`.
+  issue_comment:
+    types: [ created ]
   schedule:
     - cron: '0 5 * * 1,2,3,4,5'
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
-# PR or branch. That reduces billing, but it creates more noise about cancelled
-# jobs
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}
-  cancel-in-progress: true
+# PR or branch, or if a maintainer posts a new `/gharun` command.
+# Concurrency is defined at the job level so that issue comments without `/gharun`
+# (which are skipped in pre-flight) do not cancel in-progress builds.
 
 jobs:
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (github.event.issue.pull_request != null && contains(github.event.comment.body, '/gharun'))
+    concurrency:
+      group: ${{ github.workflow }}-pre-flight-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
+      cancel-in-progress: true
     environment: >-
       ${{
           (github.event_name != 'pull_request_target' && 'internal') ||
@@ -45,31 +55,54 @@ jobs:
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
     steps:
-      - name: Verify author permissions
+      - name: Verify permissions
         if: >-
           github.event_name == 'pull_request_target' ||
+          github.event_name == 'issue_comment' ||
           (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/ci-gha'))
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
+          EVENT_NAME: ${{ github.event_name }}
+          USER_TO_CHECK: >-
+            ${{
+              (github.event_name == 'pull_request_target' && github.event.pull_request.user.login) ||
+              (github.event_name == 'issue_comment' && (github.event.comment.user.login || github.actor)) ||
+              github.actor
+            }}
         run: |
-          permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${AUTHOR}/permission" --jq '.permission')
-          echo "Author: ${AUTHOR}, permission: ${permission}"
+          permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
+          echo "Event: ${EVENT_NAME}, User: ${USER_TO_CHECK}, permission: ${permission}"
           case "${permission}" in
             admin|write|maintain)
-              echo "Author is trusted."
+              echo "User '${USER_TO_CHECK}' is trusted."
               ;;
             *)
-              echo "::error::Author '${AUTHOR}' is not trusted (permission: '${permission}')."
+              if [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
+                echo "::error::Author '${USER_TO_CHECK}' is not trusted (permission: '${permission}'). A maintainer can comment '/gharun' to trigger this workflow."
+              else
+                echo "::error::User '${USER_TO_CHECK}' is not trusted (permission: '${permission}')."
+              fi
               exit 1
               ;;
           esac
       - name: Save Pull Request
         id: save-pull-request
         env:
-          PR_SHA: ${{ github.event.pull_request.head.sha || github.ref }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          FALLBACK_SHA: ${{ github.ref }}
         run: |
-          echo "sha=${PR_SHA}" >> "${GITHUB_OUTPUT}"
+          if [[ "${EVENT_NAME}" == "issue_comment" ]]; then
+            sha=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')
+          elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
+            sha="${PR_HEAD_SHA}"
+          else
+            sha="${FALLBACK_SHA}"
+          fi
+          echo "Resolved checkout SHA: ${sha}"
+          echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
 
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
   # job requires approval, these blocks all the other jobs. The jobs are defined
@@ -79,6 +112,9 @@ jobs:
   macos-bazel:
     name: macOS-Bazel
     needs: [pre-flight]
+    concurrency:
+      group: ${{ github.workflow }}-macos-bazel-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
+      cancel-in-progress: true
     uses: ./.github/workflows/macos-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
@@ -90,6 +126,9 @@ jobs:
     if: false
     name: Windows-Bazel
     needs: [pre-flight]
+    concurrency:
+      group: ${{ github.workflow }}-windows-bazel-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
+      cancel-in-progress: true
     uses: ./.github/workflows/windows-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
@@ -101,6 +140,9 @@ jobs:
     if: false
     name: macOS-CMake
     needs: [pre-flight]
+    concurrency:
+      group: ${{ github.workflow }}-macos-cmake-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
+      cancel-in-progress: true
     uses: ./.github/workflows/macos-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
@@ -111,7 +153,8 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build') ||
+          contains(github.event.issue.labels.*.name, 'gha:full-build')
         }}
       sccache-mode: 'READ_WRITE'
       vcpkg-cache-mode: 'readwrite'
@@ -120,6 +163,9 @@ jobs:
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
+    concurrency:
+      group: ${{ github.workflow }}-windows-cmake-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
+      cancel-in-progress: true
     uses: ./.github/workflows/windows-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
@@ -130,7 +176,8 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build') ||
+          contains(github.event.issue.labels.*.name, 'gha:full-build')
         }}
       sccache-mode: 'READ_WRITE'
       vcpkg-cache-mode: 'readwrite'

@@ -33,22 +33,54 @@ jobs:
 
       - name: Run checkers
         run: |
-          ci/cloudbuild/build.sh -t checkers-pr
+          status=0
+          ci/cloudbuild/build.sh -t checkers-pr || status=$?
+          if [[ ${status} -eq 111 ]]; then
+            echo "Checkers produced formatting and documentation updates. Committing changes..."
+            # Exclude .github directory from automated commit to prevent workflow permission errors
+            git add -A -- ':!.github'
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: apply formatting from checkers"
+            fi
+          elif [[ ${status} -ne 0 ]]; then
+            echo "Checkers failed with unexpected exit code ${status}."
+            exit "${status}"
+          fi
 
       - name: Push branch and create Pull Request if changes exist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Check if a new commit was made (HEAD differs from origin/main)
-          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
+          # Fetch latest main from remote and rebase any newly generated commits on top of it.
+          # This ensures the pushed branch includes any workflow updates made on main while the
+          # long-running build was executing, avoiding push rejection due to missing workflow permissions.
+          echo "Fetching latest main from remote..."
+          git fetch "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" main
+          echo "Rebasing onto latest main..."
+          if ! git rebase FETCH_HEAD; then
+            echo "::error::Rebase failed due to merge conflicts."
+            git rebase --abort
+            exit 1
+          fi
+
+          # Ensure no workflow files were inadvertently touched in the branch
+          if git diff --name-only FETCH_HEAD HEAD | grep -q '^\.github/'; then
+            echo "Changes to .github/ detected in branch. Discarding to prevent push rejection..."
+            git checkout FETCH_HEAD -- .github
+            git commit -a --amend --no-edit || true
+          fi
+
+          # Check if a new commit was made (HEAD differs from FETCH_HEAD)
+          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]]; then
             echo "Changes detected. Pushing branch automation/update-compute-discovery..."
-            git push origin HEAD:automation/update-compute-discovery --force
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:automation/update-compute-discovery --force
 
             echo "Checking if a PR is already open..."
-            if ! gh pr list --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
+            if ! gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
               echo "Opening new PR..."
               BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
               gh pr create \
+                --repo "${GITHUB_REPOSITORY}" \
                 --title "feat(compute): update discovery doc and generate new services" \
                 --body "$(printf '%b' "$BODY")" \
                 --base main \

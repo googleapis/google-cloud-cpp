@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/open_object.h"
+#include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/internal/async_read_write_stream_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_cat.h"
 #include <utility>
@@ -59,7 +62,17 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
     google::storage::v2::BidiReadObjectRequest const& request) {
   auto p = RequestParams(request);
   if (!p.empty()) context->AddMetadata("x-goog-request-params", std::move(p));
-  return stub.AsyncBidiReadObject(cq, std::move(context), std::move(options));
+  std::chrono::milliseconds const timeout = ScaleStallTimeout(
+      options->get<storage::DownloadStallTimeoutOption>(),
+      options->get<storage::DownloadStallMinimumRateOption>(),
+      google::storage::v2::ServiceConstants::MAX_READ_CHUNK_BYTES);
+  std::unique_ptr<OpenStream::StreamingRpc> rpc =
+      stub.AsyncBidiReadObject(cq, std::move(context), std::move(options));
+  return std::make_unique<
+      google::cloud::internal::AsyncStreamingReadWriteRpcTimeout<
+          google::storage::v2::BidiReadObjectRequest,
+          google::storage::v2::BidiReadObjectResponse>>(
+      cq, timeout, timeout, timeout, std::move(rpc));
 }
 
 void OpenObject::OnStart(bool ok) {

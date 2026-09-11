@@ -1876,6 +1876,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationSuccess) {
       name: "test-object"
       generation: 42
       size: 43
+      finalize_time { seconds: 1234567890 }
       checksums {
         crc32c: 576848900
         md5_hash: "\236\020\175\235\067\053\266\202\153\330\035\065\102\244\031\326"
@@ -1983,6 +1984,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchCrc32c) {
       name: "test-object"
       generation: 42
       size: 43
+      finalize_time { seconds: 1234567890 }
       checksums {
         crc32c: 12345
         md5_hash: "\236\020\175\235\067\053\266\202\153\330\035\065\102\244\031\326"
@@ -2091,6 +2093,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchMd5) {
       name: "test-object"
       generation: 42
       size: 43
+      finalize_time { seconds: 1234567890 }
       checksums {
         crc32c: 576848900
         md5_hash: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
@@ -2289,6 +2292,230 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+/// @test Verify that reading an unfinalized object (e.g. appendable object
+/// without finalize_time) from offset 0 bypasses full-object checksum
+/// validation against open-time metadata checksums, while still validating
+/// chunk-level CRC32C.
+TEST(ObjectDescriptorImpl,
+     UnfinalizedObjectReadFromOffset0BypassesFullChecksumValidation) {
+  auto constexpr kResponseMetadata = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+      size: 16
+      checksums {
+        crc32c: 12345
+        md5_hash: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+      }
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kRequest1 = R"pb(
+    read_ranges { read_id: 1 read_offset: 0 read_length: 0 }
+  )pb";
+
+  auto constexpr kResponse1 = R"pb(
+    read_handle { handle: "handle-23456" }
+    object_data_ranges {
+      range_end: true
+      read_range { read_id: 1 read_offset: 0 }
+      checksummed_data {
+        content: "The quick brown fox jumps over the lazy dog"
+        crc32c: 576848900
+      }
+    }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return std::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return std::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  options.set<storage::EnableCrc32cValidationOption>(true);
+  options.set<storage::EnableMD5ValidationOption>(true);
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponseMetadata, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  auto s1 = tested->Read({0, 0});
+  auto s1r1 = s1->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[1]");
+  next.first.set_value(true);
+  read1.first.set_value(true);
+
+  EXPECT_THAT(s1r1.get(),
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "contents are",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(std::string_view{
+                      "The quick brown fox jumps over the lazy dog"}))));
+
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+/// @test Verify that reading an unfinalized object from offset 0 still
+/// validates chunk-level CRC32C and fails with DATA_LOSS if a chunk contains
+/// corrupted data.
+TEST(ObjectDescriptorImpl,
+     UnfinalizedObjectReadFromOffset0FailsOnCorruptChunkCrc32c) {
+  auto constexpr kResponseMetadata = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+      size: 16
+      checksums {
+        crc32c: 12345
+        md5_hash: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+      }
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kRequest1 = R"pb(
+    read_ranges { read_id: 1 read_offset: 0 read_length: 0 }
+  )pb";
+
+  auto constexpr kResponse1 = R"pb(
+    read_handle { handle: "handle-23456" }
+    object_data_ranges {
+      range_end: true
+      read_range { read_id: 1 read_offset: 0 }
+      checksummed_data {
+        content: "The quick brown fox jumps over the lazy dog"
+        crc32c: 999999
+      }
+    }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return std::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return std::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  options.set<storage::EnableCrc32cValidationOption>(true);
+  options.set<storage::EnableMD5ValidationOption>(true);
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponseMetadata, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  auto s1 = tested->Read({0, 0});
+  auto s1r1 = s1->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[1]");
+  next.first.set_value(true);
+  read1.first.set_value(true);
+
+  EXPECT_THAT(s1r1.get(),
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "contents are",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(std::string_view{
+                      "The quick brown fox jumps over the lazy dog"}))));
+
+  EXPECT_THAT(s1->Read().get(),
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read[2]");
