@@ -20,10 +20,13 @@ source "$(dirname "$0")/../../ci/lib/init.sh"
 source module ci/lib/io.sh
 
 function print_service_textproto() {
-  service_proto_path="${1#protos/}"
-  product_path="${service_proto_path%/*.proto}"
+  local service_proto_path="${1#protos/}"
+  local product_path="${service_proto_path%/*.proto}"
+  local initial_copyright_year
   initial_copyright_year=$(date +"%Y")
 
+  local tmp
+  tmp="$(mktemp "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}.XXXXXX")"
   (
     sed -n '/# update_discovery_doc.sh additions/q;p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
     cat <<_EOF_
@@ -38,7 +41,8 @@ function print_service_textproto() {
 
 _EOF_
     sed -n '/# update_discovery_doc.sh additions/,$p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
-  ) | sponge "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
+  ) >"${tmp}"
+  mv "${tmp}" "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
 }
 
 function add_service_directory() {
@@ -174,8 +178,18 @@ if [[ -n "${NEW_FILES}" ]]; then
   done
 
   io::log_yellow "Adding new directories to ${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
-  CMAKE_BUILD_DIR=$(mktemp -d)
-  cmake -DGOOGLE_CLOUD_CPP_ENABLE=compute -S . -B "${CMAKE_BUILD_DIR}"
+  (
+    CMAKE_SCRIPT=$(mktemp)
+    trap 'rm -f "${CMAKE_SCRIPT}"' EXIT
+    cat <<EOF >"${CMAKE_SCRIPT}"
+cmake_minimum_required(VERSION 3.16)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_ROOT}/cmake")
+include(CreateBazelConfig)
+include("${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH}")
+export_list_to_bazel("${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}" YEAR 2023 service_dirs operation_service_dirs)
+EOF
+    cmake -P "${CMAKE_SCRIPT}"
+  )
 
   git commit -m"Update generator_config.textproto and service_dirs files" \
     "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}" \
@@ -183,4 +197,7 @@ if [[ -n "${NEW_FILES}" ]]; then
     "${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
 fi
 
-git add -A . && git commit -m"Update generated code"
+git add -A -- ':!.github'
+if ! git diff --cached --quiet; then
+  git commit -m"Update generated code"
+fi

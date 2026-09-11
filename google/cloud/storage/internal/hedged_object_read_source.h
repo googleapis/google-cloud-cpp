@@ -54,7 +54,8 @@ class HedgedObjectReadSource : public ObjectReadSource {
   using ChildFactory =
       std::function<StatusOr<std::unique_ptr<ObjectReadSource>>()>;
 
-  HedgedObjectReadSource(std::shared_ptr<HedgingThreadPool> hedge_pool,
+  HedgedObjectReadSource(std::shared_ptr<ThreadPool> read_pool,
+                         std::shared_ptr<HedgingThreadPool> hedge_pool,
                          ChildFactory child_factory,
                          std::chrono::milliseconds delay, int max_hedges,
                          std::size_t max_buffer);
@@ -66,6 +67,7 @@ class HedgedObjectReadSource : public ObjectReadSource {
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
  private:
+  std::shared_ptr<ThreadPool> read_pool_;
   std::shared_ptr<HedgingThreadPool> hedge_pool_;
   ChildFactory child_factory_;
   std::chrono::milliseconds delay_;

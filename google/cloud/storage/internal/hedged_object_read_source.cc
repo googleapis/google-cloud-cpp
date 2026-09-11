@@ -45,6 +45,9 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
                 HedgedObjectReadSource::ChildFactory const& factory,
                 std::size_t n, bool resolve_on_open_error,
                 std::shared_ptr<HedgingThreadPool> release_slot) {
+  // Releases the acquired hedge concurrency slot upon function exit across
+  // all code paths (early return on open/allocation error, race winner, or
+  // race loser). For primary attempts, release_slot is nullptr.
   struct SlotGuard {
     std::shared_ptr<HedgingThreadPool> pool;
     ~SlotGuard() {
@@ -55,7 +58,7 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
   auto source = factory();
   if (!source) {
     if (!resolve_on_open_error) return;
-    auto expected = false;
+    bool expected = false;
     if (state->resolved.compare_exchange_strong(expected, true)) {
       state->promise.set_value(
           RaceResult{std::move(source).status(), nullptr, {}});
@@ -65,7 +68,7 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
   std::unique_ptr<char[]> buffer(new (std::nothrow) char[n]);
   if (!buffer) {
     if (!resolve_on_open_error) return;
-    auto expected = false;
+    bool expected = false;
     if (state->resolved.compare_exchange_strong(expected, true)) {
       state->promise.set_value(RaceResult{
           google::cloud::internal::ResourceExhaustedError(
@@ -76,7 +79,7 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
     return;
   }
   auto result = (*source)->Read(buffer.get(), n);
-  auto expected = false;
+  bool expected = false;
   if (state->resolved.compare_exchange_strong(expected, true)) {
     state->promise.set_value(
         RaceResult{std::move(result), *std::move(source), std::move(buffer)});
@@ -88,9 +91,11 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
 }  // namespace
 
 HedgedObjectReadSource::HedgedObjectReadSource(
+    std::shared_ptr<ThreadPool> read_pool,
     std::shared_ptr<HedgingThreadPool> hedge_pool, ChildFactory child_factory,
     std::chrono::milliseconds delay, int max_hedges, std::size_t max_buffer)
-    : hedge_pool_(std::move(hedge_pool)),
+    : read_pool_(std::move(read_pool)),
+      hedge_pool_(std::move(hedge_pool)),
       child_factory_(std::move(child_factory)),
       delay_(delay),
       max_hedges_(max_hedges),
@@ -111,7 +116,9 @@ StatusOr<HttpResponse> HedgedObjectReadSource::Close() {
 
 StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
                                                         std::size_t n) {
-  if (is_closed_) return ReadSourceResult{};
+  if (is_closed_) {
+    return ReadSourceResult{0, HttpResponse{HttpStatusCode::kOk, {}, {}}};
+  }
 
   // Only the stream open is hedged. Once a child has won the race all
   // subsequent reads continue on it, at its current offset, without any
@@ -135,13 +142,25 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
   auto primary = [state, factory = child_factory_, n] {
     RunAttempt(state, factory, n, /*resolve_on_open_error=*/true, nullptr);
   };
+  // The primary attempt is scheduled on the dedicated read pool.
   // If the pool is shutting down run the attempt inline, the read must
   // complete either way.
-  if (!hedge_pool_->Enqueue(primary)) primary();
+  if (!read_pool_->Enqueue(primary)) primary();
 
-  for (int i = 0; i != max_hedges_; ++i) {
+  for (int hedges_dispatched = 0; hedges_dispatched < max_hedges_;) {
     if (future.wait_for(delay_) != std::future_status::timeout) break;
-    if (!hedge_pool_->TryAcquireHedgeToken()) continue;
+    if (!hedge_pool_->TryAcquireHedgeToken()) {
+      // When delay_ is 0ms (or token acquisition fails), back off briefly on
+      // the future instead of busy-spinning if tokens or concurrency slots are
+      // temporarily exhausted.
+      if (delay_ == std::chrono::milliseconds::zero()) {
+        if (future.wait_for(std::chrono::milliseconds(10)) !=
+            std::future_status::timeout) {
+          break;
+        }
+      }
+      continue;
+    }
     auto hedge = [state, factory = child_factory_, n, pool = hedge_pool_] {
       RunAttempt(state, factory, n, /*resolve_on_open_error=*/false, pool);
     };
@@ -149,6 +168,7 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
       hedge_pool_->ReleaseHedgeSlot();
       break;
     }
+    ++hedges_dispatched;
   }
 
   auto race = future.get();

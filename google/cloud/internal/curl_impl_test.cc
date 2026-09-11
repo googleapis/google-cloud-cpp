@@ -392,6 +392,35 @@ TEST_F(CurlImplTest, MergeAndWriteHeadersDoNotMergeContentLength) {
   EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
 }
 
+TEST(NoProxyValueTest, MakeNoProxyValueDefault) {
+  EXPECT_THAT(MakeNoProxyValue(std::nullopt, std::nullopt),
+              testing::Eq("metadata.google.internal"));
+}
+
+TEST(NoProxyValueTest, MakeNoProxyValueLowerOnly) {
+  EXPECT_THAT(MakeNoProxyValue("localhost,127.0.0.1", std::nullopt),
+              testing::Eq("metadata.google.internal,localhost,127.0.0.1"));
+}
+
+TEST(NoProxyValueTest, MakeNoProxyValueUpperOnly) {
+  EXPECT_THAT(MakeNoProxyValue(std::nullopt, "10.0.0.0/8"),
+              testing::Eq("metadata.google.internal,10.0.0.0/8"));
+}
+
+TEST(NoProxyValueTest, MakeNoProxyValueBothSet) {
+  EXPECT_THAT(MakeNoProxyValue("localhost", "10.0.0.0/8"),
+              testing::Eq("metadata.google.internal,localhost,10.0.0.0/8"));
+}
+
+TEST(NoProxyValueTest, MakeNoProxyValueEmpty) {
+  EXPECT_THAT(MakeNoProxyValue("", ""),
+              testing::Eq("metadata.google.internal"));
+}
+
+TEST(NoProxyValueTest, NoProxyValue) {
+  EXPECT_THAT(NoProxyValue(), testing::HasSubstr("metadata.google.internal"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
