@@ -197,7 +197,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     auto self = w.lock();
     if (!self) return;
 
-    StatusOr<OpenStreamResult> stream_result = f.get();
+    auto stream_result = f.get();
     if (!stream_result) {
       // Stream creation failed.
       // The next call to AssurePendingStreamQueued will retry creation.
@@ -320,8 +320,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   std::shared_ptr<ReadStream> read_stream = it->stream;
   std::int64_t const id = ++read_id_generator_;
   it->active_ranges.emplace(id, range);
-  google::storage::v2::ReadRange& read_range =
-      *read_stream->next_request.add_read_ranges();
+  auto& read_range = *read_stream->next_request.add_read_ranges();
   read_range.set_read_id(id);
   read_range.set_read_offset(p.start);
   read_range.set_read_length(p.length);
@@ -585,9 +584,9 @@ void ObjectDescriptorImpl::DoFinish(
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  std::shared_ptr<OpenStream> current_stream = it->stream->stream;
+  auto current_stream = it->stream->stream;
   lk.unlock();
-  future<Status> pending = current_stream->Finish();
+  auto pending = current_stream->Finish();
   if (!pending.valid()) return;
   pending.then([w = WeakFromThis(), read_stream, current_stream](auto f) {
     if (auto self = w.lock()) {
@@ -609,7 +608,7 @@ void ObjectDescriptorImpl::OnFinish(
       return;
     }
   }
-  google::rpc::Status proto_status = ExtractGrpcStatus(status);
+  auto proto_status = ExtractGrpcStatus(status);
 
   if (IsResumable(read_stream, status, proto_status)) {
     return Resume(read_stream, proto_status);
@@ -640,15 +639,14 @@ void ObjectDescriptorImpl::Resume(
   // to the dying stream while we establish a new one.
   it->stream->resuming = true;
   it->stream->next_request.Clear();
-  std::shared_ptr<OpenStream> current_stream = it->stream->stream;
+  auto current_stream = it->stream->stream;
   // This call needs to happen inside the lock, as it may modify
   // `read_object_spec_`.
   ApplyRedirectErrors(read_object_spec_, proto_status);
-  google::storage::v2::BidiReadObjectRequest request;
+  auto request = google::storage::v2::BidiReadObjectRequest{};
   *request.mutable_read_object_spec() = read_object_spec_;
   for (auto const& kv : it->active_ranges) {
-    std::optional<google::storage::v2::ReadRange> range =
-        kv.second->RangeForResume(kv.first);
+    auto range = kv.second->RangeForResume(kv.first);
     if (!range) continue;
     *request.add_read_ranges() = *std::move(range);
   }
@@ -716,8 +714,8 @@ bool ObjectDescriptorImpl::IsResumable(
   if (cancelled_) return false;
   auto it = stream_manager_->Find(read_stream);
   if (it == stream_manager_->End() || !it->stream) return false;
-  for (google::protobuf::Any const& any : proto_status.details()) {
-    google::storage::v2::BidiReadObjectError error;
+  for (auto const& any : proto_status.details()) {
+    auto error = google::storage::v2::BidiReadObjectError{};
     if (!any.UnpackTo(&error)) continue;
 
     std::vector<std::pair<std::int64_t, Status>> notify;
