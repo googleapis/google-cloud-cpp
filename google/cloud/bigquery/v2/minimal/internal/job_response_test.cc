@@ -2010,8 +2010,8 @@ TEST(QueryResponseTest, DebugString) {
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
       R"( deleted_row_count: 10 updated_row_count: 10 })"
-      R"( arrow_schema { serialized_schema: "test_schema_data" })"
-      R"( arrow_record_batch { serialized_record_batch: "test_batch_data" row_count: 10 })"
+      R"( arrow_schema { serialized_schema: "testing_schema_data" })"
+      R"( arrow_record_batch { serialized_record_batch: "testing_batch_data" row_count: 10 })"
       R"( page_row_count: 10 } })");
 
   EXPECT_EQ(
@@ -2033,8 +2033,8 @@ TEST(QueryResponseTest, DebugString) {
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats {)"
       R"( inserted_row_count: 10 deleted_row_count: 10 updated_row_count: 10 })"
-      R"( arrow_schema { serialized_schema: "test_sc...<truncated>..." })"
-      R"( arrow_record_batch { serialized_record_batch: "test_ba...<truncated>..." row_count: 10 })"
+      R"( arrow_schema { serialized_schema: "testing...<truncated>..." })"
+      R"( arrow_record_batch { serialized_record_batch: "testing...<truncated>..." row_count: 10 })"
       R"( page_row_count: 10 } })");
 
   EXPECT_EQ(response->DebugString("QueryResponse", TracingOptions{}.SetOptions(
@@ -2115,10 +2115,10 @@ TEST(QueryResponseTest, DebugString) {
       updated_row_count: 10
     }
     arrow_schema {
-      serialized_schema: "test_schema_data"
+      serialized_schema: "testing_schema_data"
     }
     arrow_record_batch {
-      serialized_record_batch: "test_batch_data"
+      serialized_record_batch: "testing_batch_data"
       row_count: 10
     }
     page_row_count: 10
@@ -2181,8 +2181,8 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
-      R"( arrow_schema { serialized_schema: "test_schema_data" })"
-      R"( arrow_record_batch { serialized_record_batch: "test_batch_data" row_count: 10 })"
+      R"( arrow_schema { serialized_schema: "testing_schema_data" })"
+      R"( arrow_record_batch { serialized_record_batch: "testing_batch_data" row_count: 10 })"
       R"( page_row_count: 10 } })");
 
   EXPECT_EQ(
@@ -2203,8 +2203,8 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
-      R"( arrow_schema { serialized_schema: "test_sc...<truncated>..." })"
-      R"( arrow_record_batch { serialized_record_batch: "test_ba...<truncated>..." row_count: 10 })"
+      R"( arrow_schema { serialized_schema: "testing...<truncated>..." })"
+      R"( arrow_record_batch { serialized_record_batch: "testing...<truncated>..." row_count: 10 })"
       R"( page_row_count: 10 } })");
 
   EXPECT_EQ(
@@ -2279,10 +2279,10 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       location: "useast"
     }
     arrow_schema {
-      serialized_schema: "test_schema_data"
+      serialized_schema: "testing_schema_data"
     }
     arrow_record_batch {
-      serialized_record_batch: "test_batch_data"
+      serialized_record_batch: "testing_batch_data"
       row_count: 10
     }
     page_row_count: 10

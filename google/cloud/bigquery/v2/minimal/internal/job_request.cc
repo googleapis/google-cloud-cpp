@@ -313,7 +313,8 @@ void from_json(nlohmann::json const& j, QueryRequest& q) {
   SafeGetTo(j, "defaultDataset", &QueryRequest::set_default_dataset, q);
   SafeGetTo(j, "formatOptions", &QueryRequest::set_format_options, q);
   SafeGetTo(j, "labels", &QueryRequest::set_labels, q);
-  SafeGetTo(j, "queryResultsFormat", &QueryRequest::set_query_results_format, q);
+  SafeGetTo(j, "queryResultsFormat", &QueryRequest::set_query_results_format,
+            q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");

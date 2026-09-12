@@ -80,7 +80,7 @@ void AttributeFormatter(
       *out += "std::vector<std::uint8_t>:[" + absl::StrJoin(v, ", ") + "]";
     }
   };
-  opentelemetry::nostd::visit(Visitor{out}, kv.second);
+  std::visit(Visitor{out}, kv.second);
 }
 }  // namespace
 

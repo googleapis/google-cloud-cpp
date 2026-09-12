@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
-#include "google/cloud/internal/base64_transforms.h" 
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_cat.h"
@@ -220,17 +220,16 @@ void from_json(nlohmann::json const& j, ArrowSchema& a) {
     std::string b64 = j["serializedSchema"].get<std::string>();
     auto bytes = internal::UrlsafeBase64Decode(b64);
     if (bytes.ok()) {
-      a.serialized_schema.assign(
-          reinterpret_cast<char const*>(bytes->data()), bytes->size());
+      a.serialized_schema.assign(reinterpret_cast<char const*>(bytes->data()),
+                                 bytes->size());
     }
   }
 }
 
 void to_json(nlohmann::json& j, ArrowRecordBatch const& a) {
-  j = nlohmann::json{
-      {"serializedRecordBatch",
-       internal::UrlsafeBase64Encode(a.serialized_record_batch)},
-      {"rowCount", std::to_string(a.row_count)}};
+  j = nlohmann::json{{"serializedRecordBatch",
+                      internal::UrlsafeBase64Encode(a.serialized_record_batch)},
+                     {"rowCount", std::to_string(a.row_count)}};
 }
 
 void from_json(nlohmann::json const& j, ArrowRecordBatch& a) {

@@ -545,10 +545,8 @@ class QueryRequest {
     query_results_format_ = std::move(query_results_format);
     return *this;
   }
-  QueryRequest&& set_query_results_format(
-      std::string query_results_format) && {
-    return std::move(
-        set_query_results_format(std::move(query_results_format)));
+  QueryRequest&& set_query_results_format(std::string query_results_format) && {
+    return std::move(set_query_results_format(std::move(query_results_format)));
   }
 
   std::string DebugString(absl::string_view name,

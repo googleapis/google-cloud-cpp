@@ -167,8 +167,8 @@ PostQueryResults MakePostQueryResults() {
   expected.schema = MakeTable().schema;
   expected.total_bytes_processed = 1000;
   expected.total_rows = 1000;
-  expected.arrow_schema.serialized_schema = "test_schema_data";
-  expected.arrow_record_batch.serialized_record_batch = "test_batch_data";
+  expected.arrow_schema.serialized_schema = "testing_schema_data";
+  expected.arrow_record_batch.serialized_record_batch = "testing_batch_data";
   expected.arrow_record_batch.row_count = 10;
   expected.page_row_count = 10;
 
@@ -194,8 +194,8 @@ GetQueryResults MakeGetQueryResults() {
   expected.schema = MakeTable().schema;
   expected.total_bytes_processed = 1000;
   expected.total_rows = 1000;
-  expected.arrow_schema.serialized_schema = "test_schema_data";
-  expected.arrow_record_batch.serialized_record_batch = "test_batch_data";
+  expected.arrow_schema.serialized_schema = "testing_schema_data";
+  expected.arrow_record_batch.serialized_record_batch = "testing_batch_data";
   expected.arrow_record_batch.row_count = 10;
   expected.page_row_count = 10;
 
