@@ -153,7 +153,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
 RUN dnf makecache && dnf install -y gdb
 
 WORKDIR /var/tmp/sccache
-RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.15.0/sccache-v0.15.0-x86_64-unknown-linux-musl.tar.gz | \
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.17.0/sccache-v0.17.0-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \
