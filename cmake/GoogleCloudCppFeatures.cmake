@@ -372,6 +372,7 @@ macro (google_cloud_cpp_enable_cleanup)
     foreach (library IN LISTS GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
         string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
         if ("${library}" IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+            AND DEFINED ${feature_flag}
             AND NOT "${${feature_flag}}")
             message(
                 WARNING "Using ${feature_flag} is discouraged. Please use the"
