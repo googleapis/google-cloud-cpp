@@ -159,6 +159,7 @@ StorageConnectionImpl::StorageConnectionImpl(
     : stub_(std::move(stub)),
       options_(MergeOptions(std::move(options), stub_->options())) {
   if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
+    hedged_read_metrics_ = std::make_shared<HedgedReadMetrics>();
     // `DefaultOptions()` normally resolves these, but a connection can be
     // built without it, in which case the option is left at 0 ("automatic").
     // A pool sized 0 would accept reads it never runs, hanging the caller.
@@ -448,9 +449,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
   // `max_buffer` bounds the size of an individual read, which is only known
   // when the application calls `Read()`; the source applies it there.
   return std::unique_ptr<ObjectReadSource>(
-      std::make_unique<HedgedObjectReadSource>(read_pool_, hedge_pool_,
-                                               std::move(retry_source_factory),
-                                               delay, max_hedges, max_buffer));
+      std::make_unique<HedgedObjectReadSource>(
+          read_pool_, hedge_pool_, std::move(retry_source_factory), delay,
+          max_hedges, max_buffer, hedged_read_metrics_));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(

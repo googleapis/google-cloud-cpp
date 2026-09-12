@@ -32,6 +32,8 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+class HedgedReadMetrics;
+
 /**
  * Decorates a `StorageConnection` to retry each operation.
  */
@@ -190,6 +192,7 @@ class StorageConnectionImpl
   Options options_;
   std::shared_ptr<ThreadPool> read_pool_;
   std::shared_ptr<HedgingThreadPool> hedge_pool_;
+  std::shared_ptr<HedgedReadMetrics> hedged_read_metrics_;
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
