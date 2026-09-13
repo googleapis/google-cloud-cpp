@@ -24,12 +24,12 @@
 // See: https://github.com/googleapis/google-cloud-cpp/issues/16430
 #if defined(__SANITIZE_ADDRESS__) || defined(__SANITIZE_THREAD__) || \
     defined(__SANITIZE_MEMORY__) || defined(__SANITIZE_UNDEFINED__)
-#define GCS_TEST_HAVE_SANITIZER 1
+#define GOOGLE_CLOUD_CPP_HAVE_SANITIZER 1
 #elif defined(__has_feature)
 #if __has_feature(address_sanitizer) || __has_feature(thread_sanitizer) || \
     __has_feature(memory_sanitizer) ||                                     \
     __has_feature(undefined_behavior_sanitizer)
-#define GCS_TEST_HAVE_SANITIZER 1
+#define GOOGLE_CLOUD_CPP_HAVE_SANITIZER 1
 #endif
 #endif
 
