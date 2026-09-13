@@ -50,11 +50,15 @@ class ObjectFileMultiThreadedTest
   }
 
   static int ThreadCount() {
+#ifdef GOOGLE_CLOUD_CPP_TEST_HAVE_SANITIZER
+    return 4;
+#else
     static int const kCount = [] {
       auto c = static_cast<int>(std::thread::hardware_concurrency());
       return (std::max)(c / 2, 8);
     }();
     return kCount;
+#endif  // GOOGLE_CLOUD_CPP_TEST_HAVE_SANITIZER
   }
 
   struct Names {
@@ -157,7 +161,11 @@ class ObjectFileMultiThreadedTest
 
   std::mutex mu_;
   std::string bucket_name_;
+#ifdef GOOGLE_CLOUD_CPP_TEST_HAVE_SANITIZER
+  int object_count_ = 16;
+#else
   int object_count_ = 128;
+#endif  // GOOGLE_CLOUD_CPP_TEST_HAVE_SANITIZER
 };
 
 TEST_F(ObjectFileMultiThreadedTest, Download) {
