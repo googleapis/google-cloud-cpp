@@ -177,12 +177,14 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   }
 
   std::unique_lock<std::mutex> lk(mu_);
-  // Reuse an idle stream if possible.
+  // Reuse an idle stream if possible. A stream undergoing reconnection
+  // (resuming == true) must not be treated as idle, as it cannot accept new
+  // read ranges immediately.
   if (stream_manager_->ReuseIdleStreamToFront(
           [](StreamManager::Stream const& s) {
             auto const* rs = s.stream.get();
             return rs != nullptr && s.active_ranges.empty() &&
-                   !rs->write_pending;
+                   !rs->write_pending && !rs->resuming;
           })) {
     return;
   }
@@ -316,7 +318,18 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
                                              CacheStatusToString(cache_status));
   }
 
-  auto it = stream_manager_->GetLeastBusyStream();
+  // Prioritize selecting a healthy stream that is not undergoing reconnection.
+  // If all streams are currently reconnecting, fall back to the least busy
+  // resuming stream so that the range is queued in next_request and dispatched
+  // upon reconnection completion in OnResume().
+  StreamManager::StreamIterator it =
+      stream_manager_->GetLeastBusyStream([](StreamManager::Stream const& s) {
+        auto const* rs = s.stream.get();
+        return rs != nullptr && !rs->resuming;
+      });
+  if (it == stream_manager_->End()) {
+    it = stream_manager_->GetLeastBusyStream();
+  }
   std::shared_ptr<ReadStream> read_stream = it->stream;
   std::int64_t const id = ++read_id_generator_;
   it->active_ranges.emplace(id, range);
@@ -688,9 +701,11 @@ void ObjectDescriptorImpl::OnResume(
   google::storage::v2::BidiReadObjectRequest queued_request =
       std::move(it->stream->next_request);
 
-  // Replace the old stream with the new stream and reset policy/state.
+  // Replace the old stream with the new stream and preserve the existing
+  // resume policy so failure budgets and error counts are maintained across
+  // reconnects.
   std::shared_ptr<ReadStream> new_read_stream = std::make_shared<ReadStream>(
-      std::move(result->stream), resume_policy_prototype_->clone());
+      std::move(result->stream), std::move(it->stream->resume_policy));
   new_read_stream->resume_policy->OnStartSuccess();
   new_read_stream->write_pending = false;
   new_read_stream->read_pending = false;
@@ -739,11 +754,10 @@ bool ObjectDescriptorImpl::IsResumable(
     stream_manager_->CleanupDoneRanges(it_curr);
     return true;
   }
-  Status effective_status = status;
-  if (status.code() == StatusCode::kCancelled) {
-    effective_status = Status(StatusCode::kUnavailable, status.message());
-  }
-  return it->stream->resume_policy->OnFinish(effective_status) ==
+  // Pass the original status directly to the resume policy without rewriting
+  // status codes. This allows custom resume policies (e.g., detecting stall
+  // cancellations) to observe the exact failure cause.
+  return it->stream->resume_policy->OnFinish(status) ==
          storage::ResumePolicy::kContinue;
 }
 

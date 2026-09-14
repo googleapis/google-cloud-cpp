@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <cstdint>
 #include <functional>
+#include <limits>
 #include <list>
 #include <memory>
 #include <unordered_map>
@@ -89,18 +90,21 @@ class MultiStreamManager {
     return streams_.begin();
   }
 
-  StreamIterator GetLeastBusyStream() {
+  // Returns an iterator to the stream with the fewest active ranges matching
+  // the given predicate. Returns End() if no stream satisfies the predicate.
+  // Strict less-than ensures stability by preferring earlier (older) streams if
+  // tied.
+  template <typename Pred>
+  StreamIterator GetLeastBusyStream(Pred pred) {
     if (streams_.empty()) return streams_.end();
-    auto least_busy_stream_it = streams_.begin();
-    // Track min_ranges to avoid calling .size() repeatedly if possible,
-    // though for std::unordered_map .size() is O(1).
-    std::size_t min_ranges = least_busy_stream_it->active_ranges.size();
-    if (min_ranges == 0) return least_busy_stream_it;
+    StreamIterator least_busy_stream_it = streams_.end();
+    // Track min_ranges to avoid calling .size() repeatedly.
+    std::size_t min_ranges = (std::numeric_limits<std::size_t>::max)();
 
-    // Start checking from the second element
-    for (auto it = std::next(streams_.begin()); it != streams_.end(); ++it) {
-      // Strict less-than ensures stability (preferring older streams if tied)
-      auto size = it->active_ranges.size();
+    for (StreamIterator it = streams_.begin(); it != streams_.end(); ++it) {
+      if (!pred(*it)) continue;
+      std::size_t const size = it->active_ranges.size();
+      // Strict less-than ensures stability (preferring older streams if tied).
       if (size < min_ranges) {
         least_busy_stream_it = it;
         min_ranges = size;
@@ -108,6 +112,12 @@ class MultiStreamManager {
       }
     }
     return least_busy_stream_it;
+  }
+
+  // Overload of `GetLeastBusyStream` without predicate that selects the stream
+  // with the fewest active ranges across all managed streams.
+  StreamIterator GetLeastBusyStream() {
+    return GetLeastBusyStream([](Stream const&) { return true; });
   }
 
   StreamIterator AddStream(std::shared_ptr<StreamT> stream) {

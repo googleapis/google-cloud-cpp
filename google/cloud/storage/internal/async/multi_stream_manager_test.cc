@@ -101,6 +101,38 @@ TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
   EXPECT_EQ(it_least->active_ranges.size(), 1U);
 }
 
+/// @test Verifies that GetLeastBusyStream with a predicate filters candidates
+/// based on the provided predicate, correctly returning End() if no stream
+/// matches or the least busy stream among those that satisfy the predicate.
+TEST(MultiStreamManagerTest, GetLeastBusyStreamWithPredicate) {
+  auto mgr = MultiStreamManagerTest::MakeManager();
+  mgr.GetFirstStream()->stream->write_pending = true;
+
+  auto s1 = std::make_shared<FakeStream>();
+  auto s2 = std::make_shared<FakeStream>();
+  mgr.AddStream(s1);
+  Manager::StreamIterator it2 = mgr.AddStream(s2);
+
+  // s1 has 0 ranges, but write_pending = true.
+  s1->write_pending = true;
+  // s2 has 1 range, write_pending = false.
+  s2->write_pending = false;
+  it2->active_ranges.emplace(1, std::make_shared<FakeRange>());
+
+  // Predicate filtering out write_pending streams selects s2 even though it has
+  // more ranges than s1.
+  Manager::StreamIterator it_pred =
+      mgr.GetLeastBusyStream([](Manager::Stream const& s) {
+        return s.stream != nullptr && !s.stream->write_pending;
+      });
+  EXPECT_THAT(it_pred, ::testing::Eq(it2));
+
+  // If predicate matches no stream, returns End().
+  Manager::StreamIterator it_none =
+      mgr.GetLeastBusyStream([](Manager::Stream const&) { return false; });
+  EXPECT_THAT(it_none, ::testing::Eq(mgr.End()));
+}
+
 TEST(MultiStreamManagerTest, CleanupDoneRangesRemovesFinished) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   auto it = mgr.GetFirstStream();

@@ -51,8 +51,12 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AnyNumber;
 using ::testing::AtMost;
 using ::testing::ElementsAre;
+using ::testing::Eq;
+using ::testing::IsFalse;
+using ::testing::IsTrue;
 using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::ResultOf;
@@ -3633,6 +3637,266 @@ TEST(ObjectDescriptorImpl, ConcurrentReadPreservedAcrossMultipleResumeRetries) {
 
   tested->Cancel();
   read2.first.set_value(false);
+}
+
+/// @test Verify that a stream waiting for a reconnection is not offered as an
+/// "idle" stream, and that new reads are not parked on it.
+TEST(ObjectDescriptorImpl, ResumingStreamIsNotReusedAsIdleStream) {
+  AsyncSequencer<bool> sequencer;
+  AsyncSequencer<bool> factory_sequencer;
+  auto stream1 = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream1, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream1, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish[1]").then([](auto) {
+      return TransientError();
+    });
+  });
+  EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
+
+  auto stream2 = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream2, Read).WillRepeatedly([&sequencer]() {
+    return sequencer.PushBack("Read[2]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  // The read issued while stream 1 is reconnecting must be written to the
+  // healthy stream.
+  EXPECT_CALL(*stream2, Write)
+      .WillOnce([&sequencer](Request const&, grpc::WriteOptions) {
+        return sequencer.PushBack("Write[2]").then([](auto f) {
+          return f.get();
+        });
+      });
+  EXPECT_CALL(*stream2, Finish).Times(AtMost(1)).WillRepeatedly([&sequencer]() {
+    return sequencer.PushBack("Finish[2]").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*stream2, Cancel).Times(AtMost(1));
+
+  // The first factory call is the proactive background stream queued by
+  // `Start()`; it produces stream 2. Any later call (including the
+  // reconnection attempt for stream 1) fails, and the reconnection is left
+  // in flight for most of the test.
+  int factory_calls = 0;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillRepeatedly([&](Request const&) {
+    int const call = ++factory_calls;
+    char const* name = call == 1 ? "Factory[background]" : "Factory[resume]";
+    return factory_sequencer.PushBack(name).then(
+        [&stream2, call](auto f) -> StatusOr<OpenStreamResult> {
+          if (call != 1 || !f.get()) return TransientError();
+          return make_status_or(OpenStreamResult{
+              std::make_shared<OpenStream>(std::move(stream2)), Response{}});
+        });
+  });
+
+  auto tested = MakeTested(storage::LimitedErrorCountResumePolicy(3)(),
+                           factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream1)));
+
+  tested->Start(Response{});
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(read1.second, Eq("Read[1]"));
+  auto background = factory_sequencer.PopFrontWithName();
+  EXPECT_THAT(background.second, Eq("Factory[background]"));
+
+  // Stream 1 fails while it has no active ranges, e.g. the stall watchdog
+  // cancelled an idle stream. The descriptor starts a reconnection which does
+  // not complete yet, leaving the entry in the `resuming` state.
+  read1.first.set_value(false);
+  auto finish1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(finish1.second, Eq("Finish[1]"));
+  finish1.first.set_value(true);
+  auto reconnect = factory_sequencer.PopFrontWithName();
+  EXPECT_THAT(reconnect.second, Eq("Factory[resume]"));
+
+  // The application asks for an additional stream. The only entry is waiting
+  // to reconnect, so the descriptor must consume the background stream
+  // instead of reporting that it reused an idle one.
+  tested->MakeSubsequentStream();
+  background.first.set_value(true);
+  EXPECT_THAT(tested->StreamSize(), Eq(std::size_t{2}));
+
+  // The new read must go to the healthy stream. If it is queued on the
+  // reconnecting stream `Flush()` is skipped and nothing reaches the wire.
+  std::unique_ptr<storage::AsyncReaderConnection> reader =
+      tested->Read({0, 100});
+  EXPECT_THAT(reader, NotNull());
+  EXPECT_THAT(sequencer.empty(), IsFalse());
+
+  tested.reset();
+  reconnect.first.set_value(false);
+  while (!sequencer.empty()) sequencer.PopFront().set_value(false);
+  while (!factory_sequencer.empty()) {
+    factory_sequencer.PopFront().set_value(false);
+  }
+}
+
+/// @test Verify the resume policy is told the actual status of the stream.
+TEST(ObjectDescriptorImpl, ResumePolicyObservesCancelledStatus) {
+  AsyncSequencer<bool> sequencer;
+  std::optional<Status> policy_status;
+  auto prototype = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*prototype, clone).WillRepeatedly([&policy_status]() {
+    auto policy = std::make_unique<MockResumePolicy>();
+    EXPECT_CALL(*policy, OnStartSuccess).Times(AnyNumber());
+    EXPECT_CALL(*policy, OnFinish)
+        .WillRepeatedly([&policy_status](Status const& status) {
+          policy_status = status;
+          return storage::ResumePolicy::kStop;
+        });
+    return policy;
+  });
+
+  auto stream1 = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream1, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream1, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish[1]").then([](auto) {
+      return Status(StatusCode::kCancelled, "Stream stalled");
+    });
+  });
+  EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillRepeatedly([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      std::move(prototype), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream1)), options);
+
+  tested->Start(Response{});
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(read1.second, Eq("Read[1]"));
+  read1.first.set_value(false);
+
+  auto finish1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(finish1.second, Eq("Finish[1]"));
+  finish1.first.set_value(true);
+
+  EXPECT_THAT(policy_status.has_value(), IsTrue());
+  if (policy_status.has_value()) {
+    EXPECT_THAT(*policy_status,
+                StatusIs(StatusCode::kCancelled, "Stream stalled"));
+  }
+
+  tested.reset();
+  while (!sequencer.empty()) sequencer.PopFront().set_value(false);
+}
+
+/// @test Verify the resume budget is consumed across successful reconnects.
+TEST(ObjectDescriptorImpl, ResumeBudgetIsNotResetByASuccessfulReconnect) {
+  AsyncSequencer<bool> sequencer;
+  auto stream1 = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream1, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream1, Write)
+      .WillOnce([&sequencer](Request const&, grpc::WriteOptions) {
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
+  EXPECT_CALL(*stream1, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish[1]").then([](auto) {
+      return TransientError();
+    });
+  });
+  EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
+
+  auto stream2 = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream2, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[2]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream2, Write)
+      .Times(AtMost(1))
+      .WillRepeatedly([&sequencer](Request const&, grpc::WriteOptions) {
+        return sequencer.PushBack("Write[2]").then([](auto f) {
+          return f.get();
+        });
+      });
+  EXPECT_CALL(*stream2, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish[2]").then([](auto) {
+      return TransientError();
+    });
+  });
+  EXPECT_CALL(*stream2, Cancel).Times(AtMost(1));
+
+  // Reconnection attempts carry the ranges to resume; the proactive background
+  // streams do not. Only the former are counted.
+  int resume_attempts = 0;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly(
+          [&](Request const& request) -> future<StatusOr<OpenStreamResult>> {
+            if (request.read_ranges().empty()) {
+              return make_ready_future(
+                  StatusOr<OpenStreamResult>(TransientError()));
+            }
+            if (++resume_attempts != 1) {
+              return make_ready_future(
+                  StatusOr<OpenStreamResult>(TransientError()));
+            }
+            return make_ready_future(make_status_or(OpenStreamResult{
+                std::make_shared<OpenStream>(std::move(stream2)), Response{}}));
+          });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  // A budget of exactly one resume for the lifetime of this descriptor.
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      storage::LimitedErrorCountResumePolicy(1)(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream1)), options);
+
+  tested->Start(Response{});
+
+  // `Start()` leaves a read outstanding on stream 1.
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(read1.second, Eq("Read[1]"));
+
+  std::unique_ptr<storage::AsyncReaderConnection> reader =
+      tested->Read({0, 100});
+  EXPECT_THAT(reader, NotNull());
+  auto write1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(write1.second, Eq("Write[1]"));
+  write1.first.set_value(true);
+
+  // First failure: consumes the single resume allowed by the policy.
+  read1.first.set_value(false);
+  auto finish1 = sequencer.PopFrontWithName();
+  EXPECT_THAT(finish1.second, Eq("Finish[1]"));
+  finish1.first.set_value(true);
+  EXPECT_THAT(resume_attempts, Eq(1));
+
+  // Second failure, on the replacement stream. The budget is exhausted, so the
+  // descriptor must give up instead of reconnecting again.
+  auto read2 = sequencer.PopFrontWithName();
+  EXPECT_THAT(read2.second, Eq("Read[2]"));
+  read2.first.set_value(false);
+
+  auto finish2 = sequencer.PopFrontWithName();
+  EXPECT_THAT(finish2.second, Eq("Finish[2]"));
+  finish2.first.set_value(true);
+
+  EXPECT_THAT(resume_attempts, Eq(1));
+  EXPECT_THAT(tested->IsOpen(), IsFalse());
+
+  tested.reset();
+  while (!sequencer.empty()) sequencer.PopFront().set_value(false);
 }
 
 }  // namespace
