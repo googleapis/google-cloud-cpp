@@ -31,6 +31,7 @@ namespace {
 using ::testing::Eq;
 using ::testing::Ge;
 using ::testing::MatchesRegex;
+using ::testing::Ne;
 using ::testing::Optional;
 using ::testing::StrEq;
 
@@ -136,7 +137,7 @@ TEST(SpannerOperationContextFactoryTest,
                                      static_cast<std::size_t>(bytes_read));
   EXPECT_THAT(child_request_id,
               MatchesRegex("^1\\.[0-9a-f]{16}\\.7\\.0\\.2\\.1$"));
-  EXPECT_NE(child_request_id, "1.0123456789abcdef.7.0.2.1");
+  EXPECT_THAT(child_request_id, Ne("1.0123456789abcdef.7.0.2.1"));
 }
 #endif
 

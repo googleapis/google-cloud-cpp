@@ -777,11 +777,11 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
           return s;
         },
         current, request, __func__);
-    op_context.OnDone(response.status());
     if (selector->has_begin()) {
       if (response.ok()) {
         if (!response->has_transaction()) {
           selector = MissingTransactionStatus(__func__);
+          op_context.OnDone(selector.status());
           return selector.status();
         }
         selector->set_id(response->transaction().id());
@@ -799,6 +799,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
     if (!response.ok()) {
       auto status = std::move(response).status();
+      op_context.OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -816,6 +817,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
           params.keys, params.columns, data_boost, params.read_options));
     }
 
+    op_context.OnDone(Status{});
     return read_partitions;
   }
 }
@@ -1022,7 +1024,6 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
           return s;
         },
         *current, request, function_name);
-    op_context->OnDone(response.status());
     if (!response) {
       auto status = std::move(response).status();
       if (IsSessionNotFound(status)) session->set_bad();
@@ -1030,8 +1031,11 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     }
     return DmlResultSetSource::Create(std::move(*response));
   };
-  return ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
-                                    query_mode, std::move(retry_resume_fn));
+  auto result =
+      ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
+                                 query_mode, std::move(retry_resume_fn));
+  op_context->OnDone(result.status());
+  return result;
 }
 
 StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
@@ -1108,11 +1112,11 @@ ConnectionImpl::PartitionQueryImpl(
           return s;
         },
         current, request, __func__);
-    op_context.OnDone(response.status());
     if (selector->has_begin()) {
       if (response.ok()) {
         if (!response->has_transaction()) {
           selector = MissingTransactionStatus(__func__);
+          op_context.OnDone(selector.status());
           return selector.status();
         }
         selector->set_id(response->transaction().id());
@@ -1129,6 +1133,7 @@ ConnectionImpl::PartitionQueryImpl(
     }
     if (!response.ok()) {
       auto status = std::move(response).status();
+      op_context.OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -1140,6 +1145,7 @@ ConnectionImpl::PartitionQueryImpl(
           session->session_name(), partition.partition_token(),
           params.partition_options.data_boost, params.statement));
     }
+    op_context.OnDone(Status{});
     return query_partitions;
   }
 }
@@ -1190,7 +1196,6 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
           return s;
         },
         current, request, __func__);
-    op_context.OnDone(response.status());
     if (response.ok() && response->has_precommit_token()) {
       ctx.precommit_token = response->precommit_token();
     }
@@ -1198,6 +1203,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
       if (response.ok() && response->result_sets_size() > 0) {
         if (!response->result_sets(0).metadata().has_transaction()) {
           selector = MissingTransactionStatus(__func__);
+          op_context.OnDone(selector.status());
           return selector.status();
         }
         selector->set_id(
@@ -1215,6 +1221,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     }
     if (!response) {
       auto status = std::move(response).status();
+      op_context.OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -1223,6 +1230,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     for (auto const& result_set : response->result_sets()) {
       result.stats.push_back({result_set.stats().row_count_exact()});
     }
+    op_context.OnDone(result.status);
     return result;
   }
 }
@@ -1362,7 +1370,6 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
               return s;
             },
             current, request, func);
-        op_context.OnDone(sor.status());
         return sor;
       };
 
@@ -1376,6 +1383,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     response = retry_loop_fn(ctx.precommit_token);
     if (!response) {
       auto status = std::move(response).status();
+      op_context.OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -1385,6 +1393,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     }
   } while (response->has_precommit_token());
 
+  op_context.OnDone(response.status());
   spanner::CommitResult r;
   r.commit_timestamp = MakeTimestamp(response->commit_timestamp());
   if (response->has_commit_stats()) {

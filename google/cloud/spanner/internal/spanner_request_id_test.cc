@@ -31,6 +31,7 @@ using ::testing::Eq;
 using ::testing::Ge;
 using ::testing::Gt;
 using ::testing::MatchesRegex;
+using ::testing::Ne;
 
 TEST(SpannerRequestIdTest, ProcessRandomIdFormat) {
   std::string const id1 = ProcessRandomId();
@@ -101,7 +102,7 @@ TEST(SpannerRequestIdTest, ProcessRandomIdForkRegeneration) {
   ASSERT_THAT(bytes_read, Eq(16));
   std::string const child_id(buffer, static_cast<std::size_t>(bytes_read));
   EXPECT_THAT(child_id, MatchesRegex("^[0-9a-f]{16}$"));
-  EXPECT_NE(child_id, parent_id);
+  EXPECT_THAT(child_id, Ne(parent_id));
 }
 #endif
 
