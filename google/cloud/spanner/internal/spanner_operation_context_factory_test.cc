@@ -16,6 +16,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
+#include <regex>
 #include <string>
 #ifndef _WIN32
 #include <sys/wait.h>
@@ -30,10 +31,17 @@ namespace {
 
 using ::testing::Eq;
 using ::testing::Ge;
-using ::testing::MatchesRegex;
 using ::testing::Ne;
 using ::testing::Optional;
 using ::testing::StrEq;
+
+MATCHER_P(MatchesStdRegex, pattern, "") {
+  if (std::regex_match(arg, std::regex(pattern))) {
+    return true;
+  }
+  *result_listener << "which does not match regex \"" << pattern << "\"";
+  return false;
+}
 
 TEST(SpannerOperationContextFactoryTest, CounterIsolationAndRpcNames) {
   auto process_random_id =
@@ -136,7 +144,7 @@ TEST(SpannerOperationContextFactoryTest,
   std::string const child_request_id(buffer,
                                      static_cast<std::size_t>(bytes_read));
   EXPECT_THAT(child_request_id,
-              MatchesRegex("^1\\.[0-9a-f]{16}\\.7\\.0\\.2\\.1$"));
+              MatchesStdRegex(R"(^1\.[0-9a-f]{16}\.7\.0\.2\.1$)"));
   EXPECT_THAT(child_request_id, Ne("1.0123456789abcdef.7.0.2.1"));
 }
 #endif

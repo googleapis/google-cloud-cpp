@@ -1513,18 +1513,22 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       std::move(factory), std::move(updater), std::move(request));
   struct BatchWriteGuard {
-    std::shared_ptr<OperationContext> op_context;
-    Status final_status =
-        internal::CancelledError("Stream cancelled", GCP_ERROR_INFO());
-    bool called = false;
+    explicit BatchWriteGuard(std::shared_ptr<OperationContext> context)
+        : op_context(std::move(context)),
+          final_status(
+              internal::CancelledError("Stream cancelled", GCP_ERROR_INFO())) {}
+
     ~BatchWriteGuard() {
       if (!called && op_context) {
         op_context->OnDone(final_status);
       }
     }
+
+    std::shared_ptr<OperationContext> op_context;
+    Status final_status;
+    bool called = false;
   };
-  auto guard = std::make_shared<BatchWriteGuard>();
-  guard->op_context = op_context;
+  auto guard = std::make_shared<BatchWriteGuard>(op_context);
   // Because there is no enclosing client-side transaction, we move the
   // session into the stream range so that it is not returned to the pool
   // until the stream is exhausted.

@@ -30,12 +30,19 @@ namespace {
 using ::testing::Eq;
 using ::testing::Ge;
 using ::testing::Gt;
-using ::testing::MatchesRegex;
 using ::testing::Ne;
+
+MATCHER_P(MatchesStdRegex, pattern, "") {
+  if (std::regex_match(arg, std::regex(pattern))) {
+    return true;
+  }
+  *result_listener << "which does not match regex \"" << pattern << "\"";
+  return false;
+}
 
 TEST(SpannerRequestIdTest, ProcessRandomIdFormat) {
   std::string const id1 = ProcessRandomId();
-  EXPECT_THAT(id1, MatchesRegex("^[0-9a-f]{16}$"));
+  EXPECT_THAT(id1, MatchesStdRegex("^[0-9a-f]{16}$"));
   std::string const id2 = ProcessRandomId();
   EXPECT_THAT(id2, Eq(id1));
 }
@@ -71,7 +78,7 @@ TEST(SpannerRequestIdTest, FormatSpannerRequestIdDirect) {
 TEST(SpannerRequestIdTest, ProcessRandomIdForkRegeneration) {
   // Ensure the parent has already initialized ProcessRandomId
   std::string const parent_id = ProcessRandomId();
-  ASSERT_THAT(parent_id, MatchesRegex("^[0-9a-f]{16}$"));
+  ASSERT_THAT(parent_id, MatchesStdRegex("^[0-9a-f]{16}$"));
 
   int pipe_fds[2];
   ASSERT_THAT(pipe(pipe_fds), Eq(0));
@@ -101,7 +108,7 @@ TEST(SpannerRequestIdTest, ProcessRandomIdForkRegeneration) {
 
   ASSERT_THAT(bytes_read, Eq(16));
   std::string const child_id(buffer, static_cast<std::size_t>(bytes_read));
-  EXPECT_THAT(child_id, MatchesRegex("^[0-9a-f]{16}$"));
+  EXPECT_THAT(child_id, MatchesStdRegex("^[0-9a-f]{16}$"));
   EXPECT_THAT(child_id, Ne(parent_id));
 }
 #endif
