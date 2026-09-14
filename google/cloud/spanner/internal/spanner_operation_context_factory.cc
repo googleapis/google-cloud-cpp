@@ -61,108 +61,98 @@ DefaultSpannerOperationContextFactory::NextBackgroundRequestIndex() {
   return next_background_request_index_.fetch_add(1, std::memory_order_relaxed);
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::CreateSession() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "CreateSession");
+OperationContext DefaultSpannerOperationContextFactory::CreateSession() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "CreateSession");
 }
 
-SpannerOperationContext
-DefaultSpannerOperationContextFactory::BatchCreateSessions() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "BatchCreateSessions");
+OperationContext DefaultSpannerOperationContextFactory::BatchCreateSessions() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "BatchCreateSessions");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::GetSession() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "GetSession");
+OperationContext DefaultSpannerOperationContextFactory::GetSession() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(), "GetSession");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::ListSessions() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "ListSessions");
+OperationContext DefaultSpannerOperationContextFactory::ListSessions() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "ListSessions");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::DeleteSession() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "DeleteSession");
+OperationContext DefaultSpannerOperationContextFactory::DeleteSession() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "DeleteSession");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::ExecuteSql() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "ExecuteSql");
+OperationContext DefaultSpannerOperationContextFactory::ExecuteSql() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(), "ExecuteSql");
 }
 
-SpannerOperationContext
-DefaultSpannerOperationContextFactory::ExecuteStreamingSql() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "ExecuteStreamingSql");
+OperationContext DefaultSpannerOperationContextFactory::ExecuteStreamingSql() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "ExecuteStreamingSql");
 }
 
-SpannerOperationContext
-DefaultSpannerOperationContextFactory::ExecuteBatchDml() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "ExecuteBatchDml");
+OperationContext DefaultSpannerOperationContextFactory::ExecuteBatchDml() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "ExecuteBatchDml");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::StreamingRead() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "StreamingRead");
+OperationContext DefaultSpannerOperationContextFactory::StreamingRead() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "StreamingRead");
 }
 
-SpannerOperationContext
-DefaultSpannerOperationContextFactory::BeginTransaction() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "BeginTransaction");
+OperationContext DefaultSpannerOperationContextFactory::BeginTransaction() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "BeginTransaction");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::Commit() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "Commit");
+OperationContext DefaultSpannerOperationContextFactory::Commit() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(), "Commit");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::Rollback() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "Rollback");
+OperationContext DefaultSpannerOperationContextFactory::Rollback() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(), "Rollback");
 }
 
-SpannerOperationContext
-DefaultSpannerOperationContextFactory::PartitionQuery() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "PartitionQuery");
+OperationContext DefaultSpannerOperationContextFactory::PartitionQuery() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "PartitionQuery");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::PartitionRead() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "PartitionRead");
+OperationContext DefaultSpannerOperationContextFactory::PartitionRead() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(),
+                          "PartitionRead");
 }
 
-SpannerOperationContext DefaultSpannerOperationContextFactory::BatchWrite() {
-  return SpannerOperationContext(StaticPrefix(), NextUserRequestIndex(),
-                                 "BatchWrite");
+OperationContext DefaultSpannerOperationContextFactory::BatchWrite() {
+  return OperationContext(StaticPrefix(), NextUserRequestIndex(), "BatchWrite");
 }
 
-SpannerOperationContext
+OperationContext
 DefaultSpannerOperationContextFactory::BackgroundCreateSession() {
-  return SpannerOperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
-                                 "BackgroundCreateSession");
+  return OperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
+                          "BackgroundCreateSession");
 }
 
-SpannerOperationContext
+OperationContext
 DefaultSpannerOperationContextFactory::BackgroundBatchCreateSessions() {
-  return SpannerOperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
-                                 "BackgroundBatchCreateSessions");
+  return OperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
+                          "BackgroundBatchCreateSessions");
 }
 
-SpannerOperationContext
+OperationContext
 DefaultSpannerOperationContextFactory::BackgroundDeleteSession() {
-  return SpannerOperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
-                                 "BackgroundDeleteSession");
+  return OperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
+                          "BackgroundDeleteSession");
 }
 
-SpannerOperationContext
+OperationContext
 DefaultSpannerOperationContextFactory::BackgroundRefreshSession() {
-  return SpannerOperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
-                                 "BackgroundRefreshSession");
+  return OperationContext(StaticPrefix(), NextBackgroundRequestIndex(),
+                          "BackgroundRefreshSession");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

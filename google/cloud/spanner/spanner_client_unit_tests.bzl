@@ -38,7 +38,7 @@ spanner_client_unit_tests = [
     "internal/route_to_leader_test.cc",
     "internal/session_pool_test.cc",
     "internal/spanner_operation_context_factory_test.cc",
-    "internal/spanner_operation_context_test.cc",
+    "internal/operation_context_test.cc",
     "internal/spanner_request_id_test.cc",
     "internal/spanner_stub_factory_test.cc",
     "internal/status_utils_test.cc",

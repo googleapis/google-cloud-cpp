@@ -275,7 +275,7 @@ TEST(DirectPathProberTest, ProbeWithAltsNegotiatedIpv4) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -299,7 +299,7 @@ TEST(DirectPathProberTest, ProbeWithAltsNegotiatedIpv6) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -323,7 +323,7 @@ TEST(DirectPathProberTest, ProbeWithAltsNegotiatedUnknownPeer) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -348,7 +348,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv4) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -372,7 +372,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv4MaxSubnet) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -396,7 +396,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv6) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -421,7 +421,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedNonDirectPathIpv4) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -445,7 +445,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDifferentOctetIpv4) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -469,7 +469,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDifferentFirstOctetIpv4) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -493,7 +493,7 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedInvalidIpv4) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });
@@ -517,7 +517,7 @@ TEST(DirectPathProberTest, ProbeWithPeerUnauthenticated) {
   EXPECT_CALL(*mock_stub, PingAndWarm)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::PingAndWarmRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::PingAndWarmResponse response;
         return response;
       });

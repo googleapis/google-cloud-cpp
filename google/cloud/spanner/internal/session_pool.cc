@@ -347,7 +347,7 @@ SessionPool::CreateMultiplexedSessionAsync(
   if (!role.empty()) session->set_creator_role(role);
   session->set_multiplexed(true);
 
-  auto op_context = std::make_shared<SpannerOperationContext>(
+  auto op_context = std::make_shared<OperationContext>(
       context_factory_->BackgroundCreateSession());
   op_context->BindChannel(stub_and_channel.channel_id);
   auto const& stub = stub_and_channel.stub;
@@ -695,7 +695,7 @@ SessionPool::AsyncBatchCreateSessions(
     request.mutable_session_template()->set_creator_role(role);
   }
   request.set_session_count(std::int32_t{num_sessions});
-  auto op_context = std::make_shared<SpannerOperationContext>(
+  auto op_context = std::make_shared<OperationContext>(
       context_factory_->BackgroundBatchCreateSessions());
   op_context->BindChannel(channel_id);
   return google::cloud::internal::AsyncRetryLoop(
@@ -728,7 +728,7 @@ future<Status> SessionPool::AsyncDeleteSession(
     std::uint32_t channel_id, std::string session_name) {
   google::spanner::v1::DeleteSessionRequest request;
   request.set_name(std::move(session_name));
-  auto op_context = std::make_shared<SpannerOperationContext>(
+  auto op_context = std::make_shared<OperationContext>(
       context_factory_->BackgroundDeleteSession());
   op_context->BindChannel(channel_id);
   return google::cloud::internal::AsyncRetryLoop(
@@ -763,7 +763,7 @@ SessionPool::AsyncRefreshSession(CompletionQueue& cq,
   request.set_sql("SELECT 1;");
   request.mutable_request_options()->set_priority(
       google::spanner::v1::RequestOptions::PRIORITY_LOW);
-  auto op_context = std::make_shared<SpannerOperationContext>(
+  auto op_context = std::make_shared<OperationContext>(
       context_factory_->BackgroundRefreshSession());
   op_context->BindChannel(channel_id);
   return google::cloud::internal::AsyncRetryLoop(

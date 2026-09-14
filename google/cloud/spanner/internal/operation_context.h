@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPERATION_CONTEXT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPERATION_CONTEXT_H
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/operation_context.h"
@@ -29,19 +29,17 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SpannerOperationContext
-    : public google::cloud::internal::OperationContext {
+class OperationContext : public google::cloud::internal::OperationContext {
  public:
-  SpannerOperationContext(std::shared_ptr<std::string const> static_prefix,
-                          std::uint64_t request_index,
-                          std::string_view rpc_name);
+  OperationContext(std::shared_ptr<std::string const> static_prefix,
+                   std::uint64_t request_index, std::string_view rpc_name);
 
   // Move operations transfer context state across threads.
-  SpannerOperationContext(SpannerOperationContext&& other) noexcept;
-  SpannerOperationContext& operator=(SpannerOperationContext&& other) noexcept;
+  OperationContext(OperationContext&& other) noexcept;
+  OperationContext& operator=(OperationContext&& other) noexcept;
 
-  SpannerOperationContext(SpannerOperationContext const&) = delete;
-  SpannerOperationContext& operator=(SpannerOperationContext const&) = delete;
+  OperationContext(OperationContext const&) = delete;
+  OperationContext& operator=(OperationContext const&) = delete;
 
   // Binds the physical gRPC channel index (0..N-1) for subsequent attempts.
   void BindChannel(std::uint32_t channel_id);
@@ -81,4 +79,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPERATION_CONTEXT_H

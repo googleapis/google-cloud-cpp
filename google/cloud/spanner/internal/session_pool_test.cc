@@ -167,7 +167,7 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       google::cloud::internal::OperationContext&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeMultiplexedSession("multiplexed");
@@ -195,7 +195,7 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       google::cloud::internal::OperationContext&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeMultiplexedSession("multiplexed");
@@ -224,7 +224,7 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       google::cloud::internal::OperationContext&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
@@ -253,7 +253,7 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       google::cloud::internal::OperationContext&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
@@ -297,7 +297,7 @@ TEST_F(SessionPoolTest, ReuseSession) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::spanner::v1::CreateSessionRequest const&,
-                   google::cloud::internal::OperationContext&) {
+                   spanner_internal::OperationContext&) {
         return MakeMultiplexedSession("multiplexed");
       });
 
@@ -324,7 +324,7 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
       .WillOnce(
           [labels](grpc::ClientContext&, Options const&,
                    google::spanner::v1::CreateSessionRequest const& request,
-                   google::cloud::internal::OperationContext&) {
+                   spanner_internal::OperationContext&) {
             auto const& request_labels = request.session().labels();
             EXPECT_EQ((std::map<std::string, std::string>(
                           request_labels.begin(), request_labels.end())),
@@ -350,7 +350,7 @@ TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([role](grpc::ClientContext&, Options const&,
                        google::spanner::v1::CreateSessionRequest const& request,
-                       google::cloud::internal::OperationContext&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_EQ(request.session().creator_role(), role);
         return MakeMultiplexedSession("multiplexed");
       });

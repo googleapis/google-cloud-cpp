@@ -60,7 +60,7 @@ void ExtractSubrangeAndAppend(Values& src, int start, Values& dst) {
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
 PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader,
-    std::shared_ptr<SpannerOperationContext> operation_context) {
+    std::shared_ptr<OperationContext> operation_context) {
   std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
       std::move(reader), std::move(operation_context)));
 
@@ -89,7 +89,7 @@ PartialResultSetSource::Create(
 
 PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader,
-    std::shared_ptr<SpannerOperationContext> operation_context)
+    std::shared_ptr<OperationContext> operation_context)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
       operation_context_(std::move(operation_context)),

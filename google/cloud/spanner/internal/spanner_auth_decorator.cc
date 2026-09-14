@@ -37,7 +37,7 @@ SpannerAuth::SpannerAuth(
 StatusOr<google::spanner::v1::Session> SpannerAuth::CreateSession(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::CreateSessionRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSession(context, options, request, operation_context);
@@ -47,7 +47,7 @@ StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 SpannerAuth::BatchCreateSessions(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::BatchCreateSessionsRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchCreateSessions(context, options, request,
@@ -57,7 +57,7 @@ SpannerAuth::BatchCreateSessions(
 Status SpannerAuth::DeleteSession(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::DeleteSessionRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSession(context, options, request, operation_context);
@@ -66,7 +66,7 @@ Status SpannerAuth::DeleteSession(
 StatusOr<google::spanner::v1::ResultSet> SpannerAuth::ExecuteSql(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExecuteSql(context, options, request, operation_context);
@@ -77,8 +77,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 SpannerAuth::ExecuteStreamingSql(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::PartialResultSet>;
   auto status = auth_->ConfigureContext(*context);
@@ -91,7 +90,7 @@ StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 SpannerAuth::ExecuteBatchDml(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::ExecuteBatchDmlRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExecuteBatchDml(context, options, request, operation_context);
@@ -102,8 +101,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 SpannerAuth::StreamingRead(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::ReadRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::PartialResultSet>;
   auto status = auth_->ConfigureContext(*context);
@@ -115,7 +113,7 @@ SpannerAuth::StreamingRead(
 StatusOr<google::spanner::v1::Transaction> SpannerAuth::BeginTransaction(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::BeginTransactionRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BeginTransaction(context, options, request, operation_context);
@@ -124,7 +122,7 @@ StatusOr<google::spanner::v1::Transaction> SpannerAuth::BeginTransaction(
 StatusOr<google::spanner::v1::CommitResponse> SpannerAuth::Commit(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::CommitRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Commit(context, options, request, operation_context);
@@ -133,7 +131,7 @@ StatusOr<google::spanner::v1::CommitResponse> SpannerAuth::Commit(
 Status SpannerAuth::Rollback(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::RollbackRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Rollback(context, options, request, operation_context);
@@ -142,7 +140,7 @@ Status SpannerAuth::Rollback(
 StatusOr<google::spanner::v1::PartitionResponse> SpannerAuth::PartitionQuery(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::PartitionQueryRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PartitionQuery(context, options, request, operation_context);
@@ -151,7 +149,7 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerAuth::PartitionQuery(
 StatusOr<google::spanner::v1::PartitionResponse> SpannerAuth::PartitionRead(
     grpc::ClientContext& context, Options const& options,
     google::spanner::v1::PartitionReadRequest const& request,
-    google::cloud::internal::OperationContext& operation_context) {
+    spanner_internal::OperationContext& operation_context) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PartitionRead(context, options, request, operation_context);
@@ -162,8 +160,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 SpannerAuth::BatchWrite(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::BatchWriteRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::BatchWriteResponse>;
   auto status = auth_->ConfigureContext(*context);
@@ -177,8 +174,7 @@ std::unique_ptr<
 SpannerAuth::FetchCacheUpdate(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::spanner::v1::FetchCacheUpdateRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::spanner::v1::CacheUpdate>;
   auto status = auth_->ConfigureContext(*context);
@@ -192,8 +188,7 @@ future<StatusOr<google::spanner::v1::Session>> SpannerAuth::AsyncCreateSession(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::CreateSessionRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child = child_, options = std::move(options), request,
              operation_context = std::move(operation_context)](
@@ -216,8 +211,7 @@ SpannerAuth::AsyncBatchCreateSessions(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::BatchCreateSessionsRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child = child_, options = std::move(options), request,
              operation_context = std::move(operation_context)](
@@ -240,8 +234,7 @@ future<Status> SpannerAuth::AsyncDeleteSession(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::DeleteSessionRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child = child_, options = std::move(options), request,
              operation_context = std::move(operation_context)](
@@ -260,8 +253,7 @@ future<StatusOr<google::spanner::v1::ResultSet>> SpannerAuth::AsyncExecuteSql(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::ExecuteSqlRequest const& request,
-    std::shared_ptr<google::cloud::internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<spanner_internal::OperationContext> operation_context) {
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child = child_, options = std::move(options), request,
              operation_context = std::move(operation_context)](

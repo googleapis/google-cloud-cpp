@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_FACTORY_H
 
-#include "google/cloud/spanner/internal/spanner_operation_context.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/version.h"
 #include <atomic>
 #include <cstdint>
@@ -36,28 +36,28 @@ class SpannerOperationContextFactory {
   virtual ~SpannerOperationContextFactory() = default;
 
   // User-facing RPC context factories (use next_user_request_index_)
-  virtual SpannerOperationContext CreateSession() = 0;
-  virtual SpannerOperationContext BatchCreateSessions() = 0;
-  virtual SpannerOperationContext GetSession() = 0;
-  virtual SpannerOperationContext ListSessions() = 0;
-  virtual SpannerOperationContext DeleteSession() = 0;
-  virtual SpannerOperationContext ExecuteSql() = 0;
-  virtual SpannerOperationContext ExecuteStreamingSql() = 0;
-  virtual SpannerOperationContext ExecuteBatchDml() = 0;
-  virtual SpannerOperationContext StreamingRead() = 0;
-  virtual SpannerOperationContext BeginTransaction() = 0;
-  virtual SpannerOperationContext Commit() = 0;
-  virtual SpannerOperationContext Rollback() = 0;
-  virtual SpannerOperationContext PartitionQuery() = 0;
-  virtual SpannerOperationContext PartitionRead() = 0;
-  virtual SpannerOperationContext BatchWrite() = 0;
+  virtual OperationContext CreateSession() = 0;
+  virtual OperationContext BatchCreateSessions() = 0;
+  virtual OperationContext GetSession() = 0;
+  virtual OperationContext ListSessions() = 0;
+  virtual OperationContext DeleteSession() = 0;
+  virtual OperationContext ExecuteSql() = 0;
+  virtual OperationContext ExecuteStreamingSql() = 0;
+  virtual OperationContext ExecuteBatchDml() = 0;
+  virtual OperationContext StreamingRead() = 0;
+  virtual OperationContext BeginTransaction() = 0;
+  virtual OperationContext Commit() = 0;
+  virtual OperationContext Rollback() = 0;
+  virtual OperationContext PartitionQuery() = 0;
+  virtual OperationContext PartitionRead() = 0;
+  virtual OperationContext BatchWrite() = 0;
 
   // Background maintenance context factories (use
   // next_background_request_index_)
-  virtual SpannerOperationContext BackgroundCreateSession() = 0;
-  virtual SpannerOperationContext BackgroundBatchCreateSessions() = 0;
-  virtual SpannerOperationContext BackgroundDeleteSession() = 0;
-  virtual SpannerOperationContext BackgroundRefreshSession() = 0;
+  virtual OperationContext BackgroundCreateSession() = 0;
+  virtual OperationContext BackgroundBatchCreateSessions() = 0;
+  virtual OperationContext BackgroundDeleteSession() = 0;
+  virtual OperationContext BackgroundRefreshSession() = 0;
 };
 
 class DefaultSpannerOperationContextFactory
@@ -68,26 +68,26 @@ class DefaultSpannerOperationContextFactory
       std::uint64_t client_id,
       std::shared_ptr<std::string const> process_random_id);
 
-  SpannerOperationContext CreateSession() override;
-  SpannerOperationContext BatchCreateSessions() override;
-  SpannerOperationContext GetSession() override;
-  SpannerOperationContext ListSessions() override;
-  SpannerOperationContext DeleteSession() override;
-  SpannerOperationContext ExecuteSql() override;
-  SpannerOperationContext ExecuteStreamingSql() override;
-  SpannerOperationContext ExecuteBatchDml() override;
-  SpannerOperationContext StreamingRead() override;
-  SpannerOperationContext BeginTransaction() override;
-  SpannerOperationContext Commit() override;
-  SpannerOperationContext Rollback() override;
-  SpannerOperationContext PartitionQuery() override;
-  SpannerOperationContext PartitionRead() override;
-  SpannerOperationContext BatchWrite() override;
+  OperationContext CreateSession() override;
+  OperationContext BatchCreateSessions() override;
+  OperationContext GetSession() override;
+  OperationContext ListSessions() override;
+  OperationContext DeleteSession() override;
+  OperationContext ExecuteSql() override;
+  OperationContext ExecuteStreamingSql() override;
+  OperationContext ExecuteBatchDml() override;
+  OperationContext StreamingRead() override;
+  OperationContext BeginTransaction() override;
+  OperationContext Commit() override;
+  OperationContext Rollback() override;
+  OperationContext PartitionQuery() override;
+  OperationContext PartitionRead() override;
+  OperationContext BatchWrite() override;
 
-  SpannerOperationContext BackgroundCreateSession() override;
-  SpannerOperationContext BackgroundBatchCreateSessions() override;
-  SpannerOperationContext BackgroundDeleteSession() override;
-  SpannerOperationContext BackgroundRefreshSession() override;
+  OperationContext BackgroundCreateSession() override;
+  OperationContext BackgroundBatchCreateSessions() override;
+  OperationContext BackgroundDeleteSession() override;
+  OperationContext BackgroundRefreshSession() override;
 
  private:
   std::shared_ptr<std::string const> StaticPrefix();

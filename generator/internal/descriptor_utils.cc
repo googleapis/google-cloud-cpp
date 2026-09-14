@@ -854,23 +854,21 @@ VarsDictionary CreateServiceVars(
       vars.find("experimental_operation_context");
   if (experimental_operation_context != vars.end() &&
       experimental_operation_context->second == "true") {
+    auto const& ns = vars.find("product_internal_namespace")->second;
     vars["op_ctx_decl"] =
-        ",\n      google::cloud::internal::OperationContext& "
-        "operation_context";
+        absl::StrCat(",\n      ", ns, "::OperationContext& operation_context");
     vars["op_ctx_arg"] = ", operation_context";
     vars["op_ctx_cap"] = ", &operation_context";
     vars["op_ctx_stub_decl"] =
-        ",\n    google::cloud::internal::OperationContext&";
+        absl::StrCat(",\n    ", ns, "::OperationContext&");
     vars["op_ctx_shared_decl"] =
-        ",\n      "
-        "std::shared_ptr<google::cloud::internal::OperationContext> "
-        "operation_context";
+        absl::StrCat(",\n      std::shared_ptr<", ns,
+                     "::OperationContext> operation_context");
     vars["op_ctx_shared_arg"] = ", std::move(operation_context)";
     vars["op_ctx_shared_cap"] =
         ", operation_context = std::move(operation_context)";
     vars["op_ctx_shared_stub_decl"] =
-        ",\n    "
-        "std::shared_ptr<google::cloud::internal::OperationContext>";
+        absl::StrCat(",\n    std::shared_ptr<", ns, "::OperationContext>");
   } else {
     vars["op_ctx_decl"] = "";
     vars["op_ctx_arg"] = "";

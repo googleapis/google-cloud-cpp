@@ -85,9 +85,10 @@ Status StubGenerator::GenerateHeader() {
   HeaderProtobufGenCodeIncludes(
       {vars("proto_grpc_header_path"),
        include_lro_header ? "google/longrunning/operations.grpc.pb.h" : ""});
-  HeaderLocalIncludes({HasExperimentalOperationContext()
-                           ? "google/cloud/internal/operation_context.h"
-                           : ""});
+  HeaderLocalIncludes(
+      {HasExperimentalOperationContext()
+           ? absl::StrCat(vars("product_path"), "internal/operation_context.h")
+           : ""});
   HeaderSystemIncludes({"memory", "utility"});
   HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);

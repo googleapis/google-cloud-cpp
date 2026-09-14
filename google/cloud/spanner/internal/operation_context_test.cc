@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/spanner_operation_context.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -31,7 +31,7 @@ using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::StrEq;
 
-class SpannerOperationContextTest : public ::testing::Test {
+class OperationContextTest : public ::testing::Test {
  protected:
   std::multimap<std::string, std::string> GetMetadata(
       grpc::ClientContext& context) {
@@ -41,10 +41,10 @@ class SpannerOperationContextTest : public ::testing::Test {
   testing_util::ValidateMetadataFixture validate_metadata_fixture_;
 };
 
-TEST_F(SpannerOperationContextTest, PreCallSetsRequestIdHeader) {
+TEST_F(OperationContextTest, PreCallSetsRequestIdHeader) {
   auto static_prefix =
       std::make_shared<std::string const>("1.0123456789abcdef.1.");
-  SpannerOperationContext op_context(static_prefix, 42, "ExecuteSql");
+  OperationContext op_context(static_prefix, 42, "ExecuteSql");
 
   EXPECT_THAT(op_context.request_index(), Eq(42ULL));
   EXPECT_THAT(op_context.attempt_index(), Eq(0U));
@@ -79,10 +79,10 @@ TEST_F(SpannerOperationContextTest, PreCallSetsRequestIdHeader) {
                                       "1.0123456789abcdef.1.3.42.2")));
 }
 
-TEST_F(SpannerOperationContextTest, MoveConstructAndAssign) {
+TEST_F(OperationContextTest, MoveConstructAndAssign) {
   auto static_prefix =
       std::make_shared<std::string const>("1.0123456789abcdef.1.");
-  SpannerOperationContext op_context(static_prefix, 10, "Commit");
+  OperationContext op_context(static_prefix, 10, "Commit");
   op_context.BindChannel(2);
 
   grpc::ClientContext context1;
@@ -90,7 +90,7 @@ TEST_F(SpannerOperationContextTest, MoveConstructAndAssign) {
   EXPECT_THAT(op_context.attempt_index(), Eq(1U));
 
   // Move construct
-  SpannerOperationContext moved_context(std::move(op_context));
+  OperationContext moved_context(std::move(op_context));
   EXPECT_THAT(moved_context.request_index(), Eq(10ULL));
   EXPECT_THAT(moved_context.channel_id(), Eq(2U));
   EXPECT_THAT(moved_context.attempt_index(), Eq(1U));
@@ -99,7 +99,7 @@ TEST_F(SpannerOperationContextTest, MoveConstructAndAssign) {
               Optional(Eq("1.0123456789abcdef.1.2.10.1")));
 
   // Move assign
-  SpannerOperationContext target_context(static_prefix, 99, "Rollback");
+  OperationContext target_context(static_prefix, 99, "Rollback");
   target_context = std::move(moved_context);
   EXPECT_THAT(target_context.request_index(), Eq(10ULL));
   EXPECT_THAT(target_context.channel_id(), Eq(2U));
@@ -109,10 +109,10 @@ TEST_F(SpannerOperationContextTest, MoveConstructAndAssign) {
               Optional(Eq("1.0123456789abcdef.1.2.10.1")));
 }
 
-TEST_F(SpannerOperationContextTest, PostCallAndOnDoneHooks) {
+TEST_F(OperationContextTest, PostCallAndOnDoneHooks) {
   auto static_prefix =
       std::make_shared<std::string const>("1.0123456789abcdef.1.");
-  SpannerOperationContext op_context(static_prefix, 1, "ExecuteSql");
+  OperationContext op_context(static_prefix, 1, "ExecuteSql");
 
   grpc::ClientContext context;
   op_context.PreCall(context);

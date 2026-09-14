@@ -131,7 +131,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:
   DefaultPartialResultSetReader(
       std::shared_ptr<grpc::ClientContext> context,
-      std::shared_ptr<SpannerOperationContext> operation_context,
+      std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<
           internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
           reader)
@@ -162,7 +162,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
  private:
   std::shared_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<SpannerOperationContext> operation_context_;
+  std::shared_ptr<OperationContext> operation_context_;
   std::unique_ptr<
       internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
       reader_;
@@ -672,8 +672,8 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
-  auto op_context = std::make_shared<SpannerOperationContext>(
-      context_factory_->StreamingRead());
+  auto op_context =
+      std::make_shared<OperationContext>(context_factory_->StreamingRead());
   op_context->BindChannel(stub_and_channel.channel_id);
 
   auto factory = [stub = stub_and_channel.stub, request, op_context,
@@ -918,7 +918,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
   auto const& backoff_policy_prototype = BackoffPolicyPrototype();
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
-  auto op_context = std::make_shared<SpannerOperationContext>(
+  auto op_context = std::make_shared<OperationContext>(
       context_factory_->ExecuteStreamingSql());
   op_context->BindChannel(stub_and_channel.channel_id);
 
@@ -1000,7 +1000,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   auto const& retry_policy_prototype = RetryPolicyPrototype(*current);
   auto const& backoff_policy_prototype = BackoffPolicyPrototype(*current);
   auto op_context =
-      std::make_shared<SpannerOperationContext>(context_factory_->ExecuteSql());
+      std::make_shared<OperationContext>(context_factory_->ExecuteSql());
   op_context->BindChannel(stub_and_channel.channel_id);
 
   auto retry_resume_fn =
@@ -1482,7 +1482,7 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
   // to store the resulting stub in the case of a Multiplexed Session.
   auto stub_and_channel = session_pool_->GetStub(*session);
   auto op_context =
-      std::make_shared<SpannerOperationContext>(context_factory_->BatchWrite());
+      std::make_shared<OperationContext>(context_factory_->BatchWrite());
   op_context->BindChannel(stub_and_channel.channel_id);
 
   auto factory = [stub = stub_and_channel.stub, op_context](
@@ -1504,7 +1504,7 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       std::move(factory), std::move(updater), std::move(request));
   struct BatchWriteGuard {
-    std::shared_ptr<SpannerOperationContext> op_context;
+    std::shared_ptr<OperationContext> op_context;
     Status final_status;
     bool called = false;
     ~BatchWriteGuard() {

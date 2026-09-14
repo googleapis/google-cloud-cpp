@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/spanner_operation_context.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/internal/spanner_request_id.h"
 #include <mutex>
 #include <utility>
@@ -22,15 +22,14 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SpannerOperationContext::SpannerOperationContext(
+OperationContext::OperationContext(
     std::shared_ptr<std::string const> static_prefix,
     std::uint64_t request_index, std::string_view rpc_name)
     : static_prefix_(std::move(static_prefix)),
       request_index_(request_index),
       rpc_name_(rpc_name) {}
 
-SpannerOperationContext::SpannerOperationContext(
-    SpannerOperationContext&& other) noexcept {
+OperationContext::OperationContext(OperationContext&& other) noexcept {
   std::scoped_lock lock(other.mu_);
   static_prefix_ = std::move(other.static_prefix_);
   request_index_ = other.request_index_;
@@ -40,8 +39,8 @@ SpannerOperationContext::SpannerOperationContext(
   current_request_id_ = std::move(other.current_request_id_);
 }
 
-SpannerOperationContext& SpannerOperationContext::operator=(
-    SpannerOperationContext&& other) noexcept {
+OperationContext& OperationContext::operator=(
+    OperationContext&& other) noexcept {
   if (this != &other) {
     std::scoped_lock lock(mu_, other.mu_);
     static_prefix_ = std::move(other.static_prefix_);
@@ -54,12 +53,12 @@ SpannerOperationContext& SpannerOperationContext::operator=(
   return *this;
 }
 
-void SpannerOperationContext::BindChannel(std::uint32_t channel_id) {
+void OperationContext::BindChannel(std::uint32_t channel_id) {
   std::scoped_lock lock(mu_);
   channel_id_ = channel_id;
 }
 
-void SpannerOperationContext::PreCall(grpc::ClientContext& client_context) {
+void OperationContext::PreCall(grpc::ClientContext& client_context) {
   std::scoped_lock lock(mu_);
   ++attempt_index_;
   if (static_prefix_ != nullptr) {
@@ -70,36 +69,33 @@ void SpannerOperationContext::PreCall(grpc::ClientContext& client_context) {
   }
 }
 
-void SpannerOperationContext::PostCall(grpc::ClientContext const&,
-                                       Status const&) {
+void OperationContext::PostCall(grpc::ClientContext const&, Status const&) {
   // Hook for metrics / debugging
 }
 
-void SpannerOperationContext::OnDone(Status const&) {
+void OperationContext::OnDone(Status const&) {
   // Hook for metrics / latencies
 }
 
-std::optional<std::string> SpannerOperationContext::RequestId() const {
+std::optional<std::string> OperationContext::RequestId() const {
   std::scoped_lock lock(mu_);
   if (current_request_id_.empty()) return std::nullopt;
   return current_request_id_;
 }
 
-std::uint64_t SpannerOperationContext::request_index() const {
-  return request_index_;
-}
+std::uint64_t OperationContext::request_index() const { return request_index_; }
 
-std::uint32_t SpannerOperationContext::attempt_index() const {
+std::uint32_t OperationContext::attempt_index() const {
   std::scoped_lock lock(mu_);
   return attempt_index_;
 }
 
-std::uint32_t SpannerOperationContext::channel_id() const {
+std::uint32_t OperationContext::channel_id() const {
   std::scoped_lock lock(mu_);
   return channel_id_;
 }
 
-std::string_view SpannerOperationContext::rpc_name() const { return rpc_name_; }
+std::string_view OperationContext::rpc_name() const { return rpc_name_; }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal

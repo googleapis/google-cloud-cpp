@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub_factory.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/operation_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -63,7 +63,7 @@ TEST(DecorateSpannerStub, Auth) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  internal::NoopOperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
@@ -74,7 +74,7 @@ TEST(DecorateSpannerStub, Metadata) {
   EXPECT_CALL(*mock, CreateSession)
       .WillOnce([&db](grpc::ClientContext& context, Options const&,
                       google::spanner::v1::CreateSessionRequest const&,
-                      internal::OperationContext&) {
+                      OperationContext&) {
         testing_util::ValidateMetadataFixture fixture;
         auto metadata = fixture.GetMetadata(context);
         EXPECT_THAT(metadata, Contains(Pair("google-cloud-resource-prefix",
@@ -89,7 +89,7 @@ TEST(DecorateSpannerStub, Metadata) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  internal::NoopOperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
@@ -110,7 +110,7 @@ TEST(DecorateSpannerStub, Logging) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  internal::NoopOperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
@@ -142,7 +142,7 @@ TEST(DecorateSpannerStub, TracingEnabled) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  internal::NoopOperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
@@ -169,7 +169,7 @@ TEST(DecorateSpannerStub, TracingDisabled) {
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  internal::NoopOperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
