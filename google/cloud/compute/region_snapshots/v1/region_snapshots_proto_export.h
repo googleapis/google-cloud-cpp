@@ -30,12 +30,12 @@
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
 #include "google/cloud/compute/v1/internal/common_028.pb.h"
 #include "google/cloud/compute/v1/internal/common_040.pb.h"
-#include "google/cloud/compute/v1/internal/common_125.pb.h"
-#include "google/cloud/compute/v1/internal/common_126.pb.h"
 #include "google/cloud/compute/v1/internal/common_127.pb.h"
-#include "google/cloud/compute/v1/internal/common_146.pb.h"
-#include "google/cloud/compute/v1/internal/common_147.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
+#include "google/cloud/compute/v1/internal/common_128.pb.h"
+#include "google/cloud/compute/v1/internal/common_129.pb.h"
+#include "google/cloud/compute/v1/internal/common_148.pb.h"
+#include "google/cloud/compute/v1/internal/common_149.pb.h"
+#include "google/cloud/compute/v1/internal/common_173.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SNAPSHOTS_V1_REGION_SNAPSHOTS_PROTO_EXPORT_H

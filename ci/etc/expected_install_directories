@@ -452,6 +452,10 @@
 ./include/google/cloud/compute/preview_features/v1
 ./include/google/cloud/compute/preview_features/v1/internal
 ./include/google/cloud/compute/preview_features/v1/mocks
+./include/google/cloud/compute/project_views
+./include/google/cloud/compute/project_views/v1
+./include/google/cloud/compute/project_views/v1/internal
+./include/google/cloud/compute/project_views/v1/mocks
 ./include/google/cloud/compute/projects
 ./include/google/cloud/compute/projects/v1
 ./include/google/cloud/compute/projects/v1/internal

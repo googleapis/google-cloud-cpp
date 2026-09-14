@@ -28,7 +28,7 @@
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_032.pb.h"
 #include "google/cloud/compute/v1/internal/common_035.pb.h"
-#include "google/cloud/compute/v1/internal/common_118.pb.h"
+#include "google/cloud/compute/v1/internal/common_120.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_REGION_DISK_TYPES_PROTO_EXPORT_H

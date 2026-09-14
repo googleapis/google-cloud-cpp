@@ -193,6 +193,17 @@ class ReservationSlotsConnection {
           GetReservationSlotsGetResponseRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  GetHealth(google::cloud::cpp::compute::reservation_slots::v1::
+                GetHealthRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetHealth(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_slots::v1::
+                      GetHealthRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  GetHealth(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   GetVersion(google::cloud::cpp::compute::reservation_slots::v1::
                  GetVersionRequest const& request);
 

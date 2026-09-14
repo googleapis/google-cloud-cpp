@@ -223,7 +223,7 @@ class RoutesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routes.v1.GetRouteRequest]: @cloud_cpp_reference_link{google/cloud/compute/routes/v1/routes.proto#L128}
-  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_140.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
@@ -254,7 +254,7 @@ class RoutesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routes.v1.GetRouteRequest]: @cloud_cpp_reference_link{google/cloud/compute/routes/v1/routes.proto#L128}
-  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_140.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
@@ -412,7 +412,7 @@ class RoutesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routes/v1/routes.proto#L168}
-  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_140.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
@@ -452,7 +452,7 @@ class RoutesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routes/v1/routes.proto#L168}
-  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Route]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_140.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
@@ -481,7 +481,7 @@ class RoutesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routes.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/routes/v1/routes.proto#L269}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_173.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -516,7 +516,7 @@ class RoutesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routes.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/routes/v1/routes.proto#L269}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_173.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

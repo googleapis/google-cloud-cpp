@@ -456,7 +456,7 @@ class RolloutsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.rollouts.v1.GetRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L214}
-  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Rollout> GetRollout(
@@ -488,7 +488,7 @@ class RolloutsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.rollouts.v1.GetRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L214}
-  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Rollout> GetRollout(
@@ -525,7 +525,7 @@ class RolloutsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.rollouts.v1.ListRolloutsRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L225}
-  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Rollout> ListRollouts(
@@ -565,7 +565,7 @@ class RolloutsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.rollouts.v1.ListRolloutsRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L225}
-  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Rollout> ListRollouts(

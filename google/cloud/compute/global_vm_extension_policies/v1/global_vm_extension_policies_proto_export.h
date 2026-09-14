@@ -28,7 +28,7 @@
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
 #include "google/cloud/compute/v1/internal/common_058.pb.h"
-#include "google/cloud/compute/v1/internal/common_175.pb.h"
+#include "google/cloud/compute/v1/internal/common_177.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_VM_EXTENSION_POLICIES_V1_GLOBAL_VM_EXTENSION_POLICIES_PROTO_EXPORT_H

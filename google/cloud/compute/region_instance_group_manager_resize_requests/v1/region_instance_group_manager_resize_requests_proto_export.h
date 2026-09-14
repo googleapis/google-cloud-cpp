@@ -30,7 +30,7 @@
 #include "google/cloud/compute/v1/internal/common_038.pb.h"
 #include "google/cloud/compute/v1/internal/common_076.pb.h"
 #include "google/cloud/compute/v1/internal/common_110.pb.h"
-#include "google/cloud/compute/v1/internal/common_122.pb.h"
+#include "google/cloud/compute/v1/internal/common_124.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_V1_REGION_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_PROTO_EXPORT_H

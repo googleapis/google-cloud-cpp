@@ -29,10 +29,10 @@
 #include "google/cloud/compute/v1/internal/common_009.pb.h"
 #include "google/cloud/compute/v1/internal/common_019.pb.h"
 #include "google/cloud/compute/v1/internal/common_040.pb.h"
-#include "google/cloud/compute/v1/internal/common_155.pb.h"
-#include "google/cloud/compute/v1/internal/common_156.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
-#include "google/cloud/compute/v1/internal/common_182.pb.h"
+#include "google/cloud/compute/v1/internal/common_157.pb.h"
+#include "google/cloud/compute/v1/internal/common_158.pb.h"
+#include "google/cloud/compute/v1/internal/common_173.pb.h"
+#include "google/cloud/compute/v1/internal/common_184.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_PROTO_EXPORT_H

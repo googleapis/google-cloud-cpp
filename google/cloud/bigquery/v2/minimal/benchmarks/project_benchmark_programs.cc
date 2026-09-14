@@ -148,15 +148,12 @@ int main(int argc, char* argv[]) {
     if (config.wants_help) {
       config.PrintUsage();
     }
-    std::cout << "Exiting..."
-              << "\n"
-              << std::flush;
+    std::cout << "Exiting..." << "\n" << std::flush;
     return 0;
   }
   std::cout << "# Project Benchmark STARTED For ListProjects() API with test "
                "duration as ["
-            << config.test_duration.count() << "] seconds"
-            << "\n"
+            << config.test_duration.count() << "] seconds" << "\n"
             << std::flush;
 
   ProjectBenchmark benchmark(config);
@@ -207,9 +204,7 @@ int main(int argc, char* argv[]) {
 
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
                                    "ListProjects()", combined.list_results);
-  std::cout << "# Project Benchmark ENDED"
-            << "\n"
-            << std::flush;
+  std::cout << "# Project Benchmark ENDED" << "\n" << std::flush;
 
   return 0;
 }
