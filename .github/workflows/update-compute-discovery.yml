@@ -85,7 +85,7 @@ jobs:
                 --body "$(printf '%b' "$BODY")" \
                 --base main \
                 --head automation/update-compute-discovery \
-                --label "autorelease: pending"
+                --label "api: compute"
             else
               echo "Pull request already exists for automation/update-compute-discovery. Branch has been updated."
             fi

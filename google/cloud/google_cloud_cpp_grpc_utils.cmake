@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ~~~
+find_package(nlohmann_json CONFIG REQUIRED)
 
 # the library
 add_library(
@@ -121,7 +122,8 @@ target_link_libraries(
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::common
            gRPC::grpc++
-           gRPC::grpc)
+           gRPC::grpc
+           nlohmann_json::nlohmann_json)
 google_cloud_cpp_add_common_options(google_cloud_cpp_grpc_utils)
 target_include_directories(
     google_cloud_cpp_grpc_utils PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -276,6 +278,7 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(google_cloud_cpp_grpc_utils_integration_tests
         # cmake-format: sort
+        internal/grpc_gdch_service_account_integration_test.cc
         internal/grpc_impersonate_service_account_integration_test.cc)
 
     # Export the list of unit and integration tests so the Bazel BUILD file can

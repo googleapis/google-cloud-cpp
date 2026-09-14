@@ -2,6 +2,7 @@ permissions:
   contents: read
   pull-requests: read
   issues: read
+  statuses: write
 
 name: "gha: macOS & Windows"
 
@@ -54,8 +55,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
+      is-trusted: ${{ steps.verify-permissions.outputs.is_trusted }}
     steps:
       - name: Verify permissions
+        id: verify-permissions
         if: >-
           github.event_name == 'pull_request_target' ||
           github.event_name == 'issue_comment' ||
@@ -63,6 +66,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
           USER_TO_CHECK: >-
             ${{
               (github.event_name == 'pull_request_target' && github.event.pull_request.user.login) ||
@@ -70,21 +75,50 @@ jobs:
               github.actor
             }}
         run: |
-          permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
-          echo "Event: ${EVENT_NAME}, User: ${USER_TO_CHECK}, permission: ${permission}"
-          case "${permission}" in
-            admin|write|maintain)
-              echo "User '${USER_TO_CHECK}' is trusted."
-              ;;
-            *)
-              if [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
-                echo "::error::Author '${USER_TO_CHECK}' is not trusted (permission: '${permission}'). A maintainer can comment '/gharun' to trigger this workflow."
-              else
+          set -euo pipefail
+
+          if [[ "${EVENT_NAME}" == "issue_comment" ]]; then
+            permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
+            echo "Commenter: ${USER_TO_CHECK}, permission: ${permission}"
+            case "${permission}" in
+              admin|write|maintain)
+                echo "Commenter '${USER_TO_CHECK}' is trusted."
+                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+                ;;
+              *)
+                echo "::error::User '${USER_TO_CHECK}' is not trusted (permission: '${permission}'). Only collaborators can trigger runs with /gharun."
+                exit 1
+                ;;
+            esac
+          elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
+            permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
+            echo "Author: ${USER_TO_CHECK}, permission: ${permission}"
+            case "${permission}" in
+              admin|write|maintain)
+                echo "Author '${USER_TO_CHECK}' is trusted."
+                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+                ;;
+              *)
+                echo "Author '${USER_TO_CHECK}' is untrusted (permission: '${permission}'). A maintainer must comment '/gharun' on the PR to trigger builds for this commit."
+                echo "is_trusted=false" >> "${GITHUB_OUTPUT}"
+                ;;
+            esac
+          elif [[ "${EVENT_NAME}" == "push" && "${REF}" == refs/heads/ci-gha* ]]; then
+            permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
+            echo "Pusher: ${USER_TO_CHECK}, permission: ${permission}"
+            case "${permission}" in
+              admin|write|maintain)
+                echo "User '${USER_TO_CHECK}' is trusted."
+                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+                ;;
+              *)
                 echo "::error::User '${USER_TO_CHECK}' is not trusted (permission: '${permission}')."
-              fi
-              exit 1
-              ;;
-          esac
+                exit 1
+                ;;
+            esac
+          else
+            echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+          fi
       - name: Save Pull Request
         id: save-pull-request
         env:
@@ -93,6 +127,7 @@ jobs:
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_NUMBER: ${{ github.event.issue.number }}
           FALLBACK_SHA: ${{ github.ref }}
+          IS_TRUSTED: ${{ steps.verify-permissions.outputs.is_trusted }}
         run: |
           if [[ "${EVENT_NAME}" == "issue_comment" ]]; then
             sha=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')
@@ -104,12 +139,22 @@ jobs:
           echo "Resolved checkout SHA: ${sha}"
           echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
 
+          if [[ "${EVENT_NAME}" == "issue_comment" && "${IS_TRUSTED}" == "true" && -n "${sha}" ]]; then
+            echo "Setting pending commit status for ${sha}..."
+            gh api "repos/${GITHUB_REPOSITORY}/statuses/${sha}" \
+              -f state="pending" \
+              -f context="gha: macOS & Windows" \
+              -f description="macOS and Windows builds in progress via /gharun..." \
+              -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
+          fi
+
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
   # job requires approval, these blocks all the other jobs. The jobs are defined
   # in separate files to keep the size of this file under control. Note how
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
   macos-bazel:
+    if: needs.pre-flight.outputs.is-trusted == 'true'
     name: macOS-Bazel
     needs: [pre-flight]
     concurrency:
@@ -161,6 +206,7 @@ jobs:
       execute-integration-tests: true
     secrets: inherit # zizmor: ignore[secrets-inherit]
   windows-cmake:
+    if: needs.pre-flight.outputs.is-trusted == 'true'
     name: Windows-CMake
     needs: [pre-flight]
     concurrency:
@@ -183,3 +229,40 @@ jobs:
       vcpkg-cache-mode: 'readwrite'
       execute-integration-tests: true
     secrets: inherit # zizmor: ignore[secrets-inherit]
+
+  report-status:
+    name: Report GHA Status
+    needs: [pre-flight, macos-bazel, windows-cmake]
+    if: >-
+      always() &&
+      needs.pre-flight.result == 'success' &&
+      needs.pre-flight.outputs.is-trusted == 'true' &&
+      (github.event_name == 'issue_comment' || github.event_name == 'pull_request_target')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish commit status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_SHA: ${{ needs.pre-flight.outputs.checkout-sha }}
+          MACOS_BAZEL_RESULT: ${{ needs.macos-bazel.result }}
+          WINDOWS_CMAKE_RESULT: ${{ needs.windows-cmake.result }}
+        run: |
+          if [[ "${MACOS_BAZEL_RESULT}" == "success" && "${WINDOWS_CMAKE_RESULT}" == "success" ]]; then
+            state="success"
+            desc="macOS and Windows builds passed"
+          elif [[ "${MACOS_BAZEL_RESULT}" == "failure" || "${WINDOWS_CMAKE_RESULT}" == "failure" ]]; then
+            state="failure"
+            desc="macOS and Windows builds failed"
+          elif [[ "${MACOS_BAZEL_RESULT}" == "cancelled" || "${WINDOWS_CMAKE_RESULT}" == "cancelled" ]]; then
+            state="error"
+            desc="macOS and Windows builds cancelled"
+          else
+            state="success"
+            desc="macOS and Windows builds completed"
+          fi
+          echo "Setting commit status on ${PR_SHA} to ${state}: ${desc}"
+          gh api "repos/${GITHUB_REPOSITORY}/statuses/${PR_SHA}" \
+            -f state="${state}" \
+            -f context="gha: macOS & Windows" \
+            -f description="${desc}" \
+            -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"

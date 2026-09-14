@@ -153,6 +153,7 @@ cc_library(
         "@googleapis//google/rpc:error_details_cc_proto",
         "@googleapis//google/rpc:status_cc_proto",
         "@grpc//:grpc++",
+        "@nlohmann_json//:json",
     ],
 )
 
@@ -178,6 +179,7 @@ cc_library(
         "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
         "@googletest//:gtest_main",
+        "@nlohmann_json//:json",
     ],
 ) for test in google_cloud_cpp_grpc_utils_unit_tests]
 
