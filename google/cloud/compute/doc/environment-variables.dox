@@ -238,6 +238,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeProjectsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_PROJECT_VIEWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeProjectViewsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_PUBLIC_ADVERTISED_PREFIXES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakePublicAdvertisedPrefixesConnection()`.

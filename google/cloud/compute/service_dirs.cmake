@@ -16,7 +16,6 @@
 
 set(service_dirs
     # cmake-format: sort
-    "project_views/v1/"
     "accelerator_types/v1/"
     "addresses/v1/"
     "advice/v1/"
@@ -71,6 +70,7 @@ set(service_dirs
     "organization_security_policies/v1/"
     "packet_mirrorings/v1/"
     "preview_features/v1/"
+    "project_views/v1/"
     "projects/v1/"
     "public_advertised_prefixes/v1/"
     "public_delegated_prefixes/v1/"

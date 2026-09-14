@@ -69,6 +69,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-service-account-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-service-account-snippet)
 - [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-service-account-snippet)
+- [\c compute_project_views_v1::ProjectViewsClient](@ref compute_project_views_v1::ProjectViewsClient-service-account-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-service-account-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-service-account-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-service-account-snippet)
@@ -489,6 +490,12 @@ guide for more details.
 /*! @page compute_preview_features_v1::PreviewFeaturesClient-service-account-snippet Override compute_preview_features_v1::PreviewFeaturesClient Authentication Defaults
 
 @snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_project_views_v1::ProjectViewsClient-service-account-snippet Override compute_project_views_v1::ProjectViewsClient Authentication Defaults
+
+@snippet google/cloud/compute/project_views/v1/samples/project_views_client_samples.cc with-service-account
 
 */
 

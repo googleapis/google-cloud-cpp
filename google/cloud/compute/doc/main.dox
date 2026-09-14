@@ -87,6 +87,7 @@ application.
 - [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref google::cloud::compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref google::cloud::compute_packet_mirrorings_v1::PacketMirroringsClient)
 - [\c compute_preview_features_v1::PreviewFeaturesClient](@ref google::cloud::compute_preview_features_v1::PreviewFeaturesClient)
+- [\c compute_project_views_v1::ProjectViewsClient](@ref google::cloud::compute_project_views_v1::ProjectViewsClient)
 - [\c compute_projects_v1::ProjectsClient](@ref google::cloud::compute_projects_v1::ProjectsClient)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref google::cloud::compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref google::cloud::compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient)
