@@ -322,7 +322,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   // If all streams are currently reconnecting, fall back to the least busy
   // resuming stream so that the range is queued in next_request and dispatched
   // upon reconnection completion in OnResume().
-  StreamManager::StreamIterator it =
+  auto it =
       stream_manager_->GetLeastBusyStream([](StreamManager::Stream const& s) {
         auto const* rs = s.stream.get();
         return rs != nullptr && !rs->resuming;
@@ -755,8 +755,9 @@ bool ObjectDescriptorImpl::IsResumable(
     return true;
   }
   // Pass the original status directly to the resume policy without rewriting
-  // status codes. This allows custom resume policies (e.g., detecting stall
-  // cancellations) to observe the exact failure cause.
+  // status codes (such as StatusCode::kCancelled). This allows custom resume
+  // policies (e.g., detecting stall cancellations) to observe the exact failure
+  // cause.
   return it->stream->resume_policy->OnFinish(status) ==
          storage::ResumePolicy::kContinue;
 }

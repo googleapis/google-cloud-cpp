@@ -97,11 +97,11 @@ class MultiStreamManager {
   template <typename Pred>
   StreamIterator GetLeastBusyStream(Pred pred) {
     if (streams_.empty()) return streams_.end();
-    StreamIterator least_busy_stream_it = streams_.end();
+    auto least_busy_stream_it = streams_.end();
     // Track min_ranges to avoid calling .size() repeatedly.
     std::size_t min_ranges = (std::numeric_limits<std::size_t>::max)();
 
-    for (StreamIterator it = streams_.begin(); it != streams_.end(); ++it) {
+    for (auto it = streams_.begin(); it != streams_.end(); ++it) {
       if (!pred(*it)) continue;
       std::size_t const size = it->active_ranges.size();
       // Strict less-than ensures stability (preferring older streams if tied).

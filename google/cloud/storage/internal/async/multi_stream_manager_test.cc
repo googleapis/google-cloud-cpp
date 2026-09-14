@@ -111,7 +111,7 @@ TEST(MultiStreamManagerTest, GetLeastBusyStreamWithPredicate) {
   auto s1 = std::make_shared<FakeStream>();
   auto s2 = std::make_shared<FakeStream>();
   mgr.AddStream(s1);
-  Manager::StreamIterator it2 = mgr.AddStream(s2);
+  auto it2 = mgr.AddStream(s2);
 
   // s1 has 0 ranges, but write_pending = true.
   s1->write_pending = true;
@@ -121,14 +121,13 @@ TEST(MultiStreamManagerTest, GetLeastBusyStreamWithPredicate) {
 
   // Predicate filtering out write_pending streams selects s2 even though it has
   // more ranges than s1.
-  Manager::StreamIterator it_pred =
-      mgr.GetLeastBusyStream([](Manager::Stream const& s) {
-        return s.stream != nullptr && !s.stream->write_pending;
-      });
+  auto it_pred = mgr.GetLeastBusyStream([](Manager::Stream const& s) {
+    return s.stream != nullptr && !s.stream->write_pending;
+  });
   EXPECT_THAT(it_pred, ::testing::Eq(it2));
 
   // If predicate matches no stream, returns End().
-  Manager::StreamIterator it_none =
+  auto it_none =
       mgr.GetLeastBusyStream([](Manager::Stream const&) { return false; });
   EXPECT_THAT(it_none, ::testing::Eq(mgr.End()));
 }
