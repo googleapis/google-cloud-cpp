@@ -28,7 +28,7 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string const& ProcessRandomId() {
+std::string ProcessRandomId() {
 #ifndef _WIN32
   static std::mutex mu;
   static pid_t pid = 0;

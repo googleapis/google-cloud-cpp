@@ -1505,7 +1505,8 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
       std::move(factory), std::move(updater), std::move(request));
   struct BatchWriteGuard {
     std::shared_ptr<OperationContext> op_context;
-    Status final_status;
+    Status final_status =
+        internal::CancelledError("Stream cancelled", GCP_ERROR_INFO());
     bool called = false;
     ~BatchWriteGuard() {
       if (!called && op_context) {

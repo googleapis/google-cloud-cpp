@@ -33,9 +33,9 @@ using ::testing::Gt;
 using ::testing::MatchesRegex;
 
 TEST(SpannerRequestIdTest, ProcessRandomIdFormat) {
-  std::string const& id1 = ProcessRandomId();
+  std::string const id1 = ProcessRandomId();
   EXPECT_THAT(id1, MatchesRegex("^[0-9a-f]{16}$"));
-  std::string const& id2 = ProcessRandomId();
+  std::string const id2 = ProcessRandomId();
   EXPECT_THAT(id2, Eq(id1));
 }
 
@@ -69,7 +69,7 @@ TEST(SpannerRequestIdTest, FormatSpannerRequestIdDirect) {
 #ifndef _WIN32
 TEST(SpannerRequestIdTest, ProcessRandomIdForkRegeneration) {
   // Ensure the parent has already initialized ProcessRandomId
-  std::string const& parent_id = ProcessRandomId();
+  std::string const parent_id = ProcessRandomId();
   ASSERT_THAT(parent_id, MatchesRegex("^[0-9a-f]{16}$"));
 
   int pipe_fds[2];
@@ -81,7 +81,7 @@ TEST(SpannerRequestIdTest, ProcessRandomIdForkRegeneration) {
   if (pid == 0) {
     // Child process: read ProcessRandomId and write to pipe
     close(pipe_fds[0]);
-    std::string const& child_id = ProcessRandomId();
+    std::string const child_id = ProcessRandomId();
     write(pipe_fds[1], child_id.data(), child_id.size());
     close(pipe_fds[1]);
     _exit(0);

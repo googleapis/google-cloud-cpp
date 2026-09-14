@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// random integer. On POSIX systems, re-generates the ID if a process fork is
 /// detected. On non-POSIX systems (e.g. Windows), generates once per process
 /// lifecycle.
-std::string const& ProcessRandomId();
+std::string ProcessRandomId();
 
 /// Returns the next sequential process-wide client ID (thread-safe).
 std::uint64_t NextClientId();

@@ -38,18 +38,17 @@ std::shared_ptr<std::string const>
 DefaultSpannerOperationContextFactory::StaticPrefix() {
 #ifndef _WIN32
   pid_t const current_pid = getpid();
+  std::scoped_lock lock(mu_);
   if (current_pid != cached_pid_) {
-    std::scoped_lock lock(mu_);
-    if (current_pid != cached_pid_) {
-      process_random_id_ =
-          std::make_shared<std::string const>(ProcessRandomId());
-      static_prefix_ = std::make_shared<std::string const>(
-          FormatSpannerRequestStaticPrefix(1, *process_random_id_, client_id_));
-      cached_pid_ = current_pid;
-    }
+    process_random_id_ = std::make_shared<std::string const>(ProcessRandomId());
+    static_prefix_ = std::make_shared<std::string const>(
+        FormatSpannerRequestStaticPrefix(1, *process_random_id_, client_id_));
+    cached_pid_ = current_pid;
   }
-#endif
   return static_prefix_;
+#else
+  return static_prefix_;
+#endif
 }
 
 std::uint64_t DefaultSpannerOperationContextFactory::NextUserRequestIndex() {
