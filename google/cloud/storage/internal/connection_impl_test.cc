@@ -16,11 +16,13 @@
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <functional>
 #include <memory>
 #include <string>
 #include <utility>
@@ -693,6 +695,95 @@ TEST(RetryClientTest, BackoffSpansUploadChunk) {
       ElementsAre(SpanNamed("Backoff"), SpanNamed("Backoff"),
                   SpanNamed("Backoff"),
                   SpanNamed("storage::Client::WriteObject/UploadChunk")));
+}
+
+// `ReadObject()` positions the child stream it creates, using the same request
+// rewrite a resumed or hedged read applies. Verify the request that reaches
+// the stub for each way a caller can express a starting position.
+StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectWithRequest(
+    ReadObjectRangeRequest const& request,
+    std::function<void(ReadObjectRangeRequest const&)> check) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).Times(AtLeast(0));
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([check = std::move(check)](auto&, auto const&,
+                                           ReadObjectRangeRequest const& req) {
+        check(req);
+        return std::unique_ptr<ObjectReadSource>(
+            std::make_unique<testing::MockObjectReadSource>());
+      });
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
+  return client->ReadObject(request);
+}
+
+TEST(RetryClientTest, ReadObjectPositionsPlainRequest) {
+  ReadObjectRangeRequest request("test-bucket", "test-object");
+  EXPECT_THAT(
+      ReadObjectWithRequest(request,
+                            [](ReadObjectRangeRequest const& req) {
+                              // Offset 0 with no range: the rewrite must not
+                              // introduce a `ReadFromOffset(0)`, which would
+                              // change the request.
+                              EXPECT_FALSE(req.HasOption<ReadFromOffset>());
+                              EXPECT_FALSE(req.HasOption<ReadLast>());
+                              EXPECT_FALSE(req.HasOption<Generation>());
+                            }),
+      IsOk());
+}
+
+TEST(RetryClientTest, ReadObjectPositionsReadFromOffset) {
+  ReadObjectRangeRequest request("test-bucket", "test-object");
+  request.set_option(ReadFromOffset(1024));
+  EXPECT_THAT(ReadObjectWithRequest(
+                  request,
+                  [](ReadObjectRangeRequest const& req) {
+                    EXPECT_EQ(1024,
+                              req.GetOption<ReadFromOffset>().value_or(0));
+                  }),
+              IsOk());
+}
+
+TEST(RetryClientTest, ReadObjectPositionsReadRange) {
+  ReadObjectRangeRequest request("test-bucket", "test-object");
+  request.set_option(ReadRange(100, 200));
+  EXPECT_THAT(ReadObjectWithRequest(
+                  request,
+                  [](ReadObjectRangeRequest const& req) {
+                    // The range is preserved, and the offset is pinned to its
+                    // start so a resumed read picks up where this one left off.
+                    EXPECT_EQ(100, req.GetOption<ReadFromOffset>().value_or(0));
+                    ASSERT_TRUE(req.HasOption<ReadRange>());
+                    EXPECT_EQ(200, req.GetOption<ReadRange>().value().end);
+                  }),
+              IsOk());
+}
+
+TEST(RetryClientTest, ReadObjectPositionsReadLast) {
+  ReadObjectRangeRequest request("test-bucket", "test-object");
+  request.set_option(ReadLast(512));
+  EXPECT_THAT(ReadObjectWithRequest(
+                  request,
+                  [](ReadObjectRangeRequest const& req) {
+                    // `ReadLast` counts from the end, so it is rewritten in
+                    // place and must not become a `ReadFromOffset`.
+                    EXPECT_EQ(512, req.GetOption<ReadLast>().value_or(0));
+                    EXPECT_FALSE(req.HasOption<ReadFromOffset>());
+                  }),
+              IsOk());
+}
+
+TEST(RetryClientTest, ReadObjectPinsGeneration) {
+  ReadObjectRangeRequest request("test-bucket", "test-object");
+  request.set_option(Generation(12345));
+  request.set_option(ReadFromOffset(64));
+  EXPECT_THAT(ReadObjectWithRequest(
+                  request,
+                  [](ReadObjectRangeRequest const& req) {
+                    EXPECT_EQ(12345, req.GetOption<Generation>().value_or(0));
+                    EXPECT_EQ(64, req.GetOption<ReadFromOffset>().value_or(0));
+                  }),
+              IsOk());
 }
 
 }  // namespace

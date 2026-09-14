@@ -62,7 +62,14 @@ class RetryObjectReadSource : public ObjectReadSource {
                         std::unique_ptr<BackoffPolicy> backoff_policy);
 
   bool IsOpen() const override { return child_ && child_->IsOpen(); }
-  StatusOr<HttpResponse> Close() override { return child_->Close(); }
+  StatusOr<HttpResponse> Close() override {
+    // `Read()` releases the child when it retries, and leaves it released if
+    // the retry policy is then exhausted. There is no connection left to
+    // close, and callers (e.g. `ObjectReadStreambuf::Close()`) do not check
+    // `IsOpen()` first.
+    if (!child_) return HttpResponse{HttpStatusCode::kOk, {}, {}};
+    return child_->Close();
+  }
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
  private:

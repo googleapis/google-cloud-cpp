@@ -489,6 +489,84 @@ TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
               Contains(Pair("x-test-only", "download 3 r1")));
 }
 
+/// @test `ReadLast` downloads subject to decompressive transcoding restart
+///     counting from the first byte, not from the tail.
+TEST(RetryObjectReadSourceTest, ReadLastWithDecompressiveTranscoding) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([](auto&, auto const&, ReadObjectRangeRequest const& req) {
+        EXPECT_EQ(1029, req.GetOption<ReadLast>().value());
+        // The response reveals the object is served with decompressive
+        // transcoding, which ignores the range and returns the whole object
+        // from the first byte.
+        auto r0 = ReadSourceResult{static_cast<std::size_t>(1024),
+                                   HttpResponse{100, "", {}}};
+        r0.transformation = "gunzipped";
+        auto source = std::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read)
+            .WillOnce(Return(r0))
+            .WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      })
+      .WillOnce([](auto&, auto const&, ReadObjectRangeRequest const& req) {
+        // 1024 bytes were consumed, counted from the start of the object. The
+        // resumed download must discard exactly those, not the un-reset
+        // `ReadLast()` count plus them (1029 + 1024), which would skip data.
+        EXPECT_EQ(1024, req.GetOption<ReadFromOffset>().value_or(0));
+        auto discard = ReadSourceResult{static_cast<std::size_t>(1024),
+                                        HttpResponse{100, "", {}}};
+        discard.transformation = "gunzipped";
+        auto payload = ReadSourceResult{static_cast<std::size_t>(64),
+                                        HttpResponse{200, "", {}}};
+        auto source = std::make_unique<MockObjectReadSource>();
+        ::testing::InSequence sequence;
+        EXPECT_CALL(*source, Read(_, 1024L)).WillOnce(Return(discard));
+        EXPECT_CALL(*source, Read(_, 2048L)).WillOnce(Return(payload));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      });
+
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
+
+  ReadObjectRangeRequest req("test_bucket", "test_object");
+  req.set_option(ReadLast(1029));
+  auto source = client->ReadObject(req);
+  ASSERT_STATUS_OK(source);
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+  auto response = (*source)->Read(nullptr, 2048);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bytes_received, 64);
+}
+
+/// @test Closing a source whose retry policy was exhausted is safe.
+TEST(RetryObjectReadSourceTest, CloseAfterRetryPolicyExhausted) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([] {
+        auto source = std::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      })
+      // Resuming the download fails until the retry policy is exhausted, so
+      // the source is left without a child.
+      .WillRepeatedly([] { return TransientError(); });
+
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
+
+  auto source = client->ReadObject(ReadObjectRangeRequest{});
+  ASSERT_STATUS_OK(source);
+  EXPECT_THAT((*source)->Read(nullptr, 1024),
+              StatusIs(TransientError().code()));
+  EXPECT_FALSE((*source)->IsOpen());
+  // Callers such as `ObjectReadStreambuf::Close()` close the stream without
+  // checking `IsOpen()` first, so this must not dereference the released
+  // child.
+  EXPECT_STATUS_OK((*source)->Close());
+}
+
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;

@@ -143,8 +143,14 @@ bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
   if (r->generation) generation_ = r->generation;
   if (r->transformation.value_or("") == "gunzipped") is_gunzipped_ = true;
   // Since decompressive transcoding does not respect `ReadLast()` we need
-  // to ensure the offset is incremented, so the discard loop works.
-  if (is_gunzipped_) offset_direction_ = kFromBeginning;
+  // to ensure the offset is incremented, so the discard loop works. The
+  // response is the whole object from the first byte, so the bytes consumed
+  // so far are counted from the start of the object and the offset restarts
+  // at zero. Resuming from the un-reset `ReadLast()` count would skip data.
+  if (is_gunzipped_ && offset_direction_ == kFromEnd) {
+    offset_direction_ = kFromBeginning;
+    current_offset_ = 0;
+  }
   if (offset_direction_ == kFromEnd) {
     current_offset_ -= r->bytes_received;
   } else {
