@@ -36,6 +36,7 @@ namespace {
 auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
 auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
 auto constexpr kDefaultMetricsExportTimeout = std::chrono::seconds(30);
+bool constexpr kDefaultDirectPathXdsOverInterconnect = false;
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing
@@ -102,19 +103,31 @@ Options DefaultOptionsGrpc(
 
   if (!options
            .has<storage_experimental::DirectPathXdsOverInterconnectOption>()) {
-    auto const env =
-        GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT");
-    if (env.has_value() && *env == "true") {
+    options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+        kDefaultDirectPathXdsOverInterconnect);
+  }
+
+  // The environment variable takes precedence over the option, consistent with.
+  // An explicit "false" disables the feature even when the option is set, so
+  // deployments can opt out without rebuilding the application. Any other value
+  // is treated as if the variable were not set.
+  auto const direct_path_interconnect_env =
+      GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT");
+  if (direct_path_interconnect_env.has_value()) {
+    if (*direct_path_interconnect_env == "true") {
       options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
           true);
+    } else if (*direct_path_interconnect_env == "false") {
+      options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          false);
     }
   }
   bool const direct_path_interconnect =
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
 
-  // Set default to direct connectivity if DirectPath over Interconnect is
-  // enabled, or if running in GCP and no endpoint or universe domain is
-  // explicitly configured.
+  // Unless the application configured an endpoint or universe domain, default
+  // to direct connectivity: the Interconnect target when that feature is
+  // enabled, otherwise the standard target when running in GCP.
   if (!options.has<EndpointOption>() &&
       !options.has<internal::UniverseDomainOption>()) {
     if (direct_path_interconnect) {

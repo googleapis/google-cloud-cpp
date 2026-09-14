@@ -134,6 +134,29 @@ struct GrpcMetricsExcludedLabelsOption {
  * When this option is enabled, the client bypasses GCE VM environment/BIOS
  * checks and configures the gRPC channel to target
  * `google-c2p:///storage-direct.googleapis.com?force-xds` with standard TLS.
+ * This makes DirectPath usable from on-premise hosts reaching Google Cloud over
+ * [Cloud Interconnect], where the usual GCE environment detection would
+ * otherwise disable it.
+ *
+ * The default is `false`. The
+ * `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT` environment variable
+ * overrides this option: set it to `"true"` to enable the feature, or to
+ * `"false"` to disable it even when this option is set. Only these exact
+ * values are recognized, and the comparison is case-sensitive; any other
+ * value, for example `"1"` or `"TRUE"`, is treated as if the variable were not
+ * set. This lets a deployment turn the feature on or off without rebuilding
+ * the application.
+ *
+ * @par Example: Enable DirectPath over Interconnect
+ * @code
+ * namespace gcs_ex = google::cloud::storage_experimental;
+ * auto client = google::cloud::storage::MakeGrpcClient(
+ *     google::cloud::Options{}
+ *         .set<gcs_ex::DirectPathXdsOverInterconnectOption>(true));
+ * @endcode
+ *
+ * [Cloud Interconnect]:
+ * https://cloud.google.com/network-connectivity/docs/interconnect
  */
 struct DirectPathXdsOverInterconnectOption {
   using Type = bool;
