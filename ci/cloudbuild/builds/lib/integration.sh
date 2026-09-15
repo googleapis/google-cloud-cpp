@@ -207,9 +207,14 @@ function integration::bazel_storage_with_emulators() {
   local verb="$1"
   local args=("${@:2}")
 
+  local limit_jobs=()
+  if [[ "${args[*]}" =~ --config=(asan|tsan|ubsan|msan|xsan) ]]; then
+    limit_jobs+=("--local_test_jobs=8")
+  fi
+
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+    bazel "${verb}" "${args[@]}" "${limit_jobs[@]}" --test_tag_filters="integration-test,-ud-only"
 }
 
 # Runs Spanner integration tests.
