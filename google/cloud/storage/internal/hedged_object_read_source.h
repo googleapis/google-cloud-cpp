@@ -18,7 +18,12 @@
 #include "google/cloud/storage/internal/hedging_thread_pool.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
+#include <opentelemetry/metrics/meter_provider.h>
+#include <opentelemetry/metrics/sync_instruments.h>
+#include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/nostd/unique_ptr.h>
 #include <chrono>
+#include <cstdint>
 #include <functional>
 #include <memory>
 
@@ -27,6 +32,37 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+/**
+ * OpenTelemetry metrics helper for read hedging operations.
+ */
+class HedgedReadMetrics {
+ public:
+  HedgedReadMetrics();
+  explicit HedgedReadMetrics(
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::MeterProvider> const& provider);
+
+  ~HedgedReadMetrics() = default;
+  HedgedReadMetrics(HedgedReadMetrics const&) = delete;
+  HedgedReadMetrics& operator=(HedgedReadMetrics const&) = delete;
+  HedgedReadMetrics(HedgedReadMetrics&&) = default;
+  HedgedReadMetrics& operator=(HedgedReadMetrics&&) = default;
+
+  /// Records that a speculative hedge read attempt was dispatched.
+  void IncrementHedgesDispatched();
+
+  /// Records that a hedged read operation was won by a hedge attempt.
+  void IncrementHedgeWon();
+
+ private:
+  opentelemetry::nostd::unique_ptr<
+      opentelemetry::metrics::Counter<std::uint64_t>>
+      hedges_dispatched_;
+  opentelemetry::nostd::unique_ptr<
+      opentelemetry::metrics::Counter<std::uint64_t>>
+      hedge_won_;
+};
 
 /**
  * Hedge the *open* of an `ObjectReadSource` to reduce tail latency.
@@ -60,6 +96,13 @@ class HedgedObjectReadSource : public ObjectReadSource {
                          std::chrono::milliseconds delay, int max_hedges,
                          std::size_t max_buffer);
 
+  HedgedObjectReadSource(std::shared_ptr<ThreadPool> read_pool,
+                         std::shared_ptr<HedgingThreadPool> hedge_pool,
+                         ChildFactory child_factory,
+                         std::chrono::milliseconds delay, int max_hedges,
+                         std::size_t max_buffer,
+                         std::shared_ptr<HedgedReadMetrics> metrics);
+
   ~HedgedObjectReadSource() override = default;
 
   bool IsOpen() const override;
@@ -73,6 +116,7 @@ class HedgedObjectReadSource : public ObjectReadSource {
   std::chrono::milliseconds delay_;
   int max_hedges_;
   std::size_t max_buffer_;
+  std::shared_ptr<HedgedReadMetrics> metrics_;
 
   std::unique_ptr<ObjectReadSource> active_child_;
   bool is_closed_ = false;
