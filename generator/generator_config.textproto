@@ -584,7 +584,7 @@ service {
   omit_connection: true
   omit_stub_factory: true
   generate_round_robin_decorator: true
-  experimental_bigtable_operation_context: true
+  experimental_operation_context: true
   omitted_rpcs: [
     "GenerateInitialChangeStreamPartitions",
     "ReadChangeStream"
@@ -3907,6 +3907,7 @@ service {
   omit_client: true
   omit_connection: true
   omit_stub_factory: true
+  experimental_operation_context: true
   omitted_rpcs: [
     "GetSession",
     "ListSessions",

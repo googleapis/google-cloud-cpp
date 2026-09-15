@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/clock.h"
+#include "google/cloud/internal/operation_context.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <map>
@@ -56,7 +57,7 @@ class Metric;
  * }
  * @endcode
  */
-class OperationContext {
+class OperationContext : public ::google::cloud::internal::OperationContext {
  public:
   using Clock = ::google::cloud::internal::SteadyClock;
 
@@ -69,12 +70,12 @@ class OperationContext {
   // Called when a stub is selected from a channel pool.
   void StubSelection(StubSelectionParams const& params);
   // Called before each RPC attempt.
-  void PreCall(grpc::ClientContext& client_context);
+  void PreCall(grpc::ClientContext& client_context) override;
   // Called after receiving RPC attempt response.
   void PostCall(grpc::ClientContext const& client_context,
-                google::cloud::Status const& status);
+                google::cloud::Status const& status) override;
   // A hook that executes at the end of a client operation.
-  void OnDone(Status const& status);
+  void OnDone(Status const& status) override;
   // Called during operations that allow the user to iterate over data
   // synchronously or asynchronously.
   void ElementRequest(grpc::ClientContext const& client_context);
