@@ -352,6 +352,7 @@ if (BUILD_TESTING)
         testing/client_unit_test.cc
         testing/client_unit_test.h
         testing/constants.h
+        testing/detect_sanitizers.h
         testing/mock_client.h
         testing/mock_generic_stub.h
         testing/mock_hash_function.h

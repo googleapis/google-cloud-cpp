@@ -101,6 +101,37 @@ TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
   EXPECT_EQ(it_least->active_ranges.size(), 1U);
 }
 
+/// @test Verifies that GetLeastBusyStream with a predicate filters candidates
+/// based on the provided predicate, correctly returning End() if no stream
+/// matches or the least busy stream among those that satisfy the predicate.
+TEST(MultiStreamManagerTest, GetLeastBusyStreamWithPredicate) {
+  auto mgr = MultiStreamManagerTest::MakeManager();
+  mgr.GetFirstStream()->stream->write_pending = true;
+
+  auto s1 = std::make_shared<FakeStream>();
+  auto s2 = std::make_shared<FakeStream>();
+  mgr.AddStream(s1);
+  auto it2 = mgr.AddStream(s2);
+
+  // s1 has 0 ranges, but write_pending = true.
+  s1->write_pending = true;
+  // s2 has 1 range, write_pending = false.
+  s2->write_pending = false;
+  it2->active_ranges.emplace(1, std::make_shared<FakeRange>());
+
+  // Predicate filtering out write_pending streams selects s2 even though it has
+  // more ranges than s1.
+  auto it_pred = mgr.GetLeastBusyStream([](Manager::Stream const& s) {
+    return s.stream != nullptr && !s.stream->write_pending;
+  });
+  EXPECT_THAT(it_pred, ::testing::Eq(it2));
+
+  // If predicate matches no stream, returns End().
+  auto it_none =
+      mgr.GetLeastBusyStream([](Manager::Stream const&) { return false; });
+  EXPECT_THAT(it_none, ::testing::Eq(mgr.End()));
+}
+
 TEST(MultiStreamManagerTest, CleanupDoneRangesRemovesFinished) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   auto it = mgr.GetFirstStream();
@@ -231,6 +262,22 @@ TEST(MultiStreamManagerTest, EmptyAndSizeTransitions) {
   mgr.AddStream(s);
   EXPECT_FALSE(mgr.Empty());
   EXPECT_EQ(mgr.Size(), 1U);
+}
+
+TEST(MultiStreamManagerTest, FindTracksStreamMembership) {
+  auto mgr = MultiStreamManagerTest::MakeManager();
+  auto it1 = mgr.GetFirstStream();
+  auto s1 = it1->stream;
+  EXPECT_NE(mgr.Find(s1), mgr.End());
+
+  auto s2 = std::make_shared<FakeStream>();
+  mgr.AddStream(s2);
+  EXPECT_NE(mgr.Find(s1), mgr.End());
+  EXPECT_NE(mgr.Find(s2), mgr.End());
+
+  mgr.RemoveStreamAndNotifyRanges(it1, Status());
+  EXPECT_EQ(mgr.Find(s1), mgr.End());
+  EXPECT_NE(mgr.Find(s2), mgr.End());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
