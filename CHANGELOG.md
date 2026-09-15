@@ -7,11 +7,31 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.10.0 - TBD
+## v3.10.0 - 2026-09
 
 ### Debian Bullseye EOL
 
 We have stopped supporting Debian 11 (Bullseye) as it has reached [EOL](https://www.debian.org/News/2026/20260831).
+
+### GDCH Service Identity Authentication
+
+- Support for authenticating with [GDCH Service Identity](https://docs.cloud.google.com/distributed-cloud/hosted/docs/latest/gdcag/platform/pa-user/service-identity) credentials for both REST and gRPC endpoints is now available.
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): ensure thread-safe stream resumption in ObjectDescriptorImpl ([#16440](https://github.com/googleapis/google-cloud-cpp/pull/16440))
+- fix(storage): bypass full object checksum validation on unfinalized objects in ObjectDescriptorImpl ([#16435](https://github.com/googleapis/google-cloud-cpp/pull/16435))
+- fix(storage): track persisted byte offset for async writer flush promises ([#16417](https://github.com/googleapis/google-cloud-cpp/pull/16417))
+- fix(storage): add unit tests for ReadRange bounded and unbounded completions ([#16419](https://github.com/googleapis/google-cloud-cpp/pull/16419))
+- fix(storage): support download stall timeout in async BiDi reads ([#16418](https://github.com/googleapis/google-cloud-cpp/pull/16418))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(rest): merge env vars when setting CURLOPT_NOPROXY ([#16420](https://github.com/googleapis/google-cloud-cpp/pull/16420))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-08-25T16:39:57-07:00](https://github.com/googleapis/googleapis/tree/d10ac9249540add035ce07b6a54028ab643e1532)
 
 ## v3.9.0 - 2026-09 
 
