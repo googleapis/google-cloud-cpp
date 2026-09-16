@@ -36,6 +36,7 @@ namespace {
 auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
 auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
 auto constexpr kDefaultMetricsExportTimeout = std::chrono::seconds(30);
+bool constexpr kDefaultDirectPathXdsOverInterconnect = false;
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing
@@ -100,13 +101,45 @@ Options DefaultOptionsGrpc(
   auto const ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
 
-  // Set default to direct connectivity if we can detect we are running in GCP
-  // and there is not already a set endpoint or unviverse domain endpoint.
-  if ((!options.has<EndpointOption>() &&
-       !options.has<internal::UniverseDomainOption>()) &&
-      (gcp_detector->IsGoogleCloudBios() ||
-       gcp_detector->IsGoogleCloudServerless())) {
-    options.set<EndpointOption>("google-c2p:///storage.googleapis.com");
+  if (!options
+           .has<storage_experimental::DirectPathXdsOverInterconnectOption>()) {
+    options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+        kDefaultDirectPathXdsOverInterconnect);
+  }
+
+  // The environment variable takes precedence over the option.
+  // An explicit "false" disables the feature even when the option is set, so
+  // deployments can opt out without rebuilding the application. Any other value
+  // is treated as if the variable were not set.
+  auto const direct_path_interconnect_env =
+      GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT");
+  if (direct_path_interconnect_env.has_value()) {
+    if (*direct_path_interconnect_env == "true") {
+      options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          true);
+    } else if (*direct_path_interconnect_env == "false") {
+      options.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          false);
+    }
+  }
+  bool const direct_path_interconnect =
+      options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
+
+  // Unless the application configured an endpoint or universe domain, default
+  // to direct connectivity: the Interconnect target when that feature is
+  // enabled, otherwise the standard target when running in GCP.
+  if (!options.has<EndpointOption>() &&
+      !options.has<internal::UniverseDomainOption>()) {
+    if (direct_path_interconnect) {
+      options.set<EndpointOption>(
+          "google-c2p:///storage-direct.googleapis.com?force-xds");
+      if (!options.has<AuthorityOption>()) {
+        options.set<AuthorityOption>("storage.googleapis.com");
+      }
+    } else if (gcp_detector->IsGoogleCloudBios() ||
+               gcp_detector->IsGoogleCloudServerless()) {
+      options.set<EndpointOption>("google-c2p:///storage.googleapis.com");
+    }
   }
 
   options = google::cloud::internal::MergeOptions(
