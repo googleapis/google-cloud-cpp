@@ -59,10 +59,6 @@ jobs:
     steps:
       - name: Verify permissions
         id: verify-permissions
-        if: >-
-          github.event_name == 'pull_request_target' ||
-          github.event_name == 'issue_comment' ||
-          (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/ci-gha'))
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
