@@ -93,7 +93,7 @@ TEST(TraceExporter, Failure) {
 
 TEST(TraceExporter, LogsOnError) {
   // Disable library logging for a more conclusive test.
-  ScopedEnvironment env{"GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt};
+  ScopedEnvironment env{"GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt};
 
   ScopedLog log;
 

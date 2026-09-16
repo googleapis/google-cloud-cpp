@@ -40,7 +40,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto constexpr kMaxInstanceIdLength = 33;
@@ -64,7 +64,7 @@ class InstanceAdminEmulator final
       response->set_name("create-instance/" + name);
       response->set_done(true);
       auto contents = std::make_unique<google::protobuf::Any>();
-      contents->PackFrom(stored_instance);
+      (void)contents->PackFrom(stored_instance);
       response->set_allocated_response(contents.release());
 
       // Add cluster into clusters_
@@ -85,7 +85,7 @@ class InstanceAdminEmulator final
                            btadmin::Instance* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = instances_.find(request->name());
@@ -101,7 +101,7 @@ class InstanceAdminEmulator final
       btadmin::ListInstancesResponse* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string prefix = request->parent() + "/instances/";
@@ -118,7 +118,7 @@ class InstanceAdminEmulator final
                               btadmin::Instance*) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
@@ -130,7 +130,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->instance().name();
@@ -170,7 +170,7 @@ class InstanceAdminEmulator final
     response->set_name("update-instance/" + name);
     response->set_done(true);
     auto contents = std::make_unique<google::protobuf::Any>();
-    contents->PackFrom(stored_instance);
+    (void)contents->PackFrom(stored_instance);
     response->set_allocated_response(contents.release());
     return grpc::Status::OK;
   }
@@ -180,7 +180,7 @@ class InstanceAdminEmulator final
                               google::protobuf::Empty*) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = instances_.find(request->name());
@@ -203,7 +203,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto constexpr kMaxClusterIdLength = 30;
@@ -225,7 +225,7 @@ class InstanceAdminEmulator final
       response->set_name("create-cluster/" + name);
       response->set_done(true);
       auto contents = std::make_unique<google::protobuf::Any>();
-      contents->PackFrom(stored_cluster);
+      (void)contents->PackFrom(stored_cluster);
       response->set_allocated_response(contents.release());
       return grpc::Status::OK;
     }
@@ -237,7 +237,7 @@ class InstanceAdminEmulator final
                           btadmin::Cluster* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = clusters_.find(request->name());
@@ -253,7 +253,7 @@ class InstanceAdminEmulator final
                             btadmin::ListClustersResponse* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     // We should only return the clusters for the project embedded in the
@@ -294,7 +294,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->name();
@@ -307,7 +307,7 @@ class InstanceAdminEmulator final
     response->set_name("update-cluster/" + name);
     response->set_done(true);
     auto contents = std::make_unique<google::protobuf::Any>();
-    contents->PackFrom(stored_cluster);
+    (void)contents->PackFrom(stored_cluster);
     response->set_allocated_response(contents.release());
     return grpc::Status::OK;
   }
@@ -317,7 +317,7 @@ class InstanceAdminEmulator final
                              google::protobuf::Empty*) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = clusters_.find(request->name());
@@ -333,7 +333,7 @@ class InstanceAdminEmulator final
                                 btadmin::AppProfile* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto constexpr kMaxAppProfileIdLength = 50;
@@ -364,7 +364,7 @@ class InstanceAdminEmulator final
                              btadmin::AppProfile* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = app_profiles_.find(request->name());
@@ -380,7 +380,7 @@ class InstanceAdminEmulator final
       btadmin::ListAppProfilesResponse* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto const& parent = request->parent();
@@ -398,7 +398,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->app_profile().name();
@@ -427,7 +427,7 @@ class InstanceAdminEmulator final
     response->set_name("update-app-profile/" + name);
     response->set_done(true);
     auto contents = std::make_unique<google::protobuf::Any>();
-    contents->PackFrom(stored_app_profile);
+    (void)contents->PackFrom(stored_app_profile);
     response->set_allocated_response(contents.release());
     return grpc::Status::OK;
   }
@@ -437,7 +437,7 @@ class InstanceAdminEmulator final
                                 google::protobuf::Empty*) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = app_profiles_.find(request->name());
@@ -458,7 +458,7 @@ class InstanceAdminEmulator final
                             google::iam::v1::Policy* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto it = policies_.find(request->resource());
@@ -476,7 +476,7 @@ class InstanceAdminEmulator final
                             google::iam::v1::Policy* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto policy = request->policy();
@@ -492,7 +492,7 @@ class InstanceAdminEmulator final
       google::iam::v1::TestIamPermissionsResponse* response) override {
     std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
-    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    (void)google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto it = instances_.find(request->resource());

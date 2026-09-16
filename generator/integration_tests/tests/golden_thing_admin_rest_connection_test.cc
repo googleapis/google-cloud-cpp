@@ -98,7 +98,6 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
 
             ::google::test::admin::database::v1::ListDatabasesResponse page;
             page.set_next_page_token("page-1");
-            ::google::test::admin::database::v1::Database database;
             page.add_databases()->set_name("db-1");
             page.add_databases()->set_name("db-2");
             return make_status_or(page);
@@ -113,7 +112,6 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
 
             ::google::test::admin::database::v1::ListDatabasesResponse page;
             page.set_next_page_token("page-2");
-            ::google::test::admin::database::v1::Database database;
             page.add_databases()->set_name("db-3");
             page.add_databases()->set_name("db-4");
             return make_status_or(page);
@@ -128,7 +126,6 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
 
             ::google::test::admin::database::v1::ListDatabasesResponse page;
             page.clear_next_page_token();
-            ::google::test::admin::database::v1::Database database;
             page.add_databases()->set_name("db-5");
             return make_status_or(page);
           });
@@ -201,7 +198,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseSuccess) {
         op.set_done(true);
         ::google::test::admin::database::v1::Database database;
         database.set_name("test-database");
-        op.mutable_response()->PackFrom(database);
+        (void)op.mutable_response()->PackFrom(database);
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
@@ -260,7 +257,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseStartAwait) {
   google::longrunning::Operation expected_operation;
   expected_operation.set_name("test-operation-name");
   google::test::admin::database::v1::CreateDatabaseMetadata metadata;
-  expected_operation.mutable_metadata()->PackFrom(metadata);
+  (void)expected_operation.mutable_metadata()->PackFrom(metadata);
 
   EXPECT_CALL(*mock, CreateDatabase(_, _, _)).WillOnce([&] {
     return make_status_or(expected_operation);
@@ -275,7 +272,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseStartAwait) {
         op.set_done(true);
         ::google::test::admin::database::v1::Database database;
         database.set_name("test-database");
-        op.mutable_response()->PackFrom(database);
+        (void)op.mutable_response()->PackFrom(database);
         return make_ready_future(make_status_or(op));
       });
 
@@ -381,7 +378,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlSuccess) {
         op.set_done(true);
         ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
         metadata.set_database("test-database");
-        op.mutable_metadata()->PackFrom(metadata);
+        (void)op.mutable_metadata()->PackFrom(metadata);
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
@@ -444,7 +441,7 @@ TEST(GoldenThingAdminRestConnectionTest, UpdateDatabaseDdlStartAwait) {
   google::longrunning::Operation expected_operation;
   expected_operation.set_name("test-operation-name");
   google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
-  expected_operation.mutable_metadata()->PackFrom(metadata);
+  (void)expected_operation.mutable_metadata()->PackFrom(metadata);
 
   EXPECT_CALL(*mock, UpdateDatabaseDdl(_, _, _)).WillOnce([&] {
     return make_status_or(expected_operation);
@@ -459,7 +456,7 @@ TEST(GoldenThingAdminRestConnectionTest, UpdateDatabaseDdlStartAwait) {
         op.set_done(true);
         ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
         metadata.set_database("test-database");
-        op.mutable_metadata()->PackFrom(metadata);
+        (void)op.mutable_metadata()->PackFrom(metadata);
         return make_ready_future(make_status_or(op));
       });
 
@@ -815,7 +812,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupSuccess) {
         op.set_done(true);
         ::google::test::admin::database::v1::Backup backup;
         backup.set_name("test-backup");
-        op.mutable_response()->PackFrom(backup);
+        (void)op.mutable_response()->PackFrom(backup);
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
@@ -877,7 +874,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupStartAwait) {
   google::longrunning::Operation expected_operation;
   expected_operation.set_name("test-operation-name");
   google::test::admin::database::v1::CreateBackupMetadata metadata;
-  expected_operation.mutable_metadata()->PackFrom(metadata);
+  (void)expected_operation.mutable_metadata()->PackFrom(metadata);
 
   EXPECT_CALL(*mock, CreateBackup(_, _, _)).WillOnce([&] {
     return make_status_or(expected_operation);
@@ -892,7 +889,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupStartAwait) {
         op.set_done(true);
         ::google::test::admin::database::v1::Backup backup;
         backup.set_name("test-backup");
-        op.mutable_response()->PackFrom(backup);
+        (void)op.mutable_response()->PackFrom(backup);
         return make_ready_future(make_status_or(op));
       });
 
@@ -1194,7 +1191,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseSuccess) {
         op.set_done(true);
         ::google::test::admin::database::v1::Database database;
         database.set_name("test-database");
-        op.mutable_response()->PackFrom(database);
+        (void)op.mutable_response()->PackFrom(database);
         return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
@@ -1254,7 +1251,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseStartAwait) {
   google::longrunning::Operation expected_operation;
   expected_operation.set_name("test-operation-name");
   google::test::admin::database::v1::RestoreDatabaseMetadata metadata;
-  expected_operation.mutable_metadata()->PackFrom(metadata);
+  (void)expected_operation.mutable_metadata()->PackFrom(metadata);
 
   EXPECT_CALL(*mock, RestoreDatabase(_, _, _)).WillOnce([&] {
     return make_status_or(expected_operation);
@@ -1269,7 +1266,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseStartAwait) {
         op.set_done(true);
         ::google::test::admin::database::v1::Database database;
         database.set_name("test-database");
-        op.mutable_response()->PackFrom(database);
+        (void)op.mutable_response()->PackFrom(database);
         return make_ready_future(make_status_or(op));
       });
 

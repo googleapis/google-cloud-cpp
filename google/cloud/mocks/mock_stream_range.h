@@ -55,7 +55,7 @@ StreamRange<T> MakeStreamRange(std::vector<T> values,
   auto iter = values.begin();
   auto reader =
       [v = std::move(values), it = std::move(iter),
-       s = std::move(final_status)]() mutable -> absl::variant<Status, T> {
+       s = std::move(final_status)]() mutable -> std::variant<Status, T> {
     if (it == v.end()) return s;
     return *it++;
   };

@@ -16,7 +16,6 @@
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
-#include "absl/meta/type_traits.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
@@ -188,7 +187,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
  * containing `"foo"->"bar", "baz"->"rab"` is returned.
  */
 RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
-                            absl::optional<std::string> const& resource_name) {
+                            std::optional<std::string> const& resource_name) {
   RoutingHeaders headers;
   std::string pattern;
   if (!http.get().empty()) {
@@ -226,7 +225,7 @@ RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
 RoutingHeaders ExtractRoutingHeaders(
     google::protobuf::MethodDescriptor const* method,
     google::protobuf::Message const& request,
-    absl::optional<std::string> const& resource_name) {
+    std::optional<std::string> const& resource_name) {
   auto options = method->options();
   if (options.HasExtension(google::api::routing)) {
     auto const& routing = options.GetExtension(google::api::routing);
@@ -301,22 +300,22 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
 }
 
 // Older versions of gRPC do not provide `ExperimentalGetAuthority()`. In that
-// case just return `absl::nullopt`, to indicate that the test cannot run.
+// case just return `std::nullopt`, to indicate that the test cannot run.
 template <typename T, typename AlwaysVoid = void>
 struct GetAuthorityImpl {
-  absl::optional<std::string> Get(T& /*sc*/) { return absl::nullopt; }
+  std::optional<std::string> Get(T& /*sc*/) { return std::nullopt; }
 };
 
 template <typename T>
 struct GetAuthorityImpl<
-    T, absl::void_t<decltype(std::declval<T>().ExperimentalGetAuthority())>> {
-  absl::optional<std::string> Get(T& sc) {
+    T, std::void_t<decltype(std::declval<T>().ExperimentalGetAuthority())>> {
+  std::optional<std::string> Get(T& sc) {
     auto result = sc.ExperimentalGetAuthority();
     return std::string(result.data(), result.size());
   }
 };
 
-absl::optional<std::string> ValidateMetadataFixture::GetAuthority(
+std::optional<std::string> ValidateMetadataFixture::GetAuthority(
     grpc::ClientContext& client_context) {
   // Set the deadline to far in the future. If the deadline is in the past,
   // gRPC doesn't send the initial metadata at all (which makes sense, given
@@ -356,8 +355,8 @@ void ValidateMetadataFixture::IsContextMDValid(
     grpc::ClientContext& context, std::string const& method_name,
     google::protobuf::Message const& request,
     std::string const& api_client_header,
-    absl::optional<std::string> const& resource_name,
-    absl::optional<std::string> const& resource_prefix_header) {
+    std::optional<std::string> const& resource_name,
+    std::optional<std::string> const& resource_prefix_header) {
   auto headers = GetMetadata(context);
 
   // Check x-goog-api-client first, because it should always be present.

@@ -14,13 +14,13 @@
 
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/faas_attributes.h>
 #include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <opentelemetry/semconv/incubating/k8s_attributes.h>
 #include <opentelemetry/semconv/incubating/service_attributes.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -87,14 +87,14 @@ TEST(MonitoredResource, GceInstance) {
 
 TEST(MonitoredResource, K8sContainer) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -120,14 +120,14 @@ TEST(MonitoredResource, K8sContainer) {
 
 TEST(MonitoredResource, K8sPod) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -151,14 +151,14 @@ TEST(MonitoredResource, K8sPod) {
 
 TEST(MonitoredResource, K8sNode) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -180,14 +180,14 @@ TEST(MonitoredResource, K8sNode) {
 
 TEST(MonitoredResource, K8sCluster) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -207,14 +207,14 @@ TEST(MonitoredResource, K8sCluster) {
 
 TEST(MonitoredResource, GaeInstance) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -238,14 +238,14 @@ TEST(MonitoredResource, GaeInstance) {
 
 TEST(MonitoredResource, AwsEc2Instance) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_region;
   };
   auto tests = std::vector<TestCase>{
       {"test-zone", "test-region", "test-zone"},
-      {"test-zone", absl::nullopt, "test-zone"},
-      {absl::nullopt, "test-region", "test-region"},
+      {"test-zone", std::nullopt, "test-zone"},
+      {std::nullopt, "test-region", "test-region"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -267,15 +267,15 @@ TEST(MonitoredResource, AwsEc2Instance) {
 
 TEST(MonitoredResource, GenericTaskFaas) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
-      {absl::nullopt, absl::nullopt, "global"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
+      {std::nullopt, std::nullopt, "global"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -297,15 +297,15 @@ TEST(MonitoredResource, GenericTaskFaas) {
 
 TEST(MonitoredResource, GenericTaskService) {
   struct TestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto tests = std::vector<TestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
-      {absl::nullopt, absl::nullopt, "global"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
+      {std::nullopt, std::nullopt, "global"},
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -328,15 +328,15 @@ TEST(MonitoredResource, GenericTaskService) {
 
 TEST(MonitoredResource, GenericNode) {
   struct LocationTestCase {
-    absl::optional<std::string> zone;
-    absl::optional<std::string> region;
+    std::optional<std::string> zone;
+    std::optional<std::string> region;
     std::string expected_location;
   };
   auto location_tests = std::vector<LocationTestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
-      {"us-central1-a", absl::nullopt, "us-central1-a"},
-      {absl::nullopt, "us-central1", "us-central1"},
-      {absl::nullopt, absl::nullopt, "global"},
+      {"us-central1-a", std::nullopt, "us-central1-a"},
+      {std::nullopt, "us-central1", "us-central1"},
+      {std::nullopt, std::nullopt, "global"},
   };
   for (auto const& test : location_tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
@@ -355,12 +355,12 @@ TEST(MonitoredResource, GenericNode) {
   }
 
   struct NodeIDTestCase {
-    absl::optional<std::string> host_id;
+    std::optional<std::string> host_id;
     std::string expected_node_id;
   };
   auto node_id_tests = std::vector<NodeIDTestCase>{
       {"test-instance", "test-instance"},
-      {absl::nullopt, "test-name"},
+      {std::nullopt, "test-name"},
   };
   for (auto const& test : node_id_tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{

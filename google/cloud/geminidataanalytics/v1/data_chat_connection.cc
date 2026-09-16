@@ -43,8 +43,8 @@ DataChatServiceConnection::Chat(
     google::cloud::geminidataanalytics::v1::ChatRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::geminidataanalytics::v1::Message>(
-      []() -> absl::variant<Status,
-                            google::cloud::geminidataanalytics::v1::Message> {
+      []() -> std::variant<Status,
+                           google::cloud::geminidataanalytics::v1::Message> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

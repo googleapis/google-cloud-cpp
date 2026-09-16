@@ -184,7 +184,7 @@ GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1
           GoldenKitchenSinkStreamingReadStreamingUpdater, request);
   return internal::MakeStreamRange<google::test::admin::database::v1::Response>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status,
               google::test::admin::database::v1::Response> {
         google::test::admin::database::v1::Response response;

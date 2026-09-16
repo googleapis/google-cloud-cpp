@@ -246,7 +246,6 @@ target_link_libraries(
            absl::memory
            absl::strings
            absl::time
-           absl::variant
            google-cloud-cpp::common
            google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
@@ -320,7 +319,6 @@ google_cloud_cpp_add_pkgconfig(
     "absl_strings"
     "absl_str_format"
     "absl_time"
-    "absl_variant"
     NON_WIN32_REQUIRES
     openssl
     WIN32_LIBS
@@ -354,6 +352,7 @@ if (BUILD_TESTING)
         testing/client_unit_test.cc
         testing/client_unit_test.h
         testing/constants.h
+        testing/detect_sanitizers.h
         testing/mock_client.h
         testing/mock_generic_stub.h
         testing/mock_hash_function.h

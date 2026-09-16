@@ -56,11 +56,11 @@ void BucketMetadataCache::MoveToFront(std::list<std::string>::iterator it) {
   list_.splice(list_.begin(), list_, it);
 }
 
-absl::optional<BucketCacheEntry> BucketMetadataCache::Get(
+std::optional<BucketCacheEntry> BucketMetadataCache::Get(
     std::string const& bucket_name) {
   std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
-  if (it == map_.end()) return absl::nullopt;
+  if (it == map_.end()) return std::nullopt;
 
   MoveToFront(it->second.second);
   return it->second.first;

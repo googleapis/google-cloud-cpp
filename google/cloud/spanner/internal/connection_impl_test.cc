@@ -2945,7 +2945,6 @@ TEST(ConnectionImplTest, MultiplexedPrecommitUpdated) {
           }
         )pb"};
 
-    google::spanner::v1::PartialResultSet result_set;
     EXPECT_CALL(*mock, StreamingRead)
         .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({response}))));
 

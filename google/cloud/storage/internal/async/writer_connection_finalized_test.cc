@@ -36,7 +36,7 @@ auto MakeTestObject() {
     name: "test-object"
   )pb";
   auto object = google::storage::v2::Object{};
-  google::protobuf::TextFormat::ParseFromString(kText, &object);
+  (void)google::protobuf::TextFormat::ParseFromString(kText, &object);
   return object;
 }
 

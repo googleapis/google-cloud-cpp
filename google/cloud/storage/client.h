@@ -39,7 +39,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/meta/type_traits.h"
 #include "absl/strings/string_view.h"
 #include <memory>
 #include <string>
@@ -1321,7 +1320,7 @@ class Client {
     // does not support (nor should it support) the UseResumableUploadSession
     // option.
     using HasUseResumableUpload =
-        absl::disjunction<std::is_same<UseResumableUploadSession, Options>...>;
+        std::disjunction<std::is_same<UseResumableUploadSession, Options>...>;
     return UploadFileImpl(file_name, bucket_name, object_name,
                           HasUseResumableUpload{},
                           std::forward<Options>(options)...);

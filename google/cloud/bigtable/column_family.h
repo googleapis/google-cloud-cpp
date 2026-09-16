@@ -16,13 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H
 
 #include "google/cloud/bigtable/version.h"
-#include "absl/meta/type_traits.h"
 #include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
 #include "google/bigtable/admin/v2/table.pb.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <chrono>
 #include <memory>
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -96,7 +96,7 @@ class GcRule {
     // letting the compiler figure things out N levels deep as it recurses on
     // `add_intersection()`.
     static_assert(
-        absl::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
+        std::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
         "The arguments to Intersection must be convertible to GcRule");
     GcRule tmp;
     auto& intersection = *tmp.gc_rule_.mutable_intersection();
@@ -121,7 +121,7 @@ class GcRule {
     // letting the compiler figure things out N levels deep as it recurses on
     // `add_intersection()`.
     static_assert(
-        absl::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
+        std::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
         "The arguments to Union must be convertible to GcRule");
     GcRule tmp;
     auto& gc_rule_union = *tmp.gc_rule_.mutable_union_();

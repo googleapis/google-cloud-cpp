@@ -17,6 +17,8 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/ascii.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
@@ -41,6 +43,22 @@ std::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   if (type == "integer") return j.value("format", "int32");
   if (type == "number") return j.value("format", "float");
   return std::nullopt;
+}
+
+bool IsStringOrBytes(nlohmann::json const& field_json) {
+  std::string const type = field_json.value("type", "");
+  if (type == "string" || type == "bytes") return true;
+  if (type == "array" && field_json.contains("items")) {
+    std::string const item_type = field_json["items"].value("type", "");
+    if (item_type == "string" || item_type == "bytes") return true;
+  }
+  return false;
+}
+
+bool ContainsKeyWord(std::string_view s) {
+  std::vector<std::string_view> const tokens = absl::StrSplit(s, '_');
+  return std::any_of(tokens.begin(), tokens.end(),
+                     [](std::string_view token) { return token == "key"; });
 }
 
 }  // namespace
@@ -319,8 +337,8 @@ DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
     std::string json_field_name, int indent_level,
     MessageProperties& message_properties,
     google::protobuf::Descriptor const* message_descriptor,
-    std::set<std::string>& current_field_names,
-    std::string const& indent) const {
+    std::set<std::string>& current_field_names, std::string const& indent,
+    bool has_sibling_value) const {
   try {
     if (field.contains("id")) {
       json_field_name = field["id"];
@@ -363,7 +381,8 @@ DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
     message_properties.lines.push_back(absl::StrFormat(
         "%s%s%s%s %s = %d%s;", FormatMessageDescription(field, indent_level),
         indent, introducer, type_name, field_name, *field_number,
-        FormatFieldOptions(field_name, json_field_name, field)));
+        FormatFieldOptions(field_name, json_field_name, field,
+                           has_sibling_value)));
     if (*field_number == message_properties.next_available_field_number) {
       ++message_properties.next_available_field_number;
     }
@@ -399,13 +418,14 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     std::set<std::string> current_field_names;
     if (json.contains("properties")) {
       auto const& properties = json.find("properties");
+      bool const has_sibling_value = properties->contains("value");
       for (auto p = properties->begin(); p != properties->end(); ++p) {
         auto const& field = p.value();
         auto const& field_key = p.key();
         auto result = FormatPropertiesHelper(
             types, message_name, qualified_message_name, file_package_name,
             field, field_key, indent_level, message_properties,
-            message_descriptor, current_field_names, indent);
+            message_descriptor, current_field_names, indent, has_sibling_value);
         if (!result.ok()) return result;
       }
     }
@@ -416,7 +436,7 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
       auto result = FormatPropertiesHelper(
           types, message_name, qualified_message_name, file_package_name, json,
           message_name, indent_level, message_properties, message_descriptor,
-          current_field_names, indent);
+          current_field_names, indent, false);
       if (!result.ok()) return result;
     }
 
@@ -484,7 +504,7 @@ std::string DiscoveryTypeVertex::FormatMessageDescription(
 
 std::string DiscoveryTypeVertex::FormatFieldOptions(
     std::string const& field_name, std::string const& json_field_name,
-    nlohmann::json const& field_json) {
+    nlohmann::json const& field_json, bool has_sibling_value) {
   std::vector<std::pair<std::string, std::string>> field_options;
   if (field_json.value("required", false)) {
     field_options.emplace_back("google.api.field_behavior", "REQUIRED");
@@ -493,6 +513,12 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
   if (field_json.value("operation_request_field", false)) {
     field_options.emplace_back("google.cloud.operation_request_field",
                                absl::StrCat("\"", field_name, "\""));
+  }
+
+  auto const is_key_value_pair = field_name == "key" && has_sibling_value;
+  if (IsStringOrBytes(field_json) && ContainsKeyWord(field_name) &&
+      !is_key_value_pair) {
+    field_options.emplace_back("debug_redact", "true");
   }
 
   // Discovery doc defined field names that are not always in strict
@@ -512,6 +538,8 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
                         std::pair<std::string, std::string> const& p) {
       if (p.first == "json_name") {
         *s += absl::StrFormat("%s=\"%s\"", p.first, p.second);
+      } else if (p.first == "debug_redact") {
+        *s += absl::StrFormat("%s = %s", p.first, p.second);
       } else {
         *s += absl::StrFormat("(%s) = %s", p.first, p.second);
       }

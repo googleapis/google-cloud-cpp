@@ -24,6 +24,7 @@
 #include <deque>
 #include <memory>
 #include <mutex>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -86,15 +87,15 @@ class AsyncWriterConnectionBufferedState
     finalized_future_ = finalized_.get_future();
     closed_future_ = closed_.get_future();
     auto state = impl_->PersistedState();
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+    if (std::holds_alternative<google::storage::v2::Object>(state)) {
       SetFinalized(std::unique_lock<std::mutex>(mu_),
-                   absl::get<google::storage::v2::Object>(std::move(state)));
+                   std::get<google::storage::v2::Object>(std::move(state)));
       cancelled_ = true;
       resume_status_ = internal::CancelledError("upload already finalized",
                                                 GCP_ERROR_INFO());
       return;
     }
-    buffer_offset_ = absl::get<std::int64_t>(state);
+    buffer_offset_ = std::get<std::int64_t>(state);
   }
 
   void Cancel() {
@@ -113,7 +114,7 @@ class AsyncWriterConnectionBufferedState
     return Impl(std::unique_lock<std::mutex>(mu_))->WriteHandle();
   }
 
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
@@ -168,9 +169,12 @@ class AsyncWriterConnectionBufferedState
     // Create a new promise for this flush operation.
     promise<Status> current_flush_promise;
     auto f = current_flush_promise.get_future();
-    pending_flush_promises_.push_back(std::move(current_flush_promise));
-
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
+    auto const target_offset =
+        buffer_offset_ + static_cast<std::int64_t>(resend_buffer_.size());
+    pending_flush_promises_.push_back(
+        PendingFlush{std::move(current_flush_promise), target_offset});
+
     flush_ = true;
     HandleNewData(std::move(lk), true);
     // Return the future associated with the new promise.
@@ -319,10 +323,10 @@ class AsyncWriterConnectionBufferedState
     auto impl = Impl(lk);
     auto const& state = impl->PersistedState();
     std::int64_t persisted_size = 0;
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      persisted_size = absl::get<google::storage::v2::Object>(state).size();
+    if (std::holds_alternative<google::storage::v2::Object>(state)) {
+      persisted_size = std::get<google::storage::v2::Object>(state).size();
     } else {
-      persisted_size = absl::get<std::int64_t>(state);
+      persisted_size = std::get<std::int64_t>(state);
     }
     lk.unlock();
     OnQuery(persisted_size);
@@ -395,7 +399,7 @@ class AsyncWriterConnectionBufferedState
       return;
     }
     // SetFlushed will release the lock before returning.
-    SetFlushed(std::move(lk), Status{});
+    SetFlushed(std::move(lk), Status{}, persisted_size);
     // Re-acquire the lock to re-enter the write loop.
     WriteLoop(std::unique_lock<std::mutex>(mu_));
     // The notifications are deferred until the lock is released, as they might
@@ -462,11 +466,11 @@ class AsyncWriterConnectionBufferedState
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
       // finalized_ promise now, based on the resume attempt's outcome.
-      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+      if (std::holds_alternative<google::storage::v2::Object>(state)) {
         // Resume found the object is finalized. Success.
         return SetFinalized(
             std::move(lk),
-            absl::get<google::storage::v2::Object>(std::move(state)));
+            std::get<google::storage::v2::Object>(std::move(state)));
       }
       // Resume succeeded, but the object is still not finalized.
       // This means the original finalization attempt failed permanently.
@@ -479,7 +483,7 @@ class AsyncWriterConnectionBufferedState
     if (was_closing) {
       // If resuming due to a close error, we must complete the
       // closed_ promise now, based on the resume attempt's outcome.
-      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+      if (std::holds_alternative<google::storage::v2::Object>(state)) {
         // Resume found the object is finalized (which implies closed). Success.
         return SetClosed(std::move(lk), Status{});
       }
@@ -491,13 +495,13 @@ class AsyncWriterConnectionBufferedState
       return SetError(std::move(lk), std::move(original_status));
     }
 
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+    if (std::holds_alternative<google::storage::v2::Object>(state)) {
       // Found finalized object (maybe finalized concurrently or resumed).
-      return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
+      return SetFinalized(std::move(lk), std::get<google::storage::v2::Object>(
                                              std::move(state)));
     }
     // Regular resume succeeded, object not finalized. Continue writing.
-    OnQuery(std::move(lk), absl::get<std::int64_t>(state), /*is_resume=*/true);
+    OnQuery(std::move(lk), std::get<std::int64_t>(state), /*is_resume=*/true);
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,
@@ -528,7 +532,7 @@ class AsyncWriterConnectionBufferedState
     lk.unlock();
     // Notify handlers and pending flushes *after* releasing the lock.
     for (auto& h : handlers) h->Execute(Status{});
-    for (auto& pf : pending_flushes) pf.set_value(Status{});  // Success
+    for (auto& pf : pending_flushes) pf.p.set_value(Status{});  // Success
     p.set_value(std::move(object));  // Set value on the moved promise
   }
 
@@ -552,34 +556,30 @@ class AsyncWriterConnectionBufferedState
     lk.unlock();
     // Notify handlers and pending flushes after releasing the lock.
     for (auto& h : handlers) h->Execute(status);
-    for (auto& pf : pending_flushes) pf.set_value(status);
+    for (auto& pf : pending_flushes) pf.p.set_value(status);
     p.set_value(status);  // Set value on the moved promise.
   }
 
-  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
+  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result,
+                  std::int64_t persisted_size) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
     // Do NOT reset finalize_ or finalizing_ here.
     auto handlers = ClearHandlers(lk);
-    // Dequeue the promise corresponding to an explicit Flush() call, if any.
-    if (pending_flush_promises_.empty()) {
-      // This can happen if SetError cleared the queue first, or if this
-      // flush was triggered internally by buffer size (not by an explicit
-      // Flush() call) and thus has no promise in the queue.
-      flush_ = false;
-      lk.unlock();
-      for (auto& h : handlers) h->Execute(Status{});
-      return;
+    std::vector<promise<Status>> flushes_to_complete;
+    while (!pending_flush_promises_.empty() &&
+           pending_flush_promises_.front().target_offset <= persisted_size) {
+      flushes_to_complete.push_back(
+          std::move(pending_flush_promises_.front().p));
+      pending_flush_promises_.pop_front();
     }
-    auto flushed = std::move(pending_flush_promises_.front());
-    pending_flush_promises_.pop_front();
     if (pending_flush_promises_.empty()) {
       flush_ = false;
     }
     lk.unlock();  // Unlock only once before notifying
-    // Notify handlers and the specific flush promise *after* releasing the
+    // Notify handlers and the specific flush promises *after* releasing the
     // lock.
     for (auto& h : handlers) h->Execute(Status{});
-    flushed.set_value(result);
+    for (auto& f : flushes_to_complete) f.set_value(result);
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
@@ -620,7 +620,7 @@ class AsyncWriterConnectionBufferedState
     for (auto& h : handlers) h->Execute(status);
     // Set error on all pending flush promises.
     for (auto& pf : pending_flushes) {
-      pf.set_value(status);
+      pf.p.set_value(status);
     }
     // Set error on the moved promises *once*.
     if (complete_finalized) {
@@ -683,8 +683,17 @@ class AsyncWriterConnectionBufferedState
   // closed_.
   future<Status> closed_future_;
 
+  // Tracks an outstanding `Flush()` promise alongside the stream offset at the
+  // time `Flush()` was called. The target offset is used to satisfy promises
+  // once all data buffered at the time of the `Flush()` call has been
+  // persisted.
+  struct PendingFlush {
+    promise<Status> p;
+    std::int64_t target_offset;
+  };
+
   // Queue of promises for outstanding Flush() calls.
-  std::deque<promise<Status>> pending_flush_promises_;
+  std::deque<PendingFlush> pending_flush_promises_;
 
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.
@@ -810,7 +819,7 @@ class AsyncWriterConnectionBuffered : public storage::AsyncWriterConnection {
     return state_->WriteHandle();
   }
 
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     return state_->PersistedState();
   }
@@ -848,7 +857,7 @@ std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionBuffered(
     WriterConnectionFactory factory,
     std::unique_ptr<storage::AsyncWriterConnection> impl,
     Options const& options) {
-  return absl::make_unique<AsyncWriterConnectionBuffered>(
+  return std::make_unique<AsyncWriterConnectionBuffered>(
       std::move(factory), std::move(impl), options,
       options.get<storage::BufferedUploadLwmOption>(),
       options.get<storage::BufferedUploadHwmOption>());

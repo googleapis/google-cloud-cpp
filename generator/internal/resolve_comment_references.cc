@@ -28,7 +28,7 @@ std::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
     Descriptor const* d) {
   if (d == nullptr) return std::nullopt;
   google::protobuf::SourceLocation loc;
-  d->GetSourceLocation(&loc);
+  (void)d->GetSourceLocation(&loc);
   return std::make_pair(std::string{d->full_name()},
                         ProtoDefinitionLocation{std::string{d->file()->name()},
                                                 loc.start_line + 1});

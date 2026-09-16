@@ -98,7 +98,7 @@ SessionsConnectionImpl::ServerStreamingDetectIntent(
   return internal::MakeStreamRange<
       google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status, google::cloud::dialogflow::cx::v3::DetectIntentResponse> {
         google::cloud::dialogflow::cx::v3::DetectIntentResponse response;
         auto status = resumable->Read(&response);

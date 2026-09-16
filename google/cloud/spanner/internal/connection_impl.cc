@@ -35,6 +35,7 @@
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <functional>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -51,7 +52,7 @@ class DirectedReadVisitor {
       std::function<google::spanner::v1::DirectedReadOptions*()> factory)
       : factory_(std::move(factory)) {}
 
-  void operator()(absl::monostate) const {
+  void operator()(std::monostate) const {
     // No inclusions/exclusions.
   }
 
@@ -638,10 +639,10 @@ spanner::RowStream ConnectionImpl::ReadImpl(
         *std::move(params.read_options.request_tag));
   }
   request->mutable_request_options()->set_transaction_tag(ctx.tag);
-  absl::visit(DirectedReadVisitor([&request] {
-                return request->mutable_directed_read_options();
-              }),
-              params.directed_read_option);
+  std::visit(DirectedReadVisitor([&request] {
+               return request->mutable_directed_read_options();
+             }),
+             params.directed_read_option);
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
@@ -825,10 +826,10 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
         *params.query_options.request_tag());
   }
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
-  absl::visit(DirectedReadVisitor([&request] {
-                return request.mutable_directed_read_options();
-              }),
-              params.directed_read_option);
+  std::visit(DirectedReadVisitor([&request] {
+               return request.mutable_directed_read_options();
+             }),
+             params.directed_read_option);
 
   for (;;) {
     auto reader = retry_resume_fn(request);
@@ -1426,7 +1427,7 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
   // until the stream is exhausted.
   return internal::MakeStreamRange<spanner::BatchedCommitResult>(
       [reader = std::move(reader), session = std::move(session)]()
-          -> absl::variant<Status, spanner::BatchedCommitResult> {
+          -> std::variant<Status, spanner::BatchedCommitResult> {
         google::spanner::v1::BatchWriteResponse response;
         auto result = reader->Read(&response);
         if (result.has_value()) {

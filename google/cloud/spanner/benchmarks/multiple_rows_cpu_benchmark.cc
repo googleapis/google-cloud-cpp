@@ -588,7 +588,6 @@ class ReadExperiment : public BasicExperiment<Traits> {
       *request.mutable_key_set() = spanner_internal::ToProto(key);
 
       int row_count = 0;
-      google::spanner::v1::PartialResultSet result;
       std::vector<google::protobuf::Value> row;
       row.resize(columns.size());
       auto stream = stub->StreamingRead(std::make_shared<grpc::ClientContext>(),
@@ -736,7 +735,6 @@ class SelectExperiment : public BasicExperiment<Traits> {
           std::move(end_type_value.second);
 
       int row_count = 0;
-      google::spanner::v1::PartialResultSet result;
       std::vector<google::protobuf::Value> row;
       row.resize(ExperimentImpl<Traits>::kColumnCount);
       auto stream =

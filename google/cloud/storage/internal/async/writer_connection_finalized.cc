@@ -45,7 +45,7 @@ AsyncWriterConnectionFinalized::WriteHandle() const {
   return std::nullopt;
 }
 
-absl::variant<std::int64_t, google::storage::v2::Object>
+std::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriterConnectionFinalized::PersistedState() const {
   return object_;
 }

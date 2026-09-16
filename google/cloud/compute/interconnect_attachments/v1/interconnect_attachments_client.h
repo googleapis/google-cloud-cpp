@@ -124,7 +124,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.AggregatedListInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L137}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_085.proto#L878}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_085.proto#L879}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -169,7 +169,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.AggregatedListInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L137}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_085.proto#L878}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_085.proto#L879}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::

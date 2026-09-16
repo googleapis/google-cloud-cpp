@@ -53,7 +53,7 @@ class AsyncWriterConnectionFinalized : public storage::AsyncWriterConnection {
   std::string UploadId() const override;
   std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const override;
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
   future<Status> Write(storage::WritePayload payload) override;

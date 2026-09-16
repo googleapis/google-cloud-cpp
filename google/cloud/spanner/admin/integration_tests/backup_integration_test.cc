@@ -158,7 +158,7 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
        database_admin_client_.ListBackupOperations(lreq)) {
     if (!operation) break;
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     db_names.push_back(metadata.database());
   }
   if (Emulator()) {
@@ -229,7 +229,7 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
          database_admin_client_.ListDatabaseOperations(dreq)) {
       if (!operation) break;
       google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata md;
-      operation->metadata().UnpackTo(&md);
+      (void)operation->metadata().UnpackTo(&md);
       restored_db_names.push_back(md.name());
     }
     EXPECT_LE(1, std::count(restored_db_names.begin(), restored_db_names.end(),

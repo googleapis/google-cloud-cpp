@@ -19,7 +19,6 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/tuple.h"
 #include "google/cloud/internal/utility.h"
-#include "absl/meta/type_traits.h"
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -148,7 +147,7 @@ StaticTupleFilter(Tuple&& t) {
 template <typename... Types>
 struct Among {
   template <typename T>
-  using TPred = absl::disjunction<std::is_same<std::decay_t<T>, Types>...>;
+  using TPred = std::disjunction<std::is_same<std::decay_t<T>, Types>...>;
 };
 
 /**
@@ -160,7 +159,7 @@ template <typename... Types>
 struct NotAmong {
   template <typename T>
   using TPred = std::integral_constant<
-      bool, !absl::disjunction<std::is_same<std::decay_t<T>, Types>...>::value>;
+      bool, !std::disjunction<std::is_same<std::decay_t<T>, Types>...>::value>;
 };
 
 }  // namespace internal

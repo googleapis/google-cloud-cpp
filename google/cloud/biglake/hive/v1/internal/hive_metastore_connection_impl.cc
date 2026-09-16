@@ -426,7 +426,7 @@ HiveMetastoreServiceConnectionImpl::ListPartitions(
   return internal::MakeStreamRange<
       google::cloud::biglake::hive::v1::ListPartitionsResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status,
               google::cloud::biglake::hive::v1::ListPartitionsResponse> {
         google::cloud::biglake::hive::v1::ListPartitionsResponse response;

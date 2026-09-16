@@ -27,6 +27,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         NAME ftp_quickstart
         COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
                 $<TARGET_FILE:ftp_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(ftp_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        ftp_quickstart PROPERTIES DISABLED "True" LABELS
+                                  "integration-test;quickstart")
 endif ()

@@ -41,7 +41,7 @@ class TracedRowReader : public bigtable_internal::RowReaderImpl {
     reader_.Cancel();
   };
 
-  absl::variant<Status, bigtable::Row> Advance() override {
+  std::variant<Status, bigtable::Row> Advance() override {
     if (it_ == reader_.end()) return End(Status());
     auto row = *it_;
     ++it_;

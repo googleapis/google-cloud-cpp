@@ -17,16 +17,16 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "absl/types/variant.h"
 #include <iterator>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-using ObjectOrPrefix = absl::variant<ObjectMetadata, std::string>;
+using ObjectOrPrefix = std::variant<ObjectMetadata, std::string>;
 
 using ListObjectsAndPrefixesReader =
     google::cloud::internal::PaginationRange<ObjectOrPrefix>;
@@ -41,8 +41,8 @@ inline void SortObjectsAndPrefixes(std::vector<ObjectOrPrefix>& in) {
   };
   std::sort(in.begin(), in.end(),
             [](ObjectOrPrefix const& a, ObjectOrPrefix const& b) {
-              return (absl::visit(GetNameOrPrefix{}, a) <
-                      absl::visit(GetNameOrPrefix{}, b));
+              return (std::visit(GetNameOrPrefix{}, a) <
+                      std::visit(GetNameOrPrefix{}, b));
             });
 }
 }  // namespace internal

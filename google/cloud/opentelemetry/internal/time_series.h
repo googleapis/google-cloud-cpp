@@ -17,13 +17,13 @@
 
 #include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/api/metric.pb.h"
 #include "google/api/monitored_resource.pb.h"
 #include "google/monitoring/v3/metric_service.pb.h"
 #include <opentelemetry/sdk/metrics/metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <functional>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -63,7 +63,7 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 
 google::api::MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    absl::optional<google::api::MonitoredResource> const& mr_proto);
+    std::optional<google::api::MonitoredResource> const& mr_proto);
 
 /**
  * We need to convert from the C++ OpenTelemetry metrics implementation to

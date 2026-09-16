@@ -18,10 +18,10 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
-#include "absl/types/variant.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -255,8 +255,8 @@ bool operator==(StandardSqlStructType const& lhs,
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/StandardSqlDataType
 struct StandardSqlDataType {
   using ValueType =
-      absl::variant<absl::monostate, std::shared_ptr<StandardSqlDataType>,
-                    StandardSqlStructType>;
+      std::variant<std::monostate, std::shared_ptr<StandardSqlDataType>,
+                   StandardSqlStructType>;
   TypeKind type_kind;
 
   ValueType sub_type;
@@ -286,8 +286,8 @@ struct Struct;
 // For more details, please see:
 // https://protobuf.dev/reference/protobuf/google.protobuf/#value
 struct Value {
-  using KindType = absl::variant<absl::monostate, double, std::string, bool,
-                                 std::shared_ptr<Struct>, std::vector<Value>>;
+  using KindType = std::variant<std::monostate, double, std::string, bool,
+                                std::shared_ptr<Struct>, std::vector<Value>>;
   KindType value_kind;
 
   std::string DebugString(absl::string_view name,

@@ -111,7 +111,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
   return internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status,
               google::cloud::aiplatform::v1::ReadFeatureValuesResponse> {
         google::cloud::aiplatform::v1::ReadFeatureValuesResponse response;

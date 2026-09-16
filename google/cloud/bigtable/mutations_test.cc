@@ -184,14 +184,14 @@ TEST(MutationsTest, FailedMutation) {
   google::rpc::RetryInfo retry;
   retry.mutable_retry_delay()->set_seconds(900);
   retry.mutable_retry_delay()->set_nanos(0);
-  status.add_details()->PackFrom(retry);
+  (void)status.add_details()->PackFrom(retry);
   google::rpc::DebugInfo debug_info;
   debug_info.add_stack_entries("foo()");
   debug_info.add_stack_entries("bar()");
   debug_info.add_stack_entries("main()");
   debug_info.set_detail("just a test");
-  status.add_details()->PackFrom(retry);
-  status.add_details()->PackFrom(debug_info);
+  (void)status.add_details()->PackFrom(retry);
+  (void)status.add_details()->PackFrom(debug_info);
 
   FailedMutation fm(std::move(status), 27);
   EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition, fm.status().code());

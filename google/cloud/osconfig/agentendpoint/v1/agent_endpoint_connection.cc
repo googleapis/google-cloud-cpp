@@ -45,8 +45,8 @@ AgentEndpointServiceConnection::ReceiveTaskNotification(
   return google::cloud::internal::MakeStreamRange<
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationResponse>(
-      []() -> absl::variant<Status, google::cloud::osconfig::agentendpoint::v1::
-                                        ReceiveTaskNotificationResponse> {
+      []() -> std::variant<Status, google::cloud::osconfig::agentendpoint::v1::
+                                       ReceiveTaskNotificationResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

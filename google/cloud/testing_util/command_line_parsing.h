@@ -16,9 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_COMMAND_LINE_PARSING_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <cinttypes>
+#include <functional>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -53,7 +54,7 @@ std::chrono::seconds ParseDuration(std::string const& val);
 
 /// Parse a string as a boolean, returning a not-present value if the string is
 /// empty.
-absl::optional<bool> ParseBoolean(std::string const& val);
+std::optional<bool> ParseBoolean(std::string const& val);
 
 /// Defines a command-line option.
 struct OptionDescriptor {

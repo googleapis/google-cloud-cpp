@@ -48,7 +48,7 @@ BigQueryReadConnection::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>(
-      []() -> absl::variant<
+      []() -> std::variant<
                Status, google::cloud::bigquery::storage::v1::ReadRowsResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });

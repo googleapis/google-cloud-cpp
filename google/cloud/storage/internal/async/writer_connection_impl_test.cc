@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(#16404): Remove deprecation disable include.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/storage/async/options.h"
@@ -708,7 +710,7 @@ TEST(AsyncWriterConnectionTest, FlushFailsWithRedirect) {
   redirect.mutable_write_handle()->set_handle("redirect-handle");
   redirect.set_routing_token("redirect-token");
   redirect.set_generation(4321);
-  rpc_status.add_details()->PackFrom(redirect);
+  (void)rpc_status.add_details()->PackFrom(redirect);
   std::string rpc_status_payload;
   ASSERT_TRUE(rpc_status.SerializeToString(&rpc_status_payload));
   Status status(StatusCode::kAborted, "redirect");

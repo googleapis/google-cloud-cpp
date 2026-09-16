@@ -19,9 +19,9 @@
 #include "google/cloud/extended_operations.pb.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
-#include "absl/types/variant.h"
 #include "google/longrunning/operations.pb.h"
 #include <string>
+#include <variant>
 
 using ::google::protobuf::Descriptor;
 using ::google::protobuf::MethodDescriptor;
@@ -31,7 +31,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-absl::variant<std::string, Descriptor const*> FullyQualifyMessageType(
+std::variant<std::string, Descriptor const*> FullyQualifyMessageType(
     MethodDescriptor const& method, std::string message_type) {
   Descriptor const* output_type =
       method.file()->pool()->FindMessageTypeByName(message_type);
@@ -63,7 +63,7 @@ struct FormatDoxygenLinkVisitor {
   }
 };
 
-absl::variant<std::string, Descriptor const*>
+std::variant<std::string, Descriptor const*>
 DeduceLongrunningOperationResponseType(
     MethodDescriptor const& method,
     google::longrunning::OperationInfo const& operation_info) {
@@ -100,36 +100,36 @@ void SetLongrunningOperationMethodVars(
   if (IsGRPCLongrunningOperation(method)) {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
-    method_vars["longrunning_metadata_type"] = ProtoNameToCppName(absl::visit(
+    method_vars["longrunning_metadata_type"] = ProtoNameToCppName(std::visit(
         FullyQualifiedMessageTypeVisitor(),
         FullyQualifyMessageType(method, operation_info.metadata_type())));
-    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
+    method_vars["longrunning_response_type"] = ProtoNameToCppName(std::visit(
         FullyQualifiedMessageTypeVisitor(),
         FullyQualifyMessageType(method, operation_info.response_type())));
     auto deduced_response_type =
         DeduceLongrunningOperationResponseType(method, operation_info);
     method_vars["longrunning_deduced_response_message_type"] =
-        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
+        std::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
     method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
         method_vars["longrunning_deduced_response_message_type"]);
     method_vars["method_longrunning_deduced_return_doxygen_link"] =
-        absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
+        std::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
     return;
   }
 
   if (IsHttpLongrunningOperation(method)) {
-    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
+    method_vars["longrunning_response_type"] = ProtoNameToCppName(std::visit(
         FullyQualifiedMessageTypeVisitor(),
         FullyQualifyMessageType(
             method, std::string{method.output_type()->full_name()})));
-    absl::variant<std::string, google::protobuf::Descriptor const*>
+    std::variant<std::string, google::protobuf::Descriptor const*>
         deduced_response_type = method.output_type();
     method_vars["longrunning_deduced_response_message_type"] =
-        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
+        std::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
     method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
         method_vars["longrunning_deduced_response_message_type"]);
     method_vars["method_longrunning_deduced_return_doxygen_link"] =
-        absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
+        std::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
   }
 }
 
@@ -169,11 +169,10 @@ void SetLongrunningOperationServiceVars(
       return;
     }
     if (IsHttpLongrunningOperation(*method)) {
-      service_vars["longrunning_response_type"] =
-          ProtoNameToCppName(absl::visit(
-              FullyQualifiedMessageTypeVisitor(),
-              FullyQualifyMessageType(
-                  *method, std::string{method->output_type()->full_name()})));
+      service_vars["longrunning_response_type"] = ProtoNameToCppName(std::visit(
+          FullyQualifiedMessageTypeVisitor(),
+          FullyQualifyMessageType(
+              *method, std::string{method->output_type()->full_name()})));
       auto operation_service_extension =
           method->options().GetExtension(google::cloud::operation_service);
 

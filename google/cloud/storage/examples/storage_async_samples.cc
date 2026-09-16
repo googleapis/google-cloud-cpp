@@ -34,6 +34,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace {
@@ -759,7 +760,7 @@ void CreateAndWriteAppendableObject(google::cloud::storage::AsyncClient& client,
     if (!flush_status.ok()) throw std::runtime_error(flush_status.message());
 
     std::cout << "Flush completed. Persisted size is now "
-              << absl::get<std::int64_t>(writer.PersistedState()) << "\n";
+              << std::get<std::int64_t>(writer.PersistedState()) << "\n";
 
     // The writer is still open. We can write more data.
     token = (co_await writer.Write(std::move(token),
@@ -850,7 +851,7 @@ void PauseAndResumeAppendableUpload(google::cloud::storage::AsyncClient& client,
              gcs::BucketName(bucket_name), object_name, metadata.generation()))
             .value();
     std::cout << "Upload resumed from offset "
-              << absl::get<std::int64_t>(writer.PersistedState()) << "\n";
+              << std::get<std::int64_t>(writer.PersistedState()) << "\n";
 
     // Append the rest of the data.
     token = (co_await writer.Write(std::move(token),

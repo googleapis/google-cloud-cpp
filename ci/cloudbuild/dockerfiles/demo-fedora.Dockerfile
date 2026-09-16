@@ -88,7 +88,7 @@ RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v36.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

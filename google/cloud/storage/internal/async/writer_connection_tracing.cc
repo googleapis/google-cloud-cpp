@@ -54,7 +54,7 @@ class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
     return impl_->WriteHandle();
   }
 
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     // No tracing, this is a local call without any significant work.
     return impl_->PersistedState();

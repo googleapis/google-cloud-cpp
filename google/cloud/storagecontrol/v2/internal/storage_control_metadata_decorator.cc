@@ -951,7 +951,7 @@ StatusOr<google::iam::v1::Policy> StorageControlMetadata::GetIamPolicy(
                         std::regex::optimize}},
             {[](google::iam::v1::GetIamPolicyRequest const& request)
                  -> std::string const& { return request.resource(); },
-             absl::nullopt},
+             std::nullopt},
         }};
   }();
   bucket_matcher->AppendParam(request, params);
@@ -981,7 +981,7 @@ StatusOr<google::iam::v1::Policy> StorageControlMetadata::SetIamPolicy(
                         std::regex::optimize}},
             {[](google::iam::v1::SetIamPolicyRequest const& request)
                  -> std::string const& { return request.resource(); },
-             absl::nullopt},
+             std::nullopt},
         }};
   }();
   bucket_matcher->AppendParam(request, params);
@@ -1016,7 +1016,7 @@ StorageControlMetadata::TestIamPermissions(
                         std::regex::optimize}},
             {[](google::iam::v1::TestIamPermissionsRequest const& request)
                  -> std::string const& { return request.resource(); },
-             absl::nullopt},
+             std::nullopt},
         }};
   }();
   bucket_matcher->AppendParam(request, params);

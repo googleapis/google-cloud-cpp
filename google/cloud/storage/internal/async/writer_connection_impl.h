@@ -59,7 +59,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
     std::unique_lock<std::mutex> lk(mu_);
     return latest_write_handle_;
   }
-  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+  std::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
   future<Status> Write(storage::WritePayload payload) override;
@@ -72,7 +72,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
 
  private:
   using PersistedStateType =
-      absl::variant<std::int64_t, google::storage::v2::Object>;
+      std::variant<std::int64_t, google::storage::v2::Object>;
   AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,

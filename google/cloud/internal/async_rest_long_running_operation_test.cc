@@ -133,7 +133,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
   done_op.set_done(true);
-  done_op.mutable_metadata()->PackFrom(expected);
+  (void)done_op.mutable_metadata()->PackFrom(expected);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -188,7 +188,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
   done_op.set_done(true);
-  done_op.mutable_response()->PackFrom(expected);
+  (void)done_op.mutable_response()->PackFrom(expected);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -319,7 +319,7 @@ TEST(AsyncLongRunningTest, AwaitPollThenSuccessMetadata) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
   done_op.set_done(true);
-  done_op.mutable_metadata()->PackFrom(expected);
+  (void)done_op.mutable_metadata()->PackFrom(expected);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -362,7 +362,7 @@ TEST(AsyncLongRunningTest, AwaitPollThenSuccessResponse) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
   done_op.set_done(true);
-  done_op.mutable_response()->PackFrom(expected);
+  (void)done_op.mutable_response()->PackFrom(expected);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)

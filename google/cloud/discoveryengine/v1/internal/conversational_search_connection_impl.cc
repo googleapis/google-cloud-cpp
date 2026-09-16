@@ -227,7 +227,7 @@ ConversationalSearchServiceConnectionImpl::StreamAnswerQuery(
   return internal::MakeStreamRange<
       google::cloud::discoveryengine::v1::AnswerQueryResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status, google::cloud::discoveryengine::v1::AnswerQueryResponse> {
         google::cloud::discoveryengine::v1::AnswerQueryResponse response;
         auto status = resumable->Read(&response);

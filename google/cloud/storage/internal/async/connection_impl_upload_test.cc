@@ -30,6 +30,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -249,7 +250,7 @@ TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w1 = writer->Write({});
   next = sequencer.PopFrontWithName();
@@ -361,7 +362,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w2 = writer->Finalize({});
   timer = sequencer.PopFrontWithName();
@@ -591,7 +592,7 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 16384);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 16384);
 
   auto w1 = writer->Write({});
   next = sequencer.PopFrontWithName();
@@ -957,7 +958,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w1 = writer->Finalize({});
   next = sequencer.PopFrontWithName();
@@ -1210,7 +1211,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUpload) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 16384);
+  EXPECT_EQ(std::get<std::int64_t>(writer->PersistedState()), 16384);
 
   auto w1 = writer->Write({});
   next = sequencer.PopFrontWithName();

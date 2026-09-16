@@ -217,7 +217,7 @@ void ListInstanceConfigOperations(
        client.ListInstanceConfigOperations(project.FullName())) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::instance::v1::CreateInstanceConfigMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "CreateInstanceConfig metadata is:\n"
               << metadata.DebugString();
   }
@@ -229,7 +229,7 @@ void ListInstanceConfigOperations(
        client.ListInstanceConfigOperations(project.FullName())) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::instance::v1::UpdateInstanceConfigMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "UpdateInstanceConfig metadata is:\n"
               << metadata.DebugString();
   }
@@ -1849,7 +1849,7 @@ void ListBackupOperations(
   for (auto& operation : client.ListBackupOperations(request)) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "Backup " << metadata.name() << " of database "
               << metadata.database() << " is "
               << metadata.progress().progress_percent() << "% complete.\n";
@@ -1861,7 +1861,7 @@ void ListBackupOperations(
   for (auto& operation : client.ListBackupOperations(request)) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::CopyBackupMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "Copy " << metadata.name() << " of backup "
               << metadata.source_backup() << " is "
               << metadata.progress().progress_percent() << "% complete.\n";
@@ -1894,7 +1894,7 @@ void ListDatabaseOperations(
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata
         metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "Database " << metadata.name() << " restored from backup is "
               << metadata.progress().progress_percent() << "% optimized.\n";
   }
@@ -3628,6 +3628,25 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
 }
 //! [END spanner_get_commit_stats]
 
+//! [START spanner_set_max_commit_delay]
+void SetMaxCommitDelay(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  auto update_albums = spanner::UpdateMutationBuilder(
+                           "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
+                           .EmplaceRow(1, 1, 200000)
+                           .EmplaceRow(2, 2, 400000)
+                           .Build();
+  google::cloud::StatusOr<spanner::CommitResult> commit =
+      client.Commit(spanner::Mutations{update_albums},
+                    google::cloud::Options{}.set<spanner::MaxCommitDelayOption>(
+                        std::chrono::milliseconds(100)));
+
+  if (!commit) throw std::move(commit).status();
+  std::cout << "Update was successful [spanner_set_max_commit_delay]\n";
+}
+//! [END spanner_set_max_commit_delay]
+
 //! [START spanner_dml_standard_insert]
 void DmlStandardInsert(google::cloud::spanner::Client client) {
   //! [execute-dml]
@@ -4371,7 +4390,7 @@ void AddProtoTypeColumns(
       .GetMetadata()
       .descriptor->file()
       ->CopyTo(fds.add_file());
-  fds.SerializeToString(request.mutable_proto_descriptors());
+  (void)fds.SerializeToString(request.mutable_proto_descriptors());
   request.add_statements(R"""(
       CREATE PROTO BUNDLE (
           google.cloud.spanner.testing.SingerInfo,
@@ -5325,6 +5344,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"isolation-level-setting", IsolationLevelSettingCommand},
       {"read-lock-mode-setting", ReadLockModeSettingCommand},
       make_command_entry("get-commit-stats", GetCommitStatistics),
+      make_command_entry("set-max-commit-delay", SetMaxCommitDelay),
       make_command_entry("dml-standard-insert", DmlStandardInsert),
       make_command_entry("dml-standard-update", DmlStandardUpdate),
       make_command_entry("dml-standard-update-with-timestamp",
@@ -6051,6 +6071,9 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_get_commit_stats");
   GetCommitStatistics(client);
+
+  SampleBanner("spanner_set_max_commit_delay");
+  SetMaxCommitDelay(client);
 
   SampleBanner("spanner_dml_standard_insert");
   DmlStandardInsert(client);

@@ -22,6 +22,7 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/internal/make_status.h"
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -116,7 +117,7 @@ std::string AsyncWriterConnectionImpl::UploadId() const {
   return request_.upload_id();
 }
 
-absl::variant<std::int64_t, google::storage::v2::Object>
+std::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriterConnectionImpl::PersistedState() const {
   std::unique_lock<std::mutex> lk(mu_);
   return persisted_state_;
@@ -215,11 +216,11 @@ future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (auto* size = absl::get_if<std::int64_t>(&persisted_state_)) {
+  if (auto* size = std::get_if<std::int64_t>(&persisted_state_)) {
     return make_ready_future(make_status_or(*size));
   }
   if (auto* meta =
-          absl::get_if<google::storage::v2::Object>(&persisted_state_)) {
+          std::get_if<google::storage::v2::Object>(&persisted_state_)) {
     return make_ready_future(
         make_status_or(static_cast<std::int64_t>(meta->size())));
   }
@@ -284,8 +285,7 @@ future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
     std::int64_t expected_offset;
 
     future<Status> operator()(
-        future<absl::optional<google::storage::v2::BidiWriteObjectResponse>>
-            f) {
+        future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
       auto response = std::move(f).get();
       if (!response.has_value()) {
         return self->Finish().then(HandleFinishAfterError(
@@ -371,8 +371,7 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
     std::shared_ptr<StreamingRpc> impl;
 
     future<void> operator()(
-        future<absl::optional<google::storage::v2::BidiWriteObjectResponse>>
-            f) {
+        future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
       auto response = std::move(f).get();
       if (!response.has_value()) return make_ready_future();
       {
@@ -397,13 +396,13 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
         [this](auto f2) -> StatusOr<google::storage::v2::Object> {
           auto status = f2.get();
           if (!status.ok()) return status;
-          if (!absl::holds_alternative<google::storage::v2::Object>(
+          if (!std::holds_alternative<google::storage::v2::Object>(
                   persisted_state_)) {
             return internal::InternalError(
                 "no object metadata returned after finalizing upload",
                 GCP_ERROR_INFO());
           }
-          return absl::get<google::storage::v2::Object>(persisted_state_);
+          return std::get<google::storage::v2::Object>(persisted_state_);
         });
   });
 }

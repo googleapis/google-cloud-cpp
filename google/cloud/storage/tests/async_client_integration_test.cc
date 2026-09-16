@@ -32,6 +32,7 @@
 #include <string>
 #include <tuple>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -378,7 +379,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
   // Incidentally, this shows the value fits into an `int`.
   ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
   // Cast to `int` because otherwise we need to write multiple casts below.
-  auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
+  auto offset = static_cast<int>(std::get<std::int64_t>(persisted));
   if (offset % kBlockSize != 0) {
     auto s = block.substr(offset % kBlockSize);
     auto const size = s.size();
@@ -844,7 +845,7 @@ TEST_F(AsyncClientIntegrationTest, ResumeAppendableObjectUpload) {
   auto const persisted = writer.PersistedState();
   ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
   // Cast to `int` because otherwise we need to write multiple casts below.
-  auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
+  auto offset = static_cast<int>(std::get<std::int64_t>(persisted));
   if (offset % kBlockSize != 0) {
     auto s = block.substr(offset % kBlockSize);
     auto const size = s.size();
@@ -959,6 +960,112 @@ TEST_F(AsyncClientIntegrationTest, ExplicitFlushAppendableObjectUpload) {
   EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockSize);
+}
+
+// Tests sequential write-then-flush cycles against an appendable object upload.
+// Verifies that multiple distinct Flush() calls properly track incremental
+// byte watermarks.
+TEST_F(AsyncClientIntegrationTest,
+       SequentialWriteAndFlushAppendableObjectUpload) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+  auto constexpr kBlockSize = static_cast<std::int64_t>(64 * 1024);
+  auto constexpr kIterations = 10;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto create =
+      client.CreateBucket(bucket_name(), storage::BucketMetadata{}
+                                             .set_location("us-west4")
+                                             .set_storage_class("RAPID"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  // Sequentially write blocks and issue an explicit Flush() after each write.
+  std::int64_t total_written = 0;
+  for (int i = 0; i < kIterations; ++i) {
+    total_written += kBlockSize;
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+
+    // Verify each Flush() future resolves successfully and the persisted
+    // watermark matches the cumulative bytes written so far.
+    auto flush_status = writer.Flush().get();
+    EXPECT_STATUS_OK(flush_status);
+
+    auto const persisted = writer.PersistedState();
+    EXPECT_THAT(persisted, VariantWith<std::int64_t>(total_written));
+  }
+
+  // Finalize the object upload and verify the total object size.
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), total_written);
+}
+
+// Tests burst writes followed by a single Flush() against an appendable object.
+TEST_F(AsyncClientIntegrationTest,
+       BurstWritesWithSingleFlushAppendableObjectUpload) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+  auto constexpr kBlockSize = static_cast<std::int64_t>(32 * 1024);
+  auto constexpr kBurstCount = 5;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto create =
+      client.CreateBucket(bucket_name(), storage::BucketMetadata{}
+                                             .set_location("us-west4")
+                                             .set_storage_class("RAPID"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  // Queue a burst of multiple writes without flushing between them.
+  std::int64_t total_written = 0;
+  for (int i = 0; i < kBurstCount; ++i) {
+    total_written += kBlockSize;
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
+
+  // Issue a single Flush() and verify it confirms persistence of all burst
+  // data.
+  auto flush_status = writer.Flush().get();
+  EXPECT_STATUS_OK(flush_status);
+
+  auto const persisted = writer.PersistedState();
+  EXPECT_THAT(persisted, VariantWith<std::int64_t>(total_written));
+
+  // Finalize the object upload and verify the total object size.
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->size(), total_written);
 }
 
 TEST_F(AsyncClientIntegrationTest, Open) {

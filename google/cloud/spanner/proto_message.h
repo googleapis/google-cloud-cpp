@@ -56,7 +56,7 @@ class ProtoMessage {
 
   /// Implicit construction from the message type.
   // NOLINTNEXTLINE(google-explicit-constructor)
-  ProtoMessage(M const& m) { m.SerializeToString(&serialized_message_); }
+  ProtoMessage(M const& m) { (void)m.SerializeToString(&serialized_message_); }
 
   /// Explicit construction from wire format.
   explicit ProtoMessage(std::string serialized_message)
@@ -65,7 +65,7 @@ class ProtoMessage {
   /// Explicit conversion to the message type.
   explicit operator message_type() const {
     message_type m;
-    m.ParseFromString(serialized_message_);
+    (void)m.ParseFromString(serialized_message_);
     return m;
   }
 

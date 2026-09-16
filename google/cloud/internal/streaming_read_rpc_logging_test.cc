@@ -16,7 +16,6 @@
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/types/variant.h"
 #include "google/protobuf/duration.pb.h"
 #include <gmock/gmock.h>
 

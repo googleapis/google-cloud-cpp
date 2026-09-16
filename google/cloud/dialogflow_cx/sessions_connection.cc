@@ -50,7 +50,7 @@ SessionsConnection::ServerStreamingDetectIntent(
   return google::cloud::internal::MakeStreamRange<
       google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
       []()
-          -> absl::variant<
+          -> std::variant<
               Status, google::cloud::dialogflow::cx::v3::DetectIntentResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });

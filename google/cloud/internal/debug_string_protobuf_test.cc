@@ -18,6 +18,9 @@
 #include "google/iam/v1/policy.pb.h"
 #include "google/protobuf/duration.pb.h"
 #include "google/protobuf/timestamp.pb.h"
+#include <google/protobuf/descriptor.h>
+#include <google/protobuf/descriptor.pb.h>
+#include <google/protobuf/dynamic_message.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -129,6 +132,63 @@ TEST(LogWrapperHelpers, Timestamp) {
 })";
   EXPECT_EQ(expected, DebugString(timestamp, TracingOptions{}.SetOptions(
                                                  "single_line_mode=off")));
+}
+
+template <
+    typename Printer,
+    typename = decltype(std::declval<Printer&>().SetRedactDebugString(true))>
+std::true_type SupportsRedact(int);
+
+template <typename Printer>
+std::false_type SupportsRedact(...);
+
+TEST(LogWrapperHelpers, RedactedField) {
+  if (!decltype(SupportsRedact<google::protobuf::TextFormat::Printer>(
+          0))::value) {
+    GTEST_SKIP()
+        << "SetRedactDebugString is not supported in this Protobuf version";
+  }
+
+  google::protobuf::FileDescriptorProto file_proto;
+  file_proto.set_name("test_redact.proto");
+  file_proto.set_syntax("proto3");
+  google::protobuf::DescriptorProto* message_proto =
+      file_proto.add_message_type();
+  message_proto->set_name("RedactedMessage");
+
+  google::protobuf::FieldDescriptorProto* unredacted_field =
+      message_proto->add_field();
+  unredacted_field->set_name("public_field");
+  unredacted_field->set_number(1);
+  unredacted_field->set_type(
+      google::protobuf::FieldDescriptorProto::TYPE_STRING);
+
+  google::protobuf::FieldDescriptorProto* redacted_field =
+      message_proto->add_field();
+  redacted_field->set_name("secret_key");
+  redacted_field->set_number(2);
+  redacted_field->set_type(google::protobuf::FieldDescriptorProto::TYPE_STRING);
+  redacted_field->mutable_options()->set_debug_redact(true);
+
+  google::protobuf::DescriptorPool pool;
+  google::protobuf::FileDescriptor const* file_desc =
+      pool.BuildFile(file_proto);
+  ASSERT_THAT(file_desc, ::testing::NotNull());
+  google::protobuf::Descriptor const* msg_desc =
+      file_desc->FindMessageTypeByName("RedactedMessage");
+  ASSERT_THAT(msg_desc, ::testing::NotNull());
+
+  google::protobuf::DynamicMessageFactory factory;
+  std::unique_ptr<google::protobuf::Message> message(
+      factory.GetPrototype(msg_desc)->New());
+  google::protobuf::Reflection const* reflection = message->GetReflection();
+  reflection->SetString(message.get(), msg_desc->field(0), "public_value");
+  reflection->SetString(message.get(), msg_desc->field(1), "secret_value");
+
+  TracingOptions tracing_options;
+  std::string const actual = DebugString(*message, tracing_options);
+  EXPECT_THAT(actual, ::testing::HasSubstr("public_value"));
+  EXPECT_THAT(actual, ::testing::Not(::testing::HasSubstr("secret_value")));
 }
 
 }  // namespace

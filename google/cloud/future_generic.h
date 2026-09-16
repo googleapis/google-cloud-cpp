@@ -20,7 +20,6 @@
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/version.h"
-#include "absl/meta/type_traits.h"
 #include <future>
 #include <type_traits>
 
@@ -64,7 +63,7 @@ class future final : private internal::future_base<T> {
    * future's result type.
    */
   template <class U, typename Enable =
-                         absl::enable_if_t<std::is_constructible<T, U>::value>>
+                         std::enable_if_t<std::is_constructible<T, U>::value>>
   explicit future(future<U>&& rhs);
 
   /**

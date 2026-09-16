@@ -24,6 +24,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -108,6 +109,32 @@ struct ReadHedgeDelayOption {
  */
 struct MaxReadHedgesOption {
   using Type = int;
+};
+
+/**
+ * The maximum number of threads in the thread pool used for primary reads
+ * when `EnableReadHedgingOption` is enabled.
+ *
+ * Set to 0 for automatic sizing (defaults to at least 64 threads or 4x hardware
+ * concurrency).
+ *
+ * @ingroup storage-options
+ */
+struct ReadThreadPoolSizeOption {
+  using Type = std::size_t;
+};
+
+/**
+ * The maximum number of threads in the thread pool used for speculative
+ * hedged requests when `EnableReadHedgingOption` is enabled.
+ *
+ * Set to 0 for automatic sizing (defaults to `MaxConcurrentHedgesOption` if
+ * set, or at least 16 threads or 2x hardware concurrency).
+ *
+ * @ingroup storage-options
+ */
+struct HedgingThreadPoolSizeOption {
+  using Type = std::size_t;
 };
 
 /**
@@ -494,6 +521,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     storage_experimental::MaximumHedgeBufferOption,
     storage_experimental::ReadHedgeDelayOption,
     storage_experimental::MaxReadHedgesOption,
+    storage_experimental::ReadThreadPoolSizeOption,
+    storage_experimental::HedgingThreadPoolSizeOption,
     storage_experimental::OTelSpanEnrichmentOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

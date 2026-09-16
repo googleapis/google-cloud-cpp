@@ -614,6 +614,144 @@ TEST(ReadRange, DeduplicateRangesInitialId) {
   EXPECT_EQ(deduped[0].read_id, 6);
 }
 
+/// @test Verify that single chunk receiving all requested bytes auto-completes
+/// the range even if range_end is false.
+TEST(ReadRange, AutoCompleteRangeEndWhenLengthZero) {
+  ReadRange actual(10000, 10);
+  EXPECT_FALSE(actual.IsDone());
+  future<ReadRange::ReadResponse> pending = actual.Read();
+  EXPECT_FALSE(pending.is_ready());
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 10000 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData, &data));
+  actual.OnRead(std::move(data));
+
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(),
+              VariantWith<ReadPayload>(ResultOf(
+                  "contents", [](ReadPayload const& p) { return p.contents(); },
+                  ElementsAre("0123456789"))));
+
+  // Verify that when server delivers full requested bytes (10 bytes), even if
+  // range_end was originally false in the proto, ReadRange completes
+  // immediately.
+  EXPECT_TRUE(actual.IsDone());
+  future<ReadRange::ReadResponse> next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
+}
+
+/// @test Verify that a bounded read (e.g. 10 bytes) delivered in multiple
+/// chunks (e.g. 4 bytes, then 6 bytes) only auto-completes after the total
+/// requested bytes are received.
+TEST(ReadRange, MultiChunkBoundedRead) {
+  ReadRange actual(10000, 10);
+  EXPECT_FALSE(actual.IsDone());
+  future<ReadRange::ReadResponse> pending1 = actual.Read();
+  EXPECT_FALSE(pending1.is_ready());
+
+  // First chunk: 4 bytes with range_end: false.
+  auto data1 = google::storage::v2::ObjectRangeData{};
+  auto constexpr kChunk1 = R"pb(
+    checksummed_data { content: "0123" }
+    read_range { read_offset: 10000 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kChunk1, &data1));
+  actual.OnRead(std::move(data1));
+
+  EXPECT_TRUE(pending1.is_ready());
+  EXPECT_THAT(pending1.get(),
+              VariantWith<ReadPayload>(ResultOf(
+                  "contents", [](ReadPayload const& p) { return p.contents(); },
+                  ElementsAre("0123"))));
+  // Stream should not be done yet because 6 bytes remain.
+  EXPECT_FALSE(actual.IsDone());
+
+  future<ReadRange::ReadResponse> pending2 = actual.Read();
+  EXPECT_FALSE(pending2.is_ready());
+
+  // Second chunk: remaining 6 bytes with range_end: false.
+  auto data2 = google::storage::v2::ObjectRangeData{};
+  auto constexpr kChunk2 = R"pb(
+    checksummed_data { content: "456789" }
+    read_range { read_offset: 10004 read_length: 6 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kChunk2, &data2));
+  actual.OnRead(std::move(data2));
+
+  EXPECT_TRUE(pending2.is_ready());
+  EXPECT_THAT(pending2.get(),
+              VariantWith<ReadPayload>(ResultOf(
+                  "contents", [](ReadPayload const& p) { return p.contents(); },
+                  ElementsAre("456789"))));
+
+  // Now all 10 bytes are received, so the stream auto-completes.
+  EXPECT_TRUE(actual.IsDone());
+  future<ReadRange::ReadResponse> next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
+}
+
+/// @test Verify that an unbounded read (requested_length == std::nullopt,
+/// reading to EOF) does not auto-complete upon receiving data with range_end:
+/// false.
+TEST(ReadRange, UnboundedReadDoesNotAutoComplete) {
+  // std::nullopt represents unbounded read to EOF in ReadRange.
+  ReadRange actual(10000, std::nullopt);
+  EXPECT_FALSE(actual.IsDone());
+  future<ReadRange::ReadResponse> pending1 = actual.Read();
+  EXPECT_FALSE(pending1.is_ready());
+
+  auto data1 = google::storage::v2::ObjectRangeData{};
+  auto constexpr kChunk = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 10000 read_length: 0 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kChunk, &data1));
+  actual.OnRead(std::move(data1));
+
+  EXPECT_TRUE(pending1.is_ready());
+  EXPECT_THAT(pending1.get(),
+              VariantWith<ReadPayload>(ResultOf(
+                  "contents", [](ReadPayload const& p) { return p.contents(); },
+                  ElementsAre("0123456789"))));
+
+  // Stream must remain open for future chunks until server sends range_end:
+  // true.
+  EXPECT_FALSE(actual.IsDone());
+  future<ReadRange::ReadResponse> pending2 = actual.Read();
+  EXPECT_FALSE(pending2.is_ready());
+
+  // Final chunk from server with range_end: true.
+  auto data2 = google::storage::v2::ObjectRangeData{};
+  auto constexpr kFinalChunk = R"pb(
+    checksummed_data { content: "ABCDEF" }
+    read_range { read_offset: 10010 read_length: 0 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kFinalChunk, &data2));
+  actual.OnRead(std::move(data2));
+
+  EXPECT_TRUE(pending2.is_ready());
+  EXPECT_THAT(pending2.get(),
+              VariantWith<ReadPayload>(ResultOf(
+                  "contents", [](ReadPayload const& p) { return p.contents(); },
+                  ElementsAre("ABCDEF"))));
+
+  EXPECT_TRUE(actual.IsDone());
+  future<ReadRange::ReadResponse> next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

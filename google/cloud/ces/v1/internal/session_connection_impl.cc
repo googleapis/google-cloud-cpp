@@ -93,7 +93,7 @@ SessionServiceConnectionImpl::StreamRunSession(
       SessionServiceStreamRunSessionStreamingUpdater, request);
   return internal::MakeStreamRange<google::cloud::ces::v1::RunSessionResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<Status, google::cloud::ces::v1::RunSessionResponse> {
+          -> std::variant<Status, google::cloud::ces::v1::RunSessionResponse> {
         google::cloud::ces::v1::RunSessionResponse response;
         auto status = resumable->Read(&response);
         if (status.has_value()) return *status;

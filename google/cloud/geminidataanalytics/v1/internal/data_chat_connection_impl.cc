@@ -89,8 +89,8 @@ DataChatServiceConnectionImpl::Chat(
   return internal::MakeStreamRange<
       google::cloud::geminidataanalytics::v1::Message>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<Status,
-                           google::cloud::geminidataanalytics::v1::Message> {
+          -> std::variant<Status,
+                          google::cloud::geminidataanalytics::v1::Message> {
         google::cloud::geminidataanalytics::v1::Message response;
         auto status = resumable->Read(&response);
         if (status.has_value()) return *status;

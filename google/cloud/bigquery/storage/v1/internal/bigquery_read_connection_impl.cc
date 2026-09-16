@@ -98,7 +98,7 @@ BigQueryReadConnectionImpl::ReadRows(
   return internal::MakeStreamRange<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<
+          -> std::variant<
               Status, google::cloud::bigquery::storage::v1::ReadRowsResponse> {
         google::cloud::bigquery::storage::v1::ReadRowsResponse response;
         auto status = resumable->Read(&response);

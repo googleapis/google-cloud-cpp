@@ -31,6 +31,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -211,7 +212,7 @@ TEST_F(AsyncConnectionImplTest, ReadObject) {
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
   auto response = data.get();
-  ASSERT_TRUE(absl::holds_alternative<storage::ReadPayload>(response));
+  ASSERT_TRUE(std::holds_alternative<storage::ReadPayload>(response));
 
   // The `Read()` and `Finish()` calls must happen before the second `Read()` is
   // satisfied.
@@ -311,7 +312,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectWithTimeout) {
   next.first.set_value(true);
 
   auto response = data.get();
-  ASSERT_TRUE(absl::holds_alternative<storage::ReadPayload>(response));
+  ASSERT_TRUE(std::holds_alternative<storage::ReadPayload>(response));
 
   // Trigger another read. Since this closes the stream, the `Read()` and
   // `Finish()` calls must happen before the second `Read()` is satisfied.

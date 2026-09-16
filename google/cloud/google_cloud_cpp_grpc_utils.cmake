@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ~~~
+find_package(nlohmann_json CONFIG REQUIRED)
 
 # the library
 add_library(
@@ -112,7 +113,6 @@ target_link_libraries(
     PUBLIC absl::function_ref
            absl::memory
            absl::time
-           absl::variant
            google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
@@ -122,7 +122,8 @@ target_link_libraries(
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::common
            gRPC::grpc++
-           gRPC::grpc)
+           gRPC::grpc
+           nlohmann_json::nlohmann_json)
 google_cloud_cpp_add_common_options(google_cloud_cpp_grpc_utils)
 target_include_directories(
     google_cloud_cpp_grpc_utils PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -183,7 +184,6 @@ google_cloud_cpp_add_pkgconfig(
     "absl_strings"
     "absl_time"
     "absl_time_zone"
-    "absl_variant"
     "openssl")
 # Create and install the CMake configuration files.
 configure_file("config-grpc-utils.cmake.in"
@@ -208,7 +208,6 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing
                 google-cloud-cpp::common
-                absl::variant
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
@@ -279,6 +278,7 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(google_cloud_cpp_grpc_utils_integration_tests
         # cmake-format: sort
+        internal/grpc_gdch_service_account_integration_test.cc
         internal/grpc_impersonate_service_account_integration_test.cc)
 
     # Export the list of unit and integration tests so the Bazel BUILD file can
@@ -308,7 +308,6 @@ if (BUILD_TESTING)
                     google_cloud_cpp_testing
                     google-cloud-cpp::common
                     google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
-                    absl::variant
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest

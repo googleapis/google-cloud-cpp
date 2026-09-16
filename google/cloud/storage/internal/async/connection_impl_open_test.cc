@@ -100,10 +100,10 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
     auto details_proto = google::rpc::Status{};
     details_proto.set_code(grpc::StatusCode::ABORTED);
     details_proto.set_message("redirect");
-    details_proto.add_details()->PackFrom(redirected);
+    (void)details_proto.add_details()->PackFrom(redirected);
 
     std::string details;
-    details_proto.SerializeToString(&details);
+    (void)details_proto.SerializeToString(&details);
     return details;
   };
 
@@ -457,9 +457,9 @@ TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([&]() {
               return sequencer.PushBack("Read").then(
-                  [=](auto f) -> absl::optional<
+                  [=](auto f) -> std::optional<
                                   google::storage::v2::BidiReadObjectResponse> {
-                    if (!f.get()) return absl::nullopt;
+                    if (!f.get()) return std::nullopt;
                     auto constexpr kHandleText = R"pb(
                       handle: "handle-12345"
                     )pb";
@@ -474,9 +474,9 @@ TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
             })
             .WillOnce([&sequencer]() {
               return sequencer.PushBack("Read[N]").then(
-                  [](auto f) -> absl::optional<
+                  [](auto f) -> std::optional<
                                  google::storage::v2::BidiReadObjectResponse> {
-                    if (!f.get()) return absl::nullopt;
+                    if (!f.get()) return std::nullopt;
                     return google::storage::v2::BidiReadObjectResponse{};
                   });
             });

@@ -153,7 +153,7 @@ HiveMetastoreServiceConnection::ListPartitions(
     google::cloud::biglake::hive::v1::ListPartitionsRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::biglake::hive::v1::ListPartitionsResponse>(
-      []() -> absl::variant<
+      []() -> std::variant<
                Status,
                google::cloud::biglake::hive::v1::ListPartitionsResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");

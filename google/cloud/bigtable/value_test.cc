@@ -305,8 +305,8 @@ template <
         std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
                      absl::Cord>::value>::type* = nullptr,
     typename std::enable_if_t<
-        absl::disjunction<std::is_same<T, std::string>,
-                          std::is_same<T, std::optional<std::string>>>::value,
+        std::disjunction<std::is_same<T, std::string>,
+                         std::is_same<T, std::optional<std::string>>>::value,
         int> = 0>
 
 StatusOr<T> MovedFromString(Value const&) {

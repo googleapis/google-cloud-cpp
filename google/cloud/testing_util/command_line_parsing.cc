@@ -60,7 +60,7 @@ std::chrono::seconds ParseDuration(std::string const& val) {
   return absl::ToChronoSeconds(d);
 }
 
-absl::optional<bool> ParseBoolean(std::string const& val) {
+std::optional<bool> ParseBoolean(std::string const& val) {
   auto lower = val;
   std::transform(
       lower.begin(), lower.end(), lower.begin(),

@@ -583,7 +583,7 @@ TEST(ToMonitoredResource, FromMetricData) {
   auto const resource = TestResource();
   rm.resource_ = &resource;
 
-  auto mr = ToMonitoredResource(rm, absl::nullopt);
+  auto mr = ToMonitoredResource(rm, std::nullopt);
   EXPECT_THAT(mr, IsTestResource());
 }
 

@@ -592,7 +592,7 @@ message InstanceProperties {
   // NONE: Indicates user chose no operation.
   // STOP: Indicates user chose to opt for VM shutdown on key revocation.
   optional string key_revocation_action_type = 7
-      [json_name = "keyRevocationActionType"];
+      [debug_redact = true, json_name = "keyRevocationActionType"];
 
   // Labels to apply to instances that are created from these properties.
   map<string, string> labels = 8 [json_name = "labels"];
@@ -889,7 +889,7 @@ message ReservationAffinity {
   // aSPECIFIC_RESERVATION by name, specifygoogleapis.com/reservation-name as
   // the key and specify
   // the name of your reservation as its value.
-  optional string key = 2 [json_name = "key"];
+  optional string key = 2 [debug_redact = true, json_name = "key"];
 
   // Corresponds to the label values of a reservation resource. This can be
   // either a name to a reservation in the same project or
@@ -1028,7 +1028,7 @@ message SchedulingGracefulShutdown {
 //  could be scheduled.
 message SchedulingNodeAffinity {
   // Corresponds to the label key of Node resource.
-  optional string key = 1 [json_name = "key"];
+  optional string key = 1 [debug_redact = true, json_name = "key"];
 
   // Defines the operation of node selection. Valid operators areIN for affinity
   // and NOT_IN for anti-affinity.

@@ -33,7 +33,7 @@ StatusOr<Job> BigQueryJobConnection::GetJob(GetJobRequest const&) {
 StreamRange<ListFormatJob> BigQueryJobConnection::ListJobs(
     ListJobsRequest const&) {
   return google::cloud::internal::MakeStreamRange<ListFormatJob>(
-      []() -> absl::variant<Status, ListFormatJob> {
+      []() -> std::variant<Status, ListFormatJob> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

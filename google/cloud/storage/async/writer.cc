@@ -49,7 +49,7 @@ std::string AsyncWriter::UploadId() const {
   return {};
 }
 
-absl::variant<std::int64_t, google::storage::v2::Object>
+std::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriter::PersistedState() const {
   if (impl_) return impl_->PersistedState();
   return -1;

@@ -190,8 +190,8 @@ LineageConnection::SearchLineageStreaming(
         SearchLineageStreamingRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>(
-      []() -> absl::variant<Status, google::cloud::datacatalog::lineage::v1::
-                                        SearchLineageStreamingResponse> {
+      []() -> std::variant<Status, google::cloud::datacatalog::lineage::v1::
+                                       SearchLineageStreamingResponse> {
         return Status(StatusCode::kUnimplemented, "not implemented");
       });
 }

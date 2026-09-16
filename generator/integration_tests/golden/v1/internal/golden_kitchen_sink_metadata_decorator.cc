@@ -175,7 +175,7 @@ GoldenKitchenSinkMetadata::ExplicitRouting1(
       {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
         return request.app_profile_id();
       },
-      absl::nullopt},
+      std::nullopt},
       {[](google::test::admin::database::v1::ExplicitRoutingRequest const& request) -> std::string const& {
         return request.table_name();
       },

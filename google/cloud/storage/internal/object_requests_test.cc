@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(#16404): Remove deprecation disable include.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -189,7 +191,6 @@ TEST(ObjectRequestsTest, InsertObjectMediaUpdateContents) {
   EXPECT_EQ("new contents", request.payload());
 }
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 TEST(ObjectRequestsTest, InsertObjectBackwardsCompat) {
   auto const payload =
       std::string("The quick brown fox jumps over the lazy dog");
@@ -201,7 +202,6 @@ TEST(ObjectRequestsTest, InsertObjectBackwardsCompat) {
   EXPECT_EQ(zebras, request.payload());
   EXPECT_EQ(zebras, request.contents());
 }
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(ObjectRequestsTest, Copy) {
   CopyObjectRequest request("source-bucket", "source-object", "my-bucket",

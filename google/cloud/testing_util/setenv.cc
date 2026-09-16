@@ -35,7 +35,7 @@ void SetEnv(char const* variable, char const* value) {
 #endif  // _WIN32
 }
 
-void SetEnv(char const* variable, absl::optional<std::string> value) {
+void SetEnv(char const* variable, std::optional<std::string> value) {
   if (!value.has_value()) {
     UnsetEnv(variable);
     return;

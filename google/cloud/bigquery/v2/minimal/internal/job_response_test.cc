@@ -1955,6 +1955,17 @@ TEST(CancelJobResponseTest, DebugString) {
 })");
 }
 
+TEST(PostQueryResultsTest, FromJson) {
+  auto const expected = MakePostQueryResults();
+  nlohmann::json j;
+  to_json(j, expected);
+
+  PostQueryResults actual;
+  from_json(j, actual);
+
+  bigquery_v2_minimal_testing::AssertEquals(expected, actual);
+}
+
 TEST(QueryResponseTest, Success) {
   BigQueryHttpResponse http_response;
   http_response.payload = MakeQueryResponsePayload();
@@ -1998,6 +2009,7 @@ TEST(QueryResponseTest, DebugString) {
       R"( status_code: 200 payload: REDACTED })"
       R"( query_results {)"
       R"( kind: "query-kind" page_token: "np123")"
+      R"( statement_type: "statement_type")"
       R"( total_rows: 1000 total_bytes_processed: 1000 num_dml_affected_rows: 5)"
       R"( job_complete: true cache_hit: true)"
       R"( rows { columns { value: "col1" is_null: false } columns { value: "col2" is_null: false })"
@@ -2009,7 +2021,10 @@ TEST(QueryResponseTest, DebugString) {
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
-      R"( deleted_row_count: 10 updated_row_count: 10 } } })");
+      R"( deleted_row_count: 10 updated_row_count: 10 })"
+      R"( arrow_schema { serialized_schema: "testing_schema_data" })"
+      R"( arrow_record_batch { serialized_record_batch: "testing_batch_data" row_count: 10 })"
+      R"( page_row_count: 10 } })");
 
   EXPECT_EQ(
       response->DebugString(
@@ -2018,7 +2033,8 @@ TEST(QueryResponseTest, DebugString) {
       R"(QueryResponse { http_response {)"
       R"( status_code: 200 payload: REDACTED })"
       R"( query_results { kind: "query-k...<truncated>...")"
-      R"( page_token: "np123" total_rows: 1000 total_bytes_processed: 1000)"
+      R"( page_token: "np123" statement_type: "stateme...<truncated>...")"
+      R"( total_rows: 1000 total_bytes_processed: 1000)"
       R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
       R"( rows { columns { value: "col1" is_null: false } columns { value: "col2" is_null: false })"
       R"( columns { value: "col3" is_null: false } columns { value: "col4" is_null: false })"
@@ -2029,7 +2045,10 @@ TEST(QueryResponseTest, DebugString) {
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats {)"
-      R"( inserted_row_count: 10 deleted_row_count: 10 updated_row_count: 10 } } })");
+      R"( inserted_row_count: 10 deleted_row_count: 10 updated_row_count: 10 })"
+      R"( arrow_schema { serialized_schema: "testing...<truncated>..." })"
+      R"( arrow_record_batch { serialized_record_batch: "testing...<truncated>..." row_count: 10 })"
+      R"( page_row_count: 10 } })");
 
   EXPECT_EQ(response->DebugString("QueryResponse", TracingOptions{}.SetOptions(
                                                        "single_line_mode=F")),
@@ -2041,6 +2060,7 @@ TEST(QueryResponseTest, DebugString) {
   query_results {
     kind: "query-kind"
     page_token: "np123"
+    statement_type: "statement_type"
     total_rows: 1000
     total_bytes_processed: 1000
     num_dml_affected_rows: 5
@@ -2108,6 +2128,14 @@ TEST(QueryResponseTest, DebugString) {
       deleted_row_count: 10
       updated_row_count: 10
     }
+    arrow_schema {
+      serialized_schema: "testing_schema_data"
+    }
+    arrow_record_batch {
+      serialized_record_batch: "testing_batch_data"
+      row_count: 10
+    }
+    page_row_count: 10
   }
 })");
 }
@@ -2166,7 +2194,10 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( description: "" collation: "" default_value_expression: "")"
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
-      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
+      R"( arrow_schema { serialized_schema: "testing_schema_data" })"
+      R"( arrow_record_batch { serialized_record_batch: "testing_batch_data" row_count: 10 })"
+      R"( page_row_count: 10 } })");
 
   EXPECT_EQ(
       response->DebugString(
@@ -2185,7 +2216,10 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( description: "" collation: "" default_value_expression: "")"
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
-      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
+      R"( arrow_schema { serialized_schema: "testing...<truncated>..." })"
+      R"( arrow_record_batch { serialized_record_batch: "testing...<truncated>..." row_count: 10 })"
+      R"( page_row_count: 10 } })");
 
   EXPECT_EQ(
       response->DebugString("GetQueryResultsResponse",
@@ -2258,6 +2292,14 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       job_id: "j123"
       location: "useast"
     }
+    arrow_schema {
+      serialized_schema: "testing_schema_data"
+    }
+    arrow_record_batch {
+      serialized_record_batch: "testing_batch_data"
+      row_count: 10
+    }
+    page_row_count: 10
   }
 })");
 }
