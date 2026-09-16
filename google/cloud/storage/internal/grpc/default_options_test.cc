@@ -21,9 +21,12 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <string>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -122,10 +125,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectOption) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(
       Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
@@ -143,10 +144,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVar) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         "true");
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(Options{}, mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(),
@@ -179,10 +178,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectDisabled) {
 /// testbench and private-endpoint setups keep working.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUserEndpointOverride) {
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(
       Options{}
@@ -198,10 +195,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUserEndpointOverride) {
 /// target, as DirectPath is only available in the default universe.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUniverseDomainOverride) {
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(
       Options{}
@@ -218,10 +213,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarOverridesOption) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         "true");
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(
       Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
@@ -258,50 +251,14 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarFalseOverridesOption) {
   EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
 }
 
-/// @test Verify unrecognized environment variable values are ignored and leave
-/// the option as the application configured it. Each value is tried against
-/// both an enabled and a disabled option, so that a case-insensitive match
-/// (for example treating `"TRUE"` as `"true"`) would be detected.
-TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarInvalidValueIgnored) {
-  for (auto const* value : {"1", "0", "TRUE", "False", "yes", ""}) {
-    for (auto const configured : {false, true}) {
-      SCOPED_TRACE("Testing with value " + std::string(value) +
-                   ", option configured as " + (configured ? "true" : "false"));
-      ScopedEnvironment env(
-          "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", value);
-      auto mock_detector = std::make_shared<MockGcpDetector>();
-      EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-          .WillRepeatedly(Return(false));
-      EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-          .WillRepeatedly(Return(false));
-
-      auto options = DefaultOptionsGrpc(
-          Options{}
-              .set<storage_experimental::DirectPathXdsOverInterconnectOption>(
-                  configured),
-          mock_detector);
-      EXPECT_EQ(
-          options
-              .get<storage_experimental::DirectPathXdsOverInterconnectOption>(),
-          configured);
-      EXPECT_EQ(options.get<EndpointOption>(),
-                configured
-                    ? "google-c2p:///storage-direct.googleapis.com?force-xds"
-                    : "storage.googleapis.com");
-    }
-  }
-}
-
 /// @test Verify a caller-supplied authority is preserved when the DirectPath
 /// target is selected; `storage.googleapis.com` is only the default.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectPreservesCustomAuthority) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(
       Options{}
@@ -319,10 +276,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectPreservesCustomAuthority) {
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUniverseDomainEnvVar) {
   ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "my-ud.net");
   auto mock_detector = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
 
   auto options = DefaultOptionsGrpc(
       Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
@@ -331,6 +286,53 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUniverseDomainEnvVar) {
   EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
 }
+
+class DirectPathOverInterconnectInvalidEnvVarTest
+    : public ::testing::TestWithParam<std::tuple<std::string, bool>> {};
+
+/// @test Verify unrecognized environment variable values are ignored and leave
+/// the option as the application configured it. Each value is tried against
+/// both an enabled and a disabled option, so that a case-insensitive match
+/// (for example treating `"TRUE"` as `"true"`) would be detected.
+TEST_P(DirectPathOverInterconnectInvalidEnvVarTest, InvalidValueIgnored) {
+  auto const& [env_value, configured] = GetParam();
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        env_value);
+
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  if (configured) {
+    EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+    EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+  } else {
+    EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+        .WillRepeatedly(Return(false));
+    EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+        .WillRepeatedly(Return(false));
+  }
+
+  auto options = DefaultOptionsGrpc(
+      Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          configured),
+      mock_detector);
+  EXPECT_EQ(
+      options.get<storage_experimental::DirectPathXdsOverInterconnectOption>(),
+      configured);
+  EXPECT_EQ(options.get<EndpointOption>(),
+            configured ? "google-c2p:///storage-direct.googleapis.com?force-xds"
+                       : "storage.googleapis.com");
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    DefaultOptionsGrpc, DirectPathOverInterconnectInvalidEnvVarTest,
+    ::testing::Combine(::testing::Values("1", "0", "TRUE", "False", "yes", ""),
+                       ::testing::Bool()),
+    ([](::testing::TestParamInfo<
+         DirectPathOverInterconnectInvalidEnvVarTest::ParamType> const& info) {
+      auto const& val = std::get<0>(info.param);
+      auto const configured = std::get<1>(info.param);
+      return absl::StrCat(val.empty() ? "Empty" : val, "_",
+                          configured ? "OptionTrue" : "OptionFalse");
+    }));
 
 TEST(DefaultOptionsGrpc, EndpointOptionsOverrideDefaults) {
   ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");

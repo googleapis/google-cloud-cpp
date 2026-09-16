@@ -107,7 +107,7 @@ Options DefaultOptionsGrpc(
         kDefaultDirectPathXdsOverInterconnect);
   }
 
-  // The environment variable takes precedence over the option, consistent with.
+  // The environment variable takes precedence over the option.
   // An explicit "false" disables the feature even when the option is set, so
   // deployments can opt out without rebuilding the application. Any other value
   // is treated as if the variable were not set.
