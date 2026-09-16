@@ -113,9 +113,9 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
   return internal::MakeSpan(
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
                    absl::string_view{method.data(), method.size()}),
-      {{"rpc.system", sc::rpc::RpcSystemValues::kGrpc},
-       {"rpc.service", service},
-       {"rpc.method", method},
+      {{sc::rpc::kRpcSystem, sc::rpc::RpcSystemValues::kGrpc},
+       {sc::rpc::kRpcService, service},
+       {sc::rpc::kRpcMethod, method},
        {/*sc::kNetworkTransport=*/"network.transport",
         sc::network::NetworkTransportValues::kTcp},
        {"grpc.version", grpc::Version()}},
