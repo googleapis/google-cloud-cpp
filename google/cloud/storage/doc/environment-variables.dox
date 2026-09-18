@@ -37,7 +37,22 @@ protocol, but currently unused.
 
 `GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=...`: this is deprecated.
 
-[project-definition-link]: https://cloud.google.com/storage/docs/projects 'Project Definition in GCS'
+`GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT=true`: attempt DirectPath
+over [Cloud Interconnect][interconnect-link]. This bypasses the usual GCE
+environment detection, making DirectPath usable from on-premise hosts. Set it
+to `true` to enable the feature. Set it to `false` to disable the feature even
+when the corresponding option is enabled in code. Only these exact values are
+recognized, and the comparison is case-sensitive; any other value, such as `1`
+or `TRUE`, is treated as if the variable were not set. This environment
+variable takes precedence over the option.
+
+@see google::cloud::storage_experimental::DirectPathXdsOverInterconnectOption
+
+[project-definition-link]: https://cloud.google.com/storage/docs/projects
+'Project Definition in GCS'
+[interconnect-link]:
+https://cloud.google.com/network-connectivity/docs/interconnect 'Cloud
+Interconnect'
 
 @section storage-env-logging Logging
 
