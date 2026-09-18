@@ -39,7 +39,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * When enabled, opening a download races the initial request against one or
  * more delayed, duplicate ("hedged") requests, and the first to respond wins.
- * This reduces tail latency at the cost of additional requests.
+ * A read that stalls mid-stream, that is, one that takes longer than
+ * `ReadHedgeDelayOption`, is raced the same way against duplicate requests
+ * resuming from the stream's current offset. This reduces tail latency at the
+ * cost of additional requests.
  *
  * @ingroup storage-options
  */
@@ -74,11 +77,15 @@ struct MaxConcurrentHedgesOption {
  * The largest read, in bytes, that is eligible for hedging.
  *
  * Racing requests each buffer their own copy of the data, so the memory used
- * while opening a stream grows with the size of the first read. A read larger
- * than this value is served without hedging, reading directly into the
- * application's buffer, which bounds that growth. Note this is the size the
- * application asks for in a single read (e.g. `stream.read(buf, n)`), not the
- * size of the object or of a requested range.
+ * by a raced read grows with the size of that read. A read larger than this
+ * value is served without hedging, reading directly into the application's
+ * buffer, which bounds that growth. Note this is the size the application asks
+ * for in a single read (e.g. `stream.read(buf, n)`), not the size of the
+ * object or of a requested range.
+ *
+ * This bound applies to every raced read, both the stream open and any
+ * stalled read that is raced later, so a stream can hold up to
+ * `MaxReadHedgesOption` + 1 buffers of this size at once.
  *
  * The default is 64 MiB (64 * 1024 * 1024).
  *
@@ -91,6 +98,9 @@ struct MaximumHedgeBufferOption {
 /**
  * The delay before starting a hedged request.
  *
+ * This is also the mid-stream stall threshold: a read that takes longer than
+ * this marks the stream as stalled, and the next read is raced.
+ *
  * The default is 500 milliseconds.
  *
  * @ingroup storage-options
@@ -100,7 +110,12 @@ struct ReadHedgeDelayOption {
 };
 
 /**
- * The maximum number of hedged requests per stream open.
+ * The maximum number of hedged requests per raced read.
+ *
+ * A read is raced when the stream is opened, and again whenever a read stalls
+ * mid-stream, so this bounds a single race rather than the whole stream. The
+ * total number of hedges a stream may issue is bounded at a small multiple of
+ * this value, so a uniformly slow stream cannot keep racing indefinitely.
  *
  * The default is 2. Set to 0 to disable hedging for reads even when
  * `EnableReadHedgingOption` is set.
