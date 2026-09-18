@@ -153,7 +153,7 @@ TEST_F(DynamicChannelPoolTest, SelectLeastUsedFromTwoChannels) {
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -222,7 +222,7 @@ TEST_F(DynamicChannelPoolTest, OneInitialChannel) {
     EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
         .WillOnce([](grpc::ClientContext&, Options const&,
                      google::bigtable::v2::CheckAndMutateRowRequest const&,
-                     OperationContext&) {
+                     bigtable_internal::OperationContext&) {
           google::bigtable::v2::CheckAndMutateRowResponse response;
           response.set_predicate_matched(true);
           return response;
@@ -281,7 +281,7 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
     EXPECT_CALL(*mock_stub, CheckAndMutateRow)
         .WillOnce([](grpc::ClientContext&, Options const&,
                      google::bigtable::v2::CheckAndMutateRowRequest const&,
-                     OperationContext&) {
+                     bigtable_internal::OperationContext&) {
           google::bigtable::v2::CheckAndMutateRowResponse response;
           response.set_predicate_matched(true);
           return response;
@@ -766,7 +766,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -848,7 +848,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -932,7 +932,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -1022,7 +1022,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   OperationContext&) {
+                   bigtable_internal::OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;

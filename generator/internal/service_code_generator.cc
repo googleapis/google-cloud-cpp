@@ -105,8 +105,8 @@ bool ServiceCodeGenerator::IsExperimental() const {
   return iter != vars().end() && iter->second == "true";
 }
 
-bool ServiceCodeGenerator::HasExperimentalBigtableOperationContext() const {
-  auto iter = vars().find("experimental_bigtable_operation_context");
+bool ServiceCodeGenerator::HasExperimentalOperationContext() const {
+  auto iter = vars().find("experimental_operation_context");
   return iter != vars().end() && iter->second == "true";
 }
 

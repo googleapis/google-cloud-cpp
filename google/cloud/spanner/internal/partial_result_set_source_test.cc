@@ -59,7 +59,7 @@ CreatePartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
   internal::OptionsSpan span(internal::MergeOptions(
       std::move(opts.set<StringOption>(CurrentTestName())),
       internal::CurrentOptions()));
-  return PartialResultSetSource::Create(std::move(reader));
+  return PartialResultSetSource::Create(std::move(reader), nullptr);
 }
 
 // Returns a functor that expects the current `StringOption` to match the test

@@ -43,7 +43,7 @@ TEST(StubManagerTest, NoAffinity) {
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::bigtable::v2::MutateRowRequest const& request,
-                    OperationContext&) {
+                    bigtable_internal::OperationContext&) {
         EXPECT_THAT(request.table_name(), Eq(expected_table_name));
         return google::bigtable::v2::MutateRowResponse{};
       });
@@ -69,7 +69,7 @@ TEST(StubManagerTest, AffinityToExistingInstance) {
       .WillOnce([instance_name = instance.FullName()](
                     grpc::ClientContext&, Options const&,
                     google::bigtable::v2::MutateRowRequest const& request,
-                    OperationContext&) {
+                    bigtable_internal::OperationContext&) {
         EXPECT_THAT(request.table_name(), StartsWith(instance_name));
         return google::bigtable::v2::MutateRowResponse{};
       });
@@ -111,7 +111,7 @@ TEST(StubManagerTest, AffinityToMissingInstance) {
         .WillOnce([instance_name = std::string{instance_name}](
                       grpc::ClientContext&, Options const&,
                       google::bigtable::v2::MutateRowRequest const& request,
-                      OperationContext&) {
+                      bigtable_internal::OperationContext&) {
           EXPECT_THAT(request.table_name(), StartsWith(instance_name));
           return google::bigtable::v2::MutateRowResponse{};
         });

@@ -184,8 +184,9 @@ message ServiceConfiguration {
   repeated BespokeMethod bespoke_methods = 30;
 
   // If set to `true`, the stub class methods will include an additional
-  // parameter of type `google::cloud::bigtable_internal::OperationContext&`.
-  bool experimental_bigtable_operation_context = 31;
+  // parameter of type
+  // `google::cloud::<product>_internal::OperationContext&`.
+  bool experimental_operation_context = 31;
 }
 
 message DiscoveryDocumentDefinedProduct {

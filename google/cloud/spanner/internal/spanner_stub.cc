@@ -35,7 +35,8 @@ SpannerStub::~SpannerStub() = default;
 
 StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::CreateSessionRequest const& request) {
+    google::spanner::v1::CreateSessionRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::Session response;
   auto status = grpc_stub_->CreateSession(&context, request, &response);
   if (!status.ok()) {
@@ -47,7 +48,8 @@ StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
 StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 DefaultSpannerStub::BatchCreateSessions(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::BatchCreateSessionsRequest const& request) {
+    google::spanner::v1::BatchCreateSessionsRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::BatchCreateSessionsResponse response;
   auto status = grpc_stub_->BatchCreateSessions(&context, request, &response);
   if (!status.ok()) {
@@ -58,7 +60,8 @@ DefaultSpannerStub::BatchCreateSessions(
 
 Status DefaultSpannerStub::DeleteSession(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::DeleteSessionRequest const& request) {
+    google::spanner::v1::DeleteSessionRequest const& request,
+    spanner_internal::OperationContext&) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSession(&context, request, &response);
   if (!status.ok()) {
@@ -69,7 +72,8 @@ Status DefaultSpannerStub::DeleteSession(
 
 StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::ResultSet response;
   auto status = grpc_stub_->ExecuteSql(&context, request, &response);
   if (!status.ok()) {
@@ -82,7 +86,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::ExecuteStreamingSql(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::spanner::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   auto stream = grpc_stub_->ExecuteStreamingSql(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::spanner::v1::PartialResultSet>>(std::move(context),
@@ -92,7 +97,8 @@ DefaultSpannerStub::ExecuteStreamingSql(
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 DefaultSpannerStub::ExecuteBatchDml(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::ExecuteBatchDmlRequest const& request) {
+    google::spanner::v1::ExecuteBatchDmlRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::ExecuteBatchDmlResponse response;
   auto status = grpc_stub_->ExecuteBatchDml(&context, request, &response);
   if (!status.ok()) {
@@ -105,7 +111,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::StreamingRead(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::spanner::v1::ReadRequest const& request) {
+    google::spanner::v1::ReadRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   auto stream = grpc_stub_->StreamingRead(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::spanner::v1::PartialResultSet>>(std::move(context),
@@ -114,7 +121,8 @@ DefaultSpannerStub::StreamingRead(
 
 StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::BeginTransactionRequest const& request) {
+    google::spanner::v1::BeginTransactionRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::Transaction response;
   auto status = grpc_stub_->BeginTransaction(&context, request, &response);
   if (!status.ok()) {
@@ -125,7 +133,8 @@ StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
 
 StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::CommitRequest const& request) {
+    google::spanner::v1::CommitRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::CommitResponse response;
   auto status = grpc_stub_->Commit(&context, request, &response);
   if (!status.ok()) {
@@ -136,7 +145,8 @@ StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
 
 Status DefaultSpannerStub::Rollback(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::RollbackRequest const& request) {
+    google::spanner::v1::RollbackRequest const& request,
+    spanner_internal::OperationContext&) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->Rollback(&context, request, &response);
   if (!status.ok()) {
@@ -148,7 +158,8 @@ Status DefaultSpannerStub::Rollback(
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionQuery(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::PartitionQueryRequest const& request) {
+    google::spanner::v1::PartitionQueryRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::PartitionResponse response;
   auto status = grpc_stub_->PartitionQuery(&context, request, &response);
   if (!status.ok()) {
@@ -160,7 +171,8 @@ DefaultSpannerStub::PartitionQuery(
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionRead(
     grpc::ClientContext& context, Options const&,
-    google::spanner::v1::PartitionReadRequest const& request) {
+    google::spanner::v1::PartitionReadRequest const& request,
+    spanner_internal::OperationContext&) {
   google::spanner::v1::PartitionResponse response;
   auto status = grpc_stub_->PartitionRead(&context, request, &response);
   if (!status.ok()) {
@@ -173,7 +185,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::spanner::v1::BatchWriteResponse>>
 DefaultSpannerStub::BatchWrite(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::spanner::v1::BatchWriteRequest const& request) {
+    google::spanner::v1::BatchWriteRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   auto stream = grpc_stub_->BatchWrite(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::spanner::v1::BatchWriteResponse>>(std::move(context),
@@ -184,7 +197,8 @@ std::unique_ptr<
     google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
 DefaultSpannerStub::FetchCacheUpdate(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+    google::spanner::v1::FetchCacheUpdateRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   auto stream = grpc_stub_->FetchCacheUpdate(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::spanner::v1::CacheUpdate>>(std::move(context), std::move(stream));
@@ -196,7 +210,8 @@ DefaultSpannerStub::AsyncCreateSession(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::spanner::v1::CreateSessionRequest const& request) {
+    google::spanner::v1::CreateSessionRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<google::spanner::v1::CreateSessionRequest,
                                     google::spanner::v1::Session>(
       cq,
@@ -214,7 +229,8 @@ DefaultSpannerStub::AsyncBatchCreateSessions(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::spanner::v1::BatchCreateSessionsRequest const& request) {
+    google::spanner::v1::BatchCreateSessionsRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<
       google::spanner::v1::BatchCreateSessionsRequest,
       google::spanner::v1::BatchCreateSessionsResponse>(
@@ -232,7 +248,8 @@ future<Status> DefaultSpannerStub::AsyncDeleteSession(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::spanner::v1::DeleteSessionRequest const& request) {
+    google::spanner::v1::DeleteSessionRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<google::spanner::v1::DeleteSessionRequest,
                                     google::protobuf::Empty>(
              cq,
@@ -253,7 +270,8 @@ DefaultSpannerStub::AsyncExecuteSql(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::spanner::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request,
+    std::shared_ptr<spanner_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<google::spanner::v1::ExecuteSqlRequest,
                                     google::spanner::v1::ResultSet>(
       cq,

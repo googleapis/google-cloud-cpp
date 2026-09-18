@@ -69,11 +69,11 @@ class ConnectionImpl : public spanner::Connection {
   spanner::BatchedCommitResultStream BatchWrite(BatchWriteParams) override;
 
  private:
-  Status PrepareSession(SessionHolder& session,
-                        Session::Mode mode = Session::Mode::kPooled);
+  Status PrepareSession(SessionHolder& session);
+  Status PrepareSession(SessionHolder& session, Session::Mode mode);
 
-  std::shared_ptr<SpannerStub> GetStubBasedOnSessionMode(
-      Session& session, TransactionContext& ctx);
+  StubAndChannel GetStubBasedOnSessionMode(Session& session,
+                                           TransactionContext& ctx);
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       SessionHolder& session, google::spanner::v1::TransactionOptions options,
@@ -173,6 +173,7 @@ class ConnectionImpl : public spanner::Connection {
   spanner::Database db_;
   std::unique_ptr<BackgroundThreads> background_threads_;
   Options opts_;
+  std::shared_ptr<SpannerOperationContextFactory> context_factory_;
   std::shared_ptr<SessionPool> session_pool_;
 };
 
