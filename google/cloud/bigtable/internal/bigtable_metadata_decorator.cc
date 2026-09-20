@@ -54,8 +54,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableMetadata::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -112,8 +111,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableMetadata::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -168,7 +166,7 @@ BigtableMetadata::SampleRowKeys(
 StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::MutateRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    bigtable_internal::OperationContext& operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -209,8 +207,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableMetadata::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::MutateRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -251,7 +248,7 @@ StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableMetadata::CheckAndMutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    bigtable_internal::OperationContext& operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -292,7 +289,7 @@ StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableMetadata::PingAndWarm(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PingAndWarmRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    bigtable_internal::OperationContext& operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -326,7 +323,7 @@ StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableMetadata::ReadModifyWriteRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    bigtable_internal::OperationContext& operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -367,7 +364,7 @@ StatusOr<google::bigtable::v2::PrepareQueryResponse>
 BigtableMetadata::PrepareQuery(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PrepareQueryRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    bigtable_internal::OperationContext& operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -402,8 +399,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableMetadata::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ExecuteQueryRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -438,7 +434,7 @@ StatusOr<google::bigtable::v2::ClientConfiguration>
 BigtableMetadata::GetClientConfiguration(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::GetClientConfigurationRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    bigtable_internal::OperationContext& operation_context) {
   SetMetadata(context, options);
   return child_->GetClientConfiguration(context, options, request,
                                         operation_context);
@@ -451,8 +447,7 @@ BigtableMetadata::AsyncOpenTable(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   SetMetadata(*context, *options);
   return child_->AsyncOpenTable(cq, std::move(context), std::move(options),
                                 std::move(operation_context));
@@ -465,8 +460,7 @@ BigtableMetadata::AsyncOpenAuthorizedView(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   SetMetadata(*context, *options);
   return child_->AsyncOpenAuthorizedView(
       cq, std::move(context), std::move(options), std::move(operation_context));
@@ -479,8 +473,7 @@ BigtableMetadata::AsyncOpenMaterializedView(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   SetMetadata(*context, *options);
   return child_->AsyncOpenMaterializedView(
       cq, std::move(context), std::move(options), std::move(operation_context));
@@ -493,8 +486,7 @@ BigtableMetadata::AsyncReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -553,8 +545,7 @@ BigtableMetadata::AsyncSampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -612,8 +603,7 @@ BigtableMetadata::AsyncMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -657,8 +647,7 @@ BigtableMetadata::AsyncMutateRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -701,8 +690,7 @@ BigtableMetadata::AsyncCheckAndMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -746,8 +734,7 @@ BigtableMetadata::AsyncPingAndWarm(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PingAndWarmRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -784,8 +771,7 @@ BigtableMetadata::AsyncReadModifyWriteRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
@@ -829,8 +815,7 @@ BigtableMetadata::AsyncPrepareQuery(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
-        operation_context) {
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   std::vector<std::string> params;
   params.reserve(2);
 
