@@ -46,7 +46,7 @@ jobs:
             ~/.cache/vcpkg
             ~/.ccache
           key: |
-            codeql-analysis-6-${{ hashFiles('vcpkg.json') }}-${{ hashFiles('build/vcpkg/versions/baseline.json') }}
+            codeql-analysis-7-${{ hashFiles('vcpkg.json') }}-${{ hashFiles('ci/gha/builds/vcpkg-overlays/**') }}-${{ hashFiles('build/vcpkg/versions/baseline.json') }}
           restore-keys: |
             codeql-analysis-
       - name: install tools
@@ -68,6 +68,7 @@ jobs:
         run: >
           build/vcpkg/vcpkg install \
             --x-manifest-root . \
+            --overlay-ports ci/gha/builds/vcpkg-overlays \
             --feature-flags=versions \
             --clean-after-build
 
@@ -87,6 +88,7 @@ jobs:
         run: >
           cmake -GNinja -S . -B build/output \
             -DCMAKE_TOOLCHAIN_FILE=build/vcpkg/scripts/buildsystems/vcpkg.cmake \
+            -DVCPKG_OVERLAY_PORTS=ci/gha/builds/vcpkg-overlays \
             -DBUILD_TESTING=OFF \
             -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF && \
           cmake --build build/output
