@@ -303,9 +303,9 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       args.emplace_back(
           "--cpp_codegen_opt=generate_round_robin_decorator=true");
     }
-    if (service.experimental_bigtable_operation_context()) {
+    if (service.experimental_operation_context()) {
       args.emplace_back(
-          "--cpp_codegen_opt=experimental_bigtable_operation_context=true");
+          "--cpp_codegen_opt=experimental_operation_context=true");
     }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());

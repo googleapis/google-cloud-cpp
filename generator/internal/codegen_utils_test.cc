@@ -323,13 +323,13 @@ TEST(ProcessCommandLineArgs, ProcessExperimental) {
   EXPECT_THAT(*result, Contains(Pair("experimental", "true")));
 }
 
-TEST(ProcessCommandLineArgs, ProcessExperimentalBigtableOperationContext) {
+TEST(ProcessCommandLineArgs, ProcessExperimentalOperationContext) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/bigtable/"
-      ",experimental_bigtable_operation_context=true");
+      ",experimental_operation_context=true");
   ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, Contains(Pair("experimental_bigtable_operation_context",
-                                     "true")));
+  EXPECT_THAT(*result,
+              Contains(Pair("experimental_operation_context", "true")));
 }
 
 TEST(ProcessCommandLineArgs, ProcessServiceNameMapping) {

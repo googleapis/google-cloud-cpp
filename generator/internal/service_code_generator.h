@@ -128,9 +128,9 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool IsExperimental() const;
 
   /**
-   * Determines if the service enables experimental Bigtable OperationContext.
+   * Determines if the service enables experimental OperationContext.
    */
-  bool HasExperimentalBigtableOperationContext() const;
+  bool HasExperimentalOperationContext() const;
 
   /**
    * Determines if the service contains at least one method that requires
