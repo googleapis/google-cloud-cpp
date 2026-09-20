@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_BIGTABLE_STUB_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include <gmock/gmock.h>
 

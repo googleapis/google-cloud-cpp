@@ -89,6 +89,7 @@ add_library(
     internal/log_wrapper.h
     internal/minimal_iam_credentials_stub.cc
     internal/minimal_iam_credentials_stub.h
+    internal/operation_context.h
     internal/populate_grpc_options.cc
     internal/populate_grpc_options.h
     internal/resumable_streaming_read_rpc.h
