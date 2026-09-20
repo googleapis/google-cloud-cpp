@@ -90,8 +90,12 @@ TEST(SpannerRequestIdTest, ProcessRandomIdForkRegeneration) {
     // Child process: read ProcessRandomId and write to pipe
     close(pipe_fds[0]);
     std::string const child_id = ProcessRandomId();
-    write(pipe_fds[1], child_id.data(), child_id.size());
+    ssize_t const bytes_written =
+        write(pipe_fds[1], child_id.data(), child_id.size());
     close(pipe_fds[1]);
+    if (bytes_written != static_cast<ssize_t>(child_id.size())) {
+      _exit(1);
+    }
     _exit(0);
   }
 

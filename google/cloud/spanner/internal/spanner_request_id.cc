@@ -17,7 +17,6 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <atomic>
-#include <mutex>
 #include <random>
 #ifndef _WIN32
 #include <unistd.h>
@@ -30,18 +29,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string ProcessRandomId() {
 #ifndef _WIN32
-  static std::mutex mu;
-  static pid_t pid = 0;
-  static std::string random_id;
+  static std::atomic<pid_t> pid{0};
+  static std::atomic<std::uint64_t> random_id{0};
   pid_t const current_pid = getpid();
-  std::scoped_lock lock(mu);
-  if (pid != current_pid) {
+  if (pid.load(std::memory_order_acquire) != current_pid) {
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     std::uniform_int_distribution<std::uint64_t> dist;
-    random_id = absl::StrFormat("%016x", dist(generator));
-    pid = current_pid;
+    random_id.store(dist(generator), std::memory_order_release);
+    pid.store(current_pid, std::memory_order_release);
   }
-  return random_id;
+  return absl::StrFormat("%016x", random_id.load(std::memory_order_acquire));
 #else
   static std::string const random_id = [] {
     auto generator = google::cloud::internal::MakeDefaultPRNG();
