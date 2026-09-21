@@ -33,6 +33,7 @@ spanner_client_unit_tests = [
     "internal/instance_admin_metadata_test.cc",
     "internal/logging_result_set_reader_test.cc",
     "internal/merge_chunk_test.cc",
+    "internal/operation_context_test.cc",
     "internal/partial_result_set_resume_test.cc",
     "internal/partial_result_set_source_test.cc",
     "internal/route_to_leader_test.cc",

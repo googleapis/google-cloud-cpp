@@ -133,6 +133,8 @@ add_library(
     internal/logging_result_set_reader.h
     internal/merge_chunk.cc
     internal/merge_chunk.h
+    internal/operation_context.cc
+    internal/operation_context.h
     internal/partial_result_set_reader.h
     internal/partial_result_set_resume.cc
     internal/partial_result_set_resume.h
@@ -460,6 +462,7 @@ function (spanner_client_define_tests)
         internal/instance_admin_metadata_test.cc
         internal/logging_result_set_reader_test.cc
         internal/merge_chunk_test.cc
+        internal/operation_context_test.cc
         internal/partial_result_set_resume_test.cc
         internal/partial_result_set_source_test.cc
         internal/route_to_leader_test.cc
