@@ -16,10 +16,6 @@
 
 set(service_dirs
     # cmake-format: sort
-    "project_views/v1/"
-    "managed_rulesets/v1/"
-    "image_views/v1/"
-    "global_frontend_settings/v1/"
     "accelerator_types/v1/"
     "addresses/v1/"
     "advice/v1/"
@@ -35,6 +31,7 @@ set(service_dirs
     "forwarding_rules/v1/"
     "global_addresses/v1/"
     "global_forwarding_rules/v1/"
+    "global_frontend_settings/v1/"
     "global_network_endpoint_groups/v1/"
     "global_public_delegated_prefixes/v1/"
     "global_vm_extension_policies/v1/"
@@ -43,6 +40,7 @@ set(service_dirs
     "http_health_checks/v1/"
     "https_health_checks/v1/"
     "image_family_views/v1/"
+    "image_views/v1/"
     "images/v1/"
     "instance_group_manager_resize_requests/v1/"
     "instance_group_managers/v1/"
@@ -62,6 +60,7 @@ set(service_dirs
     "licenses/v1/"
     "machine_images/v1/"
     "machine_types/v1/"
+    "managed_rulesets/v1/"
     "network_attachments/v1/"
     "network_edge_security_services/v1/"
     "network_endpoint_groups/v1/"
@@ -74,6 +73,7 @@ set(service_dirs
     "organization_security_policies/v1/"
     "packet_mirrorings/v1/"
     "preview_features/v1/"
+    "project_views/v1/"
     "projects/v1/"
     "public_advertised_prefixes/v1/"
     "public_delegated_prefixes/v1/"
