@@ -85,14 +85,14 @@ Status StubGenerator::GenerateHeader() {
   HeaderProtobufGenCodeIncludes(
       {vars("proto_grpc_header_path"),
        include_lro_header ? "google/longrunning/operations.grpc.pb.h" : ""});
+  HeaderLocalIncludes(
+      {HasExperimentalOperationContext()
+           ? absl::StrCat(vars("product_path"), "internal/operation_context.h")
+           : ""});
   HeaderSystemIncludes({"memory", "utility"});
   HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
-
-  if (HasExperimentalBigtableOperationContext()) {
-    HeaderPrint("\nclass OperationContext;\n");
-  }
 
   // Abstract interface Stub base class
   HeaderPrint(  // clang-format off
