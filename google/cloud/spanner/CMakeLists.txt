@@ -150,6 +150,8 @@ add_library(
     internal/spanner_logging_decorator.h
     internal/spanner_metadata_decorator.cc
     internal/spanner_metadata_decorator.h
+    internal/spanner_request_id.cc
+    internal/spanner_request_id.h
     internal/spanner_stub.cc
     internal/spanner_stub.h
     internal/spanner_stub_factory.cc
@@ -462,6 +464,7 @@ function (spanner_client_define_tests)
         internal/partial_result_set_source_test.cc
         internal/route_to_leader_test.cc
         internal/session_pool_test.cc
+        internal/spanner_request_id_test.cc
         internal/spanner_stub_factory_test.cc
         internal/status_utils_test.cc
         internal/transaction_impl_test.cc
