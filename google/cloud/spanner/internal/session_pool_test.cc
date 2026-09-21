@@ -141,7 +141,7 @@ TEST_F(SessionPoolTest, Multiplexed) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
@@ -156,9 +156,10 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::CreateSessionRequest const&) {
+                       google::spanner::v1::CreateSessionRequest const&,
+                       auto&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeMultiplexedSession("multiplexed");
@@ -181,9 +182,10 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
 
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::CreateSessionRequest const&) {
+                       google::spanner::v1::CreateSessionRequest const&,
+                       auto&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeMultiplexedSession("multiplexed");
@@ -207,9 +209,10 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
 
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::CreateSessionRequest const&) {
+                       google::spanner::v1::CreateSessionRequest const&,
+                       auto&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
@@ -233,9 +236,10 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
 
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::CreateSessionRequest const&) {
+                       google::spanner::v1::CreateSessionRequest const&,
+                       auto&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
@@ -274,11 +278,10 @@ TEST_F(SessionPoolTest, ReuseSession) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([](grpc::ClientContext&, Options const&,
-                   google::spanner::v1::CreateSessionRequest const&) {
-        return MakeMultiplexedSession("multiplexed");
-      });
+                   google::spanner::v1::CreateSessionRequest const&,
+                   auto&) { return MakeMultiplexedSession("multiplexed"); });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
@@ -299,10 +302,11 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
       {"k1", "v1"}, {"k2", "v2"}, {"k3", "v3"}};
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce(
           [labels](grpc::ClientContext&, Options const&,
-                   google::spanner::v1::CreateSessionRequest const& request) {
+                   google::spanner::v1::CreateSessionRequest const& request,
+                   auto&) {
             auto const& request_labels = request.session().labels();
             EXPECT_EQ((std::map<std::string, std::string>(
                           request_labels.begin(), request_labels.end())),
@@ -325,13 +329,13 @@ TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
   std::string const role = "public";
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
-      .WillOnce(
-          [role](grpc::ClientContext&, Options const&,
-                 google::spanner::v1::CreateSessionRequest const& request) {
-            EXPECT_EQ(request.session().creator_role(), role);
-            return MakeMultiplexedSession("multiplexed");
-          });
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
+      .WillOnce([role](grpc::ClientContext&, Options const&,
+                       google::spanner::v1::CreateSessionRequest const& request,
+                       auto&) {
+        EXPECT_EQ(request.session().creator_role(), role);
+        return MakeMultiplexedSession("multiplexed");
+      });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -363,9 +367,9 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementSuccess) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed1"}))));
-  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _))
+  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _, _))
       .WillOnce(Return(make_ready_future(StatusOr<google::spanner::v1::Session>(
           MakeMultiplexedSession({"multiplexed2"})))));
 
@@ -404,9 +408,9 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(
       *mock,
-      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _))
+  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _, _))
       .WillOnce(Return(make_ready_future(StatusOr<google::spanner::v1::Session>(
           Status(StatusCode::kResourceExhausted, "retry policy exhausted")))));
 
