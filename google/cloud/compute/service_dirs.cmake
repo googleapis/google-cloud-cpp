@@ -16,6 +16,10 @@
 
 set(service_dirs
     # cmake-format: sort
+    "project_views/v1/"
+    "managed_rulesets/v1/"
+    "image_views/v1/"
+    "global_frontend_settings/v1/"
     "accelerator_types/v1/"
     "addresses/v1/"
     "advice/v1/"

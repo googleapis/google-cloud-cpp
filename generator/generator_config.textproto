@@ -1990,6 +1990,42 @@ discovery_products {
     generate_grpc_transport: false
   }
 
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto"
+    product_path: "google/cloud/compute/global_frontend_settings/v1"
+    initial_copyright_year: "2026"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/image_views/v1/image_views.proto"
+    product_path: "google/cloud/compute/image_views/v1"
+    initial_copyright_year: "2026"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto"
+    product_path: "google/cloud/compute/managed_rulesets/v1"
+    initial_copyright_year: "2026"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/project_views/v1/project_views.proto"
+    product_path: "google/cloud/compute/project_views/v1"
+    initial_copyright_year: "2026"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
   # update_discovery_doc.sh additions
 }
 
