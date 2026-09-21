@@ -15,6 +15,7 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/hedged_object_read_source.h"
+#include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/filesystem.h"
@@ -409,8 +410,17 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
         current->get<IdempotencyPolicyOption>()->IsIdempotent(request)
             ? Idempotency::kIdempotent
             : Idempotency::kNonIdempotent;
+    // Wrapping the policy, rather than inspecting the status here, means a
+    // record is emitted only when the policy really does grant another
+    // attempt. The final failure of an exhausted policy, a permanent error,
+    // and a non-idempotent request are all silent; each is reported to the
+    // caller through the returned `Status`.
+    storage_internal::LoggingRetryPolicy logging_retry_policy(
+        retry_policy, "ReadObject/open",
+        storage_internal::RetryLogResource(request.bucket_name(),
+                                           request.object_name()));
     return RestRetryLoop(
-        retry_policy, backoff_policy, idempotency,
+        logging_retry_policy, backoff_policy, idempotency,
         [self, token = self->MakeIdempotencyToken()](
             rest_internal::RestContext& context, Options const& options,
             ReadObjectRangeRequest const& request) {
@@ -772,6 +782,15 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
       if (!UploadChunkOnFailure(*retry_policy, last_status)) {
         return RetryError(std::move(last_status), *retry_policy, __func__);
       }
+
+      // `UploadChunkRequest` does not carry the bucket or object name, only the
+      // resumable session URL. That URL is the only stable identifier for the
+      // upload, but its `upload_id` is a bearer capability, so it is redacted
+      // before it reaches the log.
+      std::string const resource = storage_internal::RetryLogUploadResource(
+          request.upload_session_url());
+      storage_internal::LogTransientRetry("UploadChunk", resource, last_status,
+                                          error_count);
 
       auto delay = backoff_policy->OnCompletion();
       sleeper(delay);

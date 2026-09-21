@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
@@ -91,6 +92,8 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   // Start a new retry loop to get the data.
   auto backoff_policy = backoff_policy_prototype_->clone();
   auto retry_policy = retry_policy_prototype_->clone();
+  std::string const resource = storage_internal::RetryLogResource(
+      request_.bucket_name(), request_.object_name());
   int counter = 0;
   while (!result && retry_policy->OnFailure(result.status())) {
     // A Read() request failed, most likely that means the connection failed or
@@ -99,10 +102,17 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     // already be exhausted, so we should fail this operation too.
     child_.reset();
 
+    ++counter;
+    // `OnFailure()` has already returned true, so this download is definitely
+    // being resumed. Report it before sleeping, otherwise the warning does not
+    // appear until after the stall it is meant to explain.
+    storage_internal::LogTransientRetry("ReadObject/resume", resource,
+                                        result.status(), counter);
+
     // The first attempt does not get to backoff.  The previous download was
     // working fine, so whatever caused the download to stop may not be an
     // overload condition.
-    if (++counter != 1) {
+    if (counter != 1) {
       backoff_(backoff_policy->OnCompletion());
     }
     if (has_emulator_instructions) {
