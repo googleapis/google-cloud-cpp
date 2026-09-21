@@ -46,7 +46,7 @@ class GcpDetectorImpl : public GcpDetector {
   };
 #endif
   explicit GcpDetectorImpl(GcpDetectorConfig config)
-      : config_(std::move(config)) {};
+      : config_(std::move(config)){};
   bool IsGoogleCloudBios() override;
   bool IsGoogleCloudServerless() override;
 

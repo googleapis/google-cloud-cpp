@@ -224,6 +224,27 @@ RegionNetworkFirewallPoliciesRestMetadata::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesRestMetadata::AsyncPatchAssociation(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPatchAssociation(cq, std::move(rest_context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesRestMetadata::PatchAssociation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchAssociation(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesRestMetadata::AsyncPatchRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

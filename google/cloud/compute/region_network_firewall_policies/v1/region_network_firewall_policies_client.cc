@@ -514,6 +514,68 @@ RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::PatchAssociation(
+    std::string const& project, std::string const& region,
+    std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyAssociation const&
+        firewall_policy_association_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      PatchAssociationRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_association_resource() =
+      firewall_policy_association_resource;
+  return connection_->PatchAssociation(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::PatchAssociation(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyAssociation const&
+        firewall_policy_association_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      PatchAssociationRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_association_resource() =
+      firewall_policy_association_resource;
+  return connection_->PatchAssociation(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::PatchAssociation(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchAssociation(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::PatchAssociation(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchAssociation(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::PatchAssociation(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchAssociation(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::PatchRule(
     std::string const& project, std::string const& region,
     std::string const& firewall_policy,

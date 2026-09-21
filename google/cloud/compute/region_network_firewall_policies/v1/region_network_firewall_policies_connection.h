@@ -317,6 +317,19 @@ class RegionNetworkFirewallPoliciesConnection {
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAssociation(
+      google::cloud::cpp::compute::region_network_firewall_policies::v1::
+          PatchAssociationRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAssociation(
+      NoAwaitTag,
+      google::cloud::cpp::compute::region_network_firewall_policies::v1::
+          PatchAssociationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAssociation(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchRule(google::cloud::cpp::compute::region_network_firewall_policies::v1::
                 PatchRuleRequest const& request);
 

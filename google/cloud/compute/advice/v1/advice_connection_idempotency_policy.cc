@@ -39,6 +39,16 @@ Idempotency AdviceConnectionIdempotencyPolicy::CalendarMode(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AdviceConnectionIdempotencyPolicy::Capacity(
+    google::cloud::cpp::compute::advice::v1::CapacityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AdviceConnectionIdempotencyPolicy::CapacityHistory(
+    google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AdviceConnectionIdempotencyPolicy>
 MakeDefaultAdviceConnectionIdempotencyPolicy() {
   return std::make_unique<AdviceConnectionIdempotencyPolicy>();

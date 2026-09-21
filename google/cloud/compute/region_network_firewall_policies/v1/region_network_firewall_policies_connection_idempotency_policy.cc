@@ -118,6 +118,13 @@ RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchAssociation(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchRule(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         PatchRuleRequest const&) {
