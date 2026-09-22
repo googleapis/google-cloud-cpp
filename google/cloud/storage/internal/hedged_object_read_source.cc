@@ -219,11 +219,8 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
   if (is_closed_) {
     return ReadSourceResult{0, HttpResponse{HttpStatusCode::kOk, {}, {}}};
   }
-  std::chrono::steady_clock::time_point const start =
-      std::chrono::steady_clock::now();
   StatusOr<ReadSourceResult> result =
       ShouldRace(n) ? ReadRaced(buf, n) : ReadDirect(buf, n);
-  last_read_stalled_ = std::chrono::steady_clock::now() - start > delay_;
   UpdateState(result);
   return result;
 }
@@ -244,12 +241,19 @@ bool HedgedObjectReadSource::ShouldRace(std::size_t n) const {
   // data. A hedge there would request an empty or inverted range, and could
   // even win the race with bytes from the wrong offset.
   if (AtEnd()) return false;
-  // A stream that is uniformly slow, rather than intermittently stalled, would
-  // otherwise re-race every read for the life of the stream.
+  // Every read is raced, so a uniformly slow stream would otherwise dispatch a
+  // hedge on every read for the life of the stream.
   if (total_hedges_ >= max_hedges_ * kMaxHedgeRoundsPerStream) return false;
-  // Otherwise only re-race a stream that has shown signs of stalling, so a
-  // healthy stream keeps the zero-cost direct path.
-  return last_read_stalled_;
+  // Every remaining read is raced. Racing does not dispatch a hedge on its
+  // own: `ReadRaced()` only does that once `delay_` elapses within this read,
+  // so a read that returns promptly still issues exactly one request.
+  //
+  // The race is what makes that elapsed time observable. `ReadDirect()` calls
+  // `active_child_->Read()` synchronously on the caller's thread, so while a
+  // read is stalled there is no thread left to notice. Gating on whether a
+  // *previous* read stalled cannot rescue the first stall on a stream that
+  // opened cleanly, which is the common case for a short ranged read.
+  return true;
 }
 
 bool HedgedObjectReadSource::AtEnd() const {

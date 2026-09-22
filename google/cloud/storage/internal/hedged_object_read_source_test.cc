@@ -691,17 +691,19 @@ TEST(HedgedObjectReadSourceTest, OversizedReadPropagatesOpenError) {
   EXPECT_FALSE(source.IsOpen());
 }
 
-TEST(HedgedObjectReadSourceTest, OversizedReadOnStalledStreamIsNotHedged) {
-  // The buffer limit applies to every read, not only to the open: a stalled
-  // stream is not raced for a read larger than the limit either.
+TEST(HedgedObjectReadSourceTest, OversizedMidStreamReadIsNotHedged) {
+  // The buffer limit applies to every read, not only to the open. Reads 1 and
+  // 2 are within the limit and answered promptly, so neither dispatches a
+  // hedge. Read 3 is well past the limit and slow: were the limit not honored
+  // it would be raced and would dispatch a hedge, opening a second child.
   auto calls = std::make_shared<std::atomic<int>>(0);
   auto factory = [calls]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
     ++*calls;
     auto mock = std::make_unique<MockObjectReadSource>();
     EXPECT_CALL(*mock, Read)
         .WillOnce(ImmediateRead("open"))
-        .WillOnce(DelayedRead("small", kStall))
-        .WillOnce(ImmediateRead("large"));
+        .WillOnce(ImmediateRead("small"))
+        .WillOnce(DelayedRead("large", kStall));
     return std::unique_ptr<ObjectReadSource>(std::move(mock));
   };
 
@@ -712,16 +714,15 @@ TEST(HedgedObjectReadSourceTest, OversizedReadOnStalledStreamIsNotHedged) {
   std::vector<char> small(8);
   EXPECT_THAT(source.Read(small.data(), small.size()), IsOk());
   EXPECT_THAT(source.Read(small.data(), small.size()), IsOk());
-  // The previous read stalled, but this one is well past the limit.
   std::vector<char> large(4096);
   EXPECT_THAT(source.Read(large.data(), large.size()), IsOk());
   EXPECT_THAT(calls->load(), Eq(1));
 }
 
 TEST(HedgedObjectReadSourceTest, SubsequentReadHedgeWinsWhenPrimaryStalls) {
-  // Read 1 opens the stream, read 2 is slow and marks the stream as stalled,
-  // so read 3 is raced. The primary blocks on read 3 and the hedge, opened at
-  // the current offset, wins and serves the rest of the stream.
+  // Read 1 opens the stream and read 2 is answered promptly. Every read is
+  // raced, so when the primary blocks on read 3 a hedge is opened at the
+  // current offset, wins, and serves the rest of the stream.
   auto unblock_primary = std::make_shared<std::promise<void>>();
   auto primary_closed = std::make_shared<std::promise<void>>();
   auto recorded_offset = std::make_shared<std::atomic<std::int64_t>>(-1);
@@ -735,7 +736,7 @@ TEST(HedgedObjectReadSourceTest, SubsequentReadHedgeWinsWhenPrimaryStalls) {
     if (++*factory_calls == 1) {
       EXPECT_CALL(*mock, Read)
           .WillOnce(ImmediateRead("chunk-1"))
-          .WillOnce(DelayedRead("chunk-2", kStall))
+          .WillOnce(ImmediateRead("chunk-2"))
           .WillOnce(BlockedRead(unblock_primary, "chunk-3-slow"));
       EXPECT_CALL(*mock, Close).WillOnce(NotifyClose(primary_closed));
     } else {
@@ -774,10 +775,73 @@ TEST(HedgedObjectReadSourceTest, SubsequentReadHedgeWinsWhenPrimaryStalls) {
   EXPECT_THAT(factory_calls->load(), Eq(2));
 }
 
-TEST(HedgedObjectReadSourceTest, StalledStreamReturnsToDirectReads) {
-  // Read 1 opens the stream, read 2 stalls, read 3 is therefore raced and
-  // the hedge wins. Read 4 (on the hedge) completes quickly, so read 5 is a
-  // direct read again: no further children are opened.
+TEST(HedgedObjectReadSourceTest, FirstStallAfterCleanOpenIsHedged) {
+  // A stream can open promptly and then stall on its very first body read.
+  // Racing is not conditioned on an earlier read having stalled, so this read
+  // is raced and the hedge rescues it. Gating on a previous stall would leave
+  // this read to run to completion at full cost, since nothing before it was
+  // slow.
+  auto unblock_primary = std::make_shared<std::promise<void>>();
+  auto primary_closed = std::make_shared<std::promise<void>>();
+  auto read_returned = std::make_shared<std::promise<void>>();
+  auto factory_calls = std::make_shared<std::atomic<int>>(0);
+
+  auto factory =
+      [unblock_primary, primary_closed,
+       factory_calls]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    auto mock = std::make_unique<MockObjectReadSource>();
+    if (++*factory_calls == 1) {
+      // The open is healthy; the first body read then blocks.
+      EXPECT_CALL(*mock, Read)
+          .WillOnce(ImmediateRead("chunk-1"))
+          .WillOnce(BlockedRead(unblock_primary, "chunk-2-slow"));
+      EXPECT_CALL(*mock, Close).WillOnce(NotifyClose(primary_closed));
+    } else {
+      EXPECT_CALL(*mock, Read).WillOnce(ImmediateRead("chunk-2-hedge"));
+    }
+    return std::unique_ptr<ObjectReadSource>(std::move(mock));
+  };
+
+  HedgedObjectReadSource source(MakeUnlimitedReadPool(),
+                                MakeUnlimitedHedgePool(), Adapt(factory),
+                                kDelay, /*max_hedges=*/1, kUnlimitedBuffer);
+
+  std::vector<char> buffer(100);
+  StatusOr<ReadSourceResult> r1 = source.Read(buffer.data(), buffer.size());
+  ASSERT_THAT(r1, IsOk());
+  EXPECT_THAT(std::string(buffer.data(), r1->bytes_received), Eq("chunk-1"));
+
+  // Release the primary only after the read has returned, so the hedge wins
+  // regardless of scheduling. The bounded wait means a regression that never
+  // dispatches the hedge fails the assertions below rather than deadlocking.
+  std::thread unblocker([unblock_primary, read_returned] {
+    read_returned->get_future().wait_for(std::chrono::seconds(10));
+    unblock_primary->set_value();
+  });
+
+  StatusOr<ReadSourceResult> r2 = source.Read(buffer.data(), buffer.size());
+  read_returned->set_value();
+  unblocker.join();
+
+  ASSERT_THAT(r2, IsOk());
+  EXPECT_THAT(std::string(buffer.data(), r2->bytes_received),
+              Eq("chunk-2-hedge"));
+  EXPECT_THAT(factory_calls->load(), Eq(2));
+
+  // The losing primary is closed off the caller's thread. Bound this wait for
+  // the same reason as the one above: if no hedge was dispatched there is no
+  // primary to lose, and an unbounded wait would hang the test instead of
+  // reporting the assertions that already failed.
+  EXPECT_THAT(primary_closed->get_future().wait_for(std::chrono::seconds(10)),
+              Eq(std::future_status::ready));
+}
+
+TEST(HedgedObjectReadSourceTest,
+     PromptReadsAfterHedgeWinOpenNoFurtherChildren) {
+  // Racing a read is not the same as hedging it. Read 3 blocks, so a hedge is
+  // dispatched and wins. Reads 4 and 5 are raced as well, but they answer well
+  // inside the delay, so no hedge is dispatched for them and no third child is
+  // ever opened.
   auto unblock_primary = std::make_shared<std::promise<void>>();
   auto primary_closed = std::make_shared<std::promise<void>>();
   auto factory_calls = std::make_shared<std::atomic<int>>(0);
@@ -789,7 +853,7 @@ TEST(HedgedObjectReadSourceTest, StalledStreamReturnsToDirectReads) {
     if (++*factory_calls == 1) {
       EXPECT_CALL(*mock, Read)
           .WillOnce(ImmediateRead("chunk-1"))
-          .WillOnce(DelayedRead("chunk-2", kStall))
+          .WillOnce(ImmediateRead("chunk-2"))
           .WillOnce(BlockedRead(unblock_primary, "chunk-3-slow"));
       EXPECT_CALL(*mock, Close).WillOnce(NotifyClose(primary_closed));
     } else {
@@ -838,7 +902,7 @@ TEST(HedgedObjectReadSourceTest, SubsequentReadPinsGeneration) {
             r.generation = 987654321;
             return r;
           })
-          .WillOnce(DelayedRead("chunk-2", kStall))
+          .WillOnce(ImmediateRead("chunk-2"))
           .WillOnce(BlockedRead(unblock_primary, "chunk-3-slow"));
       EXPECT_CALL(*mock, Close).WillOnce(NotifyClose(primary_closed));
     } else {
@@ -863,9 +927,9 @@ TEST(HedgedObjectReadSourceTest, SubsequentReadPinsGeneration) {
 }
 
 TEST(HedgedObjectReadSourceTest, SubsequentReadGunzippedBypassesHedging) {
-  // Read 1 discovers decompressive transcoding, read 2 stalls. Read 3 would
-  // be raced, but under transcoding a hedge cannot resume at an offset, so it
-  // must continue directly on the active child.
+  // Read 1 discovers decompressive transcoding. Read 2 stalls and would
+  // otherwise be raced, but under transcoding a hedge cannot resume at an
+  // offset, so it must continue directly on the active child.
   auto factory_calls = std::make_shared<std::atomic<int>>(0);
   auto factory =
       [factory_calls]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
@@ -916,7 +980,7 @@ TEST(HedgedObjectReadSourceTest,
     auto mock = std::make_unique<MockObjectReadSource>();
     EXPECT_CALL(*mock, Read)
         .WillOnce(ImmediateRead("chunk-1"))
-        .WillOnce(DelayedRead("chunk-2", kStall))
+        .WillOnce(ImmediateRead("chunk-2"))
         .WillOnce(BlockedRead(unblock_primary, "chunk-3-primary"));
     return std::unique_ptr<ObjectReadSource>(std::move(mock));
   };
@@ -948,9 +1012,10 @@ TEST(HedgedObjectReadSourceTest,
   EXPECT_THAT(factory_calls->load(), Eq(2));
 }
 
-// Returns a factory whose first child answers @p result twice (the second time
-// after `kStall`, so the next read is raced) and then blocks, and whose second
-// child records the offset it was opened at and answers "hedge".
+// Returns a factory whose first child answers @p result twice promptly and
+// then blocks, and whose second child records the offset it was opened at and
+// answers "hedge". Every read is raced, so the hedge is dispatched on the
+// blocked third read.
 auto MakeOffsetRecordingFactory(
     ReadSourceResult result,
     std::shared_ptr<std::promise<void>> const& unblock_primary,
@@ -969,7 +1034,6 @@ auto MakeOffsetRecordingFactory(
             return result;
           })
           .WillOnce([result](char* buf, std::size_t) {
-            std::this_thread::sleep_for(kStall);
             std::fill(buf, buf + result.bytes_received, 'x');
             return result;
           })
@@ -1043,11 +1107,12 @@ TEST(HedgedObjectReadSourceTest, ReadLastLargerThanObjectClampsOffset) {
   primary_closed->get_future().get();
 }
 
-// Verifies that a stalled stream is *not* raced once it has reached the end
-// of the requested data: the drain read at the end must go to the active
-// child, a hedge would request an empty or inverted range. The child answers
-// @p chunk twice, reaching the end of the data with a stalled read, then
-// answers the (equally slow) drain read with no data.
+// Verifies that a stream is *not* raced once it has reached the end of the
+// requested data: the drain read at the end must go to the active child, a
+// hedge would request an empty or inverted range. The child answers @p chunk
+// twice, reaching the end of the data, then answers the drain read slowly. The
+// drain is slow enough that a hedge would be dispatched for it were the
+// end-of-data guard not honored, which would open a second child.
 void ExpectNoRaceAtEnd(HedgedObjectReadSource::Position position,
                        ReadSourceResult chunk) {
   auto factory_calls = std::make_shared<std::atomic<int>>(0);
@@ -1061,7 +1126,6 @@ void ExpectNoRaceAtEnd(HedgedObjectReadSource::Position position,
           return chunk;
         })
         .WillOnce([chunk](char* buf, std::size_t) {
-          std::this_thread::sleep_for(kStall);
           std::fill(buf, buf + chunk.bytes_received, 'x');
           return chunk;
         })
@@ -1133,7 +1197,7 @@ TEST(HedgedObjectReadSourceTest, RangeEndTakesPrecedenceOverResponseSize) {
           std::fill(buf, buf + chunk.bytes_received, 'x');
           return chunk;
         })
-        .WillOnce(DelayedRead("chunk-2", kStall))
+        .WillOnce(ImmediateRead("chunk-2"))
         .WillOnce(BlockedRead(unblock_primary, "chunk-3-slow"));
     EXPECT_CALL(*mock, Close).WillOnce(NotifyClose(primary_closed));
     return std::unique_ptr<ObjectReadSource>(std::move(mock));
