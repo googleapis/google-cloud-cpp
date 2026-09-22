@@ -28,6 +28,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-endpoint-snippet)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-endpoint-snippet)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-endpoint-snippet)
+- [\c compute_global_frontend_settings_v1::GlobalFrontendSettingsClient](@ref compute_global_frontend_settings_v1::GlobalFrontendSettingsClient-endpoint-snippet)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-endpoint-snippet)
 - [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-endpoint-snippet)
 - [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-endpoint-snippet)
@@ -38,6 +39,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-endpoint-snippet)
 - [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-endpoint-snippet)
 - [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-endpoint-snippet)
+- [\c compute_image_views_v1::ImageViewsClient](@ref compute_image_views_v1::ImageViewsClient-endpoint-snippet)
 - [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-endpoint-snippet)
 - [\c compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient](@ref compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-endpoint-snippet)
 - [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-endpoint-snippet)
@@ -57,6 +59,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-endpoint-snippet)
 - [\c compute_machine_images_v1::MachineImagesClient](@ref compute_machine_images_v1::MachineImagesClient-endpoint-snippet)
 - [\c compute_machine_types_v1::MachineTypesClient](@ref compute_machine_types_v1::MachineTypesClient-endpoint-snippet)
+- [\c compute_managed_rulesets_v1::ManagedRulesetsClient](@ref compute_managed_rulesets_v1::ManagedRulesetsClient-endpoint-snippet)
 - [\c compute_network_attachments_v1::NetworkAttachmentsClient](@ref compute_network_attachments_v1::NetworkAttachmentsClient-endpoint-snippet)
 - [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-endpoint-snippet)
 - [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-endpoint-snippet)
@@ -69,6 +72,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-endpoint-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-endpoint-snippet)
 - [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-endpoint-snippet)
+- [\c compute_project_views_v1::ProjectViewsClient](@ref compute_project_views_v1::ProjectViewsClient-endpoint-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-endpoint-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-endpoint-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-endpoint-snippet)
@@ -236,6 +240,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_global_frontend_settings_v1::GlobalFrontendSettingsClient-endpoint-snippet Override compute_global_frontend_settings_v1::GlobalFrontendSettingsClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_frontend_settings/v1/samples/global_frontend_settings_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-endpoint-snippet Override compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient Endpoint Configuration
 
 @snippet google/cloud/compute/global_network_endpoint_groups/v1/samples/global_network_endpoint_groups_client_samples.cc set-client-endpoint
@@ -293,6 +303,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_image_family_views_v1::ImageFamilyViewsClient-endpoint-snippet Override compute_image_family_views_v1::ImageFamilyViewsClient Endpoint Configuration
 
 @snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_image_views_v1::ImageViewsClient-endpoint-snippet Override compute_image_views_v1::ImageViewsClient Endpoint Configuration
+
+@snippet google/cloud/compute/image_views/v1/samples/image_views_client_samples.cc set-client-endpoint
 
 */
 
@@ -410,6 +426,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_managed_rulesets_v1::ManagedRulesetsClient-endpoint-snippet Override compute_managed_rulesets_v1::ManagedRulesetsClient Endpoint Configuration
+
+@snippet google/cloud/compute/managed_rulesets/v1/samples/managed_rulesets_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_network_attachments_v1::NetworkAttachmentsClient-endpoint-snippet Override compute_network_attachments_v1::NetworkAttachmentsClient Endpoint Configuration
 
 @snippet google/cloud/compute/network_attachments/v1/samples/network_attachments_client_samples.cc set-client-endpoint
@@ -479,6 +501,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_preview_features_v1::PreviewFeaturesClient-endpoint-snippet Override compute_preview_features_v1::PreviewFeaturesClient Endpoint Configuration
 
 @snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_project_views_v1::ProjectViewsClient-endpoint-snippet Override compute_project_views_v1::ProjectViewsClient Endpoint Configuration
+
+@snippet google/cloud/compute/project_views/v1/samples/project_views_client_samples.cc set-client-endpoint
 
 */
 
