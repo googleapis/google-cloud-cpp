@@ -114,6 +114,29 @@ LustreConnection::DeleteInstance(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::lustre::v1::Instance>>
+LustreConnection::RescheduleMaintenance(
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreConnection::RescheduleMaintenance(
+    NoAwaitTag,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Instance>>
+LustreConnection::RescheduleMaintenance(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
 LustreConnection::ImportData(
     google::cloud::lustre::v1::ImportDataRequest const&) {
@@ -156,6 +179,141 @@ LustreConnection::ExportData(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnection::CreateMirror(
+    google::cloud::lustre::v1::CreateMirrorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::Mirror>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> LustreConnection::CreateMirror(
+    NoAwaitTag, google::cloud::lustre::v1::CreateMirrorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnection::CreateMirror(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::Mirror>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnection::UpdateMirror(
+    google::cloud::lustre::v1::UpdateMirrorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::Mirror>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> LustreConnection::UpdateMirror(
+    NoAwaitTag, google::cloud::lustre::v1::UpdateMirrorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnection::UpdateMirror(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::Mirror>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnection::DeleteMirror(
+    google::cloud::lustre::v1::DeleteMirrorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> LustreConnection::DeleteMirror(
+    NoAwaitTag, google::cloud::lustre::v1::DeleteMirrorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnection::DeleteMirror(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreConnection::GetMirror(
+    google::cloud::lustre::v1::GetMirrorRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::lustre::v1::Mirror> LustreConnection::ListMirrors(
+    google::cloud::lustre::v1::
+        ListMirrorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::lustre::v1::Mirror>>();
+}
+
+future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+LustreConnection::CreateDirectoryPolicy(
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreConnection::CreateDirectoryPolicy(
+    NoAwaitTag,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+LustreConnection::CreateDirectoryPolicy(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnection::DeleteDirectoryPolicy(
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreConnection::DeleteDirectoryPolicy(
+    NoAwaitTag,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnection::DeleteDirectoryPolicy(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::lustre::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreConnection::GetDirectoryPolicy(
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::lustre::v1::DirectoryPolicy>
+LustreConnection::ListDirectoryPolicies(
+    google::cloud::lustre::v1::
+        ListDirectoryPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::lustre::v1::DirectoryPolicy>>();
+}
+
 StreamRange<google::cloud::location::Location> LustreConnection::ListLocations(
     google::cloud::location::
         ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
@@ -165,6 +323,22 @@ StreamRange<google::cloud::location::Location> LustreConnection::ListLocations(
 
 StatusOr<google::cloud::location::Location> LustreConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> LustreConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> LustreConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

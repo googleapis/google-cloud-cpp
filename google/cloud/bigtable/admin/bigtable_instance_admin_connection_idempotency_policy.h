@@ -73,6 +73,15 @@ class BigtableInstanceAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateMemoryLayer(
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request);
+
+  virtual google::cloud::Idempotency ListMemoryLayers(
+      google::bigtable::admin::v2::ListMemoryLayersRequest request);
+
+  virtual google::cloud::Idempotency GetMemoryLayer(
+      google::bigtable::admin::v2::GetMemoryLayerRequest const& request);
+
   virtual google::cloud::Idempotency CreateAppProfile(
       google::bigtable::admin::v2::CreateAppProfileRequest const& request);
 

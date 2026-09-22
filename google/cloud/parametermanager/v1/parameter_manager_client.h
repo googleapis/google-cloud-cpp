@@ -115,8 +115,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L226}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L358}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::Parameter> ListParameters(
@@ -154,8 +154,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L226}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L358}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::Parameter> ListParameters(
@@ -181,8 +181,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L264}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L400}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
@@ -211,8 +211,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L264}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L400}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
@@ -240,8 +240,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L276}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L412}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
@@ -272,8 +272,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L276}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L412}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
@@ -305,8 +305,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
-  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L312}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
+  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L448}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
@@ -336,8 +336,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
-  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L312}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L295}
+  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L448}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
@@ -362,7 +362,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L345}
+  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L481}
   ///
   // clang-format on
   Status DeleteParameter(std::string const& name, Options opts = {});
@@ -388,7 +388,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L345}
+  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L481}
   ///
   // clang-format on
   Status DeleteParameter(
@@ -424,8 +424,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L427}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L586}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
@@ -463,8 +463,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L427}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L586}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
@@ -491,8 +491,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L465}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L628}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -521,8 +521,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L465}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L628}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -549,8 +549,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L482}
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L493}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L645}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L656}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
@@ -579,8 +579,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L482}
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L493}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L645}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L656}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
@@ -610,8 +610,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L514}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L677}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -644,8 +644,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L514}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L677}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -678,8 +678,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
-  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L551}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
+  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L714}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -711,8 +711,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
-  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L551}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L511}
+  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L714}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -738,7 +738,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L585}
+  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L748}
   ///
   // clang-format on
   Status DeleteParameterVersion(std::string const& name, Options opts = {});
@@ -764,11 +764,693 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L585}
+  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L748}
   ///
   // clang-format on
   Status DeleteParameterVersion(
       google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Templates in a given project and location.
+  ///
+  /// @param parent  Required. Parent value for ListTemplatesRequest in the format
+  ///  `projects/*/locations/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.parametermanager.v1.Template], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.ListTemplatesRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L806}
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::parametermanager::v1::Template> ListTemplates(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Templates in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.ListTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.parametermanager.v1.Template], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.ListTemplatesRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L806}
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::parametermanager::v1::Template> ListTemplates(
+      google::cloud::parametermanager::v1::ListTemplatesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single Template.
+  ///
+  /// @param name  Required. Name of the resource in the format
+  ///  `projects/*/locations/*/templates/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.Template])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.GetTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L848}
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::Template> GetTemplate(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single Template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.GetTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.Template])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.GetTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L848}
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::Template> GetTemplate(
+      google::cloud::parametermanager::v1::GetTemplateRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new Template in a given project and location.
+  ///
+  /// @param parent  Required. Value for parent in the format
+  ///  `projects/*/locations/*`.
+  /// @param template_  Required. The Template resource being created
+  /// @param template_id  Required. Id of the Template resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.Template])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.CreateTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L860}
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::Template> CreateTemplate(
+      std::string const& parent,
+      google::cloud::parametermanager::v1::Template const& template_,
+      std::string const& template_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new Template in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.CreateTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.Template])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.CreateTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L860}
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::Template> CreateTemplate(
+      google::cloud::parametermanager::v1::CreateTemplateRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a single Template.
+  ///
+  /// @param template_  Required. The Template resource being updated
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  Template resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A mutable field will be overwritten if it is in the
+  ///  mask. If the user does not provide a mask then all mutable fields present
+  ///  in the request will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.Template])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  /// [google.cloud.parametermanager.v1.UpdateTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L896}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::Template> UpdateTemplate(
+      google::cloud::parametermanager::v1::Template const& template_,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a single Template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.UpdateTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.Template])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.Template]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L778}
+  /// [google.cloud.parametermanager.v1.UpdateTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L896}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::Template> UpdateTemplate(
+      google::cloud::parametermanager::v1::UpdateTemplateRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single Template.
+  ///
+  /// @param name  Required. Name of the resource in the format
+  ///  `projects/*/locations/*/templates/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.DeleteTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L929}
+  ///
+  // clang-format on
+  Status DeleteTemplate(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single Template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.DeleteTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.DeleteTemplateRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L929}
+  ///
+  // clang-format on
+  Status DeleteTemplate(
+      google::cloud::parametermanager::v1::DeleteTemplateRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists TemplateVersions in a given project, location, and template.
+  ///
+  /// @param parent  Required. Parent value for ListTemplateVersionsRequest in the format
+  ///  `projects/*/locations/*/templates/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.parametermanager.v1.TemplateVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.ListTemplateVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L997}
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+  ListTemplateVersions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists TemplateVersions in a given project, location, and template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.ListTemplateVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.parametermanager.v1.TemplateVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.ListTemplateVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L997}
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+  ListTemplateVersions(
+      google::cloud::parametermanager::v1::ListTemplateVersionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single TemplateVersion.
+  ///
+  /// @param name  Required. Name of the resource in the format
+  ///  `projects/*/locations/*/templates/*/versions/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.TemplateVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.GetTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1039}
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  GetTemplateVersion(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single TemplateVersion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.GetTemplateVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.TemplateVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.GetTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1039}
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  GetTemplateVersion(
+      google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new TemplateVersion in a given project, location, and template.
+  ///
+  /// @param parent  Required. Value for parent in the format
+  ///  `projects/*/locations/*/templates/*`.
+  /// @param template_version  Required. The TemplateVersion resource being created
+  /// @param template_version_id  Required. Id of the TemplateVersion resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.TemplateVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.CreateTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1056}
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  CreateTemplateVersion(
+      std::string const& parent,
+      google::cloud::parametermanager::v1::TemplateVersion const&
+          template_version,
+      std::string const& template_version_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new TemplateVersion in a given project, location, and template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.CreateTemplateVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.TemplateVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.CreateTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1056}
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  CreateTemplateVersion(
+      google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a single TemplateVersion.
+  ///
+  /// @param template_version  Required. The TemplateVersion resource being updated
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  TemplateVersion resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A mutable field will be overwritten if it is in the
+  ///  mask. If the user does not provide a mask then all mutable fields present
+  ///  in the request will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.TemplateVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  /// [google.cloud.parametermanager.v1.UpdateTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1092}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  UpdateTemplateVersion(
+      google::cloud::parametermanager::v1::TemplateVersion const&
+          template_version,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a single TemplateVersion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.UpdateTemplateVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.TemplateVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.TemplateVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L959}
+  /// [google.cloud.parametermanager.v1.UpdateTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1092}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  UpdateTemplateVersion(
+      google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single TemplateVersion.
+  ///
+  /// @param name  Required. Name of the resource in the format
+  ///  `projects/*/locations/*/templates/*/versions/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.DeleteTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1125}
+  ///
+  // clang-format on
+  Status DeleteTemplateVersion(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single TemplateVersion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.DeleteTemplateVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.DeleteTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1125}
+  ///
+  // clang-format on
+  Status DeleteTemplateVersion(
+      google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets rendered version of a TemplateVersion.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.RenderTemplateVersionResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.RenderTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1155}
+  /// [google.cloud.parametermanager.v1.RenderTemplateVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1174}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+  RenderTemplateVersion(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets rendered version of a TemplateVersion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.parametermanager.v1.RenderTemplateVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.parametermanager.v1.RenderTemplateVersionResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.parametermanager.v1.RenderTemplateVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1155}
+  /// [google.cloud.parametermanager.v1.RenderTemplateVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L1174}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+  RenderTemplateVersion(
+      google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
           request,
       Options opts = {});
 

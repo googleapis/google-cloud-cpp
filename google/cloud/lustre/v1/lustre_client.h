@@ -117,8 +117,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L124}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
+  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L314}
   ///
   // clang-format on
   StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
@@ -156,8 +156,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L124}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
+  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L314}
   ///
   // clang-format on
   StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
@@ -183,8 +183,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L165}
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
+  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L355}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
@@ -213,8 +213,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L165}
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
+  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L355}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
@@ -255,8 +255,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L175}
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
+  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L365}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
@@ -310,8 +310,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L175}
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
+  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L365}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
@@ -379,8 +379,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L217}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
+  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L407}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
@@ -432,8 +432,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L217}
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
+  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L407}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
@@ -494,8 +494,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L252}
-  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L280}
+  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L442}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L475}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
@@ -545,8 +545,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L252}
-  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L280}
+  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L442}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L475}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
@@ -583,6 +583,126 @@ class LustreClient {
 
   // clang-format off
   ///
+  /// Reschedules a planned maintenance event for a specific instance.
+  ///
+  /// @param name  Required. Format:
+  ///  projects/{project}/locations/{location}/instances/{instance}
+  /// @param reschedule  Required. The desired reschedule settings.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
+  /// [google.cloud.lustre.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L564}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Instance>> RescheduleMaintenance(
+      std::string const& name,
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest::Reschedule const&
+          reschedule,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RescheduleMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag, std::string const& name,
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest::Reschedule const&
+          reschedule,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Reschedules a planned maintenance event for a specific instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.RescheduleMaintenanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L34}
+  /// [google.cloud.lustre.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L564}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Instance>> RescheduleMaintenance(
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RescheduleMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag,
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RescheduleMaintenance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Instance>> RescheduleMaintenance(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Imports data from Cloud Storage to a Managed Lustre instance.
   ///
   /// @param name  Required. The name of the Managed Lustre instance in the format
@@ -608,7 +728,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L43}
-  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L127}
+  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L139}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
@@ -660,7 +780,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L43}
-  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L127}
+  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L139}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
@@ -724,8 +844,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L83}
-  /// [google.cloud.lustre.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L124}
+  /// [google.cloud.lustre.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L89}
+  /// [google.cloud.lustre.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L136}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
@@ -758,6 +878,866 @@ class LustreClient {
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
       google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new mirror in a given instance.
+  ///
+  /// @param parent  Required. Parent instance resource where the mirror will be created, in the
+  ///  format: `projects/{project}/locations/{location}/instances/{instance}`
+  /// @param mirror  Required. The mirror to create.
+  /// @param mirror_id  Required. The ID to use for the mirror.
+  ///  @n
+  ///  * Must contain only lowercase letters, numbers, and hyphens.
+  ///  * Must start with a letter.
+  ///  * Must be between 1-63 characters.
+  ///  * Must end with a number or a letter.
+  ///  @n
+  ///  The ID cannot be changed after the mirror is created.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.Mirror] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.CreateMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L128}
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> CreateMirror(
+      std::string const& parent,
+      google::cloud::lustre::v1::Mirror const& mirror,
+      std::string const& mirror_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMirror
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateMirror(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::lustre::v1::Mirror const& mirror,
+      std::string const& mirror_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new mirror in a given instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.CreateMirrorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.Mirror] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.CreateMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L128}
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> CreateMirror(
+      google::cloud::lustre::v1::CreateMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMirror
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateMirror(
+      NoAwaitTag, google::cloud::lustre::v1::CreateMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMirror
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> CreateMirror(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single mirror.
+  ///
+  /// @param mirror  Required. Mirror to update. The mirror's `name` field is used to identify
+  ///  the mirror to update, in the format:
+  ///  `projects/{project}/locations/{location}/instances/{instance}/mirrors/{mirror}`
+  /// @param update_mask  Optional. Fields specified in the update_mask are relative to the resource,
+  ///  not the full request. A field will be overwritten if it is in the mask. If
+  ///  no mask is provided then all fields present in the request are overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.Mirror] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  /// [google.cloud.lustre.v1.UpdateMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L173}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> UpdateMirror(
+      google::cloud::lustre::v1::Mirror const& mirror,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMirror
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateMirror(
+      NoAwaitTag, google::cloud::lustre::v1::Mirror const& mirror,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single mirror.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.UpdateMirrorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.Mirror] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  /// [google.cloud.lustre.v1.UpdateMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L173}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> UpdateMirror(
+      google::cloud::lustre::v1::UpdateMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMirror
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateMirror(
+      NoAwaitTag, google::cloud::lustre::v1::UpdateMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMirror
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> UpdateMirror(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single mirror.
+  ///
+  /// @param name  Required. Name of the mirror to delete, in the format:
+  ///  `projects/{project}/locations/{location}/instances/{instance}/mirrors/{mirror}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DeleteMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L206}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L475}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteMirror(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteMirror
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteMirror(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single mirror.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.DeleteMirrorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DeleteMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L206}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L475}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteMirror(
+      google::cloud::lustre::v1::DeleteMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteMirror
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteMirror(
+      NoAwaitTag, google::cloud::lustre::v1::DeleteMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteMirror
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteMirror(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single mirror.
+  ///
+  /// @param name  Required. Name of the mirror to retrieve, in the format:
+  ///  `projects/{project}/locations/{location}/instances/{instance}/mirrors/{mirror}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.lustre.v1.Mirror])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.GetMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L235}
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::lustre::v1::Mirror> GetMirror(std::string const& name,
+                                                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single mirror.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.GetMirrorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.lustre.v1.Mirror])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.GetMirrorRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L235}
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::lustre::v1::Mirror> GetMirror(
+      google::cloud::lustre::v1::GetMirrorRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of multiple mirrors under a given instance.
+  ///
+  /// @param parent  Required. Parent instance resource where the mirrors will be listed, in the
+  ///  format: `projects/{project}/locations/{location}/instances/{instance}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.lustre.v1.Mirror], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.ListMirrorsRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L245}
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::lustre::v1::Mirror> ListMirrors(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of multiple mirrors under a given instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.ListMirrorsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.lustre.v1.Mirror], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.ListMirrorsRequest]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L245}
+  /// [google.cloud.lustre.v1.Mirror]: @googleapis_reference_link{google/cloud/lustre/v1/mirror.proto#L32}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::lustre::v1::Mirror> ListMirrors(
+      google::cloud::lustre::v1::ListMirrorsRequest request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a directory policy resource.
+  ///
+  /// @param parent  Required. The parent instance.
+  ///  It must be in the format of
+  ///  `projects/{project}/locations/{location}/instances/{instance}`.
+  /// @param directory_policy  Required. The directory policy to create.
+  /// @param directory_policy_id  Required. The ID for the DirectoryPolicy to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.DirectoryPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.CreateDirectoryPolicyRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L85}
+  /// [google.cloud.lustre.v1.DirectoryPolicy]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L29}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+  CreateDirectoryPolicy(
+      std::string const& parent,
+      google::cloud::lustre::v1::DirectoryPolicy const& directory_policy,
+      std::string const& directory_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDirectoryPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDirectoryPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::lustre::v1::DirectoryPolicy const& directory_policy,
+      std::string const& directory_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a directory policy resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.CreateDirectoryPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.DirectoryPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.CreateDirectoryPolicyRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L85}
+  /// [google.cloud.lustre.v1.DirectoryPolicy]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L29}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+  CreateDirectoryPolicy(
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDirectoryPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDirectoryPolicy(
+      NoAwaitTag,
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDirectoryPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+  CreateDirectoryPolicy(google::longrunning::Operation const& operation,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a directory policy resource.
+  ///
+  /// @param name  Required. The resource name of the directory policy.
+  ///  DirectoryPolicy names have the form
+  ///  `projects/{project}/locations/{location}/instances/{instance}/directoryPolicies/{id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DeleteDirectoryPolicyRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L104}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L475}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteDirectoryPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDirectoryPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDirectoryPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a directory policy resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.DeleteDirectoryPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.lustre.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DeleteDirectoryPolicyRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L104}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L475}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteDirectoryPolicy(
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDirectoryPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDirectoryPolicy(
+      NoAwaitTag,
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDirectoryPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteDirectoryPolicy(google::longrunning::Operation const& operation,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single directory policy.
+  ///
+  /// @param name  Required. The resource name of the directory policy.
+  ///  DirectoryPolicy names have the form
+  ///  `projects/{project}/locations/{location}/instances/{instance}/directoryPolicies/{id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.lustre.v1.DirectoryPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DirectoryPolicy]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L29}
+  /// [google.cloud.lustre.v1.GetDirectoryPolicyRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L117}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::lustre::v1::DirectoryPolicy> GetDirectoryPolicy(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single directory policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.GetDirectoryPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.lustre.v1.DirectoryPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DirectoryPolicy]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L29}
+  /// [google.cloud.lustre.v1.GetDirectoryPolicyRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L117}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::lustre::v1::DirectoryPolicy> GetDirectoryPolicy(
+      google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of multiple directory policies under a given instance.
+  ///
+  /// @param parent  Required. The parent instance.
+  ///  It must be in the format of
+  ///  `projects/{project}/locations/{location}/instances/{instance}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.lustre.v1.DirectoryPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DirectoryPolicy]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L29}
+  /// [google.cloud.lustre.v1.ListDirectoryPoliciesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L130}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::lustre::v1::DirectoryPolicy> ListDirectoryPolicies(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of multiple directory policies under a given instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.lustre.v1.ListDirectoryPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.lustre.v1.DirectoryPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.lustre.v1.DirectoryPolicy]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L29}
+  /// [google.cloud.lustre.v1.ListDirectoryPoliciesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/directory_policy.proto#L130}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::lustre::v1::DirectoryPolicy> ListDirectoryPolicies(
+      google::cloud::lustre::v1::ListDirectoryPoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -827,6 +1807,108 @@ class LustreClient {
   // clang-format on
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource. Replaces any
+  /// existing policy.
+  ///
+  /// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource.
+  /// Returns an empty policy if the resource exists and does not have a policy
+  /// set.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// If the resource does not exist, this will return an empty set of
+  /// permissions, not a `NOT_FOUND` error.
+  ///
+  /// Note: This operation is designed to be used for building permission-aware
+  /// UIs and command-line tools, not for authorization checking. This operation
+  /// may "fail open" without warning.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
   // clang-format off

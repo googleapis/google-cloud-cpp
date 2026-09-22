@@ -182,6 +182,148 @@ Status ParameterManagerTracingStub::DeleteParameterVersion(
       child_->DeleteParameterVersion(context, options, request));
 }
 
+StatusOr<google::cloud::parametermanager::v1::ListTemplatesResponse>
+ParameterManagerTracingStub::ListTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplatesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "ListTemplates");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListTemplates(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerTracingStub::GetTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "GetTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerTracingStub::CreateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "CreateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerTracingStub::UpdateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "UpdateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTemplate(context, options, request));
+}
+
+Status ParameterManagerTracingStub::DeleteTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "DeleteTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::ListTemplateVersionsResponse>
+ParameterManagerTracingStub::ListTemplateVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "ListTemplateVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListTemplateVersions(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerTracingStub::GetTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "GetTemplateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetTemplateVersion(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerTracingStub::CreateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "CreateTemplateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateTemplateVersion(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerTracingStub::UpdateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "UpdateTemplateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateTemplateVersion(context, options, request));
+}
+
+Status ParameterManagerTracingStub::DeleteTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "DeleteTemplateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteTemplateVersion(context, options, request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerTracingStub::RenderTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "RenderTemplateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RenderTemplateVersion(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParameterManagerTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -23,6 +23,7 @@
 #include "google/cloud/lustre/v1/lustre.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
@@ -53,17 +54,56 @@ class LustreConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteInstance(
       google::cloud::lustre::v1::DeleteInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency RescheduleMaintenance(
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request);
+
   virtual google::cloud::Idempotency ImportData(
       google::cloud::lustre::v1::ImportDataRequest const& request);
 
   virtual google::cloud::Idempotency ExportData(
       google::cloud::lustre::v1::ExportDataRequest const& request);
 
+  virtual google::cloud::Idempotency CreateMirror(
+      google::cloud::lustre::v1::CreateMirrorRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateMirror(
+      google::cloud::lustre::v1::UpdateMirrorRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteMirror(
+      google::cloud::lustre::v1::DeleteMirrorRequest const& request);
+
+  virtual google::cloud::Idempotency GetMirror(
+      google::cloud::lustre::v1::GetMirrorRequest const& request);
+
+  virtual google::cloud::Idempotency ListMirrors(
+      google::cloud::lustre::v1::ListMirrorsRequest request);
+
+  virtual google::cloud::Idempotency CreateDirectoryPolicy(
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteDirectoryPolicy(
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetDirectoryPolicy(
+      google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency ListDirectoryPolicies(
+      google::cloud::lustre::v1::ListDirectoryPoliciesRequest request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual google::cloud::Idempotency GetLocation(
       google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);

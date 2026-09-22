@@ -734,6 +734,18 @@ SecureSourceManagerTracingConnection::FetchBlob(
   return internal::EndSpan(*span, child_->FetchBlob(request));
 }
 
+StreamRange<google::cloud::securesourcemanager::v1::Ref>
+SecureSourceManagerTracingConnection::FetchRefs(
+    google::cloud::securesourcemanager::v1::FetchRefsRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::FetchRefs");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchRefs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::Ref>(std::move(span),
+                                                   std::move(sr));
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
 SecureSourceManagerTracingConnection::CreateIssue(
     google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {

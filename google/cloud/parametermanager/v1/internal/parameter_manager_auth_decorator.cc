@@ -140,6 +140,109 @@ Status ParameterManagerAuth::DeleteParameterVersion(
   return child_->DeleteParameterVersion(context, options, request);
 }
 
+StatusOr<google::cloud::parametermanager::v1::ListTemplatesResponse>
+ParameterManagerAuth::ListTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplatesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListTemplates(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerAuth::GetTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerAuth::CreateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerAuth::UpdateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTemplate(context, options, request);
+}
+
+Status ParameterManagerAuth::DeleteTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::ListTemplateVersionsResponse>
+ParameterManagerAuth::ListTemplateVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListTemplateVersions(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerAuth::GetTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTemplateVersion(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerAuth::CreateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTemplateVersion(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerAuth::UpdateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTemplateVersion(context, options, request);
+}
+
+Status ParameterManagerAuth::DeleteTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTemplateVersion(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerAuth::RenderTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RenderTemplateVersion(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParameterManagerAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

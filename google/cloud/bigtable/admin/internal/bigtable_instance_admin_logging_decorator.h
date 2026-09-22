@@ -130,6 +130,28 @@ class BigtableInstanceAdminLogging : public BigtableInstanceAdminStub {
                        google::bigtable::admin::v2::DeleteClusterRequest const&
                            request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMemoryLayer(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMemoryLayer(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::ListMemoryLayersResponse>
+  ListMemoryLayers(grpc::ClientContext& context, Options const& options,
+                   google::bigtable::admin::v2::ListMemoryLayersRequest const&
+                       request) override;
+
+  StatusOr<google::bigtable::admin::v2::MemoryLayer> GetMemoryLayer(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetMemoryLayerRequest const& request)
+      override;
+
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::CreateAppProfileRequest const& request)

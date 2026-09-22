@@ -378,6 +378,37 @@ DlpServiceConnection::UpdateConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnection::CreateContentPolicy(
+    google::privacy::dlp::v2::CreateContentPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnection::UpdateContentPolicy(
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnection::GetContentPolicy(
+    google::privacy::dlp::v2::GetContentPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnection::ListContentPolicies(
+    google::privacy::dlp::v2::
+        ListContentPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::ContentPolicy>>();
+}
+
+Status DlpServiceConnection::DeleteContentPolicy(
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

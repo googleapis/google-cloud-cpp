@@ -80,6 +80,18 @@ class LustreAuth : public LustreStub {
       grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -100,6 +112,79 @@ class LustreAuth : public LustreStub {
       grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::ExportDataRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMirror(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::lustre::v1::CreateMirrorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateMirror(
+      grpc::ClientContext& context, Options options,
+      google::cloud::lustre::v1::CreateMirrorRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMirror(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::lustre::v1::UpdateMirrorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateMirror(
+      grpc::ClientContext& context, Options options,
+      google::cloud::lustre::v1::UpdateMirrorRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteMirror(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::lustre::v1::DeleteMirrorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteMirror(
+      grpc::ClientContext& context, Options options,
+      google::cloud::lustre::v1::DeleteMirrorRequest const& request) override;
+
+  StatusOr<google::cloud::lustre::v1::Mirror> GetMirror(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::lustre::v1::GetMirrorRequest const& request) override;
+
+  StatusOr<google::cloud::lustre::v1::ListMirrorsResponse> ListMirrors(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::lustre::v1::ListMirrorsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDirectoryPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDirectoryPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDirectoryPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDirectoryPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::lustre::v1::DirectoryPolicy> GetDirectoryPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::lustre::v1::ListDirectoryPoliciesResponse>
+  ListDirectoryPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -107,6 +192,18 @@ class LustreAuth : public LustreStub {
   StatusOr<google::cloud::location::Location> GetLocation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,

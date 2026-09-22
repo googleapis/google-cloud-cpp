@@ -48,6 +48,32 @@ class MockAuditManagerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::auditmanager::v1::AuditSchedule>,
+      CreateAuditSchedule,
+      (google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::auditmanager::v1::AuditSchedule>,
+      UpdateAuditSchedule,
+      (google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::auditmanager::v1::AuditSchedule>,
+      GetAuditSchedule,
+      (google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::auditmanager::v1::AuditSchedule>),
+      ListAuditSchedules,
+      (google::cloud::auditmanager::v1::ListAuditSchedulesRequest request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::auditmanager::v1::Enrollment>, EnrollResource,
       (google::cloud::auditmanager::v1::EnrollResourceRequest const& request),
       (override));

@@ -73,6 +73,18 @@ class LustreTracingConnection : public lustre_v1::LustreConnection {
   future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::lustre::v1::Instance>> RescheduleMaintenance(
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag,
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::lustre::v1::Instance>> RescheduleMaintenance(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
       google::cloud::lustre::v1::ImportDataRequest const& request) override;
 
@@ -93,11 +105,91 @@ class LustreTracingConnection : public lustre_v1::LustreConnection {
   future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> CreateMirror(
+      google::cloud::lustre::v1::CreateMirrorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateMirror(
+      NoAwaitTag,
+      google::cloud::lustre::v1::CreateMirrorRequest const& request) override;
+
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> CreateMirror(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> UpdateMirror(
+      google::cloud::lustre::v1::UpdateMirrorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateMirror(
+      NoAwaitTag,
+      google::cloud::lustre::v1::UpdateMirrorRequest const& request) override;
+
+  future<StatusOr<google::cloud::lustre::v1::Mirror>> UpdateMirror(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteMirror(
+      google::cloud::lustre::v1::DeleteMirrorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteMirror(
+      NoAwaitTag,
+      google::cloud::lustre::v1::DeleteMirrorRequest const& request) override;
+
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteMirror(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::lustre::v1::Mirror> GetMirror(
+      google::cloud::lustre::v1::GetMirrorRequest const& request) override;
+
+  StreamRange<google::cloud::lustre::v1::Mirror> ListMirrors(
+      google::cloud::lustre::v1::ListMirrorsRequest request) override;
+
+  future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+  CreateDirectoryPolicy(
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDirectoryPolicy(
+      NoAwaitTag,
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+  CreateDirectoryPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteDirectoryPolicy(
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDirectoryPolicy(
+      NoAwaitTag,
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteDirectoryPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::lustre::v1::DirectoryPolicy> GetDirectoryPolicy(
+      google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request)
+      override;
+
+  StreamRange<google::cloud::lustre::v1::DirectoryPolicy> ListDirectoryPolicies(
+      google::cloud::lustre::v1::ListDirectoryPoliciesRequest request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;

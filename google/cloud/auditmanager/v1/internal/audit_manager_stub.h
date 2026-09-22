@@ -42,6 +42,30 @@ class AuditManagerStub {
  public:
   virtual ~AuditManagerStub() = 0;
 
+  virtual StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+  CreateAuditSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+  UpdateAuditSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+  GetAuditSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::GetAuditScheduleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+  ListAuditSchedules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::ListAuditSchedulesRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
       grpc::ClientContext& context, Options const& options,
       google::cloud::auditmanager::v1::EnrollResourceRequest const&
@@ -146,6 +170,27 @@ class DefaultAuditManagerStub : public AuditManagerStub {
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
+
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> CreateAuditSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> UpdateAuditSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> GetAuditSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request)
+      override;
+
+  StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+  ListAuditSchedules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& request)
+      override;
 
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
       grpc::ClientContext& context, Options const& options,

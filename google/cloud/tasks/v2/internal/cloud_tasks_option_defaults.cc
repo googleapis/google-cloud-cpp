@@ -50,6 +50,16 @@ Options CloudTasksDefaultOptions(Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<tasks_v2::CloudTasksPollingPolicyOption>()) {
+    options.set<tasks_v2::CloudTasksPollingPolicyOption>(
+        GenericPollingPolicy<tasks_v2::CloudTasksRetryPolicyOption::Type,
+                             tasks_v2::CloudTasksBackoffPolicyOption::Type>(
+            options.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()) {
     options.set<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>(
         tasks_v2::MakeDefaultCloudTasksConnectionIdempotencyPolicy());

@@ -330,6 +330,31 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       StatusOr<google::privacy::dlp::v2::Connection>, UpdateConnection,
       (google::privacy::dlp::v2::UpdateConnectionRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::ContentPolicy>, CreateContentPolicy,
+      (google::privacy::dlp::v2::CreateContentPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::ContentPolicy>, UpdateContentPolicy,
+      (google::privacy::dlp::v2::UpdateContentPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::ContentPolicy>, GetContentPolicy,
+      (google::privacy::dlp::v2::GetContentPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::ContentPolicy>),
+              ListContentPolicies,
+              (google::privacy::dlp::v2::ListContentPoliciesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      Status, DeleteContentPolicy,
+      (google::privacy::dlp::v2::DeleteContentPolicyRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

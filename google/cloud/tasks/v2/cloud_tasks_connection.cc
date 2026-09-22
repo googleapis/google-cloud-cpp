@@ -113,13 +113,67 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::CreateTask(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksConnection::BatchCreateTasks(
+    google::cloud::tasks::v2::BatchCreateTasksRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksConnection::BatchCreateTasks(
+    NoAwaitTag, google::cloud::tasks::v2::BatchCreateTasksRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksConnection::BatchCreateTasks(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status CloudTasksConnection::DeleteTask(
     google::cloud::tasks::v2::DeleteTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksConnection::BatchDeleteTasks(
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksConnection::BatchDeleteTasks(
+    NoAwaitTag, google::cloud::tasks::v2::BatchDeleteTasksRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksConnection::BatchDeleteTasks(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::RunTask(
     google::cloud::tasks::v2::RunTaskRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksConnection::UpdateCmekConfig(
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksConnection::GetCmekConfig(
+    google::cloud::tasks::v2::GetCmekConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -133,6 +187,11 @@ CloudTasksConnection::ListLocations(
 
 StatusOr<google::cloud::location::Location> CloudTasksConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

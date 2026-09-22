@@ -93,6 +93,20 @@ Status DataChatServiceLogging::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceLogging::UpdateConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::geminidataanalytics::v1::
+                 UpdateConversationRequest const& request) {
+        return child_->UpdateConversation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceLogging::GetConversation(
     grpc::ClientContext& context, Options const& options,
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&

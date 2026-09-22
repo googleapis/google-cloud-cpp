@@ -48,6 +48,46 @@ AuditManagerMetadata::AuditManagerMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerMetadata::CreateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAuditSchedule(context, options, request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerMetadata::UpdateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("audit_schedule.name=",
+                   internal::UrlEncode(request.audit_schedule().name())));
+  return child_->UpdateAuditSchedule(context, options, request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerMetadata::GetAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAuditSchedule(context, options, request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+AuditManagerMetadata::ListAuditSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAuditSchedules(context, options, request);
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerMetadata::EnrollResource(
     grpc::ClientContext& context, Options const& options,

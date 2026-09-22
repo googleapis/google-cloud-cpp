@@ -240,6 +240,53 @@ Status BigtableInstanceAdminAuth::DeleteCluster(
   return child_->DeleteCluster(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminAuth::AsyncUpdateMemoryLayer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateMemoryLayer(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::UpdateMemoryLayer(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMemoryLayer(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListMemoryLayersResponse>
+BigtableInstanceAdminAuth::ListMemoryLayers(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMemoryLayersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMemoryLayers(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminAuth::GetMemoryLayer(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMemoryLayer(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminAuth::CreateAppProfile(
     grpc::ClientContext& context, Options const& options,

@@ -102,12 +102,101 @@ class MockCloudTasksConnection : public tasks_v2::CloudTasksConnection {
               (google::cloud::tasks::v2::CreateTaskRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateTasks(Matcher<google::cloud::tasks::v2::BatchCreateTasksRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>,
+      BatchCreateTasks,
+      (google::cloud::tasks::v2::BatchCreateTasksRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCreateTasks(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchCreateTasks,
+      (NoAwaitTag,
+       google::cloud::tasks::v2::BatchCreateTasksRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, BatchCreateTasks(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>,
+      BatchCreateTasks, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(Status, DeleteTask,
               (google::cloud::tasks::v2::DeleteTaskRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteTasks(Matcher<google::cloud::tasks::v2::BatchDeleteTasksRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>,
+      BatchDeleteTasks,
+      (google::cloud::tasks::v2::BatchDeleteTasksRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchDeleteTasks(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchDeleteTasks,
+      (NoAwaitTag,
+       google::cloud::tasks::v2::BatchDeleteTasksRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, BatchDeleteTasks(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>,
+      BatchDeleteTasks, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Task>, RunTask,
               (google::cloud::tasks::v2::RunTaskRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::tasks::v2::CmekConfig>, UpdateCmekConfig,
+      (google::cloud::tasks::v2::UpdateCmekConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::CmekConfig>, GetCmekConfig,
+              (google::cloud::tasks::v2::GetCmekConfigRequest const& request),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
@@ -116,6 +205,10 @@ class MockCloudTasksConnection : public tasks_v2::CloudTasksConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
               (google::cloud::location::GetLocationRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
               (override));
 };
 

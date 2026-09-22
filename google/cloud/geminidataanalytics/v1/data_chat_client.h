@@ -112,8 +112,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.ChatRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L151}
-  /// [google.cloud.geminidataanalytics.v1.Message]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L305}
+  /// [google.cloud.geminidataanalytics.v1.ChatRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L160}
+  /// [google.cloud.geminidataanalytics.v1.Message]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L312}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::Message> Chat(
@@ -145,8 +145,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L39}
-  /// [google.cloud.geminidataanalytics.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L101}
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L102}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
@@ -179,8 +179,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L39}
-  /// [google.cloud.geminidataanalytics.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L101}
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L102}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
@@ -207,7 +207,7 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L180}
+  /// [google.cloud.geminidataanalytics.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L206}
   ///
   // clang-format on
   Status DeleteConversation(std::string const& name, Options opts = {});
@@ -233,11 +233,78 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L180}
+  /// [google.cloud.geminidataanalytics.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L206}
   ///
   // clang-format on
   Status DeleteConversation(
       google::cloud::geminidataanalytics::v1::DeleteConversationRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a conversation.
+  ///
+  /// @param conversation  Required. The resource being updated.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  Conversation resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields with non-default values
+  ///  present in the request will be overwritten. If a wildcard mask is provided,
+  ///  all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.geminidataanalytics.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L132}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      google::cloud::geminidataanalytics::v1::Conversation const& conversation,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a conversation.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.geminidataanalytics.v1.UpdateConversationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.geminidataanalytics.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L132}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
           request,
       Options opts = {});
 
@@ -261,8 +328,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L39}
-  /// [google.cloud.geminidataanalytics.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L131}
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L157}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
@@ -291,8 +358,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L39}
-  /// [google.cloud.geminidataanalytics.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L131}
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L157}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
@@ -329,8 +396,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L39}
-  /// [google.cloud.geminidataanalytics.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L144}
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L170}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::Conversation>
@@ -368,8 +435,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L39}
-  /// [google.cloud.geminidataanalytics.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L144}
+  /// [google.cloud.geminidataanalytics.v1.Conversation]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L40}
+  /// [google.cloud.geminidataanalytics.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/conversation.proto#L170}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::Conversation>
@@ -406,8 +473,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.ListMessagesRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L103}
-  /// [google.cloud.geminidataanalytics.v1.StorageMessage]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L142}
+  /// [google.cloud.geminidataanalytics.v1.ListMessagesRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L112}
+  /// [google.cloud.geminidataanalytics.v1.StorageMessage]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L151}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::StorageMessage>
@@ -445,8 +512,8 @@ class DataChatServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.ListMessagesRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L103}
-  /// [google.cloud.geminidataanalytics.v1.StorageMessage]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L142}
+  /// [google.cloud.geminidataanalytics.v1.ListMessagesRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L112}
+  /// [google.cloud.geminidataanalytics.v1.StorageMessage]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_chat_service.proto#L151}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::StorageMessage>

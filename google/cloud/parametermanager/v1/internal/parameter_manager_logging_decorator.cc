@@ -189,6 +189,154 @@ Status ParameterManagerLogging::DeleteParameterVersion(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::parametermanager::v1::ListTemplatesResponse>
+ParameterManagerLogging::ListTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplatesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::ListTemplatesRequest const&
+                 request) {
+        return child_->ListTemplates(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerLogging::GetTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::GetTemplateRequest const&
+                 request) {
+        return child_->GetTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerLogging::CreateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::CreateTemplateRequest const&
+                 request) {
+        return child_->CreateTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerLogging::UpdateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::UpdateTemplateRequest const&
+                 request) {
+        return child_->UpdateTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status ParameterManagerLogging::DeleteTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::DeleteTemplateRequest const&
+                 request) {
+        return child_->DeleteTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::ListTemplateVersionsResponse>
+ParameterManagerLogging::ListTemplateVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 ListTemplateVersionsRequest const& request) {
+        return child_->ListTemplateVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerLogging::GetTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+              request) {
+        return child_->GetTemplateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerLogging::CreateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 CreateTemplateVersionRequest const& request) {
+        return child_->CreateTemplateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerLogging::UpdateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 UpdateTemplateVersionRequest const& request) {
+        return child_->UpdateTemplateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status ParameterManagerLogging::DeleteTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 DeleteTemplateVersionRequest const& request) {
+        return child_->DeleteTemplateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerLogging::RenderTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 RenderTemplateVersionRequest const& request) {
+        return child_->RenderTemplateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParameterManagerLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

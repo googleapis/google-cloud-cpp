@@ -95,13 +95,46 @@ class CloudTasksTracingStub : public CloudTasksStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateTasks(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request)
+      override;
+
   Status DeleteTask(
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteTasks(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request)
+      override;
+
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -110,6 +143,22 @@ class CloudTasksTracingStub : public CloudTasksStub {
   StatusOr<google::cloud::location::Location> GetLocation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<CloudTasksStub> child_;

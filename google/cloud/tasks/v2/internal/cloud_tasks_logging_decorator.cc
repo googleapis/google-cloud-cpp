@@ -195,6 +195,35 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksLogging::CreateTask(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksLogging::AsyncBatchCreateTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+        return child_->AsyncBatchCreateTasks(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksLogging::BatchCreateTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+        return child_->BatchCreateTasks(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status CloudTasksLogging::DeleteTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
@@ -206,6 +235,35 @@ Status CloudTasksLogging::DeleteTask(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksLogging::AsyncBatchDeleteTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+        return child_->AsyncBatchDeleteTasks(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksLogging::BatchDeleteTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+        return child_->BatchDeleteTasks(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksLogging::RunTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
@@ -213,6 +271,29 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksLogging::RunTask(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tasks::v2::RunTaskRequest const& request) {
         return child_->RunTask(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksLogging::UpdateCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+        return child_->UpdateCmekConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig> CloudTasksLogging::GetCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+        return child_->GetCmekConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -238,6 +319,52 @@ StatusOr<google::cloud::location::Location> CloudTasksLogging::GetLocation(
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksLogging::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+future<Status> CloudTasksLogging::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

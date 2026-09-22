@@ -34,6 +34,44 @@ AuditManagerAuth::AuditManagerAuth(
     std::shared_ptr<AuditManagerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerAuth::CreateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAuditSchedule(context, options, request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerAuth::UpdateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAuditSchedule(context, options, request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerAuth::GetAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAuditSchedule(context, options, request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+AuditManagerAuth::ListAuditSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAuditSchedules(context, options, request);
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerAuth::EnrollResource(
     grpc::ClientContext& context, Options const& options,

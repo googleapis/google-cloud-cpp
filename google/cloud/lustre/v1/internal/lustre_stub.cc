@@ -145,6 +145,37 @@ StatusOr<google::longrunning::Operation> DefaultLustreStub::DeleteInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultLustreStub::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::lustre::v1::RescheduleMaintenanceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::lustre::v1::RescheduleMaintenanceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRescheduleMaintenance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLustreStub::RescheduleMaintenance(
+    grpc::ClientContext& context, Options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RescheduleMaintenance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultLustreStub::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -202,6 +233,202 @@ StatusOr<google::longrunning::Operation> DefaultLustreStub::ExportData(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultLustreStub::AsyncCreateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::lustre::v1::CreateMirrorRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::lustre::v1::CreateMirrorRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateMirror(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultLustreStub::CreateMirror(
+    grpc::ClientContext& context, Options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMirror(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLustreStub::AsyncUpdateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::lustre::v1::UpdateMirrorRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::lustre::v1::UpdateMirrorRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateMirror(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultLustreStub::UpdateMirror(
+    grpc::ClientContext& context, Options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMirror(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLustreStub::AsyncDeleteMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::lustre::v1::DeleteMirrorRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::lustre::v1::DeleteMirrorRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteMirror(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultLustreStub::DeleteMirror(
+    grpc::ClientContext& context, Options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMirror(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> DefaultLustreStub::GetMirror(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  google::cloud::lustre::v1::Mirror response;
+  auto status = grpc_stub_->GetMirror(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::lustre::v1::ListMirrorsResponse>
+DefaultLustreStub::ListMirrors(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+  google::cloud::lustre::v1::ListMirrorsResponse response;
+  auto status = grpc_stub_->ListMirrors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLustreStub::AsyncCreateDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::lustre::v1::CreateDirectoryPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDirectoryPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLustreStub::CreateDirectoryPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDirectoryPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLustreStub::AsyncDeleteDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::lustre::v1::DeleteDirectoryPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDirectoryPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLustreStub::DeleteDirectoryPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDirectoryPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+DefaultLustreStub::GetDirectoryPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  google::cloud::lustre::v1::DirectoryPolicy response;
+  auto status = grpc_stub_->GetDirectoryPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::lustre::v1::ListDirectoryPoliciesResponse>
+DefaultLustreStub::ListDirectoryPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& request) {
+  google::cloud::lustre::v1::ListDirectoryPoliciesResponse response;
+  auto status = grpc_stub_->ListDirectoryPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultLustreStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -219,6 +446,41 @@ StatusOr<google::cloud::location::Location> DefaultLustreStub::GetLocation(
     google::cloud::location::GetLocationRequest const& request) {
   google::cloud::location::Location response;
   auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultLustreStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultLustreStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultLustreStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

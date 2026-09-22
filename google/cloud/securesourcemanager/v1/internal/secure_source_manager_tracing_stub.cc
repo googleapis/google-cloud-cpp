@@ -728,6 +728,18 @@ SecureSourceManagerTracingStub::FetchBlob(
                            child_->FetchBlob(context, options, request));
 }
 
+StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse>
+SecureSourceManagerTracingStub::FetchRefs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchRefsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager", "FetchRefs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchRefs(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerTracingStub::AsyncCreateIssue(
     google::cloud::CompletionQueue& cq,

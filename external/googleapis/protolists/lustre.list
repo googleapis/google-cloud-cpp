@@ -1,3 +1,5 @@
+@googleapis//google/cloud/lustre/v1:directory_policy.proto
 @googleapis//google/cloud/lustre/v1:instance.proto
 @googleapis//google/cloud/lustre/v1:lustre.proto
+@googleapis//google/cloud/lustre/v1:mirror.proto
 @googleapis//google/cloud/lustre/v1:transfer.proto

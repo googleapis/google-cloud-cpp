@@ -58,6 +58,12 @@ class DataChatServiceTracingStub : public DataChatServiceStub {
           request) override;
 
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+          request) override;
+
+  StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
   GetConversation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::geminidataanalytics::v1::GetConversationRequest const&

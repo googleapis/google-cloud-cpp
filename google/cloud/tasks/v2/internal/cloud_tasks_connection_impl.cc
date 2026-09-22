@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -45,6 +46,10 @@ std::unique_ptr<tasks_v2::CloudTasksConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
   return options.get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()
       ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<tasks_v2::CloudTasksPollingPolicyOption>()->clone();
 }
 
 }  // namespace
@@ -277,6 +282,97 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::CreateTask(
       *current, request, __func__);
 }
 
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksConnectionImpl::BatchCreateTasks(
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchCreateTasks(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::tasks::v2::BatchCreateTasksResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+        return stub->AsyncBatchCreateTasks(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::tasks::v2::BatchCreateTasksResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudTasksConnectionImpl::BatchCreateTasks(
+    NoAwaitTag,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchCreateTasks(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+        return stub_->BatchCreateTasks(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksConnectionImpl::BatchCreateTasks(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::tasks::v2::BatchCreateTasksMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchCreateTasks",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::tasks::v2::BatchCreateTasksResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::tasks::v2::BatchCreateTasksResponse>,
+      polling_policy(*current), __func__);
+}
+
 Status CloudTasksConnectionImpl::DeleteTask(
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -290,6 +386,97 @@ Status CloudTasksConnectionImpl::DeleteTask(
       *current, request, __func__);
 }
 
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksConnectionImpl::BatchDeleteTasks(
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchDeleteTasks(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::tasks::v2::BatchDeleteTasksMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+        return stub->AsyncBatchDeleteTasks(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::tasks::v2::BatchDeleteTasksMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudTasksConnectionImpl::BatchDeleteTasks(
+    NoAwaitTag,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchDeleteTasks(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+        return stub_->BatchDeleteTasks(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksConnectionImpl::BatchDeleteTasks(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::tasks::v2::BatchDeleteTasksMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchDeleteTasks",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::tasks::v2::BatchDeleteTasksMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::tasks::v2::BatchDeleteTasksMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::RunTask(
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -299,6 +486,34 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::RunTask(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tasks::v2::RunTaskRequest const& request) {
         return stub_->RunTask(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksConnectionImpl::UpdateCmekConfig(
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCmekConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+        return stub_->UpdateCmekConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksConnectionImpl::GetCmekConfig(
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCmekConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+        return stub_->GetCmekConfig(context, options, request);
       },
       *current, request, __func__);
 }
@@ -347,6 +562,19 @@ CloudTasksConnectionImpl::GetLocation(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return stub_->GetLocation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetOperation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub_->GetOperation(context, options, request);
       },
       *current, request, __func__);
 }

@@ -20,6 +20,7 @@
 #include "google/cloud/tasks/v2/cloudtasks.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -190,6 +191,36 @@ StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::CreateTask(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudTasksStub::AsyncBatchCreateTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::tasks::v2::BatchCreateTasksRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::tasks::v2::BatchCreateTasksRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchCreateTasks(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudTasksStub::BatchCreateTasks(
+    grpc::ClientContext& context, Options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchCreateTasks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultCloudTasksStub::DeleteTask(
     grpc::ClientContext& context, Options const&,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
@@ -201,11 +232,65 @@ Status DefaultCloudTasksStub::DeleteTask(
   return google::cloud::Status();
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudTasksStub::AsyncBatchDeleteTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::tasks::v2::BatchDeleteTasksRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::tasks::v2::BatchDeleteTasksRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchDeleteTasks(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudTasksStub::BatchDeleteTasks(
+    grpc::ClientContext& context, Options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchDeleteTasks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::RunTask(
     grpc::ClientContext& context, Options const&,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   google::cloud::tasks::v2::Task response;
   auto status = grpc_stub_->RunTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+DefaultCloudTasksStub::UpdateCmekConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+  google::cloud::tasks::v2::CmekConfig response;
+  auto status = grpc_stub_->UpdateCmekConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+DefaultCloudTasksStub::GetCmekConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+  google::cloud::tasks::v2::CmekConfig response;
+  auto status = grpc_stub_->GetCmekConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -233,6 +318,56 @@ StatusOr<google::cloud::location::Location> DefaultCloudTasksStub::GetLocation(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+StatusOr<google::longrunning::Operation> DefaultCloudTasksStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudTasksStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::longrunning::GetOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncGetOperation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status> DefaultCloudTasksStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::longrunning::CancelOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

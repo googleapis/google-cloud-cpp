@@ -1027,6 +1027,14 @@ SecureSourceManagerClient::FetchBlob(
   return connection_->FetchBlob(request);
 }
 
+StreamRange<google::cloud::securesourcemanager::v1::Ref>
+SecureSourceManagerClient::FetchRefs(
+    google::cloud::securesourcemanager::v1::FetchRefsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchRefs(std::move(request));
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
 SecureSourceManagerClient::CreateIssue(
     std::string const& parent,

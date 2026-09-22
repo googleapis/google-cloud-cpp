@@ -59,6 +59,11 @@ Idempotency LustreConnectionIdempotencyPolicy::DeleteInstance(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LustreConnectionIdempotencyPolicy::RescheduleMaintenance(
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LustreConnectionIdempotencyPolicy::ImportData(
     google::cloud::lustre::v1::ImportDataRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -69,6 +74,51 @@ Idempotency LustreConnectionIdempotencyPolicy::ExportData(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LustreConnectionIdempotencyPolicy::CreateMirror(
+    google::cloud::lustre::v1::CreateMirrorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::UpdateMirror(
+    google::cloud::lustre::v1::UpdateMirrorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::DeleteMirror(
+    google::cloud::lustre::v1::DeleteMirrorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::GetMirror(
+    google::cloud::lustre::v1::GetMirrorRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::ListMirrors(
+    google::cloud::lustre::v1::ListMirrorsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::CreateDirectoryPolicy(
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::DeleteDirectoryPolicy(
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::GetDirectoryPolicy(
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::ListDirectoryPolicies(
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency LustreConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -76,6 +126,22 @@ Idempotency LustreConnectionIdempotencyPolicy::ListLocations(
 
 Idempotency LustreConnectionIdempotencyPolicy::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LustreConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 

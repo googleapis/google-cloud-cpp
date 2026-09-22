@@ -23,6 +23,7 @@
 #include "google/cloud/tasks/v2/cloudtasks.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -79,17 +80,32 @@ class CloudTasksConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request);
 
+  virtual google::cloud::Idempotency BatchCreateTasks(
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request);
+
   virtual google::cloud::Idempotency DeleteTask(
       google::cloud::tasks::v2::DeleteTaskRequest const& request);
 
+  virtual google::cloud::Idempotency BatchDeleteTasks(
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request);
+
   virtual google::cloud::Idempotency RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateCmekConfig(
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request);
+
+  virtual google::cloud::Idempotency GetCmekConfig(
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual google::cloud::Idempotency GetLocation(
       google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
