@@ -23,11 +23,15 @@
 #include "google/cloud/tasks/v2/cloudtasks.pb.h"
 #include "google/cloud/tasks/v2/internal/cloud_tasks_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -225,17 +229,48 @@ class CloudTasksConnection {
   virtual StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request);
 
+  virtual future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(google::longrunning::Operation const& operation);
+
   virtual Status DeleteTask(
       google::cloud::tasks::v2::DeleteTaskRequest const& request);
 
+  virtual future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request);
+
+  virtual StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

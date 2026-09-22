@@ -23,10 +23,12 @@
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -117,8 +119,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L317}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L389}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
@@ -158,8 +160,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L317}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L389}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
@@ -184,8 +186,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L380}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L452}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name,
@@ -214,8 +216,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L380}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L452}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
@@ -261,9 +263,9 @@ class CloudTasksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.location.Locations.ListLocations]: @googleapis_reference_link{google/cloud/location/locations.proto#L37}
-  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L393}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L95}
+  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L465}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L96}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
@@ -304,8 +306,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L393}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L465}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
@@ -353,9 +355,9 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L95}
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L96}
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L488}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
@@ -399,8 +401,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L488}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
@@ -413,8 +415,15 @@ class CloudTasksClient {
   ///
   /// This command will delete the queue even if it has tasks in it.
   ///
-  /// Note: If you delete a queue, a queue with the same name can't be created
-  /// for 7 days.
+  /// Note: If you delete a queue, you may be prevented from creating a new queue
+  /// with the same name as the deleted queue for a tombstone window of up to
+  /// 3 days. During this window, the CreateQueue operation may appear to
+  /// recreate the queue, but this can be misleading. If you attempt to create
+  /// a queue with the same name as one that is in the tombstone window, run
+  /// GetQueue to confirm that the queue creation was successful. If GetQueue
+  /// returns 200 response code, your queue was successfully created with the
+  /// name of the previously deleted queue. Otherwise, your queue did not
+  /// successfully recreate.
   ///
   /// WARNING: Using this method may have unintended side effects if you are
   /// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
@@ -436,7 +445,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L434}
+  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L506}
   ///
   // clang-format on
   Status DeleteQueue(std::string const& name, Options opts = {});
@@ -447,8 +456,15 @@ class CloudTasksClient {
   ///
   /// This command will delete the queue even if it has tasks in it.
   ///
-  /// Note: If you delete a queue, a queue with the same name can't be created
-  /// for 7 days.
+  /// Note: If you delete a queue, you may be prevented from creating a new queue
+  /// with the same name as the deleted queue for a tombstone window of up to
+  /// 3 days. During this window, the CreateQueue operation may appear to
+  /// recreate the queue, but this can be misleading. If you attempt to create
+  /// a queue with the same name as one that is in the tombstone window, run
+  /// GetQueue to confirm that the queue creation was successful. If GetQueue
+  /// returns 200 response code, your queue was successfully created with the
+  /// name of the previously deleted queue. Otherwise, your queue did not
+  /// successfully recreate.
   ///
   /// WARNING: Using this method may have unintended side effects if you are
   /// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
@@ -474,7 +490,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L434}
+  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L506}
   ///
   // clang-format on
   Status DeleteQueue(
@@ -505,8 +521,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L447}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L519}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(std::string const& name,
@@ -540,8 +556,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L447}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L519}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
@@ -574,11 +590,11 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L168}
-  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L460}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
+  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L180}
+  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L532}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L164}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
@@ -614,11 +630,11 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L168}
-  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L460}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
+  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L180}
+  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L532}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L164}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
@@ -657,12 +673,12 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L72}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
-  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L51}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L473}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L73}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
+  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L52}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L164}
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L545}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(std::string const& name,
@@ -704,12 +720,12 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
-  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L72}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
-  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L51}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L473}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L73}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
+  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L52}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L164}
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L545}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
@@ -743,7 +759,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
@@ -782,7 +798,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
@@ -823,7 +839,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
@@ -889,7 +905,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
@@ -927,7 +943,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
@@ -966,7 +982,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
@@ -1011,10 +1027,10 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L486}
-  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L508}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
-  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L57}
+  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L558}
+  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L580}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L59}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
@@ -1060,10 +1076,10 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L486}
-  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L508}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
-  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L57}
+  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L558}
+  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L580}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L59}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
@@ -1072,6 +1088,10 @@ class CloudTasksClient {
   // clang-format off
   ///
   /// Gets a task.
+  ///
+  /// After a task is successfully executed or has exhausted its retry attempts,
+  /// the task is deleted. A `GetTask` request for a deleted task returns a
+  /// `NOT_FOUND` error.
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
@@ -1088,8 +1108,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L550}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L622}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name,
@@ -1098,6 +1118,10 @@ class CloudTasksClient {
   // clang-format off
   ///
   /// Gets a task.
+  ///
+  /// After a task is successfully executed or has exhausted its retry attempts,
+  /// the task is deleted. A `GetTask` request for a deleted task returns a
+  /// `NOT_FOUND` error.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1118,8 +1142,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L550}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L622}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
@@ -1154,8 +1178,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L575}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L647}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
@@ -1189,13 +1213,148 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L575}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L647}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a batch of tasks and adds them to a queue.
+  ///
+  /// All tasks must be for the same queue.
+  /// A maximum of 100 tasks can be created in a single batch.
+  ///
+  /// @param parent  Required. The queue name. For example:
+  ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  ///  @n
+  ///  The queue must already exist.
+  /// @param requests  Required. The list of requests to create tasks.
+  ///  The queue specified in parent field of each CreateTaskRequest will be
+  ///  the same. This validation happens on the client side as well as in the
+  ///  handler.
+  ///  BatchCreateTasksRequest.parent will also be the same value as the
+  ///  individual CreateTaskRequest.parent.
+  ///  The maximum number of requests is 100.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tasks.v2.BatchCreateTasksResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.BatchCreateTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L709}
+  /// [google.cloud.tasks.v2.BatchCreateTasksResponse]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L883}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(
+      std::string const& parent,
+      std::vector<google::cloud::tasks::v2::CreateTaskRequest> const& requests,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateTasks
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      NoAwaitTag, std::string const& parent,
+      std::vector<google::cloud::tasks::v2::CreateTaskRequest> const& requests,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a batch of tasks and adds them to a queue.
+  ///
+  /// All tasks must be for the same queue.
+  /// A maximum of 100 tasks can be created in a single batch.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tasks.v2.BatchCreateTasksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tasks.v2.BatchCreateTasksResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.BatchCreateTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L709}
+  /// [google.cloud.tasks.v2.BatchCreateTasksResponse]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L883}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateTasks
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateTasks
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1218,7 +1377,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L639}
+  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L742}
   ///
   // clang-format on
   Status DeleteTask(std::string const& name, Options opts = {});
@@ -1248,11 +1407,141 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L639}
+  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L742}
   ///
   // clang-format on
   Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request,
                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a batch of tasks.
+  /// This is a non-atomic operation: if deletion fails for some tasks, it
+  /// can still succeed for others. The metadata field of
+  /// google.longrunning.Operation contains details of failed deletions.
+  /// A maximum of 1000 tasks can be deleted in a batch.
+  ///
+  /// @param parent  Required. The queue name. For example:
+  ///  Format: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param names  Required. The names of the tasks to delete.
+  ///  A maximum of 1000 tasks can be deleted in a batch.
+  ///  For example:
+  ///  Format:
+  ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tasks.v2.BatchDeleteTasksMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.BatchDeleteTasksMetadata]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L787}
+  /// [google.cloud.tasks.v2.BatchDeleteTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L753}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(std::string const& parent,
+                   std::vector<std::string> const& names, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchDeleteTasks
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a batch of tasks.
+  /// This is a non-atomic operation: if deletion fails for some tasks, it
+  /// can still succeed for others. The metadata field of
+  /// google.longrunning.Operation contains details of failed deletions.
+  /// A maximum of 1000 tasks can be deleted in a batch.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tasks.v2.BatchDeleteTasksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tasks.v2.BatchDeleteTasksMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.BatchDeleteTasksMetadata]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L787}
+  /// [google.cloud.tasks.v2.BatchDeleteTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L753}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchDeleteTasks
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchDeleteTasks
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1267,10 +1556,6 @@ class CloudTasksClient {
   /// example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can be used to
   /// retry a failed task after a fix has been made or to manually force a task
   /// to be dispatched now.
-  ///
-  /// The dispatched task is returned. That is, the task that is returned
-  /// contains the [status][Task.status] after the task is dispatched but
-  /// before the task is received by its target.
   ///
   /// If Cloud Tasks receives a successful response from the task's
   /// target, then the task will be deleted; otherwise the task's
@@ -1298,13 +1583,13 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L306}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
-  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L190}
-  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L260}
-  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L650}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
-  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L108}
+  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L353}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
+  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L194}
+  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L263}
+  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L836}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L110}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
@@ -1323,10 +1608,6 @@ class CloudTasksClient {
   /// example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can be used to
   /// retry a failed task after a fix has been made or to manually force a task
   /// to be dispatched now.
-  ///
-  /// The dispatched task is returned. That is, the task that is returned
-  /// contains the [status][Task.status] after the task is dispatched but
-  /// before the task is received by its target.
   ///
   /// If Cloud Tasks receives a successful response from the task's
   /// target, then the task will be deleted; otherwise the task's
@@ -1358,17 +1639,148 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L306}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
-  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L190}
-  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L260}
-  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L650}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
-  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L108}
+  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L353}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
+  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L194}
+  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L263}
+  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L836}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L110}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates or Updates a CMEK config.
+  ///
+  /// Updates the Customer Managed Encryption Key associated with the Cloud Tasks
+  /// location (Creates if the key does not already exist). All new tasks created
+  /// in the location will be encrypted at-rest with the KMS-key provided in the
+  /// config.
+  ///
+  /// @param cmek_config  Required. The config to update.  Its name attribute distinguishes it.
+  /// @param update_mask  List of fields to be updated in this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.tasks.v2.CmekConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.CmekConfig]: @googleapis_reference_link{google/cloud/tasks/v2/cmek_config.proto#L33}
+  /// [google.cloud.tasks.v2.UpdateCmekConfigRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L861}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      google::cloud::tasks::v2::CmekConfig const& cmek_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates or Updates a CMEK config.
+  ///
+  /// Updates the Customer Managed Encryption Key associated with the Cloud Tasks
+  /// location (Creates if the key does not already exist). All new tasks created
+  /// in the location will be encrypted at-rest with the KMS-key provided in the
+  /// config.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tasks.v2.UpdateCmekConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.tasks.v2.CmekConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.CmekConfig]: @googleapis_reference_link{google/cloud/tasks/v2/cmek_config.proto#L33}
+  /// [google.cloud.tasks.v2.UpdateCmekConfigRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L861}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the CMEK config.
+  ///
+  /// Gets the Customer Managed Encryption Key configured with the Cloud Tasks
+  /// location. By default there is no kms_key configured.
+  ///
+  /// @param name  Required. The config. For example:
+  ///  `projects/PROJECT_ID/locations/LOCATION_ID/CmekConfig`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.tasks.v2.CmekConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.CmekConfig]: @googleapis_reference_link{google/cloud/tasks/v2/cmek_config.proto#L33}
+  /// [google.cloud.tasks.v2.GetCmekConfigRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L871}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the CMEK config.
+  ///
+  /// Gets the Customer Managed Encryption Key configured with the Cloud Tasks
+  /// location. By default there is no kms_key configured.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tasks.v2.GetCmekConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.tasks.v2.CmekConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tasks.v2.CmekConfig]: @googleapis_reference_link{google/cloud/tasks/v2/cmek_config.proto#L33}
+  /// [google.cloud.tasks.v2.GetCmekConfigRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L871}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1439,6 +1851,66 @@ class CloudTasksClient {
   // clang-format on
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the latest state of a long-running operation.  Clients can use this
+  /// method to poll the operation result at intervals as recommended by the API
+  /// service.
+  ///
+  /// @param name  The name of the operation resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.longrunning.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the latest state of a long-running operation.  Clients can use this
+  /// method to poll the operation result at intervals as recommended by the API
+  /// service.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.longrunning.GetOperationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.longrunning.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
       Options opts = {});
 
  private:

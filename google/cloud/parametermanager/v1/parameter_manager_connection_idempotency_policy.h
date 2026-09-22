@@ -80,6 +80,47 @@ class ParameterManagerConnectionIdempotencyPolicy {
       google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListTemplates(
+      google::cloud::parametermanager::v1::ListTemplatesRequest request);
+
+  virtual google::cloud::Idempotency GetTemplate(
+      google::cloud::parametermanager::v1::GetTemplateRequest const& request);
+
+  virtual google::cloud::Idempotency CreateTemplate(
+      google::cloud::parametermanager::v1::CreateTemplateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateTemplate(
+      google::cloud::parametermanager::v1::UpdateTemplateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteTemplate(
+      google::cloud::parametermanager::v1::DeleteTemplateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListTemplateVersions(
+      google::cloud::parametermanager::v1::ListTemplateVersionsRequest request);
+
+  virtual google::cloud::Idempotency GetTemplateVersion(
+      google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateTemplateVersion(
+      google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateTemplateVersion(
+      google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteTemplateVersion(
+      google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RenderTemplateVersion(
+      google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

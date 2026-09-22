@@ -44,6 +44,11 @@ Idempotency DataChatServiceConnectionIdempotencyPolicy::DeleteConversation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataChatServiceConnectionIdempotencyPolicy::UpdateConversation(
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DataChatServiceConnectionIdempotencyPolicy::GetConversation(
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&) {
   return Idempotency::kIdempotent;

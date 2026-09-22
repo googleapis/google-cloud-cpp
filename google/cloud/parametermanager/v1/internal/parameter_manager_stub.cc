@@ -176,6 +176,142 @@ Status DefaultParameterManagerStub::DeleteParameterVersion(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::parametermanager::v1::ListTemplatesResponse>
+DefaultParameterManagerStub::ListTemplates(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::ListTemplatesRequest const& request) {
+  google::cloud::parametermanager::v1::ListTemplatesResponse response;
+  auto status = grpc_stub_->ListTemplates(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+DefaultParameterManagerStub::GetTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request) {
+  google::cloud::parametermanager::v1::Template response;
+  auto status = grpc_stub_->GetTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+DefaultParameterManagerStub::CreateTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request) {
+  google::cloud::parametermanager::v1::Template response;
+  auto status = grpc_stub_->CreateTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+DefaultParameterManagerStub::UpdateTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request) {
+  google::cloud::parametermanager::v1::Template response;
+  auto status = grpc_stub_->UpdateTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultParameterManagerStub::DeleteTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::parametermanager::v1::ListTemplateVersionsResponse>
+DefaultParameterManagerStub::ListTemplateVersions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest const&
+        request) {
+  google::cloud::parametermanager::v1::ListTemplateVersionsResponse response;
+  auto status = grpc_stub_->ListTemplateVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+DefaultParameterManagerStub::GetTemplateVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::TemplateVersion response;
+  auto status = grpc_stub_->GetTemplateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+DefaultParameterManagerStub::CreateTemplateVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::TemplateVersion response;
+  auto status = grpc_stub_->CreateTemplateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+DefaultParameterManagerStub::UpdateTemplateVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::TemplateVersion response;
+  auto status = grpc_stub_->UpdateTemplateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultParameterManagerStub::DeleteTemplateVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteTemplateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+DefaultParameterManagerStub::RenderTemplateVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::RenderTemplateVersionResponse response;
+  auto status = grpc_stub_->RenderTemplateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultParameterManagerStub::ListLocations(
     grpc::ClientContext& context, Options const&,

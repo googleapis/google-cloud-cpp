@@ -275,6 +275,52 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::CreateTask(
   return connection_->CreateTask(request);
 }
 
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksClient::BatchCreateTasks(
+    std::string const& parent,
+    std::vector<google::cloud::tasks::v2::CreateTaskRequest> const& requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tasks::v2::BatchCreateTasksRequest request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreateTasks(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksClient::BatchCreateTasks(
+    NoAwaitTag, std::string const& parent,
+    std::vector<google::cloud::tasks::v2::CreateTaskRequest> const& requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tasks::v2::BatchCreateTasksRequest request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreateTasks(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksClient::BatchCreateTasks(
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateTasks(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksClient::BatchCreateTasks(
+    NoAwaitTag,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateTasks(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+CloudTasksClient::BatchCreateTasks(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateTasks(operation);
+}
+
 Status CloudTasksClient::DeleteTask(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::DeleteTaskRequest request;
@@ -286,6 +332,50 @@ Status CloudTasksClient::DeleteTask(
     google::cloud::tasks::v2::DeleteTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTask(request);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksClient::BatchDeleteTasks(std::string const& parent,
+                                   std::vector<std::string> const& names,
+                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tasks::v2::BatchDeleteTasksRequest request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->BatchDeleteTasks(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksClient::BatchDeleteTasks(
+    NoAwaitTag, std::string const& parent,
+    std::vector<std::string> const& names, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tasks::v2::BatchDeleteTasksRequest request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->BatchDeleteTasks(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksClient::BatchDeleteTasks(
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchDeleteTasks(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksClient::BatchDeleteTasks(
+    NoAwaitTag,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchDeleteTasks(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+CloudTasksClient::BatchDeleteTasks(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchDeleteTasks(operation);
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::RunTask(
@@ -302,6 +392,40 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::RunTask(
   return connection_->RunTask(request);
 }
 
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksClient::UpdateCmekConfig(
+    google::cloud::tasks::v2::CmekConfig const& cmek_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tasks::v2::UpdateCmekConfigRequest request;
+  *request.mutable_cmek_config() = cmek_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCmekConfig(request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksClient::UpdateCmekConfig(
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCmekConfig(request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig> CloudTasksClient::GetCmekConfig(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tasks::v2::GetCmekConfigRequest request;
+  request.set_name(name);
+  return connection_->GetCmekConfig(request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig> CloudTasksClient::GetCmekConfig(
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetCmekConfig(request);
+}
+
 StreamRange<google::cloud::location::Location> CloudTasksClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -312,6 +436,20 @@ StatusOr<google::cloud::location::Location> CloudTasksClient::GetLocation(
     google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksClient::GetOperation(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::GetOperationRequest request;
+  request.set_name(name);
+  return connection_->GetOperation(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOperation(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

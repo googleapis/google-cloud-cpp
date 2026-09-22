@@ -210,6 +210,56 @@ DataAgentServiceTracingConnection::SetIamPolicy(
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceTracingConnection::SetAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  auto span = internal::MakeSpan(
+      "geminidataanalytics_v1::DataAgentServiceConnection::"
+      "SetAgentOpsObservability");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SetAgentOpsObservability(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceTracingConnection::SetAgentOpsObservability(
+    NoAwaitTag, google::cloud::geminidataanalytics::v1::
+                    SetAgentOpsObservabilityRequest const& request) {
+  auto span = internal::MakeSpan(
+      "geminidataanalytics_v1::DataAgentServiceConnection::"
+      "SetAgentOpsObservability");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetAgentOpsObservability(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceTracingConnection::SetAgentOpsObservability(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "geminidataanalytics_v1::DataAgentServiceConnection::"
+      "SetAgentOpsObservability");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SetAgentOpsObservability(operation));
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceTracingConnection::RetrieveAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request) {
+  auto span = internal::MakeSpan(
+      "geminidataanalytics_v1::DataAgentServiceConnection::"
+      "RetrieveAgentOpsObservability");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->RetrieveAgentOpsObservability(request));
+}
+
 StreamRange<google::cloud::location::Location>
 DataAgentServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

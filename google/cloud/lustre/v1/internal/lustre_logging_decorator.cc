@@ -148,6 +148,37 @@ StatusOr<google::longrunning::Operation> LustreLogging::DeleteInstance(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+LustreLogging::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::lustre::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return child_->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LustreLogging::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return child_->RescheduleMaintenance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> LustreLogging::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -204,6 +235,204 @@ StatusOr<google::longrunning::Operation> LustreLogging::ExportData(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+LustreLogging::AsyncCreateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+        return child_->AsyncCreateMirror(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LustreLogging::CreateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+        return child_->CreateMirror(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreLogging::AsyncUpdateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+        return child_->AsyncUpdateMirror(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LustreLogging::UpdateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+        return child_->UpdateMirror(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreLogging::AsyncDeleteMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+        return child_->AsyncDeleteMirror(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LustreLogging::DeleteMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+        return child_->DeleteMirror(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreLogging::GetMirror(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::GetMirrorRequest const& request) {
+        return child_->GetMirror(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::lustre::v1::ListMirrorsResponse>
+LustreLogging::ListMirrors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+        return child_->ListMirrors(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreLogging::AsyncCreateDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&
+                 request) {
+        return child_->AsyncCreateDirectoryPolicy(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LustreLogging::CreateDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&
+                 request) {
+        return child_->CreateDirectoryPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreLogging::AsyncDeleteDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&
+                 request) {
+        return child_->AsyncDeleteDirectoryPolicy(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LustreLogging::DeleteDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&
+                 request) {
+        return child_->DeleteDirectoryPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreLogging::GetDirectoryPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+        return child_->GetDirectoryPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::lustre::v1::ListDirectoryPoliciesResponse>
+LustreLogging::ListDirectoryPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::ListDirectoryPoliciesRequest const&
+                 request) {
+        return child_->ListDirectoryPolicies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 LustreLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -223,6 +452,40 @@ StatusOr<google::cloud::location::Location> LustreLogging::GetLocation(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> LustreLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> LustreLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreLogging::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

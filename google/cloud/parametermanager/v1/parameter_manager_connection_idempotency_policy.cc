@@ -90,6 +90,62 @@ Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteParameterVersion(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ParameterManagerConnectionIdempotencyPolicy::ListTemplates(
+    google::cloud::parametermanager::v1::ListTemplatesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::GetTemplate(
+    google::cloud::parametermanager::v1::GetTemplateRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::CreateTemplate(
+    google::cloud::parametermanager::v1::CreateTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::UpdateTemplate(
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteTemplate(
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::ListTemplateVersions(
+    google::cloud::parametermanager::v1::
+        ListTemplateVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::GetTemplateVersion(
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::CreateTemplateVersion(
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::UpdateTemplateVersion(
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteTemplateVersion(
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ParameterManagerConnectionIdempotencyPolicy::RenderTemplateVersion(
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency ParameterManagerConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

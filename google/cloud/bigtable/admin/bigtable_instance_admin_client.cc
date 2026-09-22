@@ -391,6 +391,95 @@ Status BigtableInstanceAdminClient::DeleteCluster(
   return connection_->DeleteCluster(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminClient::UpdateMemoryLayer(
+    google::bigtable::admin::v2::MemoryLayer const& memory_layer,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateMemoryLayerRequest request;
+  *request.mutable_memory_layer() = memory_layer;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMemoryLayer(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::UpdateMemoryLayer(
+    NoAwaitTag, google::bigtable::admin::v2::MemoryLayer const& memory_layer,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateMemoryLayerRequest request;
+  *request.mutable_memory_layer() = memory_layer;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMemoryLayer(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminClient::UpdateMemoryLayer(
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMemoryLayer(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::UpdateMemoryLayer(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMemoryLayer(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminClient::UpdateMemoryLayer(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMemoryLayer(operation);
+}
+
+StreamRange<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminClient::ListMemoryLayers(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::ListMemoryLayersRequest request;
+  request.set_parent(parent);
+  return connection_->ListMemoryLayers(request);
+}
+
+StreamRange<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminClient::ListMemoryLayers(
+    google::bigtable::admin::v2::ListMemoryLayersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMemoryLayers(std::move(request));
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminClient::GetMemoryLayer(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::GetMemoryLayerRequest request;
+  request.set_name(name);
+  return connection_->GetMemoryLayer(request);
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminClient::GetMemoryLayer(
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMemoryLayer(request);
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::CreateAppProfile(
     std::string const& parent, std::string const& app_profile_id,

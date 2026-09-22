@@ -139,8 +139,8 @@ class SqlUsersServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlUsersGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L92}
-  /// [google.cloud.sql.v1.User]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L190}
+  /// [google.cloud.sql.v1.SqlUsersGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L95}
+  /// [google.cloud.sql.v1.User]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L205}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::User> Get(
@@ -171,7 +171,7 @@ class SqlUsersServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1226}
-  /// [google.cloud.sql.v1.SqlUsersInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L106}
+  /// [google.cloud.sql.v1.SqlUsersInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L112}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Insert(
@@ -201,8 +201,8 @@ class SqlUsersServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlUsersListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L116}
-  /// [google.cloud.sql.v1.UsersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L322}
+  /// [google.cloud.sql.v1.SqlUsersListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L125}
+  /// [google.cloud.sql.v1.UsersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L337}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::UsersListResponse> List(
@@ -233,7 +233,7 @@ class SqlUsersServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1226}
-  /// [google.cloud.sql.v1.SqlUsersUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L124}
+  /// [google.cloud.sql.v1.SqlUsersUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L136}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Update(

@@ -58,6 +58,12 @@ class DataChatServiceStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
   GetConversation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::geminidataanalytics::v1::GetConversationRequest const&
@@ -131,6 +137,12 @@ class DefaultDataChatServiceStub : public DataChatServiceStub {
   Status DeleteConversation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::geminidataanalytics::v1::DeleteConversationRequest const&
+          request) override;
+
+  StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>

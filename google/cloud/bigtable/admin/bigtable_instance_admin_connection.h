@@ -268,6 +268,24 @@ class BigtableInstanceAdminConnection {
   virtual Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+  UpdateMemoryLayer(
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMemoryLayer(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+  UpdateMemoryLayer(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::bigtable::admin::v2::MemoryLayer>
+  ListMemoryLayers(
+      google::bigtable::admin::v2::ListMemoryLayersRequest request);
+
+  virtual StatusOr<google::bigtable::admin::v2::MemoryLayer> GetMemoryLayer(
+      google::bigtable::admin::v2::GetMemoryLayerRequest const& request);
+
   virtual StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       google::bigtable::admin::v2::CreateAppProfileRequest const& request);
 

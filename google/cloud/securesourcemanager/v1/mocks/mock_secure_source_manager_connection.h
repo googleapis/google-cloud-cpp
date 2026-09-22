@@ -813,6 +813,11 @@ class MockSecureSourceManagerConnection
       (google::cloud::securesourcemanager::v1::FetchBlobRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::Ref>), FetchRefs,
+      (google::cloud::securesourcemanager::v1::FetchRefsRequest request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

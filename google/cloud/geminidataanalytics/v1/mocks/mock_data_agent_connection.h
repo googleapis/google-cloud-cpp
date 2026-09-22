@@ -222,6 +222,55 @@ class MockDataAgentServiceConnection
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetAgentOpsObservability(Matcher<google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::geminidataanalytics::v1::
+                                  SetAgentOpsObservabilityResponse>>,
+              SetAgentOpsObservability,
+              (google::cloud::geminidataanalytics::v1::
+                   SetAgentOpsObservabilityRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetAgentOpsObservability(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              SetAgentOpsObservability,
+              (NoAwaitTag, google::cloud::geminidataanalytics::v1::
+                               SetAgentOpsObservabilityRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetAgentOpsObservability(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::geminidataanalytics::v1::
+                                  SetAgentOpsObservabilityResponse>>,
+              SetAgentOpsObservability,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::geminidataanalytics::v1::
+                           RetrieveAgentOpsObservabilityResponse>,
+              RetrieveAgentOpsObservability,
+              (google::cloud::geminidataanalytics::v1::
+                   RetrieveAgentOpsObservabilityRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -66,6 +66,87 @@ AuditManagerConnectionImpl::AuditManagerConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       AuditManagerConnection::options())) {}
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnectionImpl::CreateAuditSchedule(
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAuditSchedule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+                 request) {
+        return stub_->CreateAuditSchedule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnectionImpl::UpdateAuditSchedule(
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAuditSchedule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+                 request) {
+        return stub_->UpdateAuditSchedule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnectionImpl::GetAuditSchedule(
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAuditSchedule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::GetAuditScheduleRequest const&
+                 request) {
+        return stub_->GetAuditSchedule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnectionImpl::ListAuditSchedules(
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAuditSchedules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::auditmanager::v1::AuditSchedule>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<auditmanager_v1::AuditManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::auditmanager::v1::
+                       ListAuditSchedulesRequest const& request) {
+              return stub->ListAuditSchedules(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::auditmanager::v1::ListAuditSchedulesResponse r) {
+        std::vector<google::cloud::auditmanager::v1::AuditSchedule> result(
+            r.audit_schedules().size());
+        auto& messages = *r.mutable_audit_schedules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerConnectionImpl::EnrollResource(
     google::cloud::auditmanager::v1::EnrollResourceRequest const& request) {

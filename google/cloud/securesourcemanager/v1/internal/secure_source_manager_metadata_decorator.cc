@@ -574,6 +574,16 @@ SecureSourceManagerMetadata::FetchBlob(
   return child_->FetchBlob(context, options, request);
 }
 
+StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse>
+SecureSourceManagerMetadata::FetchRefs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchRefsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  return child_->FetchRefs(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerMetadata::AsyncCreateIssue(
     google::cloud::CompletionQueue& cq,

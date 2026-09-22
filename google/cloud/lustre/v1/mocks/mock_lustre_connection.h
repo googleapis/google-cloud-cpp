@@ -171,6 +171,45 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// RescheduleMaintenance(Matcher<google::cloud::lustre::v1::RescheduleMaintenanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::lustre::v1::Instance>>,
+      RescheduleMaintenance,
+      (google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RescheduleMaintenance(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RescheduleMaintenance,
+      (NoAwaitTag,
+       google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RescheduleMaintenance(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Instance>>,
+              RescheduleMaintenance,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// ImportData(Matcher<google::cloud::lustre::v1::ImportDataRequest
   /// const&>(_)))
   /// @endcode
@@ -239,12 +278,228 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
               ExportData, (google::longrunning::Operation const& operation),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMirror(Matcher<google::cloud::lustre::v1::CreateMirrorRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Mirror>>, CreateMirror,
+              (google::cloud::lustre::v1::CreateMirrorRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMirror(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMirror,
+              (NoAwaitTag,
+               google::cloud::lustre::v1::CreateMirrorRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateMirror(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Mirror>>, CreateMirror,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMirror(Matcher<google::cloud::lustre::v1::UpdateMirrorRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Mirror>>, UpdateMirror,
+              (google::cloud::lustre::v1::UpdateMirrorRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMirror(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateMirror,
+              (NoAwaitTag,
+               google::cloud::lustre::v1::UpdateMirrorRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateMirror(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Mirror>>, UpdateMirror,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMirror(Matcher<google::cloud::lustre::v1::DeleteMirrorRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>,
+              DeleteMirror,
+              (google::cloud::lustre::v1::DeleteMirrorRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMirror(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMirror,
+              (NoAwaitTag,
+               google::cloud::lustre::v1::DeleteMirrorRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteMirror(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>,
+              DeleteMirror, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::lustre::v1::Mirror>, GetMirror,
+              (google::cloud::lustre::v1::GetMirrorRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::lustre::v1::Mirror>), ListMirrors,
+              (google::cloud::lustre::v1::ListMirrorsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDirectoryPolicy(Matcher<google::cloud::lustre::v1::CreateDirectoryPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>,
+      CreateDirectoryPolicy,
+      (google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDirectoryPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDirectoryPolicy,
+      (NoAwaitTag,
+       google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDirectoryPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>,
+              CreateDirectoryPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDirectoryPolicy(Matcher<google::cloud::lustre::v1::DeleteDirectoryPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>,
+      DeleteDirectoryPolicy,
+      (google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDirectoryPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDirectoryPolicy,
+      (NoAwaitTag,
+       google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDirectoryPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>,
+              DeleteDirectoryPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::lustre::v1::DirectoryPolicy>, GetDirectoryPolicy,
+      (google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::lustre::v1::DirectoryPolicy>),
+              ListDirectoryPolicies,
+              (google::cloud::lustre::v1::ListDirectoryPoliciesRequest request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
               (google::cloud::location::GetLocationRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
