@@ -26,8 +26,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROLLOUT_PLANS_V1_ROLLOUT_PLANS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_137.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_143.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROLLOUT_PLANS_V1_ROLLOUT_PLANS_PROTO_EXPORT_H

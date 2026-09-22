@@ -124,7 +124,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.AggregatedListRegionNotificationEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L114}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpointsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L367}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpointsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_109.proto#L367}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -167,7 +167,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.AggregatedListRegionNotificationEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L114}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpointsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L367}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpointsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_109.proto#L367}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -325,7 +325,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L267}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L34}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_109.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -358,7 +358,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L267}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L34}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_109.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -527,7 +527,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L320}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L34}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_109.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -568,7 +568,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L320}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L34}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_109.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -600,7 +600,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L425}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -636,7 +636,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L425}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -224,7 +224,7 @@ class FirewallsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L28}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_044.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
@@ -256,7 +256,7 @@ class FirewallsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L28}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_044.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
@@ -416,7 +416,7 @@ class FirewallsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L200}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L28}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_044.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -457,7 +457,7 @@ class FirewallsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L200}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L28}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_044.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -613,7 +613,7 @@ class FirewallsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewalls.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L334}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -648,7 +648,7 @@ class FirewallsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewalls.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L334}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
