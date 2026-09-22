@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub_factory.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -44,7 +45,8 @@ TEST(DecorateSpannerStub, Auth) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession)
       .WillOnce([](grpc::ClientContext& context, Options const&,
-                   google::spanner::v1::CreateSessionRequest const&) {
+                   google::spanner::v1::CreateSessionRequest const&,
+                   spanner_internal::OperationContext&) {
         EXPECT_THAT(context.credentials(), NotNull());
         return internal::AbortedError("fail");
       });
@@ -61,7 +63,8 @@ TEST(DecorateSpannerStub, Auth) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session = stub->CreateSession(context, Options{}, {});
+  spanner_internal::OperationContext op_context;
+  auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
 
@@ -70,7 +73,8 @@ TEST(DecorateSpannerStub, Metadata) {
   auto const db = spanner::Database("foo", "bar", "baz");
   EXPECT_CALL(*mock, CreateSession)
       .WillOnce([&db](grpc::ClientContext& context, Options const&,
-                      google::spanner::v1::CreateSessionRequest const&) {
+                      google::spanner::v1::CreateSessionRequest const&,
+                      spanner_internal::OperationContext&) {
         testing_util::ValidateMetadataFixture fixture;
         auto metadata = fixture.GetMetadata(context);
         EXPECT_THAT(metadata, Contains(Pair("google-cloud-resource-prefix",
@@ -85,7 +89,8 @@ TEST(DecorateSpannerStub, Metadata) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session = stub->CreateSession(context, Options{}, {});
+  spanner_internal::OperationContext op_context;
+  auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
 
@@ -105,7 +110,8 @@ TEST(DecorateSpannerStub, Logging) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session = stub->CreateSession(context, Options{}, {});
+  spanner_internal::OperationContext op_context;
+  auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(log.ExtractLines(),
@@ -123,7 +129,7 @@ TEST(DecorateSpannerStub, TracingEnabled) {
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession)
-      .WillOnce([](auto& context, auto const&, auto const&) {
+      .WillOnce([](auto& context, auto const&, auto const&, auto&) {
         testing_util::ValidatePropagator(context);
         return internal::AbortedError("fail");
       });
@@ -136,7 +142,8 @@ TEST(DecorateSpannerStub, TracingEnabled) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session = stub->CreateSession(context, Options{}, {});
+  spanner_internal::OperationContext op_context;
+  auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -149,7 +156,7 @@ TEST(DecorateSpannerStub, TracingDisabled) {
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession)
-      .WillOnce([](auto& context, auto const&, auto const&) {
+      .WillOnce([](auto& context, auto const&, auto const&, auto&) {
         testing_util::ValidateNoPropagator(context);
         return internal::AbortedError("fail");
       });
@@ -162,7 +169,8 @@ TEST(DecorateSpannerStub, TracingDisabled) {
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session = stub->CreateSession(context, Options{}, {});
+  spanner_internal::OperationContext op_context;
+  auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());

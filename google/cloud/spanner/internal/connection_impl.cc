@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/route_to_leader.h"
@@ -579,7 +580,8 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
           grpc::ClientContext& context, Options const& options,
           google::spanner::v1::BeginTransactionRequest const& request) {
         if (route_to_leader) RouteToLeader(context);
-        return stub->BeginTransaction(context, options, request);
+        spanner_internal::OperationContext op_context;
+        return stub->BeginTransaction(context, options, request, op_context);
       },
       current, begin, func);
   if (!response) {
@@ -657,7 +659,9 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     auto const& options = internal::CurrentOptions();
     internal::ConfigureContext(*context, options);
     if (route_to_leader) RouteToLeader(*context);
-    auto stream = stub->StreamingRead(context, options, *request);
+    auto stream = stub->StreamingRead(
+        context, options, *request,
+        std::make_shared<spanner_internal::OperationContext>());
     std::unique_ptr<PartialResultSetReader> reader =
         std::make_unique<DefaultPartialResultSetReader>(std::move(context),
                                                         std::move(stream));
@@ -739,7 +743,8 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
         [&stub](grpc::ClientContext& context, Options const& options,
                 google::spanner::v1::PartitionReadRequest const& request) {
           RouteToLeader(context);  // always for PartitionRead()
-          return stub->PartitionRead(context, options, request);
+          spanner_internal::OperationContext op_context;
+          return stub->PartitionRead(context, options, request, op_context);
         },
         current, request, __func__);
     if (selector->has_begin()) {
@@ -897,7 +902,9 @@ ResultType ConnectionImpl::CommonQueryImpl(
       auto const& options = internal::CurrentOptions();
       internal::ConfigureContext(*context, options);
       if (route_to_leader) RouteToLeader(*context);
-      auto stream = stub->ExecuteStreamingSql(context, options, request);
+      auto stream = stub->ExecuteStreamingSql(
+          context, options, request,
+          std::make_shared<spanner_internal::OperationContext>());
       std::unique_ptr<PartialResultSetReader> reader =
           std::make_unique<DefaultPartialResultSetReader>(std::move(context),
                                                           std::move(stream));
@@ -975,7 +982,8 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
             grpc::ClientContext& context, Options const& options,
             google::spanner::v1::ExecuteSqlRequest const& request) {
           if (route_to_leader) RouteToLeader(context);
-          return stub->ExecuteSql(context, options, request);
+          spanner_internal::OperationContext op_context;
+          return stub->ExecuteSql(context, options, request, op_context);
         },
         *current, request, function_name);
     if (!response) {
@@ -1053,7 +1061,8 @@ ConnectionImpl::PartitionQueryImpl(
         [&stub](grpc::ClientContext& context, Options const& options,
                 google::spanner::v1::PartitionQueryRequest const& request) {
           RouteToLeader(context);  // always for PartitionQuery()
-          return stub->PartitionQuery(context, options, request);
+          spanner_internal::OperationContext op_context;
+          return stub->PartitionQuery(context, options, request, op_context);
         },
         current, request, __func__);
     if (selector->has_begin()) {
@@ -1127,7 +1136,8 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         [&stub](grpc::ClientContext& context, Options const& options,
                 google::spanner::v1::ExecuteBatchDmlRequest const& request) {
           RouteToLeader(context);  // always for ExecuteBatchDml()
-          return stub->ExecuteBatchDml(context, options, request);
+          spanner_internal::OperationContext op_context;
+          return stub->ExecuteBatchDml(context, options, request, op_context);
         },
         current, request, __func__);
     if (response.ok() && response->has_precommit_token()) {
@@ -1292,7 +1302,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
             [&stub](grpc::ClientContext& context, Options const& options,
                     google::spanner::v1::CommitRequest const& request) {
               RouteToLeader(context);  // always for Commit()
-              return stub->Commit(context, options, request);
+              spanner_internal::OperationContext op_context;
+              return stub->Commit(context, options, request, op_context);
             },
             current, request, func);
       };
@@ -1361,7 +1372,8 @@ Status ConnectionImpl::RollbackImpl(
       [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::RollbackRequest const& request) {
         RouteToLeader(context);  // always for Rollback()
-        return stub->Rollback(context, options, request);
+        spanner_internal::OperationContext op_context;
+        return stub->Rollback(context, options, request, op_context);
       },
       current, request, __func__);
   if (IsSessionNotFound(status)) session->set_bad();
@@ -1411,7 +1423,9 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
     auto const& options = internal::CurrentOptions();
     internal::ConfigureContext(*context, options);
     RouteToLeader(*context);  // always for BatchWrite()
-    return stub->BatchWrite(std::move(context), options, request);
+    auto op_context = std::make_shared<spanner_internal::OperationContext>();
+    return stub->BatchWrite(std::move(context), options, request,
+                            std::move(op_context));
   };
   auto updater = [](google::spanner::v1::BatchWriteResponse const&,
                     google::spanner::v1::BatchWriteRequest&) {

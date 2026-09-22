@@ -13,6 +13,7 @@
 // limitations under the License.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/internal/session_pool.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/internal/route_to_leader.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/status_utils.h"
@@ -306,7 +307,8 @@ Status SessionPool::CreateMultiplexedSessionSync(
       [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::CreateSessionRequest const& request) {
         RouteToLeader(context);  // always for CreateSession()
-        return stub->CreateSession(context, options, request);
+        spanner_internal::OperationContext op_context;
+        return stub->CreateSession(context, options, request, op_context);
       },
       opts_, request, __func__);
   return HandleMultiplexedCreateSessionDone(std::move(response));
@@ -332,8 +334,11 @@ SessionPool::CreateMultiplexedSessionAsync(std::shared_ptr<SpannerStub> stub) {
               internal::ImmutableOptions options,
               google::spanner::v1::CreateSessionRequest const& request) {
         RouteToLeader(*context);  // always for CreateSession()
+        auto op_context =
+            std::make_shared<spanner_internal::OperationContext>();
         return stub->AsyncCreateSession(cq, std::move(context),
-                                        std::move(options), request);
+                                        std::move(options), request,
+                                        std::move(op_context));
       },
       internal::SaveCurrentOptions(), std::move(request), __func__);
 }
@@ -596,7 +601,8 @@ Status SessionPool::CreateSessionsSync(
       [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
         RouteToLeader(context);  // always for BatchCreateSessions()
-        return stub->BatchCreateSessions(context, options, request);
+        spanner_internal::OperationContext op_context;
+        return stub->BatchCreateSessions(context, options, request, op_context);
       },
       current, request, __func__);
   return HandleBatchCreateSessionsDone(channel, std::move(response));
@@ -657,8 +663,11 @@ SessionPool::AsyncBatchCreateSessions(
              internal::ImmutableOptions options,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
         RouteToLeader(*context);  // always for BatchCreateSessions()
+        auto op_context =
+            std::make_shared<spanner_internal::OperationContext>();
         return stub->AsyncBatchCreateSessions(cq, std::move(context),
-                                              std::move(options), request);
+                                              std::move(options), request,
+                                              std::move(op_context));
       },
       internal::SaveCurrentOptions(), std::move(request), __func__);
 }
@@ -674,8 +683,11 @@ future<Status> SessionPool::AsyncDeleteSession(
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::spanner::v1::DeleteSessionRequest const& request) {
+        auto op_context =
+            std::make_shared<spanner_internal::OperationContext>();
         return stub->AsyncDeleteSession(cq, std::move(context),
-                                        std::move(options), request);
+                                        std::move(options), request,
+                                        std::move(op_context));
       },
       internal::SaveCurrentOptions(), std::move(request), __func__);
 }
@@ -698,8 +710,10 @@ SessionPool::AsyncRefreshSession(CompletionQueue& cq,
              google::cloud::internal::ImmutableOptions options,
              google::spanner::v1::ExecuteSqlRequest const& request) {
         // Read-only transaction, so no route-to-leader.
+        auto op_context =
+            std::make_shared<spanner_internal::OperationContext>();
         return stub->AsyncExecuteSql(cq, std::move(context), std::move(options),
-                                     request);
+                                     request, std::move(op_context));
       },
       internal::SaveCurrentOptions(), std::move(request), __func__);
 }
