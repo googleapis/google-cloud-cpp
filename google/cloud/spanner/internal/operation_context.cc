@@ -31,30 +31,6 @@ OperationContext::OperationContext(
       request_index_(request_index),
       rpc_name_(rpc_name) {}
 
-OperationContext::OperationContext(OperationContext&& other) noexcept {
-  std::scoped_lock lock(other.mu_);
-  static_prefix_ = std::move(other.static_prefix_);
-  request_index_ = other.request_index_;
-  rpc_name_ = other.rpc_name_;
-  channel_id_ = other.channel_id_;
-  attempt_index_ = other.attempt_index_;
-  current_request_id_ = std::move(other.current_request_id_);
-}
-
-OperationContext& OperationContext::operator=(
-    OperationContext&& other) noexcept {
-  if (this != &other) {
-    std::scoped_lock lock(mu_, other.mu_);
-    static_prefix_ = std::move(other.static_prefix_);
-    request_index_ = other.request_index_;
-    rpc_name_ = other.rpc_name_;
-    channel_id_ = other.channel_id_;
-    attempt_index_ = other.attempt_index_;
-    current_request_id_ = std::move(other.current_request_id_);
-  }
-  return *this;
-}
-
 void OperationContext::BindChannel(std::uint32_t channel_id) {
   std::scoped_lock lock(mu_);
   channel_id_ = channel_id;

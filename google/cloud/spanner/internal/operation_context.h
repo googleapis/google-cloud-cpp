@@ -35,12 +35,10 @@ class OperationContext : public google::cloud::internal::OperationContext {
   OperationContext(std::shared_ptr<std::string const> static_prefix,
                    std::uint64_t request_index, std::string_view rpc_name);
 
-  // Move operations transfer context state across threads.
-  OperationContext(OperationContext&& other) noexcept;
-  OperationContext& operator=(OperationContext&& other) noexcept;
-
   OperationContext(OperationContext const&) = delete;
   OperationContext& operator=(OperationContext const&) = delete;
+  OperationContext(OperationContext&&) = delete;
+  OperationContext& operator=(OperationContext&&) = delete;
 
   // Binds the physical gRPC channel index (0..N-1) for subsequent attempts.
   void BindChannel(std::uint32_t channel_id);
@@ -66,9 +64,9 @@ class OperationContext : public google::cloud::internal::OperationContext {
   std::string_view rpc_name() const;
 
  private:
-  std::shared_ptr<std::string const> static_prefix_;
-  std::uint64_t request_index_;
-  std::string_view rpc_name_;
+  std::shared_ptr<std::string const> const static_prefix_;
+  std::uint64_t const request_index_;
+  std::string_view const rpc_name_;
   mutable std::mutex mu_;
   std::uint32_t channel_id_ = 0;
   std::uint32_t attempt_index_ = 0;

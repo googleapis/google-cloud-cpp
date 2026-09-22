@@ -79,36 +79,6 @@ TEST_F(OperationContextTest, PreCallSetsRequestIdHeader) {
                                       "1.0123456789abcdef.1.3.42.2")));
 }
 
-TEST_F(OperationContextTest, MoveConstructAndAssign) {
-  auto static_prefix =
-      std::make_shared<std::string const>("1.0123456789abcdef.1.");
-  OperationContext op_context(static_prefix, 10, "Commit");
-  op_context.BindChannel(2);
-
-  grpc::ClientContext context1;
-  op_context.PreCall(context1);
-  EXPECT_THAT(op_context.attempt_index(), Eq(1U));
-
-  // Move construct
-  OperationContext moved_context(std::move(op_context));
-  EXPECT_THAT(moved_context.request_index(), Eq(10ULL));
-  EXPECT_THAT(moved_context.channel_id(), Eq(2U));
-  EXPECT_THAT(moved_context.attempt_index(), Eq(1U));
-  EXPECT_THAT(moved_context.rpc_name(), StrEq("Commit"));
-  EXPECT_THAT(moved_context.RequestId(),
-              Optional(Eq("1.0123456789abcdef.1.2.10.1")));
-
-  // Move assign
-  OperationContext target_context(static_prefix, 99, "Rollback");
-  target_context = std::move(moved_context);
-  EXPECT_THAT(target_context.request_index(), Eq(10ULL));
-  EXPECT_THAT(target_context.channel_id(), Eq(2U));
-  EXPECT_THAT(target_context.attempt_index(), Eq(1U));
-  EXPECT_THAT(target_context.rpc_name(), StrEq("Commit"));
-  EXPECT_THAT(target_context.RequestId(),
-              Optional(Eq("1.0123456789abcdef.1.2.10.1")));
-}
-
 TEST_F(OperationContextTest, PostCallAndOnDoneHooks) {
   auto static_prefix =
       std::make_shared<std::string const>("1.0123456789abcdef.1.");
