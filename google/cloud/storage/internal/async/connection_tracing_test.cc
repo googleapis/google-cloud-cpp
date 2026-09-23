@@ -564,10 +564,10 @@ TEST(ConnectionTracing, RewriteObjectSpanEnrichment) {
 
   // 1st call populates the cache
   google::storage::v2::GetBucketRequest req;
-  req.set_name("projects/_/buckets/test-bucket");
+  req.set_name("//storage.googleapis.com/projects/_/buckets/test-bucket");
   auto res1 = connection->GetBucket({req, options}).then(expect_no_context);
   google::storage::v2::Bucket bucket_meta;
-  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_project("//storage.googleapis.com/projects/123456");
   bucket_meta.set_location("us-east1");
   bucket_meta.set_location_type("regional");
   p.set_value(make_status_or(std::move(bucket_meta)));
@@ -577,7 +577,7 @@ TEST(ConnectionTracing, RewriteObjectSpanEnrichment) {
 
   // 2nd call: RewriteObject uses cached bucket metadata for span enrichment
   google::storage::v2::RewriteObjectRequest rewrite_req;
-  rewrite_req.set_destination_bucket("projects/_/buckets/test-bucket");
+  rewrite_req.set_destination_bucket("//storage.googleapis.com/projects/_/buckets/test-bucket");
   auto rewriter = connection->RewriteObject({rewrite_req, options});
   auto r1 = rewriter->Iterate().get();
   ASSERT_STATUS_OK(r1);
@@ -590,7 +590,7 @@ TEST(ConnectionTracing, RewriteObjectSpanEnrichment) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -870,12 +870,12 @@ TEST(ConnectionTracing, GetBucketSpanEnrichment) {
   auto actual = MakeTracingAsyncConnection(std::move(mock));
 
   google::storage::v2::GetBucketRequest req;
-  req.set_name("projects/_/buckets/test-bucket");
+  req.set_name("//storage.googleapis.com/projects/_/buckets/test-bucket");
   auto result =
       actual->GetBucket({std::move(req), options}).then(expect_no_context);
 
   google::storage::v2::Bucket bucket_meta;
-  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_project("//storage.googleapis.com/projects/123456");
   bucket_meta.set_location("us-east1");
   bucket_meta.set_location_type("regional");
   p.set_value(make_status_or(std::move(bucket_meta)));
@@ -890,7 +890,7 @@ TEST(ConnectionTracing, GetBucketSpanEnrichment) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -921,7 +921,7 @@ TEST(ConnectionTracing, BucketMetadataCacheSuccess) {
   auto actual = MakeTracingAsyncConnection(std::move(mock));
 
   google::storage::v2::DeleteObjectRequest req;
-  req.set_bucket("projects/_/buckets/test-bucket");
+  req.set_bucket("//storage.googleapis.com/projects/_/buckets/test-bucket");
   req.set_object("test-object-1");
 
   auto res1 = actual->DeleteObject({req, options}).then(expect_no_context);
@@ -930,7 +930,7 @@ TEST(ConnectionTracing, BucketMetadataCacheSuccess) {
 
   // Complete the background GetBucket fetch to populate the cache
   google::storage::v2::Bucket bucket_meta;
-  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_project("//storage.googleapis.com/projects/123456");
   bucket_meta.set_location("us-east1");
   bucket_meta.set_location_type("regional");
   bucket_promise.set_value(make_status_or(std::move(bucket_meta)));
@@ -953,7 +953,7 @@ TEST(ConnectionTracing, BucketMetadataCacheSuccess) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -978,10 +978,10 @@ TEST(ConnectionTracing, GetBucketMaybeInvalidateEvicts) {
 
   // 1st call populates the cache
   google::storage::v2::GetBucketRequest req;
-  req.set_name("projects/_/buckets/test-bucket");
+  req.set_name("//storage.googleapis.com/projects/_/buckets/test-bucket");
   auto res1 = actual->GetBucket({req, options}).then(expect_no_context);
   google::storage::v2::Bucket bucket_meta;
-  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_project("//storage.googleapis.com/projects/123456");
   bucket_meta.set_location("us-east1");
   bucket_meta.set_location_type("regional");
   p1.set_value(make_status_or(std::move(bucket_meta)));
@@ -1016,11 +1016,11 @@ TEST(ConnectionTracing, DeleteObjectNoEvictOnError) {
 
   // 1st call: GetBucket populates the cache
   google::storage::v2::GetBucketRequest bucket_req;
-  bucket_req.set_name("projects/_/buckets/test-bucket");
+  bucket_req.set_name("//storage.googleapis.com/projects/_/buckets/test-bucket");
   auto res_bucket =
       actual->GetBucket({bucket_req, options}).then(expect_no_context);
   google::storage::v2::Bucket bucket_meta;
-  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_project("//storage.googleapis.com/projects/123456");
   bucket_meta.set_location("us-east1");
   bucket_meta.set_location_type("regional");
   bucket_p.set_value(make_status_or(std::move(bucket_meta)));
@@ -1028,7 +1028,7 @@ TEST(ConnectionTracing, DeleteObjectNoEvictOnError) {
 
   // 2nd call: DeleteObject fails with kNotFound (object missing)
   google::storage::v2::DeleteObjectRequest del_req;
-  del_req.set_bucket("projects/_/buckets/test-bucket");
+  del_req.set_bucket("//storage.googleapis.com/projects/_/buckets/test-bucket");
   del_req.set_object("missing-object");
   auto res_del1 =
       actual->DeleteObject({del_req, options}).then(expect_no_context);
@@ -1054,7 +1054,7 @@ TEST(ConnectionTracing, DeleteObjectNoEvictOnError) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
