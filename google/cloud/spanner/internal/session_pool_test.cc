@@ -15,6 +15,8 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/internal/spanner_operation_context_factory.h"
+#include "google/cloud/spanner/internal/spanner_request_id.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/spanner/testing/status_utils.h"
@@ -52,6 +54,7 @@ using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::ByMove;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Pair;
@@ -124,7 +127,13 @@ google::spanner::v1::Session MakeMultiplexedSession(std::string name,
 
 std::shared_ptr<SessionPool> MakeTestSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    CompletionQueue cq, Options opts = {}) {
+    CompletionQueue cq, Options opts = {},
+    std::shared_ptr<SpannerOperationContextFactory> context_factory = {}) {
+  if (!context_factory) {
+    context_factory = std::make_shared<DefaultSpannerOperationContextFactory>(
+        /*client_id=*/1,
+        std::make_shared<std::string const>(ProcessRandomId()));
+  }
   opts.set<spanner::SpannerRetryPolicyOption>(
       std::make_shared<spanner::LimitedTimeRetryPolicy>(
           std::chrono::minutes(10)));
@@ -133,7 +142,7 @@ std::shared_ptr<SessionPool> MakeTestSessionPool(
           std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0));
   opts = DefaultOptions(std::move(opts));
   return MakeSessionPool(std::move(db), std::move(stubs), std::move(cq),
-                         std::move(opts));
+                         std::move(context_factory), std::move(opts));
 }
 
 TEST_F(SessionPoolTest, Multiplexed) {
@@ -148,7 +157,7 @@ TEST_F(SessionPoolTest, Multiplexed) {
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), {});
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
 }
 
 TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
@@ -159,7 +168,7 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       auto&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeMultiplexedSession("multiplexed");
@@ -172,8 +181,10 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
 
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
-  EXPECT_EQ(pool->GetStub(**session), mock);
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
+  auto stub_and_channel = pool->GetStub(**session);
+  EXPECT_THAT(stub_and_channel.stub, Eq(mock));
+  EXPECT_THAT(stub_and_channel.channel_id, Eq(0));
 }
 
 TEST_F(SessionPoolTest, AllocateRouteToLeader) {
@@ -185,7 +196,7 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       auto&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeMultiplexedSession("multiplexed");
@@ -199,8 +210,10 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
                               .set<spanner::SessionPoolMinSessionsOption>(42));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
-  EXPECT_EQ(pool->GetStub(**session), mock);
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
+  auto stub_and_channel = pool->GetStub(**session);
+  EXPECT_THAT(stub_and_channel.stub, Eq(mock));
+  EXPECT_THAT(stub_and_channel.channel_id, Eq(0));
 }
 
 TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
@@ -212,7 +225,7 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       auto&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
@@ -226,8 +239,10 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
 
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
-  EXPECT_EQ(pool->GetStub(**session), mock);
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
+  auto stub_and_channel = pool->GetStub(**session);
+  EXPECT_THAT(stub_and_channel.stub, Eq(mock));
+  EXPECT_THAT(stub_and_channel.channel_id, Eq(0));
 }
 
 TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
@@ -239,7 +254,7 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::spanner::v1::CreateSessionRequest const&,
-                       auto&) {
+                       spanner_internal::OperationContext&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
@@ -254,14 +269,16 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
                               .set<spanner::SessionPoolMinSessionsOption>(42));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
-  EXPECT_EQ(pool->GetStub(**session), mock);
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
+  auto stub_and_channel = pool->GetStub(**session);
+  EXPECT_THAT(stub_and_channel.stub, Eq(mock));
+  EXPECT_THAT(stub_and_channel.channel_id, Eq(0));
 }
 
 TEST_F(SessionPoolTest, MultiplexedCreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, CreateSession)
+  EXPECT_CALL(*mock, CreateSession(_, _, _, _))
       .WillRepeatedly(
           Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
 
@@ -281,18 +298,20 @@ TEST_F(SessionPoolTest, ReuseSession) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::spanner::v1::CreateSessionRequest const&,
-                   auto&) { return MakeMultiplexedSession("multiplexed"); });
+                   spanner_internal::OperationContext&) {
+        return MakeMultiplexedSession("multiplexed");
+      });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
   session->reset();
 
   auto session2 = pool->Multiplexed();
   ASSERT_STATUS_OK(session2);
-  EXPECT_EQ((*session2)->session_name(), "multiplexed");
+  EXPECT_THAT((*session2)->session_name(), Eq("multiplexed"));
 }
 
 TEST_F(SessionPoolTest, MultiplexedLabels) {
@@ -306,11 +325,11 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
       .WillOnce(
           [labels](grpc::ClientContext&, Options const&,
                    google::spanner::v1::CreateSessionRequest const& request,
-                   auto&) {
+                   spanner_internal::OperationContext&) {
             auto const& request_labels = request.session().labels();
-            EXPECT_EQ((std::map<std::string, std::string>(
-                          request_labels.begin(), request_labels.end())),
-                      labels);
+            EXPECT_THAT((std::map<std::string, std::string>(
+                            request_labels.begin(), request_labels.end())),
+                        Eq(labels));
             return MakeMultiplexedSession("multiplexed");
           });
 
@@ -320,7 +339,7 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
       Options{}.set<spanner::SessionPoolLabelsOption>(std::move(labels)));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
 }
 
 TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
@@ -332,8 +351,8 @@ TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
       .WillOnce([role](grpc::ClientContext&, Options const&,
                        google::spanner::v1::CreateSessionRequest const& request,
-                       auto&) {
-        EXPECT_EQ(request.session().creator_role(), role);
+                       spanner_internal::OperationContext&) {
+        EXPECT_THAT(request.session().creator_role(), Eq(role));
         return MakeMultiplexedSession("multiplexed");
       });
 
@@ -344,13 +363,13 @@ TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
 
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "multiplexed");
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
 }
 
 TEST_F(SessionPoolTest, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, CreateSession)
+  EXPECT_CALL(*mock, CreateSession(_, _, _, _))
       .WillRepeatedly(
           Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
@@ -359,7 +378,7 @@ TEST_F(SessionPoolTest, GetStubForStublessSession) {
       Options{}.set<spanner::SessionPoolMinSessionsOption>(0));
   // ensure we get a stub even if we didn't allocate from the pool.
   auto session = MakeDissociatedSessionHolder("session_id");
-  EXPECT_EQ(pool->GetStub(*session), mock);
+  EXPECT_THAT(pool->GetStub(*session).stub, Eq(mock));
 }
 
 TEST_F(SessionPoolTest, MultilpexedSessionReplacementSuccess) {
@@ -390,14 +409,14 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementSuccess) {
 
   auto s1 = pool->Multiplexed();
   ASSERT_STATUS_OK(s1);
-  EXPECT_EQ((*s1)->session_name(), "multiplexed1");
+  EXPECT_THAT((*s1)->session_name(), Eq("multiplexed1"));
 
   clock->AdvanceTime(background_interval);
   impl->SimulateCompletion(true);
 
   auto s2 = pool->Multiplexed();
   ASSERT_STATUS_OK(s2);
-  EXPECT_EQ((*s2)->session_name(), "multiplexed2");
+  EXPECT_THAT((*s2)->session_name(), Eq("multiplexed2"));
 
   // Cancel all pending operations, satisfying any remaining futures.
   impl->SimulateCompletion(false);
@@ -431,17 +450,73 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
 
   auto s1 = pool->Multiplexed();
   ASSERT_STATUS_OK(s1);
-  EXPECT_EQ((*s1)->session_name(), "multiplexed");
+  EXPECT_THAT((*s1)->session_name(), Eq("multiplexed"));
 
   clock->AdvanceTime(background_interval);
   impl->SimulateCompletion(true);
 
   auto s2 = pool->Multiplexed();
   ASSERT_STATUS_OK(s2);
-  EXPECT_EQ((*s2)->session_name(), "multiplexed");
+  EXPECT_THAT((*s2)->session_name(), Eq("multiplexed"));
 
   // Cancel all pending operations, satisfying any remaining futures.
   impl->SimulateCompletion(false);
+}
+
+TEST_F(SessionPoolTest, ChannelIdRoundRobinAndAffinity) {
+  auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto mock3 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  auto opts =
+      DefaultOptions(Options{}.set<spanner::SessionPoolMinSessionsOption>(0));
+  opts.unset<spanner::EnableMultiplexedSessionOption>();
+  auto context_factory =
+      std::make_shared<DefaultSpannerOperationContextFactory>(
+          /*client_id=*/1,
+          std::make_shared<std::string const>(ProcessRandomId()));
+  auto pool = MakeSessionPool(db, {mock1, mock2, mock3}, threads.cq(),
+                              context_factory, std::move(opts));
+
+  auto session = MakeDissociatedSessionHolder("session_id");
+
+  // Round-robin for dissociated sessions
+  auto stub_and_channel1 = pool->GetStub(*session);
+  EXPECT_THAT(stub_and_channel1.stub, Eq(mock1));
+  EXPECT_THAT(stub_and_channel1.channel_id, Eq(0));
+
+  auto stub_and_channel2 = pool->GetStub(*session);
+  EXPECT_THAT(stub_and_channel2.stub, Eq(mock2));
+  EXPECT_THAT(stub_and_channel2.channel_id, Eq(1));
+
+  auto stub_and_channel3 = pool->GetStub(*session);
+  EXPECT_THAT(stub_and_channel3.stub, Eq(mock3));
+  EXPECT_THAT(stub_and_channel3.channel_id, Eq(2));
+
+  auto stub_and_channel4 = pool->GetStub(*session);
+  EXPECT_THAT(stub_and_channel4.stub, Eq(mock1));
+  EXPECT_THAT(stub_and_channel4.channel_id, Eq(0));
+
+  // TransactionContext pins stub and channel_id
+  std::string tag = "test_tag";
+  TransactionContext ctx{/*route_to_leader=*/false,
+                         tag,
+                         /*seqno=*/1,
+                         /*stub=*/std::nullopt,
+                         /*channel_id=*/std::nullopt,
+                         /*precommit_token=*/std::nullopt};
+  auto pinned1 = pool->GetStub(*session, ctx);
+  EXPECT_THAT(pinned1.stub, Eq(mock2));
+  EXPECT_THAT(pinned1.channel_id, Eq(1));
+  EXPECT_THAT(ctx.channel_id, Eq(1));
+  EXPECT_THAT(*ctx.stub, Eq(mock2));
+
+  // Second call with the same ctx returns the cached channel
+  auto pinned2 = pool->GetStub(*session, ctx);
+  EXPECT_THAT(pinned2.stub, Eq(mock2));
+  EXPECT_THAT(pinned2.channel_id, Eq(1));
 }
 
 }  // namespace

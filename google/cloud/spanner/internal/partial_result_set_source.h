@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H
 
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/value.h"
@@ -61,7 +62,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
-      std::unique_ptr<PartialResultSetReader> reader);
+      std::unique_ptr<PartialResultSetReader> reader,
+      std::shared_ptr<OperationContext> operation_context);
 
   ~PartialResultSetSource() override;
 
@@ -82,15 +84,21 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
  private:
   explicit PartialResultSetSource(
-      std::unique_ptr<PartialResultSetReader> reader);
+      std::unique_ptr<PartialResultSetReader> reader,
+      std::shared_ptr<OperationContext> operation_context);
 
   Status ReadFromStream();
+
+  void NotifyOnDone(Status const& status);
 
   // Arena for the values_ field.
   google::protobuf::Arena arena_;
 
   Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
+  std::shared_ptr<OperationContext> operation_context_;
+  bool on_done_called_ = false;
+  Status last_status_;
 
   // The `PartialResultSet.metadata` we received in the first response, and
   // the column names it contained (which will be shared between rows).

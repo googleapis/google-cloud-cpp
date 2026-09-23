@@ -28,6 +28,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/time/time.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/time_util.h>
@@ -4183,6 +4184,63 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
   EXPECT_THAT(conn->Rollback({txn}),
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("BeginTransaction failed")));
+}
+
+TEST(ConnectionImplTest, RequestIdHeaderInjectionAndAttemptIncrement) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillRepeatedly(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+  std::vector<std::string> request_ids;
+  std::mutex mu;
+  testing_util::ValidateMetadataFixture fixture;
+
+  EXPECT_CALL(*mock, ExecuteSql)
+      .WillOnce([&](grpc::ClientContext& context, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const&,
+                    auto const&) {
+        auto metadata = fixture.GetMetadata(context);
+        auto it = metadata.find("x-goog-spanner-request-id");
+        if (it != metadata.end()) {
+          std::scoped_lock lock(mu);
+          request_ids.push_back(it->second);
+        }
+        return internal::UnavailableError("try-again");
+      })
+      .WillOnce([&](grpc::ClientContext& context, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const&,
+                    auto const&) {
+        auto metadata = fixture.GetMetadata(context);
+        auto it = metadata.find("x-goog-spanner-request-id");
+        if (it != metadata.end()) {
+          std::scoped_lock lock(mu);
+          request_ids.push_back(it->second);
+        }
+        google::spanner::v1::ResultSet result;
+        result.mutable_metadata()->mutable_transaction()->set_id("1234567890");
+        return result;
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedRetryOptions());
+  auto result = conn->ExecuteDml(
+      {spanner::MakeReadWriteTransaction(),
+       spanner::SqlStatement("UPDATE Table SET v = 1 WHERE k = 1")});
+  EXPECT_THAT(result, IsOk());
+
+  ASSERT_THAT(request_ids, testing::SizeIs(2));
+  // Request ID format: <client_id>.<channel_id>.<random_id>.<req_id>.<attempt>
+  EXPECT_THAT(request_ids[0], testing::EndsWith(".1"));
+  EXPECT_THAT(request_ids[1], testing::EndsWith(".2"));
+  // Both attempts should share the prefix
+  // <client_id>.<channel_id>.<random_id>.<req_id>
+  std::string const prefix0 =
+      request_ids[0].substr(0, request_ids[0].rfind('.'));
+  std::string const prefix1 =
+      request_ids[1].substr(0, request_ids[1].rfind('.'));
+  EXPECT_THAT(prefix0, testing::Eq(prefix1));
 }
 
 #if defined(__GNUC__) || defined(__clang__)
