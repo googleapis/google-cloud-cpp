@@ -118,13 +118,23 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
                 std::unique_ptr<char[]> buffer, std::size_t buffer_capacity,
                 std::int64_t offset, std::optional<std::int64_t> generation,
                 std::size_t n, bool is_primary,
-                std::shared_ptr<HedgingThreadPool> release_slot) {
+                std::weak_ptr<HedgingThreadPool> release_slot) {
   // Releases the acquired hedge concurrency slot upon function exit across
-  // all code paths. For the primary attempt, release_slot is nullptr.
+  // all code paths. For the primary attempt, release_slot is empty.
+  //
+  // std::weak_ptr is used intentionally instead of std::shared_ptr: tasks
+  // executing inside HedgingThreadPool::pool_ must not hold a strong reference
+  // to HedgingThreadPool, otherwise an in-flight losing hedge task would
+  // create a reference cycle and prevent ~HedgingThreadPool() from running on
+  // the owning thread when the last external shared_ptr is dropped (causing
+  // the worker thread to outlive the caller and detach instead of being
+  // joined).
   struct SlotGuard {
-    std::shared_ptr<HedgingThreadPool> pool;
+    std::weak_ptr<HedgingThreadPool> pool;
     ~SlotGuard() {
-      if (pool) pool->ReleaseHedgeSlot();
+      if (std::shared_ptr<HedgingThreadPool> p = pool.lock()) {
+        p->ReleaseHedgeSlot();
+      }
     }
   } guard{std::move(release_slot)};
 
@@ -295,7 +305,7 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
     RunAttempt(state, *factory, std::move(state->primary_child),
                std::move(state->primary_buffer), state->primary_buffer_capacity,
                offset, gen, n,
-               /*is_primary=*/true, nullptr);
+               /*is_primary=*/true, std::weak_ptr<HedgingThreadPool>{});
   };
   // The primary attempt is scheduled on the dedicated read pool.
   // If the pool is shutting down run the attempt inline, the read must
@@ -318,7 +328,8 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
     }
     state->active_attempts.fetch_add(1);
     auto hedge = [state, factory = child_factory_, offset = current_offset_,
-                  gen = generation_, n, pool = hedge_pool_] {
+                  gen = generation_, n,
+                  pool = std::weak_ptr<HedgingThreadPool>(hedge_pool_)] {
       RunAttempt(state, *factory, /*child=*/nullptr, /*buffer=*/nullptr,
                  /*buffer_capacity=*/0, offset, gen, n, /*is_primary=*/false,
                  pool);
