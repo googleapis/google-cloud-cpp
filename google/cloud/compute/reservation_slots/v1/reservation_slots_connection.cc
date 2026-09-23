@@ -44,6 +44,31 @@ ReservationSlotsConnection::GetReservationSlotsGetResponse(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsConnection::GetHealth(
+    google::cloud::cpp::compute::reservation_slots::v1::
+        GetHealthRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSlotsConnection::GetHealth(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_slots::v1::
+                    GetHealthRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsConnection::GetHealth(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationSlotsConnection::GetVersion(
     google::cloud::cpp::compute::reservation_slots::v1::
         GetVersionRequest const&) {

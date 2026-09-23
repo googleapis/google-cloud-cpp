@@ -50,6 +50,40 @@ ReservationSlotsRestLogging::GetReservationSlotsGetResponse(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSlotsRestLogging::AsyncGetHealth(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::reservation_slots::v1::
+                 GetHealthRequest const& request) {
+        return child_->AsyncGetHealth(cq, std::move(rest_context),
+                                      std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSlotsRestLogging::GetHealth(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_slots::v1::
+                 GetHealthRequest const& request) {
+        return child_->GetHealth(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationSlotsRestLogging::AsyncGetVersion(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

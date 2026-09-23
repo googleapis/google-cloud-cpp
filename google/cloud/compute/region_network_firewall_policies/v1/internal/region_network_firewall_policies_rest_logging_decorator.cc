@@ -327,6 +327,40 @@ RegionNetworkFirewallPoliciesRestLogging::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesRestLogging::AsyncPatchAssociation(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::region_network_firewall_policies::v1::
+                 PatchAssociationRequest const& request) {
+        return child_->AsyncPatchAssociation(cq, std::move(rest_context),
+                                             std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesRestLogging::PatchAssociation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_network_firewall_policies::v1::
+                 PatchAssociationRequest const& request) {
+        return child_->PatchAssociation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesRestLogging::AsyncPatchRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

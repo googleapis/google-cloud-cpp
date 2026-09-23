@@ -624,7 +624,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L433}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L75}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
@@ -656,7 +656,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L433}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L75}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
@@ -687,7 +687,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L447}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -720,7 +720,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L447}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -882,7 +882,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L505}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L75}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
@@ -923,7 +923,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L505}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L75}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
@@ -1211,7 +1211,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L690}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1247,7 +1247,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L690}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1789,7 +1789,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L864}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1825,7 +1825,7 @@ class RegionDisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L864}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

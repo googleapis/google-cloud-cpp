@@ -341,6 +341,48 @@ class MockRegionNetworkFirewallPoliciesConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// PatchAssociation(Matcher<google::cloud::cpp::compute::region_network_firewall_policies::v1::PatchAssociationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchAssociation,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::PatchAssociationRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchAssociation(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchAssociation,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::PatchAssociationRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchAssociation(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchAssociation,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// PatchRule(Matcher<google::cloud::cpp::compute::region_network_firewall_policies::v1::PatchRuleRequest
   /// const&>(_)))
   /// @endcode

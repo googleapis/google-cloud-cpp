@@ -27,10 +27,10 @@
 
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_005.pb.h"
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_054.pb.h"
-#include "google/cloud/compute/v1/internal/common_056.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_055.pb.h"
+#include "google/cloud/compute/v1/internal/common_058.pb.h"
+#include "google/cloud/compute/v1/internal/common_177.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_PROTO_EXPORT_H
