@@ -291,13 +291,13 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
           StatusOr<google::storage::v2::Bucket> metadata = f.get();
           if (metadata.ok()) {
             BucketCacheEntry entry = BucketCacheEntry::FromLocation(
-                metadata->project() + "/buckets/" +
+                "//storage.googleapis.com/" + metadata->project() + "/buckets/" +
                     BucketMetadataCache::NormalizeBucketName(bucket_name),
                 metadata->location(), metadata->location_type());
             cache->Put(bucket_name, std::move(entry));
           } else if (metadata.status().code() ==
                      StatusCode::kPermissionDenied) {
-            BucketCacheEntry entry{
+            BucketCacheEntry entry{ "//storage.googleapis.com/" + 
                 std::string(kProjectBucketPrefix) +
                     BucketMetadataCache::NormalizeBucketName(bucket_name),
                 kGlobalLocation};

@@ -43,32 +43,32 @@ TEST(BucketMetadataCacheTest, HitAndMiss) {
   BucketMetadataCache cache(10);
   EXPECT_FALSE(cache.Get("test-bucket").has_value());
 
-  BucketCacheEntry entry{"projects/123/buckets/test-bucket", "us-central1"};
+  BucketCacheEntry entry{"//storage.googleapis.com/projects/123/buckets/test-bucket", "us-central1"};
   cache.Put("test-bucket", entry);
 
   auto res = cache.Get("test-bucket");
   ASSERT_TRUE(res.has_value());
-  EXPECT_THAT(res->id, Eq("projects/123/buckets/test-bucket"));
+  EXPECT_THAT(res->id, Eq("//storage.googleapis.com/projects/123/buckets/test-bucket"));
   EXPECT_THAT(res->location, Eq("us-central1"));
 }
 
 TEST(BucketMetadataCacheTest, PutUpdatesExisting) {
   BucketMetadataCache cache(10);
-  BucketCacheEntry entry1{"projects/123/buckets/test-bucket", "us-central1"};
+  BucketCacheEntry entry1{"//storage.googleapis.com/projects/123/buckets/test-bucket", "us-central1"};
   cache.Put("test-bucket", entry1);
 
-  BucketCacheEntry entry2{"projects/456/buckets/test-bucket", "global"};
+  BucketCacheEntry entry2{"//storage.googleapis.com/projects/456/buckets/test-bucket", "global"};
   cache.Put("test-bucket", entry2);
 
   auto res = cache.Get("test-bucket");
   ASSERT_TRUE(res.has_value());
-  EXPECT_THAT(res->id, Eq("projects/456/buckets/test-bucket"));
+  EXPECT_THAT(res->id, Eq("//storage.googleapis.com/projects/456/buckets/test-bucket"));
   EXPECT_THAT(res->location, Eq("global"));
 }
 
 TEST(BucketMetadataCacheTest, InvalidateAndClear) {
   BucketMetadataCache cache(10);
-  BucketCacheEntry entry{"projects/123/buckets/test-bucket", "us-central1"};
+  BucketCacheEntry entry{"//storage.googleapis.com/projects/123/buckets/test-bucket", "us-central1"};
   cache.Put("test-bucket", entry);
   EXPECT_TRUE(cache.Get("test-bucket").has_value());
 

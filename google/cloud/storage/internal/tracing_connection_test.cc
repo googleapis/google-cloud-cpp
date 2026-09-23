@@ -158,7 +158,7 @@ TEST(TracingClientTest, CreateBucketSuccess) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -210,7 +210,7 @@ TEST(TracingClientTest, GetBucketMetadataSuccess) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -263,7 +263,7 @@ TEST(TracingClientTest, BucketMetadataCacheSuccess) {
           SpanNamed("storage::Client::DeleteObject"),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -338,7 +338,7 @@ TEST(TracingClientTest, UpdateBucketSuccess) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -388,7 +388,7 @@ TEST(TracingClientTest, PatchBucketSuccess) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -511,7 +511,7 @@ TEST(TracingClientTest, LockBucketRetentionPolicySuccess) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
