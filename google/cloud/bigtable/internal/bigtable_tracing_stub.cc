@@ -21,6 +21,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include <functional>
 #include <memory>
 #include <utility>
 
@@ -32,8 +33,14 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigtableTracingStub::BigtableTracingStub(std::shared_ptr<BigtableStub> child)
-    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
+BigtableTracingStub::BigtableTracingStub(
+    std::shared_ptr<BigtableStub> child,
+    std::function<void(opentelemetry::trace::Span&,
+                       bigtable_internal::OperationContext const&)>
+        op_ctx_fn)
+    : child_(std::move(child)),
+      propagator_(internal::MakePropagator()),
+      op_ctx_fn_(std::move(op_ctx_fn)) {}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
@@ -42,6 +49,9 @@ BigtableTracingStub::ReadRows(
     google::bigtable::v2::ReadRowsRequest const& request,
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ReadRows");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream =
@@ -59,6 +69,9 @@ BigtableTracingStub::SampleRowKeys(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "SampleRowKeys");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->SampleRowKeys(context, options, request,
@@ -75,6 +88,9 @@ BigtableTracingStub::MutateRow(
     bigtable_internal::OperationContext& operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -90,6 +106,9 @@ BigtableTracingStub::MutateRows(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRows");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->MutateRows(context, options, request,
@@ -106,6 +125,9 @@ BigtableTracingStub::CheckAndMutateRow(
     bigtable_internal::OperationContext& operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "CheckAndMutateRow");
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -120,6 +142,9 @@ BigtableTracingStub::PingAndWarm(
     bigtable_internal::OperationContext& operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PingAndWarm");
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -134,6 +159,9 @@ BigtableTracingStub::ReadModifyWriteRow(
     bigtable_internal::OperationContext& operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "ReadModifyWriteRow");
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -148,6 +176,9 @@ BigtableTracingStub::PrepareQuery(
     bigtable_internal::OperationContext& operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PrepareQuery");
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -163,6 +194,9 @@ BigtableTracingStub::ExecuteQuery(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ExecuteQuery");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->ExecuteQuery(context, options, request,
@@ -179,6 +213,9 @@ BigtableTracingStub::GetClientConfiguration(
     bigtable_internal::OperationContext& operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "GetClientConfiguration");
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  }
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -195,6 +232,9 @@ BigtableTracingStub::AsyncOpenTable(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "OpenTable");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncOpenTable(cq, context, std::move(options),
@@ -214,6 +254,9 @@ BigtableTracingStub::AsyncOpenAuthorizedView(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "OpenAuthorizedView");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncOpenAuthorizedView(cq, context, std::move(options),
@@ -233,6 +276,9 @@ BigtableTracingStub::AsyncOpenMaterializedView(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "OpenMaterializedView");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncOpenMaterializedView(
@@ -252,6 +298,9 @@ BigtableTracingStub::AsyncReadRows(
     google::bigtable::v2::ReadRowsRequest const& request,
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ReadRows");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncReadRows(cq, context, std::move(options), request,
@@ -271,6 +320,9 @@ BigtableTracingStub::AsyncSampleRowKeys(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "SampleRowKeys");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncSampleRowKeys(
@@ -289,6 +341,9 @@ BigtableTracingStub::AsyncMutateRow(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncMutateRow(cq, context, std::move(options), request,
@@ -306,6 +361,9 @@ BigtableTracingStub::AsyncMutateRows(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRows");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncMutateRows(cq, context, std::move(options),
@@ -324,6 +382,9 @@ BigtableTracingStub::AsyncCheckAndMutateRow(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "CheckAndMutateRow");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCheckAndMutateRow(
@@ -340,6 +401,9 @@ BigtableTracingStub::AsyncPingAndWarm(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PingAndWarm");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPingAndWarm(cq, context, std::move(options), request,
@@ -356,6 +420,9 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "ReadModifyWriteRow");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReadModifyWriteRow(
@@ -372,6 +439,9 @@ BigtableTracingStub::AsyncPrepareQuery(
     std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PrepareQuery");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPrepareQuery(cq, context, std::move(options), request,
@@ -380,8 +450,17 @@ BigtableTracingStub::AsyncPrepareQuery(
 }
 
 std::shared_ptr<BigtableStub> MakeBigtableTracingStub(
+    std::shared_ptr<BigtableStub> stub,
+    std::function<void(opentelemetry::trace::Span&,
+                       bigtable_internal::OperationContext const&)>
+        op_ctx_fn) {
+  return std::make_shared<BigtableTracingStub>(std::move(stub),
+                                               std::move(op_ctx_fn));
+}
+
+std::shared_ptr<BigtableStub> MakeBigtableTracingStub(
     std::shared_ptr<BigtableStub> stub) {
-  return std::make_shared<BigtableTracingStub>(std::move(stub));
+  return MakeBigtableTracingStub(std::move(stub), nullptr);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
