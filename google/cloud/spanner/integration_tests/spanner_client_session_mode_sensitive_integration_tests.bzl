@@ -18,4 +18,5 @@
 
 spanner_client_session_mode_sensitive_integration_tests = [
     "client_integration_test.cc",
+    "observability_integration_test.cc",
 ]

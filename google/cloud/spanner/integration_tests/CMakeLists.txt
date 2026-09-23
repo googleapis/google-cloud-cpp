@@ -28,7 +28,7 @@ function (spanner_client_define_integration_tests)
 
     set(spanner_client_session_mode_sensitive_integration_tests
         # cmake-format: sort
-        client_integration_test.cc)
+        client_integration_test.cc observability_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

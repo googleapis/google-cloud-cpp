@@ -50,7 +50,14 @@ std::shared_ptr<SpannerStub> DecorateSpannerStub(
         opts.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(opts)) {
-    stub = MakeSpannerTracingStub(std::move(stub));
+    stub = MakeSpannerTracingStub(
+        std::move(stub),
+        [](opentelemetry::trace::Span& span,
+           spanner_internal::OperationContext const& op_context) {
+          if (auto req_id = op_context.RequestId()) {
+            span.SetAttribute("gcp.spanner.request_id", *req_id);
+          }
+        });
   }
   return stub;
 }
