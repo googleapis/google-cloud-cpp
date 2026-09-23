@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_TRACING_STUB_H
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <functional>
 #include <memory>
 
 // Must be included last.
@@ -37,7 +39,11 @@ class SpannerTracingStub : public SpannerStub {
  public:
   ~SpannerTracingStub() override = default;
 
-  explicit SpannerTracingStub(std::shared_ptr<SpannerStub> child);
+  explicit SpannerTracingStub(
+      std::shared_ptr<SpannerStub> child,
+      std::function<void(opentelemetry::trace::Span&,
+                         spanner_internal::OperationContext const&)>
+          op_ctx_fn);
 
   StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& context, Options const& options,
@@ -159,6 +165,9 @@ class SpannerTracingStub : public SpannerStub {
   std::shared_ptr<SpannerStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
+  std::function<void(opentelemetry::trace::Span&,
+                     spanner_internal::OperationContext const&)>
+      op_ctx_fn_;
 };
 
 /**
@@ -167,6 +176,12 @@ class SpannerTracingStub : public SpannerStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
+std::shared_ptr<SpannerStub> MakeSpannerTracingStub(
+    std::shared_ptr<SpannerStub> stub,
+    std::function<void(opentelemetry::trace::Span&,
+                       spanner_internal::OperationContext const&)>
+        op_ctx_fn);
+
 std::shared_ptr<SpannerStub> MakeSpannerTracingStub(
     std::shared_ptr<SpannerStub> stub);
 
