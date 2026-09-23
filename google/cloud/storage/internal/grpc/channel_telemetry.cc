@@ -32,11 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 /// The scheme used by the C2P resolver, which is a prerequisite for DirectPath.
-auto constexpr kC2pPrefix = "google-c2p:///";
-auto constexpr kC2pExperimentalPrefix = "google-c2p-experimental:///";
+constexpr char const* kC2pPrefix = "google-c2p:///";
+constexpr char const* kC2pExperimentalPrefix = "google-c2p-experimental:///";
 
 /// The query parameter that requests DirectPath over Cloud Interconnect.
-auto constexpr kForceXds = "force-xds";
+constexpr char const* kForceXds = "force-xds";
 
 bool HasQueryParameter(std::string_view uri, std::string_view key) {
   // Per RFC 3986 the fragment follows the query, so anything after `#` cannot
