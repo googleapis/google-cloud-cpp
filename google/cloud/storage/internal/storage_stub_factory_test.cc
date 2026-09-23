@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_stub_factory.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,6 +43,7 @@ using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -256,6 +258,32 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
   auto response = stub->QueryWriteStatus(context, Options{}, {});
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("QueryWriteStatus")));
+}
+
+/// @test Verify `CreateDecoratedStubs()` logs the effective transport.
+TEST_F(StorageStubFactory, LogsChannelConfiguration) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockStorageStub>();
+      });
+
+  ScopedLog log;
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  // Only `LogChannelConfiguration()` emits the mismatch warning, and the
+  // endpoint supplied by `CreateTestStub()` does not request DirectPath over
+  // Interconnect, so enabling the option is enough to provoke it.
+  std::shared_ptr<StorageStub> const stub = CreateTestStub(
+      pool.cq(), factory.AsStdFunction(),
+      Options{}
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true)
+          .set<GrpcNumChannelsOption>(1));
+  ASSERT_THAT(stub, NotNull());
+
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("DirectPath over Interconnect is "
+                                       "enabled"),
+                             HasSubstr("endpoint=localhost:1"))));
 }
 
 using ::google::cloud::testing_util::DisableTracing;
