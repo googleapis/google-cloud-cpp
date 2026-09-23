@@ -76,8 +76,14 @@ jobs:
             if [[ -n "${BOT_TOKEN}" ]]; then
               BOT_USER="google-cloud-cpp-bot"
               echo "Ensuring fork ${BOT_USER}/google-cloud-cpp exists and is synced..."
-              GH_TOKEN="${BOT_TOKEN}" gh repo fork "${GITHUB_REPOSITORY}" --remote=false
-              GH_TOKEN="${BOT_TOKEN}" gh repo sync "${BOT_USER}/google-cloud-cpp" --branch main || true
+              GH_TOKEN="${BOT_TOKEN}" gh api -X POST "repos/${GITHUB_REPOSITORY}/forks" --silent
+              for _ in {1..15}; do
+                if GH_TOKEN="${BOT_TOKEN}" gh api "repos/${BOT_USER}/google-cloud-cpp" --silent 2>/dev/null; then
+                  break
+                fi
+                sleep 2
+              done
+              GH_TOKEN="${BOT_TOKEN}" gh api -X POST "repos/${BOT_USER}/google-cloud-cpp/merge-upstream" -f branch=main --silent || true
 
               echo "Changes detected. Pushing branch automation/update-compute-discovery to ${BOT_USER}/google-cloud-cpp..."
               git push "https://x-access-token:${BOT_TOKEN}@github.com/${BOT_USER}/google-cloud-cpp.git" HEAD:automation/update-compute-discovery --force
