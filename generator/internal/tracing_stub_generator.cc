@@ -48,26 +48,72 @@ Status TracingStubGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes({vars("stub_header_path"),
+                       HasExperimentalOperationContext()
+                           ? "google/cloud/internal/opentelemetry.h"
+                           : "",
                        "google/cloud/internal/trace_propagator.h",
                        "google/cloud/options.h", "google/cloud/version.h"});
-  HeaderSystemIncludes({"memory"});
+  HeaderSystemIncludes(HasExperimentalOperationContext()
+                           ? std::vector<std::string>{"functional", "memory"}
+                           : std::vector<std::string>{"memory"});
   HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
   // Tracing stub class definition
-  HeaderPrint(
-      R"""(
+  if (HasExperimentalOperationContext()) {
+    HeaderPrint(
+        R"""(
+class $tracing_stub_class_name$ : public $stub_class_name$ {
+ public:
+  ~$tracing_stub_class_name$() override = default;
+
+  explicit $tracing_stub_class_name$(
+      std::shared_ptr<$stub_class_name$> child,
+      std::function<void(opentelemetry::trace::Span&,
+                         $product_internal_namespace$::OperationContext const&)>
+          op_ctx_fn);
+)""");
+  } else {
+    HeaderPrint(
+        R"""(
 class $tracing_stub_class_name$ : public $stub_class_name$ {
  public:
   ~$tracing_stub_class_name$() override = default;
 
   explicit $tracing_stub_class_name$(std::shared_ptr<$stub_class_name$> child);
 )""");
+  }
 
   HeaderPrintPublicMethods();
 
-  HeaderPrint(R"""(
+  if (HasExperimentalOperationContext()) {
+    HeaderPrint(R"""(
+ private:
+  std::shared_ptr<$stub_class_name$> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::function<void(opentelemetry::trace::Span&,
+                     $product_internal_namespace$::OperationContext const&)>
+      op_ctx_fn_;
+};
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> stub,
+    std::function<void(opentelemetry::trace::Span&,
+                       $product_internal_namespace$::OperationContext const&)>
+        op_ctx_fn);
+
+std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> stub);
+)""");
+  } else {
+    HeaderPrint(R"""(
  private:
   std::shared_ptr<$stub_class_name$> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
@@ -82,6 +128,7 @@ class $tracing_stub_class_name$ : public $stub_class_name$ {
 std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> stub);
 )""");
+  }
 
   HeaderCloseNamespaces();
   HeaderGrpcPortsUndefInclude();
@@ -119,18 +166,46 @@ Status TracingStubGenerator::GenerateCc() {
            ? "google/cloud/internal/streaming_write_rpc_tracing.h"
            : "",
        "google/cloud/internal/grpc_opentelemetry.h"});
-  CcSystemIncludes({"memory", "utility"});
+  CcSystemIncludes(
+      HasExperimentalOperationContext()
+          ? std::vector<std::string>{"functional", "memory", "utility"}
+          : std::vector<std::string>{"memory", "utility"});
   CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
   // constructor
-  CcPrint(
-      R"""(
+  if (HasExperimentalOperationContext()) {
+    CcPrint(
+        R"""(
+$tracing_stub_class_name$::$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> child,
+    std::function<void(opentelemetry::trace::Span&,
+                       $product_internal_namespace$::OperationContext const&)>
+        op_ctx_fn)
+    : child_(std::move(child)),
+      propagator_(internal::MakePropagator()),
+      op_ctx_fn_(std::move(op_ctx_fn)) {}
+)""");
+  } else {
+    CcPrint(
+        R"""(
 $tracing_stub_class_name$::$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 )""");
+  }
+
+  auto const* op_ctx_sync_fragment = HasExperimentalOperationContext() ? R"""(
+  if (op_ctx_fn_ != nullptr) {
+    op_ctx_fn_(*span, operation_context);
+  })"""
+                                                                       : "";
+  auto const* op_ctx_shared_fragment = HasExperimentalOperationContext() ? R"""(
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  })"""
+                                                                         : "";
 
   // Tracing stub class member methods
   for (auto const& method : methods()) {
@@ -144,7 +219,10 @@ std::unique_ptr<internal::StreamingWriteRpc<$request_type$, $response_type$>>
 $tracing_stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const& options$op_ctx_shared_decl$) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->$method_name$(context, options$op_ctx_shared_arg$);
@@ -164,7 +242,10 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 $tracing_stub_class_name$::Async$method_name$(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->Async$method_name$(cq, context, std::move(options)$op_ctx_shared_arg$);
@@ -187,6 +268,7 @@ $tracing_stub_class_name$::Async$method_name$(
       $request_type$ const& request$op_ctx_shared_decl$) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
       CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
   internal::OTelScope scope(span);
@@ -204,6 +286,7 @@ $tracing_stub_class_name$::$method_name$(
       $request_type$ const& request$op_ctx_decl$) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
       CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_sync_fragment);
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
   auto scope = opentelemetry::trace::Scope(span);
@@ -222,7 +305,10 @@ $tracing_stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const& options,
     $request_type$ const& request$op_ctx_shared_decl$) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->$method_name$(context, options, request$op_ctx_shared_arg$);
@@ -240,6 +326,7 @@ $tracing_stub_class_name$::$method_name$(
     $request_type$ const& request$op_ctx_decl$) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
     CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+    CcPrintMethod(method, __FILE__, __LINE__, op_ctx_sync_fragment);
     CcPrintMethod(method, __FILE__, __LINE__,
                   R"""(
   auto scope = opentelemetry::trace::Scope(span);
@@ -265,7 +352,10 @@ $tracing_stub_class_name$::Async$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request$op_ctx_shared_decl$) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->Async$method_name$(
@@ -286,7 +376,10 @@ $tracing_stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->Async$method_name$(cq, context, std::move(options)$op_ctx_shared_arg$);
@@ -307,6 +400,7 @@ $tracing_stub_class_name$::Async$method_name$(
       $request_type$ const& request$op_ctx_shared_decl$) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
     CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+    CcPrintMethod(method, __FILE__, __LINE__, op_ctx_shared_fragment);
     CcPrintMethod(method, __FILE__, __LINE__,
                   R"""(
   internal::OTelScope scope(span);
@@ -328,7 +422,10 @@ $tracing_stub_class_name$::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request$op_ctx_shared_decl$) {
   auto span =
-      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");)""");
+    CcPrint(op_ctx_shared_fragment);
+    CcPrint(
+        R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(
@@ -342,7 +439,10 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request$op_ctx_shared_decl$) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
-                                     "CancelOperation");
+                                     "CancelOperation");)""");
+    CcPrint(op_ctx_shared_fragment);
+    CcPrint(
+        R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(
@@ -352,12 +452,30 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
 )""");
   }
 
-  CcPrint(R"""(
+  if (HasExperimentalOperationContext()) {
+    CcPrint(R"""(
+std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> stub,
+    std::function<void(opentelemetry::trace::Span&,
+                       $product_internal_namespace$::OperationContext const&)>
+        op_ctx_fn) {
+  return std::make_shared<$tracing_stub_class_name$>(std::move(stub),
+                                                     std::move(op_ctx_fn));
+}
+
+std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> stub) {
+  return Make$tracing_stub_class_name$(std::move(stub), nullptr);
+}
+)""");
+  } else {
+    CcPrint(R"""(
 std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> stub) {
   return std::make_shared<$tracing_stub_class_name$>(std::move(stub));
 }
 )""");
+  }
   CcCloseNamespaces();
   CcGrpcPortsUndefInclude();
   return {};
