@@ -73,20 +73,33 @@ jobs:
 
           # Check if a new commit was made (HEAD differs from FETCH_HEAD)
           if [[ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]]; then
-            echo "Changes detected. Pushing branch automation/update-compute-discovery..."
-            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:automation/update-compute-discovery --force
+            if [[ -n "${BOT_TOKEN}" ]]; then
+              BOT_USER="google-cloud-cpp-bot"
+              echo "Ensuring fork ${BOT_USER}/google-cloud-cpp exists and is synced..."
+              GH_TOKEN="${BOT_TOKEN}" gh repo fork "${GITHUB_REPOSITORY}" --remote=false
+              GH_TOKEN="${BOT_TOKEN}" gh repo sync "${BOT_USER}/google-cloud-cpp" --branch main || true
+
+              echo "Changes detected. Pushing branch automation/update-compute-discovery to ${BOT_USER}/google-cloud-cpp..."
+              git push "https://x-access-token:${BOT_TOKEN}@github.com/${BOT_USER}/google-cloud-cpp.git" HEAD:automation/update-compute-discovery --force
+              HEAD_REF="${BOT_USER}:automation/update-compute-discovery"
+              PR_CREATOR_TOKEN="${BOT_TOKEN}"
+            else
+              echo "Changes detected. Pushing branch automation/update-compute-discovery..."
+              git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:automation/update-compute-discovery --force
+              HEAD_REF="automation/update-compute-discovery"
+              PR_CREATOR_TOKEN="${GH_TOKEN}"
+            fi
 
             echo "Checking if a PR is already open..."
             if ! gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
               echo "Opening new PR..."
               BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
-              PR_CREATOR_TOKEN="${BOT_TOKEN:-${GH_TOKEN}}"
               PR_URL=$(GH_TOKEN="${PR_CREATOR_TOKEN}" gh pr create \
                 --repo "${GITHUB_REPOSITORY}" \
                 --title "feat(compute): update discovery doc and generate new services" \
                 --body "$(printf '%b' "$BODY")" \
                 --base main \
-                --head automation/update-compute-discovery)
+                --head "${HEAD_REF}")
               echo "Created PR: ${PR_URL}"
               gh pr edit "${PR_URL}" --repo "${GITHUB_REPOSITORY}" --add-label "api: compute"
             else
