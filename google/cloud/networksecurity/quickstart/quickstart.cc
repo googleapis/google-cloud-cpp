@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], "-");
+  auto const location = google::cloud::Location(argv[1], "global");
 
   namespace networksecurity = ::google::cloud::networksecurity_v1;
   auto client = networksecurity::NetworkSecurityClient(
