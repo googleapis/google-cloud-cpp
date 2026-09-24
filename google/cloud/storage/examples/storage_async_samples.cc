@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdlib>
+#include <deque>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -903,6 +904,71 @@ void FinalizeAppendableObjectUpload(google::cloud::storage::AsyncClient& client,
   std::cout << "Finalized object: " << object.DebugString() << "\n";
 }
 
+void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient& client,
+                              std::vector<std::string> const& argv) {
+  //! [optimize-write-latency-pool]
+  // [START storage_optimize_write_latency_pool]
+  namespace gcs = google::cloud::storage;
+  auto coro = [](gcs::AsyncClient& client, std::string bucket_name,
+                 std::string key_prefix,
+                 int pool_size) -> google::cloud::future<void> {
+    std::string const next_object_name =
+        key_prefix + "_" + std::to_string(pool_size);
+
+    // 1. Init pool: Sized to ensure pre-warmed writers are always available.
+    std::deque<std::pair<gcs::AsyncWriter, gcs::AsyncToken>> pool;
+    for (int i = 0; i < pool_size; ++i) {
+      auto [writer, token] = (co_await client.StartAppendableObjectUpload(
+                                  gcs::BucketName(bucket_name),
+                                  key_prefix + "_" + std::to_string(i)))
+                                 .value();
+      pool.emplace_back(std::move(writer), std::move(token));
+    }
+
+    // 2. Write: Pop a pre-warmed writer and commit with Flush() (~1-2 ms)
+    // instead of Finalize().
+    auto [writer, token] = std::move(pool.front());
+    pool.pop_front();
+    token = (co_await writer.Write(std::move(token),
+                                   gcs::WritePayload("0123456789")))
+                .value();
+    (void)co_await writer.Flush();
+
+    // 3. Pool maintenance (run asynchronously off the critical write path):
+    // Close the used writer without finalizing and refill the pool.
+    auto maintain_pool = [](gcs::AsyncClient client, std::string bucket_name,
+                            std::string next_object_name,
+                            gcs::AsyncWriter writer)
+        -> google::cloud::future<std::pair<gcs::AsyncWriter, gcs::AsyncToken>> {
+      (void)co_await writer.Close();
+      auto [new_writer, new_token] =
+          (co_await client.StartAppendableObjectUpload(
+               gcs::BucketName(bucket_name), next_object_name))
+              .value();
+      co_return {std::move(new_writer), std::move(new_token)};
+    };
+    auto maintenance_future =
+        maintain_pool(client, bucket_name, next_object_name, std::move(writer));
+
+    // 4. Read: Unfinalized objects are readable after Flush().
+    gcs::ObjectDescriptor descriptor =
+        (co_await client.Open(gcs::BucketName(bucket_name), key_prefix + "_0"))
+            .value();
+    auto [reader, read_token] = descriptor.Read(0, 10);
+    auto [payload, next_token] =
+        (co_await reader.Read(std::move(read_token))).value();
+
+    auto [new_writer, new_token] = co_await std::move(maintenance_future);
+    pool.emplace_back(std::move(new_writer), std::move(new_token));
+    for (auto& [rem_writer, rem_token] : pool) {
+      (void)co_await rem_writer.Close();
+    }
+  };
+  // [END storage_optimize_write_latency_pool]
+  //! [optimize-write-latency-pool]
+  coro(client, argv.at(0), argv.at(1), 3).get();
+}
+
 void ReadAppendableObjectTail(google::cloud::storage::AsyncClient& client,
                               std::vector<std::string> const& argv) {
   //! [read-appendable-object-tail]
@@ -1492,6 +1558,13 @@ void AutoRun(std::vector<std::string> const& argv) {
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
 
+    std::cout << "Running OptimizeWriteLatencyPool() example" << std::endl;
+    OptimizeWriteLatencyPool(client, {bucket_name, object_name});
+    for (int i = 0; i != 4; ++i) {
+      scheduled_for_delete.push_back(object_name + "_" + std::to_string(i));
+    }
+    object_name = examples::MakeRandomObjectName(generator, "object-");
+
     std::cout << "Running ReadAppendableObjectTail() example" << std::endl;
     // Create a dummy object for the tail example to read. In a real
     // application another process would be writing to this object.
@@ -1657,6 +1730,7 @@ int main(int argc, char* argv[]) try {
                  PauseAndResumeAppendableUpload),
       make_entry("finalize-appendable-object-upload", {},
                  FinalizeAppendableObjectUpload),
+      make_entry("optimize-write-latency-pool", {}, OptimizeWriteLatencyPool),
 
       make_entry("rewrite-object", {"<destination>"}, RewriteObject),
       make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
