@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "absl/strings/match.h"
 #include <gmock/gmock.h>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -270,6 +271,30 @@ TEST(LoggingRetryPolicy, FollowsTheWrappedPolicyForAborted) {
   EXPECT_FALSE(tested.OnFailure(Status(StatusCode::kAborted, "aborted")));
 
   EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+/// @test The owning constructor keeps the wrapped policy alive.
+///
+/// `AsyncRetryLoop()` takes the policy by `std::unique_ptr` and uses it long
+/// after the caller's frame is gone, so the decorator has to own it. The
+/// wrapped policy is deliberately allowed to go out of scope here.
+TEST(LoggingRetryPolicy, OwnsTheWrappedPolicy) {
+  testing_util::ScopedLog log;
+  std::unique_ptr<LoggingRetryPolicy> tested;
+  {
+    auto impl = std::make_unique<storage::LimitedErrorCountRetryPolicy>(
+        /*maximum_failures=*/2);
+    tested = std::make_unique<LoggingRetryPolicy>(
+        std::move(impl), "ReadObject/open", "test-bucket/test-object");
+  }
+
+  auto const transient = Status(StatusCode::kUnavailable, "try again");
+  EXPECT_TRUE(tested->OnFailure(transient));
+  EXPECT_TRUE(tested->OnFailure(transient));
+  EXPECT_FALSE(tested->OnFailure(transient));
+
+  EXPECT_THAT(RetryRecords(log), SizeIs(2));
+  EXPECT_THAT(tested->attempt_count(), Eq(2));
 }
 
 }  // namespace

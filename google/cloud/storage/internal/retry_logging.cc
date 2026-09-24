@@ -17,6 +17,8 @@
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include <algorithm>
+#include <cassert>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -61,6 +63,15 @@ std::string RedactRange(std::string_view text, std::size_t start,
   std::size_t const kept = (std::min)(kRetainedTokenChars, end - start);
   return absl::StrCat(text.substr(0, start + kept), kRedactedMarker,
                       text.substr(end));
+}
+
+// Binds a reference to an owned policy, with a debug check that the caller
+// really passed one. `owned_` is initialized before `impl_`, so this runs
+// before the reference is bound.
+google::cloud::RetryPolicy& Deref(
+    std::unique_ptr<google::cloud::RetryPolicy> const& policy) {
+  assert(policy != nullptr);
+  return *policy;
 }
 
 }  // namespace
@@ -140,6 +151,14 @@ void LogTransientRetry(char const* where, std::string_view resource,
 LoggingRetryPolicy::LoggingRetryPolicy(google::cloud::RetryPolicy& impl,
                                        char const* where, std::string resource)
     : impl_(impl), where_(where), resource_(std::move(resource)) {}
+
+LoggingRetryPolicy::LoggingRetryPolicy(
+    std::unique_ptr<google::cloud::RetryPolicy> impl, char const* where,
+    std::string resource)
+    : owned_(std::move(impl)),
+      impl_(Deref(owned_)),
+      where_(where),
+      resource_(std::move(resource)) {}
 
 bool LoggingRetryPolicy::OnFailure(Status const& status) {
   // Ask the policy first. Logging only when it says "retry" keeps the record
