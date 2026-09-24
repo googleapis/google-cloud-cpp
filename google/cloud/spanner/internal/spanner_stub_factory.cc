@@ -25,6 +25,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -54,7 +55,7 @@ std::shared_ptr<SpannerStub> DecorateSpannerStub(
         std::move(stub),
         [](opentelemetry::trace::Span& span,
            spanner_internal::OperationContext const& op_context) {
-          if (auto req_id = op_context.RequestId()) {
+          if (std::optional<std::string> req_id = op_context.RequestId()) {
             span.SetAttribute("gcp.spanner.request_id", *req_id);
           }
         });

@@ -200,7 +200,8 @@ TEST(DecorateSpannerStub, TracingRequestId) {
   op_context.BindChannel(2);
   op_context.PreCall(context);
 
-  auto session = stub->CreateSession(context, Options{}, {}, op_context);
+  StatusOr<google::spanner::v1::Session> session =
+      stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -229,7 +230,8 @@ TEST(SpannerTracingStub, CustomOpCtxFn) {
 
   grpc::ClientContext context;
   OperationContext op_context(nullptr, 1, "CreateSession");
-  auto session = stub->CreateSession(context, Options{}, {}, op_context);
+  StatusOr<google::spanner::v1::Session> session =
+      stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -258,7 +260,8 @@ TEST(SpannerTracingStub, DefaultNoopOpCtxFn) {
   op_context.BindChannel(2);
   op_context.PreCall(context);
 
-  auto session = stub->CreateSession(context, Options{}, {}, op_context);
+  StatusOr<google::spanner::v1::Session> session =
+      stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();

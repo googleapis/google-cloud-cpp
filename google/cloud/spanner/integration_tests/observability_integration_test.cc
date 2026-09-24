@@ -15,13 +15,14 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/options.h"
+#include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdint>
-#include <regex>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -34,6 +35,7 @@ namespace {
 
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -41,15 +43,8 @@ using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::MatchesRegex;
 using ::testing::Not;
-
-MATCHER_P(MatchesStdRegex, pattern, "") {
-  if (std::regex_match(arg, std::regex(pattern))) {
-    return true;
-  }
-  *result_listener << "which does not match regex \"" << pattern << "\"";
-  return false;
-}
 
 class ObservabilityIntegrationTest
     : public spanner_testing::DatabaseIntegrationTest {};
@@ -60,7 +55,7 @@ TEST_F(ObservabilityIntegrationTest, OpenTelemetryRequestIdTracing) {
 
   auto options =
       Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_GZIP);
-  auto session_mode =
+  std::optional<std::string> session_mode =
       internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE");
   if (session_mode.has_value() && *session_mode == "multiplexed") {
     options.set<spanner::EnableMultiplexedSessionOption>({});
@@ -69,17 +64,17 @@ TEST_F(ObservabilityIntegrationTest, OpenTelemetryRequestIdTracing) {
 
   auto client = Client(MakeConnection(GetDatabase(), std::move(options)));
 
-  auto rows = client.ExecuteQuery(SqlStatement("SELECT 1"));
+  RowStream rows = client.ExecuteQuery(SqlStatement("SELECT 1"));
   using RowType = std::tuple<std::int64_t>;
-  auto row = GetSingularRow(StreamOf<RowType>(rows));
-  ASSERT_STATUS_OK(row);
+  StatusOr<RowType> row = GetSingularRow(StreamOf<RowType>(rows));
+  ASSERT_THAT(row, IsOk());
   EXPECT_THAT(std::get<0>(*row), Eq(1));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Not(IsEmpty()));
 
   auto request_id_matcher =
-      MatchesStdRegex(R"(^1\.[0-9a-f]{16}\.[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$)");
+      MatchesRegex(R"(1\.[0-9a-f]{16}\.[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)");
 
   EXPECT_THAT(
       spans,
