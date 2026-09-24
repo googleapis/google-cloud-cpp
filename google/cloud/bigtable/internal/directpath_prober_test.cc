@@ -20,7 +20,7 @@
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>

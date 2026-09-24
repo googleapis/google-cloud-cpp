@@ -96,3 +96,25 @@ to avoid typing an explicit type.
     dependencies at call sites, make it easy to inadvertently omit required
     configuration, and can mask untested branches in unit tests. If a simpler
     calling convention is genuinely needed, provide an explicit overload.
+
+## Protobuf and gRPC Header Include Style
+
+- **Use Quotes for `googleapis/googleapis` Generated Headers:**
+  - Headers generated from `.proto` files found in the `googleapis/googleapis`
+    repository/module (e.g., `*.pb.h` and `*.grpc.pb.h` such as
+    `#include "google/cloud/.../foo.pb.h"`,
+    `#include "google/monitoring/v3/metric_service.grpc.pb.h"`,
+    `#include "google/api/client.pb.h"`, `#include "google/iam/v1/policy.pb.h"`,
+    `#include "google/bigtable/v2/bigtable.grpc.pb.h"`) must always be included
+    using double quotes (`"..."`), never angle brackets (`<...>`).
+  - *Why:* Generated protobuf headers from `googleapis` represent project and
+    submodule interface files rather than system/third-party library headers.
+- **Use Angle Brackets for `protocolbuffers/protobuf` Headers:**
+  - Headers from the upstream `protocolbuffers/protobuf` repository (including
+    well-known types and protobuf library headers such as
+    `#include <google/protobuf/field_mask.pb.h>`,
+    `#include <google/protobuf/duration.pb.h>`,
+    `#include <google/protobuf/timestamp.pb.h>`,
+    `#include <google/protobuf/descriptor.pb.h>`,
+    `#include <google/protobuf/descriptor.h>`) must continue to use angle
+    brackets (`<...>`).
