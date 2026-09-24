@@ -84,6 +84,7 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib/pkgconfig
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    sed 's/@CURL_LT_SHLIB_VERSIONED_FLAVOUR@/OPENSSL_/g' lib/libcurl.vers.in > libcurl.vers && \
     cmake \
         -DCMAKE_C_FLAGS=-m32 \
         -DCMAKE_FIND_ROOT_PATH=/usr/ \
@@ -96,6 +97,7 @@ RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.
         -DCURL_USE_OPENSSL=ON \
         -DBUILD_CURL_EXE=OFF \
         -DBUILD_TESTING=OFF \
+        -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--version-script=$(pwd)/libcurl.vers" \
         -S . -B cmake-out && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig && cd /var/tmp && rm -fr build
