@@ -22,7 +22,7 @@ module(
 
 bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.2")
-bazel_dep(name = "rules_cc", version = "0.2.17")
+bazel_dep(name = "rules_cc", version = "0.2.25")
 bazel_dep(name = "abseil-cpp", version = "20260526.0")
 
 # For backwards compatibility with WORKSPACE.
@@ -32,7 +32,7 @@ bazel_dep(name = "abseil-cpp", version = "20260526.0")
 bazel_dep(name = "protobuf", version = "35.1", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.20251124.0")
 bazel_dep(name = "nlohmann_json", version = "3.12.0.bcr.1")
-bazel_dep(name = "curl", version = "8.8.0.bcr.3")
+bazel_dep(name = "curl", version = "8.12.0.bcr.2")
 bazel_dep(name = "opentelemetry-cpp", version = "1.24.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
 bazel_dep(name = "rules_python", version = "2.3.3")
@@ -53,6 +53,6 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.84.0")
-bazel_dep(name = "googleapis", version = "0.0.0-20260922-d6b44118")
+bazel_dep(name = "googleapis", version = "0.0.0-20260922-d6b44118.bcr.1")
 bazel_dep(name = "googleapis-cc", version = "1.1.5")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")
