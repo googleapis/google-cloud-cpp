@@ -46,7 +46,7 @@ TEST(DecorateSpannerStub, Auth) {
   EXPECT_CALL(*mock, CreateSession)
       .WillOnce([](grpc::ClientContext& context, Options const&,
                    google::spanner::v1::CreateSessionRequest const&,
-                   spanner_internal::OperationContext&) {
+                   internal::OperationContext&) {
         EXPECT_THAT(context.credentials(), NotNull());
         return internal::AbortedError("fail");
       });
@@ -63,7 +63,7 @@ TEST(DecorateSpannerStub, Auth) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  spanner_internal::OperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
@@ -74,7 +74,7 @@ TEST(DecorateSpannerStub, Metadata) {
   EXPECT_CALL(*mock, CreateSession)
       .WillOnce([&db](grpc::ClientContext& context, Options const&,
                       google::spanner::v1::CreateSessionRequest const&,
-                      spanner_internal::OperationContext&) {
+                      OperationContext&) {
         testing_util::ValidateMetadataFixture fixture;
         auto metadata = fixture.GetMetadata(context);
         EXPECT_THAT(metadata, Contains(Pair("google-cloud-resource-prefix",
@@ -89,7 +89,7 @@ TEST(DecorateSpannerStub, Metadata) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  spanner_internal::OperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
@@ -110,7 +110,7 @@ TEST(DecorateSpannerStub, Logging) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  spanner_internal::OperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
@@ -142,7 +142,7 @@ TEST(DecorateSpannerStub, TracingEnabled) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  spanner_internal::OperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
@@ -169,7 +169,7 @@ TEST(DecorateSpannerStub, TracingDisabled) {
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  spanner_internal::OperationContext op_context;
+  OperationContext op_context(nullptr, 1, "CreateSession");
   auto session = stub->CreateSession(context, Options{}, {}, op_context);
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 

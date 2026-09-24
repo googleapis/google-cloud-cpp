@@ -22,8 +22,6 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-OperationContext::OperationContext() : OperationContext(nullptr, 0, "") {}
-
 OperationContext::OperationContext(
     std::shared_ptr<std::string const> static_prefix,
     std::uint64_t request_index, std::string_view rpc_name)

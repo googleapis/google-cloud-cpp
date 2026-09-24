@@ -546,7 +546,7 @@ class ReadExperiment : public BasicExperiment<Traits> {
         spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
-        spanner_internal::OperationContext op_context;
+        spanner_internal::OperationContext op_context(nullptr, 0, "");
         auto response = stub->CreateSession(context, google::cloud::Options{},
                                             request, op_context);
         if (response) return response->name();
@@ -592,10 +592,10 @@ class ReadExperiment : public BasicExperiment<Traits> {
       int row_count = 0;
       std::vector<google::protobuf::Value> row;
       row.resize(columns.size());
-      auto op_context = std::make_shared<spanner_internal::OperationContext>();
-      auto stream = stub->StreamingRead(std::make_shared<grpc::ClientContext>(),
-                                        google::cloud::Options{}, request,
-                                        std::move(op_context));
+      auto stream = stub->StreamingRead(
+          std::make_shared<grpc::ClientContext>(), google::cloud::Options{},
+          request,
+          std::make_shared<spanner_internal::OperationContext>(nullptr, 0, ""));
       for (;;) {
         google::spanner::v1::PartialResultSet result;
         auto status = stream->Read(&result);
@@ -692,7 +692,7 @@ class SelectExperiment : public BasicExperiment<Traits> {
         spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
-        spanner_internal::OperationContext op_context;
+        spanner_internal::OperationContext op_context(nullptr, 0, "");
         auto response = stub->CreateSession(context, google::cloud::Options{},
                                             request, op_context);
         if (response) return response->name();
@@ -742,10 +742,10 @@ class SelectExperiment : public BasicExperiment<Traits> {
       int row_count = 0;
       std::vector<google::protobuf::Value> row;
       row.resize(ExperimentImpl<Traits>::kColumnCount);
-      auto op_context = std::make_shared<spanner_internal::OperationContext>();
       auto stream = stub->ExecuteStreamingSql(
           std::make_shared<grpc::ClientContext>(), google::cloud::Options{},
-          request, std::move(op_context));
+          request,
+          std::make_shared<spanner_internal::OperationContext>(nullptr, 0, ""));
       for (;;) {
         google::spanner::v1::PartialResultSet result;
         auto status = stream->Read(&result);
@@ -858,7 +858,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
         spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
-        spanner_internal::OperationContext op_context;
+        spanner_internal::OperationContext op_context(nullptr, 0, "");
         auto response = stub->CreateSession(context, google::cloud::Options{},
                                             request, op_context);
         if (response) return response->name();
@@ -920,7 +920,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
       google::cloud::Status status;
       {
         grpc::ClientContext context;
-        spanner_internal::OperationContext op_context;
+        spanner_internal::OperationContext op_context(nullptr, 0, "");
         auto response = stub->ExecuteSql(context, google::cloud::Options{},
                                          request, op_context);
         if (response) {
@@ -937,7 +937,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
         google::spanner::v1::CommitRequest commit_request;
         commit_request.set_session(*session);
         commit_request.set_transaction_id(transaction_id);
-        spanner_internal::OperationContext op_context;
+        spanner_internal::OperationContext op_context(nullptr, 0, "");
         auto response = stub->Commit(context, google::cloud::Options{},
                                      commit_request, op_context);
         if (!response) status = std::move(response).status();
@@ -1050,7 +1050,7 @@ class MutationExperiment : public BasicExperiment<Traits> {
         spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
-        spanner_internal::OperationContext op_context;
+        spanner_internal::OperationContext op_context(nullptr, 0, "");
         auto response = stub->CreateSession(context, google::cloud::Options{},
                                             request, op_context);
         if (response) return response->name();
@@ -1113,7 +1113,7 @@ class MutationExperiment : public BasicExperiment<Traits> {
         *row.add_values() =
             spanner_internal::ToProto(spanner::Value(std::move(v))).second;
       }
-      spanner_internal::OperationContext op_context;
+      spanner_internal::OperationContext op_context(nullptr, 0, "");
       auto response = stub->Commit(context, google::cloud::Options{},
                                    commit_request, op_context);
 

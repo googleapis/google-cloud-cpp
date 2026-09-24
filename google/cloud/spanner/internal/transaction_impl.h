@@ -37,6 +37,7 @@ struct TransactionContext {
   std::string const& tag;
   std::int64_t seqno;
   std::optional<std::shared_ptr<SpannerStub>> stub;
+  std::optional<std::uint32_t> channel_id;
   std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
       precommit_token;
 };
@@ -91,13 +92,14 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{route_to_leader_, tag_, 0, std::nullopt,
-                           std::nullopt};
+    TransactionContext ctx{route_to_leader_, tag_,         0,
+                           std::nullopt,     std::nullopt, std::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       ctx.stub = stub_;
+      ctx.channel_id = channel_id_;
       ctx.precommit_token = precommit_token_;
       if (state_ == State::kDone) {
         lock.unlock();
@@ -117,6 +119,7 @@ class TransactionImpl {
       {
         std::unique_lock<std::mutex> lock(mu_);
         stub_ = ctx.stub;
+        channel_id_ = ctx.channel_id;
         UpdatePrecommitToken(lock, ctx.precommit_token);
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
@@ -131,7 +134,7 @@ class TransactionImpl {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     } catch (...) {
       {
-        std::lock_guard<std::mutex> lock(mu_);
+        std::scoped_lock<std::mutex> lock(mu_);
         state_ = State::kBegin;
       }
       cond_.notify_one();
@@ -161,6 +164,7 @@ class TransactionImpl {
   std::string tag_;
   std::int64_t seqno_;
   std::optional<std::shared_ptr<SpannerStub>> stub_ = std::nullopt;
+  std::optional<std::uint32_t> channel_id_ = std::nullopt;
   std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
       precommit_token_ = std::nullopt;
 };
