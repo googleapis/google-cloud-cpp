@@ -134,7 +134,7 @@ time {
 printf "%-50s" "Running buildifier (lint):" >&2
 time {
   git_files -z -- '*.BUILD' '*.bzl' '*.bazel' |
-    xargs -r -P "$(nproc)" -n 50 -0 buildifier --lint=fix
+    xargs -r -P "$(nproc)" -n 50 -0 buildifier --lint=fix --warnings=+native-cc,+native-proto,+native-py
 }
 printf "%-50s" "Running buildifier (format):" >&2
 time {

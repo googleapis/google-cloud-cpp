@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load(":bigtable_examples.bzl", "bigtable_examples")
 load(":bigtable_examples_common.bzl", "bigtable_examples_common_hdrs", "bigtable_examples_common_srcs")
 load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")

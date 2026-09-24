@@ -17,8 +17,8 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^ci/cloudbuild/builds/lib/bazel.sh$/", "/^ci/gha/builds/lib/bazel.sh$/"],
-      "matchStrings": ["{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}", "\\$Env:USE_BAZEL_VERSION=\"(?<currentValue>.*?)\""],
+      "managerFilePatterns": ["/^ci/cloudbuild/builds/.*\\.sh$/", "/^ci/gha/builds/lib/bazel.sh$/"],
+      "matchStrings": ["{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}", "USE_BAZEL_VERSION=(?<currentValue>9\\.[0-9]+\\.[0-9]+)", "\\$Env:USE_BAZEL_VERSION=\"(?<currentValue>.*?)\""],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "bazelbuild/bazel",
       "versioningTemplate": "loose"
@@ -33,6 +33,10 @@
     }
   ],
   "packageRules": [
+    {
+      "matchManagers": ["bazelisk"],
+      "allowedVersions": "<9.0.0"
+    },
     {
       "matchCategories": [
         "python"

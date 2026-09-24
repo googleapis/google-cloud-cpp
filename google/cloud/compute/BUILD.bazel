@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:defs.bzl", "cc_test")
 load(":compute_library.bzl", "compute_library")
 load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
 

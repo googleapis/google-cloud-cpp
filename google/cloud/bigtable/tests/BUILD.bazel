@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load(
     ":bigtable_client_integration_tests.bzl",
     "bigtable_client_integration_tests",
