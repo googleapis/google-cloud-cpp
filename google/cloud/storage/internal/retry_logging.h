@@ -18,6 +18,7 @@
 #include "google/cloud/retry_policy.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
+#include <memory>
 #include <string>
 #include <string_view>
 
@@ -67,8 +68,8 @@ void LogTransientRetry(char const* where, std::string_view resource,
  * retry.
  *
  * Use this to instrument a retry loop that only has the policy to work with,
- * such as `RestRetryLoop()`. Wrap the real policy, pass the decorator to the
- * loop, and each retried attempt produces one record.
+ * such as `RestRetryLoop()` or `AsyncRetryLoop()`. Wrap the real policy, pass
+ * the decorator to the loop, and each retried attempt produces one record.
  *
  * The decision comes from the wrapped policy rather than from a separate
  * classification of the status, which matters for two reasons:
@@ -78,18 +79,31 @@ void LogTransientRetry(char const* where, std::string_view resource,
  *   those failures are reported to the caller through the returned `Status`.
  * - There is no second copy of "which errors are retryable" to drift out of
  *   step with the policy in force. A caller that overrides the retry policy
- *   automatically gets logging that matches it.
+ *   automatically gets logging that matches it. This also keeps the sync and
+ *   async paths correct without a shared table: they use different definitions
+ *   of "transient" (only the async traits treat `kAborted` as retryable), and
+ *   each one is the definition its own policy applies.
  *
- * `OnFailure()` is not reached for a non-idempotent request, because
- * `RestRetryLoop()` returns before consulting the policy, so those are silent
- * too.
+ * `OnFailure()` is not reached for a non-idempotent request under
+ * `RestRetryLoop()`, which returns before consulting the policy, so those are
+ * silent. `AsyncRetryLoop()` calls `OnFailure()` before it checks idempotency,
+ * so a non-idempotent async request would still be reported; no async call site
+ * passes `kNonIdempotent` today.
  *
- * The decorator holds a reference; the wrapped policy must outlive it.
+ * Two constructors are provided because the two loops own the policy
+ * differently: `RestRetryLoop()` borrows a `RetryPolicy&` from the caller,
+ * while `AsyncRetryLoop()` takes a `std::unique_ptr` and outlives the caller's
+ * stack frame.
  */
 class LoggingRetryPolicy : public google::cloud::RetryPolicy {
  public:
+  /// Borrows @p impl, which must outlive this object.
   LoggingRetryPolicy(google::cloud::RetryPolicy& impl, char const* where,
                      std::string resource);
+
+  /// Takes ownership of @p impl, which must not be null.
+  LoggingRetryPolicy(std::unique_ptr<google::cloud::RetryPolicy> impl,
+                     char const* where, std::string resource);
 
   bool OnFailure(Status const& status) override;
   bool IsExhausted() const override;
@@ -99,6 +113,9 @@ class LoggingRetryPolicy : public google::cloud::RetryPolicy {
   int attempt_count() const { return attempt_; }
 
  private:
+  // Empty when the policy is borrowed. Declared before `impl_` so that the
+  // owning constructor can bind the reference to it.
+  std::unique_ptr<google::cloud::RetryPolicy> owned_;
   google::cloud::RetryPolicy& impl_;
   char const* where_;
   std::string resource_;
