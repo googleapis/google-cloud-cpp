@@ -76,9 +76,6 @@ function bazel::msvc_args() {
     '--per_file_copt=.*\.pb\.cc@-wd4267'
     '--per_file_copt=.*\.upb\.c@-wd4090'
     '--per_file_copt=.*\.upbdefs\.c@-wd4090'
-    # TODO(#14462) - gRPC is not compatible with (at least) MSVC 2019 + bzlmod.
-    '--noenable_bzlmod'
-    '--enable_workspace'
   )
   printf "%s\n" "${args[@]}"
 }

@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load("//bazel:gapic.bzl", "cc_gapic_library")
 load(":bigquery_rest_testing.bzl", "bigquery_rest_testing_hdrs", "bigquery_rest_testing_srcs")
 load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")

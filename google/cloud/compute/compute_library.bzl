@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
 def compute_library(service_dir, inner_deps = []):
     """Defines targets for a compute resource library
 
@@ -56,8 +58,7 @@ def compute_library(service_dir, inner_deps = []):
         srcs = native.glob([d + "mocks/*.h"]),
         visibility = ["//:__pkg__"],
     )
-
-    native.cc_library(
+    cc_library(
         name = "google_cloud_cpp_compute_" + service + "_mocks",
         hdrs = [":" + service + "_mock_hdrs"],
         visibility = ["//:__pkg__"],
@@ -66,8 +67,7 @@ def compute_library(service_dir, inner_deps = []):
             "@googletest//:gtest",
         ],
     )
-
-    native.cc_library(
+    cc_library(
         name = "google_cloud_cpp_compute_" + service,
         srcs = [":" + service + "_srcs"],
         hdrs = [":" + service + "_hdrs"],
