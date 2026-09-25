@@ -78,7 +78,7 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
     if (result.ok()) {
       cache->Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
     } else if (result.status().code() == StatusCode::kPermissionDenied) {
-      cache->Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
+      cache->Put(bucket_name, {"//storage.googleapis.com/projects/_/buckets/" + bucket_name, "global"});
     }
   });
 }
