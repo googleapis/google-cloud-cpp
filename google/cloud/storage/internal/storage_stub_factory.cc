@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc/channel_telemetry.h"
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
 #include "google/cloud/storage/internal/storage_metadata_decorator.h"
@@ -27,6 +28,7 @@
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
+#include <chrono>
 #include <memory>
 #include <string>
 #include <utility>
@@ -68,6 +70,7 @@ std::pair<std::vector<std::shared_ptr<grpc::Channel>>,
           std::shared_ptr<StorageStub>>
 CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
                      BaseStorageStubFactory const& base_factory) {
+  LogChannelConfiguration(options);
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
 
@@ -103,11 +106,16 @@ CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
 
 std::pair<std::shared_ptr<GrpcChannelRefresh>, std::shared_ptr<StorageStub>>
 CreateStorageStub(google::cloud::CompletionQueue cq, Options const& options) {
+  std::chrono::steady_clock::time_point const start =
+      std::chrono::steady_clock::now();
   auto p =
       CreateDecoratedStubs(cq, options, [](std::shared_ptr<grpc::Channel> c) {
         return std::make_shared<DefaultStorageStub>(
             google::storage::v2::Storage::NewStub(std::move(c)));
       });
+  (void)StartChannelTelemetry(
+      cq, p.first, DetectTransportType(options.get<EndpointOption>()), start,
+      kDefaultChannelReadyTimeout);
   auto refresh = std::make_shared<GrpcChannelRefresh>(std::move(p.first));
   refresh->StartRefreshLoop(std::move(cq));
   return std::make_pair(std::move(refresh), std::move(p.second));
