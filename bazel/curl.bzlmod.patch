@@ -1,0 +1,19 @@
+diff --git a/BUILD.bazel b/BUILD.bazel
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -250,7 +250,6 @@ _BASE_CURL_COPTS = [
+     # These 3 all have to be set correctly
+     "-DCURL_HIDDEN_SYMBOLS",
+     '-DCURL_EXTERN_SYMBOL=__attribute__((__visibility__(\"default\")))',
+-    "-fvisibility=hidden",
+ ]
+ 
+ expand_template(
+@@ -333,7 +332,6 @@ expand_template(
+                 "-lpthread",
+             ],
+         }),
+-        linkstatic = True,
+         local_defines = select({
+             "@platforms//os:macos": [
+                 'CURL_CA_BUNDLE=\\"/etc/ssl/cert.pem\\"',

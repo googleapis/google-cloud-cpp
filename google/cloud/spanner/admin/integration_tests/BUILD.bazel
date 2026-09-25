@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:defs.bzl", "cc_test")
 load(":spanner_admin_integration_tests.bzl", "spanner_admin_integration_tests")
 load(":spanner_admin_integration_tests_rest.bzl", "spanner_admin_integration_tests_rest")
 
