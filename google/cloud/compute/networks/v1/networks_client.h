@@ -481,7 +481,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L309}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L185}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
@@ -513,7 +513,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L309}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L185}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
@@ -542,7 +542,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L298}
-  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L733}
+  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L733}
   ///
   // clang-format on
   StatusOr<
@@ -575,7 +575,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L298}
-  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L733}
+  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L733}
   ///
   // clang-format on
   StatusOr<
@@ -735,7 +735,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L349}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L185}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -775,7 +775,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L349}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L185}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -812,7 +812,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L450}
-  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L27}
+  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
@@ -853,7 +853,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L450}
-  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L27}
+  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>

@@ -26,14 +26,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_061.pb.h"
-#include "google/cloud/compute/v1/internal/common_065.pb.h"
-#include "google/cloud/compute/v1/internal/common_078.pb.h"
-#include "google/cloud/compute/v1/internal/common_142.pb.h"
-#include "google/cloud/compute/v1/internal/common_165.pb.h"
-#include "google/cloud/compute/v1/internal/common_166.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_063.pb.h"
+#include "google/cloud/compute/v1/internal/common_067.pb.h"
+#include "google/cloud/compute/v1/internal/common_081.pb.h"
+#include "google/cloud/compute/v1/internal/common_148.pb.h"
 #include "google/cloud/compute/v1/internal/common_171.pb.h"
+#include "google/cloud/compute/v1/internal/common_172.pb.h"
+#include "google/cloud/compute/v1/internal/common_177.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_PROTO_EXPORT_H

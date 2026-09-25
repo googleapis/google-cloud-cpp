@@ -180,8 +180,7 @@ bool AppendIfXRefSect(std::ostream& os, MarkdownContext const& ctx,
   auto const title = std::string_view{node.child_value("xreftitle")};
   if (title == "Deprecated") {
     // The GCP site has a special representation for deprecated elements.
-    os << R"""(<aside class="deprecated"><b>Deprecated:</b>)"""
-       << "\n";
+    os << R"""(<aside class="deprecated"><b>Deprecated:</b>)""" << "\n";
     AppendDescriptionType(os, ctx, node.child("xrefdescription"));
     os << "\n</aside>";
     return true;
@@ -367,8 +366,8 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
   // DocFX YAML supports `xref:` as the syntax to cross link other documents
   // generated from the same DoxFX YAML source:
   //    https://dotnet.github.io/docfx/tutorial/links_and_cross_references.html#using-cross-reference
-  os << "[" << ref << "]"
-     << "(xref:" << node.attribute("refid").as_string() << ")";
+  os << "[" << ref << "]" << "(xref:" << node.attribute("refid").as_string()
+     << ")";
   return true;
 }
 

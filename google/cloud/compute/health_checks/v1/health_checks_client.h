@@ -121,7 +121,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.AggregatedListHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L145}
-  /// [google.cloud.cpp.compute.v1.HealthChecksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L157}
+  /// [google.cloud.cpp.compute.v1.HealthChecksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L157}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -166,7 +166,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.AggregatedListHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L145}
-  /// [google.cloud.cpp.compute.v1.HealthChecksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L157}
+  /// [google.cloud.cpp.compute.v1.HealthChecksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L157}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -314,7 +314,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L289}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_054.proto#L368}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
@@ -346,7 +346,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L289}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_054.proto#L368}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
@@ -507,7 +507,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.ListHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L329}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_054.proto#L368}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck> ListHealthChecks(
@@ -548,7 +548,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.ListHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L329}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_054.proto#L368}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck> ListHealthChecks(
@@ -705,7 +705,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L463}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -740,7 +740,7 @@ class HealthChecksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.health_checks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L463}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

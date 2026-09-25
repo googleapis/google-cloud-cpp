@@ -124,7 +124,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.AggregatedListRegionHealthSourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L142}
-  /// [google.cloud.cpp.compute.v1.HealthSourcesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L410}
+  /// [google.cloud.cpp.compute.v1.HealthSourcesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L410}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -170,7 +170,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.AggregatedListRegionHealthSourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L142}
-  /// [google.cloud.cpp.compute.v1.HealthSourcesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L410}
+  /// [google.cloud.cpp.compute.v1.HealthSourcesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L410}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -322,7 +322,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.GetHealthSourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L308}
-  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L29}
+  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthSource> GetHealthSource(
@@ -354,7 +354,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.GetHealthSourceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L308}
-  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L29}
+  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthSource> GetHealthSource(
@@ -385,7 +385,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L293}
-  /// [google.cloud.cpp.compute.v1.HealthSourceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L234}
+  /// [google.cloud.cpp.compute.v1.HealthSourceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L234}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthSourceHealth> GetHealth(
@@ -418,7 +418,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L293}
-  /// [google.cloud.cpp.compute.v1.HealthSourceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L234}
+  /// [google.cloud.cpp.compute.v1.HealthSourceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L234}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthSourceHealth> GetHealth(
@@ -582,7 +582,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.ListRegionHealthSourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L359}
-  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L29}
+  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HealthSource>
@@ -623,7 +623,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.ListRegionHealthSourcesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L359}
-  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L29}
+  /// [google.cloud.cpp.compute.v1.HealthSource]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HealthSource>
@@ -787,7 +787,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L505}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -823,7 +823,7 @@ class RegionHealthSourcesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_health_sources.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_sources/v1/region_health_sources.proto#L505}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

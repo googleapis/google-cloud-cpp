@@ -55,6 +55,38 @@ AdviceRestConnectionImpl::CalendarMode(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+AdviceRestConnectionImpl::Capacity(
+    google::cloud::cpp::compute::advice::v1::CapacityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Capacity(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::advice::v1::CapacityRequest const&
+                 request) {
+        return stub_->Capacity(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+AdviceRestConnectionImpl::CapacityHistory(
+    google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CapacityHistory(request),
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+              request) {
+        return stub_->CapacityHistory(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_advice_v1_internal
 }  // namespace cloud

@@ -52,6 +52,19 @@ class MockAdviceConnection : public compute_advice_v1::AdviceConnection {
       (google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>,
+      Capacity,
+      (google::cloud::cpp::compute::advice::v1::CapacityRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>,
+      CapacityHistory,
+      (google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -349,7 +349,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.GetImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L277}
-  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L32}
+  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
@@ -380,7 +380,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.GetImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L277}
-  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L32}
+  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
@@ -411,7 +411,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.GetFromFamilyRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L250}
-  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L32}
+  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
@@ -444,7 +444,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.GetFromFamilyRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L250}
-  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L32}
+  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
@@ -474,7 +474,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L262}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -507,7 +507,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L262}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -672,7 +672,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.ListImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L320}
-  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L32}
+  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
@@ -718,7 +718,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.ListImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L320}
-  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L32}
+  /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
@@ -871,7 +871,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L454}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -906,7 +906,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L454}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1059,7 +1059,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L489}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1094,7 +1094,7 @@ class ImagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.images.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L489}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
