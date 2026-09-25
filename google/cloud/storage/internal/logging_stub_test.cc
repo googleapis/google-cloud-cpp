@@ -241,6 +241,50 @@ TEST_F(LoggingStubTest, ListObjects) {
   client.ListObjects(context, Options{}, ListObjectsRequest("my-bucket"));
 }
 
+TEST_F(LoggingStubTest, ReadObjectWithError) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce(Return(
+          StatusOr<std::unique_ptr<ObjectReadSource>>(TransientError())));
+
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" << "));
+        EXPECT_THAT(lr.message, HasSubstr("ReadObjectRangeRequest={"));
+        EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
+      })
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" >> "));
+        EXPECT_THAT(lr.message, HasSubstr("status={"));
+      });
+
+  LoggingStub client(std::move(mock));
+  rest_internal::RestContext context;
+  client.ReadObject(context, Options{},
+                    ReadObjectRangeRequest("my-bucket", "my-object"));
+}
+
+TEST_F(LoggingStubTest, ReadObjectSuccessLogsOnlyTheRequest) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, ReadObject).WillOnce([] {
+    return StatusOr<std::unique_ptr<ObjectReadSource>>(
+        std::unique_ptr<ObjectReadSource>());
+  });
+
+  // The success payload is a `std::unique_ptr<>` with no `operator<<`, so
+  // there is nothing to log on the way out.
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" << "));
+        EXPECT_THAT(lr.message, HasSubstr("ReadObjectRangeRequest={"));
+      });
+
+  LoggingStub client(std::move(mock));
+  rest_internal::RestContext context;
+  client.ReadObject(context, Options{},
+                    ReadObjectRangeRequest("my-bucket", "my-object"));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

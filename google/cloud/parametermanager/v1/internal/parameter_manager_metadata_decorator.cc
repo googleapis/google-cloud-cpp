@@ -157,6 +157,112 @@ Status ParameterManagerMetadata::DeleteParameterVersion(
   return child_->DeleteParameterVersion(context, options, request);
 }
 
+StatusOr<google::cloud::parametermanager::v1::ListTemplatesResponse>
+ParameterManagerMetadata::ListTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplatesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTemplates(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerMetadata::GetTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerMetadata::CreateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerMetadata::UpdateTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("template.name=",
+                           internal::UrlEncode(request.template_().name())));
+  return child_->UpdateTemplate(context, options, request);
+}
+
+Status ParameterManagerMetadata::DeleteTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::ListTemplateVersionsResponse>
+ParameterManagerMetadata::ListTemplateVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTemplateVersions(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerMetadata::GetTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTemplateVersion(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerMetadata::CreateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTemplateVersion(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerMetadata::UpdateTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("template_version.name=",
+                   internal::UrlEncode(request.template_version().name())));
+  return child_->UpdateTemplateVersion(context, options, request);
+}
+
+Status ParameterManagerMetadata::DeleteTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTemplateVersion(context, options, request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerMetadata::RenderTemplateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RenderTemplateVersion(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParameterManagerMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

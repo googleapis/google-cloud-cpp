@@ -26,10 +26,13 @@
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -89,17 +92,51 @@ class CloudTasksConnectionImpl : public tasks_v2::CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(google::cloud::tasks::v2::BatchCreateTasksRequest const&
+                       request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(google::longrunning::Operation const& operation) override;
+
   Status DeleteTask(
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(google::cloud::tasks::v2::BatchDeleteTasksRequest const&
+                       request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

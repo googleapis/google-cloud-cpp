@@ -125,6 +125,27 @@ class DataAgentServiceConnectionImpl
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
+  future<StatusOr<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+  SetAgentOpsObservability(
+      google::cloud::geminidataanalytics::v1::
+          SetAgentOpsObservabilityRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> SetAgentOpsObservability(
+      NoAwaitTag, google::cloud::geminidataanalytics::v1::
+                      SetAgentOpsObservabilityRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+  SetAgentOpsObservability(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::geminidataanalytics::v1::
+               RetrieveAgentOpsObservabilityResponse>
+  RetrieveAgentOpsObservability(
+      google::cloud::geminidataanalytics::v1::
+          RetrieveAgentOpsObservabilityRequest const& request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

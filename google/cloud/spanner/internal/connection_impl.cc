@@ -15,9 +15,12 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/route_to_leader.h"
+#include "google/cloud/spanner/internal/spanner_operation_context_factory.h"
+#include "google/cloud/spanner/internal/spanner_request_id.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/query_partition.h"
@@ -129,10 +132,13 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:
   DefaultPartialResultSetReader(
       std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<
           internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
           reader)
-      : context_(std::move(context)), reader_(std::move(reader)) {}
+      : context_(std::move(context)),
+        operation_context_(std::move(operation_context)),
+        reader_(std::move(reader)) {}
 
   ~DefaultPartialResultSetReader() override = default;
 
@@ -145,6 +151,9 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
     if (opt_status.has_value()) {
       final_status_ = *std::move(opt_status);
+      if (operation_context_) {
+        operation_context_->PostCall(*context_, final_status_);
+      }
       return false;
     }
     return true;
@@ -154,6 +163,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
  private:
   std::shared_ptr<grpc::ClientContext> context_;
+  std::shared_ptr<OperationContext> operation_context_;
   std::unique_ptr<
       internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
       reader_;
@@ -377,8 +387,12 @@ ConnectionImpl::ConnectionImpl(
     : db_(std::move(db)),
       background_threads_(std::move(background_threads)),
       opts_(internal::MergeOptions(std::move(opts), Connection::options())),
+      context_factory_(std::make_shared<DefaultSpannerOperationContextFactory>(
+          NextClientId(),
+          std::make_shared<std::string const>(ProcessRandomId()))),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
-                                    background_threads_->cq(), opts_)) {}
+                                    background_threads_->cq(), context_factory_,
+                                    opts_)) {}
 
 spanner::RowStream ConnectionImpl::Read(ReadParams params) {
   return Visit(
@@ -517,6 +531,10 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWrite(
  * Helper function that ensures `session` holds a valid `Session`, or returns
  * an error if `session` is empty and no `Session` can be allocated.
  */
+Status ConnectionImpl::PrepareSession(SessionHolder& session) {
+  return PrepareSession(session, Session::Mode::kPooled);
+}
+
 Status ConnectionImpl::PrepareSession(SessionHolder& session,
                                       Session::Mode mode) {
   if (!session) {
@@ -535,7 +553,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
   return Status();
 }
 
-std::shared_ptr<SpannerStub> ConnectionImpl::GetStubBasedOnSessionMode(
+SelectedStub ConnectionImpl::GetStubBasedOnSessionMode(
     Session& session, TransactionContext& ctx) {
   if (session.is_multiplexed()) {
     return session_pool_->GetStub(session, ctx);
@@ -570,18 +588,26 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     *begin.mutable_mutation_key() = *mutation;
   }
 
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
+  auto op_context = context_factory_->BeginTransaction();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
   auto const& current = internal::CurrentOptions();
   auto response = RetryLoop(
       RetryPolicyPrototype(current)->clone(),
       BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
-      [&stub, route_to_leader = ctx.route_to_leader](
+      [&stub = stub_and_channel.stub, &op_context,
+       route_to_leader = ctx.route_to_leader](
           grpc::ClientContext& context, Options const& options,
           google::spanner::v1::BeginTransactionRequest const& request) {
         if (route_to_leader) RouteToLeader(context);
-        return stub->BeginTransaction(context, options, request);
+        op_context->PreCall(context);
+        auto s = stub->BeginTransaction(context, options, request, *op_context);
+        op_context->PostCall(context, s.status());
+        return s;
       },
       current, begin, func);
+  op_context->OnDone(response.status());
   if (!response) {
     auto status = std::move(response).status();
     if (IsSessionNotFound(status)) session->set_bad();
@@ -644,23 +670,25 @@ spanner::RowStream ConnectionImpl::ReadImpl(
              }),
              params.directed_read_option);
 
-  // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
-  // the lifetime of the lambda.
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
-  auto factory = [stub, request, route_to_leader = ctx.route_to_leader,
-                  tracing_enabled,
+  auto op_context = context_factory_->StreamingRead();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
+  auto factory = [stub = stub_and_channel.stub, request, op_context,
+                  route_to_leader = ctx.route_to_leader, tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
     if (!resume_token.empty()) request->set_resume_token(resume_token);
     auto context = std::make_shared<grpc::ClientContext>();
     auto const& options = internal::CurrentOptions();
     internal::ConfigureContext(*context, options);
     if (route_to_leader) RouteToLeader(*context);
-    auto stream = stub->StreamingRead(context, options, *request);
+    op_context->PreCall(*context);
+    auto stream = stub->StreamingRead(context, options, *request, op_context);
     std::unique_ptr<PartialResultSetReader> reader =
-        std::make_unique<DefaultPartialResultSetReader>(std::move(context),
-                                                        std::move(stream));
+        std::make_unique<DefaultPartialResultSetReader>(
+            std::move(context), op_context, std::move(stream));
     if (tracing_enabled) {
       reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
                                                         tracing_options);
@@ -671,7 +699,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     auto rpc = std::make_unique<PartialResultSetResume>(
         factory, Idempotency::kIdempotent, RetryPolicyPrototype()->clone(),
         BackoffPolicyPrototype()->clone());
-    auto reader = PartialResultSetSource::Create(std::move(rpc));
+    auto reader = PartialResultSetSource::Create(std::move(rpc), op_context);
     if (reader.ok()) {
       ctx.precommit_token = (*reader)->PrecommitToken();
     }
@@ -730,22 +758,30 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_key_set() = ToProto(params.keys);
   *request.mutable_partition_options() = ToProto(partition_options);
 
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
+  auto op_context = context_factory_->PartitionRead();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
   auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
-        [&stub](grpc::ClientContext& context, Options const& options,
-                google::spanner::v1::PartitionReadRequest const& request) {
+        [&stub = stub_and_channel.stub, &op_context](
+            grpc::ClientContext& context, Options const& options,
+            google::spanner::v1::PartitionReadRequest const& request) {
           RouteToLeader(context);  // always for PartitionRead()
-          return stub->PartitionRead(context, options, request);
+          op_context->PreCall(context);
+          auto s = stub->PartitionRead(context, options, request, *op_context);
+          op_context->PostCall(context, s.status());
+          return s;
         },
         current, request, __func__);
     if (selector->has_begin()) {
       if (response.ok()) {
         if (!response->has_transaction()) {
           selector = MissingTransactionStatus(__func__);
+          op_context->OnDone(selector.status());
           return selector.status();
         }
         selector->set_id(response->transaction().id());
@@ -763,6 +799,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
     if (!response.ok()) {
       auto status = std::move(response).status();
+      op_context->OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -780,6 +817,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
           params.keys, params.columns, data_boost, params.read_options));
     }
 
+    op_context->OnDone(Status{});
     return read_partitions;
   }
 }
@@ -877,30 +915,33 @@ ResultType ConnectionImpl::CommonQueryImpl(
   if (!prepare_status.ok()) {
     return MakeStatusOnlyResult<ResultType>(std::move(prepare_status));
   }
-  // Capture a copy of of these to ensure the `shared_ptr<>` remains valid
-  // through the lifetime of the lambda. Note that the local variables are a
-  // reference to avoid increasing refcounts twice, but the capture is by value.
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
   auto const& retry_policy_prototype = RetryPolicyPrototype();
   auto const& backoff_policy_prototype = BackoffPolicyPrototype();
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
+  auto op_context = context_factory_->ExecuteStreamingSql();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
   auto retry_resume_fn =
-      [stub, retry_policy_prototype, backoff_policy_prototype,
-       route_to_leader = ctx.route_to_leader, tracing_enabled,
+      [stub = stub_and_channel.stub, op_context, retry_policy_prototype,
+       backoff_policy_prototype, route_to_leader = ctx.route_to_leader,
+       tracing_enabled,
        tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
-    auto factory = [stub, request, route_to_leader, tracing_enabled,
+    auto factory = [stub, request, op_context, route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
       auto context = std::make_shared<grpc::ClientContext>();
       auto const& options = internal::CurrentOptions();
       internal::ConfigureContext(*context, options);
       if (route_to_leader) RouteToLeader(*context);
-      auto stream = stub->ExecuteStreamingSql(context, options, request);
+      op_context->PreCall(*context);
+      auto stream =
+          stub->ExecuteStreamingSql(context, options, request, op_context);
       std::unique_ptr<PartialResultSetReader> reader =
-          std::make_unique<DefaultPartialResultSetReader>(std::move(context),
-                                                          std::move(stream));
+          std::make_unique<DefaultPartialResultSetReader>(
+              std::move(context), op_context, std::move(stream));
       if (tracing_enabled) {
         reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
                                                           tracing_options);
@@ -911,7 +952,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
-    return PartialResultSetSource::Create(std::move(rpc));
+    return PartialResultSetSource::Create(std::move(rpc), op_context);
   };
 
   StatusOr<ResultType> response =
@@ -955,27 +996,30 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   if (!prepare_status.ok()) {
     return prepare_status;
   }
-  // Capture a copy of of these to ensure the `shared_ptr<>` remains valid
-  // through the lifetime of the lambda. Note that the local variables are a
-  // reference to avoid increasing refcounts twice, but the capture is by value.
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto const& retry_policy_prototype = RetryPolicyPrototype(*current);
   auto const& backoff_policy_prototype = BackoffPolicyPrototype(*current);
+  auto op_context = context_factory_->ExecuteSql();
+  op_context->BindChannel(stub_and_channel.channel_id);
 
   auto retry_resume_fn =
-      [function_name, stub, retry_policy_prototype, backoff_policy_prototype,
-       session, route_to_leader = ctx.route_to_leader,
+      [function_name, stub = stub_and_channel.stub, op_context,
+       retry_policy_prototype, backoff_policy_prototype, session,
+       route_to_leader = ctx.route_to_leader,
        current](google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     StatusOr<google::spanner::v1::ResultSet> response = RetryLoop(
         retry_policy_prototype->clone(), backoff_policy_prototype->clone(),
         Idempotency::kIdempotent,
-        [stub, route_to_leader](
+        [stub, op_context, route_to_leader](
             grpc::ClientContext& context, Options const& options,
             google::spanner::v1::ExecuteSqlRequest const& request) {
           if (route_to_leader) RouteToLeader(context);
-          return stub->ExecuteSql(context, options, request);
+          op_context->PreCall(context);
+          auto s = stub->ExecuteSql(context, options, request, *op_context);
+          op_context->PostCall(context, s.status());
+          return s;
         },
         *current, request, function_name);
     if (!response) {
@@ -985,8 +1029,11 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     }
     return DmlResultSetSource::Create(std::move(*response));
   };
-  return ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
-                                    query_mode, std::move(retry_resume_fn));
+  auto result =
+      ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
+                                 query_mode, std::move(retry_resume_fn));
+  op_context->OnDone(result.status());
+  return result;
 }
 
 StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
@@ -1044,22 +1091,30 @@ ConnectionImpl::PartitionQueryImpl(
       std::move(*sql_statement.mutable_param_types());
   *request.mutable_partition_options() = ToProto(params.partition_options);
 
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
+  auto op_context = context_factory_->PartitionQuery();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
   auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
-        [&stub](grpc::ClientContext& context, Options const& options,
-                google::spanner::v1::PartitionQueryRequest const& request) {
+        [&stub = stub_and_channel.stub, &op_context](
+            grpc::ClientContext& context, Options const& options,
+            google::spanner::v1::PartitionQueryRequest const& request) {
           RouteToLeader(context);  // always for PartitionQuery()
-          return stub->PartitionQuery(context, options, request);
+          op_context->PreCall(context);
+          auto s = stub->PartitionQuery(context, options, request, *op_context);
+          op_context->PostCall(context, s.status());
+          return s;
         },
         current, request, __func__);
     if (selector->has_begin()) {
       if (response.ok()) {
         if (!response->has_transaction()) {
           selector = MissingTransactionStatus(__func__);
+          op_context->OnDone(selector.status());
           return selector.status();
         }
         selector->set_id(response->transaction().id());
@@ -1076,6 +1131,7 @@ ConnectionImpl::PartitionQueryImpl(
     }
     if (!response.ok()) {
       auto status = std::move(response).status();
+      op_context->OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -1087,6 +1143,7 @@ ConnectionImpl::PartitionQueryImpl(
           session->session_name(), partition.partition_token(),
           params.partition_options.data_boost, params.statement));
     }
+    op_context->OnDone(Status{});
     return query_partitions;
   }
 }
@@ -1118,16 +1175,24 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   request.mutable_request_options()->set_request_tag(request_tag);
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
+  auto op_context = context_factory_->ExecuteBatchDml();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
   auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
-        [&stub](grpc::ClientContext& context, Options const& options,
-                google::spanner::v1::ExecuteBatchDmlRequest const& request) {
+        [&stub = stub_and_channel.stub, &op_context](
+            grpc::ClientContext& context, Options const& options,
+            google::spanner::v1::ExecuteBatchDmlRequest const& request) {
           RouteToLeader(context);  // always for ExecuteBatchDml()
-          return stub->ExecuteBatchDml(context, options, request);
+          op_context->PreCall(context);
+          auto s =
+              stub->ExecuteBatchDml(context, options, request, *op_context);
+          op_context->PostCall(context, s.status());
+          return s;
         },
         current, request, __func__);
     if (response.ok() && response->has_precommit_token()) {
@@ -1137,6 +1202,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
       if (response.ok() && response->result_sets_size() > 0) {
         if (!response->result_sets(0).metadata().has_transaction()) {
           selector = MissingTransactionStatus(__func__);
+          op_context->OnDone(selector.status());
           return selector.status();
         }
         selector->set_id(
@@ -1154,6 +1220,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     }
     if (!response) {
       auto status = std::move(response).status();
+      op_context->OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -1162,6 +1229,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     for (auto const& result_set : response->result_sets()) {
       result.stats.push_back({result_set.stats().row_count_exact()});
     }
+    op_context->OnDone(result.status);
     return result;
   }
 }
@@ -1273,7 +1341,9 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
                                      GCP_ERROR_INFO());
   }
 
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
+  auto op_context = context_factory_->Commit();
+  op_context->BindChannel(stub_and_channel.channel_id);
   auto const& current = internal::CurrentOptions();
 
   char const* calling_func = __func__;
@@ -1286,15 +1356,20 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
           *request.mutable_precommit_token() = *token;
         }
 
-        return RetryLoop(
+        auto sor = RetryLoop(
             RetryPolicyPrototype(current)->clone(),
             BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
-            [&stub](grpc::ClientContext& context, Options const& options,
-                    google::spanner::v1::CommitRequest const& request) {
+            [&stub = stub_and_channel.stub, &op_context](
+                grpc::ClientContext& context, Options const& options,
+                google::spanner::v1::CommitRequest const& request) {
               RouteToLeader(context);  // always for Commit()
-              return stub->Commit(context, options, request);
+              op_context->PreCall(context);
+              auto s = stub->Commit(context, options, request, *op_context);
+              op_context->PostCall(context, s.status());
+              return s;
             },
             current, request, func);
+        return sor;
       };
 
   // If the CommitResponse contains a precommit token, it's a signal from the
@@ -1307,6 +1382,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     response = retry_loop_fn(ctx.precommit_token);
     if (!response) {
       auto status = std::move(response).status();
+      op_context->OnDone(status);
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
@@ -1316,6 +1392,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     }
   } while (response->has_precommit_token());
 
+  op_context->OnDone(response.status());
   spanner::CommitResult r;
   r.commit_timestamp = MakeTimestamp(response->commit_timestamp());
   if (response->has_commit_stats()) {
@@ -1353,17 +1430,24 @@ Status ConnectionImpl::RollbackImpl(
   google::spanner::v1::RollbackRequest request;
   request.set_session(session->session_name());
   request.set_transaction_id(selector->id());
-  auto stub = GetStubBasedOnSessionMode(*session, ctx);
+  auto stub_and_channel = GetStubBasedOnSessionMode(*session, ctx);
+  auto op_context = context_factory_->Rollback();
+  op_context->BindChannel(stub_and_channel.channel_id);
   auto const& current = internal::CurrentOptions();
   auto status = RetryLoop(
       RetryPolicyPrototype(current)->clone(),
       BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context, Options const& options,
-              google::spanner::v1::RollbackRequest const& request) {
+      [&stub = stub_and_channel.stub, &op_context](
+          grpc::ClientContext& context, Options const& options,
+          google::spanner::v1::RollbackRequest const& request) {
         RouteToLeader(context);  // always for Rollback()
-        return stub->Rollback(context, options, request);
+        op_context->PreCall(context);
+        auto s = stub->Rollback(context, options, request, *op_context);
+        op_context->PostCall(context, s);
+        return s;
       },
       current, request, __func__);
+  op_context->OnDone(status);
   if (IsSessionNotFound(status)) session->set_bad();
   return status;
 }
@@ -1404,14 +1488,18 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
 
   // There's no client-side transaction involved with BatchWrite, so no need
   // to store the resulting stub in the case of a Multiplexed Session.
-  auto stub = session_pool_->GetStub(*session);
-  auto factory = [stub = std::move(stub)](
+  auto stub_and_channel = session_pool_->GetStub(*session);
+  auto op_context = context_factory_->BatchWrite();
+  op_context->BindChannel(stub_and_channel.channel_id);
+
+  auto factory = [stub = stub_and_channel.stub, op_context](
                      google::spanner::v1::BatchWriteRequest const& request) {
     auto context = std::make_shared<grpc::ClientContext>();
     auto const& options = internal::CurrentOptions();
     internal::ConfigureContext(*context, options);
     RouteToLeader(*context);  // always for BatchWrite()
-    return stub->BatchWrite(std::move(context), options, request);
+    op_context->PreCall(*context);
+    return stub->BatchWrite(std::move(context), options, request, op_context);
   };
   auto updater = [](google::spanner::v1::BatchWriteResponse const&,
                     google::spanner::v1::BatchWriteRequest&) {
@@ -1422,15 +1510,38 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
       google::spanner::v1::BatchWriteRequest>(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       std::move(factory), std::move(updater), std::move(request));
+  struct BatchWriteGuard {
+    explicit BatchWriteGuard(std::shared_ptr<OperationContext> context)
+        : op_context(std::move(context)),
+          final_status(
+              internal::CancelledError("Stream cancelled", GCP_ERROR_INFO())) {}
+
+    ~BatchWriteGuard() {
+      if (!called && op_context) {
+        op_context->OnDone(final_status);
+      }
+    }
+
+    std::shared_ptr<OperationContext> op_context;
+    Status final_status;
+    bool called = false;
+  };
+  auto guard = std::make_shared<BatchWriteGuard>(op_context);
   // Because there is no enclosing client-side transaction, we move the
   // session into the stream range so that it is not returned to the pool
   // until the stream is exhausted.
   return internal::MakeStreamRange<spanner::BatchedCommitResult>(
-      [reader = std::move(reader), session = std::move(session)]()
-          -> std::variant<Status, spanner::BatchedCommitResult> {
+      [reader = std::move(reader), session = std::move(session),
+       guard = std::move(
+           guard)]() -> std::variant<Status, spanner::BatchedCommitResult> {
         google::spanner::v1::BatchWriteResponse response;
         auto result = reader->Read(&response);
         if (result.has_value()) {
+          guard->final_status = *result;
+          guard->called = true;
+          if (guard->op_context) {
+            guard->op_context->OnDone(*result);
+          }
           // "Session not found" can really only happen on the first
           // response, but, rather than tracking that, we just check
           // on non-first failures too.

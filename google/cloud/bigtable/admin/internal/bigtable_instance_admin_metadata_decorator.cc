@@ -218,6 +218,47 @@ Status BigtableInstanceAdminMetadata::DeleteCluster(
   return child_->DeleteCluster(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminMetadata::AsyncUpdateMemoryLayer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("memory_layer.name=",
+                           internal::UrlEncode(request.memory_layer().name())));
+  return child_->AsyncUpdateMemoryLayer(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::UpdateMemoryLayer(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("memory_layer.name=",
+                           internal::UrlEncode(request.memory_layer().name())));
+  return child_->UpdateMemoryLayer(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListMemoryLayersResponse>
+BigtableInstanceAdminMetadata::ListMemoryLayers(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMemoryLayersRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMemoryLayers(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminMetadata::GetMemoryLayer(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMemoryLayer(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminMetadata::CreateAppProfile(
     grpc::ClientContext& context, Options const& options,

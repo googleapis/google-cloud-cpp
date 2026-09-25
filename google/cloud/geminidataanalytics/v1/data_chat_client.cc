@@ -79,6 +79,26 @@ Status DataChatServiceClient::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceClient::UpdateConversation(
+    google::cloud::geminidataanalytics::v1::Conversation const& conversation,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::geminidataanalytics::v1::UpdateConversationRequest request;
+  *request.mutable_conversation() = conversation;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateConversation(request);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceClient::UpdateConversation(
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConversation(request);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceClient::GetConversation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::geminidataanalytics::v1::GetConversationRequest request;

@@ -8,3 +8,6 @@
 @googleapis//google/longrunning:operations_proto
 @googleapis//google/rpc:code_proto
 @googleapis//google/rpc:status_proto
+@googleapis//google/type:date_proto
+@googleapis//google/type:dayofweek_proto
+@googleapis//google/type:timeofday_proto

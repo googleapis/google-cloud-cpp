@@ -59,12 +59,23 @@ struct CloudTasksConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-tasks-options
+ */
+struct CloudTasksPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to CloudTasks.
  *
  * @ingroup google-cloud-tasks-options
  */
 using CloudTasksPolicyOptionList =
     OptionList<CloudTasksRetryPolicyOption, CloudTasksBackoffPolicyOption,
+               CloudTasksPollingPolicyOption,
                CloudTasksConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -47,6 +47,10 @@ class DataChatServiceConnectionIdempotencyPolicy {
       google::cloud::geminidataanalytics::v1::DeleteConversationRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateConversation(
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetConversation(
       google::cloud::geminidataanalytics::v1::GetConversationRequest const&
           request);

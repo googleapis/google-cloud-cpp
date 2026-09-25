@@ -336,6 +336,11 @@ class SecureSourceManagerStub {
             google::cloud::securesourcemanager::v1::FetchBlobRequest const&
                 request) = 0;
 
+  virtual StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse>
+  FetchRefs(grpc::ClientContext& context, Options const& options,
+            google::cloud::securesourcemanager::v1::FetchRefsRequest const&
+                request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateIssue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -889,6 +894,11 @@ class DefaultSecureSourceManagerStub : public SecureSourceManagerStub {
   StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse> FetchBlob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::securesourcemanager::v1::FetchBlobRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse> FetchRefs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::FetchRefsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateIssue(

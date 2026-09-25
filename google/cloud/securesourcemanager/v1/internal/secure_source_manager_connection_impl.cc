@@ -2001,6 +2001,42 @@ SecureSourceManagerConnectionImpl::FetchBlob(
       *current, request, __func__);
 }
 
+StreamRange<google::cloud::securesourcemanager::v1::Ref>
+SecureSourceManagerConnectionImpl::FetchRefs(
+    google::cloud::securesourcemanager::v1::FetchRefsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->FetchRefs(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::Ref>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::FetchRefsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securesourcemanager::v1::FetchRefsRequest const&
+                    request) {
+              return stub->FetchRefs(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::FetchRefsResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::Ref> result(
+            r.refs().size());
+        auto& messages = *r.mutable_refs();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
 SecureSourceManagerConnectionImpl::CreateIssue(
     google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {

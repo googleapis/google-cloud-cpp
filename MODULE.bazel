@@ -35,8 +35,8 @@ bazel_dep(name = "nlohmann_json", version = "3.12.0.bcr.1")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")
 bazel_dep(name = "opentelemetry-cpp", version = "1.24.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_python", version = "2.3.3")
-bazel_dep(name = "rules_apple", version = "5.1.0")
+bazel_dep(name = "rules_python", version = "2.3.4")
+bazel_dep(name = "rules_apple", version = "5.2.0")
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 
 bazel_dep(name = "google_benchmark", version = "1.9.5", dev_dependency = True, repo_name = "com_google_benchmark")
@@ -53,6 +53,6 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.84.0")
-bazel_dep(name = "googleapis", version = "0.0.0-20260825-d10ac924")
+bazel_dep(name = "googleapis", version = "0.0.0-20260922-d6b44118")
 bazel_dep(name = "googleapis-cc", version = "1.1.5")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")

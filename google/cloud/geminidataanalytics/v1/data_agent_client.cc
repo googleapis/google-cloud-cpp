@@ -314,6 +314,84 @@ StatusOr<google::iam::v1::Policy> DataAgentServiceClient::SetIamPolicy(
   return connection_->SetIamPolicy(request);
 }
 
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceClient::SetAgentOpsObservability(
+    std::string const& parent, bool telemetry_enabled,
+    std::string const& data_source_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityRequest
+      request;
+  request.set_parent(parent);
+  request.set_telemetry_enabled(telemetry_enabled);
+  request.set_data_source_type(data_source_type);
+  return connection_->SetAgentOpsObservability(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceClient::SetAgentOpsObservability(
+    NoAwaitTag, std::string const& parent, bool telemetry_enabled,
+    std::string const& data_source_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityRequest
+      request;
+  request.set_parent(parent);
+  request.set_telemetry_enabled(telemetry_enabled);
+  request.set_data_source_type(data_source_type);
+  return connection_->SetAgentOpsObservability(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceClient::SetAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetAgentOpsObservability(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceClient::SetAgentOpsObservability(
+    NoAwaitTag,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetAgentOpsObservability(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceClient::SetAgentOpsObservability(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetAgentOpsObservability(operation);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceClient::RetrieveAgentOpsObservability(
+    std::string const& parent, std::string const& data_source_type,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::geminidataanalytics::v1::RetrieveAgentOpsObservabilityRequest
+      request;
+  request.set_parent(parent);
+  request.set_data_source_type(data_source_type);
+  return connection_->RetrieveAgentOpsObservability(request);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceClient::RetrieveAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RetrieveAgentOpsObservability(request);
+}
+
 StreamRange<google::cloud::location::Location>
 DataAgentServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

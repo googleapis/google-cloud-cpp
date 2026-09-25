@@ -70,6 +70,19 @@ Status DefaultDataChatServiceStub::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DefaultDataChatServiceStub::UpdateConversation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request) {
+  google::cloud::geminidataanalytics::v1::Conversation response;
+  auto status = grpc_stub_->UpdateConversation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DefaultDataChatServiceStub::GetConversation(
     grpc::ClientContext& context, Options const&,
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&

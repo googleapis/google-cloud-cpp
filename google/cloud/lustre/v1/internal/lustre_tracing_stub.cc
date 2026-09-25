@@ -134,6 +134,33 @@ StatusOr<google::longrunning::Operation> LustreTracingStub::DeleteInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LustreTracingStub::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "RescheduleMaintenance");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRescheduleMaintenance(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreTracingStub::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "RescheduleMaintenance");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RescheduleMaintenance(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LustreTracingStub::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -183,6 +210,182 @@ StatusOr<google::longrunning::Operation> LustreTracingStub::ExportData(
                            child_->ExportData(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+LustreTracingStub::AsyncCreateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CreateMirror");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateMirror(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> LustreTracingStub::CreateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CreateMirror");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateMirror(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreTracingStub::AsyncUpdateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "UpdateMirror");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateMirror(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> LustreTracingStub::UpdateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "UpdateMirror");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateMirror(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreTracingStub::AsyncDeleteMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteMirror");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteMirror(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> LustreTracingStub::DeleteMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteMirror");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteMirror(context, options, request));
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreTracingStub::GetMirror(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetMirror");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetMirror(context, options, request));
+}
+
+StatusOr<google::cloud::lustre::v1::ListMirrorsResponse>
+LustreTracingStub::ListMirrors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListMirrors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListMirrors(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreTracingStub::AsyncCreateDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "CreateDirectoryPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateDirectoryPolicy(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreTracingStub::CreateDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "CreateDirectoryPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDirectoryPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreTracingStub::AsyncDeleteDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "DeleteDirectoryPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteDirectoryPolicy(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreTracingStub::DeleteDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "DeleteDirectoryPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDirectoryPolicy(context, options, request));
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreTracingStub::GetDirectoryPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "GetDirectoryPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetDirectoryPolicy(context, options, request));
+}
+
+StatusOr<google::cloud::lustre::v1::ListDirectoryPoliciesResponse>
+LustreTracingStub::ListDirectoryPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "ListDirectoryPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListDirectoryPolicies(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 LustreTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -204,6 +407,40 @@ StatusOr<google::cloud::location::Location> LustreTracingStub::GetLocation(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> LustreTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> LustreTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>

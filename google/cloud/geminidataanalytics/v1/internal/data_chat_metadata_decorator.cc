@@ -78,6 +78,17 @@ Status DataChatServiceMetadata::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceMetadata::UpdateConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("conversation.name=",
+                           internal::UrlEncode(request.conversation().name())));
+  return child_->UpdateConversation(context, options, request);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceMetadata::GetConversation(
     grpc::ClientContext& context, Options const& options,
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&

@@ -530,6 +530,50 @@ DlpServiceMetadata::UpdateConnection(
   return child_->UpdateConnection(context, options, request);
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceMetadata::CreateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateContentPolicy(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceMetadata::UpdateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateContentPolicy(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceMetadata::GetContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetContentPolicy(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+DlpServiceMetadata::ListContentPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListContentPoliciesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListContentPolicies(context, options, request);
+}
+
+Status DlpServiceMetadata::DeleteContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteContentPolicy(context, options, request);
+}
+
 void DlpServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                      Options const& options,
                                      std::string const& request_params) {

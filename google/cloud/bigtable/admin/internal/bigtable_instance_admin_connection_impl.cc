@@ -624,6 +624,150 @@ Status BigtableInstanceAdminConnectionImpl::DeleteCluster(
       *current, request, __func__);
 }
 
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminConnectionImpl::UpdateMemoryLayer(
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateMemoryLayer(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::MemoryLayer>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::bigtable::admin::v2::UpdateMemoryLayerRequest const&
+              request) {
+        return stub->AsyncUpdateMemoryLayer(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::MemoryLayer>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminConnectionImpl::UpdateMemoryLayer(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateMemoryLayer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateMemoryLayerRequest const&
+                 request) {
+        return stub_->UpdateMemoryLayer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminConnectionImpl::UpdateMemoryLayer(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::bigtable::admin::v2::
+                   UpdateMemoryLayerMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::bigtable::admin::v2::MemoryLayer>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateMemoryLayer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::bigtable::admin::v2::MemoryLayer>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::MemoryLayer>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminConnectionImpl::ListMemoryLayers(
+    google::bigtable::admin::v2::ListMemoryLayersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMemoryLayers(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::bigtable::admin::v2::MemoryLayer>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::bigtable::admin::v2::ListMemoryLayersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::bigtable::admin::v2::ListMemoryLayersRequest const&
+                       request) {
+              return stub->ListMemoryLayers(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::bigtable::admin::v2::ListMemoryLayersResponse r) {
+        std::vector<google::bigtable::admin::v2::MemoryLayer> result(
+            r.memory_layers().size());
+        auto& messages = *r.mutable_memory_layers();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminConnectionImpl::GetMemoryLayer(
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMemoryLayer(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+        return stub_->GetMemoryLayer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminConnectionImpl::CreateAppProfile(
     google::bigtable::admin::v2::CreateAppProfileRequest const& request) {

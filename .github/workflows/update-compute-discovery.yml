@@ -24,8 +24,8 @@ jobs:
 
       - name: Setup Git user identity
         run: |
-          git config user.name "cloud-cpp-automation[bot]"
-          git config user.email "cloud-cpp-automation[bot]@users.noreply.github.com"
+          git config user.name "google-cloud-cpp-bot"
+          git config user.email "google-cloud-cpp-bot@google.com"
 
       - name: Run update_discovery_doc.sh
         run: |
@@ -50,6 +50,7 @@ jobs:
       - name: Push branch and create Pull Request if changes exist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_TOKEN: ${{ secrets.GOOGLE_CLOUD_CPP_BOT_TOKEN }}
         run: |
           # Fetch latest main from remote and rebase any newly generated commits on top of it.
           # This ensures the pushed branch includes any workflow updates made on main while the
@@ -72,20 +73,41 @@ jobs:
 
           # Check if a new commit was made (HEAD differs from FETCH_HEAD)
           if [[ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]]; then
-            echo "Changes detected. Pushing branch automation/update-compute-discovery..."
-            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:automation/update-compute-discovery --force
+            if [[ -n "${BOT_TOKEN}" ]]; then
+              BOT_USER="google-cloud-cpp-bot"
+              echo "Ensuring fork ${BOT_USER}/google-cloud-cpp exists and is synced..."
+              GH_TOKEN="${BOT_TOKEN}" gh api -X POST "repos/${GITHUB_REPOSITORY}/forks" --silent
+              for _ in {1..15}; do
+                if GH_TOKEN="${BOT_TOKEN}" gh api "repos/${BOT_USER}/google-cloud-cpp" --silent 2>/dev/null; then
+                  break
+                fi
+                sleep 2
+              done
+              GH_TOKEN="${BOT_TOKEN}" gh api -X POST "repos/${BOT_USER}/google-cloud-cpp/merge-upstream" -f branch=main --silent || true
+
+              echo "Changes detected. Pushing branch automation/update-compute-discovery to ${BOT_USER}/google-cloud-cpp..."
+              git push "https://x-access-token:${BOT_TOKEN}@github.com/${BOT_USER}/google-cloud-cpp.git" HEAD:automation/update-compute-discovery --force
+              HEAD_REF="${BOT_USER}:automation/update-compute-discovery"
+              PR_CREATOR_TOKEN="${BOT_TOKEN}"
+            else
+              echo "Changes detected. Pushing branch automation/update-compute-discovery..."
+              git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:automation/update-compute-discovery --force
+              HEAD_REF="automation/update-compute-discovery"
+              PR_CREATOR_TOKEN="${GH_TOKEN}"
+            fi
 
             echo "Checking if a PR is already open..."
             if ! gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
               echo "Opening new PR..."
               BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
-              gh pr create \
+              PR_URL=$(GH_TOKEN="${PR_CREATOR_TOKEN}" gh pr create \
                 --repo "${GITHUB_REPOSITORY}" \
                 --title "feat(compute): update discovery doc and generate new services" \
                 --body "$(printf '%b' "$BODY")" \
                 --base main \
-                --head automation/update-compute-discovery \
-                --label "api: compute"
+                --head "${HEAD_REF}")
+              echo "Created PR: ${PR_URL}"
+              gh pr edit "${PR_URL}" --repo "${GITHUB_REPOSITORY}" --add-label "api: compute"
             else
               echo "Pull request already exists for automation/update-compute-discovery. Branch has been updated."
             fi

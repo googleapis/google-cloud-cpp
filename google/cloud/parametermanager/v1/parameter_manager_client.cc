@@ -233,6 +233,206 @@ Status ParameterManagerClient::DeleteParameterVersion(
   return connection_->DeleteParameterVersion(request);
 }
 
+StreamRange<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::ListTemplates(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::ListTemplatesRequest request;
+  request.set_parent(parent);
+  return connection_->ListTemplates(request);
+}
+
+StreamRange<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::ListTemplates(
+    google::cloud::parametermanager::v1::ListTemplatesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTemplates(std::move(request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::GetTemplate(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::GetTemplateRequest request;
+  request.set_name(name);
+  return connection_->GetTemplate(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::GetTemplate(
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTemplate(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::CreateTemplate(
+    std::string const& parent,
+    google::cloud::parametermanager::v1::Template const& template_,
+    std::string const& template_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::CreateTemplateRequest request;
+  request.set_parent(parent);
+  *request.mutable_template_() = template_;
+  request.set_template_id(template_id);
+  return connection_->CreateTemplate(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::CreateTemplate(
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTemplate(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::UpdateTemplate(
+    google::cloud::parametermanager::v1::Template const& template_,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::UpdateTemplateRequest request;
+  *request.mutable_template_() = template_;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTemplate(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerClient::UpdateTemplate(
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTemplate(request);
+}
+
+Status ParameterManagerClient::DeleteTemplate(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::DeleteTemplateRequest request;
+  request.set_name(name);
+  return connection_->DeleteTemplate(request);
+}
+
+Status ParameterManagerClient::DeleteTemplate(
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTemplate(request);
+}
+
+StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::ListTemplateVersions(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::ListTemplateVersionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListTemplateVersions(request);
+}
+
+StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::ListTemplateVersions(
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTemplateVersions(std::move(request));
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::GetTemplateVersion(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::GetTemplateVersionRequest request;
+  request.set_name(name);
+  return connection_->GetTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::GetTemplateVersion(
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::CreateTemplateVersion(
+    std::string const& parent,
+    google::cloud::parametermanager::v1::TemplateVersion const&
+        template_version,
+    std::string const& template_version_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::CreateTemplateVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_template_version() = template_version;
+  request.set_template_version_id(template_version_id);
+  return connection_->CreateTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::CreateTemplateVersion(
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::UpdateTemplateVersion(
+    google::cloud::parametermanager::v1::TemplateVersion const&
+        template_version,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::UpdateTemplateVersionRequest request;
+  *request.mutable_template_version() = template_version;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerClient::UpdateTemplateVersion(
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTemplateVersion(request);
+}
+
+Status ParameterManagerClient::DeleteTemplateVersion(std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::DeleteTemplateVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteTemplateVersion(request);
+}
+
+Status ParameterManagerClient::DeleteTemplateVersion(
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerClient::RenderTemplateVersion(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::parametermanager::v1::RenderTemplateVersionRequest request;
+  request.set_name(name);
+  return connection_->RenderTemplateVersion(request);
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerClient::RenderTemplateVersion(
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RenderTemplateVersion(request);
+}
+
 StreamRange<google::cloud::location::Location>
 ParameterManagerClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

@@ -34,6 +34,26 @@ AuditManagerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AuditManagerConnectionIdempotencyPolicy>(*this);
 }
 
+Idempotency AuditManagerConnectionIdempotencyPolicy::CreateAuditSchedule(
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AuditManagerConnectionIdempotencyPolicy::UpdateAuditSchedule(
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AuditManagerConnectionIdempotencyPolicy::GetAuditSchedule(
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AuditManagerConnectionIdempotencyPolicy::ListAuditSchedules(
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency AuditManagerConnectionIdempotencyPolicy::EnrollResource(
     google::cloud::auditmanager::v1::EnrollResourceRequest const&) {
   return Idempotency::kNonIdempotent;

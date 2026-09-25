@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
@@ -58,6 +60,11 @@ future<ReadResponse> AsyncReaderConnectionResume::Read(
 future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
   if (std::holds_alternative<storage::ReadPayload>(r)) {
     resume_policy_->OnStartSuccess();
+    // Data arrived, so whatever we were recovering from is over. The next
+    // failure starts a new count, which is what makes the attempt number in
+    // the log describe the current stall rather than the lifetime of the
+    // download. `RetryObjectReadSource::Read()` counts the same way.
+    resume_count_ = 0;
     auto response = std::get<storage::ReadPayload>(std::move(r));
     hash_validator_->ProcessHashValues(
         ReadPayloadImpl::GetObjectHashes(response).value_or(
@@ -108,6 +115,20 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
   if (resume_policy_->OnFinish(status) == ResumePolicy::kStop) {
     CheckOverrun();
     return make_ready_future(std::move(r));
+  }
+  // The resume policy has decided to continue, so this download is being
+  // resumed. Without this the caller only observes extra latency.
+  //
+  // The built-in resume policies only count failures, they return `kContinue`
+  // for a permanent error such as `PERMISSION_DENIED` too, and leave it to the
+  // retry loop inside `reader_factory_` to give up on it. Describing that as a
+  // transient error retried would be wrong, so only transient errors are
+  // reported, and only they advance the attempt count.
+  if (!storage::internal::AsyncStatusTraits::IsPermanentFailure(status)) {
+    ++resume_count_;
+    LogTransientRetry("ReadObject/resume",
+                      RetryLogResource(bucket_name_, object_name_), status,
+                      resume_count_);
   }
   return Reconnect();
 }

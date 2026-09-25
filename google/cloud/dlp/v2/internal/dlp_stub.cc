@@ -692,6 +692,65 @@ DefaultDlpServiceStub::UpdateConnection(
   return response;
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DefaultDlpServiceStub::CreateContentPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  google::privacy::dlp::v2::ContentPolicy response;
+  auto status = grpc_stub_->CreateContentPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DefaultDlpServiceStub::UpdateContentPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  google::privacy::dlp::v2::ContentPolicy response;
+  auto status = grpc_stub_->UpdateContentPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DefaultDlpServiceStub::GetContentPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  google::privacy::dlp::v2::ContentPolicy response;
+  auto status = grpc_stub_->GetContentPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+DefaultDlpServiceStub::ListContentPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::ListContentPoliciesRequest const& request) {
+  google::privacy::dlp::v2::ListContentPoliciesResponse response;
+  auto status = grpc_stub_->ListContentPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDlpServiceStub::DeleteContentPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteContentPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2_internal
 }  // namespace cloud

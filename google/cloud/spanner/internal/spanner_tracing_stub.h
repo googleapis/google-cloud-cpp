@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_TRACING_STUB_H
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <functional>
 #include <memory>
 
 // Must be included last.
@@ -37,101 +39,135 @@ class SpannerTracingStub : public SpannerStub {
  public:
   ~SpannerTracingStub() override = default;
 
-  explicit SpannerTracingStub(std::shared_ptr<SpannerStub> child);
+  explicit SpannerTracingStub(
+      std::shared_ptr<SpannerStub> child,
+      std::function<void(opentelemetry::trace::Span&,
+                         spanner_internal::OperationContext const&)>
+          op_ctx_fn);
 
   StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::CreateSessionRequest const& request) override;
+      google::spanner::v1::CreateSessionRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
   BatchCreateSessions(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
+      google::spanner::v1::BatchCreateSessionsRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   Status DeleteSession(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::DeleteSessionRequest const& request) override;
+      google::spanner::v1::DeleteSessionRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::ExecuteSqlRequest const& request) override;
+      google::spanner::v1::ExecuteSqlRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::PartialResultSet>>
-  ExecuteStreamingSql(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::spanner::v1::ExecuteSqlRequest const& request) override;
+  ExecuteStreamingSql(std::shared_ptr<grpc::ClientContext> context,
+                      Options const& options,
+                      google::spanner::v1::ExecuteSqlRequest const& request,
+                      std::shared_ptr<spanner_internal::OperationContext>
+                          operation_context) override;
 
   StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::ExecuteBatchDmlRequest const& request) override;
+      google::spanner::v1::ExecuteBatchDmlRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::PartialResultSet>>
   StreamingRead(std::shared_ptr<grpc::ClientContext> context,
                 Options const& options,
-                google::spanner::v1::ReadRequest const& request) override;
+                google::spanner::v1::ReadRequest const& request,
+                std::shared_ptr<spanner_internal::OperationContext>
+                    operation_context) override;
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::BeginTransactionRequest const& request) override;
+      google::spanner::v1::BeginTransactionRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   StatusOr<google::spanner::v1::CommitResponse> Commit(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::CommitRequest const& request) override;
+      google::spanner::v1::CommitRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
-  Status Rollback(grpc::ClientContext& context, Options const& options,
-                  google::spanner::v1::RollbackRequest const& request) override;
+  Status Rollback(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::v1::RollbackRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   StatusOr<google::spanner::v1::PartitionResponse> PartitionQuery(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::PartitionQueryRequest const& request) override;
+      google::spanner::v1::PartitionQueryRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
       grpc::ClientContext& context, Options const& options,
-      google::spanner::v1::PartitionReadRequest const& request) override;
+      google::spanner::v1::PartitionReadRequest const& request,
+      spanner_internal::OperationContext& operation_context) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::BatchWriteResponse>>
   BatchWrite(std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
-             google::spanner::v1::BatchWriteRequest const& request) override;
+             google::spanner::v1::BatchWriteRequest const& request,
+             std::shared_ptr<spanner_internal::OperationContext>
+                 operation_context) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::spanner::v1::CacheUpdate>>
-  FetchCacheUpdate(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::spanner::v1::FetchCacheUpdateRequest const& request) override;
+  FetchCacheUpdate(std::shared_ptr<grpc::ClientContext> context,
+                   Options const& options,
+                   google::spanner::v1::FetchCacheUpdateRequest const& request,
+                   std::shared_ptr<spanner_internal::OperationContext>
+                       operation_context) override;
 
   future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::v1::CreateSessionRequest const& request) override;
+      google::spanner::v1::CreateSessionRequest const& request,
+      std::shared_ptr<spanner_internal::OperationContext> operation_context)
+      override;
 
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
+      google::spanner::v1::BatchCreateSessionsRequest const& request,
+      std::shared_ptr<spanner_internal::OperationContext> operation_context)
+      override;
 
   future<Status> AsyncDeleteSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::v1::DeleteSessionRequest const& request) override;
+      google::spanner::v1::DeleteSessionRequest const& request,
+      std::shared_ptr<spanner_internal::OperationContext> operation_context)
+      override;
 
   future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::v1::ExecuteSqlRequest const& request) override;
+      google::spanner::v1::ExecuteSqlRequest const& request,
+      std::shared_ptr<spanner_internal::OperationContext> operation_context)
+      override;
 
  private:
   std::shared_ptr<SpannerStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
+  std::function<void(opentelemetry::trace::Span&,
+                     spanner_internal::OperationContext const&)>
+      op_ctx_fn_;
 };
 
 /**
@@ -140,6 +176,12 @@ class SpannerTracingStub : public SpannerStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
+std::shared_ptr<SpannerStub> MakeSpannerTracingStub(
+    std::shared_ptr<SpannerStub> stub,
+    std::function<void(opentelemetry::trace::Span&,
+                       spanner_internal::OperationContext const&)>
+        op_ctx_fn);
+
 std::shared_ptr<SpannerStub> MakeSpannerTracingStub(
     std::shared_ptr<SpannerStub> stub);
 

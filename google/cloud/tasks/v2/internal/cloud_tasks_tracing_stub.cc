@@ -190,6 +190,33 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::CreateTask(
                            child_->CreateTask(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksTracingStub::AsyncBatchCreateTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "BatchCreateTasks");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncBatchCreateTasks(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudTasksTracingStub::BatchCreateTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "BatchCreateTasks");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BatchCreateTasks(context, options, request));
+}
+
 Status CloudTasksTracingStub::DeleteTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
@@ -201,6 +228,33 @@ Status CloudTasksTracingStub::DeleteTask(
                            child_->DeleteTask(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksTracingStub::AsyncBatchDeleteTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "BatchDeleteTasks");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncBatchDeleteTasks(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudTasksTracingStub::BatchDeleteTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "BatchDeleteTasks");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BatchDeleteTasks(context, options, request));
+}
+
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::RunTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
@@ -210,6 +264,30 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::RunTask(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RunTask(context, options, request));
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksTracingStub::UpdateCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "UpdateCmekConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCmekConfig(context, options, request));
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksTracingStub::GetCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "GetCmekConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetCmekConfig(context, options, request));
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -233,6 +311,45 @@ StatusOr<google::cloud::location::Location> CloudTasksTracingStub::GetLocation(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksTracingStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<Status> CloudTasksTracingStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 std::shared_ptr<CloudTasksStub> MakeCloudTasksTracingStub(

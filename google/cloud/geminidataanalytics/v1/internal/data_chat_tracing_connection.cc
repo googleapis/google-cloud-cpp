@@ -62,6 +62,16 @@ Status DataChatServiceTracingConnection::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceTracingConnection::UpdateConversation(
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "geminidataanalytics_v1::DataChatServiceConnection::UpdateConversation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateConversation(request));
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceTracingConnection::GetConversation(
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&
         request) {
