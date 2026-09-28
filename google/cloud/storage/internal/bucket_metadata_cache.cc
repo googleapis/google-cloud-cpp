@@ -34,9 +34,10 @@ BucketCacheEntry BucketCacheEntry::FromLocation(
 
 BucketCacheEntry BucketCacheEntry::FromMetadata(
     storage::BucketMetadata const& m) {
-  return FromLocation(
-      "//storage.googleapis.com/projects/" + std::to_string(m.project_number()) + "/buckets/" + m.name(),
-      m.location(), m.location_type());
+  return FromLocation("//storage.googleapis.com/projects/" +
+                          std::to_string(m.project_number()) + "/buckets/" +
+                          m.name(),
+                      m.location(), m.location_type());
 }
 
 std::string BucketMetadataCache::NormalizeBucketName(
