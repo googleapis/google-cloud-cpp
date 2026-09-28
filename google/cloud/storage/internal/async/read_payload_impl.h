@@ -52,7 +52,10 @@ struct ReadPayloadImpl {
   /// Append the data from @p rhs to @p lhs.
   static void Accumulate(storage::ReadPayload& lhs,
                          storage::ReadPayload&& rhs) {
-    if (lhs.impl_.empty()) {
+    // Only replace `lhs` if it holds no data *and* no metadata. A 0-byte
+    // object (or range) produces a payload with empty contents but valid
+    // metadata, which must not be discarded by later (e.g. EOF) payloads.
+    if (lhs.impl_.empty() && !lhs.metadata_.has_value()) {
       lhs = std::move(rhs);
       return;
     }
