@@ -18,11 +18,6 @@
 #include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/span.h>
-#include <opentelemetry/trace/tracer.h>
-#include <chrono>
-#include <functional>
 
 namespace google {
 namespace cloud {
