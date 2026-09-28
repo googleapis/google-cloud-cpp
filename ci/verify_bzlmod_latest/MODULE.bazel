@@ -1,0 +1,51 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Verifies that google_cloud_cpp builds with the latest versions of dependencies."""
+
+module(name = "google_cloud_cpp_verify_bzlmod_latest")
+
+bazel_dep(name = "google_cloud_cpp", version = "0.0.0")
+local_path_override(
+    module_name = "google_cloud_cpp",
+    path = "../..",
+)
+
+# Under Bzlmod Minimal Version Selection (MVS), specifying higher versions in this
+# root module overrides the minimum versions requested by transitive dependencies.
+# Keep these dependencies updated to their latest released versions.
+bazel_dep(name = "platforms", version = "1.1.0")
+bazel_dep(name = "bazel_skylib", version = "1.9.2")
+bazel_dep(name = "rules_cc", version = "0.2.25")
+bazel_dep(name = "abseil-cpp", version = "20260817.0")
+bazel_dep(name = "protobuf", version = "36.2", repo_name = "com_google_protobuf")
+bazel_dep(name = "boringssl", version = "0.20260413.0")
+bazel_dep(name = "nlohmann_json", version = "3.12.0.bcr.2")
+bazel_dep(name = "curl", version = "8.22.0")
+bazel_dep(name = "opentelemetry-cpp", version = "1.29.0")
+bazel_dep(name = "rules_proto", version = "7.1.0")
+bazel_dep(name = "rules_python", version = "2.3.4")
+bazel_dep(name = "rules_apple", version = "5.1.0")
+bazel_dep(name = "googletest", version = "1.18.0.bcr.1")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
+
+bazel_dep(name = "grpc", version = "1.84.0")
+bazel_dep(name = "googleapis", version = "0.0.0-20260922-d6b44118")
+bazel_dep(name = "googleapis-cc", version = "1.1.5")
+bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")
