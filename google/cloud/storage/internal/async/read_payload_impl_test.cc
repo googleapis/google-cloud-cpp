@@ -147,6 +147,27 @@ TEST(ReadPayload, AccumulateEmptyWithMetadataThenData) {
                   Field(&storage::internal::HashValues::md5, "test-md5"))));
 }
 
+// An empty payload without metadata may still carry headers, an offset, or
+// object hashes. None of these should be discarded by later payloads.
+TEST(ReadPayload, AccumulateEmptyWithoutMetadataKeepsOtherFields) {
+  storage::ReadPayload actual = ReadPayloadImpl::Make(absl::Cord())
+                                    .set_headers({{"k1", "v1"}})
+                                    .set_offset(1024);
+  ReadPayloadImpl::SetObjectHashes(
+      actual, storage::internal::HashValues{"test-crc32c", "test-md5"});
+  ReadPayloadImpl::Accumulate(
+      actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(1024));
+  ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
+  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_FALSE(actual.metadata().has_value());
+  EXPECT_THAT(actual.headers(), UnorderedElementsAre(Pair("k1", "v1")));
+  EXPECT_EQ(actual.offset(), 1024);
+  EXPECT_THAT(ReadPayloadImpl::GetObjectHashes(actual),
+              Optional(AllOf(
+                  Field(&storage::internal::HashValues::crc32c, "test-crc32c"),
+                  Field(&storage::internal::HashValues::md5, "test-md5"))));
+}
+
 TEST(ReadPayload, AccumulateEmptyIntoEmpty) {
   storage::ReadPayload actual;
   ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
