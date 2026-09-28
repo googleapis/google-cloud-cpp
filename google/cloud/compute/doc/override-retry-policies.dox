@@ -94,6 +94,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-retry-snippet)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-retry-snippet)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-retry-snippet)
+- [\c compute_global_frontend_settings_v1::GlobalFrontendSettingsClient](@ref compute_global_frontend_settings_v1::GlobalFrontendSettingsClient-retry-snippet)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-retry-snippet)
 - [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-retry-snippet)
 - [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-retry-snippet)
@@ -104,6 +105,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-retry-snippet)
 - [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-retry-snippet)
 - [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-retry-snippet)
+- [\c compute_image_views_v1::ImageViewsClient](@ref compute_image_views_v1::ImageViewsClient-retry-snippet)
 - [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-retry-snippet)
 - [\c compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient](@ref compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-retry-snippet)
 - [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-retry-snippet)
@@ -123,6 +125,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-retry-snippet)
 - [\c compute_machine_images_v1::MachineImagesClient](@ref compute_machine_images_v1::MachineImagesClient-retry-snippet)
 - [\c compute_machine_types_v1::MachineTypesClient](@ref compute_machine_types_v1::MachineTypesClient-retry-snippet)
+- [\c compute_managed_rulesets_v1::ManagedRulesetsClient](@ref compute_managed_rulesets_v1::ManagedRulesetsClient-retry-snippet)
 - [\c compute_network_attachments_v1::NetworkAttachmentsClient](@ref compute_network_attachments_v1::NetworkAttachmentsClient-retry-snippet)
 - [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-retry-snippet)
 - [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-retry-snippet)
@@ -135,6 +138,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-retry-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-retry-snippet)
 - [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-retry-snippet)
+- [\c compute_project_views_v1::ProjectViewsClient](@ref compute_project_views_v1::ProjectViewsClient-retry-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-retry-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-retry-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-retry-snippet)
@@ -400,6 +404,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page compute_global_frontend_settings_v1::GlobalFrontendSettingsClient-retry-snippet Override compute_global_frontend_settings_v1::GlobalFrontendSettingsClient Retry Policies
+
+This shows how to override the retry policies for compute_global_frontend_settings_v1::GlobalFrontendSettingsClient:
+
+@snippet google/cloud/compute/global_frontend_settings/v1/samples/global_frontend_settings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_frontend_settings/v1/samples/global_frontend_settings_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-retry-snippet Override compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient Retry Policies
 
 This shows how to override the retry policies for compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient:
@@ -517,6 +533,18 @@ This shows how to override the retry policies for compute_image_family_views_v1:
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_image_views_v1::ImageViewsClient-retry-snippet Override compute_image_views_v1::ImageViewsClient Retry Policies
+
+This shows how to override the retry policies for compute_image_views_v1::ImageViewsClient:
+
+@snippet google/cloud/compute/image_views/v1/samples/image_views_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/image_views/v1/samples/image_views_client_samples.cc custom-idempotency-policy
 
 */
 
@@ -748,6 +776,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page compute_managed_rulesets_v1::ManagedRulesetsClient-retry-snippet Override compute_managed_rulesets_v1::ManagedRulesetsClient Retry Policies
+
+This shows how to override the retry policies for compute_managed_rulesets_v1::ManagedRulesetsClient:
+
+@snippet google/cloud/compute/managed_rulesets/v1/samples/managed_rulesets_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/managed_rulesets/v1/samples/managed_rulesets_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page compute_network_attachments_v1::NetworkAttachmentsClient-retry-snippet Override compute_network_attachments_v1::NetworkAttachmentsClient Retry Policies
 
 This shows how to override the retry policies for compute_network_attachments_v1::NetworkAttachmentsClient:
@@ -889,6 +929,18 @@ This shows how to override the retry policies for compute_preview_features_v1::P
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_project_views_v1::ProjectViewsClient-retry-snippet Override compute_project_views_v1::ProjectViewsClient Retry Policies
+
+This shows how to override the retry policies for compute_project_views_v1::ProjectViewsClient:
+
+@snippet google/cloud/compute/project_views/v1/samples/project_views_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/project_views/v1/samples/project_views_client_samples.cc custom-idempotency-policy
 
 */
 
