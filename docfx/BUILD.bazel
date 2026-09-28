@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load(":docfx.bzl", "docfx_hdrs", "docfx_srcs")
 load(":docfx_testing.bzl", "docfx_testing_hdrs", "docfx_testing_srcs")
 load(":unit_tests.bzl", "unit_tests")

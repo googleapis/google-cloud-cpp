@@ -13,6 +13,8 @@
 # limitations under the License.
 
 load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load(":configure_template.bzl", "configure_template")
 
 package(default_visibility = ["//visibility:public"])

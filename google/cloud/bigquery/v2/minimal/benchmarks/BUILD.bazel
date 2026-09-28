@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load(":experimental_bigquery_rest_client_benchmark_programs.bzl", "experimental_bigquery_rest_client_benchmark_programs")
 load(":experimental_bigquery_rest_client_benchmark_unit_tests.bzl", "experimental_bigquery_rest_client_benchmark_unit_tests")
 load(":experimental_bigquery_rest_client_benchmarks.bzl", "experimental_bigquery_rest_client_benchmarks_hdrs", "experimental_bigquery_rest_client_benchmarks_srcs")

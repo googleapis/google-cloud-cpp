@@ -1,6 +1,8 @@
 module(name = "google-cloud-cpp-verify-deprecated-targets")
 
 bazel_dep(name = "google_cloud_cpp", version = "0.0.0")
+bazel_dep(name = "rules_cc", version = "0.2.25")
+
 local_path_override(
     module_name = "google_cloud_cpp",
     path = "../..",
