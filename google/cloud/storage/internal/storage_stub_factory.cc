@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
@@ -113,11 +114,20 @@ CreateStorageStub(google::cloud::CompletionQueue cq, Options const& options) {
         return std::make_shared<DefaultStorageStub>(
             google::storage::v2::Storage::NewStub(std::move(c)));
       });
-  (void)StartChannelTelemetry(
-      cq, p.first, DetectTransportType(options.get<EndpointOption>()), start,
-      kDefaultChannelReadyTimeout);
   auto refresh = std::make_shared<GrpcChannelRefresh>(std::move(p.first));
+  // Like `GrpcChannelRefresh`, hold the completion queue weakly. If nothing
+  // else owns it, nobody would drain the operations scheduled on it, and gRPC
+  // asserts when such a queue is destroyed with operations still pending.
+  std::weak_ptr<google::cloud::internal::CompletionQueueImpl> const wcq =
+      google::cloud::internal::GetCompletionQueueImpl(cq);
   refresh->StartRefreshLoop(std::move(cq));
+  if (std::shared_ptr<google::cloud::internal::CompletionQueueImpl> impl =
+          wcq.lock()) {
+    (void)StartChannelTelemetry(
+        google::cloud::CompletionQueue(std::move(impl)), refresh->channels(),
+        DetectTransportType(options.get<EndpointOption>()), start,
+        kDefaultChannelReadyTimeout);
+  }
   return std::make_pair(std::move(refresh), std::move(p.second));
 }
 

@@ -23,6 +23,7 @@
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include <grpcpp/channel.h>
+#include <algorithm>
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
@@ -55,13 +56,14 @@ bool HasQueryParameter(std::string_view uri, std::string_view key) {
   std::size_t const query_pos = addressable.find('?');
   if (query_pos == std::string_view::npos) return false;
   std::string_view const query = addressable.substr(query_pos + 1);
-  for (std::string_view const param : absl::StrSplit(query, '&')) {
-    std::size_t const eq_pos = param.find('=');
-    std::string_view const name =
-        eq_pos == std::string_view::npos ? param : param.substr(0, eq_pos);
-    if (name == key) return true;
-  }
-  return false;
+  auto const params = absl::StrSplit(query, '&');
+  return std::any_of(
+      params.begin(), params.end(), [key](std::string_view param) {
+        std::size_t const eq_pos = param.find('=');
+        std::string_view const name =
+            eq_pos == std::string_view::npos ? param : param.substr(0, eq_pos);
+        return name == key;
+      });
 }
 
 /**
