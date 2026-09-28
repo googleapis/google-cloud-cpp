@@ -121,6 +121,83 @@ TEST_F(ManagedWorkloadIntegrationTest, GrpcTransportCrud) {
   std::cout << "gRPC transport GCS CRUD test PASSED successfully!" << std::endl;
 }
 
+TEST_F(ManagedWorkloadIntegrationTest, RestTransportMtlsBoundCrud) {
+  auto options =
+      google::cloud::Options{}.set<google::cloud::storage::RestEndpointOption>(
+          "https://storage.mtls.googleapis.com");
+  auto client = google::cloud::storage::Client(std::move(options));
+  std::string const object_name =
+      "mwlid-test-rest-mtls-" + random_suffix_ + ".txt";
+  std::string const expected_content =
+      "Hello from Cloud Run REST transport with mTLS-bound MWLID!";
+
+  std::cout << "Starting REST transport mTLS-bound GCS CRUD test on bucket: "
+            << bucket_name_ << ", object: " << object_name << std::endl;
+
+  // 1. Write object
+  auto writer = client.WriteObject(bucket_name_, object_name);
+  writer << expected_content;
+  writer.Close();
+  ASSERT_THAT(writer.metadata(), IsOk());
+
+  // 2. Read object
+  auto reader = client.ReadObject(bucket_name_, object_name);
+  ASSERT_TRUE(reader.good());
+  std::string actual_content(std::istreambuf_iterator<char>(reader), {});
+  ASSERT_THAT(actual_content, Eq(expected_content));
+
+  // 3. Get metadata
+  StatusOr<ObjectMetadata> metadata =
+      client.GetObjectMetadata(bucket_name_, object_name);
+  ASSERT_THAT(metadata, IsOk());
+  EXPECT_THAT(metadata->name(), Eq(object_name));
+
+  // 4. Delete object
+  Status delete_status = client.DeleteObject(bucket_name_, object_name);
+  EXPECT_THAT(delete_status, IsOk());
+
+  std::cout << "REST transport mTLS-bound GCS CRUD test PASSED successfully!"
+            << std::endl;
+}
+
+TEST_F(ManagedWorkloadIntegrationTest, GrpcTransportMtlsBoundCrud) {
+  auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
+      "storage.mtls.googleapis.com:443");
+  auto client = google::cloud::storage::MakeGrpcClient(std::move(options));
+  std::string const object_name =
+      "mwlid-test-grpc-mtls-" + random_suffix_ + ".txt";
+  std::string const expected_content =
+      "Hello from Cloud Run gRPC transport with mTLS-bound MWLID!";
+
+  std::cout << "Starting gRPC transport mTLS-bound GCS CRUD test on bucket: "
+            << bucket_name_ << ", object: " << object_name << std::endl;
+
+  // 1. Write object
+  auto writer = client.WriteObject(bucket_name_, object_name);
+  writer << expected_content;
+  writer.Close();
+  ASSERT_THAT(writer.metadata(), IsOk());
+
+  // 2. Read object
+  auto reader = client.ReadObject(bucket_name_, object_name);
+  ASSERT_TRUE(reader.good());
+  std::string actual_content(std::istreambuf_iterator<char>(reader), {});
+  ASSERT_THAT(actual_content, Eq(expected_content));
+
+  // 3. Get metadata
+  StatusOr<ObjectMetadata> metadata =
+      client.GetObjectMetadata(bucket_name_, object_name);
+  ASSERT_THAT(metadata, IsOk());
+  EXPECT_THAT(metadata->name(), Eq(object_name));
+
+  // 4. Delete object
+  Status delete_status = client.DeleteObject(bucket_name_, object_name);
+  EXPECT_THAT(delete_status, IsOk());
+
+  std::cout << "gRPC transport mTLS-bound GCS CRUD test PASSED successfully!"
+            << std::endl;
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
