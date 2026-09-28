@@ -233,6 +233,31 @@ RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesConnection::PatchAssociation(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchAssociationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesConnection::PatchAssociation(
+    NoAwaitTag, google::cloud::cpp::compute::region_network_firewall_policies::
+                    v1::PatchAssociationRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesConnection::PatchAssociation(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::PatchRule(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         PatchRuleRequest const&) {

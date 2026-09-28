@@ -27,16 +27,16 @@
 
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_001.pb.h"
-#include "google/cloud/compute/v1/internal/common_009.pb.h"
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_038.pb.h"
-#include "google/cloud/compute/v1/internal/common_040.pb.h"
-#include "google/cloud/compute/v1/internal/common_072.pb.h"
-#include "google/cloud/compute/v1/internal/common_094.pb.h"
-#include "google/cloud/compute/v1/internal/common_144.pb.h"
-#include "google/cloud/compute/v1/internal/common_171.pb.h"
-#include "google/cloud/compute/v1/internal/common_173.pb.h"
-#include "google/cloud/compute/v1/internal/common_182.pb.h"
+#include "google/cloud/compute/v1/internal/common_010.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_039.pb.h"
+#include "google/cloud/compute/v1/internal/common_041.pb.h"
+#include "google/cloud/compute/v1/internal/common_075.pb.h"
+#include "google/cloud/compute/v1/internal/common_097.pb.h"
+#include "google/cloud/compute/v1/internal/common_150.pb.h"
+#include "google/cloud/compute/v1/internal/common_177.pb.h"
+#include "google/cloud/compute/v1/internal/common_179.pb.h"
+#include "google/cloud/compute/v1/internal/common_188.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_NODE_GROUPS_PROTO_EXPORT_H

@@ -57,6 +57,17 @@ class ReservationSlotsRestConnectionImpl
       google::cloud::cpp::compute::reservation_slots::v1::
           GetReservationSlotsGetResponseRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetHealth(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_slots::v1::
+                      GetHealthRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
       google::cloud::cpp::compute::reservation_slots::v1::
           GetVersionRequest const& request) override;

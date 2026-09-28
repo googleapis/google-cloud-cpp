@@ -48,6 +48,34 @@ AdviceRestLogging::CalendarMode(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+AdviceRestLogging::Capacity(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::advice::v1::CapacityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::advice::v1::CapacityRequest const&
+                 request) {
+        return child_->Capacity(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+AdviceRestLogging::CapacityHistory(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+              request) {
+        return child_->CapacityHistory(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_advice_v1_internal
 }  // namespace cloud

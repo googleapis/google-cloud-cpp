@@ -45,6 +45,20 @@ class ReservationSlotsRestStub {
           GetReservationSlotsGetResponseRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetHealth(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetHealth(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetVersion(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -111,6 +125,19 @@ class DefaultReservationSlotsRestStub : public ReservationSlotsRestStub {
       Options const& options,
       google::cloud::cpp::compute::reservation_slots::v1::
           GetReservationSlotsGetResponseRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetHealth(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetHealth(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::reservation_slots::v1::
+          GetHealthRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetVersion(
       google::cloud::CompletionQueue& cq,
