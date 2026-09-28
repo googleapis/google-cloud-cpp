@@ -45,6 +45,19 @@ class AdviceRestMetadata : public AdviceRestStub {
       google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse> Capacity(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::advice::v1::CapacityRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+  CapacityHistory(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+          request) override;
+
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
                    Options const& options,

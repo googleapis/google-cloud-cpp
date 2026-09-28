@@ -288,6 +288,10 @@
 ./include/google/cloud/compute/global_forwarding_rules/v1
 ./include/google/cloud/compute/global_forwarding_rules/v1/internal
 ./include/google/cloud/compute/global_forwarding_rules/v1/mocks
+./include/google/cloud/compute/global_frontend_settings
+./include/google/cloud/compute/global_frontend_settings/v1
+./include/google/cloud/compute/global_frontend_settings/v1/internal
+./include/google/cloud/compute/global_frontend_settings/v1/mocks
 ./include/google/cloud/compute/global_network_endpoint_groups
 ./include/google/cloud/compute/global_network_endpoint_groups/v1
 ./include/google/cloud/compute/global_network_endpoint_groups/v1/internal
@@ -328,6 +332,10 @@
 ./include/google/cloud/compute/image_family_views/v1
 ./include/google/cloud/compute/image_family_views/v1/internal
 ./include/google/cloud/compute/image_family_views/v1/mocks
+./include/google/cloud/compute/image_views
+./include/google/cloud/compute/image_views/v1
+./include/google/cloud/compute/image_views/v1/internal
+./include/google/cloud/compute/image_views/v1/mocks
 ./include/google/cloud/compute/images
 ./include/google/cloud/compute/images/v1
 ./include/google/cloud/compute/images/v1/internal
@@ -404,6 +412,10 @@
 ./include/google/cloud/compute/machine_types/v1
 ./include/google/cloud/compute/machine_types/v1/internal
 ./include/google/cloud/compute/machine_types/v1/mocks
+./include/google/cloud/compute/managed_rulesets
+./include/google/cloud/compute/managed_rulesets/v1
+./include/google/cloud/compute/managed_rulesets/v1/internal
+./include/google/cloud/compute/managed_rulesets/v1/mocks
 ./include/google/cloud/compute/network_attachments
 ./include/google/cloud/compute/network_attachments/v1
 ./include/google/cloud/compute/network_attachments/v1/internal
@@ -452,6 +464,10 @@
 ./include/google/cloud/compute/preview_features/v1
 ./include/google/cloud/compute/preview_features/v1/internal
 ./include/google/cloud/compute/preview_features/v1/mocks
+./include/google/cloud/compute/project_views
+./include/google/cloud/compute/project_views/v1
+./include/google/cloud/compute/project_views/v1/internal
+./include/google/cloud/compute/project_views/v1/mocks
 ./include/google/cloud/compute/projects
 ./include/google/cloud/compute/projects/v1
 ./include/google/cloud/compute/projects/v1/internal

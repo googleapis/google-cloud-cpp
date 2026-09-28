@@ -39,6 +39,13 @@ class AdviceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CalendarMode(
       google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
           request);
+
+  virtual google::cloud::Idempotency Capacity(
+      google::cloud::cpp::compute::advice::v1::CapacityRequest const& request);
+
+  virtual google::cloud::Idempotency CapacityHistory(
+      google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+          request);
 };
 
 std::unique_ptr<AdviceConnectionIdempotencyPolicy>

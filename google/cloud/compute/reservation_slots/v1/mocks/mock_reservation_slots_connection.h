@@ -60,6 +60,45 @@ class MockReservationSlotsConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// GetHealth(Matcher<google::cloud::cpp::compute::reservation_slots::v1::GetHealthRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              GetHealth,
+              (google::cloud::cpp::compute::reservation_slots::v1::
+                   GetHealthRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, GetHealth(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, GetHealth,
+              (NoAwaitTag, google::cloud::cpp::compute::reservation_slots::v1::
+                               GetHealthRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// GetHealth(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              GetHealth,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// GetVersion(Matcher<google::cloud::cpp::compute::reservation_slots::v1::GetVersionRequest
   /// const&>(_)))
   /// @endcode

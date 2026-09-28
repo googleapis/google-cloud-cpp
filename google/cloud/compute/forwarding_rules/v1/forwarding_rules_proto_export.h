@@ -26,12 +26,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_050.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
 #include "google/cloud/compute/v1/internal/common_051.pb.h"
-#include "google/cloud/compute/v1/internal/common_097.pb.h"
-#include "google/cloud/compute/v1/internal/common_125.pb.h"
-#include "google/cloud/compute/v1/internal/common_166.pb.h"
+#include "google/cloud/compute/v1/internal/common_052.pb.h"
+#include "google/cloud/compute/v1/internal/common_101.pb.h"
+#include "google/cloud/compute/v1/internal/common_131.pb.h"
+#include "google/cloud/compute/v1/internal/common_172.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_PROTO_EXPORT_H

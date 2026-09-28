@@ -147,6 +147,18 @@ class RegionNetworkFirewallPoliciesTracingConnection
   PatchFirewallPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAssociation(
+      google::cloud::cpp::compute::region_network_firewall_policies::v1::
+          PatchAssociationRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAssociation(
+      NoAwaitTag,
+      google::cloud::cpp::compute::region_network_firewall_policies::v1::
+          PatchAssociationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAssociation(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           PatchRuleRequest const& request) override;
