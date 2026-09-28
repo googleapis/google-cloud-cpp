@@ -22,6 +22,7 @@
 #include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
+#include <future>
 #include <memory>
 #include <string>
 #include <thread>
@@ -277,6 +278,29 @@ TEST(ChannelTelemetry, StartChannelTelemetryReportsFailures) {
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("did not become ready"),
                      HasSubstr("transport_type=DirectPathInterconnect"))));
+}
+
+/// @test Verify releasing the channel ends the wait before the timeout.
+///
+/// Destroying the client while the first channel is still connecting must not
+/// keep the channel alive, or delay the completion queue shutdown, for up to
+/// `kDefaultChannelReadyTimeout`.
+TEST(ChannelTelemetry, StartChannelTelemetryDoesNotExtendChannelLifetime) {
+  testing_util::ScopedLog log;
+  // There is no server at this address, so the channel never becomes ready.
+  std::vector<std::shared_ptr<grpc::Channel>> channels{
+      grpc::CreateChannel("localhost:1", grpc::InsecureChannelCredentials())};
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  future<void> done = StartChannelTelemetry(
+      pool.cq(), channels, TransportType::kDirectPathInterconnect,
+      std::chrono::steady_clock::now(), kDefaultChannelReadyTimeout);
+  // Release the last reference to the channel, as destroying the client does.
+  channels.clear();
+  ASSERT_EQ(done.wait_for(std::chrono::seconds(5)), std::future_status::ready);
+
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("did not become ready"),
+                             HasSubstr("CANCELLED"))));
 }
 
 }  // namespace

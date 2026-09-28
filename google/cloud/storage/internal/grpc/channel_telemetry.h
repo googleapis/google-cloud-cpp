@@ -74,8 +74,10 @@ void LogChannelReady(TransportType transport,
 /**
  * How long to wait for the first channel to become ready.
  *
- * An unbounded wait would keep a pending completion queue operation (and the
- * channel it references) alive for the lifetime of the client.
+ * An unbounded wait would keep a pending completion queue operation alive for
+ * the lifetime of the client. The wait holds only a `std::weak_ptr` to the
+ * channel, so destroying the client ends it immediately, and this timeout
+ * never delays shutdown.
  */
 auto constexpr kDefaultChannelReadyTimeout = std::chrono::seconds(30);
 
