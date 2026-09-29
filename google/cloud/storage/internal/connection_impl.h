@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/hedging_thread_pool.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/object_read_stream.h"
@@ -32,8 +33,6 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-class HedgedReadMetrics;
-
 /**
  * Decorates a `StorageConnection` to retry each operation.
  */
