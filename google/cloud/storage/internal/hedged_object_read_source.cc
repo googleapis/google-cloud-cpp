@@ -227,6 +227,8 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
 
 bool HedgedObjectReadSource::ShouldRace(std::size_t n) const {
   if (max_hedges_ <= 0 || !read_pool_ || !hedge_pool_) return false;
+  // No hedge can be granted, so a race would only add a thread hop and a copy.
+  if (hedge_pool_->IsTotalBudgetSpent()) return false;
   // Racing stages one copy of `n` bytes per attempt on top of the caller's
   // buffer. For a large read that multiplication is worse than the tail
   // latency it avoids.
@@ -319,6 +321,8 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
   for (int hedges_dispatched = 0; hedges_dispatched < max_hedges_;) {
     if (future.wait_for(delay_) != std::future_status::timeout) break;
     if (!hedge_pool_->TryAcquireHedgeToken()) {
+      // The budget will not come back, wait for the attempts in flight.
+      if (hedge_pool_->IsTotalBudgetSpent()) break;
       // When delay_ is 0ms (or token acquisition fails), back off briefly on
       // the future instead of busy-spinning if tokens or concurrency slots are
       // temporarily exhausted.

@@ -74,6 +74,22 @@ struct MaxConcurrentHedgesOption {
 };
 
 /**
+ * The maximum total number of hedged requests over the life of the connection.
+ *
+ * Once this many hedges have been sent, the connection stops hedging and serves
+ * every later read with the primary request only. This bounds the extra load
+ * hedging can add when a VM or the service is degraded, where most reads are
+ * slow and hedging them only adds requests without making them faster.
+ *
+ * The default is 0, meaning no limit.
+ *
+ * @ingroup storage-options
+ */
+struct MaxTotalHedgesOption {
+  using Type = std::int64_t;
+};
+
+/**
  * The largest read, in bytes, that is eligible for hedging.
  *
  * Racing requests each buffer their own copy of the data, so the memory used
@@ -533,6 +549,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     storage_experimental::EnableReadHedgingOption,
     storage_experimental::ReadHedgeRateLimitOption,
     storage_experimental::MaxConcurrentHedgesOption,
+    storage_experimental::MaxTotalHedgesOption,
     storage_experimental::MaximumHedgeBufferOption,
     storage_experimental::ReadHedgeDelayOption,
     storage_experimental::MaxReadHedgesOption,

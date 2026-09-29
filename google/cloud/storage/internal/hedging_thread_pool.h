@@ -137,8 +137,9 @@ class ThreadPool {
 /**
  * Coordinates and bounds speculative hedged requests across a storage client.
  *
- * Hedged requests are gated by `TryAcquireHedgeToken()`, which enforces two
- * limits: a maximum number of concurrently active hedges (when
+ * Hedged requests are gated by `TryAcquireHedgeToken()`, which enforces three
+ * limits: a maximum number of hedges over the life of the pool (when
+ * `max_total > 0`), a maximum number of concurrently active hedges (when
  * `max_concurrent > 0`), and a maximum rate of new hedges per second via a
  * token bucket (when `rate_limit > 0.0`). Setting `rate_limit <= 0.0` disables
  * rate limiting (unlimited hedges per second). Task execution is dispatched
@@ -156,14 +157,17 @@ class HedgingThreadPool {
    *     least 1.0.
    * @param max_concurrent the ceiling on concurrently active hedges. When <= 0,
    *     concurrency limiting is disabled.
+   * @param max_total the ceiling on hedges granted over the life of the pool.
+   *     When <= 0, the lifetime limit is disabled.
    */
   HedgingThreadPool(std::size_t max_threads, double rate_limit, double capacity,
-                    std::int64_t max_concurrent)
+                    std::int64_t max_concurrent, std::int64_t max_total)
       : rate_limit_(rate_limit),
         tokens_capacity_((std::max)(1.0, capacity)),
         tokens_((std::max)(1.0, capacity)),
         last_refill_(std::chrono::steady_clock::now()),
         max_concurrent_hedges_(max_concurrent),
+        max_total_hedges_(max_total),
         pool_(max_threads) {}
 
   ~HedgingThreadPool() = default;
@@ -188,24 +192,40 @@ class HedgingThreadPool {
    * On success the caller *must* eventually call `ReleaseHedgeSlot()`.
    */
   bool TryAcquireHedgeToken() {
-    // Gate 1: the ceiling on concurrently active hedges. When
+    // Gate 1: the lifetime budget. Checked first so that, once it is spent,
+    // every later hedge is denied with a single atomic load. When
+    // max_total_hedges_ <= 0, the lifetime limit is disabled.
+    if (max_total_hedges_ > 0) {
+      std::int64_t granted =
+          total_hedges_granted_.load(std::memory_order_relaxed);
+      do {
+        if (granted >= max_total_hedges_) return false;
+      } while (!total_hedges_granted_.compare_exchange_weak(
+          granted, granted + 1, std::memory_order_relaxed));
+    }
+
+    // Gate 2: the ceiling on concurrently active hedges. When
     // max_concurrent_hedges_ <= 0, concurrency limiting is disabled.
     if (max_concurrent_hedges_ > 0) {
       std::int64_t current =
           active_concurrent_hedges_.load(std::memory_order_relaxed);
       do {
-        if (current >= max_concurrent_hedges_) return false;
+        if (current >= max_concurrent_hedges_) {
+          RefundTotalBudget();
+          return false;
+        }
       } while (!active_concurrent_hedges_.compare_exchange_weak(
           current, current + 1, std::memory_order_relaxed));
     }
 
-    // Gate 2: the rate limit on new hedges (token bucket). When
+    // Gate 3: the rate limit on new hedges (token bucket). When
     // rate_limit_ <= 0.0, rate limiting is disabled.
     if (rate_limit_ > 0.0) {
       std::lock_guard<std::mutex> lock(limiter_mutex_);
       Refill();
       if (tokens_ < 1.0) {
         ReleaseHedgeSlot();
+        RefundTotalBudget();
         return false;
       }
       tokens_ -= 1.0;
@@ -214,15 +234,32 @@ class HedgingThreadPool {
     return true;
   }
 
+  /// Releases the concurrency slot. The lifetime budget is never returned.
   void ReleaseHedgeSlot() {
     if (max_concurrent_hedges_ > 0) {
       active_concurrent_hedges_.fetch_sub(1, std::memory_order_relaxed);
     }
   }
 
+  /// Returns true once the lifetime budget is spent. No hedge is granted after
+  /// that, so callers can skip racing altogether.
+  bool IsTotalBudgetSpent() const {
+    return max_total_hedges_ > 0 &&
+           total_hedges_granted_.load(std::memory_order_relaxed) >=
+               max_total_hedges_;
+  }
+
   std::size_t max_threads() const { return pool_.max_threads(); }
 
  private:
+  // A hedge denied by a later gate is never sent, so it must not spend the
+  // lifetime budget.
+  void RefundTotalBudget() {
+    if (max_total_hedges_ > 0) {
+      total_hedges_granted_.fetch_sub(1, std::memory_order_relaxed);
+    }
+  }
+
   void Refill() {
     std::chrono::steady_clock::time_point const now =
         std::chrono::steady_clock::now();
@@ -244,6 +281,10 @@ class HedgingThreadPool {
   // Concurrency limiter. A max_concurrent_hedges_ <= 0 disables limit.
   std::int64_t const max_concurrent_hedges_;
   std::atomic<std::int64_t> active_concurrent_hedges_{0};
+
+  // Lifetime limiter. A max_total_hedges_ <= 0 disables limit.
+  std::int64_t const max_total_hedges_;
+  std::atomic<std::int64_t> total_hedges_granted_{0};
 
   // Declared last so the pool (and its worker threads) is destroyed and joined
   // first, before any other member variables are torn down.
