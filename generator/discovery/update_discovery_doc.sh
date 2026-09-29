@@ -186,6 +186,8 @@ cmake_minimum_required(VERSION 3.16)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_ROOT}/cmake")
 include(CreateBazelConfig)
 include("${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH}")
+list(SORT service_dirs)
+list(SORT operation_service_dirs)
 export_list_to_bazel("${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}" YEAR 2023 service_dirs operation_service_dirs)
 EOF
     cmake -P "${CMAKE_SCRIPT}"
