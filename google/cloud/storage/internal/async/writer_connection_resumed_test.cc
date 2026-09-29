@@ -1490,8 +1490,11 @@ TEST(WriteConnectionResumed, FlushCallbackCrossThreadFlush) {
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
   });
   next.first.set_value(true);
-  worker.join();
+  // Completing the sequencer promise runs the whole chain inline, including
+  // the `f1` continuation, so `worker` is assigned before `set_value()`
+  // returns.
   ASSERT_TRUE(callback_done.is_ready());
+  worker.join();
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
