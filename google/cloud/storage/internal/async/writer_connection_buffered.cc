@@ -383,28 +383,28 @@ class AsyncWriterConnectionBufferedState
         write_offset_ -= static_cast<std::size_t>(n);
       }
     }
-    // If the buffer is small enough, collect all the handlers to notify them.
-    auto const handlers = ClearHandlersIfEmpty(lk);
     if (is_resume) {
       // We are resuming. The pending flush promises (if any) should not be
       // satisfied yet, because we haven't actually flushed the data on the new
       // connection. The `WriteLoop` will trigger a flush (potentially empty)
       // if `flush_` is still true, which will satisfy the promises when it
-      // completes. However, we still need to notify any handlers waiting for
-      // the buffer to shrink, and we need to restart the write loop.
+      // completes.
+      auto const handlers = ClearHandlersIfEmpty(lk);
+      // Mark the writer idle under the lock so any operation chained from a
+      // handler below sees an idle writer and is dispatched immediately, and
+      // `writing_` is never modified without holding `mu_`.
       resuming_ = false;
-      lk.unlock();
+      writing_ = false;
+      lk.unlock();  // Release lock before notifying.
+      // The notifications are deferred until the lock is released, as they
+      // might call back and try to acquire the lock.
       for (auto const& h : handlers) h->Execute(Status{});
-      WriteLoop(std::unique_lock<std::mutex>(mu_));
+      // Re-acquire the lock to restart the write loop. This is a no-op if a
+      // handler above already restarted it.
+      StartWriting(std::unique_lock<std::mutex>(mu_));
       return;
     }
-    // SetFlushed will release the lock before returning.
     SetFlushed(std::move(lk), Status{}, persisted_size);
-    // Re-acquire the lock to re-enter the write loop.
-    WriteLoop(std::unique_lock<std::mutex>(mu_));
-    // The notifications are deferred until the lock is released, as they might
-    // call back and try to acquire the lock.
-    for (auto const& h : handlers) h->Execute(Status{});
   }
 
   void WriteStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -575,11 +575,19 @@ class AsyncWriterConnectionBufferedState
     if (pending_flush_promises_.empty()) {
       flush_ = false;
     }
-    lk.unlock();  // Unlock only once before notifying
-    // Notify handlers and the specific flush promises *after* releasing the
-    // lock.
+    // Mark the writer idle under the lock so any operation chained from a
+    // callback below sees an idle writer and is dispatched immediately, and
+    // `writing_` is never modified without holding `mu_`.
+    writing_ = false;
+    lk.unlock();  // Release lock before notifying.
+    // Notify handlers and satisfied flush promises before restarting the
+    // write loop so callbacks cannot be overtaken by a queued flush that
+    // completes inline.
     for (auto& h : handlers) h->Execute(Status{});
     for (auto& f : flushes_to_complete) f.set_value(result);
+    // Re-acquire the lock to resume writing any remaining buffered data.
+    // This is a no-op if a callback above already restarted the write loop.
+    StartWriting(std::unique_lock<std::mutex>(mu_));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
