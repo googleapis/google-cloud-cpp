@@ -225,20 +225,16 @@ TEST(HedgingThreadPoolTest, ConcurrencyDenialDoesNotSpendTotalBudget) {
 }
 
 TEST(HedgingThreadPoolTest, RateLimitDenialDoesNotSpendTotalBudget) {
-  // One token per 200ms, with a burst capacity of one token.
-  HedgingThreadPool pool(5, 5.0, 1.0, 0, /*max_total=*/2);
+  // A burst capacity of one token, and a refill (one token per 1000 seconds)
+  // too slow to add a token while the test runs.
+  HedgingThreadPool pool(5, 0.001, 1.0, 0, /*max_total=*/2);
 
   EXPECT_TRUE(pool.TryAcquireHedgeToken());
   // Denied by the rate limit, so this hedge is never sent.
   EXPECT_FALSE(pool.TryAcquireHedgeToken());
-
-  // Wait longer than one token's refill period, with margin for slow machines.
-  std::this_thread::sleep_for(std::chrono::milliseconds(250));
-  EXPECT_TRUE(pool.TryAcquireHedgeToken());
-
-  // A token is available again, but the lifetime budget is spent.
-  std::this_thread::sleep_for(std::chrono::milliseconds(250));
   EXPECT_FALSE(pool.TryAcquireHedgeToken());
+  // Only the first hedge spent the budget.
+  EXPECT_FALSE(pool.IsTotalBudgetSpent());
 }
 
 TEST(HedgingThreadPoolTest, ZeroMaxTotalDisablesLifetimeLimit) {
@@ -267,10 +263,15 @@ TEST(HedgingThreadPoolTest, MaxTotalHedgesUnderContention) {
   }
   for (auto& t : threads) t.join();
 
-  // 8000 attempts race for 100 hedges. Denials by the concurrency limit are
-  // refunded, so the budget is spent exactly, and never exceeded.
+  // Spend whatever budget the threads left, so the count below does not depend
+  // on how the threads were scheduled. If contention ever over-granted, or a
+  // denial by the concurrency limit was not refunded, the total is off.
+  while (pool.TryAcquireHedgeToken()) {
+    ++granted;
+    pool.ReleaseHedgeSlot();
+  }
   EXPECT_THAT(granted.load(), Eq(max_total));
-  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+  EXPECT_TRUE(pool.IsTotalBudgetSpent());
 }
 
 TEST(HedgingThreadPoolTest, SafeDestructionOnWorkerThread) {

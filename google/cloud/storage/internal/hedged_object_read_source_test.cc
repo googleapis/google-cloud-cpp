@@ -386,6 +386,10 @@ TEST(HedgedObjectReadSourceTest, NoHedgesOnceTotalBudgetIsSpent) {
 
   std::vector<char> buffer(100);
   StatusOr<ReadSourceResult> result = first.Read(buffer.data(), buffer.size());
+  // Release the losing primary now, so a failed assertion below cannot leave
+  // it blocked and hang the test.
+  unblock_primary->set_value();
+  primary_closed->get_future().get();
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
   EXPECT_THAT(first_calls->load(), Eq(2));
@@ -401,14 +405,13 @@ TEST(HedgedObjectReadSourceTest, NoHedgesOnceTotalBudgetIsSpent) {
   HedgedObjectReadSource second(read_pool, hedge_pool, Adapt(slow_factory),
                                 kDelay, /*max_hedges=*/2, kUnlimitedBuffer);
 
+  // The read stalls past the hedge delay, but the budget is spent, so it is
+  // served by the primary alone.
   result = second.Read(buffer.data(), buffer.size());
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(std::string(buffer.data(), result->bytes_received),
               Eq("primary"));
   EXPECT_THAT(second_calls->load(), Eq(1));
-
-  unblock_primary->set_value();
-  primary_closed->get_future().get();
 }
 
 TEST(HedgedObjectReadSourceTest, HedgeOpenFailureReleasesSlot) {
