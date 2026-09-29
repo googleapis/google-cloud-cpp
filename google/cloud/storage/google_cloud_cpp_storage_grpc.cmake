@@ -172,6 +172,8 @@ add_library(
     internal/grpc/buffer_read_object_data.h
     internal/grpc/channel_refresh.cc
     internal/grpc/channel_refresh.h
+    internal/grpc/channel_telemetry.cc
+    internal/grpc/channel_telemetry.h
     internal/grpc/configure_client_context.cc
     internal/grpc/configure_client_context.h
     internal/grpc/ctype_cord_workaround.h
@@ -451,6 +453,7 @@ set(storage_client_grpc_unit_tests
     internal/grpc/bucket_name_test.cc
     internal/grpc/bucket_request_parser_test.cc
     internal/grpc/buffer_read_object_data_test.cc
+    internal/grpc/channel_telemetry_test.cc
     internal/grpc/configure_client_context_test.cc
     internal/grpc/default_options_test.cc
     internal/grpc/make_cord_test.cc
