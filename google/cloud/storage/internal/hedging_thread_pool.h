@@ -192,43 +192,48 @@ class HedgingThreadPool {
    * On success the caller *must* eventually call `ReleaseHedgeSlot()`.
    */
   bool TryAcquireHedgeToken() {
-    // Gate 1: the lifetime budget. Checked first so that, once it is spent,
-    // every later hedge is denied with a single atomic load. When
-    // max_total_hedges_ <= 0, the lifetime limit is disabled.
-    if (max_total_hedges_ > 0) {
-      std::int64_t granted =
-          total_hedges_granted_.load(std::memory_order_relaxed);
-      do {
-        if (granted >= max_total_hedges_) return false;
-      } while (!total_hedges_granted_.compare_exchange_weak(
-          granted, granted + 1, std::memory_order_relaxed));
-    }
+    // Once the lifetime budget is spent, deny with a single atomic load.
+    if (IsTotalBudgetSpent()) return false;
 
-    // Gate 2: the ceiling on concurrently active hedges. When
+    // Gate 1: the ceiling on concurrently active hedges. When
     // max_concurrent_hedges_ <= 0, concurrency limiting is disabled.
     if (max_concurrent_hedges_ > 0) {
       std::int64_t current =
           active_concurrent_hedges_.load(std::memory_order_relaxed);
       do {
-        if (current >= max_concurrent_hedges_) {
-          RefundTotalBudget();
-          return false;
-        }
+        if (current >= max_concurrent_hedges_) return false;
       } while (!active_concurrent_hedges_.compare_exchange_weak(
           current, current + 1, std::memory_order_relaxed));
     }
 
-    // Gate 3: the rate limit on new hedges (token bucket). When
+    // Gate 2: the rate limit on new hedges (token bucket). When
     // rate_limit_ <= 0.0, rate limiting is disabled.
     if (rate_limit_ > 0.0) {
       std::lock_guard<std::mutex> lock(limiter_mutex_);
       Refill();
       if (tokens_ < 1.0) {
         ReleaseHedgeSlot();
-        RefundTotalBudget();
         return false;
       }
       tokens_ -= 1.0;
+    }
+
+    // Gate 3: the lifetime budget. Checked last so the counter only moves for
+    // a hedge that is granted, which keeps `IsTotalBudgetSpent()` exact. If
+    // another thread took the last unit since the check above, return what
+    // the earlier gates reserved. When max_total_hedges_ <= 0, the lifetime
+    // limit is disabled.
+    if (max_total_hedges_ > 0) {
+      std::int64_t granted =
+          total_hedges_granted_.load(std::memory_order_relaxed);
+      do {
+        if (granted >= max_total_hedges_) {
+          ReleaseHedgeSlot();
+          ReturnRateToken();
+          return false;
+        }
+      } while (!total_hedges_granted_.compare_exchange_weak(
+          granted, granted + 1, std::memory_order_relaxed));
     }
 
     return true;
@@ -252,12 +257,10 @@ class HedgingThreadPool {
   std::size_t max_threads() const { return pool_.max_threads(); }
 
  private:
-  // A hedge denied by a later gate is never sent, so it must not spend the
-  // lifetime budget.
-  void RefundTotalBudget() {
-    if (max_total_hedges_ > 0) {
-      total_hedges_granted_.fetch_sub(1, std::memory_order_relaxed);
-    }
+  void ReturnRateToken() {
+    if (rate_limit_ <= 0.0) return;
+    std::lock_guard<std::mutex> lock(limiter_mutex_);
+    tokens_ = (std::min)(tokens_capacity_, tokens_ + 1.0);
   }
 
   void Refill() {

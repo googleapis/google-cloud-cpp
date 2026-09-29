@@ -248,7 +248,9 @@ TEST(HedgingThreadPoolTest, ZeroMaxTotalDisablesLifetimeLimit) {
 
 TEST(HedgingThreadPoolTest, MaxTotalHedgesUnderContention) {
   std::int64_t const max_total = 100;
-  HedgingThreadPool pool(1, 0.0, 0.0, /*max_concurrent=*/4, max_total);
+  // A rate limit that never runs out, so threads racing for the last unit of
+  // budget also exercise returning the rate token.
+  HedgingThreadPool pool(1, 1e9, 1e9, /*max_concurrent=*/4, max_total);
 
   std::atomic<std::int64_t> granted{0};
   std::vector<std::thread> threads;
@@ -265,7 +267,7 @@ TEST(HedgingThreadPoolTest, MaxTotalHedgesUnderContention) {
 
   // Spend whatever budget the threads left, so the count below does not depend
   // on how the threads were scheduled. If contention ever over-granted, or a
-  // denial by the concurrency limit was not refunded, the total is off.
+  // hedge denied by an earlier gate spent budget, the total is off.
   while (pool.TryAcquireHedgeToken()) {
     ++granted;
     pool.ReleaseHedgeSlot();
