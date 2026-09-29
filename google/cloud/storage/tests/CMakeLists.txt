@@ -152,7 +152,7 @@ target_link_libraries(
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     target_link_libraries(
         ${target}
-        PRIVATE google-cloud-cpp::storage google_cloud_cpp_testing_grpc
+        PRIVATE google-cloud-cpp::storage_grpc google_cloud_cpp_testing_grpc
                 google_cloud_cpp_storage_tests_conformance_protos)
 endif ()
 add_test(NAME ${target} COMMAND ${target})

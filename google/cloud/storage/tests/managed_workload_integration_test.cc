@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/grpc_plugin.h"
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status.h"
@@ -96,6 +98,7 @@ TEST_F(ManagedWorkloadIntegrationTest, RestTransportCrud) {
   std::cout << "REST transport GCS CRUD test PASSED successfully!" << std::endl;
 }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 TEST_F(ManagedWorkloadIntegrationTest, GrpcTransportCrud) {
   Client client = google::cloud::storage::MakeGrpcClient();
   std::string const object_name = "mwlid-test-grpc-" + random_suffix_ + ".txt";
@@ -130,6 +133,7 @@ TEST_F(ManagedWorkloadIntegrationTest, GrpcTransportCrud) {
 
   std::cout << "gRPC transport GCS CRUD test PASSED successfully!" << std::endl;
 }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 TEST_F(ManagedWorkloadIntegrationTest, RestTransportMtlsBoundCrud) {
   auto options =
@@ -171,6 +175,7 @@ TEST_F(ManagedWorkloadIntegrationTest, RestTransportMtlsBoundCrud) {
             << std::endl;
 }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 TEST_F(ManagedWorkloadIntegrationTest, GrpcTransportMtlsBoundCrud) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "storage.mtls.googleapis.com:443");
@@ -209,6 +214,7 @@ TEST_F(ManagedWorkloadIntegrationTest, GrpcTransportMtlsBoundCrud) {
   std::cout << "gRPC transport mTLS-bound GCS CRUD test PASSED successfully!"
             << std::endl;
 }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
