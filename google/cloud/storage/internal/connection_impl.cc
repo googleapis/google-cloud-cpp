@@ -180,9 +180,11 @@ StorageConnectionImpl::StorageConnectionImpl(
     }
     double const rate_limit =
         options_.get<storage_experimental::ReadHedgeRateLimitOption>();
+    std::int64_t const max_total =
+        options_.get<storage_experimental::MaxTotalHedgesOption>();
     // Allow bursts of up to one second worth of hedges.
     hedge_pool_ = std::make_shared<HedgingThreadPool>(
-        hedge_threads, rate_limit, rate_limit, max_concurrent);
+        hedge_threads, rate_limit, rate_limit, max_concurrent, max_total);
   }
 }
 
