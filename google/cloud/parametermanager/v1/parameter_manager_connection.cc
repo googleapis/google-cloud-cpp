@@ -106,6 +106,74 @@ Status ParameterManagerConnection::DeleteParameterVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnection::ListTemplates(
+    google::cloud::parametermanager::v1::
+        ListTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::parametermanager::v1::Template>>();
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnection::GetTemplate(
+    google::cloud::parametermanager::v1::GetTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnection::CreateTemplate(
+    google::cloud::parametermanager::v1::CreateTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnection::UpdateTemplate(
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ParameterManagerConnection::DeleteTemplate(
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnection::ListTemplateVersions(
+    google::cloud::parametermanager::v1::
+        ListTemplateVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::parametermanager::v1::TemplateVersion>>();
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnection::GetTemplateVersion(
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnection::CreateTemplateVersion(
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnection::UpdateTemplateVersion(
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ParameterManagerConnection::DeleteTemplateVersion(
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerConnection::RenderTemplateVersion(
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 ParameterManagerConnection::ListLocations(
     google::cloud::location::

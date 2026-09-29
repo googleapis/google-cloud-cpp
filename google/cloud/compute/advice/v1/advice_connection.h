@@ -181,6 +181,15 @@ class AdviceConnection {
   CalendarMode(
       google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+  Capacity(
+      google::cloud::cpp::compute::advice::v1::CapacityRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+  CapacityHistory(
+      google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

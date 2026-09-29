@@ -19,6 +19,7 @@
 #include "google/cloud/sql/v1/internal/sql_instances_rest_metadata_decorator.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
+#include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
@@ -141,7 +142,21 @@ StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Insert(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
-  SetMetadata(rest_context, options);
+  std::vector<std::string> params;
+  params.reserve(2);
+
+  if (!request.project().empty()) {
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.project())));
+  }
+
+  if (!request.body().region().empty()) {
+    params.push_back(
+        absl::StrCat("region=", internal::UrlEncode(request.body().region())));
+  }
+
+  SetMetadata(rest_context, options, params);
+
   return child_->Insert(rest_context, options, request);
 }
 

@@ -117,8 +117,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
-  /// [google.cloud.apigateway.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
+  /// [google.cloud.apigateway.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L357}
   ///
   // clang-format on
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
@@ -156,8 +156,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
-  /// [google.cloud.apigateway.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
+  /// [google.cloud.apigateway.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L357}
   ///
   // clang-format on
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
@@ -183,8 +183,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
-  /// [google.cloud.apigateway.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
+  /// [google.cloud.apigateway.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L393}
   ///
   // clang-format on
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
@@ -213,8 +213,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
-  /// [google.cloud.apigateway.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
+  /// [google.cloud.apigateway.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L393}
   ///
   // clang-format on
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
@@ -228,8 +228,8 @@ class ApiGatewayServiceClient {
   /// @param parent  Required. Parent resource of the Gateway, of the form:
   ///  `projects/*/locations/*`
   /// @param gateway  Required. Gateway resource.
-  /// @param gateway_id  Required. Identifier to assign to the Gateway. Must be unique within scope of
-  ///  the parent resource.
+  /// @param gateway_id  Required. Identifier to assign to the Gateway. Must be unique within scope
+  ///  of the parent resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -250,8 +250,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L353}
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L405}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
@@ -305,8 +305,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L353}
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L405}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
@@ -371,8 +371,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
-  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
+  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L424}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
@@ -424,8 +424,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
-  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
+  /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L249}
+  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L424}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
@@ -486,8 +486,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L385}
-  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
+  /// [google.cloud.apigateway.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L437}
+  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -537,8 +537,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L385}
-  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
+  /// [google.cloud.apigateway.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L437}
+  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -604,7 +604,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.ListApisRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
+  /// [google.cloud.apigateway.v1.ListApisRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L449}
   ///
   // clang-format on
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
@@ -643,7 +643,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.ListApisRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
+  /// [google.cloud.apigateway.v1.ListApisRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L449}
   ///
   // clang-format on
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
@@ -670,7 +670,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.GetApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
+  /// [google.cloud.apigateway.v1.GetApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L485}
   ///
   // clang-format on
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(std::string const& name,
@@ -700,7 +700,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.GetApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
+  /// [google.cloud.apigateway.v1.GetApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L485}
   ///
   // clang-format on
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(
@@ -737,7 +737,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.CreateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
+  /// [google.cloud.apigateway.v1.CreateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
@@ -791,7 +791,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.CreateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
+  /// [google.cloud.apigateway.v1.CreateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
@@ -857,7 +857,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.UpdateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
+  /// [google.cloud.apigateway.v1.UpdateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
@@ -910,7 +910,7 @@ class ApiGatewayServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.apigateway.v1.Api]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
-  /// [google.cloud.apigateway.v1.UpdateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
+  /// [google.cloud.apigateway.v1.UpdateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
@@ -971,8 +971,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.DeleteApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L477}
-  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
+  /// [google.cloud.apigateway.v1.DeleteApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L527}
+  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
@@ -1023,8 +1023,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.DeleteApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L477}
-  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
+  /// [google.cloud.apigateway.v1.DeleteApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L527}
+  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
@@ -1087,8 +1087,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L537}
   ///
   // clang-format on
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
@@ -1126,8 +1126,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L537}
   ///
   // clang-format on
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
@@ -1153,8 +1153,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.GetApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.GetApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   ///
   // clang-format on
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
@@ -1183,8 +1183,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.GetApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.GetApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   ///
   // clang-format on
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
@@ -1198,8 +1198,8 @@ class ApiGatewayServiceClient {
   /// @param parent  Required. Parent resource of the API Config, of the form:
   ///  `projects/*/locations/global/apis/*`
   /// @param api_config  Required. API resource.
-  /// @param api_config_id  Required. Identifier to assign to the API Config. Must be unique within scope of
-  ///  the parent resource.
+  /// @param api_config_id  Required. Identifier to assign to the API Config. Must be unique within
+  ///  scope of the parent resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1220,8 +1220,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L598}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
@@ -1275,8 +1275,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L598}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
@@ -1341,8 +1341,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L615}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
@@ -1394,8 +1394,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
-  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
+  /// [google.cloud.apigateway.v1.ApiConfig]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L109}
+  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L615}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
@@ -1456,8 +1456,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.DeleteApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L584}
-  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
+  /// [google.cloud.apigateway.v1.DeleteApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L628}
+  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -1507,8 +1507,8 @@ class ApiGatewayServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apigateway.v1.DeleteApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L584}
-  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
+  /// [google.cloud.apigateway.v1.DeleteApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L628}
+  /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>

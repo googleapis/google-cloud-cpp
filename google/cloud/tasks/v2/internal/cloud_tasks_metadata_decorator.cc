@@ -167,6 +167,26 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksMetadata::CreateTask(
   return child_->CreateTask(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksMetadata::AsyncBatchCreateTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchCreateTasks(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksMetadata::BatchCreateTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateTasks(context, options, request);
+}
+
 Status CloudTasksMetadata::DeleteTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
@@ -175,12 +195,51 @@ Status CloudTasksMetadata::DeleteTask(
   return child_->DeleteTask(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksMetadata::AsyncBatchDeleteTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchDeleteTasks(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksMetadata::BatchDeleteTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchDeleteTasks(context, options, request);
+}
+
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksMetadata::RunTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RunTask(context, options, request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksMetadata::UpdateCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cmek_config.name=",
+                           internal::UrlEncode(request.cmek_config().name())));
+  return child_->UpdateCmekConfig(context, options, request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig>
+CloudTasksMetadata::GetCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetCmekConfig(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -198,6 +257,37 @@ StatusOr<google::cloud::location::Location> CloudTasksMetadata::GetLocation(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+future<Status> CloudTasksMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CloudTasksMetadata::SetMetadata(grpc::ClientContext& context,

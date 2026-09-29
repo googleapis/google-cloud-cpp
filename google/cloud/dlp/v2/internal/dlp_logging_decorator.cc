@@ -720,6 +720,69 @@ DlpServiceLogging::UpdateConnection(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceLogging::CreateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+        return child_->CreateContentPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceLogging::UpdateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+        return child_->UpdateContentPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceLogging::GetContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+        return child_->GetContentPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+DlpServiceLogging::ListContentPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListContentPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::ListContentPoliciesRequest const& request) {
+        return child_->ListContentPolicies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status DlpServiceLogging::DeleteContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+        return child_->DeleteContentPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2_internal
 }  // namespace cloud

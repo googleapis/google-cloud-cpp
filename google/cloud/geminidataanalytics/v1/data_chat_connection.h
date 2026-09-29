@@ -197,6 +197,11 @@ class DataChatServiceConnection {
           request);
 
   virtual StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
   GetConversation(
       google::cloud::geminidataanalytics::v1::GetConversationRequest const&
           request);

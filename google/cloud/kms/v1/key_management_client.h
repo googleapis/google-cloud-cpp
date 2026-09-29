@@ -445,7 +445,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   /// [google.cloud.kms.v1.ListRetiredResourcesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L684}
-  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1155}
+  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1169}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::RetiredResource> ListRetiredResources(
@@ -487,7 +487,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   /// [google.cloud.kms.v1.ListRetiredResourcesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L684}
-  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1155}
+  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1169}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::RetiredResource> ListRetiredResources(
@@ -835,8 +835,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   /// [google.cloud.kms.v1.GetRetiredResourceRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L896}
-  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1155}
-  /// [google.cloud.kms.v1.RetiredResource.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1166}
+  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1169}
+  /// [google.cloud.kms.v1.RetiredResource.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1180}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
@@ -869,7 +869,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   /// [google.cloud.kms.v1.GetRetiredResourceRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L896}
-  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1155}
+  /// [google.cloud.kms.v1.RetiredResource]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1169}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
@@ -2038,10 +2038,10 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.EncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1324}
   /// [google.cloud.kms.v1.EncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1937}
   /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L415}
-  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1199}
-  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL_VPC]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1202}
-  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1196}
-  /// [google.cloud.kms.v1.ProtectionLevel.SOFTWARE]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1193}
+  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1213}
+  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL_VPC]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1216}
+  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1210}
+  /// [google.cloud.kms.v1.ProtectionLevel.SOFTWARE]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1207}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
@@ -2598,8 +2598,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.GenerateRandomBytesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1919}
   /// [google.cloud.kms.v1.GenerateRandomBytesResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L2476}
-  /// [google.cloud.kms.v1.ProtectionLevel]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1188}
-  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1196}
+  /// [google.cloud.kms.v1.ProtectionLevel]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1202}
+  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1210}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>

@@ -52,6 +52,15 @@ class AdviceRestConnectionImpl : public compute_advice_v1::AdviceConnection {
       google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse> Capacity(
+      google::cloud::cpp::compute::advice::v1::CapacityRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+  CapacityHistory(
+      google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+          request) override;
+
  private:
   static std::unique_ptr<compute_advice_v1::AdviceRetryPolicy> retry_policy(
       Options const& options) {

@@ -14,12 +14,18 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -37,7 +43,30 @@ using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::Each;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Not;
+using ::testing::SizeIs;
+
+// Shaped like a real REST resumable session URL: the `upload_id` is a bearer
+// credential, while the rest of the URL names the bucket and is safe to log.
+auto constexpr kResumableSessionUrl =
+    "https://storage.googleapis.com/upload/storage/v1/b/test-bucket/o"
+    "?uploadType=resumable&upload_id=test-only-upload-id";
+
+// The `[gcs-retry]` records captured by @p log, in order.
+std::vector<std::string> RetryRecords(ScopedLog& log) {
+  std::vector<std::string> records;
+  for (auto const& line : log.ExtractLines()) {
+    if (absl::StrContains(line, "[gcs-retry]")) records.push_back(line);
+  }
+  return records;
+}
 
 TEST(StorageConnectionImpl, InsertObjectMediaTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
@@ -153,6 +182,90 @@ TEST(StorageConnectionImpl, ReadObjectPermanentFailure) {
   EXPECT_THAT(response, StoppedOnPermanentError("ReadObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
+}
+
+/// @test Opening a stream that keeps failing reports every *retried* attempt.
+///
+/// `RetryTestOptions()` allows two transient failures, so three attempts are
+/// made. Only the first two are followed by another try; the third is the
+/// error handed back to the caller and must not be announced as a retry.
+TEST(StorageConnectionImpl, ReadObjectLogsOnlyTheRetriedAttempts) {
+  ScopedLog log;
+  auto transient = MockRetryClientFunction(TransientError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, ReadObject).Times(3).WillRepeatedly(transient);
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+
+  auto response =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"))
+          .status();
+
+  EXPECT_THAT(response, StoppedOnTooManyTransients("ReadObject"));
+  std::vector<std::string> const records = RetryRecords(log);
+  EXPECT_THAT(records, SizeIs(2));
+  EXPECT_THAT(records, Each(AllOf(HasSubstr("ReadObject/open"),
+                                  HasSubstr("test-bucket/test-object"))));
+  EXPECT_THAT(records, Contains(HasSubstr("attempt 1")));
+  EXPECT_THAT(records, Contains(HasSubstr("attempt 2")));
+  EXPECT_THAT(records, Not(Contains(HasSubstr("attempt 3"))));
+}
+
+/// @test A permanent error is not retried, so it produces no record.
+TEST(StorageConnectionImpl, ReadObjectDoesNotLogPermanentFailures) {
+  ScopedLog log;
+  auto permanent = MockRetryClientFunction(PermanentError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, ReadObject).WillOnce(permanent);
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+
+  auto response =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"))
+          .status();
+
+  EXPECT_THAT(response, StoppedOnPermanentError("ReadObject"));
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+/// @test A non-idempotent request is not retried, so it produces no record.
+///
+/// Reads are idempotent under every policy the library ships, so the only way
+/// to reach this branch of `RestRetryLoop()` is to declare the request
+/// non-idempotent. The loop returns before it consults the retry policy, which
+/// is what keeps the diagnostic silent.
+TEST(StorageConnectionImpl, ReadObjectDoesNotLogNonIdempotentRequests) {
+  class NonIdempotentReads : public AlwaysRetryIdempotencyPolicy {
+   public:
+    std::unique_ptr<IdempotencyPolicy> clone() const override {
+      return std::make_unique<NonIdempotentReads>(*this);
+    }
+    using AlwaysRetryIdempotencyPolicy::IsIdempotent;
+    bool IsIdempotent(ReadObjectRangeRequest const&) const override {
+      return false;
+    }
+  };
+
+  ScopedLog log;
+  auto transient = MockRetryClientFunction(TransientError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, ReadObject).WillOnce(transient);
+  auto client = StorageConnectionImpl::Create(
+      std::move(mock), RetryTestOptions().set<IdempotencyPolicyOption>(
+                           NonIdempotentReads().clone()));
+  google::cloud::internal::OptionsSpan span(client->options());
+
+  auto response =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"))
+          .status();
+
+  EXPECT_THAT(response, Not(IsOk()));
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
 }
 
 TEST(StorageConnectionImpl, CreateResumableUploadTooManyFailures) {
@@ -284,6 +397,55 @@ TEST(StorageConnectionImpl, UploadChunkPermanentFailure) {
   // it is always idempotent.
   EXPECT_THAT(permanent.captured_tokens(), IsEmpty());
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
+}
+
+TEST(StorageConnectionImpl, UploadChunkLogsTransientFailures) {
+  ScopedLog log;
+
+  auto transient = MockRetryClientFunction(TransientError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, UploadChunk).Times(3).WillRepeatedly(transient);
+  EXPECT_CALL(*mock, QueryResumableUpload).WillRepeatedly([] {
+    return QueryResumableUploadResponse{std::nullopt, std::nullopt};
+  });
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto request = UploadChunkRequest(
+      /*upload_session_url=*/kResumableSessionUrl,
+      /*offset=*/0, /*payload=*/{{"test-data"}}, CreateNullHashFunction());
+  auto response = client->UploadChunk(request).status();
+  EXPECT_THAT(response, StoppedOnTooManyTransients("UploadChunk"));
+
+  // The record keeps enough of the session URL to identify the upload, and
+  // drops the `upload_id` token, which is a bearer credential.
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("[gcs-retry]"), HasSubstr("UploadChunk"),
+                             HasSubstr("test-bucket"), HasSubstr("[redacted]"),
+                             HasSubstr("attempt 1"),
+                             Not(HasSubstr("test-only-upload-id")))));
+}
+
+TEST(StorageConnectionImpl, UploadChunkDoesNotLogPermanentFailures) {
+  ScopedLog log;
+
+  auto permanent = MockRetryClientFunction(PermanentError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(permanent);
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto request = UploadChunkRequest(
+      /*upload_session_url=*/kResumableSessionUrl,
+      /*offset=*/0, /*payload=*/{{"test-data"}}, CreateNullHashFunction());
+  auto response = client->UploadChunk(request).status();
+  EXPECT_THAT(response, StoppedOnPermanentError("UploadChunk"));
+
+  // A permanent error is not retried, so there is nothing to report: the error
+  // is returned to the caller.
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
 }
 
 TEST(StorageConnectionImpl, DeleteObjectTooManyFailures) {

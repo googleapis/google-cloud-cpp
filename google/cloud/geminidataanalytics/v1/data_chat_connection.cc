@@ -61,6 +61,12 @@ Status DataChatServiceConnection::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceConnection::UpdateConversation(
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceConnection::GetConversation(
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

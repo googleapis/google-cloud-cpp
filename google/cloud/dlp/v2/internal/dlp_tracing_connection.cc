@@ -537,6 +537,52 @@ DlpServiceTracingConnection::UpdateConnection(
   return internal::EndSpan(*span, child_->UpdateConnection(request));
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingConnection::CreateContentPolicy(
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateContentPolicy(request));
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingConnection::UpdateContentPolicy(
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateContentPolicy(request));
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingConnection::GetContentPolicy(
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetContentPolicy(request));
+}
+
+StreamRange<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingConnection::ListContentPolicies(
+    google::privacy::dlp::v2::ListContentPoliciesRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListContentPolicies");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListContentPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::ContentPolicy>(std::move(span), std::move(sr));
+}
+
+Status DlpServiceTracingConnection::DeleteContentPolicy(
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteContentPolicy(request));
+}
+
 std::shared_ptr<dlp_v2::DlpServiceConnection> MakeDlpServiceTracingConnection(
     std::shared_ptr<dlp_v2::DlpServiceConnection> conn) {
   if (internal::TracingEnabled(conn->options())) {

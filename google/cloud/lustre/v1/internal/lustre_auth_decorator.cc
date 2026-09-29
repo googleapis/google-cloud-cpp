@@ -135,6 +135,34 @@ StatusOr<google::longrunning::Operation> LustreAuth::DeleteInstance(
   return child_->DeleteInstance(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+LustreAuth::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRescheduleMaintenance(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LustreAuth::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RescheduleMaintenance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> LustreAuth::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -189,6 +217,178 @@ StatusOr<google::longrunning::Operation> LustreAuth::ExportData(
   return child_->ExportData(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>> LustreAuth::AsyncCreateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateMirror(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LustreAuth::CreateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMirror(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>> LustreAuth::AsyncUpdateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateMirror(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LustreAuth::UpdateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMirror(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>> LustreAuth::AsyncDeleteMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteMirror(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LustreAuth::DeleteMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMirror(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreAuth::GetMirror(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMirror(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::ListMirrorsResponse>
+LustreAuth::ListMirrors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMirrors(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreAuth::AsyncCreateDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateDirectoryPolicy(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LustreAuth::CreateDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDirectoryPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreAuth::AsyncDeleteDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteDirectoryPolicy(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LustreAuth::DeleteDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDirectoryPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreAuth::GetDirectoryPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDirectoryPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::ListDirectoryPoliciesResponse>
+LustreAuth::ListDirectoryPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDirectoryPolicies(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 LustreAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -204,6 +404,31 @@ StatusOr<google::cloud::location::Location> LustreAuth::GetLocation(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> LustreAuth::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> LustreAuth::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>

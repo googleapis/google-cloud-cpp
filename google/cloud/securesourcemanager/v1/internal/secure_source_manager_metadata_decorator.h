@@ -318,6 +318,11 @@ class SecureSourceManagerMetadata : public SecureSourceManagerStub {
       google::cloud::securesourcemanager::v1::FetchBlobRequest const& request)
       override;
 
+  StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse> FetchRefs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::FetchRefsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateIssue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

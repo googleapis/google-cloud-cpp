@@ -231,6 +231,54 @@ StatusOr<google::iam::v1::Policy> DataAgentServiceTracingStub::SetIamPolicy(
                            child_->SetIamPolicy(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataAgentServiceTracingStub::AsyncSetAgentOpsObservability(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.geminidataanalytics.v1.DataAgentService",
+      "SetAgentOpsObservability");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncSetAgentOpsObservability(cq, context,
+                                                 std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceTracingStub::SetAgentOpsObservability(
+    grpc::ClientContext& context, Options options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.geminidataanalytics.v1.DataAgentService",
+      "SetAgentOpsObservability");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->SetAgentOpsObservability(context, options, request));
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceTracingStub::RetrieveAgentOpsObservability(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.geminidataanalytics.v1.DataAgentService",
+      "RetrieveAgentOpsObservability");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RetrieveAgentOpsObservability(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataAgentServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

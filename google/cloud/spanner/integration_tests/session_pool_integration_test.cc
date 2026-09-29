@@ -14,6 +14,8 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session_pool.h"
+#include "google/cloud/spanner/internal/spanner_operation_context_factory.h"
+#include "google/cloud/spanner/internal/spanner_request_id.h"
 #include "google/cloud/spanner/internal/spanner_stub_factory.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
@@ -34,22 +36,24 @@ struct SessionPoolFriendForTest {
                            std::map<std::string, std::string> const& labels,
                            std::string const& role, int num_sessions) {
     internal::OptionsSpan span(session_pool->opts_);
-    return session_pool->AsyncBatchCreateSessions(cq, stub, labels, role,
-                                                  num_sessions);
+    return session_pool->AsyncBatchCreateSessions(cq, stub, /*channel_id=*/0,
+                                                  labels, role, num_sessions);
   }
 
   static future<Status> AsyncDeleteSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
       std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
     internal::OptionsSpan span(session_pool->opts_);
-    return session_pool->AsyncDeleteSession(cq, stub, std::move(session_name));
+    return session_pool->AsyncDeleteSession(cq, stub, /*channel_id=*/0,
+                                            std::move(session_name));
   }
 
   static future<StatusOr<google::spanner::v1::ResultSet>> AsyncRefreshSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
       std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
     internal::OptionsSpan span(session_pool->opts_);
-    return session_pool->AsyncRefreshSession(cq, stub, std::move(session_name));
+    return session_pool->AsyncRefreshSession(cq, stub, /*channel_id=*/0,
+                                             std::move(session_name));
   }
 };
 
@@ -73,7 +77,12 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   auto stub = CreateDefaultSpannerStub(
       db, internal::CreateAuthenticationStrategy(cq, opts), opts,
       /*channel_id=*/0);
-  auto session_pool = MakeSessionPool(db, {stub}, cq, opts);
+  auto context_factory =
+      std::make_shared<spanner_internal::DefaultSpannerOperationContextFactory>(
+          /*client_id=*/1, std::make_shared<std::string const>(
+                               spanner_internal::ProcessRandomId()));
+  auto session_pool =
+      MakeSessionPool(db, {stub}, cq, std::move(context_factory), opts);
 
   // Make an asynchronous request, but immediately block until the response
   // arrives

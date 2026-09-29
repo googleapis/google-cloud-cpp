@@ -77,6 +77,9 @@ class AsyncReaderConnectionResume : public storage::AsyncReaderConnection {
   std::string object_name_;
   bool is_transcoded_ = false;
   bool logged_warning_ = false;
+  // Consecutive resumes without any data in between, used only for
+  // diagnostics. Reset when a payload arrives.
+  int resume_count_ = 0;
   std::optional<std::int64_t> object_size_;
   storage::Generation generation_;
   std::int64_t received_bytes_ = 0;

@@ -26,8 +26,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_CROSS_SITE_NETWORKS_V1_CROSS_SITE_NETWORKS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_027.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_028.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_CROSS_SITE_NETWORKS_V1_CROSS_SITE_NETWORKS_PROTO_EXPORT_H

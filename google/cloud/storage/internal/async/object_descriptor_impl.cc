@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/checksum_helpers.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
@@ -26,6 +27,7 @@
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -71,8 +73,23 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream, Options options,
     std::function<bool()> transport_ok)
+    // An empty clean-resume factory means "use `make_stream` for those
+    // re-opens too", i.e. every re-open behaves the same way, including
+    // whether it reports its retries.
+    : ObjectDescriptorImpl(std::move(resume_policy), std::move(make_stream),
+                           OpenStreamFactory{}, std::move(read_object_spec),
+                           std::move(stream), std::move(options),
+                           std::move(transport_ok)) {}
+
+ObjectDescriptorImpl::ObjectDescriptorImpl(
+    std::unique_ptr<storage::ResumePolicy> resume_policy,
+    OpenStreamFactory make_stream, OpenStreamFactory make_clean_resume_stream,
+    google::storage::v2::BidiReadObjectSpec read_object_spec,
+    std::shared_ptr<OpenStream> stream, Options options,
+    std::function<bool()> transport_ok)
     : resume_policy_prototype_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
+      make_clean_resume_stream_(std::move(make_clean_resume_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
       has_initial_read_ranges_(options_.has<ReadRangesOption>()),
@@ -623,11 +640,12 @@ void ObjectDescriptorImpl::OnFinish(
   }
   auto proto_status = ExtractGrpcStatus(status);
 
-  if (IsResumable(read_stream, status, proto_status)) {
-    return Resume(read_stream, proto_status);
+  ResumeKind const kind = ClassifyFinish(read_stream, status, proto_status);
+  if (kind != ResumeKind::kNo) {
+    return Resume(read_stream, status, proto_status, kind);
   }
   std::unique_lock<std::mutex> lk(mu_);
-  // Re-verify stream identity under lock because IsResumable() releases and
+  // Re-verify stream identity under lock because ClassifyFinish() releases and
   // re-acquires the mutex while notifying range callbacks, during which time
   // another thread or callback could have modified or replaced the stream.
   if (cancelled_) return;
@@ -642,8 +660,8 @@ void ObjectDescriptorImpl::OnFinish(
 }
 
 void ObjectDescriptorImpl::Resume(
-    std::shared_ptr<ReadStream> const& read_stream,
-    google::rpc::Status const& proto_status) {
+    std::shared_ptr<ReadStream> const& read_stream, Status const& status,
+    google::rpc::Status const& proto_status, ResumeKind kind) {
   std::unique_lock<std::mutex> lk(mu_);
   if (cancelled_) return;
   auto it = stream_manager_->Find(read_stream);
@@ -663,8 +681,45 @@ void ObjectDescriptorImpl::Resume(
     if (!range) continue;
     *request.add_read_ranges() = *std::move(range);
   }
+  // Only a transient stream-level failure the resume policy agreed to retry is
+  // a retry. The other ways to get here are not:
+  //
+  // - A stream that ends cleanly is resumed as well, because
+  //   `ResumePolicy::OnFinish()` returns `kContinue` for an OK status.
+  //   Reporting it would put a warning on every completed download.
+  // - A per-range `BidiReadObjectError` also ends the stream, but those ranges
+  //   have already been completed with their own status, which may well be
+  //   permanent. The stream is re-opened to carry whatever is left, and
+  //   describing that as a transient error retried would be wrong.
+  // - The built-in resume policies only count failures, they return
+  //   `kContinue` for a permanent error such as `PERMISSION_DENIED` too, and
+  //   leave it to the retry loop inside `make_stream_` to give up on it.
+  //
+  // Capture the diagnostics under the lock, but emit them after releasing it:
+  // `read_object_spec_` is guarded by `mu_`, while logging may be arbitrarily
+  // slow and must not extend the critical section.
+  bool const report =
+      kind == ResumeKind::kStreamFailure && !status.ok() &&
+      !storage::internal::AsyncStatusTraits::IsPermanentFailure(status);
+  std::string const resource =
+      report ? RetryLogResource(read_object_spec_.bucket(),
+                                read_object_spec_.object())
+             : std::string{};
+  // The count belongs to the stream, so it reports how many times in a row
+  // this reconnection has been attempted. A successful re-open installs a new
+  // `ReadStream` and the next failure starts again at one.
+  int const attempt = report ? ++it->stream->resume_count : 0;
+  // Only the re-open that follows a clean close is silent, and only when the
+  // descriptor was given a separate factory for it; see the constructor.
+  // Everything else -- this failure, a per-range error, a subsequent stream --
+  // reports the retries it makes while reconnecting.
+  OpenStreamFactory const* factory = &make_stream_;
+  if (status.ok() && make_clean_resume_stream_) {
+    factory = &make_clean_resume_stream_;
+  }
   lk.unlock();
-  make_stream_(std::move(request))
+  if (report) LogTransientRetry("Open/resume", resource, status, attempt);
+  (*factory)(std::move(request))
       .then([w = WeakFromThis(), read_stream, current_stream](auto f) {
         if (auto self = w.lock()) {
           self->OnResume(read_stream, current_stream, f.get());
@@ -722,13 +777,13 @@ void ObjectDescriptorImpl::OnResume(
   OnRead(new_read_stream, new_stream, std::move(result->first_response));
 }
 
-bool ObjectDescriptorImpl::IsResumable(
+ObjectDescriptorImpl::ResumeKind ObjectDescriptorImpl::ClassifyFinish(
     std::shared_ptr<ReadStream> const& read_stream, Status const& status,
     google::rpc::Status const& proto_status) {
   std::unique_lock<std::mutex> lk(mu_);
-  if (cancelled_) return false;
+  if (cancelled_) return ResumeKind::kNo;
   auto it = stream_manager_->Find(read_stream);
-  if (it == stream_manager_->End() || !it->stream) return false;
+  if (it == stream_manager_->End() || !it->stream) return ResumeKind::kNo;
   for (auto const& any : proto_status.details()) {
     auto error = google::storage::v2::BidiReadObjectError{};
     if (!any.UnpackTo(&error)) continue;
@@ -748,18 +803,26 @@ bool ObjectDescriptorImpl::IsResumable(
       if (l != copy.end()) l->second->OnFinish(p.second);
     }
     lk.lock();
-    if (cancelled_) return true;
+    // Note the resume policy is not consulted on this path: the ranges named
+    // in the error have been completed with their own status, and the stream
+    // is re-opened only to carry the ones that are left.
+    if (cancelled_) return ResumeKind::kRangeError;
     auto it_curr = stream_manager_->Find(read_stream);
-    if (it_curr == stream_manager_->End() || !it_curr->stream) return true;
+    if (it_curr == stream_manager_->End() || !it_curr->stream) {
+      return ResumeKind::kRangeError;
+    }
     stream_manager_->CleanupDoneRanges(it_curr);
-    return true;
+    return ResumeKind::kRangeError;
   }
   // Pass the original status directly to the resume policy without rewriting
   // status codes (such as StatusCode::kCancelled). This allows custom resume
   // policies (e.g., detecting stall cancellations) to observe the exact failure
   // cause.
-  return it->stream->resume_policy->OnFinish(status) ==
-         storage::ResumePolicy::kContinue;
+  if (it->stream->resume_policy->OnFinish(status) ==
+      storage::ResumePolicy::kContinue) {
+    return ResumeKind::kStreamFailure;
+  }
+  return ResumeKind::kNo;
 }
 
 std::size_t ObjectDescriptorImpl::StreamSize() const {

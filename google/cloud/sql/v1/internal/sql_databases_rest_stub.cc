@@ -46,6 +46,9 @@ DefaultSqlDatabasesServiceRestStub::Delete(
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"location", request.location()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -61,6 +64,9 @@ DefaultSqlDatabasesServiceRestStub::Get(
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"location", request.location()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::Database>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -76,6 +82,9 @@ DefaultSqlDatabasesServiceRestStub::Insert(
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"location", request.location()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -90,6 +99,9 @@ DefaultSqlDatabasesServiceRestStub::List(
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"location", request.location()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::DatabasesListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -104,6 +116,9 @@ DefaultSqlDatabasesServiceRestStub::Patch(
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"location", request.location()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -119,6 +134,9 @@ DefaultSqlDatabasesServiceRestStub::Update(
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"location", request.location()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

@@ -263,6 +263,25 @@ class DataAgentServiceConnection {
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 
+  virtual future<StatusOr<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+  SetAgentOpsObservability(google::cloud::geminidataanalytics::v1::
+                               SetAgentOpsObservabilityRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SetAgentOpsObservability(
+      NoAwaitTag, google::cloud::geminidataanalytics::v1::
+                      SetAgentOpsObservabilityRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+  SetAgentOpsObservability(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::geminidataanalytics::v1::
+                       RetrieveAgentOpsObservabilityResponse>
+  RetrieveAgentOpsObservability(
+      google::cloud::geminidataanalytics::v1::
+          RetrieveAgentOpsObservabilityRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

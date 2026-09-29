@@ -811,6 +811,19 @@ SecureSourceManagerLogging::FetchBlob(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse>
+SecureSourceManagerLogging::FetchRefs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchRefsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::FetchRefsRequest const&
+                 request) {
+        return child_->FetchRefs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncCreateIssue(
     google::cloud::CompletionQueue& cq,

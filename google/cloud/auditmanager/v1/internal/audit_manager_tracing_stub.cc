@@ -33,6 +33,56 @@ AuditManagerTracingStub::AuditManagerTracingStub(
     std::shared_ptr<AuditManagerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingStub::CreateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.auditmanager.v1.AuditManager", "CreateAuditSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAuditSchedule(context, options, request));
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingStub::UpdateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.auditmanager.v1.AuditManager", "UpdateAuditSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAuditSchedule(context, options, request));
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingStub::GetAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.auditmanager.v1.AuditManager", "GetAuditSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAuditSchedule(context, options, request));
+}
+
+StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+AuditManagerTracingStub::ListAuditSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.auditmanager.v1.AuditManager", "ListAuditSchedules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListAuditSchedules(context, options, request));
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerTracingStub::EnrollResource(
     grpc::ClientContext& context, Options const& options,

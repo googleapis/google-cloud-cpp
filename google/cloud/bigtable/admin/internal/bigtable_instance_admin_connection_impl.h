@@ -132,6 +132,25 @@ class BigtableInstanceAdminConnectionImpl
   Status DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const&
                            request) override;
 
+  future<StatusOr<google::bigtable::admin::v2::MemoryLayer>> UpdateMemoryLayer(
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMemoryLayer(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::MemoryLayer>> UpdateMemoryLayer(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::bigtable::admin::v2::MemoryLayer> ListMemoryLayers(
+      google::bigtable::admin::v2::ListMemoryLayersRequest request) override;
+
+  StatusOr<google::bigtable::admin::v2::MemoryLayer> GetMemoryLayer(
+      google::bigtable::admin::v2::GetMemoryLayerRequest const& request)
+      override;
+
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       google::bigtable::admin::v2::CreateAppProfileRequest const& request)
       override;

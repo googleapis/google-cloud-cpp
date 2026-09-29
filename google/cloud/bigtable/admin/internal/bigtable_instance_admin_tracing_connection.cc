@@ -238,6 +238,56 @@ Status BigtableInstanceAdminTracingConnection::DeleteCluster(
   return internal::EndSpan(*span, child_->DeleteCluster(request));
 }
 
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminTracingConnection::UpdateMemoryLayer(
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateMemoryLayer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateMemoryLayer(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::UpdateMemoryLayer(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateMemoryLayer");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateMemoryLayer(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminTracingConnection::UpdateMemoryLayer(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateMemoryLayer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateMemoryLayer(operation));
+}
+
+StreamRange<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminTracingConnection::ListMemoryLayers(
+    google::bigtable::admin::v2::ListMemoryLayersRequest request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListMemoryLayers");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListMemoryLayers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::MemoryLayer>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminTracingConnection::GetMemoryLayer(
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetMemoryLayer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMemoryLayer(request));
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminTracingConnection::CreateAppProfile(
     google::bigtable::admin::v2::CreateAppProfileRequest const& request) {

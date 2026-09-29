@@ -510,6 +510,50 @@ StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::UpdateConnection(
   return child_->UpdateConnection(context, options, request);
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceAuth::CreateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateContentPolicy(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceAuth::UpdateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateContentPolicy(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceAuth::GetContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetContentPolicy(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+DlpServiceAuth::ListContentPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListContentPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListContentPolicies(context, options, request);
+}
+
+Status DlpServiceAuth::DeleteContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteContentPolicy(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2_internal
 }  // namespace cloud

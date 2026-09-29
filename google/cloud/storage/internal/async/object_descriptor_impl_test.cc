@@ -28,13 +28,17 @@
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -48,15 +52,22 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::AnyNumber;
+using ::testing::AtLeast;
 using ::testing::AtMost;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::IsFalse;
 using ::testing::IsTrue;
+using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::ResultOf;
@@ -77,6 +88,16 @@ auto constexpr kMetadataText = R"pb(
 )pb";
 
 auto NoResume() { return storage::LimitedErrorCountResumePolicy(0)(); }
+
+// The `[gcs-retry]` records, in order. Everything else the library logs is
+// noise for these tests.
+std::vector<std::string> RetryRecords(ScopedLog& log) {
+  std::vector<std::string> records;
+  for (auto const& line : log.ExtractLines()) {
+    if (absl::StrContains(line, "[gcs-retry]")) records.push_back(line);
+  }
+  return records;
+}
 
 auto MakeTested(
     std::unique_ptr<storage::ResumePolicy> resume_policy,
@@ -144,6 +165,287 @@ TEST(ObjectDescriptorImpl, LifecycleNoRead) {
   next.first.set_value(true);
 
   tested.reset();
+}
+
+/// @test A stream that closes cleanly must not be reported as a retry.
+TEST(ObjectDescriptorImpl, CleanFinishIsNotReportedAsRetry) {
+  ScopedLog log;
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  // `LimitedErrorCountResumePolicy` returns `kContinue` for an OK status, so
+  // the descriptor opens a replacement stream even after a clean close.
+  EXPECT_CALL(factory, Call)
+      .Times(AnyNumber())
+      .WillRepeatedly([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      });
+
+  auto tested = MakeTested(storage::LimitedErrorCountResumePolicy(3)(),
+                           factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
+  auto response = Response{};
+  EXPECT_TRUE(
+      TextFormat::ParseFromString(kMetadataText, response.mutable_metadata()));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+  read1.first.set_value(true);
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  tested.reset();
+
+  // The stream ended successfully, yet the resume policy still says
+  // `kContinue`, so the descriptor reconnects. That reconnect must not be
+  // reported: otherwise every completed download emits a warning.
+  //
+  // The replacement streams this test hands out do fail, and reporting *those*
+  // is correct, so the invariant is specifically that no OK status is ever
+  // described as an error.
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("status=OK"))));
+}
+
+/// @test A re-open that follows a clean close uses the silent factory.
+TEST(ObjectDescriptorImpl, CleanResumeUsesTheSilentFactory) {
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  MockFactory clean_factory;
+  // The re-open after the clean close must go to the silent factory. The
+  // reporting one is used later, when the replacement re-open fails for good
+  // and the descriptor queues a fresh stream; that is not what is under test
+  // here, so it is merely permitted.
+  EXPECT_CALL(factory, Call)
+      .Times(AnyNumber())
+      .WillRepeatedly([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      });
+  EXPECT_CALL(clean_factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  // Keep `MakeSubsequentStream()` out of the way.
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(), clean_factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options,
+      std::function<bool()>{});
+  tested->Start(Response{});
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+  read1.first.set_value(true);
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  tested.reset();
+}
+
+/// @test A re-open that follows a stream failure uses the reporting factory.
+///
+/// Only the clean-close case is silenced. A resume that is recovering from a
+/// broken stream may itself be throttled, and those retries are exactly the
+/// stall the application cannot otherwise see.
+TEST(ObjectDescriptorImpl, FailedResumeUsesTheReportingFactory) {
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return TransientError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  MockFactory clean_factory;
+  EXPECT_CALL(factory, Call)
+      .Times(AtLeast(1))
+      .WillRepeatedly([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      });
+  // The stream failed, so nothing here may take the silent path.
+  EXPECT_CALL(clean_factory, Call).Times(0);
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      storage::LimitedErrorCountResumePolicy(1)(), factory.AsStdFunction(),
+      clean_factory.AsStdFunction(), google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options,
+      std::function<bool()>{});
+  tested->Start(Response{});
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+  read1.first.set_value(false);
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  tested.reset();
+}
+
+/// @test A permanent stream failure is not reported, even though it resumes.
+///
+/// The built-in resume policies only count failures, so they return
+/// `kContinue` for `PERMISSION_DENIED` as well, and the descriptor re-opens.
+/// It is the retry loop inside the factory that gives up on it. Nothing was
+/// retried, so a "transient error" record would be misleading.
+TEST(ObjectDescriptorImpl, NoRetryLogForPermanentStreamFailure) {
+  ScopedLog log;
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return std::optional<Response>{}; });
+  });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return Status(StatusCode::kPermissionDenied, "uh-oh"); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  // The descriptor still re-opens: only the reporting changes, not whether the
+  // stream is resumed.
+  EXPECT_CALL(factory, Call)
+      .Times(AtLeast(1))
+      .WillRepeatedly([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      storage::LimitedErrorCountResumePolicy(1)(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options,
+      std::function<bool()>{});
+  tested->Start(Response{});
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+  read1.first.set_value(false);
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  tested.reset();
+
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+/// @test The attempt number counts consecutive resumes of the same stream.
+///
+/// The count has to restart with each new stream. A long-lived descriptor may
+/// be resumed many times over its life, and a number that only ever grows says
+/// nothing about how bad the current stall is.
+TEST(ObjectDescriptorImpl, ResumeAttemptCountsConsecutiveFailures) {
+  ScopedLog log;
+
+  AsyncSequencer<bool> sequencer;
+  auto make_failing_stream = [&sequencer](std::string const& name) {
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Read).WillOnce([&sequencer, name]() {
+      return sequencer.PushBack("Read/" + name).then([](auto) {
+        return std::optional<Response>{};
+      });
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer, name]() {
+      return sequencer.PushBack("Finish/" + name).then([](auto) {
+        return TransientError();
+      });
+    });
+    EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+    return stream;
+  };
+
+  MockFactory factory;
+  // The first resume re-opens successfully, which is what restarts the count.
+  // The second one fails outright, so the stream that failed is resumed again
+  // and its own count continues.
+  EXPECT_CALL(factory, Call)
+      .WillOnce([&](Request const&) {
+        auto result = OpenStreamResult{
+            std::make_shared<OpenStream>(make_failing_stream("s2")),
+            Response{}};
+        return make_ready_future(StatusOr<OpenStreamResult>(std::move(result)));
+      })
+      .WillOnce([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(TransientError()));
+      })
+      .WillOnce([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      })
+      // The descriptor gives up at that point and queues a replacement stream.
+      .WillRepeatedly([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      storage::LimitedErrorCountResumePolicy(3)(), factory.AsStdFunction(),
+      factory.AsStdFunction(), google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(make_failing_stream("s1")), options,
+      std::function<bool()>{});
+  tested->Start(Response{});
+
+  for (auto const& name : {std::string("s1"), std::string("s2")}) {
+    auto read = sequencer.PopFrontWithName();
+    EXPECT_EQ(read.second, "Read/" + name);
+    read.first.set_value(false);
+
+    auto finish = sequencer.PopFrontWithName();
+    EXPECT_EQ(finish.second, "Finish/" + name);
+    finish.first.set_value(true);
+  }
+
+  tested.reset();
+
+  // The first stream fails: attempt 1. Its re-open succeeds, so the second
+  // stream starts over: attempt 1 again. That re-open fails, and the same
+  // stream is resumed once more: attempt 2.
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("Open/resume"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log),
+              ElementsAre(matches(1), matches(1), matches(2)));
 }
 
 /// @test Verify that Cancel() is called if OnFinish() is delayed.
@@ -754,6 +1056,8 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   GTEST_SKIP();
 #endif
 
+  ScopedLog log;
+
   auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
@@ -887,6 +1191,13 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   // All the ranges fail with the same error.
   EXPECT_THAT(s1r2.get(), VariantWith<Status>(PermanentError()));
   EXPECT_THAT(s2r2.get(), VariantWith<Status>(PermanentError()));
+
+  // The first failure was recoverable, so the descriptor resumed the stream.
+  // That has to be visible, otherwise the application only sees the extra
+  // latency.
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("[gcs-retry]"), HasSubstr("Open/resume"),
+                             HasSubstr("test-only-invalid/test-object"))));
 }
 
 Status RedirectError(absl::string_view handle, absl::string_view token) {
@@ -1141,6 +1452,8 @@ Status PartialFailure(std::int64_t read_id) {
 /// @test When the underlying stream fails with unrecoverable errors all ranges
 /// fail.
 TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
+  ScopedLog log;
+
   auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
@@ -1278,6 +1591,13 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
   // All the other ranges fail with the same error.
   EXPECT_THAT(s1r1.get(), VariantWith<Status>(PermanentError()));
   EXPECT_THAT(s3r1.get(), VariantWith<Status>(PermanentError()));
+
+  // The stream ended to report a per-range error, and range #2 was completed
+  // with that error rather than retried. Re-opening the stream carries the
+  // ranges that are left; it is not a retry of anything, and calling it one
+  // would attach a "transient error retried" warning to a permanent failure
+  // the application has already been told about.
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
 }
 
 /// @test Verify that a background stream is created proactively.

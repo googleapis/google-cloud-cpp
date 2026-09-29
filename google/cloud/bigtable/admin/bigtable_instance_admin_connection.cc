@@ -195,6 +195,43 @@ Status BigtableInstanceAdminConnection::DeleteCluster(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminConnection::UpdateMemoryLayer(
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::MemoryLayer>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminConnection::UpdateMemoryLayer(
+    NoAwaitTag, google::bigtable::admin::v2::UpdateMemoryLayerRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MemoryLayer>>
+BigtableInstanceAdminConnection::UpdateMemoryLayer(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::MemoryLayer>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminConnection::ListMemoryLayers(
+    google::bigtable::admin::v2::
+        ListMemoryLayersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::MemoryLayer>>();
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminConnection::GetMemoryLayer(
+    google::bigtable::admin::v2::GetMemoryLayerRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminConnection::CreateAppProfile(
     google::bigtable::admin::v2::CreateAppProfileRequest const&) {

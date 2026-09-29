@@ -128,6 +128,26 @@ StatusOr<google::longrunning::Operation> LustreMetadata::DeleteInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LustreMetadata::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRescheduleMaintenance(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> LustreMetadata::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RescheduleMaintenance(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LustreMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -167,6 +187,143 @@ StatusOr<google::longrunning::Operation> LustreMetadata::ExportData(
   return child_->ExportData(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+LustreMetadata::AsyncCreateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMirror(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> LustreMetadata::CreateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMirror(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreMetadata::AsyncUpdateMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("mirror.name=",
+                           internal::UrlEncode(request.mirror().name())));
+  return child_->AsyncUpdateMirror(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> LustreMetadata::UpdateMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("mirror.name=",
+                           internal::UrlEncode(request.mirror().name())));
+  return child_->UpdateMirror(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreMetadata::AsyncDeleteMirror(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteMirror(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> LustreMetadata::DeleteMirror(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMirror(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreMetadata::GetMirror(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMirror(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::ListMirrorsResponse>
+LustreMetadata::ListMirrors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMirrors(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreMetadata::AsyncCreateDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDirectoryPolicy(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> LustreMetadata::CreateDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDirectoryPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LustreMetadata::AsyncDeleteDirectoryPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDirectoryPolicy(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> LustreMetadata::DeleteDirectoryPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDirectoryPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreMetadata::GetDirectoryPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDirectoryPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::lustre::v1::ListDirectoryPoliciesResponse>
+LustreMetadata::ListDirectoryPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDirectoryPolicies(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 LustreMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -182,6 +339,34 @@ StatusOr<google::cloud::location::Location> LustreMetadata::GetLocation(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> LustreMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> LustreMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreMetadata::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>

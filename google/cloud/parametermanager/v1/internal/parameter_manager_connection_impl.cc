@@ -277,6 +277,217 @@ Status ParameterManagerConnectionImpl::DeleteParameterVersion(
       *current, request, __func__);
 }
 
+StreamRange<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnectionImpl::ListTemplates(
+    google::cloud::parametermanager::v1::ListTemplatesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTemplates(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::parametermanager::v1::Template>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<parametermanager_v1::ParameterManagerRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::parametermanager::v1::ListTemplatesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::parametermanager::v1::ListTemplatesRequest const&
+                    request) {
+              return stub->ListTemplates(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::parametermanager::v1::ListTemplatesResponse r) {
+        std::vector<google::cloud::parametermanager::v1::Template> result(
+            r.templates().size());
+        auto& messages = *r.mutable_templates();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnectionImpl::GetTemplate(
+    google::cloud::parametermanager::v1::GetTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::GetTemplateRequest const&
+                 request) {
+        return stub_->GetTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnectionImpl::CreateTemplate(
+    google::cloud::parametermanager::v1::CreateTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::CreateTemplateRequest const&
+                 request) {
+        return stub_->CreateTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::parametermanager::v1::Template>
+ParameterManagerConnectionImpl::UpdateTemplate(
+    google::cloud::parametermanager::v1::UpdateTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::UpdateTemplateRequest const&
+                 request) {
+        return stub_->UpdateTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status ParameterManagerConnectionImpl::DeleteTemplate(
+    google::cloud::parametermanager::v1::DeleteTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::DeleteTemplateRequest const&
+                 request) {
+        return stub_->DeleteTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnectionImpl::ListTemplateVersions(
+    google::cloud::parametermanager::v1::ListTemplateVersionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListTemplateVersions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::parametermanager::v1::TemplateVersion>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<parametermanager_v1::ParameterManagerRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::parametermanager::v1::
+                                      ListTemplateVersionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::parametermanager::v1::
+                       ListTemplateVersionsRequest const& request) {
+              return stub->ListTemplateVersions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::parametermanager::v1::ListTemplateVersionsResponse r) {
+        std::vector<google::cloud::parametermanager::v1::TemplateVersion>
+            result(r.template_versions().size());
+        auto& messages = *r.mutable_template_versions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnectionImpl::GetTemplateVersion(
+    google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTemplateVersion(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+              request) {
+        return stub_->GetTemplateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnectionImpl::CreateTemplateVersion(
+    google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTemplateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 CreateTemplateVersionRequest const& request) {
+        return stub_->CreateTemplateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+ParameterManagerConnectionImpl::UpdateTemplateVersion(
+    google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTemplateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 UpdateTemplateVersionRequest const& request) {
+        return stub_->UpdateTemplateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status ParameterManagerConnectionImpl::DeleteTemplateVersion(
+    google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTemplateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 DeleteTemplateVersionRequest const& request) {
+        return stub_->DeleteTemplateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+ParameterManagerConnectionImpl::RenderTemplateVersion(
+    google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenderTemplateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 RenderTemplateVersionRequest const& request) {
+        return stub_->RenderTemplateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 ParameterManagerConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

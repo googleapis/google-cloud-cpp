@@ -65,7 +65,7 @@ CreatePartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
                              Options opts = {}) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), internal::CurrentOptions()));
-  return PartialResultSetSource::Create(std::move(reader));
+  return PartialResultSetSource::Create(std::move(reader), nullptr);
 }
 
 MATCHER_P(IsValidAndEquals, expected,

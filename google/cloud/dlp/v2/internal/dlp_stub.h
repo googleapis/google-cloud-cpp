@@ -309,6 +309,27 @@ class DlpServiceStub {
   virtual StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateConnectionRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ContentPolicy> CreateContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::CreateContentPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ContentPolicy> UpdateContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ContentPolicy> GetContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetContentPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+  ListContentPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListContentPoliciesRequest const& request) = 0;
+
+  virtual Status DeleteContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) = 0;
 };
 
 class DefaultDlpServiceStub : public DlpServiceStub {
@@ -590,6 +611,32 @@ class DefaultDlpServiceStub : public DlpServiceStub {
   StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateConnectionRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> CreateContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::CreateContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> UpdateContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::UpdateContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> GetContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+  ListContentPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListContentPoliciesRequest const& request)
+      override;
+
+  Status DeleteContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteContentPolicyRequest const& request)
       override;
 
  private:

@@ -672,6 +672,15 @@ SecureSourceManagerAuth::FetchBlob(
   return child_->FetchBlob(context, options, request);
 }
 
+StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse>
+SecureSourceManagerAuth::FetchRefs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchRefsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchRefs(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerAuth::AsyncCreateIssue(
     google::cloud::CompletionQueue& cq,

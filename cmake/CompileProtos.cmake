@@ -51,7 +51,7 @@ endfunction ()
 #
 # the resulting C++ code says:
 #
-# #include <foo/bar/baz.pb.h>
+# #include "foo/bar/baz.pb.h"
 #
 # Use the `PROTO_PATH` option to provide one or more directories to search for
 # proto files in the import.
@@ -139,7 +139,7 @@ endfunction ()
 #
 # the resulting C++ code says:
 #
-# #include <foo/bar/baz.pb.h>
+# #include "foo/bar/baz.pb.h"
 #
 # Use the `PROTO_PATH` option to provide one or more directories to search for
 # proto files in the import.

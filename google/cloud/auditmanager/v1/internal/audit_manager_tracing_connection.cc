@@ -31,6 +31,47 @@ AuditManagerTracingConnection::AuditManagerTracingConnection(
     std::shared_ptr<auditmanager_v1::AuditManagerConnection> child)
     : child_(std::move(child)) {}
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingConnection::CreateAuditSchedule(
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "auditmanager_v1::AuditManagerConnection::CreateAuditSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAuditSchedule(request));
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingConnection::UpdateAuditSchedule(
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "auditmanager_v1::AuditManagerConnection::UpdateAuditSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAuditSchedule(request));
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingConnection::GetAuditSchedule(
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "auditmanager_v1::AuditManagerConnection::GetAuditSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAuditSchedule(request));
+}
+
+StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerTracingConnection::ListAuditSchedules(
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest request) {
+  auto span = internal::MakeSpan(
+      "auditmanager_v1::AuditManagerConnection::ListAuditSchedules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAuditSchedules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::auditmanager::v1::AuditSchedule>(std::move(span),
+                                                      std::move(sr));
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerTracingConnection::EnrollResource(
     google::cloud::auditmanager::v1::EnrollResourceRequest const& request) {

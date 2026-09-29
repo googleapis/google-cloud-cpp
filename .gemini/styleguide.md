@@ -38,6 +38,14 @@ https://google.github.io/styleguide/cppguide.html with the following variances:
   `google::cloud::*_internal`). Require all internal callers and unit tests to
   explicitly supply all arguments. Suggest explicit function overloads if a
   simpler calling syntax is needed.
+- **Generated Protobuf and gRPC Includes:** Always use quotes (`#include "..."`)
+  for `.pb.h` and `.grpc.pb.h` files generated from `.proto` files found in the
+  `googleapis/googleapis` repository/module (e.g., `"google/api/client.pb.h"`,
+  `"google/monitoring/v3/metric_service.grpc.pb.h"`,
+  `"google/iam/v1/policy.pb.h"`). Headers from the `protocolbuffers/protobuf`
+  repository (such as `<google/protobuf/field_mask.pb.h>`,
+  `<google/protobuf/timestamp.pb.h>`, `<google/protobuf/descriptor.h>`) should
+  continue to use angle brackets (`#include <...>`).
 
 Do not make comments of suggestions on ordering of includes as a script formats
 them.

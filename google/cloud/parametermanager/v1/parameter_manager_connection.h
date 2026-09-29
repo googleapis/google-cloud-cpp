@@ -234,6 +234,56 @@ class ParameterManagerConnection {
       google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
           request);
 
+  virtual StreamRange<google::cloud::parametermanager::v1::Template>
+  ListTemplates(
+      google::cloud::parametermanager::v1::ListTemplatesRequest request);
+
+  virtual StatusOr<google::cloud::parametermanager::v1::Template> GetTemplate(
+      google::cloud::parametermanager::v1::GetTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::parametermanager::v1::Template>
+  CreateTemplate(
+      google::cloud::parametermanager::v1::CreateTemplateRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::parametermanager::v1::Template>
+  UpdateTemplate(
+      google::cloud::parametermanager::v1::UpdateTemplateRequest const&
+          request);
+
+  virtual Status DeleteTemplate(
+      google::cloud::parametermanager::v1::DeleteTemplateRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::parametermanager::v1::TemplateVersion>
+  ListTemplateVersions(
+      google::cloud::parametermanager::v1::ListTemplateVersionsRequest request);
+
+  virtual StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  GetTemplateVersion(
+      google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  CreateTemplateVersion(
+      google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  UpdateTemplateVersion(
+      google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+          request);
+
+  virtual Status DeleteTemplateVersion(
+      google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+  RenderTemplateVersion(
+      google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+          request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

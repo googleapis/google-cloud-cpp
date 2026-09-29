@@ -1092,6 +1092,98 @@ DlpServiceConnectionImpl::UpdateConnection(
       *current, request, __func__);
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnectionImpl::CreateContentPolicy(
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateContentPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+        return stub_->CreateContentPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnectionImpl::UpdateContentPolicy(
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateContentPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+        return stub_->UpdateContentPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnectionImpl::GetContentPolicy(
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetContentPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+        return stub_->GetContentPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceConnectionImpl::ListContentPolicies(
+    google::privacy::dlp::v2::ListContentPoliciesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListContentPolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::privacy::dlp::v2::ContentPolicy>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::privacy::dlp::v2::ListContentPoliciesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::privacy::dlp::v2::ListContentPoliciesRequest const&
+                       request) {
+              return stub->ListContentPolicies(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::privacy::dlp::v2::ListContentPoliciesResponse r) {
+        std::vector<google::privacy::dlp::v2::ContentPolicy> result(
+            r.content_policies().size());
+        auto& messages = *r.mutable_content_policies();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+Status DlpServiceConnectionImpl::DeleteContentPolicy(
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteContentPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+        return stub_->DeleteContentPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2_internal
 }  // namespace cloud

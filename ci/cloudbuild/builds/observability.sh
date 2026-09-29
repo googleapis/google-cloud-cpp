@@ -63,15 +63,19 @@ else
   io::log_yellow "No dedicated observability service account keyfile found; using default gcloud auth."
 fi
 
-io::log_h2 "Building OtelCollector targets and Bigtable Observability integration tests"
+io::log_h2 "Building OtelCollector targets, Bigtable Observability and Spanner Request ID integration tests"
 io::run bazel build "${args[@]}" \
   //ci/otel_collector:otel_collector_main \
   //google/cloud/bigtable/tests:observability_integration_test-default \
-  //google/cloud/bigtable/tests:observability_integration_test-dynamic-pool
+  //google/cloud/bigtable/tests:observability_integration_test-dynamic-pool \
+  //google/cloud/spanner/integration_tests:observability_integration_test-session-pool \
+  //google/cloud/spanner/integration_tests:observability_integration_test-session-multiplexed
 
 BAZEL_BIN="$(bazel info "${args[@]}" bazel-bin)"
 TEST_DEFAULT_BIN="${BAZEL_BIN}/google/cloud/bigtable/tests/observability_integration_test-default"
 TEST_DYNAMIC_BIN="${BAZEL_BIN}/google/cloud/bigtable/tests/observability_integration_test-dynamic-pool"
+TEST_SPANNER_POOL_BIN="${BAZEL_BIN}/google/cloud/spanner/integration_tests/observability_integration_test-session-pool"
+TEST_SPANNER_MP_BIN="${BAZEL_BIN}/google/cloud/spanner/integration_tests/observability_integration_test-session-multiplexed"
 
 readonly ZONES=("us-central1-f" "us-central1-a" "us-central1-b" "us-central1-c")
 ZONE="us-central1-f"
@@ -132,7 +136,10 @@ EOF
 fi
 
 io::log_h2 "Uploading test binaries to GCS: ${GCS_PATH}/binaries/"
-gcloud storage cp --quiet "${TEST_DEFAULT_BIN}" "${TEST_DYNAMIC_BIN}" "${GCS_PATH}/binaries/" >/dev/null 2>&1 || true
+gcloud storage cp --quiet \
+  "${TEST_DEFAULT_BIN}" \
+  "${TEST_DYNAMIC_BIN}" \
+  "${GCS_PATH}/binaries/" >/dev/null 2>&1 || true
 
 # Prepare Startup Script to run on the ephemeral GCE VM
 STARTUP_SCRIPT=$(
@@ -178,16 +185,26 @@ EOF
 )
 
 io::log_h2 "Running DirectPath fallback and diagnostics test on the build machine"
-(
-  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
-  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="${BIGTABLE_INSTANCE_ID}"
-  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID="${BIGTABLE_CLUSTER_ID}"
-  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="${BIGTABLE_ZONE_A}"
-  export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="${BIGTABLE_ZONE_B}"
-  export GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL=dynamic
+GOOGLE_CLOUD_PROJECT="${PROJECT_ID}" \
+  GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="${BIGTABLE_INSTANCE_ID}" \
+  GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID="${BIGTABLE_CLUSTER_ID}" \
+  GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="${BIGTABLE_ZONE_A}" \
+  GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="${BIGTABLE_ZONE_B}" \
+  GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL=dynamic \
   io::run "${TEST_DYNAMIC_BIN}" \
-    --gtest_filter="*VerifyDirectAccessFallbackAndDiagnosticsMetric*"
-)
+  --gtest_filter="*VerifyDirectAccessFallbackAndDiagnosticsMetric*"
+
+io::log_h2 "Running Spanner OpenTelemetry Request ID test (session pool) on the build machine"
+GOOGLE_CLOUD_PROJECT="${PROJECT_ID}" \
+  GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE=pool \
+  io::run "${TEST_SPANNER_POOL_BIN}" \
+  --gtest_filter="*OpenTelemetryRequestIdTracing*"
+
+io::log_h2 "Running Spanner OpenTelemetry Request ID test (multiplexed sessions) on the build machine"
+GOOGLE_CLOUD_PROJECT="${PROJECT_ID}" \
+  GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE=multiplexed \
+  io::run "${TEST_SPANNER_MP_BIN}" \
+  --gtest_filter="*OpenTelemetryRequestIdTracing*"
 
 for candidate_zone in "${ZONES[@]}"; do
   ZONE="${candidate_zone}"
@@ -239,7 +256,7 @@ io::log_h2 "Fetching test logs from GCS: ${GCS_PATH}/results/"
 gcloud storage cp --quiet "${GCS_PATH}/results/*.log" /tmp/ 2>/dev/null || true
 
 if [[ "${TEST_RESULT_CODE}" -ne 0 ]]; then
-  for log_file in /tmp/startup.log /tmp/test-default.log /tmp/test-dynamic-pool.log; do
+  for log_file in /tmp/startup.log /tmp/test-default.log /tmp/test-dynamic-pool.log /tmp/test-spanner-pool.log /tmp/test-spanner-multiplexed.log; do
     if [[ -f "${log_file}" ]]; then
       io::log_h2 "=== Content of $(basename "${log_file}") ==="
       cat "${log_file}" || true
@@ -248,7 +265,7 @@ if [[ "${TEST_RESULT_CODE}" -ne 0 ]]; then
   io::log_red "Observability integration tests failed with exit code: ${TEST_RESULT_CODE}"
   exit "${TEST_RESULT_CODE}"
 else
-  for log_file in /tmp/test-default.log /tmp/test-dynamic-pool.log; do
+  for log_file in /tmp/test-default.log /tmp/test-dynamic-pool.log /tmp/test-spanner-pool.log /tmp/test-spanner-multiplexed.log; do
     if [[ -f "${log_file}" ]]; then
       io::log_h2 "=== Test Summary: $(basename "${log_file}" .log) (Execution: Live Ephemeral VM - Uncached) ==="
       grep -E '^\[(==========|----------| RUN      |       OK |  PASSED  |  FAILED  |  SKIPPED )\]' "${log_file}" || cat "${log_file}"

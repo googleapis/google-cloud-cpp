@@ -24,8 +24,8 @@
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"  // NOLINT(modernize-deprecated-headers)
+#include "hello_world_grpc/hello_world.grpc.pb.h"
 #include <curl/curl.h>
-#include <hello_world_grpc/hello_world.grpc.pb.h>
 #include <chrono>
 #include <stdexcept>
 #include <thread>

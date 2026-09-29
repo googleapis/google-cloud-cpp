@@ -532,6 +532,14 @@ SecureSourceManagerConnection::FetchBlob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::securesourcemanager::v1::Ref>
+SecureSourceManagerConnection::FetchRefs(
+    google::cloud::securesourcemanager::v1::
+        FetchRefsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::Ref>>();
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
 SecureSourceManagerConnection::CreateIssue(
     google::cloud::securesourcemanager::v1::CreateIssueRequest const&) {

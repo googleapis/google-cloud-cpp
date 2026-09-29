@@ -52,6 +52,11 @@ class DataChatServiceTracingConnection
           request) override;
 
   StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+  UpdateConversation(
+      google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+          request) override;
+
+  StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
   GetConversation(
       google::cloud::geminidataanalytics::v1::GetConversationRequest const&
           request) override;

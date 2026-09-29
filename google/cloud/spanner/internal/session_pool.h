@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/internal/spanner_operation_context_factory.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -32,6 +33,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <mutex>
@@ -63,6 +65,11 @@ struct MultiplexedSessionBackgroundWorkIntervalOption {
   using Type = std::chrono::minutes;
 };
 
+struct SelectedStub {
+  std::shared_ptr<SpannerStub> stub;
+  std::uint32_t channel_id;
+};
+
 class SessionPool;
 
 /**
@@ -74,7 +81,9 @@ class SessionPool;
  */
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    google::cloud::CompletionQueue cq, Options opts);
+    google::cloud::CompletionQueue cq,
+    std::shared_ptr<SpannerOperationContextFactory> context_factory,
+    Options opts);
 
 /**
  * Maintains a pool of `Session` objects.
@@ -124,11 +133,11 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
       Session::Mode mode = Session::Mode::kMultiplexed);
 
   /**
-   * Return a `SpannerStub` to be used when making calls using `session`.
+   * Return a `SpannerStub` and `channel_id` to be used when making calls using
+   * `session`.
    */
-  std::shared_ptr<SpannerStub> GetStub(Session const& session);
-  std::shared_ptr<SpannerStub> GetStub(Session const& session,
-                                       TransactionContext& context);
+  SelectedStub GetStub(Session const& session);
+  SelectedStub GetStub(Session const& session, TransactionContext& context);
 
   /**
    * Returns the number of sessions in the session pool plus the number of
@@ -142,7 +151,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
  private:
   friend std::shared_ptr<SessionPool> MakeSessionPool(
       spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
-      google::cloud::CompletionQueue, Options);
+      google::cloud::CompletionQueue,
+      std::shared_ptr<SpannerOperationContextFactory>, Options);
 
   /**
    * Construct a `SessionPool`.
@@ -151,7 +161,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    */
   SessionPool(spanner::Database db,
               std::vector<std::shared_ptr<SpannerStub>> stubs,
-              google::cloud::CompletionQueue cq, Options opts);
+              google::cloud::CompletionQueue cq,
+              std::shared_ptr<SpannerOperationContextFactory> context_factory,
+              Options opts);
 
   void Initialize();
 
@@ -167,8 +179,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   StatusOr<SessionHolder> Allocate(std::unique_lock<std::mutex>,
                                    Session::Mode mode);
 
-  // Returns a stub to use by round-robining between the channels.
-  std::shared_ptr<SpannerStub> GetStub(std::unique_lock<std::mutex>);
+  // Returns a stub and channel to use by round-robining between the channels.
+  SelectedStub GetStub(std::unique_lock<std::mutex>);
 
   // Release session back to the pool.
   void Release(std::unique_ptr<Session> session);
@@ -184,9 +196,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   Status CreateMultiplexedSession(
       std::unique_lock<std::mutex>& lk);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
-  Status CreateMultiplexedSessionSync(std::shared_ptr<SpannerStub>);
+  Status CreateMultiplexedSessionSync(SelectedStub const& selected_stub);
   future<StatusOr<google::spanner::v1::Session>> CreateMultiplexedSessionAsync(
-      std::shared_ptr<SpannerStub>);
+      SelectedStub const& selected_stub);
   Status HandleMultiplexedCreateSessionDone(
       StatusOr<google::spanner::v1::Session> response);
   bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
@@ -214,14 +226,16 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(CompletionQueue& cq,
                            std::shared_ptr<SpannerStub> const& stub,
+                           std::uint32_t channel_id,
                            std::map<std::string, std::string> const& labels,
                            std::string const& role, int num_sessions);
   future<Status> AsyncDeleteSession(CompletionQueue& cq,
                                     std::shared_ptr<SpannerStub> const& stub,
+                                    std::uint32_t channel_id,
                                     std::string session_name);
   future<StatusOr<google::spanner::v1::ResultSet>> AsyncRefreshSession(
       CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
-      std::string session_name);
+      std::uint32_t channel_id, std::string session_name);
 
   Status HandleBatchCreateSessionsDone(
       std::shared_ptr<Channel> const& channel,
@@ -277,6 +291,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   using ChannelVec = absl::FixedArray<std::shared_ptr<Channel>>;
   ChannelVec channels_;                                 // GUARDED_BY(mu_)
   ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
+  std::shared_ptr<SpannerOperationContextFactory> context_factory_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -530,6 +530,121 @@ StatusOr<google::iam::v1::Policy> DataAgentServiceConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceConnectionImpl::SetAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SetAgentOpsObservability(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::geminidataanalytics::v1::
+                         SetAgentOpsObservabilityRequest const& request) {
+        return stub->AsyncSetAgentOpsObservability(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::geminidataanalytics::v1::
+              SetAgentOpsObservabilityResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceConnectionImpl::SetAgentOpsObservability(
+    NoAwaitTag, google::cloud::geminidataanalytics::v1::
+                    SetAgentOpsObservabilityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetAgentOpsObservability(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::geminidataanalytics::v1::
+                 SetAgentOpsObservabilityRequest const& request) {
+        return stub_->SetAgentOpsObservability(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceConnectionImpl::SetAgentOpsObservability(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::geminidataanalytics::v1::
+                   SetAgentOpsObservabilityMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::geminidataanalytics::v1::
+                                          SetAgentOpsObservabilityResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SetAgentOpsObservability",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::geminidataanalytics::v1::
+              SetAgentOpsObservabilityResponse>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceConnectionImpl::RetrieveAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RetrieveAgentOpsObservability(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::geminidataanalytics::v1::
+                 RetrieveAgentOpsObservabilityRequest const& request) {
+        return stub_->RetrieveAgentOpsObservability(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 DataAgentServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

@@ -38,6 +38,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuditManagerConnection::~AuditManagerConnection() = default;
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnection::CreateAuditSchedule(
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnection::UpdateAuditSchedule(
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnection::GetAuditSchedule(
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerConnection::ListAuditSchedules(
+    google::cloud::auditmanager::v1::
+        ListAuditSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::auditmanager::v1::AuditSchedule>>();
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerConnection::EnrollResource(
     google::cloud::auditmanager::v1::EnrollResourceRequest const&) {

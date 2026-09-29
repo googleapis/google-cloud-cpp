@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
+#include <cstdint>
 #include <memory>
 
 namespace google {
@@ -29,14 +30,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct Channel {
   /// @p stub_param must not be nullptr
-  explicit Channel(std::shared_ptr<SpannerStub> stub_param)
-      : stub(std::move(stub_param)) {}
+  Channel(std::shared_ptr<SpannerStub> stub_param, std::uint32_t channel_id)
+      : stub(std::move(stub_param)), channel_id(channel_id) {}
 
   // This class is not copyable or movable.
   Channel(Channel const&) = delete;
   Channel& operator=(Channel const&) = delete;
 
   std::shared_ptr<SpannerStub> const stub;
+  std::uint32_t const channel_id;
   int session_count = 0;
 };
 

@@ -87,6 +87,10 @@ class RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           PatchFirewallPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency PatchAssociation(
+      google::cloud::cpp::compute::region_network_firewall_policies::v1::
+          PatchAssociationRequest const& request);
+
   virtual google::cloud::Idempotency PatchRule(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           PatchRuleRequest const& request);

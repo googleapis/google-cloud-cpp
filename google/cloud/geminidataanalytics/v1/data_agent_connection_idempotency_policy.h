@@ -80,6 +80,14 @@ class DataAgentServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency SetAgentOpsObservability(
+      google::cloud::geminidataanalytics::v1::
+          SetAgentOpsObservabilityRequest const& request);
+
+  virtual google::cloud::Idempotency RetrieveAgentOpsObservability(
+      google::cloud::geminidataanalytics::v1::
+          RetrieveAgentOpsObservabilityRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

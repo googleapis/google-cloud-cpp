@@ -277,6 +277,64 @@ Status BigtableInstanceAdminLogging::DeleteCluster(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminLogging::AsyncUpdateMemoryLayer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::UpdateMemoryLayerRequest const&
+                 request) {
+        return child_->AsyncUpdateMemoryLayer(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::UpdateMemoryLayer(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateMemoryLayerRequest const&
+                 request) {
+        return child_->UpdateMemoryLayer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::ListMemoryLayersResponse>
+BigtableInstanceAdminLogging::ListMemoryLayers(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMemoryLayersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::ListMemoryLayersRequest const& request) {
+        return child_->ListMemoryLayers(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminLogging::GetMemoryLayer(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+        return child_->GetMemoryLayer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminLogging::CreateAppProfile(
     grpc::ClientContext& context, Options const& options,

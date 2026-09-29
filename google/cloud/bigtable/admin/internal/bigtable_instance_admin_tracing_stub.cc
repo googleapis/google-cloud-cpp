@@ -250,6 +250,57 @@ Status BigtableInstanceAdminTracingStub::DeleteCluster(
                            child_->DeleteCluster(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminTracingStub::AsyncUpdateMemoryLayer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateMemoryLayer");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateMemoryLayer(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingStub::UpdateMemoryLayer(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateMemoryLayer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateMemoryLayer(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::ListMemoryLayersResponse>
+BigtableInstanceAdminTracingStub::ListMemoryLayers(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMemoryLayersRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListMemoryLayers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListMemoryLayers(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+BigtableInstanceAdminTracingStub::GetMemoryLayer(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetMemoryLayer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetMemoryLayer(context, options, request));
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminTracingStub::CreateAppProfile(
     grpc::ClientContext& context, Options const& options,

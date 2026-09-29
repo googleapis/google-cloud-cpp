@@ -79,17 +79,51 @@ class CloudTasksTracingConnection : public tasks_v2::CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(google::cloud::tasks::v2::BatchCreateTasksRequest const&
+                       request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::tasks::v2::BatchCreateTasksResponse>>
+  BatchCreateTasks(google::longrunning::Operation const& operation) override;
+
   Status DeleteTask(
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(google::cloud::tasks::v2::BatchDeleteTasksRequest const&
+                       request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      NoAwaitTag,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::tasks::v2::BatchDeleteTasksMetadata>>
+  BatchDeleteTasks(google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<tasks_v2::CloudTasksConnection> child_;

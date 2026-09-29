@@ -33,6 +33,79 @@ AuditManagerClient::AuditManagerClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 AuditManagerClient::~AuditManagerClient() = default;
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::CreateAuditSchedule(
+    std::string const& parent,
+    google::cloud::auditmanager::v1::AuditSchedule const& audit_schedule,
+    std::string const& audit_schedule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::auditmanager::v1::CreateAuditScheduleRequest request;
+  request.set_parent(parent);
+  *request.mutable_audit_schedule() = audit_schedule;
+  request.set_audit_schedule_id(audit_schedule_id);
+  return connection_->CreateAuditSchedule(request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::CreateAuditSchedule(
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuditSchedule(request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::UpdateAuditSchedule(
+    google::cloud::auditmanager::v1::AuditSchedule const& audit_schedule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::auditmanager::v1::UpdateAuditScheduleRequest request;
+  *request.mutable_audit_schedule() = audit_schedule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAuditSchedule(request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::UpdateAuditSchedule(
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuditSchedule(request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::GetAuditSchedule(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::auditmanager::v1::GetAuditScheduleRequest request;
+  request.set_name(name);
+  return connection_->GetAuditSchedule(request);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::GetAuditSchedule(
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAuditSchedule(request);
+}
+
+StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::ListAuditSchedules(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::auditmanager::v1::ListAuditSchedulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListAuditSchedules(request);
+}
+
+StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerClient::ListAuditSchedules(
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAuditSchedules(std::move(request));
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerClient::EnrollResource(
     std::string const& scope,

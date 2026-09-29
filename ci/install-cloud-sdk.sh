@@ -51,3 +51,15 @@ echo "${GOOGLE_CLOUD_CPP_SDK_SHA256[${ARCH}]} ${TARBALL}" | sha256sum --check -
 tar x -C /usr/local -f "${TARBALL}"
 /usr/local/google-cloud-sdk/bin/gcloud --quiet components install \
   "${components[@]}"
+
+# vcpkg requires gsutil >= 5.35.0 for GCS binary caching, while Cloud SDK
+# 474.0.0 ships with gsutil 5.27. Upgrade only platform/gsutil in-place so
+# that the Cloud SDK wrapper (which passes GCE credentials) stays intact and
+# emulator versions (like cloud-spanner-emulator) remain pinned to 474.0.0.
+readonly GSUTIL_TARBALL="gsutil_5.35.tar.gz"
+readonly GSUTIL_SHA256="8e567c0d55052f8485d646b5e6f46e82f7bc0deef061c07e4c7c0b2669a5d763"
+curl -fsSL "https://storage.googleapis.com/pub/${GSUTIL_TARBALL}" -o "${GSUTIL_TARBALL}"
+echo "${GSUTIL_SHA256} ${GSUTIL_TARBALL}" | sha256sum --check -
+rm -rf /usr/local/google-cloud-sdk/platform/gsutil
+tar -xzf "${GSUTIL_TARBALL}" -C /usr/local/google-cloud-sdk/platform
+rm "${GSUTIL_TARBALL}"

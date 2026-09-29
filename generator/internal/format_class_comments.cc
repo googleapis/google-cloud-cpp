@@ -18,7 +18,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/strip.h"
-#include <google/api/client.pb.h>
+#include "google/api/client.pb.h"
 
 namespace google {
 namespace cloud {

@@ -902,6 +902,94 @@ DlpServiceClient::UpdateConnection(
   return connection_->UpdateConnection(request);
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::CreateContentPolicy(
+    std::string const& parent,
+    google::privacy::dlp::v2::ContentPolicy const& content_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::CreateContentPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_content_policy() = content_policy;
+  return connection_->CreateContentPolicy(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::CreateContentPolicy(
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateContentPolicy(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::UpdateContentPolicy(
+    std::string const& name,
+    google::privacy::dlp::v2::ContentPolicy const& content_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::UpdateContentPolicyRequest request;
+  request.set_name(name);
+  *request.mutable_content_policy() = content_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateContentPolicy(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::UpdateContentPolicy(
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateContentPolicy(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::GetContentPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetContentPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetContentPolicy(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::GetContentPolicy(
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetContentPolicy(request);
+}
+
+StreamRange<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::ListContentPolicies(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListContentPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListContentPolicies(request);
+}
+
+StreamRange<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceClient::ListContentPolicies(
+    google::privacy::dlp::v2::ListContentPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListContentPolicies(std::move(request));
+}
+
+Status DlpServiceClient::DeleteContentPolicy(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::DeleteContentPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteContentPolicy(request);
+}
+
+Status DlpServiceClient::DeleteContentPolicy(
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteContentPolicy(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2
 }  // namespace cloud

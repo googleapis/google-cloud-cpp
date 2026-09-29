@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:defs.bzl", "cc_binary")
 load(":pubsub_client_benchmark_programs.bzl", "pubsub_client_benchmark_programs")
 
 package(default_visibility = ["//visibility:private"])

@@ -27,9 +27,13 @@
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -43,10 +47,18 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::AllOf;
+using ::testing::AtLeast;
+using ::testing::Contains;
+using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::InvokeWithoutArgs;
+using ::testing::IsEmpty;
 using ::testing::NiceMock;
+using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Optional;
 
@@ -59,6 +71,16 @@ using MockStream = google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
 
 auto constexpr kAuthority = "storage.googleapis.com";
 auto constexpr kRetryAttempts = 2;
+
+// The `[gcs-retry]` records, in order. Everything else the library logs is
+// noise for these tests.
+std::vector<std::string> RetryRecords(ScopedLog& log) {
+  std::vector<std::string> records;
+  for (auto const& line : log.ExtractLines()) {
+    if (absl::StrContains(line, "[gcs-retry]")) records.push_back(line);
+  }
+  return records;
+}
 
 auto TestOptions(Options options = {}) {
   using ms = std::chrono::milliseconds;
@@ -335,6 +357,8 @@ TEST(AsyncConnectionImplTest, HandleRedirectErrors) {
 }
 
 TEST(AsyncConnectionImplTest, StopOnPermanentError) {
+  ScopedLog log;
+
   auto constexpr kExpectedRequest = R"pb(
     bucket: "test-only-invalid"
     object: "test-object"
@@ -367,9 +391,14 @@ TEST(AsyncConnectionImplTest, StopOnPermanentError) {
 
   auto response = pending.get();
   ASSERT_THAT(response, StatusIs(PermanentError().code()));
+
+  // A permanent error is never retried, so there is nothing to report.
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
 }
 
-TEST(AsyncConnectionImplTest, TooManyTransienErrors) {
+TEST(AsyncConnectionImplTest, TooManyTransientErrors) {
+  ScopedLog log;
+
   auto constexpr kExpectedRequest = R"pb(
     bucket: "test-only-invalid"
     object: "test-object"
@@ -404,6 +433,162 @@ TEST(AsyncConnectionImplTest, TooManyTransienErrors) {
   }
 
   ASSERT_THAT(pending.get(), StatusIs(TransientError().code()));
+
+  // `kRetryAttempts` retries are granted, so the first two failures are
+  // reported and the third -- the attempt on which the loop gives up -- is
+  // not. That last failure reaches the caller as the returned `Status`.
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("Open"),
+                 HasSubstr("test-only-invalid/test-object"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log), ElementsAre(matches(1), matches(2)));
+}
+
+// A download that succeeds must say nothing, including while the descriptor
+// winds down.
+//
+// When a stream ends cleanly the descriptor re-opens it anyway, because
+// `ResumePolicy::OnFinish()` returns `kContinue` for an OK status. That
+// re-open routinely loses a race with teardown and fails with an internal
+// "stream closed successfully" error, which this retry policy counts as
+// transient and retries. Reporting it would put a warning on a read that in
+// fact succeeded, so the factory handed to the descriptor does not log.
+//
+// This is a regression test for real behaviour: against the storage-testbench
+// this fired on roughly a third of healthy reads, and on every descriptor
+// opened without a range.
+//
+// Note the resume itself is a different matter. A resume that *fails* is
+// still reported, by `ObjectDescriptorImpl::Resume()`; that is covered in
+// `object_descriptor_impl_test.cc`. Here every resume ultimately succeeds, so
+// there is nothing legitimate to report.
+TEST(AsyncConnectionImplTest, ResumeReopenIsSilent) {
+  ScopedLog log;
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+
+  // The stream the caller opens on. It serves one response, then ends
+  // cleanly, which is what prompts the descriptor to resume.
+  auto closing_stream = [] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(true);
+    }));
+    ON_CALL(*stream, Write).WillByDefault([](auto const&, auto) {
+      return make_ready_future(true);
+    });
+    ON_CALL(*stream, Read).WillByDefault(InvokeWithoutArgs([n = 0]() mutable {
+      using Response = google::storage::v2::BidiReadObjectResponse;
+      // The first read satisfies the open; the stream then ends.
+      if (n++ == 0) {
+        return make_ready_future(std::optional<Response>(Response{}));
+      }
+      return make_ready_future(std::optional<Response>());
+    }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(Status{});
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  // A stream shaped like the one teardown produces: it never starts, and
+  // finishing it reports success. `OpenObject` turns that into a transient
+  // `kInternal` error, which the retry policy retries.
+  auto teardown_stream = [] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(false);
+    }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(Status{});
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  // The stream the resume settles on. It opens and then stays open.
+  //
+  // It must not end cleanly: `LimitedErrorCountResumePolicy` only counts
+  // failures, so an OK finish always answers `kContinue` and a stream that
+  // keeps closing cleanly would be resumed forever. Parking the read leaves
+  // the descriptor in the state a healthy session is normally in.
+  auto parked_stream = [&sequencer] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(true);
+    }));
+    ON_CALL(*stream, Write).WillByDefault([](auto const&, auto) {
+      return make_ready_future(true);
+    });
+    ON_CALL(*stream, Read)
+        .WillByDefault(InvokeWithoutArgs([&sequencer, n = 0]() mutable {
+          using Response = google::storage::v2::BidiReadObjectResponse;
+          if (n++ == 0) {
+            return make_ready_future(std::optional<Response>(Response{}));
+          }
+          return sequencer.PushBack("Read").then(
+              [](auto) { return std::optional<Response>(); });
+        }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(Status{});
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      // `AtLeast(3)` matters: without it the test would pass simply because
+      // no resume ever happened, which is the bug it is meant to catch.
+      .Times(AtLeast(3))
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const&) {
+        return closing_stream();
+      })
+      // The first re-open loses the race with teardown and fails transiently.
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const&) {
+        return teardown_stream();
+      })
+      // Its retry succeeds, so the resume completes and nothing has gone
+      // wrong from the caller's point of view.
+      .WillRepeatedly([&](CompletionQueue const&,
+                          std::shared_ptr<grpc::ClientContext> const&,
+                          google::cloud::internal::ImmutableOptions const&) {
+        return parked_stream();
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            StatusOr<std::chrono::system_clock::time_point>(
+                std::chrono::system_clock::now()));
+      });
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      // Allow a resume, which the default test options switch off.
+      TestOptions(Options{}.set<storage::ResumePolicyOption>(
+          storage::LimitedErrorCountResumePolicy(1))));
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto p = connection->Open({std::move(request), connection->options()}).get();
+  ASSERT_THAT(p, IsOkAndHolds(NotNull()));
+  auto descriptor = *std::move(p);
+  descriptor.reset();
+
+  // Release the parked read so the stream can wind down.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(false);
+
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
 }
 
 TEST(AsyncConnectionImplTest, OpenWithReadRanges) {

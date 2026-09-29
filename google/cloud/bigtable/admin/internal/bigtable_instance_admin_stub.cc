@@ -267,6 +267,61 @@ Status DefaultBigtableInstanceAdminStub::DeleteCluster(
   return google::cloud::Status();
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableInstanceAdminStub::AsyncUpdateMemoryLayer(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::admin::v2::UpdateMemoryLayerRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateMemoryLayer(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::UpdateMemoryLayer(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMemoryLayer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::bigtable::admin::v2::ListMemoryLayersResponse>
+DefaultBigtableInstanceAdminStub::ListMemoryLayers(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::ListMemoryLayersRequest const& request) {
+  google::bigtable::admin::v2::ListMemoryLayersResponse response;
+  auto status = grpc_stub_->ListMemoryLayers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::bigtable::admin::v2::MemoryLayer>
+DefaultBigtableInstanceAdminStub::GetMemoryLayer(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::GetMemoryLayerRequest const& request) {
+  google::bigtable::admin::v2::MemoryLayer response;
+  auto status = grpc_stub_->GetMemoryLayer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::bigtable::admin::v2::AppProfile>
 DefaultBigtableInstanceAdminStub::CreateAppProfile(
     grpc::ClientContext& context, Options const&,

@@ -238,6 +238,56 @@ StatusOr<google::iam::v1::Policy> DefaultDataAgentServiceStub::SetIamPolicy(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataAgentServiceStub::AsyncSetAgentOpsObservability(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::geminidataanalytics::v1::
+                 SetAgentOpsObservabilityRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSetAgentOpsObservability(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataAgentServiceStub::SetAgentOpsObservability(
+    grpc::ClientContext& context, Options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SetAgentOpsObservability(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DefaultDataAgentServiceStub::RetrieveAgentOpsObservability(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request) {
+  google::cloud::geminidataanalytics::v1::RetrieveAgentOpsObservabilityResponse
+      response;
+  auto status =
+      grpc_stub_->RetrieveAgentOpsObservability(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataAgentServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

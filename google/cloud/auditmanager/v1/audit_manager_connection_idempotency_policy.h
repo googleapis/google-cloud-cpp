@@ -39,6 +39,20 @@ class AuditManagerConnectionIdempotencyPolicy {
   virtual std::unique_ptr<AuditManagerConnectionIdempotencyPolicy> clone()
       const;
 
+  virtual google::cloud::Idempotency CreateAuditSchedule(
+      google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateAuditSchedule(
+      google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAuditSchedule(
+      google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request);
+
+  virtual google::cloud::Idempotency ListAuditSchedules(
+      google::cloud::auditmanager::v1::ListAuditSchedulesRequest request);
+
   virtual google::cloud::Idempotency EnrollResource(
       google::cloud::auditmanager::v1::EnrollResourceRequest const& request);
 

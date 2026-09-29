@@ -5,6 +5,7 @@
 
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 licenses(["notice"])  # MIT/X derivative license
 

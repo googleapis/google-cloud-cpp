@@ -127,6 +127,37 @@ LustreTracingConnection::DeleteInstance(
   return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
 }
 
+future<StatusOr<google::cloud::lustre::v1::Instance>>
+LustreTracingConnection::RescheduleMaintenance(
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::RescheduleMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RescheduleMaintenance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreTracingConnection::RescheduleMaintenance(
+    NoAwaitTag,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::RescheduleMaintenance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RescheduleMaintenance(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Instance>>
+LustreTracingConnection::RescheduleMaintenance(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::RescheduleMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RescheduleMaintenance(operation));
+}
+
 future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
 LustreTracingConnection::ImportData(
     google::cloud::lustre::v1::ImportDataRequest const& request) {
@@ -173,6 +204,175 @@ LustreTracingConnection::ExportData(
   return internal::EndSpan(std::move(span), child_->ExportData(operation));
 }
 
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreTracingConnection::CreateMirror(
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::CreateMirror");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateMirror(request));
+}
+
+StatusOr<google::longrunning::Operation> LustreTracingConnection::CreateMirror(
+    NoAwaitTag, google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::CreateMirror");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateMirror(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreTracingConnection::CreateMirror(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::CreateMirror");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateMirror(operation));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreTracingConnection::UpdateMirror(
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::UpdateMirror");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateMirror(request));
+}
+
+StatusOr<google::longrunning::Operation> LustreTracingConnection::UpdateMirror(
+    NoAwaitTag, google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::UpdateMirror");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateMirror(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreTracingConnection::UpdateMirror(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::UpdateMirror");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateMirror(operation));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreTracingConnection::DeleteMirror(
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::DeleteMirror");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteMirror(request));
+}
+
+StatusOr<google::longrunning::Operation> LustreTracingConnection::DeleteMirror(
+    NoAwaitTag, google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::DeleteMirror");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteMirror(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreTracingConnection::DeleteMirror(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::DeleteMirror");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteMirror(operation));
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreTracingConnection::GetMirror(
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::GetMirror");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMirror(request));
+}
+
+StreamRange<google::cloud::lustre::v1::Mirror>
+LustreTracingConnection::ListMirrors(
+    google::cloud::lustre::v1::ListMirrorsRequest request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::ListMirrors");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListMirrors(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::lustre::v1::Mirror>(
+      std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+LustreTracingConnection::CreateDirectoryPolicy(
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::CreateDirectoryPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDirectoryPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreTracingConnection::CreateDirectoryPolicy(
+    NoAwaitTag,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::CreateDirectoryPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDirectoryPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+LustreTracingConnection::CreateDirectoryPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::CreateDirectoryPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDirectoryPolicy(operation));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreTracingConnection::DeleteDirectoryPolicy(
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::DeleteDirectoryPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDirectoryPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LustreTracingConnection::DeleteDirectoryPolicy(
+    NoAwaitTag,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::DeleteDirectoryPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDirectoryPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreTracingConnection::DeleteDirectoryPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::DeleteDirectoryPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDirectoryPolicy(operation));
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreTracingConnection::GetDirectoryPolicy(
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::GetDirectoryPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDirectoryPolicy(request));
+}
+
+StreamRange<google::cloud::lustre::v1::DirectoryPolicy>
+LustreTracingConnection::ListDirectoryPolicies(
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::ListDirectoryPolicies");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDirectoryPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::lustre::v1::DirectoryPolicy>(std::move(span),
+                                                  std::move(sr));
+}
+
 StreamRange<google::cloud::location::Location>
 LustreTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -189,6 +389,29 @@ LustreTracingConnection::GetLocation(
   auto span = internal::MakeSpan("lustre_v1::LustreConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
+StatusOr<google::iam::v1::Policy> LustreTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy> LustreTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("lustre_v1::LustreConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span =
+      internal::MakeSpan("lustre_v1::LustreConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>

@@ -21,9 +21,12 @@
 
 #include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/tasks/v2/cloudtasks.grpc.pb.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -96,13 +99,43 @@ class CloudTasksStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateTaskRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchCreateTasks(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request) = 0;
+
   virtual Status DeleteTask(
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteTaskRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchDeleteTasks(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::tasks::v2::Task> RunTask(
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::RunTaskRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
@@ -112,17 +145,36 @@ class CloudTasksStub {
   virtual StatusOr<google::cloud::location::Location> GetLocation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultCloudTasksStub : public CloudTasksStub {
  public:
-  explicit DefaultCloudTasksStub(
+  DefaultCloudTasksStub(
       std::unique_ptr<google::cloud::tasks::v2::CloudTasks::StubInterface>
           grpc_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub)
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        locations_stub_(std::move(locations_stub)) {}
+        locations_stub_(std::move(locations_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::tasks::v2::ListQueuesResponse> ListQueues(
       grpc::ClientContext& context, Options const& options,
@@ -180,13 +232,46 @@ class DefaultCloudTasksStub : public CloudTasksStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateTasks(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateTasks(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tasks::v2::BatchCreateTasksRequest const& request)
+      override;
+
   Status DeleteTask(
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteTasks(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteTasks(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tasks::v2::BatchDeleteTasksRequest const& request)
+      override;
+
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> UpdateCmekConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tasks::v2::UpdateCmekConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::tasks::v2::CmekConfig> GetCmekConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tasks::v2::GetCmekConfigRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -196,11 +281,29 @@ class DefaultCloudTasksStub : public CloudTasksStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::tasks::v2::CloudTasks::StubInterface>
       grpc_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

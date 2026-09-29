@@ -771,6 +771,18 @@ DefaultSecureSourceManagerStub::FetchBlob(
   return response;
 }
 
+StatusOr<google::cloud::securesourcemanager::v1::FetchRefsResponse>
+DefaultSecureSourceManagerStub::FetchRefs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::FetchRefsRequest const& request) {
+  google::cloud::securesourcemanager::v1::FetchRefsResponse response;
+  auto status = grpc_stub_->FetchRefs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncCreateIssue(
     google::cloud::CompletionQueue& cq,

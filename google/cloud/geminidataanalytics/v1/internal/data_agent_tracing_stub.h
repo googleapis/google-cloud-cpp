@@ -119,6 +119,26 @@ class DataAgentServiceTracingStub : public DataAgentServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncSetAgentOpsObservability(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::geminidataanalytics::v1::
+          SetAgentOpsObservabilityRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> SetAgentOpsObservability(
+      grpc::ClientContext& context, Options options,
+      google::cloud::geminidataanalytics::v1::
+          SetAgentOpsObservabilityRequest const& request) override;
+
+  StatusOr<google::cloud::geminidataanalytics::v1::
+               RetrieveAgentOpsObservabilityResponse>
+  RetrieveAgentOpsObservability(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::geminidataanalytics::v1::
+          RetrieveAgentOpsObservabilityRequest const& request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

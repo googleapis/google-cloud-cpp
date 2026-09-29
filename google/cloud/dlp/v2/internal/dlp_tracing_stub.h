@@ -313,6 +313,32 @@ class DlpServiceTracingStub : public DlpServiceStub {
       google::privacy::dlp::v2::UpdateConnectionRequest const& request)
       override;
 
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> CreateContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::CreateContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> UpdateContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::UpdateContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> GetContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+  ListContentPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListContentPoliciesRequest const& request)
+      override;
+
+  Status DeleteContentPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteContentPolicyRequest const& request)
+      override;
+
  private:
   std::shared_ptr<DlpServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

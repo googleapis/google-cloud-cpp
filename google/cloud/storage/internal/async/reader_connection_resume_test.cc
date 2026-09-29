@@ -28,8 +28,11 @@
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -50,10 +53,12 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtMost;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -68,6 +73,16 @@ using ReadResponse =
 using MockAsyncReaderConnectionFactory = ::testing::MockFunction<
     future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>(
         storage::Generation, std::int64_t)>;
+
+// The `[gcs-retry]` records, in order. Everything else the library logs is
+// noise for these tests.
+std::vector<std::string> RetryRecords(ScopedLog& log) {
+  std::vector<std::string> records;
+  for (auto const& line : log.ExtractLines()) {
+    if (absl::StrContains(line, "[gcs-retry]")) records.push_back(line);
+  }
+  return records;
+}
 
 auto WithGeneration(std::int64_t expected) {
   return ::testing::ResultOf(
@@ -213,6 +228,195 @@ TEST(AsyncReaderConnectionResume, Resume) {
               UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
   EXPECT_THAT(metadata.trailers,
               UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
+}
+
+/// Returns a reader that immediately fails with a transient error.
+StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>
+MakeMockReaderStalled() {
+  auto mock = std::make_unique<MockReader>();
+  EXPECT_CALL(*mock, Read).WillOnce([] {
+    return make_ready_future(ReadResponse(TransientError()));
+  });
+  return std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock));
+}
+
+/// Returns a reader that immediately reports a successful end-of-stream.
+StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>
+MakeMockReaderFinished() {
+  auto mock = std::make_unique<MockReader>();
+  EXPECT_CALL(*mock, Read).WillOnce([] {
+    return make_ready_future(ReadResponse(Status{}));
+  });
+  return std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock));
+}
+
+TEST(AsyncReaderConnectionResume, LogsResume) {
+  ScopedLog log;
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call)
+      .WillOnce([] { return make_ready_future(MakeMockReaderStalled()); })
+      .WillOnce([] { return make_ready_future(MakeMockReaderFinished()); });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(0);
+  EXPECT_CALL(*resume_policy, OnFinish)
+      .WillOnce(Return(ResumePolicy::kContinue));
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction(), std::nullopt, "test-bucket", "test-object");
+
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
+
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/resume"),
+                     HasSubstr("test-bucket/test-object"),
+                     HasSubstr("attempt 1"))));
+}
+
+TEST(AsyncReaderConnectionResume, NoLogsWithoutResume) {
+  ScopedLog log;
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([] {
+    return make_ready_future(MakeMockReaderFinished());
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(0);
+  EXPECT_CALL(*resume_policy, OnFinish).Times(AtMost(1));
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction(), std::nullopt, "test-bucket", "test-object");
+
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
+
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
+}
+
+/// @test A failure the resume policy refuses to resume is not reported.
+///
+/// The record says "transient error, retried". If the policy stops, the read
+/// is over and the error is returned to the caller, so there is no retry to
+/// describe.
+TEST(AsyncReaderConnectionResume, NoLogsWhenResumePolicyStops) {
+  ScopedLog log;
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([] {
+    return make_ready_future(MakeMockReaderStalled());
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(0);
+  EXPECT_CALL(*resume_policy, OnFinish).WillOnce(Return(ResumePolicy::kStop));
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction(), std::nullopt, "test-bucket", "test-object");
+
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<Status>(StatusIs(TransientError().code())));
+
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
+}
+
+/// @test A permanent error is not reported, even if the policy resumes it.
+///
+/// The built-in resume policies only count failures, so they return
+/// `kContinue` for `PERMISSION_DENIED` as well. The reader factory's retry
+/// loop is what gives up on it, and the error reaches the caller. Nothing was
+/// retried, so a "transient error" record would be misleading.
+TEST(AsyncReaderConnectionResume, NoLogsForPermanentErrors) {
+  ScopedLog log;
+
+  auto const permanent = Status(StatusCode::kPermissionDenied, "uh-oh");
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call)
+      .WillOnce([&] {
+        auto mock = std::make_unique<MockReader>();
+        EXPECT_CALL(*mock, Read).WillOnce([&] {
+          return make_ready_future(ReadResponse(permanent));
+        });
+        return make_ready_future(
+            StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>(
+                std::move(mock)));
+      })
+      .WillOnce([&] {
+        return make_ready_future(
+            StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>(
+                permanent));
+      });
+
+  AsyncReaderConnectionResume tested(
+      storage::LimitedErrorCountResumePolicy(3)(),
+      storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction(), std::nullopt, "test-bucket", "test-object");
+
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<Status>(StatusIs(StatusCode::kPermissionDenied)));
+
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
+}
+
+/// Returns a reader that serves one payload and then fails transiently.
+StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>
+MakeMockReaderDataThenStalled() {
+  auto mock = std::make_unique<MockReader>();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Read).WillOnce([] {
+    return make_ready_future(ReadResponse(ReadPayload(std::string(16, 'A'))));
+  });
+  EXPECT_CALL(*mock, Read).WillOnce([] {
+    return make_ready_future(ReadResponse(TransientError()));
+  });
+  return std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock));
+}
+
+/// @test The attempt number counts consecutive failures, not the whole read.
+///
+/// Data arriving means the previous trouble is over. A download that hiccups
+/// once an hour for a day should report "attempt 1" each time, not "attempt
+/// 24": the number is there to say how stuck this read is right now.
+TEST(AsyncReaderConnectionResume, ResumeCountRestartsAfterData) {
+  ScopedLog log;
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call)
+      .WillOnce([] { return make_ready_future(MakeMockReaderStalled()); })
+      .WillOnce(
+          [] { return make_ready_future(MakeMockReaderDataThenStalled()); })
+      .WillOnce([] { return make_ready_future(MakeMockReaderFinished()); });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnFinish)
+      .Times(2)
+      .WillRepeatedly(Return(ResumePolicy::kContinue));
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction(), std::nullopt, "test-bucket", "test-object");
+
+  // The first read stalls, resumes, and then returns the data.
+  EXPECT_THAT(tested.Read().get(), VariantWith<storage::ReadPayload>(_));
+  // The second one stalls again, resumes, and reaches the end of the stream.
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
+
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/resume"),
+                 HasSubstr("test-bucket/test-object"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log), ElementsAre(matches(1), matches(1)));
 }
 
 TEST(AsyncReaderConnectionResume, HashValidation) {

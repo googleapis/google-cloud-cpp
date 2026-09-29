@@ -90,6 +90,271 @@ class AuditManagerClient {
 
   // clang-format off
   ///
+  /// Creates a new audit schedule in a given project and location.
+  ///
+  /// @param parent  Required. Project or folder that this audit schedule is for, in one of the
+  ///  following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  /// @param audit_schedule  Required. Audit schedule to create.
+  /// @param audit_schedule_id  Required. ID to use for the audit schedule, which becomes the final
+  ///  component of the audit schedule's resource name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.auditmanager.v1.AuditSchedule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.CreateAuditScheduleRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1068}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> CreateAuditSchedule(
+      std::string const& parent,
+      google::cloud::auditmanager::v1::AuditSchedule const& audit_schedule,
+      std::string const& audit_schedule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new audit schedule in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.auditmanager.v1.CreateAuditScheduleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.auditmanager.v1.AuditSchedule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.CreateAuditScheduleRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1068}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> CreateAuditSchedule(
+      google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an existing audit schedule.
+  ///
+  /// @param audit_schedule  Required. Audit schedule to update.
+  /// @param update_mask  Optional. List of fields to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.auditmanager.v1.AuditSchedule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.UpdateAuditScheduleRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1105}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> UpdateAuditSchedule(
+      google::cloud::auditmanager::v1::AuditSchedule const& audit_schedule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an existing audit schedule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.auditmanager.v1.UpdateAuditScheduleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.auditmanager.v1.AuditSchedule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.UpdateAuditScheduleRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1105}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> UpdateAuditSchedule(
+      google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single audit schedule.
+  ///
+  /// @param name  Required. Name of the audit schedule to retrieve, in one of the following
+  ///  formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}/auditSchedules/{audit_schedule}`
+  ///  * `folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}`
+  ///  * `organizations/{organization}/locations/{location}/auditSchedules/{audit_schedule}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.auditmanager.v1.AuditSchedule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.GetAuditScheduleRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1131}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> GetAuditSchedule(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single audit schedule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.auditmanager.v1.GetAuditScheduleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.auditmanager.v1.AuditSchedule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.GetAuditScheduleRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1131}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> GetAuditSchedule(
+      google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists audit schedules in a given project and location.
+  ///
+  /// @param parent  Required. Parent for the audit schedule, in one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `organizations/{organization}/locations/{location}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.auditmanager.v1.AuditSchedule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.ListAuditSchedulesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1148}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+  ListAuditSchedules(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists audit schedules in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.auditmanager.v1.ListAuditSchedulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.auditmanager.v1.AuditSchedule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.auditmanager.v1.AuditSchedule]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1191}
+  /// [google.cloud.auditmanager.v1.ListAuditSchedulesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L1148}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+  ListAuditSchedules(
+      google::cloud::auditmanager::v1::ListAuditSchedulesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Adds your project, folder, or organization to Audit
   /// Manager. This method creates the Audit Manager service agent in your
   /// workload and grants required permissions to the service agent.
@@ -123,8 +388,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L260}
-  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L573}
+  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L350}
+  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L692}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
@@ -160,8 +425,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L260}
-  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L573}
+  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L350}
+  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L692}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
@@ -203,8 +468,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L597}
-  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L295}
+  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L716}
+  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L399}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditScopeReport>
@@ -244,8 +509,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L597}
-  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L295}
+  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L716}
+  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L399}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditScopeReport>
@@ -293,8 +558,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
-  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L331}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L825}
+  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::auditmanager::v1::AuditReport>>
@@ -355,8 +620,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
-  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L331}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L825}
+  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::auditmanager::v1::AuditReport>>
@@ -428,8 +693,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
-  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L443}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L825}
+  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L562}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::AuditReport> ListAuditReports(
@@ -468,8 +733,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
-  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L443}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L825}
+  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L562}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::AuditReport> ListAuditReports(
@@ -498,8 +763,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
-  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L483}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L825}
+  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L602}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditReport> GetAuditReport(
@@ -528,8 +793,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L706}
-  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L483}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L825}
+  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L602}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditReport> GetAuditReport(
@@ -559,8 +824,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L388}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
+  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L507}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L774}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -589,8 +854,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L388}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
+  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L507}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L774}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -631,8 +896,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L405}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
+  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L524}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L774}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -671,8 +936,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L405}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L655}
+  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L524}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L774}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -713,8 +978,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L804}
-  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L499}
+  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L923}
+  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L618}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::Control> ListControls(
@@ -753,8 +1018,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L804}
-  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L499}
+  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L923}
+  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L618}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::Control> ListControls(

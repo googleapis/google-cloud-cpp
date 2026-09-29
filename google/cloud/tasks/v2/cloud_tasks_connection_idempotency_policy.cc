@@ -105,14 +105,34 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::CreateTask(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudTasksConnectionIdempotencyPolicy::BatchCreateTasks(
+    google::cloud::tasks::v2::BatchCreateTasksRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteTask(
     google::cloud::tasks::v2::DeleteTaskRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudTasksConnectionIdempotencyPolicy::BatchDeleteTasks(
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::RunTask(
     google::cloud::tasks::v2::RunTaskRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudTasksConnectionIdempotencyPolicy::UpdateCmekConfig(
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetCmekConfig(
+    google::cloud::tasks::v2::GetCmekConfigRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::ListLocations(
@@ -122,6 +142,11 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::ListLocations(
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

@@ -86,6 +86,7 @@ storage_client_unit_tests = [
     "internal/rest/object_read_source_test.cc",
     "internal/rest/request_builder_test.cc",
     "internal/rest/stub_test.cc",
+    "internal/retry_logging_test.cc",
     "internal/retry_object_read_source_test.cc",
     "internal/service_account_requests_test.cc",
     "internal/sign_blob_requests_test.cc",

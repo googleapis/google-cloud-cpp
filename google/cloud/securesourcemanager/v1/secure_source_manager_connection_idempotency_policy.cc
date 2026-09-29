@@ -201,6 +201,11 @@ Idempotency SecureSourceManagerConnectionIdempotencyPolicy::FetchBlob(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::FetchRefs(
+    google::cloud::securesourcemanager::v1::FetchRefsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateIssue(
     google::cloud::securesourcemanager::v1::CreateIssueRequest const&) {
   return Idempotency::kNonIdempotent;

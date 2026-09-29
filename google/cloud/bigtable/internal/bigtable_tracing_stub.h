@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_TRACING_STUB_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <functional>
 #include <memory>
 
 // Must be included last.
@@ -37,7 +39,11 @@ class BigtableTracingStub : public BigtableStub {
  public:
   ~BigtableTracingStub() override = default;
 
-  explicit BigtableTracingStub(std::shared_ptr<BigtableStub> child);
+  explicit BigtableTracingStub(
+      std::shared_ptr<BigtableStub> child,
+      std::function<void(opentelemetry::trace::Span&,
+                         bigtable_internal::OperationContext const&)>
+          op_ctx_fn);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
@@ -200,6 +206,9 @@ class BigtableTracingStub : public BigtableStub {
   std::shared_ptr<BigtableStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
+  std::function<void(opentelemetry::trace::Span&,
+                     bigtable_internal::OperationContext const&)>
+      op_ctx_fn_;
 };
 
 /**
@@ -208,6 +217,12 @@ class BigtableTracingStub : public BigtableStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
+std::shared_ptr<BigtableStub> MakeBigtableTracingStub(
+    std::shared_ptr<BigtableStub> stub,
+    std::function<void(opentelemetry::trace::Span&,
+                       bigtable_internal::OperationContext const&)>
+        op_ctx_fn);
+
 std::shared_ptr<BigtableStub> MakeBigtableTracingStub(
     std::shared_ptr<BigtableStub> stub);
 

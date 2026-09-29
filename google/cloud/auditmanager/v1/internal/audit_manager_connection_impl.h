@@ -52,6 +52,22 @@ class AuditManagerConnectionImpl
 
   Options options() override { return options_; }
 
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> CreateAuditSchedule(
+      google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> UpdateAuditSchedule(
+      google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::auditmanager::v1::AuditSchedule> GetAuditSchedule(
+      google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request)
+      override;
+
+  StreamRange<google::cloud::auditmanager::v1::AuditSchedule>
+  ListAuditSchedules(google::cloud::auditmanager::v1::ListAuditSchedulesRequest
+                         request) override;
+
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
       google::cloud::auditmanager::v1::EnrollResourceRequest const& request)
       override;

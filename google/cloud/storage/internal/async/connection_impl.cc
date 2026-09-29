@@ -50,6 +50,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
+#include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
@@ -141,6 +142,81 @@ std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
     return std::make_unique<storage::internal::Crc32cHashValidator>();
   }
   return std::make_unique<storage::internal::MD5HashValidator>();
+}
+
+/// Whether the retry loop opening a bidi read stream reports its retries.
+enum class OpenLogging { kEnabled, kDisabled };
+
+/**
+ * Creates the factory that opens a bidi read stream.
+ *
+ * The same factory shape serves two callers, and one narrow case does not want
+ * diagnostics.
+ *
+ * Everything a caller waits on uses an `OpenLogging::kEnabled` factory: the
+ * `AsyncConnectionImpl::Open()` call itself, the descriptor's resume after a
+ * stream failure or a per-range error, and the extra streams
+ * `ObjectDescriptorImpl::MakeSubsequentStream()` opens. A silent retry in any
+ * of those is exactly the stall worth reporting.
+ *
+ * The `OpenLogging::kDisabled` factory is used for one case:
+ * `ObjectDescriptorImpl` re-opening a stream that ended *cleanly*. It does that
+ * because `ResumePolicy::OnFinish()` returns `kContinue` for an OK status, and
+ * that re-open routinely races with descriptor teardown and fails with an
+ * internal "stream closed successfully" error, which this policy counts as
+ * transient. Reporting it would put a warning on a download that in fact
+ * succeeded, and there is no failure behind it to report.
+ */
+OpenStreamFactory MakeOpenStreamFactory(
+    std::shared_ptr<StorageStub> stub, CompletionQueue cq,
+    std::shared_ptr<storage::AsyncRetryPolicy> retry,
+    std::shared_ptr<storage::BackoffPolicy> backoff,
+    google::cloud::internal::ImmutableOptions current,
+    char const* function_name, OpenLogging logging) {
+  return OpenStreamFactory(
+      [stub = std::move(stub), cq = std::move(cq), retry = std::move(retry),
+       backoff = std::move(backoff), current = std::move(current),
+       function_name,
+       logging](google::storage::v2::BidiReadObjectRequest request) {
+        struct DummyRequest {};
+
+        std::string resource =
+            logging == OpenLogging::kEnabled
+                ? RetryLogResource(request.read_object_spec().bucket(),
+                                   request.read_object_spec().object())
+                : std::string{};
+        auto call = [stub, request = std::move(request)](
+                        CompletionQueue& cq,
+                        std::shared_ptr<grpc::ClientContext> context,
+                        google::cloud::internal::ImmutableOptions options,
+                        DummyRequest const&) mutable {
+          auto open = std::make_shared<OpenObject>(
+              *stub, cq, std::move(context), std::move(options), request);
+          // Extend the lifetime of the coroutine until it finishes.
+          return open->Call().then([open, &request](auto f) mutable {
+            open.reset();
+            auto response = f.get();
+            if (response) return response;
+            ApplyRedirectErrors(*request.mutable_read_object_spec(),
+                                ExtractGrpcStatus(response.status()));
+            return response;
+          });
+        };
+
+        // Wrapping the policy, rather than counting attempts here, means the
+        // record is emitted by whichever thread the loop consults the policy
+        // on, exactly once per granted retry. There is no counter shared
+        // between the caller and the CompletionQueue threads to race on, and
+        // the final give-up attempt stays silent.
+        std::unique_ptr<google::cloud::RetryPolicy> policy = retry->clone();
+        if (logging == OpenLogging::kEnabled) {
+          policy = std::make_unique<LoggingRetryPolicy>(
+              std::move(policy), "Open", std::move(resource));
+        }
+        return google::cloud::internal::AsyncRetryLoop(
+            std::move(policy), backoff->clone(), Idempotency::kIdempotent, cq,
+            std::move(call), current, DummyRequest{}, function_name);
+      });
 }
 
 }  // namespace
@@ -243,38 +319,20 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   auto const* function_name = __func__;
-  auto factory = OpenStreamFactory(
-      [stub = stub_, cq = cq_, retry = std::move(retry),
-       backoff = std::move(backoff), current = std::move(current),
-       function_name](google::storage::v2::BidiReadObjectRequest request) {
-        struct DummyRequest {};
-
-        auto call = [stub, request = std::move(request)](
-                        CompletionQueue& cq,
-                        std::shared_ptr<grpc::ClientContext> context,
-                        google::cloud::internal::ImmutableOptions options,
-                        DummyRequest const&) mutable {
-          auto open = std::make_shared<OpenObject>(
-              *stub, cq, std::move(context), std::move(options), request);
-          // Extend the lifetime of the coroutine until it finishes.
-          return open->Call().then([open, &request](auto f) mutable {
-            open.reset();
-            auto response = f.get();
-            if (response) return response;
-            ApplyRedirectErrors(*request.mutable_read_object_spec(),
-                                ExtractGrpcStatus(response.status()));
-            return response;
-          });
-        };
-
-        return google::cloud::internal::AsyncRetryLoop(
-            retry->clone(), backoff->clone(), Idempotency::kIdempotent, cq,
-            std::move(call), current, DummyRequest{}, function_name);
-      });
+  // The application is waiting on this open, so its retries are reported. So
+  // are the descriptor's, with one exception below.
+  auto factory = MakeOpenStreamFactory(stub_, cq_, retry, backoff, current,
+                                       function_name, OpenLogging::kEnabled);
+  // Used only when the descriptor re-opens a stream that ended cleanly: see
+  // `MakeOpenStreamFactory()` and `ObjectDescriptorImpl`.
+  auto clean_resume_factory = MakeOpenStreamFactory(
+      stub_, cq_, std::move(retry), std::move(backoff), std::move(current),
+      function_name, OpenLogging::kDisabled);
 
   auto pending = factory(std::move(initial_request));
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
   return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
+                       qfa = std::move(clean_resume_factory),
                        rs = std::move(p.read_spec),
                        options = std::move(p.options), refresh = refresh_](
                           auto f) mutable -> StatusOr<ReturnType> {
@@ -283,8 +341,8 @@ AsyncConnectionImpl::Open(OpenParams p) {
 
     // The descriptor remains open if at least one gRPC channel is in a
     // functional state. We consider READY, IDLE, and CONNECTING to be
-    // functional. TRANSIENT_FAILURE and SHUTDOWN are not included because they
-    // indicate a definitive loss of connectivity or terminal closure.
+    // functional. TRANSIENT_FAILURE and SHUTDOWN are not included because
+    // they indicate a definitive loss of connectivity or terminal closure.
     auto transport_ok = [refresh] {
       if (!refresh) return true;
       auto const& channels = refresh->channels();
@@ -296,8 +354,8 @@ AsyncConnectionImpl::Open(OpenParams p) {
           });
     };
     auto impl = std::make_shared<ObjectDescriptorImpl>(
-        std::move(rp), std::move(fa), std::move(rs), std::move(result->stream),
-        std::move(options), std::move(transport_ok));
+        std::move(rp), std::move(fa), std::move(qfa), std::move(rs),
+        std::move(result->stream), std::move(options), std::move(transport_ok));
     impl->Start(std::move(result->first_response));
     return ReturnType(impl);
   });
@@ -612,6 +670,11 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
       google::cloud::internal::AsyncStreamingReadRpcTimeout<
           google::storage::v2::ReadObjectResponse>;
 
+  // The bucket and object do not change across resumes, so format the resource
+  // once.
+  std::string const resource =
+      RetryLogResource(request.bucket(), request.object());
+
   auto make_rpc = [stub = stub_](
                       CompletionQueue& cq,
                       std::shared_ptr<grpc::ClientContext> context,
@@ -640,7 +703,7 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
   };
 
   auto const* caller = __func__;
-  return [caller, cq = cq_, current = std::move(current),
+  return [caller, cq = cq_, current = std::move(current), resource,
           make_rpc = std::move(make_rpc),
           hash_function = std::move(hash_function),
           request = std::move(request)](storage::Generation generation,
@@ -661,11 +724,15 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
 
     auto retry = retry_policy(*current);
     auto backoff = backoff_policy(*current);
+    // A fresh decorator per retry loop, so the attempt numbering restarts with
+    // the loop and nothing is shared across threads.
     // Do not use `std::move()` for the captured variables, as we need to keep
     // such variables valid for all factory invocations.
     return google::cloud::internal::AsyncRetryLoop(
-               std::move(retry), std::move(backoff), Idempotency::kIdempotent,
-               cq, make_rpc, current, request, caller)
+               std::make_unique<LoggingRetryPolicy>(
+                   std::move(retry), "ReadObject/open", resource),
+               std::move(backoff), Idempotency::kIdempotent, cq, make_rpc,
+               current, request, caller)
         .then(std::move(transform));
   };
 }

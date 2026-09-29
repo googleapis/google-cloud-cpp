@@ -38,6 +38,60 @@ AuditManagerLogging::AuditManagerLogging(
     std::set<std::string> const&)
     : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerLogging::CreateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+                 request) {
+        return child_->CreateAuditSchedule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerLogging::UpdateAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+                 request) {
+        return child_->UpdateAuditSchedule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+AuditManagerLogging::GetAuditSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::GetAuditScheduleRequest const&
+                 request) {
+        return child_->GetAuditSchedule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+AuditManagerLogging::ListAuditSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::auditmanager::v1::ListAuditSchedulesRequest const&
+                 request) {
+        return child_->ListAuditSchedules(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 AuditManagerLogging::EnrollResource(
     grpc::ClientContext& context, Options const& options,

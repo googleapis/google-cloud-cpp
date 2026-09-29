@@ -256,6 +256,25 @@ class DlpServiceConnectionImpl : public dlp_v2::DlpServiceConnection {
       google::privacy::dlp::v2::UpdateConnectionRequest const& request)
       override;
 
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> CreateContentPolicy(
+      google::privacy::dlp::v2::CreateContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> UpdateContentPolicy(
+      google::privacy::dlp::v2::UpdateContentPolicyRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ContentPolicy> GetContentPolicy(
+      google::privacy::dlp::v2::GetContentPolicyRequest const& request)
+      override;
+
+  StreamRange<google::privacy::dlp::v2::ContentPolicy> ListContentPolicies(
+      google::privacy::dlp::v2::ListContentPoliciesRequest request) override;
+
+  Status DeleteContentPolicy(
+      google::privacy::dlp::v2::DeleteContentPolicyRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dlp_v2_internal::DlpServiceStub> stub_;

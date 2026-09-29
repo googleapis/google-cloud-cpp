@@ -34,6 +34,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuditManagerStub::~AuditManagerStub() = default;
 
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+DefaultAuditManagerStub::CreateAuditSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::auditmanager::v1::CreateAuditScheduleRequest const&
+        request) {
+  google::cloud::auditmanager::v1::AuditSchedule response;
+  auto status = grpc_stub_->CreateAuditSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+DefaultAuditManagerStub::UpdateAuditSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::auditmanager::v1::UpdateAuditScheduleRequest const&
+        request) {
+  google::cloud::auditmanager::v1::AuditSchedule response;
+  auto status = grpc_stub_->UpdateAuditSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::auditmanager::v1::AuditSchedule>
+DefaultAuditManagerStub::GetAuditSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::auditmanager::v1::GetAuditScheduleRequest const& request) {
+  google::cloud::auditmanager::v1::AuditSchedule response;
+  auto status = grpc_stub_->GetAuditSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::auditmanager::v1::ListAuditSchedulesResponse>
+DefaultAuditManagerStub::ListAuditSchedules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::auditmanager::v1::ListAuditSchedulesRequest const& request) {
+  google::cloud::auditmanager::v1::ListAuditSchedulesResponse response;
+  auto status = grpc_stub_->ListAuditSchedules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::auditmanager::v1::Enrollment>
 DefaultAuditManagerStub::EnrollResource(
     grpc::ClientContext& context, Options const&,

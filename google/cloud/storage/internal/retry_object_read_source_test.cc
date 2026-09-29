@@ -20,6 +20,7 @@
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -37,10 +38,13 @@ using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
 
@@ -675,6 +679,95 @@ TEST(RetryObjectReadSourceTest, TracingDisabled) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
+}
+
+/// @test A retried attempt to open the stream is reported.
+TEST(RetryObjectReadSourceTest, LogsRetryOnSessionCreation) {
+  ScopedLog log;
+
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce(Return(TransientError()))
+      .WillOnce([](auto const&, auto const&, ReadObjectRangeRequest const&) {
+        auto source = std::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      });
+
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
+
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_STATUS_OK(source);
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/open"),
+                     HasSubstr("test-bucket/test-object"),
+                     HasSubstr("attempt 1"))));
+}
+
+/// @test A download interrupted mid-stream reports the resume.
+TEST(RetryObjectReadSourceTest, LogsMidStreamResume) {
+  ScopedLog log;
+
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([] {
+        auto source = std::make_unique<MockObjectReadSource>();
+        // The stream opens, serves some data, and then stalls.
+        EXPECT_CALL(*source, Read)
+            .WillOnce(Return(ReadSourceResult{}))
+            .WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      })
+      .WillOnce([] {
+        auto source = std::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      });
+
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
+
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_STATUS_OK(source);
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/resume"),
+                     HasSubstr("test-bucket/test-object"),
+                     HasSubstr("attempt 1"))));
+}
+
+/// @test A download that never fails says nothing at all.
+TEST(RetryObjectReadSourceTest, NoLogsWithoutFailures) {
+  ScopedLog log;
+
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
+  EXPECT_CALL(*mock, ReadObject).WillOnce([] {
+    auto source = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+    return std::unique_ptr<ObjectReadSource>(std::move(source));
+  });
+
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
+
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_STATUS_OK(source);
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
 }
 
 }  // namespace

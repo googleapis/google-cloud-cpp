@@ -148,6 +148,34 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::CreateTask(
   return child_->CreateTask(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksAuth::AsyncBatchCreateTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBatchCreateTasks(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksAuth::BatchCreateTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchCreateTasksRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateTasks(context, options, request);
+}
+
 Status CloudTasksAuth::DeleteTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
@@ -156,12 +184,56 @@ Status CloudTasksAuth::DeleteTask(
   return child_->DeleteTask(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksAuth::AsyncBatchDeleteTasks(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBatchDeleteTasks(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksAuth::BatchDeleteTasks(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tasks::v2::BatchDeleteTasksRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeleteTasks(context, options, request);
+}
+
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::RunTask(
     grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunTask(context, options, request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig> CloudTasksAuth::UpdateCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::UpdateCmekConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCmekConfig(context, options, request);
+}
+
+StatusOr<google::cloud::tasks::v2::CmekConfig> CloudTasksAuth::GetCmekConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tasks::v2::GetCmekConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetCmekConfig(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -179,6 +251,50 @@ StatusOr<google::cloud::location::Location> CloudTasksAuth::GetLocation(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> CloudTasksAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudTasksAuth::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+future<Status> CloudTasksAuth::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

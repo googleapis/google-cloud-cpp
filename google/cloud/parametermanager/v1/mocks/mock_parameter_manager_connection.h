@@ -118,6 +118,76 @@ class MockParameterManagerConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::parametermanager::v1::Template>),
+      ListTemplates,
+      (google::cloud::parametermanager::v1::ListTemplatesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::parametermanager::v1::Template>, GetTemplate,
+      (google::cloud::parametermanager::v1::GetTemplateRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::Template>,
+              CreateTemplate,
+              (google::cloud::parametermanager::v1::CreateTemplateRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::Template>,
+              UpdateTemplate,
+              (google::cloud::parametermanager::v1::UpdateTemplateRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteTemplate,
+              (google::cloud::parametermanager::v1::DeleteTemplateRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::parametermanager::v1::TemplateVersion>),
+      ListTemplateVersions,
+      (google::cloud::parametermanager::v1::ListTemplateVersionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::parametermanager::v1::TemplateVersion>,
+      GetTemplateVersion,
+      (google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::parametermanager::v1::TemplateVersion>,
+      CreateTemplateVersion,
+      (google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::parametermanager::v1::TemplateVersion>,
+      UpdateTemplateVersion,
+      (google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteTemplateVersion,
+      (google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::parametermanager::v1::RenderTemplateVersionResponse>,
+      RenderTemplateVersion,
+      (google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+           request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

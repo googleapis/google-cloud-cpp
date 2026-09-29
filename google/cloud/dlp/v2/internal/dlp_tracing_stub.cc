@@ -692,6 +692,65 @@ DlpServiceTracingStub::UpdateConnection(
                            child_->UpdateConnection(context, options, request));
 }
 
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingStub::CreateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateContentPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "CreateContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateContentPolicy(context, options, request));
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingStub::UpdateContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "UpdateContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateContentPolicy(context, options, request));
+}
+
+StatusOr<google::privacy::dlp::v2::ContentPolicy>
+DlpServiceTracingStub::GetContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetContentPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "GetContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetContentPolicy(context, options, request));
+}
+
+StatusOr<google::privacy::dlp::v2::ListContentPoliciesResponse>
+DlpServiceTracingStub::ListContentPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListContentPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "ListContentPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListContentPolicies(context, options, request));
+}
+
+Status DlpServiceTracingStub::DeleteContentPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "DeleteContentPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteContentPolicy(context, options, request));
+}
+
 std::shared_ptr<DlpServiceStub> MakeDlpServiceTracingStub(
     std::shared_ptr<DlpServiceStub> stub) {
   return std::make_shared<DlpServiceTracingStub>(std::move(stub));

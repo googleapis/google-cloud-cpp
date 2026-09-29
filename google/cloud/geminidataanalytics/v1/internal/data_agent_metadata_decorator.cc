@@ -198,6 +198,40 @@ StatusOr<google::iam::v1::Policy> DataAgentServiceMetadata::SetIamPolicy(
   return child_->SetIamPolicy(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataAgentServiceMetadata::AsyncSetAgentOpsObservability(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncSetAgentOpsObservability(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceMetadata::SetAgentOpsObservability(
+    grpc::ClientContext& context, Options options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SetAgentOpsObservability(context, options, request);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceMetadata::RetrieveAgentOpsObservability(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RetrieveAgentOpsObservability(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataAgentServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

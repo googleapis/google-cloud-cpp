@@ -374,6 +374,22 @@ class DlpServiceConnection {
 
   virtual StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
       google::privacy::dlp::v2::UpdateConnectionRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::ContentPolicy> CreateContentPolicy(
+      google::privacy::dlp::v2::CreateContentPolicyRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::ContentPolicy> UpdateContentPolicy(
+      google::privacy::dlp::v2::UpdateContentPolicyRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::ContentPolicy> GetContentPolicy(
+      google::privacy::dlp::v2::GetContentPolicyRequest const& request);
+
+  virtual StreamRange<google::privacy::dlp::v2::ContentPolicy>
+  ListContentPolicies(
+      google::privacy::dlp::v2::ListContentPoliciesRequest request);
+
+  virtual Status DeleteContentPolicy(
+      google::privacy::dlp::v2::DeleteContentPolicyRequest const& request);
 };
 
 /**

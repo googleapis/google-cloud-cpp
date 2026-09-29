@@ -92,6 +92,20 @@ Idempotency DataAgentServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
+Idempotency
+DataAgentServiceConnectionIdempotencyPolicy::SetAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataAgentServiceConnectionIdempotencyPolicy::RetrieveAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DataAgentServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

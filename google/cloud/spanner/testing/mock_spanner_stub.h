@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_SPANNER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_SPANNER_STUB_H
 
+#include "google/cloud/spanner/internal/operation_context.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
@@ -29,21 +30,24 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
  public:
   MOCK_METHOD(StatusOr<google::spanner::v1::Session>, CreateSession,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::CreateSessionRequest const&),
+               google::spanner::v1::CreateSessionRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::spanner::v1::Session>>,
-              AsyncCreateSession,
-              (google::cloud::CompletionQueue & cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::cloud::internal::ImmutableOptions options,
-               google::spanner::v1::CreateSessionRequest const& request),
-              (override));
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::v1::Session>>, AsyncCreateSession,
+      (google::cloud::CompletionQueue & cq,
+       std::shared_ptr<grpc::ClientContext> context,
+       google::cloud::internal::ImmutableOptions options,
+       google::spanner::v1::CreateSessionRequest const& request,
+       std::shared_ptr<spanner_internal::OperationContext> operation_context),
+      (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::BatchCreateSessionsResponse>,
               BatchCreateSessions,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::BatchCreateSessionsRequest const&),
+               google::spanner::v1::BatchCreateSessionsRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(
@@ -51,29 +55,34 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
       AsyncBatchCreateSessions,
       (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
        google::cloud::internal::ImmutableOptions,
-       google::spanner::v1::BatchCreateSessionsRequest const&),
+       google::spanner::v1::BatchCreateSessionsRequest const&,
+       std::shared_ptr<spanner_internal::OperationContext>),
       (override));
 
   MOCK_METHOD(Status, DeleteSession,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::DeleteSessionRequest const&),
+               google::spanner::v1::DeleteSessionRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncDeleteSession,
               (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::cloud::internal::ImmutableOptions,
-               google::spanner::v1::DeleteSessionRequest const&),
+               google::spanner::v1::DeleteSessionRequest const&,
+               std::shared_ptr<spanner_internal::OperationContext>),
               (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::ResultSet>, ExecuteSql,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::ExecuteSqlRequest const&),
+               google::spanner::v1::ExecuteSqlRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::v1::ResultSet>>, AsyncExecuteSql,
               (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::cloud::internal::ImmutableOptions,
-               google::spanner::v1::ExecuteSqlRequest const&),
+               google::spanner::v1::ExecuteSqlRequest const&,
+               std::shared_ptr<spanner_internal::OperationContext>),
               (override));
 
   MOCK_METHOD(
@@ -81,13 +90,15 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
           internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>,
       ExecuteStreamingSql,
       (std::shared_ptr<grpc::ClientContext>, Options const&,
-       google::spanner::v1::ExecuteSqlRequest const&),
+       google::spanner::v1::ExecuteSqlRequest const&,
+       std::shared_ptr<spanner_internal::OperationContext>),
       (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>,
               ExecuteBatchDml,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::ExecuteBatchDmlRequest const&),
+               google::spanner::v1::ExecuteBatchDmlRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(
@@ -95,32 +106,38 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
           internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>,
       StreamingRead,
       (std::shared_ptr<grpc::ClientContext>, Options const&,
-       google::spanner::v1::ReadRequest const&),
+       google::spanner::v1::ReadRequest const&,
+       std::shared_ptr<spanner_internal::OperationContext>),
       (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::Transaction>, BeginTransaction,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::BeginTransactionRequest const&),
+               google::spanner::v1::BeginTransactionRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::CommitResponse>, Commit,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::CommitRequest const&),
+               google::spanner::v1::CommitRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(Status, Rollback,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::RollbackRequest const&),
+               google::spanner::v1::RollbackRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::PartitionResponse>, PartitionQuery,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::PartitionQueryRequest const&),
+               google::spanner::v1::PartitionQueryRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::PartitionResponse>, PartitionRead,
               (grpc::ClientContext&, Options const&,
-               google::spanner::v1::PartitionReadRequest const&),
+               google::spanner::v1::PartitionReadRequest const&,
+               spanner_internal::OperationContext&),
               (override));
 
   MOCK_METHOD(
@@ -128,14 +145,16 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
           internal::StreamingReadRpc<google::spanner::v1::BatchWriteResponse>>,
       BatchWrite,
       (std::shared_ptr<grpc::ClientContext>, Options const&,
-       google::spanner::v1::BatchWriteRequest const&),
+       google::spanner::v1::BatchWriteRequest const&,
+       std::shared_ptr<spanner_internal::OperationContext>),
       (override));
 
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::spanner::v1::CacheUpdate>>,
               FetchCacheUpdate,
               (std::shared_ptr<grpc::ClientContext>, Options const&,
-               google::spanner::v1::FetchCacheUpdateRequest const&),
+               google::spanner::v1::FetchCacheUpdateRequest const&,
+               std::shared_ptr<spanner_internal::OperationContext>),
               (override));
 };
 

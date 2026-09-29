@@ -322,6 +322,10 @@ class SecureSourceManagerConnectionImpl
       google::cloud::securesourcemanager::v1::FetchBlobRequest const& request)
       override;
 
+  StreamRange<google::cloud::securesourcemanager::v1::Ref> FetchRefs(
+      google::cloud::securesourcemanager::v1::FetchRefsRequest request)
+      override;
+
   future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CreateIssue(
       google::cloud::securesourcemanager::v1::CreateIssueRequest const& request)
       override;

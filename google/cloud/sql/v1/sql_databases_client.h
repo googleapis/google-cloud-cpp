@@ -111,7 +111,7 @@ class SqlDatabasesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1226}
-  /// [google.cloud.sql.v1.SqlDatabasesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L88}
+  /// [google.cloud.sql.v1.SqlDatabasesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L89}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
@@ -143,7 +143,7 @@ class SqlDatabasesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Database]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L256}
-  /// [google.cloud.sql.v1.SqlDatabasesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L100}
+  /// [google.cloud.sql.v1.SqlDatabasesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L104}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Database> Get(
@@ -177,7 +177,7 @@ class SqlDatabasesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1226}
-  /// [google.cloud.sql.v1.SqlDatabasesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L112}
+  /// [google.cloud.sql.v1.SqlDatabasesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Insert(
@@ -207,8 +207,8 @@ class SqlDatabasesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.DatabasesListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L146}
-  /// [google.cloud.sql.v1.SqlDatabasesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L123}
+  /// [google.cloud.sql.v1.DatabasesListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L162}
+  /// [google.cloud.sql.v1.SqlDatabasesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L133}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::DatabasesListResponse> List(
@@ -240,7 +240,7 @@ class SqlDatabasesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1226}
-  /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L132}
+  /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L145}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Patch(
@@ -272,7 +272,7 @@ class SqlDatabasesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1226}
-  /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L132}
+  /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L145}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Update(

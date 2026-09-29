@@ -154,6 +154,9 @@ class SecureSourceManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency FetchBlob(
       google::cloud::securesourcemanager::v1::FetchBlobRequest const& request);
 
+  virtual google::cloud::Idempotency FetchRefs(
+      google::cloud::securesourcemanager::v1::FetchRefsRequest request);
+
   virtual google::cloud::Idempotency CreateIssue(
       google::cloud::securesourcemanager::v1::CreateIssueRequest const&
           request);

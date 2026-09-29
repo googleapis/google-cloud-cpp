@@ -309,6 +309,31 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateConnection(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateContentPolicy(
+    google::privacy::dlp::v2::CreateContentPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateContentPolicy(
+    google::privacy::dlp::v2::UpdateContentPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetContentPolicy(
+    google::privacy::dlp::v2::GetContentPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListContentPolicies(
+    google::privacy::dlp::v2::ListContentPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteContentPolicy(
+    google::privacy::dlp::v2::DeleteContentPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
 MakeDefaultDlpServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DlpServiceConnectionIdempotencyPolicy>();

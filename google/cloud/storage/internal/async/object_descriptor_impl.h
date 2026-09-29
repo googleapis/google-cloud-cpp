@@ -54,6 +54,15 @@ struct ReadStream : public storage_internal::StreamBase {
   bool write_pending = false;
   bool read_pending = false;
   bool resuming = false;
+  // Consecutive resume attempts for *this* stream, used only for diagnostics.
+  // Guarded by the descriptor's `mu_`.
+  //
+  // A successful re-open builds a new `ReadStream` and calls
+  // `ResumePolicy::OnStartSuccess()` on it, so the count starts over there.
+  // That is the intent: the number reports how many times in a row the current
+  // failure has been retried, not how many times the download has ever hiccuped
+  // since it started.
+  int resume_count = 0;
 };
 
 class ObjectDescriptorImpl
@@ -65,6 +74,31 @@ class ObjectDescriptorImpl
                        google::storage::v2::BidiReadObjectSpec read_object_spec,
                        std::shared_ptr<OpenStream> stream, Options options = {},
                        std::function<bool()> transport_ok = {});
+
+  /**
+   * As above, but re-opens that follow a clean close use a separate factory.
+   *
+   * `ResumePolicy::OnFinish()` returns `kContinue` for an OK status, so a
+   * stream that ends cleanly is re-opened too. That re-open routinely races
+   * with descriptor teardown and fails with an internal "stream closed
+   * successfully" error, which the retry policy counts as transient. Handing
+   * those re-opens a factory that does not report its retries keeps a download
+   * that in fact succeeded from emitting warnings.
+   *
+   * Every other re-open -- a resume after a stream failure, a resume after a
+   * per-range error, and the streams `MakeSubsequentStream()` opens -- uses
+   * @p make_stream, so a genuine stall while reconnecting is still reported.
+   *
+   * @p make_clean_resume_stream may be empty, in which case @p make_stream is
+   * used for those re-opens as well.
+   */
+  ObjectDescriptorImpl(std::unique_ptr<storage::ResumePolicy> resume_policy,
+                       OpenStreamFactory make_stream,
+                       OpenStreamFactory make_clean_resume_stream,
+                       google::storage::v2::BidiReadObjectSpec read_object_spec,
+                       std::shared_ptr<OpenStream> stream, Options options,
+                       std::function<bool()> transport_ok);
+
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
@@ -117,14 +151,31 @@ class ObjectDescriptorImpl
   void OnFinish(std::shared_ptr<ReadStream> const& read_stream,
                 std::shared_ptr<OpenStream> const& stream,
                 Status const& status);
+  // Why a finished stream is being re-opened, as decided by
+  // `ClassifyFinish()`.
+  enum class ResumeKind {
+    // The stream is not re-opened. The ranges are notified of the failure.
+    kNo,
+    // The server reported a per-range `BidiReadObjectError`. The affected
+    // ranges have been completed with their own status; the stream is
+    // re-opened to carry the remaining ones. The stream itself did not fail,
+    // so this is not a retry.
+    kRangeError,
+    // The resume policy accepted the stream-level status. This is a retry when
+    // the status is an error; a stream that ends cleanly lands here too,
+    // because `ResumePolicy::OnFinish()` answers `kContinue` for an OK status.
+    kStreamFailure,
+  };
+
   void Resume(std::shared_ptr<ReadStream> const& read_stream,
-              google::rpc::Status const& proto_status);
+              Status const& status, google::rpc::Status const& proto_status,
+              ResumeKind kind);
   void OnResume(std::shared_ptr<ReadStream> const& old_read_stream,
                 std::shared_ptr<OpenStream> const& old_stream,
                 StatusOr<OpenStreamResult> result);
-  bool IsResumable(std::shared_ptr<ReadStream> const& read_stream,
-                   Status const& status,
-                   google::rpc::Status const& proto_status);
+  ResumeKind ClassifyFinish(std::shared_ptr<ReadStream> const& read_stream,
+                            Status const& status,
+                            google::rpc::Status const& proto_status);
   bool ApplyPacingAndCheckEviction(std::int64_t id, std::size_t chunk_size,
                                    StreamIterator it);
 
@@ -135,6 +186,9 @@ class ObjectDescriptorImpl
 
   std::unique_ptr<storage::ResumePolicy> resume_policy_prototype_;
   OpenStreamFactory make_stream_;
+  // Used only to re-open a stream that ended cleanly. See the constructor.
+  // May be empty, in which case `make_stream_` is used for those re-opens too.
+  OpenStreamFactory make_clean_resume_stream_;
 
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;

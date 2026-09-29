@@ -377,6 +377,98 @@ LustreConnectionImpl::DeleteInstance(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::lustre::v1::Instance>>
+LustreConnectionImpl::RescheduleMaintenance(
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RescheduleMaintenance(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::lustre::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::lustre::v1::RescheduleMaintenanceRequest const&
+              request) {
+        return stub->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+LustreConnectionImpl::RescheduleMaintenance(
+    NoAwaitTag,
+    google::cloud::lustre::v1::RescheduleMaintenanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RescheduleMaintenance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub_->RescheduleMaintenance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::Instance>>
+LustreConnectionImpl::RescheduleMaintenance(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::lustre::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::lustre::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RescheduleMaintenance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::lustre::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
 LustreConnectionImpl::ImportData(
     google::cloud::lustre::v1::ImportDataRequest const& request) {
@@ -555,6 +647,555 @@ LustreConnectionImpl::ExportData(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnectionImpl::CreateMirror(
+    google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMirror(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::lustre::v1::Mirror>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+        return stub->AsyncCreateMirror(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::Mirror>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> LustreConnectionImpl::CreateMirror(
+    NoAwaitTag, google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMirror(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::CreateMirrorRequest const& request) {
+        return stub_->CreateMirror(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnectionImpl::CreateMirror(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::lustre::v1::CreateMirrorMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::lustre::v1::Mirror>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMirror",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::lustre::v1::Mirror>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::Mirror>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnectionImpl::UpdateMirror(
+    google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateMirror(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::lustre::v1::Mirror>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+        return stub->AsyncUpdateMirror(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::Mirror>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> LustreConnectionImpl::UpdateMirror(
+    NoAwaitTag, google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateMirror(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::UpdateMirrorRequest const& request) {
+        return stub_->UpdateMirror(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::Mirror>>
+LustreConnectionImpl::UpdateMirror(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::lustre::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::lustre::v1::Mirror>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateMirror",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::lustre::v1::Mirror>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::Mirror>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnectionImpl::DeleteMirror(
+    google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteMirror(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::lustre::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+        return stub->AsyncDeleteMirror(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::lustre::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> LustreConnectionImpl::DeleteMirror(
+    NoAwaitTag, google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMirror(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::DeleteMirrorRequest const& request) {
+        return stub_->DeleteMirror(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnectionImpl::DeleteMirror(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::lustre::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::lustre::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteMirror",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::lustre::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::lustre::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::lustre::v1::Mirror> LustreConnectionImpl::GetMirror(
+    google::cloud::lustre::v1::GetMirrorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMirror(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::GetMirrorRequest const& request) {
+        return stub_->GetMirror(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::lustre::v1::Mirror>
+LustreConnectionImpl::ListMirrors(
+    google::cloud::lustre::v1::ListMirrorsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMirrors(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::lustre::v1::Mirror>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<lustre_v1::LustreRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::lustre::v1::ListMirrorsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::lustre::v1::ListMirrorsRequest const& request) {
+              return stub->ListMirrors(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::lustre::v1::ListMirrorsResponse r) {
+        std::vector<google::cloud::lustre::v1::Mirror> result(
+            r.mirrors().size());
+        auto& messages = *r.mutable_mirrors();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+LustreConnectionImpl::CreateDirectoryPolicy(
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDirectoryPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::lustre::v1::DirectoryPolicy>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&
+              request) {
+        return stub->AsyncCreateDirectoryPolicy(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::DirectoryPolicy>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+LustreConnectionImpl::CreateDirectoryPolicy(
+    NoAwaitTag,
+    google::cloud::lustre::v1::CreateDirectoryPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDirectoryPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::CreateDirectoryPolicyRequest const&
+                 request) {
+        return stub_->CreateDirectoryPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>
+LustreConnectionImpl::CreateDirectoryPolicy(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::lustre::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::lustre::v1::DirectoryPolicy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDirectoryPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::lustre::v1::DirectoryPolicy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::lustre::v1::DirectoryPolicy>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnectionImpl::DeleteDirectoryPolicy(
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDirectoryPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::lustre::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&
+              request) {
+        return stub->AsyncDeleteDirectoryPolicy(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::lustre::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+LustreConnectionImpl::DeleteDirectoryPolicy(
+    NoAwaitTag,
+    google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDirectoryPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::lustre::v1::DeleteDirectoryPolicyRequest const&
+                 request) {
+        return stub_->DeleteDirectoryPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+LustreConnectionImpl::DeleteDirectoryPolicy(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::lustre::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::lustre::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDirectoryPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::lustre::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::lustre::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::lustre::v1::DirectoryPolicy>
+LustreConnectionImpl::GetDirectoryPolicy(
+    google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDirectoryPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::lustre::v1::GetDirectoryPolicyRequest const& request) {
+        return stub_->GetDirectoryPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::lustre::v1::DirectoryPolicy>
+LustreConnectionImpl::ListDirectoryPolicies(
+    google::cloud::lustre::v1::ListDirectoryPoliciesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDirectoryPolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::lustre::v1::DirectoryPolicy>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<lustre_v1::LustreRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::lustre::v1::ListDirectoryPoliciesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::lustre::v1::ListDirectoryPoliciesRequest const&
+                    request) {
+              return stub->ListDirectoryPolicies(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::lustre::v1::ListDirectoryPoliciesResponse r) {
+        std::vector<google::cloud::lustre::v1::DirectoryPolicy> result(
+            r.directory_policies().size());
+        auto& messages = *r.mutable_directory_policies();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::cloud::location::Location>
 LustreConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -598,6 +1239,46 @@ StatusOr<google::cloud::location::Location> LustreConnectionImpl::GetLocation(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return stub_->GetLocation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy> LustreConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy> LustreConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LustreConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(context, options, request);
       },
       *current, request, __func__);
 }

@@ -66,6 +66,16 @@ Status DataChatServiceAuth::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceAuth::UpdateConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConversation(context, options, request);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceAuth::GetConversation(
     grpc::ClientContext& context, Options const& options,
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&

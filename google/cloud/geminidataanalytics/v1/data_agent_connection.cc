@@ -159,6 +159,43 @@ StatusOr<google::iam::v1::Policy> DataAgentServiceConnection::SetIamPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceConnection::SetAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::geminidataanalytics::v1::
+                   SetAgentOpsObservabilityResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceConnection::SetAgentOpsObservability(
+    NoAwaitTag, google::cloud::geminidataanalytics::v1::
+                    SetAgentOpsObservabilityRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::geminidataanalytics::v1::SetAgentOpsObservabilityResponse>>
+DataAgentServiceConnection::SetAgentOpsObservability(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::geminidataanalytics::v1::
+                   SetAgentOpsObservabilityResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceConnection::RetrieveAgentOpsObservability(
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 DataAgentServiceConnection::ListLocations(
     google::cloud::location::

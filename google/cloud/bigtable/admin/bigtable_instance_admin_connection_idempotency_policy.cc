@@ -97,6 +97,21 @@ Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::DeleteCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::UpdateMemoryLayer(
+    google::bigtable::admin::v2::UpdateMemoryLayerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListMemoryLayers(
+    google::bigtable::admin::v2::ListMemoryLayersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::GetMemoryLayer(
+    google::bigtable::admin::v2::GetMemoryLayerRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::CreateAppProfile(
     google::bigtable::admin::v2::CreateAppProfileRequest const&) {
   return Idempotency::kNonIdempotent;

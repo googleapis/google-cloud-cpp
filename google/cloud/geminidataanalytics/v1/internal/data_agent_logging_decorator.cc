@@ -256,6 +256,55 @@ StatusOr<google::iam::v1::Policy> DataAgentServiceLogging::SetIamPolicy(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataAgentServiceLogging::AsyncSetAgentOpsObservability(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::geminidataanalytics::v1::
+                 SetAgentOpsObservabilityRequest const& request) {
+        return child_->AsyncSetAgentOpsObservability(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataAgentServiceLogging::SetAgentOpsObservability(
+    grpc::ClientContext& context, Options options,
+    google::cloud::geminidataanalytics::v1::
+        SetAgentOpsObservabilityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::geminidataanalytics::v1::
+                 SetAgentOpsObservabilityRequest const& request) {
+        return child_->SetAgentOpsObservability(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::
+             RetrieveAgentOpsObservabilityResponse>
+DataAgentServiceLogging::RetrieveAgentOpsObservability(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::geminidataanalytics::v1::
+        RetrieveAgentOpsObservabilityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::geminidataanalytics::v1::
+                 RetrieveAgentOpsObservabilityRequest const& request) {
+        return child_->RetrieveAgentOpsObservability(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataAgentServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

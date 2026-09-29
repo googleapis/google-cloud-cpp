@@ -130,6 +130,22 @@ Status DataChatServiceConnectionImpl::DeleteConversation(
 }
 
 StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
+DataChatServiceConnectionImpl::UpdateConversation(
+    google::cloud::geminidataanalytics::v1::UpdateConversationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateConversation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::geminidataanalytics::v1::
+                 UpdateConversationRequest const& request) {
+        return stub_->UpdateConversation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::geminidataanalytics::v1::Conversation>
 DataChatServiceConnectionImpl::GetConversation(
     google::cloud::geminidataanalytics::v1::GetConversationRequest const&
         request) {

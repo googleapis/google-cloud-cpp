@@ -27,11 +27,15 @@
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string>
 #include <variant>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -48,10 +52,14 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
+using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::VariantWith;
@@ -71,6 +79,16 @@ class AsyncConnectionImplTest : public ::testing::Test {
 };
 
 auto constexpr kAuthority = "storage.googleapis.com";
+
+// The `[gcs-retry]` records, in order. Everything else the library logs is
+// noise for these tests.
+std::vector<std::string> RetryRecords(ScopedLog& log) {
+  std::vector<std::string> records;
+  for (auto const& line : log.ExtractLines()) {
+    if (absl::StrContains(line, "[gcs-retry]")) records.push_back(line);
+  }
+  return records;
+}
 
 auto TestOptions(Options options = {}) {
   using ms = std::chrono::milliseconds;
@@ -444,16 +462,22 @@ TEST_F(AsyncConnectionImplTest, ReadObjectPermanentError) {
 }
 
 TEST_F(AsyncConnectionImplTest, ReadObjectTooManyTransients) {
+  ScopedLog log;
+
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncReadObject).Times(3).WillRepeatedly([&] {
     return MakeErrorReadStream(sequencer, TransientError());
   });
 
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket("test-only-invalid");
+  request.set_object("test-object");
+
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->ReadObject(
-      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+  auto pending =
+      connection->ReadObject({std::move(request), connection->options()});
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
   auto reader = *std::move(r);
@@ -471,6 +495,110 @@ TEST_F(AsyncConnectionImplTest, ReadObjectTooManyTransients) {
 
   auto response = data.get();
   EXPECT_THAT(response, VariantWith<Status>(StatusIs(TransientError().code())));
+
+  // Two retries are granted, so the third failure -- the one the loop gives up
+  // on -- is not reported. It reaches the caller as the returned `Status`.
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/open"),
+                 HasSubstr("test-only-invalid/test-object"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log), ElementsAre(matches(1), matches(2)));
+}
+
+/// @test `kAborted` is retried by the async policies, so it must be reported.
+///
+/// The synchronous policies (`storage::internal::StatusTraits`) treat
+/// `kAborted` as permanent, the async ones (`AsyncStatusTraits`) do not.
+/// Classifying with the sync rules here would retry the read but say nothing
+/// about it, which is the exact failure mode this logging exists to remove.
+TEST_F(AsyncConnectionImplTest, LogsAbortedWhichOnlyAsyncRetries) {
+  ScopedLog log;
+
+  auto const aborted = Status(StatusCode::kAborted, "try-again");
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).Times(3).WillRepeatedly([&] {
+    return MakeErrorReadStream(sequencer, aborted);
+  });
+
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket("test-only-invalid");
+  request.set_object("test-object");
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending =
+      connection->ReadObject({std::move(request), connection->options()});
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  // Three attempts confirms the async retry policy really does treat this as
+  // transient; otherwise the loop would stop after the first one.
+  for (int i = 0; i != 3; ++i) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Start");
+    next.first.set_value(false);
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Finish");
+    next.first.set_value(true);
+  }
+
+  EXPECT_THAT(data.get(), VariantWith<Status>(StatusIs(StatusCode::kAborted)));
+
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/open"),
+                 HasSubstr("test-only-invalid/test-object"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log), ElementsAre(matches(1), matches(2)));
+}
+
+/// @test A policy that grants no retries produces no records.
+///
+/// Nothing is retried here, so there is nothing to report. The single failure
+/// is returned to the caller. This is the case that motivated deriving the
+/// records from the policy instead of classifying the status separately.
+TEST_F(AsyncConnectionImplTest, ReadObjectSilentWhenRetriesAreDisabled) {
+  ScopedLog log;
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    return MakeErrorReadStream(sequencer, TransientError());
+  });
+
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket("test-only-invalid");
+  request.set_object("test-object");
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(
+      pool.cq(), mock,
+      Options{}.set<storage::AsyncRetryPolicyOption>(
+          storage::LimitedErrorCountAsyncRetryPolicy(0).clone()));
+  auto pending =
+      connection->ReadObject({std::move(request), connection->options()});
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(data.get(),
+              VariantWith<Status>(StatusIs(TransientError().code())));
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
 }
 
 // Only one test for ReadObjectRange(). The tests for `ReadAll()` and
@@ -867,6 +995,98 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactoryTooManyTransients) {
 
   auto r = pending.get();
   EXPECT_THAT(r, StatusIs(TransientError().code()));
+}
+
+/// @test Each factory invocation counts its own attempts.
+///
+/// The factory is called again whenever a stream breaks mid-read and the
+/// download is resumed. Each call starts a fresh `AsyncRetryLoop`, so the
+/// attempt numbers have to start over: a reader that is resumed every few
+/// minutes for an hour would otherwise report "attempt 37" for what is, as far
+/// as the retry loop is concerned, a first failure.
+TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactoryRestartsAttempts) {
+  ScopedLog log;
+
+  AsyncSequencer<bool> sequencer;
+  auto make_success_stream = [](AsyncSequencer<bool>& sequencer) {
+    auto stream = std::make_unique<MockAsyncObjectMediaStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Read).WillOnce([&sequencer] {
+      return sequencer.PushBack("Read").then([](auto) {
+        return std::optional<google::storage::v2::ReadObjectResponse>{};
+      });
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  // Each factory invocation fails once and then succeeds.
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce(
+          [&] { return MakeErrorReadStream(sequencer, TransientError()); })
+      .WillOnce([&] { return make_success_stream(sequencer); })
+      .WillOnce(
+          [&] { return MakeErrorReadStream(sequencer, TransientError()); })
+      .WillOnce([&] { return make_success_stream(sequencer); });
+
+  // Drives one factory invocation: the failed attempt, then the successful
+  // one, then reads to the end of the stream.
+  auto consume = [](AsyncSequencer<bool>& sequencer, auto pending) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Start");
+    next.first.set_value(false);
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Finish");
+    next.first.set_value(true);
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Start");
+    next.first.set_value(true);
+
+    auto r = pending.get();
+    ASSERT_STATUS_OK(r);
+    auto reader = *std::move(r);
+    auto data = reader->Read();
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Read");
+    next.first.set_value(true);
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Finish");
+    next.first.set_value(true);
+
+    EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
+  };
+
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket("test-only-invalid");
+  request.set_object("test-object");
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  AsyncConnectionImpl connection(
+      pool.cq(), std::shared_ptr<GrpcChannelRefresh>{}, mock, TestOptions());
+  auto hash_function = std::make_shared<MockHashFunction>();
+  auto factory = connection.MakeReaderConnectionFactory(
+      internal::MakeImmutableOptions(connection.options()), std::move(request),
+      std::move(hash_function));
+
+  consume(sequencer, factory(storage::Generation(), 0));
+  // This is the invocation a resume makes.
+  consume(sequencer, factory(storage::Generation(1234), 500));
+
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("ReadObject/open"),
+                 HasSubstr("test-only-invalid/test-object"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log), ElementsAre(matches(1), matches(1)));
 }
 
 }  // namespace

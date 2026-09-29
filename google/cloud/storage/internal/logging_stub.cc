@@ -191,7 +191,15 @@ StatusOr<std::unique_ptr<ObjectReadSource>> LoggingStub::ReadObject(
     rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
   GCP_LOG(INFO) << __func__ << "() << " << request;
-  return stub_->ReadObject(context, options, request);
+  StatusOr<std::unique_ptr<ObjectReadSource>> response =
+      stub_->ReadObject(context, options, request);
+  // This function cannot use `LogWrapper()`, as the success payload is a
+  // `std::unique_ptr<>` with no `operator<<`. Log the status on failure so this
+  // matches the diagnostics produced by the other methods in this class.
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+  }
+  return response;
 }
 
 StatusOr<ListObjectsResponse> LoggingStub::ListObjects(

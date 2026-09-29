@@ -102,6 +102,66 @@ class ParameterManagerAuth : public ParameterManagerStub {
       google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
           request) override;
 
+  StatusOr<google::cloud::parametermanager::v1::ListTemplatesResponse>
+  ListTemplates(grpc::ClientContext& context, Options const& options,
+                google::cloud::parametermanager::v1::ListTemplatesRequest const&
+                    request) override;
+
+  StatusOr<google::cloud::parametermanager::v1::Template> GetTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::GetTemplateRequest const& request)
+      override;
+
+  StatusOr<google::cloud::parametermanager::v1::Template> CreateTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::CreateTemplateRequest const& request)
+      override;
+
+  StatusOr<google::cloud::parametermanager::v1::Template> UpdateTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::UpdateTemplateRequest const& request)
+      override;
+
+  Status DeleteTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::DeleteTemplateRequest const& request)
+      override;
+
+  StatusOr<google::cloud::parametermanager::v1::ListTemplateVersionsResponse>
+  ListTemplateVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::ListTemplateVersionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  GetTemplateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::GetTemplateVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  CreateTemplateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::CreateTemplateVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::parametermanager::v1::TemplateVersion>
+  UpdateTemplateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::UpdateTemplateVersionRequest const&
+          request) override;
+
+  Status DeleteTemplateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::DeleteTemplateVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::parametermanager::v1::RenderTemplateVersionResponse>
+  RenderTemplateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::parametermanager::v1::RenderTemplateVersionRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
