@@ -35,6 +35,8 @@ excluded_rules=(
   # Observability integration tests are run separately by observability.sh
   "-//google/cloud/bigtable/tests:observability_integration_test-default"
   "-//google/cloud/bigtable/tests:observability_integration_test-dynamic-pool"
+  # Managed Workload Identity (MWLID) integration tests are run separately by managed-workload.sh
+  "-//google/cloud/storage/tests:managed_workload_integration_test"
   # This sample uses HMAC keys, which are very limited in production (at most
   # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
