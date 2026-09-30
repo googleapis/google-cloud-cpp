@@ -324,7 +324,6 @@ declare -A -r LIBRARIES=(
   ["tasks"]="@googleapis//google/cloud/tasks/v2:tasks_cc_grpc"
   ["telcoautomation"]="@googleapis//google/cloud/telcoautomation/v1:telcoautomation_cc_grpc"
   ["texttospeech"]="@googleapis//google/cloud/texttospeech/v1:texttospeech_cc_grpc"
-  ["timeseriesinsights"]="@googleapis//google/cloud/timeseriesinsights/v1:timeseriesinsights_cc_grpc"
   ["tpu"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/tpu/v1:tpu_cc_grpc" \
