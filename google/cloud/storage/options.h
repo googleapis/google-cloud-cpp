@@ -44,6 +44,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * resuming from the stream's current offset. This reduces tail latency at the
  * cost of additional requests.
  *
+ * The client records two OpenTelemetry counters through the global meter
+ * provider in effect when the client is created:
+ * `storage.read_hedging.hedges_dispatched`, the number of hedged requests
+ * issued, and `storage.read_hedging.hedge_won`, the number of reads completed
+ * by a hedged request instead of the original one. Nothing is recorded unless
+ * the application installs a meter provider before creating the client.
+ *
  * @ingroup storage-options
  */
 struct EnableReadHedgingOption {
