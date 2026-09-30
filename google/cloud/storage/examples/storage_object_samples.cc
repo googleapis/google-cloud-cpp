@@ -158,7 +158,7 @@ void InsertObjectWithChecksum(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
         bucket_name, object_name, std::move(contents),
         google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
-            gcs::PrecomputedChecksums{std::move(checksum)}));
+            gcs::PrecomputedChecksums{std::move(checksum), /*md5=*/{}}));
 
     if (!object_metadata) throw std::move(object_metadata).status();
 
@@ -180,7 +180,7 @@ void InsertObjectWithBadChecksum(google::cloud::storage::Client client,
         bucket_name, object_name, std::move(contents),
         google::cloud::Options{}
             .set<gcs::PrecomputedChecksumsOption>(
-                gcs::PrecomputedChecksums{"bad_crc32c"})
+                gcs::PrecomputedChecksums{"bad_crc32c", /*md5=*/{}})
             .set<gcs::RetryPolicyOption>(
                 std::make_shared<gcs::LimitedErrorCountRetryPolicy>(2)));
 
@@ -456,7 +456,8 @@ void WriteObjectWithChecksum(google::cloud::storage::Client client,
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name,
         google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
-            gcs::PrecomputedChecksums{gcs::ComputeCrc32cChecksum(text)}));
+            gcs::PrecomputedChecksums{gcs::ComputeCrc32cChecksum(text),
+                                      /*md5=*/{}}));
 
     stream << text;
     stream.Close();
