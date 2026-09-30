@@ -1623,6 +1623,89 @@ TEST(HedgedObjectReadSourceTest, MetricsPrimaryWinRecordsNothing) {
               Eq("payload"));
 }
 
+TEST(HedgedObjectReadSourceTest,
+     MetricsPrimaryWinAfterHedgeRecordsDispatchOnly) {
+  MockHedgingCounters counters = MakeMockHedgingCounters();
+  EXPECT_CALL(*counters.dispatched, Add(std::uint64_t{1})).Times(1);
+  EXPECT_CALL(*counters.won, Add(_)).Times(0);
+
+  auto unblock_hedge = std::make_shared<std::promise<void>>();
+  auto hedge_closed = std::make_shared<std::promise<void>>();
+  HedgeSignal hedge_started;
+  PrimaryReadPool read_pool;
+  std::thread::id const primary_thread = read_pool.worker_id();
+  auto factory =
+      [unblock_hedge, hedge_closed, hedge_started,
+       primary_thread]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    auto mock = std::make_unique<MockObjectReadSource>();
+    if (OnPrimaryThread(primary_thread)) {
+      // Answer only once the hedge is in flight, so the primary wins a race
+      // that did dispatch a hedge.
+      EXPECT_CALL(*mock, Read)
+          .WillOnce([hedge_started](char* buf, std::size_t n) {
+            hedge_started.Wait();
+            return ImmediateRead("primary")(buf, n);
+          });
+    } else {
+      hedge_started.Signal();
+      EXPECT_CALL(*mock, Read).WillOnce(BlockedRead(unblock_hedge, "hedge"));
+      EXPECT_CALL(*mock, Close).WillOnce(NotifyClose(hedge_closed));
+    }
+    return std::unique_ptr<ObjectReadSource>(std::move(mock));
+  };
+
+  HedgedObjectReadSource source(read_pool.pool(), MakeUnlimitedHedgePool(),
+                                Adapt(factory), std::chrono::milliseconds(1),
+                                /*max_hedges=*/1, kUnlimitedBuffer,
+                                HedgedObjectReadSource::Position{},
+                                counters.metrics);
+
+  std::vector<char> buffer(100);
+  StatusOr<ReadSourceResult> result = source.Read(buffer.data(), buffer.size());
+  unblock_hedge->set_value();
+  WaitForSignal(hedge_closed);
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(std::string(buffer.data(), result->bytes_received),
+              Eq("primary"));
+}
+
+TEST(HedgedObjectReadSourceTest, MetricsAllAttemptsFailRecordsDispatchOnly) {
+  MockHedgingCounters counters = MakeMockHedgingCounters();
+  EXPECT_CALL(*counters.dispatched, Add(std::uint64_t{1})).Times(1);
+  EXPECT_CALL(*counters.won, Add(_)).Times(0);
+
+  HedgeSignal hedge_started;
+  PrimaryReadPool read_pool;
+  std::thread::id const primary_thread = read_pool.worker_id();
+  auto factory =
+      [hedge_started,
+       primary_thread]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    if (!OnPrimaryThread(primary_thread)) {
+      hedge_started.Signal();
+      return Status(StatusCode::kUnavailable, "hedge error");
+    }
+    auto mock = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*mock, Read).WillOnce([hedge_started](char*, std::size_t) {
+      hedge_started.Wait();
+      return StatusOr<ReadSourceResult>(
+          Status(StatusCode::kUnavailable, "primary error"));
+    });
+    EXPECT_CALL(*mock, IsOpen).WillRepeatedly(Return(false));
+    EXPECT_CALL(*mock, Close).Times(0);
+    return std::unique_ptr<ObjectReadSource>(std::move(mock));
+  };
+
+  HedgedObjectReadSource source(read_pool.pool(), MakeUnlimitedHedgePool(),
+                                Adapt(factory), std::chrono::milliseconds(1),
+                                /*max_hedges=*/1, kUnlimitedBuffer,
+                                HedgedObjectReadSource::Position{},
+                                counters.metrics);
+
+  std::vector<char> buffer(100);
+  EXPECT_THAT(source.Read(buffer.data(), buffer.size()),
+              StatusIs(StatusCode::kUnavailable));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
