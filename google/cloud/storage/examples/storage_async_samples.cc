@@ -925,8 +925,8 @@ void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient& client,
       pool.emplace_back(std::move(writer), std::move(token));
     }
 
-    // 2. Write: Pop a pre-warmed writer and commit with Flush() instead of
-    // Finalize().
+    // 2. Write: Pop a pre-warmed writer and commit with the faster Flush()
+    // instead of Finalize().
     auto [writer, token] = std::move(pool.front());
     pool.pop_front();
     token = (co_await writer.Write(std::move(token),
