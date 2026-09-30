@@ -9,6 +9,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.11.0 - TBD
 
+### Removed Libraries
+
+- The `timeseriesinsights` client library has been removed because the Timeseries Insights service has been turned down.
+
 ## v3.10.0 - 2026-09
 
 ### Debian Bullseye EOL
