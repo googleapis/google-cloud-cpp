@@ -42,6 +42,11 @@ excluded_rules=(
   "-//google/cloud/storage/examples:storage_service_account_samples"
   # This sample can be very long running due to creation time of AnywhereCache
   "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
+  # Rapid cache behavior is verified by
+  # //google/cloud/storage/tests:rapid_cache_integration_test.
+  # The sample creates a billable cache in a preexisting bucket, and would only
+  # duplicate that coverage.
+  "-//google/cloud/storagecontrol:v2_samples_storage_control_rapid_cache_samples"
 )
 
 io::log_h2 "Running the integration tests against prod"
