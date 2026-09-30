@@ -29,6 +29,8 @@ export CXX=clang++
 
 PROJECT_ID="${GOOGLE_CLOUD_PROJECT:-cloud-cpp-testing-resources}"
 REGION="${GOOGLE_CLOUD_CPP_TEST_REGION:-us-central1}"
+NETWORK="${GOOGLE_CLOUD_CPP_TEST_NETWORK:-directpath-net-ipv6}"
+SUBNET="${GOOGLE_CLOUD_CPP_TEST_SUBNET:-directpath-subnet-ipv6}"
 # integration-tests-config.sh exports GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME (without UBLA).
 # Agent Identity bearer tokens require Uniform Bucket-Level Access (UBLA).
 BUCKET_NAME="cloud-cpp-wif-test-bucket"
@@ -105,6 +107,9 @@ gcloud alpha run jobs create "${JOB_NAME}" \
   --functional-type=agent \
   --identity-type=agent-identity \
   --identity-certificate \
+  --network="${NETWORK}" \
+  --subnet="${SUBNET}" \
+  --vpc-egress=all-traffic \
   --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${BUCKET_NAME}" \
   --max-retries=0 \
   --task-timeout=5m \
