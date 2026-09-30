@@ -223,6 +223,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.15.0/scca
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
 
-# Update the ld.conf cache in case any libraries were installed in /usr/local/lib* or /usr/local/openssl-4/lib*
-RUN (echo /usr/local/openssl-4/lib; echo /usr/local/openssl-4/lib64; echo /usr/local/lib; echo /usr/local/lib64) | tee /etc/ld.so.conf.d/local.conf
-RUN ldconfig /usr/local/lib*
+# Update the dynamic linker cache for all installed libraries
+RUN ldconfig
