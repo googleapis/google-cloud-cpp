@@ -85,7 +85,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   }
 
   // This is automatically deleted by `cert`.
-  X509_NAME* name = X509_get_subject_name(cert.get());
+  X509_NAME const* name = X509_get_subject_name(cert.get());
 
   std::string service_account_id = [&name]() -> std::string {
     auto openssl_free = [](void* addr) { OPENSSL_free(addr); };
