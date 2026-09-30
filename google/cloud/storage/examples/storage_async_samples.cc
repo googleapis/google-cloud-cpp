@@ -925,14 +925,15 @@ void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient& client,
       pool.emplace_back(std::move(writer), std::move(token));
     }
 
-    // 2. Write: Pop a pre-warmed writer and commit with Flush() (~1-2 ms)
-    // instead of Finalize().
+    // 2. Write: Pop a pre-warmed writer and commit with Flush() instead of
+    // Finalize().
     auto [writer, token] = std::move(pool.front());
     pool.pop_front();
     token = (co_await writer.Write(std::move(token),
                                    gcs::WritePayload("0123456789")))
                 .value();
-    (void)co_await writer.Flush();
+    auto flush_status = co_await writer.Flush();
+    if (!flush_status.ok()) throw std::runtime_error(flush_status.message());
 
     // 3. Pool maintenance (run asynchronously off the critical write path):
     // Close the used writer without finalizing and refill the pool.
@@ -940,7 +941,8 @@ void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient& client,
                             std::string next_object_name,
                             gcs::AsyncWriter writer)
         -> google::cloud::future<std::pair<gcs::AsyncWriter, gcs::AsyncToken>> {
-      (void)co_await writer.Close();
+      auto close_status = co_await writer.Close();
+      if (!close_status.ok()) throw std::runtime_error(close_status.message());
       auto [new_writer, new_token] =
           (co_await client.StartAppendableObjectUpload(
                gcs::BucketName(bucket_name), next_object_name))
@@ -955,13 +957,22 @@ void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient& client,
         (co_await client.Open(gcs::BucketName(bucket_name), key_prefix + "_0"))
             .value();
     auto [reader, read_token] = descriptor.Read(0, 10);
-    auto [payload, next_token] =
-        (co_await reader.Read(std::move(read_token))).value();
+    std::string contents;
+    while (read_token.valid()) {
+      auto [payload, t] = (co_await reader.Read(std::move(read_token))).value();
+      read_token = std::move(t);
+      for (auto const& buffer : payload.contents()) {
+        contents.append(buffer.begin(), buffer.end());
+      }
+    }
+    std::cout << "Read unfinalized object " << key_prefix << "_0: " << contents
+              << "\n";
 
     auto [new_writer, new_token] = co_await std::move(maintenance_future);
     pool.emplace_back(std::move(new_writer), std::move(new_token));
     for (auto& [rem_writer, rem_token] : pool) {
-      (void)co_await rem_writer.Close();
+      auto close_status = co_await rem_writer.Close();
+      if (!close_status.ok()) throw std::runtime_error(close_status.message());
     }
   };
   // [END storage_optimize_write_latency_pool]
@@ -1208,6 +1219,12 @@ void PauseAndResumeAppendableUpload(google::cloud::storage::AsyncClient&,
 void FinalizeAppendableObjectUpload(google::cloud::storage::AsyncClient&,
                                     std::vector<std::string> const&) {
   std::cerr << "AsyncClient::FinalizeAppendableObjectUpload() example requires "
+               "coroutines\n";
+}
+
+void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient&,
+                              std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::OptimizeWriteLatencyPool() example requires "
                "coroutines\n";
 }
 
