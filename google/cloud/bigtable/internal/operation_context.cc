@@ -112,6 +112,8 @@ void OperationContext::ElementDelivery(grpc::ClientContext const&) {
 OperationContext::OperationContext(std::vector<std::shared_ptr<Metric>>,
                                    std::shared_ptr<Clock>) {}
 
+void OperationContext::StubSelection(StubSelectionParams const&) {}
+
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   for (auto const& [key, value] : cookies_) {
     client_context.AddMetadata(key, value);
