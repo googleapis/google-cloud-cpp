@@ -55,6 +55,7 @@ using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::Ne;
 using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
@@ -852,7 +853,6 @@ TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
   // primary attempt. Any other thread is running a hedge.
   auto primary_thread = std::make_shared<std::thread::id>();
   auto unblock_primary = std::make_shared<std::promise<void>>();
-  auto primary_closed = std::make_shared<std::promise<void>>();
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options).Times(AtLeast(0));
   EXPECT_CALL(*mock, ReadObject)
@@ -865,24 +865,36 @@ TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
         });
         return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
       })
-      .WillRepeatedly([primary_thread, unblock_primary, primary_closed](
-                          auto&, auto const&, ReadObjectRangeRequest const&) {
+      .WillOnce([primary_thread, unblock_primary](
+                    auto&, auto const&, ReadObjectRangeRequest const&) {
+        EXPECT_THAT(std::this_thread::get_id(), Eq(*primary_thread));
         auto source = std::make_unique<testing::MockObjectReadSource>();
-        if (std::this_thread::get_id() == *primary_thread) {
-          EXPECT_CALL(*source, Read)
-              .WillOnce([unblock_primary](char* buf, std::size_t) {
-                unblock_primary->get_future().wait();
-                return MakeReadResult("slow", buf);
-              });
-          EXPECT_CALL(*source, Close).WillOnce([primary_closed] {
-            primary_closed->set_value();
-            return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
-          });
-        } else {
-          EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
-            return MakeReadResult("hedge", buf);
-          });
-        }
+        EXPECT_CALL(*source, Read)
+            .WillOnce([unblock_primary](char* buf, std::size_t) {
+              unblock_primary->get_future().wait();
+              return MakeReadResult("slow", buf);
+            });
+        EXPECT_CALL(*source, Close).WillOnce([] {
+          return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
+        });
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+      })
+      .WillOnce([primary_thread](auto&, auto const&,
+                                 ReadObjectRangeRequest const&) {
+        EXPECT_THAT(std::this_thread::get_id(), Ne(*primary_thread));
+        auto source = std::make_unique<testing::MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+          return MakeReadResult("hedge", buf);
+        });
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+      })
+      .WillOnce([primary_thread](auto&, auto const&,
+                                 ReadObjectRangeRequest const&) {
+        EXPECT_THAT(std::this_thread::get_id(), Eq(*primary_thread));
+        auto source = std::make_unique<testing::MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+          return MakeReadResult("sync", buf);
+        });
         return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
       });
 
@@ -916,9 +928,21 @@ TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
   StatusOr<ReadSourceResult> result =
       (*source)->Read(buffer.data(), buffer.size());
   unblock_primary->set_value();
-  primary_closed->get_future().wait();
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
+
+  // Flush the single-threaded read pool to ensure the losing primary attempt
+  // and its captured references to `client` have completely finished executing
+  // before tearing down the test.
+  {
+    google::cloud::internal::OptionsSpan const span(
+        client->options().set<storage_experimental::ReadHedgeDelayOption>(
+            std::chrono::seconds(30)));
+    StatusOr<std::unique_ptr<ObjectReadSource>> sync_source =
+        client->ReadObject(ReadObjectRangeRequest("test-bucket", "sync"));
+    ASSERT_THAT(sync_source, IsOk());
+    ASSERT_THAT((*sync_source)->Read(buffer.data(), buffer.size()), IsOk());
+  }
 }
 
 }  // namespace
