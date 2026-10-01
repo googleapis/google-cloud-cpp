@@ -200,7 +200,6 @@ jobs:
           webrisk
           websecurityscanner
           workstations
-          automl
         )
         shard5_features=(
           bigquerycontrol

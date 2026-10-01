@@ -88,10 +88,6 @@
 ./include/google/cloud/auditmanager/v1
 ./include/google/cloud/auditmanager/v1/internal
 ./include/google/cloud/auditmanager/v1/mocks
-./include/google/cloud/automl
-./include/google/cloud/automl/v1
-./include/google/cloud/automl/v1/internal
-./include/google/cloud/automl/v1/mocks
 ./include/google/cloud/backupdr
 ./include/google/cloud/backupdr/v1
 ./include/google/cloud/backupdr/v1/internal
@@ -1441,8 +1437,6 @@
 ./lib64/cmake/google_cloud_cpp_assuredworkloads_mocks
 ./lib64/cmake/google_cloud_cpp_auditmanager
 ./lib64/cmake/google_cloud_cpp_auditmanager_mocks
-./lib64/cmake/google_cloud_cpp_automl
-./lib64/cmake/google_cloud_cpp_automl_mocks
 ./lib64/cmake/google_cloud_cpp_backupdr
 ./lib64/cmake/google_cloud_cpp_backupdr_mocks
 ./lib64/cmake/google_cloud_cpp_baremetalsolution

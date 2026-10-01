@@ -56,7 +56,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "asset"
     "assuredworkloads"
     "auditmanager"
-    "automl"
     "backupdr"
     "baremetalsolution"
     "batch"

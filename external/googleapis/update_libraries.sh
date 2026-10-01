@@ -50,7 +50,6 @@ declare -A -r LIBRARIES=(
   ["asset"]="@googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
   ["auditmanager"]="@googleapis//google/cloud/auditmanager/v1:auditmanager_cc_grpc"
-  ["automl"]="@googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["backupdr"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/backupdr/v1:backupdr_cc_grpc" \
