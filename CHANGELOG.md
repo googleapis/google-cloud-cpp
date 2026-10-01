@@ -11,6 +11,7 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ### Removed Libraries
 
+- The `automl` client library has been removed because the Cloud AutoML service has been turned down.
 - The `timeseriesinsights` client library has been removed because the Timeseries Insights service has been turned down.
 
 ## v3.10.0 - 2026-09

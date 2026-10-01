@@ -147,7 +147,6 @@ jobs:
           webrisk
           websecurityscanner
           workstations
-          automl
           cloudbuild
           cloudcontrolspartner
           composer
