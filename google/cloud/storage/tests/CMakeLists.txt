@@ -132,3 +132,31 @@ endforeach ()
 
 target_link_libraries(storage_error_injection_integration_test
                       PRIVATE ${CMAKE_DL_LIBS})
+
+# Managed Workload Identity (MWLID) integration test is only intended to run on
+# Cloud Run via ci/cloudbuild/builds/managed-workload.sh.
+google_cloud_cpp_add_executable(target "storage"
+                                "managed_workload_integration_test.cc")
+target_link_libraries(
+    ${target}
+    PRIVATE storage_client_testing
+            google_cloud_cpp_testing
+            google-cloud-cpp::storage
+            google-cloud-cpp::common
+            GTest::gmock_main
+            GTest::gmock
+            GTest::gtest
+            Threads::Threads
+            absl::strings
+            nlohmann_json)
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    target_link_libraries(
+        ${target}
+        PRIVATE google-cloud-cpp::storage_grpc google_cloud_cpp_testing_grpc
+                google_cloud_cpp_storage_tests_conformance_protos)
+endif ()
+add_test(NAME ${target} COMMAND ${target})
+set_tests_properties(
+    ${target} PROPERTIES LABELS "integration-test;managed-workload-only"
+                         DISABLED TRUE)
+google_cloud_cpp_add_common_options(${target})

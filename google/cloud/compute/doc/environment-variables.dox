@@ -70,6 +70,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeGlobalForwardingRulesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_GLOBAL_FRONTEND_SETTINGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalFrontendSettingsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_GLOBAL_NETWORK_ENDPOINT_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeGlobalNetworkEndpointGroupsConnection()`.
@@ -113,6 +117,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeImageFamilyViewsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_IMAGE_VIEWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeImageViewsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -186,6 +194,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeMachineTypesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_MANAGED_RULESETS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeManagedRulesetsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_NETWORKS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeNetworksConnection()`.
@@ -237,6 +249,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeProjectsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PROJECT_VIEWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeProjectViewsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_PUBLIC_ADVERTISED_PREFIXES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")

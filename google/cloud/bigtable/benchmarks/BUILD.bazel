@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load(":bigtable_benchmark_common.bzl", "bigtable_benchmark_common_hdrs", "bigtable_benchmark_common_srcs")
 load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")

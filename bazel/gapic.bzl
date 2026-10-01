@@ -14,6 +14,8 @@
 
 """A definition for the typical C++ GAPIC library."""
 
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
 def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_deps = []):
     """Defines targets for the typical fully generated GAPIC library
 
@@ -57,16 +59,14 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
         srcs = native.glob([d + "mocks/*.h" for d in service_dirs], allow_empty = True),
         visibility = ["//:__pkg__"],
     )
-
-    native.cc_library(
+    cc_library(
         name = "google_cloud_cpp_" + name,
         srcs = [":srcs"],
         hdrs = [":hdrs"],
         visibility = ["//:__pkg__"],
         deps = ["//:common", "//:grpc_utils"] + googleapis_deps + additional_deps,
     )
-
-    native.cc_library(
+    cc_library(
         name = "google_cloud_cpp_" + name + "_mocks",
         hdrs = [":mocks"],
         visibility = ["//:__pkg__"],
@@ -76,7 +76,7 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
         ],
     )
 
-    [native.cc_test(
+    [cc_test(
         name = sample.replace("/", "_").replace(".cc", ""),
         srcs = [sample],
         tags = ["integration-test"],

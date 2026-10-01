@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_CI_OTEL_COLLECTOR_OTEL_COLLECTOR_H
 
 #include "google/cloud/version.h"
+#include "google/monitoring/v3/metric_service.grpc.pb.h"
 #include "protos/google/cloud/opentelemetry/testing/observability_verification.grpc.pb.h"
-#include <google/monitoring/v3/metric_service.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <mutex>
 #include <vector>

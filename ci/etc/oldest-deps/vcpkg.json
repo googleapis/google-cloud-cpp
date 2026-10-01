@@ -10,12 +10,6 @@
     "dependencies": [
       {"name": "abseil", "version>=": "20250127.1"},
       {
-        "name": "curl",
-        "features": [
-          "ssl"
-        ]
-      },
-      {
         "name": "grpc",
         "version>=": "1.71.0",
         "host": true

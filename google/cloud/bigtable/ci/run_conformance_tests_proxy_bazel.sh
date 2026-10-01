@@ -42,8 +42,11 @@ popd >/dev/null
 # Run the test
 pushd /var/tmp/downloads/cloud-bigtable-clients-test/tests >/dev/null
 # Run all non ExecuteQuery tests with skips for non ExecuteQuery tests.
+# - TestMutateRows_NoRetry_MissingResponseEntry is skipped because the C++
+#   client intentionally retries unconfirmed idempotent mutations on incomplete
+#   streams.
 go test -v \
-  -skip "Generic_CloseClient|Generic_DeadlineExceeded|NoRetry_OutOfOrderError_Reverse|Retry_LastScannedRow_Reverse|Retry_WithRetryInfo_OverallDedaline|TestExecuteQuery" \
+  -skip "Generic_CloseClient|Generic_DeadlineExceeded|NoRetry_OutOfOrderError_Reverse|Retry_LastScannedRow_Reverse|Retry_WithRetryInfo_OverallDedaline|TestExecuteQuery|TestMutateRows_NoRetry_MissingResponseEntry" \
   -proxy_addr=:9999
 exit_status=$?
 

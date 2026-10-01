@@ -15,6 +15,7 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/hedged_object_read_source.h"
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
@@ -23,6 +24,7 @@
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include <opentelemetry/metrics/provider.h>
 #include <algorithm>
 #include <chrono>
 #include <fstream>
@@ -180,9 +182,13 @@ StorageConnectionImpl::StorageConnectionImpl(
     }
     double const rate_limit =
         options_.get<storage_experimental::ReadHedgeRateLimitOption>();
+    std::int64_t const max_total =
+        options_.get<storage_experimental::MaxTotalHedgesOption>();
     // Allow bursts of up to one second worth of hedges.
     hedge_pool_ = std::make_shared<HedgingThreadPool>(
-        hedge_threads, rate_limit, rate_limit, max_concurrent);
+        hedge_threads, rate_limit, rate_limit, max_concurrent, max_total);
+    hedged_read_metrics_ = std::make_shared<HedgedReadMetrics>(
+        opentelemetry::metrics::Provider::GetMeterProvider());
   }
 }
 
@@ -490,7 +496,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
   return std::unique_ptr<ObjectReadSource>(
       std::make_unique<HedgedObjectReadSource>(
           read_pool_, hedge_pool_, std::move(child_factory), delay, max_hedges,
-          max_buffer, position));
+          max_buffer, position, hedged_read_metrics_));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(

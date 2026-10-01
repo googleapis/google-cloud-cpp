@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HEDGED_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HEDGED_OBJECT_READ_SOURCE_H
 
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/hedging_thread_pool.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
@@ -40,16 +41,23 @@ namespace internal {
  * read wins and becomes the active child; losing attempts are closed when they
  * eventually complete.
  *
- * Later reads normally continue on the active child, on the caller's thread,
- * with no thread hops or copies. A read that takes longer than @p delay marks
- * the stream as stalled, and the next read is raced again: the active child is
- * the primary attempt, and hedges are opened by @p child_factory at the
- * stream's current offset, pinned to the generation observed so far. A hedge
- * that wins replaces the active child. Once a read completes within @p delay
- * the stream goes back to direct reads. The number of hedges a single stream
- * may issue this way is capped at a small multiple of @p max_hedges, so a
- * stream that is uniformly slow rather than intermittently stalled stops
- * racing instead of duplicating every read.
+ * Later reads are raced the same way, against the active child as the primary
+ * attempt, with hedges opened by @p child_factory at the stream's current
+ * offset and pinned to the generation observed so far. A hedge that wins
+ * replaces the active child.
+ *
+ * Racing a read does not by itself issue a second request: a hedge is
+ * dispatched only once @p delay elapses within that read, so a read that
+ * returns promptly costs exactly one request. What racing buys is the ability
+ * to observe that elapsed time at all. A direct read runs synchronously on the
+ * caller's thread, so while it is stalled no thread is left to react; the
+ * primary therefore runs on the read pool and the caller waits on a future.
+ * The cost on the fast path is one staged copy of the bytes received and one
+ * thread hop.
+ *
+ * The number of hedges a single stream may issue is capped at a small multiple
+ * of @p max_hedges, so a stream that is uniformly slow rather than
+ * intermittently stalled stops racing instead of duplicating every read.
  *
  * Racing is skipped where it cannot produce correct data or cannot help: under
  * decompressive transcoding (byte ranges are not honored, a hedge would restart
@@ -83,13 +91,15 @@ class HedgedObjectReadSource : public ObjectReadSource {
     std::optional<std::int64_t> generation;
   };
 
+  /// @p metrics may be null, in which case nothing is recorded.
   HedgedObjectReadSource(std::shared_ptr<ThreadPool> read_pool,
                          std::shared_ptr<HedgingThreadPool> hedge_pool,
                          ChildFactory child_factory,
                          std::chrono::milliseconds delay, int max_hedges,
-                         std::size_t max_buffer, Position position);
+                         std::size_t max_buffer, Position position,
+                         std::shared_ptr<HedgedReadMetrics> metrics);
 
-  /// A stream that starts at the beginning of the object.
+  /// A stream that starts at the beginning of the object, without metrics.
   HedgedObjectReadSource(std::shared_ptr<ThreadPool> read_pool,
                          std::shared_ptr<HedgingThreadPool> hedge_pool,
                          ChildFactory child_factory,
@@ -116,6 +126,7 @@ class HedgedObjectReadSource : public ObjectReadSource {
   std::chrono::milliseconds delay_;
   int max_hedges_;
   std::size_t max_buffer_;
+  std::shared_ptr<HedgedReadMetrics> metrics_;
 
   std::int64_t current_offset_;
   OffsetDirection offset_direction_;
@@ -123,7 +134,6 @@ class HedgedObjectReadSource : public ObjectReadSource {
   std::optional<std::int64_t> generation_;
   std::optional<std::uint64_t> size_;
   bool is_gunzipped_ = false;
-  bool last_read_stalled_ = false;
   // Hedges dispatched over the life of this stream, bounded so a uniformly
   // slow stream cannot race forever.
   int total_hedges_ = 0;

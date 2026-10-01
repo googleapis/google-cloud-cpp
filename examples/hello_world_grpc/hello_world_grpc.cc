@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "hello_world.grpc.pb.h"
 #include <grpcpp/grpcpp.h>
-#include <hello_world.grpc.pb.h>
 #include <iostream>
 
 class GreeterImpl final : public google::cloud::examples::Greet::Service {

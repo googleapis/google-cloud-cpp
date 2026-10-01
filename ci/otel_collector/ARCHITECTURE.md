@@ -161,7 +161,7 @@ headers and libraries:
 
 ```cpp
 #include "protos/google/cloud/opentelemetry/testing/observability_verification.grpc.pb.h"
-#include <google/monitoring/v3/metric_service.grpc.pb.h>
+#include "google/monitoring/v3/metric_service.grpc.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <mutex>
 #include <vector>

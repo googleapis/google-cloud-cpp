@@ -25,6 +25,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -50,7 +51,14 @@ std::shared_ptr<SpannerStub> DecorateSpannerStub(
         opts.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(opts)) {
-    stub = MakeSpannerTracingStub(std::move(stub));
+    stub = MakeSpannerTracingStub(
+        std::move(stub),
+        [](opentelemetry::trace::Span& span,
+           spanner_internal::OperationContext const& op_context) {
+          if (std::optional<std::string> req_id = op_context.RequestId()) {
+            span.SetAttribute("gcp.spanner.request_id", *req_id);
+          }
+        });
   }
   return stub;
 }

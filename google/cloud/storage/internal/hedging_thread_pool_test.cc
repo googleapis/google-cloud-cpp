@@ -18,6 +18,7 @@
 #include <atomic>
 #include <chrono>
 #include <cstddef>
+#include <cstdint>
 #include <future>
 #include <memory>
 #include <thread>
@@ -130,7 +131,7 @@ TEST(HedgingThreadPoolTest, EnqueueAndExecute) {
   std::future<void> f1 = p1.get_future();
   std::future<void> f2 = p2.get_future();
 
-  HedgingThreadPool pool(2, 0.0, 0.0, 0);
+  HedgingThreadPool pool(2, 0.0, 0.0, 0, 0);
   EXPECT_TRUE(pool.Enqueue([&p1] { p1.set_value(); }));
   EXPECT_TRUE(pool.Enqueue([&p2] { p2.set_value(); }));
 
@@ -140,7 +141,7 @@ TEST(HedgingThreadPoolTest, EnqueueAndExecute) {
 
 TEST(HedgingThreadPoolTest, MaxConcurrentHedgesLimit) {
   // Only one concurrent hedge allowed.
-  HedgingThreadPool pool(5, 0.0, 0.0, 1);
+  HedgingThreadPool pool(5, 0.0, 0.0, 1, 0);
 
   EXPECT_TRUE(pool.TryAcquireHedgeToken());
   // Fails because one hedge is active.
@@ -154,7 +155,7 @@ TEST(HedgingThreadPoolTest, MaxConcurrentHedgesLimit) {
 TEST(HedgingThreadPoolTest, RateLimiter) {
   // A rate limit of 5.0 tokens per second (one token per 200ms), and a burst
   // capacity of 2 tokens.
-  HedgingThreadPool pool(5, 5.0, 2.0, 0);
+  HedgingThreadPool pool(5, 5.0, 2.0, 0, 0);
 
   EXPECT_TRUE(pool.TryAcquireHedgeToken());
   EXPECT_TRUE(pool.TryAcquireHedgeToken());
@@ -171,7 +172,7 @@ TEST(HedgingThreadPoolTest, RateLimiter) {
 TEST(HedgingThreadPoolTest, FractionalRateLimiter) {
   // A rate limit of 0.5 tokens per second (one token per 2 seconds).
   // The capacity is set to 0.5, which the pool must clamp to a floor of 1.0.
-  HedgingThreadPool pool(5, 0.5, 0.5, 0);
+  HedgingThreadPool pool(5, 0.5, 0.5, 0, 0);
 
   // Since capacity is clamped to 1.0, we must be able to acquire at least one
   // token.
@@ -182,16 +183,102 @@ TEST(HedgingThreadPoolTest, FractionalRateLimiter) {
 TEST(HedgingThreadPoolTest, ZeroRateLimitDisablesRateLimiting) {
   // A rate limit of 0.0 disables rate limiting, allowing unlimited
   // acquisitions.
-  HedgingThreadPool pool(5, 0.0, 0.0, 0);
+  HedgingThreadPool pool(5, 0.0, 0.0, 0, 0);
 
   for (int i = 0; i < 100; ++i) {
     EXPECT_TRUE(pool.TryAcquireHedgeToken());
   }
 }
 
+TEST(HedgingThreadPoolTest, MaxTotalHedgesLimit) {
+  HedgingThreadPool pool(5, 0.0, 0.0, 0, /*max_total=*/3);
+
+  EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  EXPECT_FALSE(pool.IsTotalBudgetSpent());
+  EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  EXPECT_TRUE(pool.IsTotalBudgetSpent());
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+
+  // Releasing a hedge frees its concurrency slot, but never returns the
+  // lifetime budget.
+  pool.ReleaseHedgeSlot();
+  pool.ReleaseHedgeSlot();
+  pool.ReleaseHedgeSlot();
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+}
+
+TEST(HedgingThreadPoolTest, ConcurrencyDenialDoesNotSpendTotalBudget) {
+  HedgingThreadPool pool(5, 0.0, 0.0, /*max_concurrent=*/1, /*max_total=*/2);
+
+  EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  // Denied by the concurrency limit, so this hedge is never sent.
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+  EXPECT_FALSE(pool.IsTotalBudgetSpent());
+  pool.ReleaseHedgeSlot();
+
+  // The denials above did not spend the budget, so one hedge is left.
+  EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  pool.ReleaseHedgeSlot();
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+}
+
+TEST(HedgingThreadPoolTest, RateLimitDenialDoesNotSpendTotalBudget) {
+  // A burst capacity of one token, and a refill (one token per 1000 seconds)
+  // too slow to add a token while the test runs.
+  HedgingThreadPool pool(5, 0.001, 1.0, 0, /*max_total=*/2);
+
+  EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  // Denied by the rate limit, so this hedge is never sent.
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+  EXPECT_FALSE(pool.TryAcquireHedgeToken());
+  // Only the first hedge spent the budget.
+  EXPECT_FALSE(pool.IsTotalBudgetSpent());
+}
+
+TEST(HedgingThreadPoolTest, ZeroMaxTotalDisablesLifetimeLimit) {
+  HedgingThreadPool pool(5, 0.0, 0.0, 0, /*max_total=*/0);
+
+  for (int i = 0; i < 100; ++i) {
+    EXPECT_TRUE(pool.TryAcquireHedgeToken());
+  }
+  EXPECT_FALSE(pool.IsTotalBudgetSpent());
+}
+
+TEST(HedgingThreadPoolTest, MaxTotalHedgesUnderContention) {
+  std::int64_t const max_total = 100;
+  // A rate limit that never runs out, so threads racing for the last unit of
+  // budget also exercise returning the rate token.
+  HedgingThreadPool pool(1, 1e9, 1e9, /*max_concurrent=*/4, max_total);
+
+  std::atomic<std::int64_t> granted{0};
+  std::vector<std::thread> threads;
+  for (int t = 0; t != 8; ++t) {
+    threads.emplace_back([&pool, &granted] {
+      for (int i = 0; i != 1000; ++i) {
+        if (!pool.TryAcquireHedgeToken()) continue;
+        ++granted;
+        pool.ReleaseHedgeSlot();
+      }
+    });
+  }
+  for (auto& t : threads) t.join();
+
+  // Spend whatever budget the threads left, so the count below does not depend
+  // on how the threads were scheduled. If contention ever over-granted, or a
+  // hedge denied by an earlier gate spent budget, the total is off.
+  while (pool.TryAcquireHedgeToken()) {
+    ++granted;
+    pool.ReleaseHedgeSlot();
+  }
+  EXPECT_THAT(granted.load(), Eq(max_total));
+  EXPECT_TRUE(pool.IsTotalBudgetSpent());
+}
+
 TEST(HedgingThreadPoolTest, SafeDestructionOnWorkerThread) {
   TestSafeDestructionOnWorkerThread(
-      std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0));
+      std::make_shared<HedgingThreadPool>(1, 0.0, 0.0, 0, 0));
 }
 
 }  // namespace

@@ -51,6 +51,8 @@ endfunction ()
 include(GoogleapisConfig)
 include(CreateBazelConfig)
 include(${CMAKE_CURRENT_SOURCE_DIR}/service_dirs.cmake)
+list(SORT service_dirs)
+list(SORT operation_service_dirs)
 export_list_to_bazel("service_dirs.bzl" YEAR 2023 service_dirs
                      operation_service_dirs)
 

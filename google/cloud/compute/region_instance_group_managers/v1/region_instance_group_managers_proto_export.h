@@ -26,13 +26,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUP_MANAGERS_V1_REGION_INSTANCE_GROUP_MANAGERS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_019.pb.h"
-#include "google/cloud/compute/v1/internal/common_037.pb.h"
+#include "google/cloud/compute/v1/internal/common_009.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_029.pb.h"
 #include "google/cloud/compute/v1/internal/common_038.pb.h"
-#include "google/cloud/compute/v1/internal/common_049.pb.h"
-#include "google/cloud/compute/v1/internal/common_098.pb.h"
-#include "google/cloud/compute/v1/internal/common_110.pb.h"
-#include "google/cloud/compute/v1/internal/common_121.pb.h"
+#include "google/cloud/compute/v1/internal/common_039.pb.h"
+#include "google/cloud/compute/v1/internal/common_043.pb.h"
+#include "google/cloud/compute/v1/internal/common_050.pb.h"
+#include "google/cloud/compute/v1/internal/common_102.pb.h"
+#include "google/cloud/compute/v1/internal/common_114.pb.h"
+#include "google/cloud/compute/v1/internal/common_127.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUP_MANAGERS_V1_REGION_INSTANCE_GROUP_MANAGERS_PROTO_EXPORT_H

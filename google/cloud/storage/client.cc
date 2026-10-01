@@ -590,6 +590,9 @@ Options DefaultOptions(Options opts) {
   if (!o.has<storage_experimental::MaxConcurrentHedgesOption>()) {
     o.set<storage_experimental::MaxConcurrentHedgesOption>(0);
   }
+  if (!o.has<storage_experimental::MaxTotalHedgesOption>()) {
+    o.set<storage_experimental::MaxTotalHedgesOption>(0);
+  }
   if (!o.has<storage_experimental::MaximumHedgeBufferOption>()) {
     o.set<storage_experimental::MaximumHedgeBufferOption>(64 * 1024 * 1024);
   }

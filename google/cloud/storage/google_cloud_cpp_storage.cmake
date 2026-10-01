@@ -119,6 +119,8 @@ add_library(
     internal/hash_values.h
     internal/hedged_object_read_source.cc
     internal/hedged_object_read_source.h
+    internal/hedged_read_metrics.cc
+    internal/hedged_read_metrics.h
     internal/hedging_thread_pool.h
     internal/hmac_key_metadata_parser.cc
     internal/hmac_key_metadata_parser.h
@@ -452,6 +454,7 @@ if (BUILD_TESTING)
         internal/hash_validator_test.cc
         internal/hash_values_test.cc
         internal/hedged_object_read_source_test.cc
+        internal/hedged_read_metrics_test.cc
         internal/hedging_thread_pool_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc

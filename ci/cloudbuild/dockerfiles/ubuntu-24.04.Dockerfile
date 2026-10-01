@@ -56,13 +56,15 @@ RUN apt-get update && \
 WORKDIR /var/tmp/build/curl
 RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    sed 's/@CURL_LT_SHLIB_VERSIONED_FLAVOUR@/OPENSSL_/g' lib/libcurl.vers.in > libcurl.vers && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=ON \
         -DCURL_USE_OPENSSL=ON \
-        -DBUILD_CURL_EXE=OFF \
+        -DBUILD_CURL_EXE=ON \
         -DBUILD_TESTING=OFF \
+        -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--version-script=$(pwd)/libcurl.vers" \
         -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
