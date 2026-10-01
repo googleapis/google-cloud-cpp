@@ -15,18 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_METRICS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_METRICS_H
 
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/status.h"
-#include <grpcpp/grpcpp.h>
-#include <opentelemetry/context/context.h>
-#include <chrono>
 #include <cstdint>
-#include <memory>
-#include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -54,6 +45,26 @@ struct StubSelectionParams {
   TransportType transport_type;
   RpcType streaming;
 };
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+}  // namespace cloud
+}  // namespace google
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+#include "google/cloud/status.h"
+#include <grpcpp/grpcpp.h>
+#include <opentelemetry/context/context.h>
+#include <chrono>
+#include <memory>
+#include <string>
+#include <vector>
+
+namespace google {
+namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct PreCallParams {
   OperationContext::Clock::time_point attempt_start;
