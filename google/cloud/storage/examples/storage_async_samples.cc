@@ -945,7 +945,8 @@ void OptimizeWriteLatencyPool(google::cloud::storage::AsyncClient& client,
       if (!close_status.ok()) throw std::runtime_error(close_status.message());
       auto [new_writer, new_token] =
           (co_await client.StartAppendableObjectUpload(
-               gcs::BucketName(bucket_name), next_object_name))
+               gcs::BucketName(std::move(bucket_name)),
+               std::move(next_object_name)))
               .value();
       co_return {std::move(new_writer), std::move(new_token)};
     };
@@ -1747,7 +1748,8 @@ int main(int argc, char* argv[]) try {
                  PauseAndResumeAppendableUpload),
       make_entry("finalize-appendable-object-upload", {},
                  FinalizeAppendableObjectUpload),
-      make_entry("optimize-write-latency-pool", {}, OptimizeWriteLatencyPool),
+      make_bucket_entry("optimize-write-latency-pool", {"<key-prefix>"},
+                        OptimizeWriteLatencyPool),
 
       make_entry("rewrite-object", {"<destination>"}, RewriteObject),
       make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
