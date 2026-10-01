@@ -105,8 +105,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3896}
-  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3847}
+  /// [google.cloud.dataform.v1.GetTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3929}
+  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3880}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::TeamFolder> GetTeamFolder(
@@ -135,8 +135,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3896}
-  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3847}
+  /// [google.cloud.dataform.v1.GetTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3929}
+  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3880}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::TeamFolder> GetTeamFolder(
@@ -163,8 +163,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3881}
-  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3847}
+  /// [google.cloud.dataform.v1.CreateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3914}
+  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3880}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::TeamFolder> CreateTeamFolder(
@@ -195,8 +195,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3881}
-  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3847}
+  /// [google.cloud.dataform.v1.CreateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3914}
+  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3880}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::TeamFolder> CreateTeamFolder(
@@ -223,8 +223,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3847}
-  /// [google.cloud.dataform.v1.UpdateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3907}
+  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3880}
+  /// [google.cloud.dataform.v1.UpdateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3940}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::TeamFolder> UpdateTeamFolder(
@@ -254,8 +254,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3847}
-  /// [google.cloud.dataform.v1.UpdateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3907}
+  /// [google.cloud.dataform.v1.TeamFolder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3880}
+  /// [google.cloud.dataform.v1.UpdateTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3940}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::TeamFolder> UpdateTeamFolder(
@@ -278,7 +278,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3918}
+  /// [google.cloud.dataform.v1.DeleteTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3951}
   ///
   // clang-format on
   Status DeleteTeamFolder(std::string const& name, Options opts = {});
@@ -304,7 +304,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3918}
+  /// [google.cloud.dataform.v1.DeleteTeamFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3951}
   ///
   // clang-format on
   Status DeleteTeamFolder(
@@ -345,8 +345,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3677}
-  /// [google.cloud.dataform.v1.DeleteTeamFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3655}
+  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3710}
+  /// [google.cloud.dataform.v1.DeleteTeamFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3688}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
@@ -397,8 +397,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3677}
-  /// [google.cloud.dataform.v1.DeleteTeamFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3655}
+  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3710}
+  /// [google.cloud.dataform.v1.DeleteTeamFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3688}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
@@ -463,8 +463,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryTeamFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3929}
-  /// [google.cloud.dataform.v1.QueryTeamFolderContentsResponse.TeamFolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3974}
+  /// [google.cloud.dataform.v1.QueryTeamFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3962}
+  /// [google.cloud.dataform.v1.QueryTeamFolderContentsResponse.TeamFolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4007}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
@@ -503,8 +503,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryTeamFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3929}
-  /// [google.cloud.dataform.v1.QueryTeamFolderContentsResponse.TeamFolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3974}
+  /// [google.cloud.dataform.v1.QueryTeamFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3962}
+  /// [google.cloud.dataform.v1.QueryTeamFolderContentsResponse.TeamFolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4007}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
@@ -546,8 +546,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.SearchTeamFoldersRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3994}
-  /// [google.cloud.dataform.v1.SearchTeamFoldersResponse.TeamFolderSearchResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4037}
+  /// [google.cloud.dataform.v1.SearchTeamFoldersRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4027}
+  /// [google.cloud.dataform.v1.SearchTeamFoldersResponse.TeamFolderSearchResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4070}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
@@ -574,8 +574,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3527}
-  /// [google.cloud.dataform.v1.GetFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3605}
+  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3560}
+  /// [google.cloud.dataform.v1.GetFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3638}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Folder> GetFolder(
@@ -604,8 +604,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3527}
-  /// [google.cloud.dataform.v1.GetFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3605}
+  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3560}
+  /// [google.cloud.dataform.v1.GetFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3638}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Folder> GetFolder(
@@ -632,8 +632,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3575}
-  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3527}
+  /// [google.cloud.dataform.v1.CreateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3608}
+  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3560}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Folder> CreateFolder(
@@ -663,8 +663,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3575}
-  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3527}
+  /// [google.cloud.dataform.v1.CreateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3608}
+  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3560}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Folder> CreateFolder(
@@ -693,8 +693,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3527}
-  /// [google.cloud.dataform.v1.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3614}
+  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3560}
+  /// [google.cloud.dataform.v1.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3647}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Folder> UpdateFolder(
@@ -724,8 +724,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3527}
-  /// [google.cloud.dataform.v1.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3614}
+  /// [google.cloud.dataform.v1.Folder]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3560}
+  /// [google.cloud.dataform.v1.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3647}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Folder> UpdateFolder(
@@ -748,7 +748,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3627}
+  /// [google.cloud.dataform.v1.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3660}
   ///
   // clang-format on
   Status DeleteFolder(std::string const& name, Options opts = {});
@@ -774,7 +774,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3627}
+  /// [google.cloud.dataform.v1.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3660}
   ///
   // clang-format on
   Status DeleteFolder(
@@ -815,8 +815,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3677}
-  /// [google.cloud.dataform.v1.DeleteFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3636}
+  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3710}
+  /// [google.cloud.dataform.v1.DeleteFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3669}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
@@ -867,8 +867,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3677}
-  /// [google.cloud.dataform.v1.DeleteFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3636}
+  /// [google.cloud.dataform.v1.DeleteFolderTreeMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3710}
+  /// [google.cloud.dataform.v1.DeleteFolderTreeRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3669}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
@@ -933,8 +933,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3718}
-  /// [google.cloud.dataform.v1.QueryFolderContentsResponse.FolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3761}
+  /// [google.cloud.dataform.v1.QueryFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3751}
+  /// [google.cloud.dataform.v1.QueryFolderContentsResponse.FolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3794}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
@@ -973,8 +973,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3718}
-  /// [google.cloud.dataform.v1.QueryFolderContentsResponse.FolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3761}
+  /// [google.cloud.dataform.v1.QueryFolderContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3751}
+  /// [google.cloud.dataform.v1.QueryFolderContentsResponse.FolderContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3794}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
@@ -1013,8 +1013,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryUserRootContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3781}
-  /// [google.cloud.dataform.v1.QueryUserRootContentsResponse.RootContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3825}
+  /// [google.cloud.dataform.v1.QueryUserRootContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3814}
+  /// [google.cloud.dataform.v1.QueryUserRootContentsResponse.RootContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3858}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
@@ -1055,8 +1055,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryUserRootContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3781}
-  /// [google.cloud.dataform.v1.QueryUserRootContentsResponse.RootContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3825}
+  /// [google.cloud.dataform.v1.QueryUserRootContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3814}
+  /// [google.cloud.dataform.v1.QueryUserRootContentsResponse.RootContentsEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3858}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
@@ -1093,8 +1093,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MoveFolderMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4055}
-  /// [google.cloud.dataform.v1.MoveFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3590}
+  /// [google.cloud.dataform.v1.MoveFolderMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4088}
+  /// [google.cloud.dataform.v1.MoveFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3623}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>> MoveFolder(
@@ -1146,8 +1146,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MoveFolderMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4055}
-  /// [google.cloud.dataform.v1.MoveFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3590}
+  /// [google.cloud.dataform.v1.MoveFolderMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4088}
+  /// [google.cloud.dataform.v1.MoveFolderRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3623}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>> MoveFolder(
@@ -1212,7 +1212,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1016}
+  /// [google.cloud.dataform.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1035}
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
   ///
   // clang-format on
@@ -1254,7 +1254,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1016}
+  /// [google.cloud.dataform.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1035}
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
   ///
   // clang-format on
@@ -1280,7 +1280,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1080}
+  /// [google.cloud.dataform.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1099}
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
   ///
   // clang-format on
@@ -1310,7 +1310,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1080}
+  /// [google.cloud.dataform.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1099}
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
   ///
   // clang-format on
@@ -1340,7 +1340,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1091}
+  /// [google.cloud.dataform.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1110}
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
   ///
   // clang-format on
@@ -1372,7 +1372,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1091}
+  /// [google.cloud.dataform.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1110}
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
   ///
   // clang-format on
@@ -1406,7 +1406,7 @@ class DataformClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
-  /// [google.cloud.dataform.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1110}
+  /// [google.cloud.dataform.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1129}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Repository> UpdateRepository(
@@ -1442,7 +1442,7 @@ class DataformClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L825}
-  /// [google.cloud.dataform.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1110}
+  /// [google.cloud.dataform.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1129}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Repository> UpdateRepository(
@@ -1465,7 +1465,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1121}
+  /// [google.cloud.dataform.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1140}
   ///
   // clang-format on
   Status DeleteRepository(std::string const& name, Options opts = {});
@@ -1491,7 +1491,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1121}
+  /// [google.cloud.dataform.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1140}
   ///
   // clang-format on
   Status DeleteRepository(
@@ -1527,8 +1527,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MoveRepositoryMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4094}
-  /// [google.cloud.dataform.v1.MoveRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1062}
+  /// [google.cloud.dataform.v1.MoveRepositoryMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4127}
+  /// [google.cloud.dataform.v1.MoveRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1081}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
@@ -1581,8 +1581,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MoveRepositoryMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4094}
-  /// [google.cloud.dataform.v1.MoveRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1062}
+  /// [google.cloud.dataform.v1.MoveRepositoryMetadata]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L4127}
+  /// [google.cloud.dataform.v1.MoveRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1081}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
@@ -1643,8 +1643,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CommitRepositoryChangesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1141}
-  /// [google.cloud.dataform.v1.CommitRepositoryChangesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1186}
+  /// [google.cloud.dataform.v1.CommitRepositoryChangesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1160}
+  /// [google.cloud.dataform.v1.CommitRepositoryChangesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1205}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -1677,8 +1677,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ReadRepositoryFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1192}
-  /// [google.cloud.dataform.v1.ReadRepositoryFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1210}
+  /// [google.cloud.dataform.v1.ReadRepositoryFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1211}
+  /// [google.cloud.dataform.v1.ReadRepositoryFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1229}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
@@ -1719,8 +1719,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DirectoryEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1724}
-  /// [google.cloud.dataform.v1.QueryRepositoryDirectoryContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1216}
+  /// [google.cloud.dataform.v1.DirectoryEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1743}
+  /// [google.cloud.dataform.v1.QueryRepositoryDirectoryContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1235}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::DirectoryEntry>
@@ -1762,8 +1762,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CommitLogEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1293}
-  /// [google.cloud.dataform.v1.FetchRepositoryHistoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1259}
+  /// [google.cloud.dataform.v1.CommitLogEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1312}
+  /// [google.cloud.dataform.v1.FetchRepositoryHistoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1278}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CommitLogEntry>
@@ -1794,8 +1794,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ComputeRepositoryAccessTokenStatusRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1317}
-  /// [google.cloud.dataform.v1.ComputeRepositoryAccessTokenStatusResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1328}
+  /// [google.cloud.dataform.v1.ComputeRepositoryAccessTokenStatusRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1336}
+  /// [google.cloud.dataform.v1.ComputeRepositoryAccessTokenStatusResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1347}
   ///
   // clang-format on
   StatusOr<
@@ -1828,8 +1828,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.FetchRemoteBranchesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1353}
-  /// [google.cloud.dataform.v1.FetchRemoteBranchesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1364}
+  /// [google.cloud.dataform.v1.FetchRemoteBranchesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1372}
+  /// [google.cloud.dataform.v1.FetchRemoteBranchesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1383}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
@@ -1865,8 +1865,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListWorkspacesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1407}
-  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1370}
+  /// [google.cloud.dataform.v1.ListWorkspacesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1426}
+  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1389}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::Workspace> ListWorkspaces(
@@ -1904,8 +1904,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListWorkspacesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1407}
-  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1370}
+  /// [google.cloud.dataform.v1.ListWorkspacesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1426}
+  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1389}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::Workspace> ListWorkspaces(
@@ -1930,8 +1930,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1453}
-  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1370}
+  /// [google.cloud.dataform.v1.GetWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1472}
+  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1389}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Workspace> GetWorkspace(
@@ -1960,8 +1960,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1453}
-  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1370}
+  /// [google.cloud.dataform.v1.GetWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1472}
+  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1389}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Workspace> GetWorkspace(
@@ -1990,8 +1990,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1464}
-  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1370}
+  /// [google.cloud.dataform.v1.CreateWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1483}
+  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1389}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Workspace> CreateWorkspace(
@@ -2022,8 +2022,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1464}
-  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1370}
+  /// [google.cloud.dataform.v1.CreateWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1483}
+  /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1389}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Workspace> CreateWorkspace(
@@ -2046,7 +2046,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1483}
+  /// [google.cloud.dataform.v1.DeleteWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1502}
   ///
   // clang-format on
   Status DeleteWorkspace(std::string const& name, Options opts = {});
@@ -2072,7 +2072,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1483}
+  /// [google.cloud.dataform.v1.DeleteWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1502}
   ///
   // clang-format on
   Status DeleteWorkspace(
@@ -2102,8 +2102,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.InstallNpmPackagesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1958}
-  /// [google.cloud.dataform.v1.InstallNpmPackagesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1973}
+  /// [google.cloud.dataform.v1.InstallNpmPackagesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1977}
+  /// [google.cloud.dataform.v1.InstallNpmPackagesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1992}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
@@ -2134,8 +2134,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.PullGitCommitsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1503}
-  /// [google.cloud.dataform.v1.PullGitCommitsResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1522}
+  /// [google.cloud.dataform.v1.PullGitCommitsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1522}
+  /// [google.cloud.dataform.v1.PullGitCommitsResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1541}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse> PullGitCommits(
@@ -2165,8 +2165,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.PushGitCommitsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1525}
-  /// [google.cloud.dataform.v1.PushGitCommitsResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1541}
+  /// [google.cloud.dataform.v1.PushGitCommitsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1544}
+  /// [google.cloud.dataform.v1.PushGitCommitsResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1560}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse> PushGitCommits(
@@ -2196,8 +2196,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.FetchFileGitStatusesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1544}
-  /// [google.cloud.dataform.v1.FetchFileGitStatusesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1555}
+  /// [google.cloud.dataform.v1.FetchFileGitStatusesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1563}
+  /// [google.cloud.dataform.v1.FetchFileGitStatusesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1574}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
@@ -2228,8 +2228,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.FetchGitAheadBehindRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1589}
-  /// [google.cloud.dataform.v1.FetchGitAheadBehindResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1605}
+  /// [google.cloud.dataform.v1.FetchGitAheadBehindRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1608}
+  /// [google.cloud.dataform.v1.FetchGitAheadBehindResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1624}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
@@ -2260,8 +2260,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CommitWorkspaceChangesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1614}
-  /// [google.cloud.dataform.v1.CommitWorkspaceChangesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1635}
+  /// [google.cloud.dataform.v1.CommitWorkspaceChangesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1633}
+  /// [google.cloud.dataform.v1.CommitWorkspaceChangesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1654}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
@@ -2292,8 +2292,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ResetWorkspaceChangesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1638}
-  /// [google.cloud.dataform.v1.ResetWorkspaceChangesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1656}
+  /// [google.cloud.dataform.v1.ResetWorkspaceChangesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1657}
+  /// [google.cloud.dataform.v1.ResetWorkspaceChangesResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1675}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
@@ -2324,8 +2324,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.FetchFileDiffRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1659}
-  /// [google.cloud.dataform.v1.FetchFileDiffResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1674}
+  /// [google.cloud.dataform.v1.FetchFileDiffRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1678}
+  /// [google.cloud.dataform.v1.FetchFileDiffResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1693}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse> FetchFileDiff(
@@ -2364,8 +2364,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DirectoryEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1724}
-  /// [google.cloud.dataform.v1.QueryDirectoryContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1680}
+  /// [google.cloud.dataform.v1.DirectoryEntry]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1743}
+  /// [google.cloud.dataform.v1.QueryDirectoryContentsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1699}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::DirectoryEntry>
@@ -2405,8 +2405,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.SearchFilesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1752}
-  /// [google.cloud.dataform.v1.SearchResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1791}
+  /// [google.cloud.dataform.v1.SearchFilesRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1771}
+  /// [google.cloud.dataform.v1.SearchResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1810}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::SearchResult> SearchFiles(
@@ -2436,8 +2436,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MakeDirectoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1815}
-  /// [google.cloud.dataform.v1.MakeDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1830}
+  /// [google.cloud.dataform.v1.MakeDirectoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1834}
+  /// [google.cloud.dataform.v1.MakeDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1849}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse> MakeDirectory(
@@ -2467,8 +2467,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.RemoveDirectoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1833}
-  /// [google.cloud.dataform.v1.RemoveDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1848}
+  /// [google.cloud.dataform.v1.RemoveDirectoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1852}
+  /// [google.cloud.dataform.v1.RemoveDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1867}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
@@ -2500,8 +2500,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MoveDirectoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1851}
-  /// [google.cloud.dataform.v1.MoveDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1870}
+  /// [google.cloud.dataform.v1.MoveDirectoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1870}
+  /// [google.cloud.dataform.v1.MoveDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1889}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse> MoveDirectory(
@@ -2531,8 +2531,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ReadFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1873}
-  /// [google.cloud.dataform.v1.ReadFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1892}
+  /// [google.cloud.dataform.v1.ReadFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1892}
+  /// [google.cloud.dataform.v1.ReadFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1911}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReadFileResponse> ReadFile(
@@ -2562,8 +2562,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.RemoveFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1898}
-  /// [google.cloud.dataform.v1.RemoveFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1913}
+  /// [google.cloud.dataform.v1.RemoveFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1917}
+  /// [google.cloud.dataform.v1.RemoveFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1932}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::RemoveFileResponse> RemoveFile(
@@ -2593,8 +2593,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.MoveFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1916}
-  /// [google.cloud.dataform.v1.MoveFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1935}
+  /// [google.cloud.dataform.v1.MoveFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1935}
+  /// [google.cloud.dataform.v1.MoveFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1954}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::MoveFileResponse> MoveFile(
@@ -2624,8 +2624,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.WriteFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1938}
-  /// [google.cloud.dataform.v1.WriteFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1955}
+  /// [google.cloud.dataform.v1.WriteFileRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1957}
+  /// [google.cloud.dataform.v1.WriteFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1974}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WriteFileResponse> WriteFile(
@@ -2660,8 +2660,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListReleaseConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2062}
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
+  /// [google.cloud.dataform.v1.ListReleaseConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2081}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::ReleaseConfig> ListReleaseConfigs(
@@ -2699,8 +2699,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListReleaseConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2062}
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
+  /// [google.cloud.dataform.v1.ListReleaseConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2081}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::ReleaseConfig> ListReleaseConfigs(
@@ -2725,8 +2725,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2100}
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
+  /// [google.cloud.dataform.v1.GetReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2119}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReleaseConfig> GetReleaseConfig(
@@ -2755,8 +2755,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2100}
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
+  /// [google.cloud.dataform.v1.GetReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2119}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReleaseConfig> GetReleaseConfig(
@@ -2785,8 +2785,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2111}
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
+  /// [google.cloud.dataform.v1.CreateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2130}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReleaseConfig> CreateReleaseConfig(
@@ -2817,8 +2817,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2111}
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
+  /// [google.cloud.dataform.v1.CreateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2130}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReleaseConfig> CreateReleaseConfig(
@@ -2850,8 +2850,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
-  /// [google.cloud.dataform.v1.UpdateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2130}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
+  /// [google.cloud.dataform.v1.UpdateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2149}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReleaseConfig> UpdateReleaseConfig(
@@ -2886,8 +2886,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1976}
-  /// [google.cloud.dataform.v1.UpdateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2130}
+  /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1995}
+  /// [google.cloud.dataform.v1.UpdateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2149}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReleaseConfig> UpdateReleaseConfig(
@@ -2910,7 +2910,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2141}
+  /// [google.cloud.dataform.v1.DeleteReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2160}
   ///
   // clang-format on
   Status DeleteReleaseConfig(std::string const& name, Options opts = {});
@@ -2936,7 +2936,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2141}
+  /// [google.cloud.dataform.v1.DeleteReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2160}
   ///
   // clang-format on
   Status DeleteReleaseConfig(
@@ -2971,8 +2971,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2152}
-  /// [google.cloud.dataform.v1.ListCompilationResultsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2382}
+  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2171}
+  /// [google.cloud.dataform.v1.ListCompilationResultsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2401}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CompilationResult>
@@ -3010,8 +3010,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2152}
-  /// [google.cloud.dataform.v1.ListCompilationResultsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2382}
+  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2171}
+  /// [google.cloud.dataform.v1.ListCompilationResultsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2401}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CompilationResult>
@@ -3037,8 +3037,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2152}
-  /// [google.cloud.dataform.v1.GetCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2428}
+  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2171}
+  /// [google.cloud.dataform.v1.GetCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2447}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CompilationResult> GetCompilationResult(
@@ -3067,8 +3067,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2152}
-  /// [google.cloud.dataform.v1.GetCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2428}
+  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2171}
+  /// [google.cloud.dataform.v1.GetCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2447}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CompilationResult> GetCompilationResult(
@@ -3095,8 +3095,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2152}
-  /// [google.cloud.dataform.v1.CreateCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2439}
+  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2171}
+  /// [google.cloud.dataform.v1.CreateCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2458}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CompilationResult>
@@ -3128,8 +3128,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2152}
-  /// [google.cloud.dataform.v1.CreateCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2439}
+  /// [google.cloud.dataform.v1.CompilationResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2171}
+  /// [google.cloud.dataform.v1.CreateCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2458}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CompilationResult>
@@ -3170,8 +3170,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CompilationResultAction]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2493}
-  /// [google.cloud.dataform.v1.QueryCompilationResultActionsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2813}
+  /// [google.cloud.dataform.v1.CompilationResultAction]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2512}
+  /// [google.cloud.dataform.v1.QueryCompilationResultActionsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2832}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CompilationResultAction>
@@ -3207,8 +3207,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListWorkflowConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2984}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.ListWorkflowConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3017}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowConfig> ListWorkflowConfigs(
@@ -3246,8 +3246,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListWorkflowConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2984}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.ListWorkflowConfigsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3017}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowConfig> ListWorkflowConfigs(
@@ -3272,8 +3272,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3022}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.GetWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3055}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowConfig> GetWorkflowConfig(
@@ -3302,8 +3302,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3022}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.GetWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3055}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowConfig> GetWorkflowConfig(
@@ -3332,8 +3332,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3033}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.CreateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3066}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowConfig> CreateWorkflowConfig(
@@ -3364,8 +3364,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3033}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.CreateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3066}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowConfig> CreateWorkflowConfig(
@@ -3397,8 +3397,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.UpdateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3052}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.UpdateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3085}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowConfig> UpdateWorkflowConfig(
@@ -3433,8 +3433,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.UpdateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3052}
-  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2852}
+  /// [google.cloud.dataform.v1.UpdateWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3085}
+  /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2871}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowConfig> UpdateWorkflowConfig(
@@ -3457,7 +3457,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3063}
+  /// [google.cloud.dataform.v1.DeleteWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3096}
   ///
   // clang-format on
   Status DeleteWorkflowConfig(std::string const& name, Options opts = {});
@@ -3483,7 +3483,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3063}
+  /// [google.cloud.dataform.v1.DeleteWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3096}
   ///
   // clang-format on
   Status DeleteWorkflowConfig(
@@ -3518,8 +3518,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListWorkflowInvocationsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3173}
-  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3074}
+  /// [google.cloud.dataform.v1.ListWorkflowInvocationsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3206}
+  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3107}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
@@ -3557,8 +3557,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.ListWorkflowInvocationsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3173}
-  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3074}
+  /// [google.cloud.dataform.v1.ListWorkflowInvocationsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3206}
+  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3107}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
@@ -3584,8 +3584,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3219}
-  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3074}
+  /// [google.cloud.dataform.v1.GetWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3252}
+  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3107}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
@@ -3614,8 +3614,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.GetWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3219}
-  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3074}
+  /// [google.cloud.dataform.v1.GetWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3252}
+  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3107}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
@@ -3643,8 +3643,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3230}
-  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3074}
+  /// [google.cloud.dataform.v1.CreateWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3263}
+  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3107}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
@@ -3677,8 +3677,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CreateWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3230}
-  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3074}
+  /// [google.cloud.dataform.v1.CreateWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3263}
+  /// [google.cloud.dataform.v1.WorkflowInvocation]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3107}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
@@ -3703,7 +3703,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3246}
+  /// [google.cloud.dataform.v1.DeleteWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3279}
   ///
   // clang-format on
   Status DeleteWorkflowInvocation(std::string const& name, Options opts = {});
@@ -3729,7 +3729,7 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.DeleteWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3246}
+  /// [google.cloud.dataform.v1.DeleteWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3279}
   ///
   // clang-format on
   Status DeleteWorkflowInvocation(
@@ -3760,8 +3760,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.CancelWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3257}
-  /// [google.cloud.dataform.v1.CancelWorkflowInvocationResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3268}
+  /// [google.cloud.dataform.v1.CancelWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3290}
+  /// [google.cloud.dataform.v1.CancelWorkflowInvocationResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3301}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
@@ -3802,8 +3802,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.QueryWorkflowInvocationActionsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3444}
-  /// [google.cloud.dataform.v1.WorkflowInvocationAction]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3271}
+  /// [google.cloud.dataform.v1.QueryWorkflowInvocationActionsRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3477}
+  /// [google.cloud.dataform.v1.WorkflowInvocationAction]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3304}
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
@@ -3830,8 +3830,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3479}
-  /// [google.cloud.dataform.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3507}
+  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3512}
+  /// [google.cloud.dataform.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3540}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Config> GetConfig(
@@ -3860,8 +3860,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3479}
-  /// [google.cloud.dataform.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3507}
+  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3512}
+  /// [google.cloud.dataform.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3540}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Config> GetConfig(
@@ -3892,8 +3892,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3479}
-  /// [google.cloud.dataform.v1.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3516}
+  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3512}
+  /// [google.cloud.dataform.v1.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3549}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
@@ -3928,8 +3928,8 @@ class DataformClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3479}
-  /// [google.cloud.dataform.v1.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3516}
+  /// [google.cloud.dataform.v1.Config]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3512}
+  /// [google.cloud.dataform.v1.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L3549}
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(

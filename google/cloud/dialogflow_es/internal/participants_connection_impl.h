@@ -74,6 +74,18 @@ class ParticipantsConnectionImpl
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
   AsyncStreamingAnalyzeContent() override;
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+  AsyncBidiStreamingAnalyzeContent() override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>>
+  AsyncStreamingReactiveCompanionSuggestions() override;
+
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const&
                       request) override;

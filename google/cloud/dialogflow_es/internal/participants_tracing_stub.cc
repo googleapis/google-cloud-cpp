@@ -112,6 +112,45 @@ ParticipantsTracingStub::AsyncStreamingAnalyzeContent(
       std::move(context), std::move(stream), std::move(span));
 }
 
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsTracingStub::AsyncBidiStreamingAnalyzeContent(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
+                                     "BidiStreamingAnalyzeContent");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream =
+      child_->AsyncBidiStreamingAnalyzeContent(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsTracingStub::AsyncStreamingReactiveCompanionSuggestions(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
+                                     "StreamingReactiveCompanionSuggestions");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncStreamingReactiveCompanionSuggestions(
+      cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsTracingStub::SuggestArticles(
     grpc::ClientContext& context, Options const& options,

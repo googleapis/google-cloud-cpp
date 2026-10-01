@@ -162,6 +162,25 @@ ParticipantsConnectionImpl::AsyncStreamingAnalyzeContent() {
       internal::SaveCurrentOptions());
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsConnectionImpl::AsyncBidiStreamingAnalyzeContent() {
+  return stub_->AsyncBidiStreamingAnalyzeContent(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsConnectionImpl::AsyncStreamingReactiveCompanionSuggestions() {
+  return stub_->AsyncStreamingReactiveCompanionSuggestions(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsConnectionImpl::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
