@@ -86,6 +86,21 @@ ParticipantsTracingConnection::AsyncStreamingAnalyzeContent() {
   return child_->AsyncStreamingAnalyzeContent();
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsTracingConnection::AsyncBidiStreamingAnalyzeContent() {
+  return child_->AsyncBidiStreamingAnalyzeContent();
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsTracingConnection::AsyncStreamingReactiveCompanionSuggestions() {
+  return child_->AsyncStreamingReactiveCompanionSuggestions();
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsTracingConnection::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {

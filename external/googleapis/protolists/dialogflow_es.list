@@ -4,6 +4,7 @@
 @googleapis//google/cloud/dialogflow/v2:audio_config.proto
 @googleapis//google/cloud/dialogflow/v2:ces_app.proto
 @googleapis//google/cloud/dialogflow/v2:ces_tool.proto
+@googleapis//google/cloud/dialogflow/v2:companion_agent.proto
 @googleapis//google/cloud/dialogflow/v2:context.proto
 @googleapis//google/cloud/dialogflow/v2:conversation.proto
 @googleapis//google/cloud/dialogflow/v2:conversation_dataset.proto
@@ -18,6 +19,7 @@
 @googleapis//google/cloud/dialogflow/v2:gcs.proto
 @googleapis//google/cloud/dialogflow/v2:generator.proto
 @googleapis//google/cloud/dialogflow/v2:generator_evaluation.proto
+@googleapis//google/cloud/dialogflow/v2:grounding.proto
 @googleapis//google/cloud/dialogflow/v2:human_agent_assistant_event.proto
 @googleapis//google/cloud/dialogflow/v2:intent.proto
 @googleapis//google/cloud/dialogflow/v2:knowledge_base.proto

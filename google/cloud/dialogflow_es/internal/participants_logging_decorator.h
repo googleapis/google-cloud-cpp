@@ -74,6 +74,24 @@ class ParticipantsLogging : public ParticipantsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) override;
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+  AsyncBidiStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>>
+  AsyncStreamingReactiveCompanionSuggestions(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(grpc::ClientContext& context, Options const& options,
                   google::cloud::dialogflow::v2::SuggestArticlesRequest const&

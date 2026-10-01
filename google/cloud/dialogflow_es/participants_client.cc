@@ -154,6 +154,23 @@ ParticipantsClient::AsyncStreamingAnalyzeContent(Options opts) {
   return connection_->AsyncStreamingAnalyzeContent();
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsClient::AsyncBidiStreamingAnalyzeContent(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncBidiStreamingAnalyzeContent();
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsClient::AsyncStreamingReactiveCompanionSuggestions(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncStreamingReactiveCompanionSuggestions();
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsClient::SuggestArticles(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

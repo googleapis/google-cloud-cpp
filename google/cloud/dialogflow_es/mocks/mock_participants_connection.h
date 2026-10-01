@@ -80,6 +80,20 @@ class MockParticipantsConnection
       AsyncStreamingAnalyzeContent, (), (override));
 
   MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+           google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+           google::cloud::dialogflow::v2::
+               BidiStreamingAnalyzeContentResponse>>),
+      AsyncBidiStreamingAnalyzeContent, (), (override));
+
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::cloud::dialogflow::v2::
+                       StreamingReactiveCompanionSuggestionsRequest,
+                   google::cloud::dialogflow::v2::
+                       StreamingReactiveCompanionSuggestionsResponse>>),
+              AsyncStreamingReactiveCompanionSuggestions, (), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>,
       SuggestArticles,
       (google::cloud::dialogflow::v2::SuggestArticlesRequest const& request),

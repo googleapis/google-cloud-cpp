@@ -76,6 +76,24 @@ class ParticipantsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) = 0;
 
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+  AsyncBidiStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>>
+  AsyncStreamingReactiveCompanionSuggestions(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
+
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(
       grpc::ClientContext& context, Options const& options,
@@ -165,6 +183,24 @@ class DefaultParticipantsStub : public ParticipantsStub {
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
   AsyncStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+  AsyncBidiStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>>
+  AsyncStreamingReactiveCompanionSuggestions(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) override;

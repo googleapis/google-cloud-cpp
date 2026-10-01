@@ -107,6 +107,31 @@ ParticipantsMetadata::AsyncStreamingAnalyzeContent(
                                               std::move(options));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsMetadata::AsyncBidiStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncBidiStreamingAnalyzeContent(cq, std::move(context),
+                                                  std::move(options));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsMetadata::AsyncStreamingReactiveCompanionSuggestions(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncStreamingReactiveCompanionSuggestions(
+      cq, std::move(context), std::move(options));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsMetadata::SuggestArticles(
     grpc::ClientContext& context, Options const& options,

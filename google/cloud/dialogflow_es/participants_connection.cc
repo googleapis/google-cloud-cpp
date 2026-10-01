@@ -81,6 +81,31 @@ ParticipantsConnection::AsyncStreamingAnalyzeContent() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsConnection::AsyncBidiStreamingAnalyzeContent() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+          google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsConnection::AsyncStreamingReactiveCompanionSuggestions() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::dialogflow::v2::
+              StreamingReactiveCompanionSuggestionsRequest,
+          google::cloud::dialogflow::v2::
+              StreamingReactiveCompanionSuggestionsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsConnection::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const&) {

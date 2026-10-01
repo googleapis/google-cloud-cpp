@@ -110,6 +110,42 @@ DefaultParticipantsStub::AsyncStreamingAnalyzeContent(
       });
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+DefaultParticipantsStub::AsyncBidiStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncBidiStreamingAnalyzeContent(context, cq);
+      });
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+DefaultParticipantsStub::AsyncStreamingReactiveCompanionSuggestions(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamingReactiveCompanionSuggestions(
+            context, cq);
+      });
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 DefaultParticipantsStub::SuggestArticles(
     grpc::ClientContext& context, Options const&,

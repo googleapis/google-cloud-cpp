@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.Participant]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
 ///
 class ParticipantsClient {
  public:
@@ -109,8 +109,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L375}
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L388}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
@@ -141,8 +141,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L375}
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L388}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
@@ -168,8 +168,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GetParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L392}
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+  /// [google.cloud.dialogflow.v2.GetParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L405}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
@@ -198,8 +198,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GetParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L392}
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+  /// [google.cloud.dialogflow.v2.GetParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L405}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
@@ -234,8 +234,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L406}
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L419}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
@@ -273,8 +273,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L406}
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L419}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
@@ -300,8 +300,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L439}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L452}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
@@ -331,8 +331,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L439}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L204}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L452}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
@@ -364,8 +364,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L450}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L511}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L463}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L524}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
@@ -398,8 +398,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L450}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L511}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L463}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L524}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
@@ -432,8 +432,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L450}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L511}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L463}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L524}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
@@ -469,8 +469,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L450}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L511}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L463}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L524}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
@@ -513,14 +513,78 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L607}
-  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L732}
+  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L620}
+  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L749}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
   AsyncStreamingAnalyzeContent(Options opts = {});
+
+  // clang-format off
+  ///
+  /// Bidirectional endless streaming version of
+  /// [StreamingAnalyzeContent][google.cloud.dialogflow.v2.Participants.StreamingAnalyzeContent].
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.dialogflow.v2.BidiStreamingAnalyzeContentRequest]) and response messages
+  ///     ([google.cloud.dialogflow.v2.BidiStreamingAnalyzeContentResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.BidiStreamingAnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1990}
+  /// [google.cloud.dialogflow.v2.BidiStreamingAnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L2119}
+  /// [google.cloud.dialogflow.v2.Participants.StreamingAnalyzeContent]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L131}
+  ///
+  // clang-format on
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+  AsyncBidiStreamingAnalyzeContent(Options opts = {});
+
+  // clang-format off
+  ///
+  /// External streaming API for direct human-agent-to-bot chats.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.dialogflow.v2.StreamingReactiveCompanionSuggestionsRequest]) and response messages
+  ///     ([google.cloud.dialogflow.v2.StreamingReactiveCompanionSuggestionsResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.StreamingReactiveCompanionSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1883}
+  /// [google.cloud.dialogflow.v2.StreamingReactiveCompanionSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1914}
+  ///
+  // clang-format on
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>>
+  AsyncStreamingReactiveCompanionSuggestions(Options opts = {});
 
   // clang-format off
   ///
@@ -542,8 +606,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L789}
-  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L824}
+  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L806}
+  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L841}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
@@ -573,8 +637,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L789}
-  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L824}
+  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L806}
+  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L841}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
@@ -602,8 +666,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L846}
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L880}
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L863}
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L897}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
@@ -633,8 +697,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L846}
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L880}
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L863}
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L897}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
@@ -662,8 +726,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L935}
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L968}
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1052}
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1085}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
@@ -693,8 +757,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L935}
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L968}
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1052}
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1085}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
@@ -725,8 +789,8 @@ class ParticipantsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.SuggestKnowledgeAssistRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1301}
-  /// [google.cloud.dialogflow.v2.SuggestKnowledgeAssistResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1338}
+  /// [google.cloud.dialogflow.v2.SuggestKnowledgeAssistRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1422}
+  /// [google.cloud.dialogflow.v2.SuggestKnowledgeAssistResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L1459}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>

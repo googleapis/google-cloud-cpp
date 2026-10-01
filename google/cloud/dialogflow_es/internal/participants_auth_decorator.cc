@@ -99,6 +99,48 @@ ParticipantsAuth::AsyncStreamingAnalyzeContent(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>>
+ParticipantsAuth::AsyncBidiStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::BidiStreamingAnalyzeContentResponse>;
+
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncBidiStreamingAnalyzeContent(cq, std::move(ctx), options);
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingReactiveCompanionSuggestionsRequest,
+    google::cloud::dialogflow::v2::
+        StreamingReactiveCompanionSuggestionsResponse>>
+ParticipantsAuth::AsyncStreamingReactiveCompanionSuggestions(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsRequest,
+      google::cloud::dialogflow::v2::
+          StreamingReactiveCompanionSuggestionsResponse>;
+
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingReactiveCompanionSuggestions(cq, std::move(ctx),
+                                                             options);
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsAuth::SuggestArticles(
     grpc::ClientContext& context, Options const& options,
