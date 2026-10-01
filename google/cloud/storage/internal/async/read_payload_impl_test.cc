@@ -116,7 +116,7 @@ TEST(ReadPayload, AccumulateAppendsData) {
   EXPECT_EQ(actual.offset(), 1024);
 }
 
-// b/565852217: a 0-byte payload with metadata must survive the EOF payload.
+// A 0-byte payload with metadata must survive the EOF payload.
 TEST(ReadPayload, AccumulateEmptyWithMetadataKeepsMetadata) {
   google::storage::v2::Object const resource = MakeTestObject();
   storage::ReadPayload actual =
@@ -127,8 +127,8 @@ TEST(ReadPayload, AccumulateEmptyWithMetadataKeepsMetadata) {
   EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
 }
 
-// b/565852217: a 0-byte payload with metadata followed by data keeps the
-// metadata, offset, and object hashes from the first payload.
+// A 0-byte payload with metadata followed by data keeps the metadata, offset,
+// and object hashes from the first payload.
 TEST(ReadPayload, AccumulateEmptyWithMetadataThenData) {
   google::storage::v2::Object const resource = MakeTestObject();
   storage::ReadPayload actual = ReadPayloadImpl::Make(absl::Cord())

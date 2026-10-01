@@ -160,7 +160,7 @@ google::storage::v2::Object MakeZeroByteTestObject() {
 }
 }  // namespace
 
-// b/565852217: reading a 0-byte object must preserve the object metadata.
+// Reading a 0-byte object must preserve the object metadata.
 TEST(ReadAll, ZeroBytePayloadPreservesMetadata) {
   auto mock = std::make_unique<MockAsyncReaderConnection>();
   EXPECT_CALL(*mock, Read)
@@ -179,8 +179,8 @@ TEST(ReadAll, ZeroBytePayloadPreservesMetadata) {
               Optional(IsProtoEqual(MakeZeroByteTestObject())));
 }
 
-// b/565852217: an empty first payload with metadata, followed by data, must
-// preserve both the metadata and the data.
+// An empty first payload with metadata, followed by data, must preserve both
+// the metadata and the data.
 TEST(ReadAll, EmptyPayloadWithMetadataThenData) {
   auto mock = std::make_unique<MockAsyncReaderConnection>();
   EXPECT_CALL(*mock, Read)

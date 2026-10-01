@@ -602,8 +602,6 @@ TEST_F(AsyncConnectionImplTest, ReadObjectSilentWhenRetriesAreDisabled) {
   EXPECT_THAT(RetryRecords(log), IsEmpty());
 }
 
-// Only one test for ReadObjectRange(). The tests for `ReadAll()` and
-// `ReadObject()` cover most other cases.
 TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
@@ -627,8 +625,8 @@ TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
   EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
 }
 
-// b/565852217: `ReadObjectRange()` on a 0-byte object must return the object
-// metadata sent by the service, even though there is no data.
+// `ReadObjectRange()` on a 0-byte object must return the object metadata sent
+// by the service, even though there is no data.
 TEST_F(AsyncConnectionImplTest, ReadObjectRangeZeroByteObjectKeepsMetadata) {
   auto constexpr kMetadata = R"pb(
     bucket: "projects/_/buckets/test-bucket"
