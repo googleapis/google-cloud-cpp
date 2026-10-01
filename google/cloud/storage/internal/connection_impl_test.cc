@@ -824,6 +824,7 @@ ReadSourceResult MakeReadResult(std::string const& payload, char* buf) {
 }
 
 TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
+  GTEST_SKIP() << "Skipping test that is leaking mock objects #16522";
   auto dispatched = std::make_unique<MockCounter<std::uint64_t>>();
   auto won = std::make_unique<MockCounter<std::uint64_t>>();
   EXPECT_CALL(*dispatched, Add(std::uint64_t{1})).Times(1);
