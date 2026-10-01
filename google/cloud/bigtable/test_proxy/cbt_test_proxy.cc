@@ -242,6 +242,9 @@ grpc::Status CbtTestProxy::BulkMutateRows(
     entry.set_index(failure.original_index());
     *entry.mutable_status() = ToRpcStatus(failure.status());
   }
+  if (!failed.empty()) {
+    *response->mutable_status() = ToRpcStatus(failed.front().status());
+  }
   return grpc::Status();
 }
 

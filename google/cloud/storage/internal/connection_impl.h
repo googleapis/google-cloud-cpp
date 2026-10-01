@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/hedging_thread_pool.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/object_read_stream.h"
@@ -190,6 +191,7 @@ class StorageConnectionImpl
   Options options_;
   std::shared_ptr<ThreadPool> read_pool_;
   std::shared_ptr<HedgingThreadPool> hedge_pool_;
+  std::shared_ptr<HedgedReadMetrics> hedged_read_metrics_;
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 

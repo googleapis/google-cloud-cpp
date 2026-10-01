@@ -44,6 +44,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * resuming from the stream's current offset. This reduces tail latency at the
  * cost of additional requests.
  *
+ * The client records two OpenTelemetry counters through the global meter
+ * provider in effect when the client is created:
+ * `storage.read_hedging.hedges_dispatched`, the number of hedged requests
+ * issued, and `storage.read_hedging.hedge_won`, the number of reads completed
+ * by a hedged request instead of the original one. Nothing is recorded unless
+ * the application installs a meter provider before creating the client.
+ *
  * @ingroup storage-options
  */
 struct EnableReadHedgingOption {
@@ -70,6 +77,22 @@ struct ReadHedgeRateLimitOption {
  * @ingroup storage-options
  */
 struct MaxConcurrentHedgesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * The maximum total number of hedged requests over the life of the connection.
+ *
+ * Once this many hedges have been sent, the connection stops hedging and serves
+ * every later read with the primary request only. This bounds the extra load
+ * hedging can add when a VM or the service is degraded, where most reads are
+ * slow and hedging them only adds requests without making them faster.
+ *
+ * The default is 0, meaning no limit.
+ *
+ * @ingroup storage-options
+ */
+struct MaxTotalHedgesOption {
   using Type = std::int64_t;
 };
 
@@ -533,6 +556,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     storage_experimental::EnableReadHedgingOption,
     storage_experimental::ReadHedgeRateLimitOption,
     storage_experimental::MaxConcurrentHedgesOption,
+    storage_experimental::MaxTotalHedgesOption,
     storage_experimental::MaximumHedgeBufferOption,
     storage_experimental::ReadHedgeDelayOption,
     storage_experimental::MaxReadHedgesOption,

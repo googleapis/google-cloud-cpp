@@ -55,6 +55,53 @@ AdviceClient::CalendarMode(
   return connection_->CalendarMode(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+AdviceClient::Capacity(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::CapacityAdviceRequest const&
+        capacity_advice_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::advice::v1::CapacityRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_capacity_advice_request_resource() =
+      capacity_advice_request_resource;
+  return connection_->Capacity(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
+AdviceClient::Capacity(
+    google::cloud::cpp::compute::advice::v1::CapacityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Capacity(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+AdviceClient::CapacityHistory(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::CapacityHistoryRequest const&
+        capacity_history_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_capacity_history_request_resource() =
+      capacity_history_request_resource;
+  return connection_->CapacityHistory(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
+AdviceClient::CapacityHistory(
+    google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CapacityHistory(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_advice_v1
 }  // namespace cloud

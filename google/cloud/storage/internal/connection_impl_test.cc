@@ -19,13 +19,20 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/metrics/provider.h>
+#include <algorithm>
+#include <cstdint>
 #include <functional>
+#include <future>
 #include <memory>
 #include <string>
+#include <thread>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -38,10 +45,15 @@ using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::MockCounter;
+using ::google::cloud::testing_util::MockMeter;
+using ::google::cloud::testing_util::MockMeterProvider;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
+using ::testing::ByMove;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Property;
@@ -784,6 +796,129 @@ TEST(RetryClientTest, ReadObjectPinsGeneration) {
                     EXPECT_EQ(64, req.GetOption<ReadFromOffset>().value_or(0));
                   }),
               IsOk());
+}
+
+// Installs a global meter provider for the lifetime of this object, and
+// restores the previous one when it goes out of scope.
+class ScopedMeterProvider {
+ public:
+  explicit ScopedMeterProvider(
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::MeterProvider> const& provider)
+      : previous_(opentelemetry::metrics::Provider::GetMeterProvider()) {
+    opentelemetry::metrics::Provider::SetMeterProvider(provider);
+  }
+  ~ScopedMeterProvider() {
+    opentelemetry::metrics::Provider::SetMeterProvider(previous_);
+  }
+
+ private:
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider>
+      previous_;
+};
+
+ReadSourceResult MakeReadResult(std::string const& payload, char* buf) {
+  std::copy(payload.begin(), payload.end(), buf);
+  return ReadSourceResult{payload.size(),
+                          HttpResponse{HttpStatusCode::kOk, {}, {}}};
+}
+
+TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
+  auto dispatched = std::make_unique<MockCounter<std::uint64_t>>();
+  auto won = std::make_unique<MockCounter<std::uint64_t>>();
+  EXPECT_CALL(*dispatched, Add(std::uint64_t{1})).Times(1);
+  EXPECT_CALL(*won, Add(std::uint64_t{1})).Times(1);
+
+  opentelemetry::nostd::shared_ptr<MockMeter> meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*meter, CreateUInt64Counter(
+                          Eq("storage.read_hedging.hedges_dispatched"), _, _))
+      .WillOnce(Return(ByMove(opentelemetry::nostd::unique_ptr<
+                              opentelemetry::metrics::Counter<std::uint64_t>>(
+          dispatched.release()))));
+  EXPECT_CALL(*meter,
+              CreateUInt64Counter(Eq("storage.read_hedging.hedge_won"), _, _))
+      .WillOnce(Return(ByMove(
+          opentelemetry::nostd::unique_ptr<
+              opentelemetry::metrics::Counter<std::uint64_t>>(won.release()))));
+  auto provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*provider, GetMeter).WillOnce(Return(meter));
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider>
+      global_provider{
+          std::shared_ptr<opentelemetry::metrics::MeterProvider>(provider)};
+  ScopedMeterProvider const scoped_provider{global_provider};
+
+  // A single read thread, so the first read tells us which thread opens every
+  // primary attempt. Any other thread is running a hedge.
+  auto primary_thread = std::make_shared<std::thread::id>();
+  auto unblock_primary = std::make_shared<std::promise<void>>();
+  auto primary_closed = std::make_shared<std::promise<void>>();
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).Times(AtLeast(0));
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([primary_thread](auto&, auto const&,
+                                 ReadObjectRangeRequest const&) {
+        *primary_thread = std::this_thread::get_id();
+        auto source = std::make_unique<testing::MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+          return MakeReadResult("warm-up", buf);
+        });
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+      })
+      .WillRepeatedly([primary_thread, unblock_primary, primary_closed](
+                          auto&, auto const&, ReadObjectRangeRequest const&) {
+        auto source = std::make_unique<testing::MockObjectReadSource>();
+        if (std::this_thread::get_id() == *primary_thread) {
+          EXPECT_CALL(*source, Read)
+              .WillOnce([unblock_primary](char* buf, std::size_t) {
+                unblock_primary->get_future().wait();
+                return MakeReadResult("slow", buf);
+              });
+          EXPECT_CALL(*source, Close).WillOnce([primary_closed] {
+            primary_closed->set_value();
+            return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
+          });
+        } else {
+          EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+            return MakeReadResult("hedge", buf);
+          });
+        }
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+      });
+
+  auto client = StorageConnectionImpl::Create(
+      std::move(mock),
+      BasicTestPolicies()
+          .set<storage_experimental::EnableReadHedgingOption>(true)
+          .set<storage_experimental::MaxReadHedgesOption>(1)
+          .set<storage_experimental::MaximumHedgeBufferOption>(1024)
+          .set<storage_experimental::ReadThreadPoolSizeOption>(1));
+  std::vector<char> buffer(100);
+
+  // Primary answers at once, nothing is hedged.
+  {
+    google::cloud::internal::OptionsSpan const span(
+        client->options().set<storage_experimental::ReadHedgeDelayOption>(
+            std::chrono::seconds(30)));
+    StatusOr<std::unique_ptr<ObjectReadSource>> source =
+        client->ReadObject(ReadObjectRangeRequest("test-bucket", "warm-up"));
+    ASSERT_THAT(source, IsOk());
+    ASSERT_THAT((*source)->Read(buffer.data(), buffer.size()), IsOk());
+  }
+
+  // Primary stalls, the hedge wins.
+  google::cloud::internal::OptionsSpan const span(
+      client->options().set<storage_experimental::ReadHedgeDelayOption>(
+          std::chrono::milliseconds(1)));
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  StatusOr<ReadSourceResult> result =
+      (*source)->Read(buffer.data(), buffer.size());
+  unblock_primary->set_value();
+  primary_closed->get_future().wait();
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
 }
 
 }  // namespace

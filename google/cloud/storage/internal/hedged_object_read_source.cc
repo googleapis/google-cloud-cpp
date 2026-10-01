@@ -27,6 +27,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 namespace {
 
 // The number of races a single stream may hedge, as a multiple of
@@ -42,6 +43,7 @@ struct RaceResult {
   std::unique_ptr<ObjectReadSource> source;
   std::unique_ptr<char[]> buffer;
   std::size_t buffer_capacity = 0;
+  bool is_primary = false;
 };
 
 // Shared between the caller, which schedules the attempts and waits for the
@@ -171,7 +173,8 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
     return;
   }
   state->promise.set_value(RaceResult{std::move(result), std::move(child),
-                                      std::move(buffer), buffer_capacity});
+                                      std::move(buffer), buffer_capacity,
+                                      is_primary});
 }
 
 }  // namespace
@@ -180,7 +183,7 @@ HedgedObjectReadSource::HedgedObjectReadSource(
     std::shared_ptr<ThreadPool> read_pool,
     std::shared_ptr<HedgingThreadPool> hedge_pool, ChildFactory child_factory,
     std::chrono::milliseconds delay, int max_hedges, std::size_t max_buffer,
-    Position position)
+    Position position, std::shared_ptr<HedgedReadMetrics> metrics)
     : read_pool_(std::move(read_pool)),
       hedge_pool_(std::move(hedge_pool)),
       child_factory_(
@@ -188,6 +191,7 @@ HedgedObjectReadSource::HedgedObjectReadSource(
       delay_(delay),
       max_hedges_(max_hedges),
       max_buffer_(max_buffer),
+      metrics_(std::move(metrics)),
       current_offset_(position.offset),
       offset_direction_(position.direction),
       end_offset_(position.end_offset),
@@ -199,7 +203,7 @@ HedgedObjectReadSource::HedgedObjectReadSource(
     std::chrono::milliseconds delay, int max_hedges, std::size_t max_buffer)
     : HedgedObjectReadSource(std::move(read_pool), std::move(hedge_pool),
                              std::move(child_factory), delay, max_hedges,
-                             max_buffer, Position{}) {}
+                             max_buffer, Position{}, /*metrics=*/nullptr) {}
 
 bool HedgedObjectReadSource::IsOpen() const {
   if (active_child_) return active_child_->IsOpen();
@@ -227,6 +231,8 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::Read(char* buf,
 
 bool HedgedObjectReadSource::ShouldRace(std::size_t n) const {
   if (max_hedges_ <= 0 || !read_pool_ || !hedge_pool_) return false;
+  // No hedge can be granted, so a race would only add a thread hop and a copy.
+  if (hedge_pool_->IsTotalBudgetSpent()) return false;
   // Racing stages one copy of `n` bytes per attempt on top of the caller's
   // buffer. For a large read that multiplication is worse than the tail
   // latency it avoids.
@@ -319,6 +325,8 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
   for (int hedges_dispatched = 0; hedges_dispatched < max_hedges_;) {
     if (future.wait_for(delay_) != std::future_status::timeout) break;
     if (!hedge_pool_->TryAcquireHedgeToken()) {
+      // The budget will not come back, wait for the attempts in flight.
+      if (hedge_pool_->IsTotalBudgetSpent()) break;
       // When delay_ is 0ms (or token acquisition fails), back off briefly on
       // the future instead of busy-spinning if tokens or concurrency slots are
       // temporarily exhausted.
@@ -345,6 +353,7 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
     }
     ++hedges_dispatched;
     ++total_hedges_;
+    if (metrics_) metrics_->OnHedgeDispatched();
   }
 
   RaceResult race = future.get();
@@ -355,6 +364,7 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
     is_closed_ = true;
     return std::move(race.result).status();
   }
+  if (metrics_ && !race.is_primary) metrics_->OnHedgeWon();
   if (race.result->bytes_received > 0) {
     std::memcpy(buf, race.buffer.get(), race.result->bytes_received);
   }

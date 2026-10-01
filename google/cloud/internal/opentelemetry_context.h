@@ -18,8 +18,8 @@
 #include "google/cloud/version.h"
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/context/runtime_context.h>
-#include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/span.h>
+#include <utility>
 #include <vector>
 
 namespace google {

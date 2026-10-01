@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HEDGED_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HEDGED_OBJECT_READ_SOURCE_H
 
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/hedging_thread_pool.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
@@ -90,13 +91,15 @@ class HedgedObjectReadSource : public ObjectReadSource {
     std::optional<std::int64_t> generation;
   };
 
+  /// @p metrics may be null, in which case nothing is recorded.
   HedgedObjectReadSource(std::shared_ptr<ThreadPool> read_pool,
                          std::shared_ptr<HedgingThreadPool> hedge_pool,
                          ChildFactory child_factory,
                          std::chrono::milliseconds delay, int max_hedges,
-                         std::size_t max_buffer, Position position);
+                         std::size_t max_buffer, Position position,
+                         std::shared_ptr<HedgedReadMetrics> metrics);
 
-  /// A stream that starts at the beginning of the object.
+  /// A stream that starts at the beginning of the object, without metrics.
   HedgedObjectReadSource(std::shared_ptr<ThreadPool> read_pool,
                          std::shared_ptr<HedgingThreadPool> hedge_pool,
                          ChildFactory child_factory,
@@ -123,6 +126,7 @@ class HedgedObjectReadSource : public ObjectReadSource {
   std::chrono::milliseconds delay_;
   int max_hedges_;
   std::size_t max_buffer_;
+  std::shared_ptr<HedgedReadMetrics> metrics_;
 
   std::int64_t current_offset_;
   OffsetDirection offset_direction_;
