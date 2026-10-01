@@ -196,10 +196,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "3bf3a9d3a90a10d94e0bebbfe6eabee9fd38cdc72397a7f48fc7059290cc2453",
+        sha256 = "4306d89e9541b5ce31108c2bd34c319dbfd6589a272dcbdc04dccdd89ff009d9",
         urls = [
-            "https://mirror.bazel.build/github.com/bazel-contrib/rules_go/releases/download/v0.64.0/rules_go-v0.64.0.zip",
-            "https://github.com/bazel-contrib/rules_go/releases/download/v0.64.0/rules_go-v0.64.0.zip",
+            "https://mirror.bazel.build/github.com/bazel-contrib/rules_go/releases/download/v0.64.1/rules_go-v0.64.1.zip",
+            "https://github.com/bazel-contrib/rules_go/releases/download/v0.64.1/rules_go-v0.64.1.zip",
         ],
         patch_args = ["-p1"],
     )
