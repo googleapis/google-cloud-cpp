@@ -25,7 +25,12 @@
 #include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <cstdint>
+#include <functional>
+#include <memory>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -41,6 +46,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -1310,6 +1316,249 @@ TEST(WriteConnectionResumed, CustomRetryPolicyOption) {
   next.first.set_value(true);
 
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kInvalidArgument));
+}
+
+/// Test case for an operation issued from inside a `Flush()` continuation.
+struct ChainedOpCase {
+  std::string name;
+  std::function<future<Status>(storage::AsyncWriterConnection&)> start_op;
+  std::string expected_call;
+};
+
+class WriterConnectionResumedFlushCallbackTest
+    : public ::testing::TestWithParam<ChainedOpCase> {};
+
+/// @test Verify that an operation chained from a `Flush()` continuation is
+/// dispatched to the underlying connection before the continuation returns.
+TEST_P(WriterConnectionResumedFlushCallbackTest,
+       ChainedOpDispatchedBeforeCallbackReturns) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  int call_count = 0;
+
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(*mock, Write).WillRepeatedly([&](auto const&) {
+    ++call_count;
+    return sequencer.PushBack("Write").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Flush).WillRepeatedly([&](storage::WritePayload const& p) {
+    ++call_count;
+    auto const size = static_cast<std::int64_t>(p.size());
+    return sequencer.PushBack("Flush").then(
+        [mock_persisted_size, size](auto f) {
+          if (!f.get()) return TransientError();
+          *mock_persisted_size += size;
+          return Status{};
+        });
+  });
+  EXPECT_CALL(*mock, Close).WillRepeatedly([&](auto const&) {
+    ++call_count;
+    return sequencer.PushBack("Close").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Finalize).WillRepeatedly([&](auto const&) {
+    ++call_count;
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return make_status_or(TestObject());
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+  // Use non-zero watermarks so a small `Write()` is dispatched as a `Write`
+  // rather than a `Flush` (the default low-water mark of 0 always flushes).
+  auto options = Options{}
+                     .set<storage::BufferedUploadLwmOption>(16 * 1024)
+                     .set<storage::BufferedUploadHwmOption>(32 * 1024);
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, options);
+
+  auto flush = connection->Flush(TestPayload(1024));
+  ASSERT_EQ(call_count, 1);
+
+  // Chain the next operation from `flush`'s continuation. Because `flush` is
+  // already satisfied when this callback runs, the writer must already be idle
+  // so the chained operation dispatches synchronously (`call_count == 2`)
+  // before the callback returns.
+  future<Status> chained_op;
+  auto callback_done = flush.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    chained_op = GetParam().start_op(*connection);
+    EXPECT_EQ(call_count, 2);
+  });
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(callback_done.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, GetParam().expected_call);
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(chained_op.get());
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    WriteConnectionResumed, WriterConnectionResumedFlushCallbackTest,
+    ::testing::Values(ChainedOpCase{"Flush",
+                                    [](storage::AsyncWriterConnection& c) {
+                                      return c.Flush(TestPayload(1024));
+                                    },
+                                    "Flush"},
+                      ChainedOpCase{"EmptyFlush",
+                                    [](storage::AsyncWriterConnection& c) {
+                                      return c.Flush(storage::WritePayload{});
+                                    },
+                                    "Flush"},
+                      ChainedOpCase{"Write",
+                                    [](storage::AsyncWriterConnection& c) {
+                                      return c.Write(TestPayload(1024));
+                                    },
+                                    "Write"},
+                      ChainedOpCase{"Close",
+                                    [](storage::AsyncWriterConnection& c) {
+                                      return c.Close(storage::WritePayload{});
+                                    },
+                                    "Close"},
+                      ChainedOpCase{"Finalize",
+                                    [](storage::AsyncWriterConnection& c) {
+                                      return c.Finalize(storage::WritePayload{})
+                                          .then([](auto f) {
+                                            return f.get().status();
+                                          });
+                                    },
+                                    "Finalize"}),
+    [](::testing::TestParamInfo<ChainedOpCase> const& info) {
+      return info.param.name;
+    });
+
+/// @test Verify that a `Flush()` continuation handing the next `Flush()` to
+/// another thread does not race with `OnQuery()` on `state_`.
+TEST(WriteConnectionResumed, FlushCallbackCrossThreadFlush) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(*mock, Flush).WillRepeatedly([&](storage::WritePayload const& p) {
+    auto const size = static_cast<std::int64_t>(p.size());
+    return sequencer.PushBack("Flush").then(
+        [mock_persisted_size, size](auto f) {
+          if (!f.get()) return TransientError();
+          *mock_persisted_size += size;
+          return Status{};
+        });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto f1 = connection->Flush(TestPayload(1024));
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Flush");
+
+  std::thread worker;
+  future<Status> f2;
+  auto callback_done = f1.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    promise<void> started;
+    worker = std::thread([&] {
+      started.set_value();
+      f2 = connection->Flush(TestPayload(1024));
+    });
+    started.get_future().wait();
+    // Give the worker time to enter the writer before this continuation
+    // returns and `SetFlushed()` restarts the write loop. Joining here would
+    // add a happens-before edge and hide any race from TSAN. The sleep only
+    // makes the interleaving likely: the assertions below hold for any
+    // interleaving, so a slow scheduler reduces race coverage but cannot
+    // make this test fail.
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  });
+  next.first.set_value(true);
+  // Completing the sequencer promise runs the whole chain inline, including
+  // the `f1` continuation, so `worker` is assigned before `set_value()`
+  // returns.
+  ASSERT_TRUE(callback_done.is_ready());
+  worker.join();
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(f2.get());
+}
+
+/// @test Verify that `Flush()` futures complete in the order they were issued,
+/// even if the underlying connection completes the next flush inline.
+TEST(WriteConnectionResumed, FlushFuturesCompleteInOrderWithInlineCompletion) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(*mock, Flush)
+      .WillOnce([&](storage::WritePayload const& p) {
+        auto const size = static_cast<std::int64_t>(p.size());
+        return sequencer.PushBack("Flush1").then(
+            [mock_persisted_size, size](auto) {
+              *mock_persisted_size += size;
+              return Status{};
+            });
+      })
+      // Return an already-satisfied future so the second flush's continuation
+      // runs inline when `FlushStep()` dispatches it.
+      .WillOnce([mock_persisted_size](storage::WritePayload const& p) {
+        *mock_persisted_size += static_cast<std::int64_t>(p.size());
+        return make_ready_future(Status{});
+      });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto f1 = connection->Flush(TestPayload(1024));
+  auto f2 = connection->Flush(TestPayload(1024));
+
+  std::vector<int> completion_order;
+  auto done1 = f1.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    completion_order.push_back(1);
+  });
+  auto done2 = f2.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    completion_order.push_back(2);
+  });
+
+  // Complete the first flush; the write loop then dispatches the second flush,
+  // which completes inline. `f1` must still complete before `f2`.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(true);
+
+  ASSERT_TRUE(done1.is_ready());
+  ASSERT_TRUE(done2.is_ready());
+  EXPECT_THAT(completion_order, ElementsAre(1, 2));
 }
 
 }  // namespace
