@@ -454,6 +454,8 @@ TEST_F(ScaffoldGenerator, QuickstartBuild) {
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
   EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+  EXPECT_THAT(actual,
+              HasSubstr(R"""(load("@rules_cc//cc:defs.bzl", "cc_binary"))"""));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
