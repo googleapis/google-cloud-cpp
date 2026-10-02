@@ -110,12 +110,17 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
   namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  return internal::MakeSpan(
+  // OpenTelemetry RPC semantic conventions specify that `rpc.method` should
+  // be the fully-qualified logical name (e.g. "<service>/<method>") and that
+  // `rpc.service` is deprecated in favor of it.
+  // https://opentelemetry.io/docs/specs/semconv/rpc/rpc-spans/
+  auto fully_qualified_method =
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
-                   absl::string_view{method.data(), method.size()}),
-      {{sc::rpc::kRpcSystem, sc::rpc::RpcSystemValues::kGrpc},
-       {sc::rpc::kRpcService, service},
-       {sc::rpc::kRpcMethod, method},
+                   absl::string_view{method.data(), method.size()});
+  return internal::MakeSpan(
+      fully_qualified_method,
+      {{sc::rpc::kRpcSystemName, sc::rpc::RpcSystemNameValues::kGrpc},
+       {sc::rpc::kRpcMethod, fully_qualified_method},
        {/*sc::kNetworkTransport=*/"network.transport",
         sc::network::NetworkTransportValues::kTcp},
        {"grpc.version", grpc::Version()}},

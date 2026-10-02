@@ -68,11 +68,10 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("google.cloud.foo.v1.Foo/GetBar"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::rpc::kRpcSystem,
-                                         sc::rpc::RpcSystemValues::kGrpc),
-              OTelAttribute<std::string>(sc::rpc::kRpcService,
-                                         "google.cloud.foo.v1.Foo"),
-              OTelAttribute<std::string>(sc::rpc::kRpcMethod, "GetBar"),
+              OTelAttribute<std::string>(sc::rpc::kRpcSystemName,
+                                         sc::rpc::RpcSystemNameValues::kGrpc),
+              OTelAttribute<std::string>(sc::rpc::kRpcMethod,
+                                         "google.cloud.foo.v1.Foo/GetBar"),
               OTelAttribute<std::string>(
                   /*sc::kNetworkTransport=*/"network.transport",
                   sc::network::NetworkTransportValues::kTcp),
