@@ -7,12 +7,39 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.11.0 - TBD
+## v3.11.0 - 2026-10
 
 ### Removed Libraries
 
 - The `automl` client library has been removed because the Cloud AutoML service has been turned down.
 - The `timeseriesinsights` client library has been removed because the Timeseries Insights service has been turned down.
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): fix build when OTel metrics disabled ([#16519](https://github.com/googleapis/google-cloud-cpp/pull/16519))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add Request ID header support ([#16448](https://github.com/googleapis/google-cloud-cpp/pull/16448))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): add OpenTelemetry counters for read hedging ([#16410](https://github.com/googleapis/google-cloud-cpp/pull/16410))
+- feat(storage): add MaxTotalHedgesOption, a lifetime cap on read hedges ([#16503](https://github.com/googleapis/google-cloud-cpp/pull/16503))
+- feat(storage): log effective gRPC transport and channel connection readiness ([#16478](https://github.com/googleapis/google-cloud-cpp/pull/16478))
+- fix(storage): break HedgingThreadPool ownership cycle in hedge tasks ([#16479](https://github.com/googleapis/google-cloud-cpp/pull/16479))
+- feat(storage): log transient errors retried on the async and bidi paths ([#16468](https://github.com/googleapis/google-cloud-cpp/pull/16468))
+- feat(storage): log transient errors retried on the sync paths ([#16467](https://github.com/googleapis/google-cloud-cpp/pull/16467))
+- feat(storage): extend read hedging to mid-stream chunk reads ([#16446](https://github.com/googleapis/google-cloud-cpp/pull/16446))
+- feat(storage): support DirectPath over Interconnect in GCS gRPC ([#16408](https://github.com/googleapis/google-cloud-cpp/pull/16408))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(openssl): openssl v4.x X509_get_subject_name usage ([#16516](https://github.com/googleapis/google-cloud-cpp/pull/16516))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-09-29T15:45:54-07:00](https://github.com/googleapis/googleapis/tree/28769825ec5fa31815f172b0de490a84e74cb97a)
 
 ## v3.10.0 - 2026-09
 
