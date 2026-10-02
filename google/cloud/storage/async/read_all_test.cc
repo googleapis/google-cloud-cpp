@@ -30,6 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
@@ -147,6 +148,58 @@ TEST(ReadAll, Empty) {
   auto payload = ReadAll(AsyncReader(std::move(mock)), std::move(token)).get();
   ASSERT_STATUS_OK(payload);
   EXPECT_THAT(payload->contents(), IsEmpty());
+}
+
+namespace {
+google::storage::v2::Object MakeZeroByteTestObject() {
+  google::storage::v2::Object object;
+  object.set_name("test-only-name");
+  object.set_generation(123456789);
+  object.set_size(0);
+  return object;
+}
+}  // namespace
+
+// Reading a 0-byte object must preserve the object metadata.
+TEST(ReadAll, ZeroBytePayloadPreservesMetadata) {
+  auto mock = std::make_unique<MockAsyncReaderConnection>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([] {
+        return make_ready_future(ReadResponse(
+            ReadPayload(std::string{}).set_metadata(MakeZeroByteTestObject())));
+      })
+      .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+
+  AsyncToken token = storage_internal::MakeAsyncToken(mock.get());
+  StatusOr<ReadPayload> payload =
+      ReadAll(AsyncReader(std::move(mock)), std::move(token)).get();
+  ASSERT_THAT(payload, IsOk());
+  EXPECT_THAT(payload->contents(), IsEmpty());
+  EXPECT_THAT(payload->metadata(),
+              Optional(IsProtoEqual(MakeZeroByteTestObject())));
+}
+
+// An empty first payload with metadata, followed by data, must preserve both
+// the metadata and the data.
+TEST(ReadAll, EmptyPayloadWithMetadataThenData) {
+  auto mock = std::make_unique<MockAsyncReaderConnection>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([] {
+        return make_ready_future(ReadResponse(
+            ReadPayload(std::string{}).set_metadata(MakeZeroByteTestObject())));
+      })
+      .WillOnce([] {
+        return make_ready_future(ReadResponse(ReadPayload("test-message-1")));
+      })
+      .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+
+  AsyncToken token = storage_internal::MakeAsyncToken(mock.get());
+  StatusOr<ReadPayload> payload =
+      ReadAll(AsyncReader(std::move(mock)), std::move(token)).get();
+  ASSERT_THAT(payload, IsOk());
+  EXPECT_THAT(payload->contents(), ElementsAre("test-message-1"));
+  EXPECT_THAT(payload->metadata(),
+              Optional(IsProtoEqual(MakeZeroByteTestObject())));
 }
 
 TEST(ReadAll, Error) {

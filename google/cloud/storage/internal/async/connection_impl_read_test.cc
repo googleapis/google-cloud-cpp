@@ -60,6 +60,7 @@ using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::VariantWith;
@@ -601,8 +602,6 @@ TEST_F(AsyncConnectionImplTest, ReadObjectSilentWhenRetriesAreDisabled) {
   EXPECT_THAT(RetryRecords(log), IsEmpty());
 }
 
-// Only one test for ReadObjectRange(). The tests for `ReadAll()` and
-// `ReadObject()` cover most other cases.
 TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
@@ -624,6 +623,66 @@ TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
   next.first.set_value(true);
 
   EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
+}
+
+// `ReadObjectRange()` on a 0-byte object must return the object metadata sent
+// by the service, even though there is no data.
+TEST_F(AsyncConnectionImplTest, ReadObjectRangeZeroByteObjectKeepsMetadata) {
+  auto constexpr kMetadata = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+    generation: 123456789
+    metageneration: 1
+    size: 0
+  )pb";
+  google::storage::v2::Object expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kMetadata, &expected));
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    auto stream = std::make_unique<MockAsyncObjectMediaStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([&](auto) {
+            // A 0-byte object: metadata, but no `checksummed_data`.
+            google::storage::v2::ReadObjectResponse response;
+            *response.mutable_metadata() = expected;
+            return std::make_optional(response);
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return std::optional<google::storage::v2::ReadObjectResponse>();
+          });
+        });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection =
+      MakeTestConnection(pool.cq(), mock,
+                         Options{}.set<storage::DownloadStallTimeoutOption>(
+                             std::chrono::seconds(0)));
+  future<StatusOr<storage::ReadPayload>> pending = connection->ReadObjectRange(
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+
+  for (auto const* name : {"Start", "Read", "Read", "Finish"}) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, name);
+    next.first.set_value(true);
+  }
+
+  StatusOr<storage::ReadPayload> payload = pending.get();
+  ASSERT_THAT(payload, IsOk());
+  EXPECT_THAT(payload->contents(), IsEmpty());
+  EXPECT_THAT(payload->metadata(), Optional(IsProtoEqual(expected)));
 }
 
 TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {

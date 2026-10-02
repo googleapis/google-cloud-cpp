@@ -25,7 +25,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Field;
 using ::testing::IsEmpty;
 using ::testing::Optional;
 using ::testing::Pair;
@@ -88,6 +90,89 @@ TEST(ReadPayload, Reset) {
   EXPECT_THAT(actual.size(), absl::string_view(kQuick).size());
   EXPECT_FALSE(actual.metadata().has_value());
   EXPECT_THAT(actual.headers(), IsEmpty());
+}
+
+TEST(ReadPayload, AccumulateIntoDefault) {
+  google::storage::v2::Object const resource = MakeTestObject();
+  storage::ReadPayload actual;
+  ReadPayloadImpl::Accumulate(actual, ReadPayloadImpl::Make(absl::Cord(kQuick))
+                                          .set_metadata(resource)
+                                          .set_offset(1024));
+  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
+  EXPECT_EQ(actual.offset(), 1024);
+}
+
+TEST(ReadPayload, AccumulateAppendsData) {
+  google::storage::v2::Object const resource = MakeTestObject();
+  storage::ReadPayload actual = ReadPayloadImpl::Make(absl::Cord(kQuick))
+                                    .set_metadata(resource)
+                                    .set_offset(1024);
+  ReadPayloadImpl::Accumulate(
+      actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(2048));
+  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick),
+                                             absl::string_view(kQuick)));
+  EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
+  EXPECT_EQ(actual.offset(), 1024);
+}
+
+// A 0-byte payload with metadata must survive the EOF payload.
+TEST(ReadPayload, AccumulateEmptyWithMetadataKeepsMetadata) {
+  google::storage::v2::Object const resource = MakeTestObject();
+  storage::ReadPayload actual =
+      ReadPayloadImpl::Make(absl::Cord()).set_metadata(resource);
+  ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
+  EXPECT_THAT(actual.contents(), IsEmpty());
+  EXPECT_EQ(actual.size(), 0);
+  EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
+}
+
+// A 0-byte payload with metadata followed by data keeps the metadata, offset,
+// and object hashes from the first payload.
+TEST(ReadPayload, AccumulateEmptyWithMetadataThenData) {
+  google::storage::v2::Object const resource = MakeTestObject();
+  storage::ReadPayload actual = ReadPayloadImpl::Make(absl::Cord())
+                                    .set_metadata(resource)
+                                    .set_offset(1024);
+  ReadPayloadImpl::SetObjectHashes(
+      actual, storage::internal::HashValues{"test-crc32c", "test-md5"});
+  ReadPayloadImpl::Accumulate(
+      actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(1024));
+  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
+  EXPECT_EQ(actual.offset(), 1024);
+  EXPECT_THAT(ReadPayloadImpl::GetObjectHashes(actual),
+              Optional(AllOf(
+                  Field(&storage::internal::HashValues::crc32c, "test-crc32c"),
+                  Field(&storage::internal::HashValues::md5, "test-md5"))));
+}
+
+// An empty payload without metadata may still carry headers, an offset, or
+// object hashes. None of these should be discarded by later payloads.
+TEST(ReadPayload, AccumulateEmptyWithoutMetadataKeepsOtherFields) {
+  storage::ReadPayload actual = ReadPayloadImpl::Make(absl::Cord())
+                                    .set_headers({{"k1", "v1"}})
+                                    .set_offset(1024);
+  ReadPayloadImpl::SetObjectHashes(
+      actual, storage::internal::HashValues{"test-crc32c", "test-md5"});
+  ReadPayloadImpl::Accumulate(
+      actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(1024));
+  ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
+  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_FALSE(actual.metadata().has_value());
+  EXPECT_THAT(actual.headers(), UnorderedElementsAre(Pair("k1", "v1")));
+  EXPECT_EQ(actual.offset(), 1024);
+  EXPECT_THAT(ReadPayloadImpl::GetObjectHashes(actual),
+              Optional(AllOf(
+                  Field(&storage::internal::HashValues::crc32c, "test-crc32c"),
+                  Field(&storage::internal::HashValues::md5, "test-md5"))));
+}
+
+TEST(ReadPayload, AccumulateEmptyIntoEmpty) {
+  storage::ReadPayload actual;
+  ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
+  EXPECT_THAT(actual.contents(), IsEmpty());
+  EXPECT_FALSE(actual.metadata().has_value());
 }
 
 }  // namespace

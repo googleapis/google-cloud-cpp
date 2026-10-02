@@ -52,7 +52,11 @@ struct ReadPayloadImpl {
   /// Append the data from @p rhs to @p lhs.
   static void Accumulate(storage::ReadPayload& lhs,
                          storage::ReadPayload&& rhs) {
-    if (lhs.impl_.empty()) {
+    // Only replace `lhs` if it is in its default-constructed state. A 0-byte
+    // object (or range) produces a payload with empty contents, but it may
+    // carry metadata, headers, an offset, or object hashes. Those must not be
+    // discarded by later (e.g. end-of-stream) payloads.
+    if (IsDefault(lhs)) {
       lhs = std::move(rhs);
       return;
     }
@@ -74,6 +78,15 @@ struct ReadPayloadImpl {
   static void Append(storage::ReadPayload& payload,
                      storage::ReadPayload new_data) {
     payload.impl_.Append(std::move(new_data.impl_));
+  }
+
+ private:
+  /// Returns true if @p p is equivalent to a default-constructed payload.
+  static bool IsDefault(storage::ReadPayload const& p) {
+    // Note: read `object_hash_values_` directly, `GetObjectHashes()` moves
+    // the value out of the payload.
+    return p.impl_.empty() && p.offset_ == 0 && !p.metadata_.has_value() &&
+           p.headers_.empty() && !p.object_hash_values_.has_value();
   }
 };
 
