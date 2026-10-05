@@ -26,7 +26,9 @@
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/open_object.h"
 #include "google/cloud/storage/internal/async/open_stream.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
@@ -58,6 +60,7 @@
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <set>
 #include <utility>
 
 namespace google {
@@ -220,6 +223,18 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
   *initial_request.mutable_read_object_spec() = p.read_spec;
   auto current = internal::MakeImmutableOptions(p.options);
+  // If pre-warmed ranges are configured, populate the initial request
+  // with these ranges to start downloading them as soon as the stream opens.
+  if (current->has<ReadRangesOption>()) {
+    auto const& ranges = current->get<ReadRangesOption>();
+    for (auto const& r : DeduplicateRanges(ranges)) {
+      auto* proto_range = initial_request.add_read_ranges();
+      proto_range->set_read_offset(r.config.offset);
+      proto_range->set_read_length(r.config.length);
+      // Generate sequential IDs starting at 1. The receiver must match these.
+      proto_range->set_read_id(r.read_id);
+    }
+  }
   // Get the policy factory and immediately create a policy.
   auto resume_policy = current->get<storage::ResumePolicyOption>()();
 

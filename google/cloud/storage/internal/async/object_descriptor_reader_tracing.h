@@ -26,7 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl,
-                                  std::string bucket_name);
+                                  std::string bucket_name,
+                                  absl::string_view cache_status = "");
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

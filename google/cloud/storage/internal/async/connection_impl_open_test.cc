@@ -16,6 +16,7 @@
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_resume_policy.h"
@@ -403,6 +404,150 @@ TEST(AsyncConnectionImplTest, TooManyTransienErrors) {
   }
 
   ASSERT_THAT(pending.get(), StatusIs(TransientError().code()));
+}
+
+TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
+  auto constexpr kExpectedRequestSpec = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 42
+    if_metageneration_match: 7
+  )pb";
+  auto constexpr kExpectedRequest = R"pb(
+    read_object_spec {
+      bucket: "test-only-invalid"
+      object: "test-object"
+      generation: 42
+      if_metageneration_match: 7
+    }
+    read_ranges { read_offset: 0 read_length: 1024 read_id: 1 }
+    read_ranges { read_offset: 2048 read_length: 4096 read_id: 2 }
+  )pb";
+  auto constexpr kMetadataText = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+    generation: 42
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const& options) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
+
+        auto stream = std::make_unique<MockStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(
+                [=, &sequencer](
+                    google::storage::v2::BidiReadObjectRequest const& request,
+                    grpc::WriteOptions) {
+                  auto expected = google::storage::v2::BidiReadObjectRequest{};
+                  EXPECT_TRUE(
+                      TextFormat::ParseFromString(kExpectedRequest, &expected));
+                  EXPECT_THAT(request, IsProtoEqual(expected));
+                  return sequencer.PushBack("Write").then(
+                      [](auto f) { return f.get(); });
+                });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([&]() {
+              return sequencer.PushBack("Read").then(
+                  [=](auto f) -> absl::optional<
+                                  google::storage::v2::BidiReadObjectResponse> {
+                    if (!f.get()) return absl::nullopt;
+                    auto constexpr kHandleText = R"pb(
+                      handle: "handle-12345"
+                    )pb";
+                    auto response =
+                        google::storage::v2::BidiReadObjectResponse{};
+                    EXPECT_TRUE(TextFormat::ParseFromString(
+                        kMetadataText, response.mutable_metadata()));
+                    EXPECT_TRUE(TextFormat::ParseFromString(
+                        kHandleText, response.mutable_read_handle()));
+                    return response;
+                  });
+            })
+            .WillOnce([&sequencer]() {
+              return sequencer.PushBack("Read[N]").then(
+                  [](auto f) -> absl::optional<
+                                 google::storage::v2::BidiReadObjectResponse> {
+                    if (!f.get()) return absl::nullopt;
+                    return google::storage::v2::BidiReadObjectResponse{};
+                  });
+            });
+        EXPECT_CALL(*stream, Cancel).WillOnce([&sequencer]() {
+          (void)sequencer.PushBack("Cancel");
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+          return sequencer.PushBack("Finish").then(
+              [](auto) { return Status{}; });
+        });
+
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
+      })
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::shared_ptr<grpc::ClientContext> const&,
+                         google::cloud::internal::ImmutableOptions const&) {
+        auto stream = std::make_unique<NiceMock<MockStream>>();
+        ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+          return make_ready_future(false);
+        }));
+        ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+          return make_ready_future(Status{});
+        }));
+        ON_CALL(*stream, Cancel).WillByDefault([] {});
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            StatusOr<std::chrono::system_clock::time_point>(
+                std::chrono::system_clock::now()));
+      });
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions());
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequestSpec, &request));
+  auto options =
+      connection->options().set<ReadRangesOption>({{0, 1024}, {2048, 4096}});
+  auto pending = connection->Open({std::move(request), std::move(options)});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+
+  auto p = pending.get();
+  ASSERT_THAT(p, IsOkAndHolds(NotNull()));
+  auto descriptor = *std::move(p);
+
+  descriptor.reset();
+
+  auto last_read = sequencer.PopFrontWithName();
+  EXPECT_EQ(last_read.second, "Read[N]");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Cancel");
+  next.first.set_value(true);
+  last_read.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 }
 
 }  // namespace

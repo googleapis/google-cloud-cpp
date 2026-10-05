@@ -19,11 +19,30 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
 #include <iostream>
+#include <set>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::vector<DedupedReadRange> DeduplicateRanges(
+    std::vector<ReadRangeConfig> const& ranges, std::int64_t initial_id) {
+  std::vector<DedupedReadRange> deduped;
+  deduped.reserve(ranges.size());
+  std::int64_t id = initial_id;
+  std::set<std::pair<std::int64_t, std::int64_t>> seen_ranges;
+  for (auto const& r : ranges) {
+    auto range_key = std::make_pair(r.offset, r.length);
+    if (!seen_ranges.insert(range_key).second) {
+      continue;
+    }
+    ++id;
+    deduped.push_back({r, id});
+  }
+  return deduped;
+}
 
 bool ReadRange::IsDone() const {
   std::lock_guard<std::mutex> lk(mu_);

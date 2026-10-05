@@ -246,6 +246,55 @@ void OpenObjectMultipleRangedRead(google::cloud::storage::AsyncClient& client,
   std::cout << "The ranges contain " << count << " newlines\n";
 }
 
+void OpenObjectWithInitialReadRanges(
+    google::cloud::storage::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [open-object-initial-read-ranges]
+  // [START storage_open_object_initial_read_ranges]
+  namespace gcs = google::cloud::storage;
+
+  // Helper coroutine to count newlines returned by an AsyncReader.
+  auto count_newlines =
+      [](gcs::AsyncReader reader,
+         gcs::AsyncToken token) -> google::cloud::future<std::uint64_t> {
+    std::uint64_t count = 0;
+    while (token.valid()) {
+      auto [payload, t] = (co_await reader.Read(std::move(token))).value();
+      token = std::move(t);
+      for (auto const& buffer : payload.contents()) {
+        count += std::count(buffer.begin(), buffer.end(), '\n');
+      }
+    }
+    co_return count;
+  };
+
+  auto coro =
+      [&count_newlines](
+          gcs::AsyncClient& client, std::string bucket_name,
+          std::string object_name) -> google::cloud::future<std::uint64_t> {
+    gcs::AsyncClient::InitialReadRanges config;
+    config.initial_ranges = {{0, 1024}, {1024, 1024}};
+
+    auto descriptor =
+        (co_await client.Open(gcs::BucketName(std::move(bucket_name)),
+                              std::move(object_name), std::move(config)))
+            .value();
+
+    auto [r1, t1] = descriptor.Read(0, 1024);
+    auto [r2, t2] = descriptor.Read(1024, 1024);
+
+    auto c1 = count_newlines(std::move(r1), std::move(t1));
+    auto c2 = count_newlines(std::move(r2), std::move(t2));
+    co_return (co_await std::move(c1)) + (co_await std::move(c2));
+  };
+  // [END storage_open_object_initial_read_ranges]
+  //! [open-object-initial-read-ranges]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const count = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "The pre-warmed ranges contain " << count << " newlines\n";
+}
+
 void OpenObjectReadFullObject(google::cloud::storage::AsyncClient& client,
                               std::vector<std::string> const& argv) {
   //! [open-object-read-full-object]
@@ -997,6 +1046,11 @@ void OpenObjectMultipleRangedRead(google::cloud::storage::AsyncClient&,
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
 }
 
+void OpenObjectWithInitialReadRanges(google::cloud::storage::AsyncClient&,
+                                     std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::Open() example requires coroutines\n";
+}
+
 void OpenMultipleObjectsRangedRead(google::cloud::storage::AsyncClient&,
                                    std::vector<std::string> const&) {
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
@@ -1306,6 +1360,10 @@ void AutoRun(std::vector<std::string> const& argv) {
             << std::endl;
   OpenObjectMultipleRangedRead(client, {bucket_name, composed_name});
 
+  std::cout << "Running the OpenObjectWithInitialReadRanges() example"
+            << std::endl;
+  OpenObjectWithInitialReadRanges(client, {bucket_name, composed_name});
+
   std::cout << "Running the OpenMultipleObjectsRangedRead() example"
             << std::endl;
   auto const multi_read_o1 =
@@ -1563,6 +1621,8 @@ int main(int argc, char* argv[]) try {
                  OpenObjectSingleRangedRead),
       make_entry("open-object-multiple-ranged-read", {},
                  OpenObjectMultipleRangedRead),
+      make_entry("open-object-initial-read-ranges", {},
+                 OpenObjectWithInitialReadRanges),
       make_entry("open-object-read-full-object", {}, OpenObjectReadFullObject),
       make_entry("open-multiple-objects-ranged-read",
                  {"<object-name-1>", "<object-name-2>", "<object-name-3>"},
