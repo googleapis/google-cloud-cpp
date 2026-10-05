@@ -116,6 +116,18 @@ class InterconnectsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
+      NoAwaitTag,
+      google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   static std::unique_ptr<compute_interconnects_v1::InterconnectsRetryPolicy>
   retry_policy(Options const& options) {

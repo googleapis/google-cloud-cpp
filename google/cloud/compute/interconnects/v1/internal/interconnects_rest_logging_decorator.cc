@@ -227,6 +227,42 @@ InterconnectsRestLogging::SetLabels(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsRestLogging::AsyncSetName(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+              request) {
+        return child_->AsyncSetName(cq, std::move(rest_context),
+                                    std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsRestLogging::SetName(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+              request) {
+        return child_->SetName(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

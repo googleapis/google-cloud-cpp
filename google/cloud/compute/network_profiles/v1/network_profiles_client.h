@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the networkProfiles resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/networkProfiles
 ///
+/// This client uses NetworkProfiles version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -106,7 +108,7 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L61}
+  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L62}
   /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L25}
   ///
   // clang-format on
@@ -138,7 +140,7 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L61}
+  /// [google.cloud.cpp.compute.network_profiles.v1.GetNetworkProfileRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L62}
   /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L25}
   ///
   // clang-format on
@@ -176,7 +178,7 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L72}
+  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L73}
   /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L25}
   ///
   // clang-format on
@@ -217,7 +219,7 @@ class NetworkProfilesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L72}
+  /// [google.cloud.cpp.compute.network_profiles.v1.ListNetworkProfilesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_profiles/v1/network_profiles.proto#L73}
   /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L25}
   ///
   // clang-format on

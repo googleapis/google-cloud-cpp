@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the instanceSettings resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceSettings
 ///
+/// This client uses InstanceSettings version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -108,7 +110,7 @@ class InstanceSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_settings.v1.GetInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L65}
+  /// [google.cloud.cpp.compute.instance_settings.v1.GetInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L66}
   /// [google.cloud.cpp.compute.v1.InstanceSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_082.proto#L27}
   ///
   // clang-format on
@@ -140,7 +142,7 @@ class InstanceSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_settings.v1.GetInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L65}
+  /// [google.cloud.cpp.compute.instance_settings.v1.GetInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L66}
   /// [google.cloud.cpp.compute.v1.InstanceSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_082.proto#L27}
   ///
   // clang-format on
@@ -178,7 +180,7 @@ class InstanceSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_settings.v1.PatchInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L75}
+  /// [google.cloud.cpp.compute.instance_settings.v1.PatchInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L76}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -237,7 +239,7 @@ class InstanceSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_settings.v1.PatchInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L75}
+  /// [google.cloud.cpp.compute.instance_settings.v1.PatchInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L76}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

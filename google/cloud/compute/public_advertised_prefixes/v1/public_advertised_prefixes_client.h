@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the publicAdvertisedPrefixes resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes
 ///
+/// This client uses PublicAdvertisedPrefixes version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -119,7 +121,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.AnnounceRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L127}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.AnnounceRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
@@ -172,7 +174,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.AnnounceRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L127}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.AnnounceRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
@@ -237,7 +239,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L158}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L159}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -292,7 +294,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L158}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L159}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -353,7 +355,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L189}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L190}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L27}
   ///
   // clang-format on
@@ -386,7 +388,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L189}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L190}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L27}
   ///
   // clang-format on
@@ -424,7 +426,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L202}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L203}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -484,7 +486,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L202}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L203}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -553,7 +555,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L231}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L232}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L27}
   ///
   // clang-format on
@@ -593,7 +595,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L231}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L232}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L27}
   ///
   // clang-format on
@@ -634,7 +636,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L332}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L326}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -697,7 +699,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L332}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L326}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -765,7 +767,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.WithdrawRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L367}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.WithdrawRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L361}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
@@ -818,7 +820,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.WithdrawRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L367}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.WithdrawRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L361}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(

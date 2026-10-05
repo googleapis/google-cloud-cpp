@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the reservationBlocks resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationBlocks
 ///
+/// This client uses ReservationBlocks version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -112,7 +114,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetReservationBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L138}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetReservationBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L139}
   /// [google.cloud.cpp.compute.v1.ReservationBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L158}
   ///
   // clang-format on
@@ -147,7 +149,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetReservationBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L138}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetReservationBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L139}
   /// [google.cloud.cpp.compute.v1.ReservationBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L158}
   ///
   // clang-format on
@@ -180,7 +182,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L116}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L117}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -214,7 +216,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L116}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L117}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -254,7 +256,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.ListReservationBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L165}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.ListReservationBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L166}
   /// [google.cloud.cpp.compute.v1.ReservationBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L27}
   ///
   // clang-format on
@@ -295,7 +297,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.ListReservationBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L165}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.ListReservationBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L166}
   /// [google.cloud.cpp.compute.v1.ReservationBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L27}
   ///
   // clang-format on
@@ -336,7 +338,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L274}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -398,7 +400,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L274}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -461,7 +463,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L322}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L316}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -497,7 +499,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L322}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L316}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -529,7 +531,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L345}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L339}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -565,7 +567,7 @@ class ReservationBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L345}
+  /// [google.cloud.cpp.compute.reservation_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto#L339}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on

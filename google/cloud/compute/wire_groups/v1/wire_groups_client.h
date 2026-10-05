@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the wireGroups resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/wireGroups
 ///
+/// This client uses WireGroups version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -114,7 +116,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.wire_groups.v1.DeleteWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L105}
+  /// [google.cloud.cpp.compute.wire_groups.v1.DeleteWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L106}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteWireGroup(
@@ -168,7 +170,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.wire_groups.v1.DeleteWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L105}
+  /// [google.cloud.cpp.compute.wire_groups.v1.DeleteWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L106}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteWireGroup(
@@ -228,7 +230,7 @@ class WireGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_185.proto#L60}
-  /// [google.cloud.cpp.compute.wire_groups.v1.GetWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L138}
+  /// [google.cloud.cpp.compute.wire_groups.v1.GetWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L139}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::WireGroup> GetWireGroup(
@@ -260,7 +262,7 @@ class WireGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_185.proto#L60}
-  /// [google.cloud.cpp.compute.wire_groups.v1.GetWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L138}
+  /// [google.cloud.cpp.compute.wire_groups.v1.GetWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L139}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::WireGroup> GetWireGroup(
@@ -297,7 +299,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.wire_groups.v1.InsertWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L152}
+  /// [google.cloud.cpp.compute.wire_groups.v1.InsertWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L153}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertWireGroup(
@@ -354,7 +356,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.wire_groups.v1.InsertWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L152}
+  /// [google.cloud.cpp.compute.wire_groups.v1.InsertWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L153}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertWireGroup(
@@ -422,7 +424,7 @@ class WireGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_185.proto#L60}
-  /// [google.cloud.cpp.compute.wire_groups.v1.ListWireGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L188}
+  /// [google.cloud.cpp.compute.wire_groups.v1.ListWireGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L189}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::WireGroup> ListWireGroups(
@@ -463,7 +465,7 @@ class WireGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.WireGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_185.proto#L60}
-  /// [google.cloud.cpp.compute.wire_groups.v1.ListWireGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L188}
+  /// [google.cloud.cpp.compute.wire_groups.v1.ListWireGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L189}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::WireGroup> ListWireGroups(
@@ -504,7 +506,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.wire_groups.v1.PatchWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L292}
+  /// [google.cloud.cpp.compute.wire_groups.v1.PatchWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchWireGroup(
@@ -565,7 +567,7 @@ class WireGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.wire_groups.v1.PatchWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L292}
+  /// [google.cloud.cpp.compute.wire_groups.v1.PatchWireGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/wire_groups/v1/wire_groups.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchWireGroup(

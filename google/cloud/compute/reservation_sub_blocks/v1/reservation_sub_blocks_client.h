@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the reservationSubBlocks resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks
 ///
+/// This client uses ReservationSubBlocks version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -114,7 +116,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L165}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L166}
   /// [google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L165}
   ///
   // clang-format on
@@ -149,7 +151,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L165}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L166}
   /// [google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L165}
   ///
   // clang-format on
@@ -182,7 +184,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L143}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L144}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -216,7 +218,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L143}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L144}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -257,7 +259,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L195}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L196}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
@@ -318,7 +320,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L195}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L196}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
@@ -387,7 +389,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L244}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L245}
   /// [google.cloud.cpp.compute.v1.ReservationSubBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L61}
   ///
   // clang-format on
@@ -428,7 +430,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L244}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L245}
   /// [google.cloud.cpp.compute.v1.ReservationSubBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L61}
   ///
   // clang-format on
@@ -468,7 +470,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L353}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L347}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -524,7 +526,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L353}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L347}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -595,7 +597,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L397}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L391}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
@@ -656,7 +658,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L397}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L391}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
@@ -718,7 +720,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L446}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L440}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -754,7 +756,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L446}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L440}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -786,7 +788,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L469}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L463}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -822,7 +824,7 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L469}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L463}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on

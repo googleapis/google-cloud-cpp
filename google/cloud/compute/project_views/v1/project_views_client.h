@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the projectViews resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/projectViews
 ///
+/// This client uses ProjectViews version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -114,7 +116,7 @@ class ProjectViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.project_views.v1.GetProjectViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/project_views/v1/project_views.proto#L57}
+  /// [google.cloud.cpp.compute.project_views.v1.GetProjectViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/project_views/v1/project_views.proto#L58}
   /// [google.cloud.cpp.compute.v1.ProjectView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L30}
   ///
   // clang-format on
@@ -152,7 +154,7 @@ class ProjectViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.project_views.v1.GetProjectViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/project_views/v1/project_views.proto#L57}
+  /// [google.cloud.cpp.compute.project_views.v1.GetProjectViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/project_views/v1/project_views.proto#L58}
   /// [google.cloud.cpp.compute.v1.ProjectView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L30}
   ///
   // clang-format on

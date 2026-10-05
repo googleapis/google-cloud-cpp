@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the previewFeatures resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/previewFeatures
 ///
+/// This client uses PreviewFeatures version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -107,7 +109,7 @@ class PreviewFeaturesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.preview_features.v1.GetPreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L76}
+  /// [google.cloud.cpp.compute.preview_features.v1.GetPreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L77}
   /// [google.cloud.cpp.compute.v1.PreviewFeature]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_031.proto#L56}
   ///
   // clang-format on
@@ -139,7 +141,7 @@ class PreviewFeaturesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.preview_features.v1.GetPreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L76}
+  /// [google.cloud.cpp.compute.preview_features.v1.GetPreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L77}
   /// [google.cloud.cpp.compute.v1.PreviewFeature]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_031.proto#L56}
   ///
   // clang-format on
@@ -176,7 +178,7 @@ class PreviewFeaturesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.preview_features.v1.ListPreviewFeaturesRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L87}
+  /// [google.cloud.cpp.compute.preview_features.v1.ListPreviewFeaturesRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L88}
   /// [google.cloud.cpp.compute.v1.PreviewFeature]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_031.proto#L56}
   ///
   // clang-format on
@@ -216,7 +218,7 @@ class PreviewFeaturesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.preview_features.v1.ListPreviewFeaturesRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L87}
+  /// [google.cloud.cpp.compute.preview_features.v1.ListPreviewFeaturesRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L88}
   /// [google.cloud.cpp.compute.v1.PreviewFeature]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_031.proto#L56}
   ///
   // clang-format on
@@ -254,7 +256,7 @@ class PreviewFeaturesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.preview_features.v1.UpdatePreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L188}
+  /// [google.cloud.cpp.compute.preview_features.v1.UpdatePreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -314,7 +316,7 @@ class PreviewFeaturesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.preview_features.v1.UpdatePreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L188}
+  /// [google.cloud.cpp.compute.preview_features.v1.UpdatePreviewFeatureRequest]: @cloud_cpp_reference_link{google/cloud/compute/preview_features/v1/preview_features.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

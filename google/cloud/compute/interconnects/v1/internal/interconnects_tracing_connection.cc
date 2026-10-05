@@ -199,6 +199,36 @@ InterconnectsTracingConnection::SetLabels(
   return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsTracingConnection::SetName(
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::SetName");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetName(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsTracingConnection::SetName(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::SetName");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->SetName(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsTracingConnection::SetName(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::SetName");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetName(operation));
+}
+
 std::shared_ptr<compute_interconnects_v1::InterconnectsConnection>
 MakeInterconnectsTracingConnection(
     std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> conn) {

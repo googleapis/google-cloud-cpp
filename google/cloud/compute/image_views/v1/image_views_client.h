@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the imageViews resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/imageViews
 ///
+/// This client uses ImageViews version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -106,7 +108,7 @@ class ImageViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_views.v1.GetImageViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L62}
+  /// [google.cloud.cpp.compute.image_views.v1.GetImageViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L63}
   /// [google.cloud.cpp.compute.v1.ImageView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_074.proto#L27}
   ///
   // clang-format on
@@ -139,7 +141,7 @@ class ImageViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_views.v1.GetImageViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L62}
+  /// [google.cloud.cpp.compute.image_views.v1.GetImageViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L63}
   /// [google.cloud.cpp.compute.v1.ImageView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_074.proto#L27}
   ///
   // clang-format on
@@ -178,7 +180,7 @@ class ImageViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_views.v1.ListImageViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L77}
+  /// [google.cloud.cpp.compute.image_views.v1.ListImageViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L78}
   /// [google.cloud.cpp.compute.v1.ImageView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_074.proto#L27}
   ///
   // clang-format on
@@ -219,7 +221,7 @@ class ImageViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_views.v1.ListImageViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L77}
+  /// [google.cloud.cpp.compute.image_views.v1.ListImageViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_views/v1/image_views.proto#L78}
   /// [google.cloud.cpp.compute.v1.ImageView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_074.proto#L27}
   ///
   // clang-format on

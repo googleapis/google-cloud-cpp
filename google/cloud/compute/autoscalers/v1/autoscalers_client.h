@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the autoscalers resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers
 ///
+/// This client uses Autoscalers version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -119,7 +121,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L142}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L143}
   /// [google.cloud.cpp.compute.v1.AutoscalersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L290}
   ///
   // clang-format on
@@ -163,7 +165,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L142}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L143}
   /// [google.cloud.cpp.compute.v1.AutoscalersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L290}
   ///
   // clang-format on
@@ -201,7 +203,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L257}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L251}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
@@ -254,7 +256,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L257}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L251}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
@@ -313,7 +315,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L293}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L287}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L43}
   ///
   // clang-format on
@@ -345,7 +347,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L293}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L287}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L43}
   ///
   // clang-format on
@@ -383,7 +385,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L307}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L301}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
@@ -439,7 +441,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L307}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L301}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
@@ -507,7 +509,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L343}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L337}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L43}
   ///
   // clang-format on
@@ -548,7 +550,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L343}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L337}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L43}
   ///
   // clang-format on
@@ -588,7 +590,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L447}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L434}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
@@ -646,7 +648,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L447}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L434}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
@@ -706,7 +708,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L486}
+  /// [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L473}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -742,7 +744,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L486}
+  /// [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L473}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -780,7 +782,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L504}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L491}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
@@ -836,7 +838,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L504}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L491}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(

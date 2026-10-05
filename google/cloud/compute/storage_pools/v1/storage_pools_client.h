@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the storagePools resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/storagePools
 ///
+/// This client uses StoragePools version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -119,7 +121,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.AggregatedListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L171}
+  /// [google.cloud.cpp.compute.storage_pools.v1.AggregatedListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L172}
   /// [google.cloud.cpp.compute.v1.StoragePoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L705}
   ///
   // clang-format on
@@ -163,7 +165,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.AggregatedListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L171}
+  /// [google.cloud.cpp.compute.storage_pools.v1.AggregatedListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L172}
   /// [google.cloud.cpp.compute.v1.StoragePoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L705}
   ///
   // clang-format on
@@ -205,7 +207,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.DeleteStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L286}
+  /// [google.cloud.cpp.compute.storage_pools.v1.DeleteStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L280}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -262,7 +264,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.DeleteStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L286}
+  /// [google.cloud.cpp.compute.storage_pools.v1.DeleteStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L280}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -322,7 +324,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.GetStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L340}
+  /// [google.cloud.cpp.compute.storage_pools.v1.GetStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L334}
   /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L27}
   ///
   // clang-format on
@@ -355,7 +357,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.GetStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L340}
+  /// [google.cloud.cpp.compute.storage_pools.v1.GetStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L334}
   /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L27}
   ///
   // clang-format on
@@ -386,7 +388,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L322}
+  /// [google.cloud.cpp.compute.storage_pools.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L316}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -419,7 +421,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L322}
+  /// [google.cloud.cpp.compute.storage_pools.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L316}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -457,7 +459,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.InsertStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L354}
+  /// [google.cloud.cpp.compute.storage_pools.v1.InsertStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L348}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -514,7 +516,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.InsertStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L354}
+  /// [google.cloud.cpp.compute.storage_pools.v1.InsertStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L348}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -582,7 +584,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.ListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L498}
+  /// [google.cloud.cpp.compute.storage_pools.v1.ListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L485}
   /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L27}
   ///
   // clang-format on
@@ -623,7 +625,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.ListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L498}
+  /// [google.cloud.cpp.compute.storage_pools.v1.ListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L485}
   /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L27}
   ///
   // clang-format on
@@ -662,7 +664,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L390}
+  /// [google.cloud.cpp.compute.storage_pools.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L384}
   /// [google.cloud.cpp.compute.v1.StoragePoolDisk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L289}
   ///
   // clang-format on
@@ -703,7 +705,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L390}
+  /// [google.cloud.cpp.compute.storage_pools.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L384}
   /// [google.cloud.cpp.compute.v1.StoragePoolDisk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_161.proto#L289}
   ///
   // clang-format on
@@ -734,7 +736,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L602}
+  /// [google.cloud.cpp.compute.storage_pools.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L582}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -770,7 +772,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L602}
+  /// [google.cloud.cpp.compute.storage_pools.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L582}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -801,7 +803,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L620}
+  /// [google.cloud.cpp.compute.storage_pools.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L600}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -837,7 +839,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L620}
+  /// [google.cloud.cpp.compute.storage_pools.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L600}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -880,7 +882,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.UpdateStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L638}
+  /// [google.cloud.cpp.compute.storage_pools.v1.UpdateStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L618}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -942,7 +944,7 @@ class StoragePoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.storage_pools.v1.UpdateStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L638}
+  /// [google.cloud.cpp.compute.storage_pools.v1.UpdateStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L618}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

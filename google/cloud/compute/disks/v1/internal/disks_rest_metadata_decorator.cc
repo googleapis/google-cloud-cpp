@@ -396,6 +396,7 @@ future<Status> DisksRestMetadata::AsyncCancelOperation(
 void DisksRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
                                     Options const& options,
                                     std::vector<std::string> const& params) {
+  rest_context.AddHeader("x-goog-api-version", "2026-09-01");
   google::cloud::rest_internal::SetMetadata(rest_context, options, params,
                                             api_client_header_);
 }

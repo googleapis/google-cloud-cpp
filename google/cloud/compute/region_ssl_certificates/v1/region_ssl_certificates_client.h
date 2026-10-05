@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionSslCertificates resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates
 ///
+/// This client uses RegionSslCertificates version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -119,7 +121,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L90}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L91}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -172,7 +174,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L90}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L91}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -234,7 +236,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L126}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L127}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_156.proto#L59}
   ///
   // clang-format on
@@ -268,7 +270,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L126}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L127}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_156.proto#L59}
   ///
   // clang-format on
@@ -306,7 +308,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L141}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -364,7 +366,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L141}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -433,7 +435,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L177}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L178}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_156.proto#L59}
   ///
   // clang-format on
@@ -475,7 +477,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L177}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L178}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_156.proto#L59}
   ///
   // clang-format on

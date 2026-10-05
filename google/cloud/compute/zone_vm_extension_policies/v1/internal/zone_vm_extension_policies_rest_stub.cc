@@ -191,8 +191,6 @@ DefaultZoneVmExtensionPoliciesRestStub::ListZoneVmExtensionPolicies(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<

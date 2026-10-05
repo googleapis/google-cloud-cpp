@@ -59,8 +59,6 @@ DefaultRoutersRestStub::AggregatedListRouters(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params.push_back(
       {"service_project_number", request.service_project_number()});
   query_params =
@@ -302,8 +300,6 @@ DefaultRoutersRestStub::GetNatMappingInfo(
   query_params.push_back({"nat_name", request.nat_name()});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
@@ -423,8 +419,6 @@ DefaultRoutersRestStub::ListRouters(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
@@ -453,8 +447,6 @@ DefaultRoutersRestStub::ListBgpRoutes(
   query_params.push_back({"peer", request.peer()});
   query_params.push_back(
       {"policy_applied", (request.policy_applied() ? "1" : "0")});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params.push_back({"route_type", request.route_type()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -481,8 +473,6 @@ DefaultRoutersRestStub::ListNamedSets(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
@@ -508,8 +498,6 @@ DefaultRoutersRestStub::ListRoutePolicies(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<

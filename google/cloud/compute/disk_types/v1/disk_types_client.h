@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the diskTypes resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes
 ///
+/// This client uses DiskTypes version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -116,7 +118,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L75}
+  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L76}
   /// [google.cloud.cpp.compute.v1.DiskTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L288}
   ///
   // clang-format on
@@ -160,7 +162,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L75}
+  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L76}
   /// [google.cloud.cpp.compute.v1.DiskTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L288}
   ///
   // clang-format on
@@ -191,7 +193,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L190}
+  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L184}
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_036.proto#L44}
   ///
   // clang-format on
@@ -223,7 +225,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L190}
+  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L184}
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_036.proto#L44}
   ///
   // clang-format on
@@ -262,7 +264,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L204}
+  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L198}
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_036.proto#L44}
   ///
   // clang-format on
@@ -303,7 +305,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L204}
+  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L198}
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_036.proto#L44}
   ///
   // clang-format on

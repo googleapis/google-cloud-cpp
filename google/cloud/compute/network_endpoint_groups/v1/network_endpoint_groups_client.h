@@ -40,6 +40,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the networkEndpointGroups resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups
 ///
+/// This client uses NetworkEndpointGroups version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -123,7 +125,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AggregatedListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L174}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AggregatedListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L175}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L183}
   ///
   // clang-format on
@@ -168,7 +170,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AggregatedListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L174}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AggregatedListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L175}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L183}
   ///
   // clang-format on
@@ -210,7 +212,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L289}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -272,7 +274,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L289}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -344,7 +346,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L335}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -404,7 +406,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L335}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -477,7 +479,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L375}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L369}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -540,7 +542,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L375}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L369}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -601,7 +603,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L421}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L415}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L157}
   ///
   // clang-format on
@@ -634,7 +636,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L421}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L415}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L157}
   ///
   // clang-format on
@@ -688,7 +690,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L438}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -762,7 +764,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L438}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -834,7 +836,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L476}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L470}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L157}
   ///
   // clang-format on
@@ -876,7 +878,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L476}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L470}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L157}
   ///
   // clang-format on
@@ -919,7 +921,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L581}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L568}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L682}
   ///
   // clang-format on
@@ -965,7 +967,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L581}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L568}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L682}
   ///
   // clang-format on
@@ -996,7 +998,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L698}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L678}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -1032,7 +1034,7 @@ class NetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L698}
+  /// [google.cloud.cpp.compute.network_endpoint_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto#L678}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on

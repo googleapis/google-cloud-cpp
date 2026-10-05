@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the rollouts resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/rollouts
 ///
+/// This client uses Rollouts version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -112,7 +114,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.AdvanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L117}
+  /// [google.cloud.cpp.compute.rollouts.v1.AdvanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L118}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Advance(
@@ -165,7 +167,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.AdvanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L117}
+  /// [google.cloud.cpp.compute.rollouts.v1.AdvanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L118}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Advance(
@@ -228,7 +230,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L149}
+  /// [google.cloud.cpp.compute.rollouts.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
@@ -281,7 +283,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L149}
+  /// [google.cloud.cpp.compute.rollouts.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
@@ -344,7 +346,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.DeleteRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L185}
+  /// [google.cloud.cpp.compute.rollouts.v1.DeleteRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRollout(
@@ -397,7 +399,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.DeleteRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L185}
+  /// [google.cloud.cpp.compute.rollouts.v1.DeleteRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRollout(
@@ -455,7 +457,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.GetRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L214}
+  /// [google.cloud.cpp.compute.rollouts.v1.GetRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L215}
   /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_142.proto#L29}
   ///
   // clang-format on
@@ -487,7 +489,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.GetRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L214}
+  /// [google.cloud.cpp.compute.rollouts.v1.GetRolloutRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L215}
   /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_142.proto#L29}
   ///
   // clang-format on
@@ -524,7 +526,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.ListRolloutsRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L225}
+  /// [google.cloud.cpp.compute.rollouts.v1.ListRolloutsRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L226}
   /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_142.proto#L29}
   ///
   // clang-format on
@@ -564,7 +566,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.ListRolloutsRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L225}
+  /// [google.cloud.cpp.compute.rollouts.v1.ListRolloutsRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L226}
   /// [google.cloud.cpp.compute.v1.Rollout]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_142.proto#L29}
   ///
   // clang-format on
@@ -599,7 +601,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.PauseRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L326}
+  /// [google.cloud.cpp.compute.rollouts.v1.PauseRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Pause(
@@ -652,7 +654,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.PauseRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L326}
+  /// [google.cloud.cpp.compute.rollouts.v1.PauseRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Pause(
@@ -715,7 +717,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L360}
+  /// [google.cloud.cpp.compute.rollouts.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
@@ -768,7 +770,7 @@ class RolloutsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.rollouts.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L360}
+  /// [google.cloud.cpp.compute.rollouts.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/rollouts/v1/rollouts.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(

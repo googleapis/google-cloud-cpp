@@ -325,6 +325,62 @@ InterconnectsClient::SetLabels(
   return connection_->SetLabels(operation);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsClient::SetName(
+    std::string const& project, std::string const& interconnect,
+    google::cloud::cpp::compute::v1::InterconnectsSetNameRequest const&
+        interconnects_set_name_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::interconnects::v1::SetNameRequest request;
+  request.set_project(project);
+  request.set_interconnect(interconnect);
+  *request.mutable_interconnects_set_name_request_resource() =
+      interconnects_set_name_request_resource;
+  return connection_->SetName(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsClient::SetName(
+    NoAwaitTag, std::string const& project, std::string const& interconnect,
+    google::cloud::cpp::compute::v1::InterconnectsSetNameRequest const&
+        interconnects_set_name_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::interconnects::v1::SetNameRequest request;
+  request.set_project(project);
+  request.set_interconnect(interconnect);
+  *request.mutable_interconnects_set_name_request_resource() =
+      interconnects_set_name_request_resource;
+  return connection_->SetName(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsClient::SetName(
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetName(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsClient::SetName(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetName(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsClient::SetName(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetName(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnects_v1
 }  // namespace cloud

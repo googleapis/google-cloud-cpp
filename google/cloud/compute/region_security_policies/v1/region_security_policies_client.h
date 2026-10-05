@@ -40,6 +40,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionSecurityPolicies resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies
 ///
+/// This client uses RegionSecurityPolicies version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -121,7 +123,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L169}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L170}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -180,7 +182,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L169}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L170}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -246,7 +248,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L197}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -299,7 +301,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L197}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -359,7 +361,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L251}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L252}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_147.proto#L31}
   ///
   // clang-format on
@@ -391,7 +393,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L251}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L252}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_147.proto#L31}
   ///
   // clang-format on
@@ -421,7 +423,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L233}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L234}
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_147.proto#L504}
   ///
   // clang-format on
@@ -453,7 +455,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L233}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L234}
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_147.proto#L504}
   ///
   // clang-format on
@@ -491,7 +493,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L266}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -549,7 +551,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L266}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -618,7 +620,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L305}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L306}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_147.proto#L31}
   ///
   // clang-format on
@@ -660,7 +662,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L305}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L306}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_147.proto#L31}
   ///
   // clang-format on
@@ -704,7 +706,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L444}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L438}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -768,7 +770,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L444}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L438}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -837,7 +839,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L410}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L404}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -897,7 +899,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L410}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L404}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -963,7 +965,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L487}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L481}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1016,7 +1018,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L487}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L481}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1085,7 +1087,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L511}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L505}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -1146,7 +1148,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L511}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L505}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
