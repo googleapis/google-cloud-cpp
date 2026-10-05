@@ -78,6 +78,39 @@ storage::WritePayload TestPayload(std::size_t n) {
   return storage::WritePayload(std::string(n, 'A'));
 }
 
+/// Configures `mock` so every `Write()` and `Flush()` is recorded in
+/// `sequencer` (as `"Write" + tag` / `"Flush" + tag`) and counted in `*calls`.
+/// A successful `Flush()` advances `*persisted` by the payload size.
+void RecordWritesAndFlushes(MockAsyncWriterConnection& mock,
+                            AsyncSequencer<bool>& sequencer,
+                            std::shared_ptr<std::int64_t> const& persisted,
+                            std::shared_ptr<int> const& calls,
+                            std::string const& tag) {
+  EXPECT_CALL(mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(mock, PersistedState).WillRepeatedly([persisted] {
+    return MakePersistedState(*persisted);
+  });
+  EXPECT_CALL(mock, Write)
+      .WillRepeatedly([&sequencer, calls, tag](storage::WritePayload const&) {
+        ++*calls;
+        return sequencer.PushBack("Write" + tag).then([](auto) {
+          return Status{};
+        });
+      });
+  EXPECT_CALL(mock, Flush)
+      .WillRepeatedly(
+          [&sequencer, persisted, calls, tag](storage::WritePayload const& p) {
+            ++*calls;
+            auto const size = static_cast<std::int64_t>(p.size());
+            return sequencer.PushBack("Flush" + tag)
+                .then([persisted, size](auto f) {
+                  if (!f.get()) return TransientError();
+                  *persisted += size;
+                  return Status{};
+                });
+          });
+}
+
 TEST(WriteConnectionBuffered, FinalizeEmpty) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -2166,6 +2199,304 @@ TEST(WriteConnectionBuffered, FlushFuturesCompleteInOrderWithInlineCompletion) {
   ASSERT_TRUE(done1.is_ready());
   ASSERT_TRUE(done2.is_ready());
   EXPECT_THAT(completion_order, ElementsAre(1, 2));
+}
+
+/// @test Verify that a small `Write()` issued while a second `Flush()` is
+/// queued does not cancel that pending flush.
+TEST(WriteConnectionBuffered, SmallWriteDoesNotCancelQueuedFlush) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted = std::make_shared<std::int64_t>(0);
+  auto calls = std::make_shared<int>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock, sequencer, persisted, calls, "");
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto f1 = connection->Flush(TestPayload(1024));
+  auto f2 = connection->Flush(TestPayload(1024));
+  // Below the low-water mark: on its own this `Write()` would not need a flush.
+  auto w = connection->Write(TestPayload(1024));
+  ASSERT_TRUE(w.is_ready());
+  EXPECT_STATUS_OK(w.get());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(f1.is_ready());
+  EXPECT_STATUS_OK(f1.get());
+  ASSERT_FALSE(f2.is_ready());
+
+  // `f2` is still pending, so the remaining data must be flushed, not written.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(f2.is_ready());
+  EXPECT_STATUS_OK(f2.get());
+}
+
+/// @test Verify that a small `Write()` chained from a `Flush()` continuation
+/// does not cancel a second `Flush()` that is still pending.
+TEST(WriteConnectionBuffered, ChainedSmallWriteDoesNotCancelQueuedFlush) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted = std::make_shared<std::int64_t>(0);
+  auto calls = std::make_shared<int>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock, sequencer, persisted, calls, "");
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto f1 = connection->Flush(TestPayload(1024));
+  auto f2 = connection->Flush(TestPayload(1024));
+  future<Status> chained;
+  auto callback_done = f1.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    chained = connection->Write(TestPayload(1024));
+  });
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(callback_done.is_ready());
+  ASSERT_FALSE(f2.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(f2.is_ready());
+  EXPECT_STATUS_OK(f2.get());
+  EXPECT_STATUS_OK(chained.get());
+}
+
+/// @test Verify that `Write()` calls blocked at the high-water mark stay
+/// blocked, and the buffer keeps being flushed, until the buffer drops below
+/// the low-water mark.
+TEST(WriteConnectionBuffered, HwmWaitersStayBlockedUntilBelowLwm) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted = std::make_shared<std::int64_t>(0);
+  auto calls = std::make_shared<int>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock, sequencer, persisted, calls, "");
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto w1 = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(w1.is_ready());
+  auto w2 = connection->Write(TestPayload(20 * 1024));
+  ASSERT_FALSE(w2.is_ready());
+
+  // Persisting the first 32 KiB leaves 20 KiB buffered, which is still above
+  // the 16 KiB low-water mark.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  EXPECT_FALSE(w1.is_ready());
+  EXPECT_FALSE(w2.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(w1.is_ready());
+  EXPECT_STATUS_OK(w1.get());
+  ASSERT_TRUE(w2.is_ready());
+  EXPECT_STATUS_OK(w2.get());
+}
+
+/// @test Verify that an operation chained from a `Write()` blocked at the
+/// high-water mark is dispatched before the continuation returns.
+TEST(WriteConnectionBuffered, HwmWriteCallbackChainedOpDispatchedBeforeReturn) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted = std::make_shared<std::int64_t>(0);
+  auto calls = std::make_shared<int>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock, sequencer, persisted, calls, "");
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto w = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(w.is_ready());
+  future<Status> chained;
+  auto callback_done = w.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    chained = connection->Write(TestPayload(1024));
+    EXPECT_EQ(*calls, 2);
+  });
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(callback_done.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(chained.get());
+}
+
+/// @test Verify that an operation chained from a `Write()` blocked at the
+/// high-water mark is dispatched before the continuation returns when the
+/// buffer shrinks as part of a `Resume()`.
+TEST(WriteConnectionBuffered, HwmWriteCallbackChainedOpDispatchedAfterResume) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted1 = std::make_shared<std::int64_t>(0);
+  auto calls1 = std::make_shared<int>(0);
+  auto mock1 = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock1, sequencer, persisted1, calls1, "1");
+  // The resumed connection reports that all 32 KiB were persisted.
+  auto persisted2 = std::make_shared<std::int64_t>(32 * 1024);
+  auto calls2 = std::make_shared<int>(0);
+  auto mock2 = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock2, sequencer, persisted2, calls2, "2");
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&] {
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage::AsyncWriterConnection>(std::move(mock2))));
+  });
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock1), TestOptions());
+
+  auto w = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(w.is_ready());
+  future<Status> chained;
+  auto callback_done = w.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    chained = connection->Write(TestPayload(1024));
+    EXPECT_EQ(*calls2, 1);
+  });
+
+  // Fail the flush to trigger a `Resume()`.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(false);
+  ASSERT_TRUE(callback_done.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write2");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(chained.get());
+}
+
+/// @test Verify that a small `Write()` chained from a high-water mark
+/// continuation during a `Resume()` does not cancel a pending `Flush()`.
+TEST(WriteConnectionBuffered, ChainedSmallWriteAfterResumeKeepsPendingFlush) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted1 = std::make_shared<std::int64_t>(0);
+  auto calls1 = std::make_shared<int>(0);
+  auto mock1 = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock1, sequencer, persisted1, calls1, "1");
+  auto persisted2 = std::make_shared<std::int64_t>(32 * 1024);
+  auto calls2 = std::make_shared<int>(0);
+  auto mock2 = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock2, sequencer, persisted2, calls2, "2");
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&] {
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage::AsyncWriterConnection>(std::move(mock2))));
+  });
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock1), TestOptions());
+
+  auto w = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(w.is_ready());
+  auto flush = connection->Flush(TestPayload(1024));
+  future<Status> chained;
+  auto callback_done = w.then([&](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    chained = connection->Write(TestPayload(1024));
+  });
+
+  // Fail the flush. The resumed connection reports 32 KiB persisted, leaving
+  // 1 KiB (below the low-water mark) buffered for the pending `Flush()`.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(false);
+  ASSERT_TRUE(callback_done.is_ready());
+  ASSERT_FALSE(flush.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush2");
+  next.first.set_value(true);
+  ASSERT_TRUE(flush.is_ready());
+  EXPECT_STATUS_OK(flush.get());
+  EXPECT_STATUS_OK(chained.get());
+}
+
+/// @test Verify that a `Resume()` does not release `Write()` calls blocked at
+/// the high-water mark while the buffer is still above the low-water mark.
+TEST(WriteConnectionBuffered, HwmWaitersStayBlockedAfterResumeUntilBelowLwm) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted1 = std::make_shared<std::int64_t>(0);
+  auto calls1 = std::make_shared<int>(0);
+  auto mock1 = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock1, sequencer, persisted1, calls1, "1");
+  // The resumed connection reports that nothing was persisted.
+  auto persisted2 = std::make_shared<std::int64_t>(0);
+  auto calls2 = std::make_shared<int>(0);
+  auto mock2 = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock2, sequencer, persisted2, calls2, "2");
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&] {
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage::AsyncWriterConnection>(std::move(mock2))));
+  });
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock1), TestOptions());
+
+  auto w = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(w.is_ready());
+
+  // Fail the flush to trigger a `Resume()`. All 32 KiB are still buffered,
+  // which is above the 16 KiB low-water mark, so `w` must stay blocked.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(false);
+  EXPECT_FALSE(w.is_ready());
+
+  // Once the resumed connection persists the data, `w` is released.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush2");
+  next.first.set_value(true);
+  ASSERT_TRUE(w.is_ready());
+  EXPECT_STATUS_OK(w.get());
+}
+
+/// @test Verify that, with a zero low-water mark, a `Write()` blocked at the
+/// high-water mark is released once the buffer drains, and that the writer
+/// does not keep issuing empty flushes afterwards.
+TEST(WriteConnectionBuffered, HwmWaiterReleasedWhenBufferDrainsWithZeroLwm) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted = std::make_shared<std::int64_t>(0);
+  auto calls = std::make_shared<int>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  RecordWritesAndFlushes(*mock, sequencer, persisted, calls, "");
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock),
+      Options{}
+          .set<storage::BufferedUploadLwmOption>(0)
+          .set<storage::BufferedUploadHwmOption>(1024));
+
+  auto w = connection->Write(TestPayload(1024));
+  ASSERT_FALSE(w.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(w.is_ready());
+  EXPECT_STATUS_OK(w.get());
+  // The buffer is empty and no `Flush()` is pending, so no further calls.
+  EXPECT_EQ(*calls, 1);
 }
 
 }  // namespace

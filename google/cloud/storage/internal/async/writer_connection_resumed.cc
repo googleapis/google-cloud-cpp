@@ -224,7 +224,11 @@ class AsyncWriterConnectionResumedState
                                bool flush = false) {
     if (!resume_status_.ok()) return make_ready_future(resume_status_);
     auto const buffer_size = resend_buffer_.size();
-    flush_ = (buffer_size >= buffer_size_lwm_) || flush;
+    // `NeedsFlush()` stays true while `Flush()` calls are pending, so a small
+    // `Write()`, possibly chained from a callback, cannot turn a queued flush
+    // into a plain write. The explicit low-water mark check preserves the
+    // existing behavior for an empty `Write()` when the low-water mark is 0.
+    flush_ = flush || NeedsFlush(lk) || buffer_size >= buffer_size_lwm_;
     auto result = make_ready_future(Status{});
     if (buffer_size >= buffer_size_hwm_) {
       auto p = promise<Status>();
@@ -363,9 +367,27 @@ class AsyncWriterConnectionResumedState
 
   auto ClearHandlersIfEmpty(std::unique_lock<std::mutex> const& /* lk */) {
     decltype(flush_handlers_) tmp;
-    if (resend_buffer_.size() >= buffer_size_lwm_) return tmp;
+    // Release the waiters once the buffer is empty or below the low-water
+    // mark. The emptiness check matters when the low-water mark is 0.
+    if (!resend_buffer_.empty() && resend_buffer_.size() >= buffer_size_lwm_) {
+      return tmp;
+    }
     flush_handlers_.swap(tmp);
     return tmp;
+  }
+
+  /**
+   * Returns true if the write loop must send data with `Flush()`.
+   *
+   * That is the case while `Flush()` calls are pending, or while the buffer is
+   * non-empty and at or above the low-water mark. An empty buffer only needs a
+   * flush if a `Flush()` is pending, which avoids an endless loop of empty
+   * flushes when the low-water mark is 0.
+   */
+  bool NeedsFlush(std::unique_lock<std::mutex> const& /* lk */) const {
+    return !pending_flush_promises_.empty() ||
+           (!resend_buffer_.empty() &&
+            resend_buffer_.size() >= buffer_size_lwm_);
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size,
@@ -415,7 +437,7 @@ class AsyncWriterConnectionResumedState
       // handler below sees an idle writer and is dispatched immediately, and
       // `state_` is never modified without holding `mu_`.
       state_ = State::kIdle;
-      lk.unlock();  // Release lock before notifying.
+      lk.unlock();  // Release lock before notifying
       // The notifications are deferred until the lock is released, as they
       // might call back and try to acquire the lock.
       for (auto const& h : handlers) {
@@ -615,7 +637,9 @@ class AsyncWriterConnectionResumedState
                   std::int64_t persisted_size) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
     // Do NOT reset finalize_ or finalizing_ here.
-    auto handlers = ClearHandlers(lk);
+    // Only release the high-water mark waiters once the buffer drops below the
+    // low-water mark (or is empty).
+    auto handlers = ClearHandlersIfEmpty(lk);
     std::vector<promise<Status>> flushes_to_complete;
     while (!pending_flush_promises_.empty() &&
            pending_flush_promises_.front().target_offset <= persisted_size) {
@@ -623,14 +647,14 @@ class AsyncWriterConnectionResumedState
           std::move(pending_flush_promises_.front().p));
       pending_flush_promises_.pop_front();
     }
-    if (pending_flush_promises_.empty()) {
-      flush_ = false;
-    }
+    // Keep flushing while `NeedsFlush()` holds, so any high-water mark waiters
+    // not released above are released by a later flush.
+    flush_ = NeedsFlush(lk);
     // Mark the writer idle under the lock so any operation chained from a
     // callback below sees an idle writer and is dispatched immediately, and
     // `state_` is never modified without holding `mu_`.
     state_ = State::kIdle;
-    lk.unlock();  // Release lock before notifying.
+    lk.unlock();  // Release lock before notifying
     // Notify handlers and satisfied flush promises before restarting the
     // write loop so callbacks cannot be overtaken by a queued flush that
     // completes inline.
