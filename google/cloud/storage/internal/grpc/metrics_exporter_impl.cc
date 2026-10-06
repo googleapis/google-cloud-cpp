@@ -33,8 +33,10 @@
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
+#include <map>
+#include <memory>
 #include <mutex>
-#include <set>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -63,11 +65,27 @@ class ExporterRegistry {
     return *exporters;
   }
 
-  // Returns `true` if @p authority is newly registered, `false` if @p authority
-  // was already registered.
-  bool Register(std::string authority) {
+  // Registers a meter provider for @p authority if none exists yet.
+  //
+  // Holding `mu_` across @p factory ensures that a concurrent caller for the
+  // same authority waits until the provider is stored and registered with
+  // gRPC, rather than observing an uninitialized entry through `Find()`.
+  template <typename F>
+  void Register(std::string const& authority, F&& factory) {
     std::unique_lock<std::mutex> lk(mu_);
-    return known_authority_.insert(std::move(authority)).second;
+    auto const l = known_authority_.find(authority);
+    if (l != known_authority_.end()) return;
+    known_authority_.emplace(authority, std::forward<F>(factory)());
+  }
+
+  // Returns the provider stored for @p authority, or `nullptr` if
+  // @p authority is unknown.
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> Find(
+      std::string const& authority) {
+    std::unique_lock<std::mutex> lk(mu_);
+    auto const l = known_authority_.find(authority);
+    if (l == known_authority_.end()) return nullptr;
+    return l->second;
   }
 
   void Clear() {
@@ -75,7 +93,8 @@ class ExporterRegistry {
     known_authority_.clear();
   }
 
-  std::set<std::string> known_authority_;
+  std::map<std::string, std::shared_ptr<opentelemetry::metrics::MeterProvider>>
+      known_authority_;
   std::mutex mu_;
 };
 
@@ -104,51 +123,62 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
 }
 
 void EnableGrpcMetricsImpl(ExporterConfig config) {
-  if (!ExporterRegistry::Singleton().Register(config.authority)) return;
+  // `config.authority` is moved into `scope_filter` below, so keep a copy.
+  std::string const authority = config.authority;
+  ExporterRegistry::Singleton().Register(authority, [&] {
+    auto exporter = otel::MakeMonitoringExporter(
+        std::move(config.project),
+        monitoring_v3::MakeMetricServiceConnection(
+            std::move(config.exporter_connection_options)),
+        config.exporter_options);
 
-  auto exporter = otel::MakeMonitoringExporter(
-      std::move(config.project),
-      monitoring_v3::MakeMetricServiceConnection(
-          std::move(config.exporter_connection_options)),
-      config.exporter_options);
+    auto provider = MakeGrpcMeterProvider(std::move(exporter),
+                                          std::move(config.reader_options));
 
-  auto provider = MakeGrpcMeterProvider(std::move(exporter),
-                                        std::move(config.reader_options));
+    auto const metrics = std::vector<absl::string_view>{
+        absl::string_view{"grpc.lb.wrr.rr_fallback"},
+        absl::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
+        absl::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
+        absl::string_view{"grpc.lb.wrr.endpoint_weights"},
+        absl::string_view{"grpc.xds_client.connected"},
+        absl::string_view{"grpc.xds_client.server_failure"},
+        absl::string_view{"grpc.xds_client.resource_updates_valid"},
+        absl::string_view{"grpc.xds_client.resource_updates_invalid"},
+        absl::string_view{"grpc.xds_client.resources"},
+        absl::string_view{"grpc.lb.rls.cache_size"},
+        absl::string_view{"grpc.lb.rls.cache_entries"},
+        absl::string_view{"grpc.lb.rls.default_target_picks"},
+        absl::string_view{"grpc.lb.rls.target_picks"},
+        absl::string_view{"grpc.lb.rls.failed_picks"},
+    };
+    auto scope_filter =
+        [authority = std::move(config.authority)](
+            grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
+          return scope.default_authority() == authority;
+        };
+    auto status =
+        grpc::OpenTelemetryPluginBuilder()
+            .SetMeterProvider(provider)
+            .EnableMetrics(metrics)
+            .AddOptionalLabel(absl::string_view("grpc.lb.locality"))
+            .SetGenericMethodAttributeFilter([](absl::string_view target) {
+              return absl::StartsWith(target, "google.storage.v2");
+            })
+            .SetChannelScopeFilter(std::move(scope_filter))
+            .BuildAndRegisterGlobal();
+    if (!status.ok()) {
+      GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
+    }
+    // Retain the provider. Instruments created by this library, rather than by
+    // gRPC, look it up through `FindMeterProvider()` so both share one
+    // exporter.
+    return provider;
+  });
+}
 
-  auto const metrics = std::vector<absl::string_view>{
-      absl::string_view{"grpc.lb.wrr.rr_fallback"},
-      absl::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
-      absl::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
-      absl::string_view{"grpc.lb.wrr.endpoint_weights"},
-      absl::string_view{"grpc.xds_client.connected"},
-      absl::string_view{"grpc.xds_client.server_failure"},
-      absl::string_view{"grpc.xds_client.resource_updates_valid"},
-      absl::string_view{"grpc.xds_client.resource_updates_invalid"},
-      absl::string_view{"grpc.xds_client.resources"},
-      absl::string_view{"grpc.lb.rls.cache_size"},
-      absl::string_view{"grpc.lb.rls.cache_entries"},
-      absl::string_view{"grpc.lb.rls.default_target_picks"},
-      absl::string_view{"grpc.lb.rls.target_picks"},
-      absl::string_view{"grpc.lb.rls.failed_picks"},
-  };
-  auto scope_filter =
-      [authority = std::move(config.authority)](
-          grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
-        return scope.default_authority() == authority;
-      };
-  auto status =
-      grpc::OpenTelemetryPluginBuilder()
-          .SetMeterProvider(provider)
-          .EnableMetrics(metrics)
-          .AddOptionalLabel(absl::string_view("grpc.lb.locality"))
-          .SetGenericMethodAttributeFilter([](absl::string_view target) {
-            return absl::StartsWith(target, "google.storage.v2");
-          })
-          .SetChannelScopeFilter(std::move(scope_filter))
-          .BuildAndRegisterGlobal();
-  if (!status.ok()) {
-    GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
-  }
+std::shared_ptr<opentelemetry::metrics::MeterProvider> FindMeterProvider(
+    std::string const& authority) {
+  return ExporterRegistry::Singleton().Find(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

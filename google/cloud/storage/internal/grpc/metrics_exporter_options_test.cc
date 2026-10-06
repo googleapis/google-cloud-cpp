@@ -27,6 +27,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <regex>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -38,6 +39,7 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::Pair;
 
 TEST(MetricsExporterConnectionOptions, DefaultEndpoint) {
@@ -182,6 +184,41 @@ TEST(MetricsExporterOptions, DefaultMonitoredResource) {
   auto expected = google::api::MonitoredResource{};
   ASSERT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
   EXPECT_THAT(mr, IsProtoEqual(expected));
+}
+
+/// @test Verify the formatter routes instruments to the right namespace.
+///
+/// gRPC's own instruments stay customer-visible under `client/`, while this
+/// library's opt into `internal/client/`. Only a leading prefix may route, so
+/// a gRPC instrument cannot reach the internal namespace by accident.
+TEST(MetricsExporterOptions, MetricNameFormatter) {
+  auto actual = MetricsExporterOptions(
+      Project("test-project"),
+      opentelemetry::sdk::resource::Resource::Create({}));
+  ASSERT_TRUE(actual.has<otel::MetricNameFormatterOption>());
+  auto const formatter = actual.get<otel::MetricNameFormatterOption>();
+
+  struct TestCase {
+    std::string input;
+    std::string expected;
+  } const cases[] = {
+      // gRPC's instruments are customer-visible, and keep the `client/`
+      // namespace. Note that `.` becomes `/`.
+      {"grpc.client.attempt.duration",
+       "storage.googleapis.com/client/grpc/client/attempt/duration"},
+      // Instruments created by this library opt into the internal namespace by
+      // naming themselves `internal/client/<name>`.
+      {"internal/client/channel_creation_latency",
+       "storage.googleapis.com/internal/client/channel_creation_latency"},
+      // Only a leading prefix counts, otherwise a gRPC instrument could
+      // accidentally land in the internal namespace.
+      {"client/internal/client/duration",
+       "storage.googleapis.com/client/client/internal/client/duration"},
+  };
+  for (auto const& t : cases) {
+    SCOPED_TRACE("Testing with " + t.input);
+    EXPECT_THAT(formatter(t.input), Eq(t.expected));
+  }
 }
 
 }  // namespace

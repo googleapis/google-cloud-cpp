@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc/channel_metrics.h"
 #include "google/cloud/storage/internal/grpc/channel_telemetry.h"
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
@@ -126,7 +127,7 @@ CreateStorageStub(google::cloud::CompletionQueue cq, Options const& options) {
     (void)StartChannelTelemetry(
         google::cloud::CompletionQueue(std::move(impl)), refresh->channels(),
         DetectTransportType(options.get<EndpointOption>()), start,
-        kDefaultChannelReadyTimeout);
+        kDefaultChannelReadyTimeout, MakeChannelMetricsCallback(options));
   }
   return std::make_pair(std::move(refresh), std::move(p.second));
 }

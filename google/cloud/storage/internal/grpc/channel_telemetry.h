@@ -22,6 +22,7 @@
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
+#include <functional>
 #include <memory>
 #include <string_view>
 #include <vector>
@@ -82,6 +83,19 @@ void LogChannelReady(TransportType transport,
 auto constexpr kDefaultChannelReadyTimeout = std::chrono::seconds(30);
 
 /**
+ * Invoked with the elapsed time once the first channel becomes ready.
+ *
+ * Only successful connections are reported. The callback may be empty, in
+ * which case nothing is recorded. It runs on a completion queue thread.
+ *
+ * This is a seam: it keeps the OpenTelemetry dependency out of this header,
+ * which is included from translation units compiled without
+ * `GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS`.
+ */
+using ChannelReadyCallback =
+    std::function<void(TransportType, std::chrono::steady_clock::duration)>;
+
+/**
  * Asynchronously reports how long the first channel takes to become ready.
  *
  * Production callers pass `kDefaultChannelReadyTimeout` as @p timeout. Returns
@@ -92,7 +106,7 @@ future<void> StartChannelTelemetry(
     CompletionQueue cq,
     std::vector<std::shared_ptr<grpc::Channel>> const& channels,
     TransportType transport, std::chrono::steady_clock::time_point start,
-    std::chrono::milliseconds timeout);
+    std::chrono::milliseconds timeout, ChannelReadyCallback on_ready);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

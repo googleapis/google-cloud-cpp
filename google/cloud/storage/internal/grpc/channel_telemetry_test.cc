@@ -201,12 +201,17 @@ TEST(ChannelTelemetry, StartChannelTelemetryWithoutChannels) {
   // With no channels there is nothing to observe, and nothing to report.
   StartChannelTelemetry(cq, {}, TransportType::kCloudPath,
                         std::chrono::steady_clock::now(),
-                        kDefaultChannelReadyTimeout)
+                        kDefaultChannelReadyTimeout, /*on_ready=*/{})
       .get();
   EXPECT_THAT(log.ExtractLines(), Each(Not(HasSubstr("channel [0]"))));
 }
 
-/// @test Verify a channel that becomes ready logs its transport and latency.
+/// @test Verify a channel that becomes ready logs its transport and invokes
+/// `on_ready`.
+///
+/// Connects an idle channel to an in-process gRPC server so the `status.ok()`
+/// branch of `StartChannelTelemetry()` and its latency callback are exercised
+/// end-to-end.
 TEST(ChannelTelemetry, StartChannelTelemetryReportsSuccess) {
   grpc::ServerBuilder builder;
   grpc::AsyncGenericService generic_service;
@@ -245,22 +250,35 @@ TEST(ChannelTelemetry, StartChannelTelemetryReportsSuccess) {
   // The pool shuts down and joins its completion queue threads in its
   // destructor, so they are cleaned up even if an assertion below throws.
   internal::AutomaticallyCreatedBackgroundThreads pool;
+  int recorded = 0;
+  TransportType recorded_transport = TransportType::kCloudPath;
   StartChannelTelemetry(
       pool.cq(), channels, TransportType::kDirectPathInterconnect,
-      std::chrono::steady_clock::now(), kDefaultChannelReadyTimeout)
+      std::chrono::steady_clock::now(), kDefaultChannelReadyTimeout,
+      [&recorded, &recorded_transport](TransportType t,
+                                       std::chrono::steady_clock::duration) {
+        ++recorded;
+        recorded_transport = t;
+      })
       .get();
 
   server->Shutdown();
   srv_cq->Shutdown();
   srv_thread.join();
 
+  EXPECT_EQ(recorded, 1);
+  EXPECT_EQ(recorded_transport, TransportType::kDirectPathInterconnect);
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("gRPC channel [0] is ready"),
                              HasSubstr("transport_type=DirectPathInterconnect"),
                              HasSubstr("elapsed_ms="))));
 }
 
-/// @test Verify a channel that never connects still logs its outcome.
+/// @test Verify a channel that never connects is reported, and not recorded.
+///
+/// This is the timeout path: the wait ends with `kDeadlineExceeded` rather
+/// than success, so the outcome must still reach the log while the latency
+/// recorder stays untouched.
 TEST(ChannelTelemetry, StartChannelTelemetryReportsFailures) {
   testing_util::ScopedLog log;
   // There is no server at this address, so the channel never becomes ready and
@@ -269,11 +287,18 @@ TEST(ChannelTelemetry, StartChannelTelemetryReportsFailures) {
   std::vector<std::shared_ptr<grpc::Channel>> const channels{
       grpc::CreateChannel("localhost:1", grpc::InsecureChannelCredentials())};
   internal::AutomaticallyCreatedBackgroundThreads pool;
+  // A failed connection has no meaningful latency, so the recorder must not
+  // run. Recording it would skew the histogram towards the timeout value.
+  int recorded = 0;
   StartChannelTelemetry(
       pool.cq(), channels, TransportType::kDirectPathInterconnect,
-      std::chrono::steady_clock::now(), std::chrono::milliseconds(100))
+      std::chrono::steady_clock::now(), std::chrono::milliseconds(100),
+      [&recorded](TransportType, std::chrono::steady_clock::duration) {
+        ++recorded;
+      })
       .get();
 
+  EXPECT_EQ(recorded, 0);
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("did not become ready"),
@@ -290,14 +315,21 @@ TEST(ChannelTelemetry, StartChannelTelemetryDoesNotExtendChannelLifetime) {
   // There is no server at this address, so the channel never becomes ready.
   std::vector<std::shared_ptr<grpc::Channel>> channels{
       grpc::CreateChannel("localhost:1", grpc::InsecureChannelCredentials())};
+  // An abandoned connection attempt has no meaningful latency. Declared before
+  // `pool` so it outlives any continuation that might still reference it.
+  int recorded = 0;
   internal::AutomaticallyCreatedBackgroundThreads pool;
   future<void> done = StartChannelTelemetry(
       pool.cq(), channels, TransportType::kDirectPathInterconnect,
-      std::chrono::steady_clock::now(), kDefaultChannelReadyTimeout);
+      std::chrono::steady_clock::now(), kDefaultChannelReadyTimeout,
+      [&recorded](TransportType, std::chrono::steady_clock::duration) {
+        ++recorded;
+      });
   // Release the last reference to the channel, as destroying the client does.
   channels.clear();
   ASSERT_EQ(done.wait_for(std::chrono::seconds(5)), std::future_status::ready);
 
+  EXPECT_EQ(recorded, 0);
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("did not become ready"),
                              HasSubstr("CANCELLED"))));

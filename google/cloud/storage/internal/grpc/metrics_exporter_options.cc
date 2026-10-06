@@ -19,6 +19,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/match.h"
 #include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/host_attributes.h>
@@ -76,6 +77,12 @@ Options MetricsExporterOptions(
       .set<otel::ServiceTimeSeriesOption>(true)
       .set<otel::MetricNameFormatterOption>([](std::string s) {
         std::replace(s.begin(), s.end(), '.', '/');
+        // Instruments created by this library opt into the internal namespace
+        // by naming themselves `internal/client/<name>`. Everything else comes
+        // from gRPC and keeps the customer-visible `client/` namespace.
+        if (absl::StartsWith(s, kInternalMetricPrefix)) {
+          return "storage.googleapis.com/" + std::move(s);
+        }
         return "storage.googleapis.com/client/" + std::move(s);
       })
       .set<otel::MonitoredResourceOption>(std::move(monitored_resource));

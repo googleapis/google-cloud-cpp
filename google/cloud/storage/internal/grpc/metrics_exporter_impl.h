@@ -20,8 +20,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
+#include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <memory>
 #include <optional>
 #include <string>
 
@@ -44,6 +46,21 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
     Options const& options);
 
 void EnableGrpcMetricsImpl(ExporterConfig config);
+
+/**
+ * Returns the meter provider created for @p authority, or `nullptr`.
+ *
+ * `EnableGrpcMetricsImpl()` creates at most one provider per authority and
+ * hands it to gRPC. Instruments created by this library reuse it, so they
+ * inherit the customer's opt-out, export period, and monitoring project
+ * instead of needing a second exporter.
+ *
+ * Returns `nullptr` when metrics are disabled, when no monitoring project
+ * could be determined, or when `EnableGrpcMetricsImpl()` has not run for
+ * @p authority.
+ */
+std::shared_ptr<opentelemetry::metrics::MeterProvider> FindMeterProvider(
+    std::string const& authority);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

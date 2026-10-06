@@ -215,7 +215,7 @@ future<void> StartChannelTelemetry(
     CompletionQueue cq,
     std::vector<std::shared_ptr<grpc::Channel>> const& channels,
     TransportType transport, std::chrono::steady_clock::time_point start,
-    std::chrono::milliseconds timeout) {
+    std::chrono::milliseconds timeout, ChannelReadyCallback on_ready) {
   if (channels.empty()) return make_ready_future();
   // We create hundreds of channels in some VMs. Observing only the first
   // channel reports the time to the first usable connection without consuming
@@ -229,10 +229,16 @@ future<void> StartChannelTelemetry(
       // The continuation captures values only. It holds no reference to the
       // stub, the channel refresh loop, or the completion queue, so it cannot
       // create an ownership cycle and needs no `std::weak_ptr`.
-      .then([transport, start](future<Status> f) {
-        LogChannelReady(transport, std::chrono::steady_clock::now() - start,
-                        f.get());
-      });
+      .then(
+          [transport, start, on_ready = std::move(on_ready)](future<Status> f) {
+            std::chrono::steady_clock::duration const elapsed =
+                std::chrono::steady_clock::now() - start;
+            Status const status = f.get();
+            LogChannelReady(transport, elapsed, status);
+            // A failed or abandoned connection attempt has no meaningful
+            // latency, and recording it would skew the histogram.
+            if (status.ok() && on_ready) on_ready(transport, elapsed);
+          });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
