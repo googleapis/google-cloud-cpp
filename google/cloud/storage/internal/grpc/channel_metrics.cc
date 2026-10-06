@@ -20,7 +20,6 @@
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/sync_instruments.h>
@@ -28,6 +27,7 @@
 #include <opentelemetry/nostd/string_view.h>
 #include <chrono>
 #include <memory>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -67,7 +67,7 @@ ChannelReadyCallback MakeChannelMetricsCallback(
     double const seconds =
         std::chrono::duration_cast<std::chrono::duration<double>>(elapsed)
             .count();
-    absl::string_view const transport_name = ToString(transport);
+    std::string_view const transport_name = ToString(transport);
     histogram->Record(seconds,
                       {{kTransportTypeLabel,
                         opentelemetry::nostd::string_view(
