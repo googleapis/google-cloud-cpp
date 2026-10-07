@@ -15,18 +15,27 @@
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/storage/internal/grpc/channel_metrics.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/channel_telemetry.h"
+#include "google/cloud/storage/internal/grpc/default_options.h"
+#include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/storage/internal/grpc/metrics_histograms.h"
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
+#include <opentelemetry/sdk/resource/resource.h>
 #include <atomic>
 #include <chrono>
+#include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <thread>
 #include <utility>
@@ -38,11 +47,16 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::MockMeter;
 using ::google::cloud::testing_util::MockMeterProvider;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::AllOf;
 using ::testing::AtLeast;
+using ::testing::ByMove;
 using ::testing::Contains;
+using ::testing::DoubleNear;
 using ::testing::ElementsAreArray;
+using ::testing::Ge;
 using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::ResultOf;
@@ -89,6 +103,28 @@ auto MatchesLatencyBoundaries() {
       ElementsAreArray(MakeLatencyHistogramBoundaries()));
 }
 
+/// Matches a histogram whose every recorded value is @p expected_seconds.
+///
+/// The reader uses cumulative temporality and the test records the same value
+/// until the first export, so `sum_` is a multiple of the value rather than
+/// the value itself. Checking the mean catches a wrong duration-to-seconds
+/// conversion, which the bucket boundaries alone would not.
+auto MatchesRecordedSeconds(double expected_seconds) {
+  return AllOf(
+      ResultOf(
+          "count",
+          [](opentelemetry::sdk::metrics::HistogramPointData const& hpd) {
+            return hpd.count_;
+          },
+          Ge(std::uint64_t{1})),
+      ResultOf(
+          "mean of recorded values",
+          [](opentelemetry::sdk::metrics::HistogramPointData const& hpd) {
+            return std::get<double>(hpd.sum_) / static_cast<double>(hpd.count_);
+          },
+          DoubleNear(expected_seconds, 1e-9)));
+}
+
 auto MatchesTransportType(std::string value) {
   return ResultOf(
       "transport_type attribute",
@@ -101,7 +137,7 @@ auto MatchesTransportType(std::string value) {
       std::move(value));
 }
 
-auto ExpectedPointData(std::string transport_type) {
+auto ExpectedPointData(std::string transport_type, double expected_seconds) {
   return AllOf(
       MatchesTransportType(std::move(transport_type)),
       ResultOf(
@@ -110,7 +146,8 @@ auto ExpectedPointData(std::string transport_type) {
             return pda.point_data;
           },
           VariantWith<opentelemetry::sdk::metrics::HistogramPointData>(
-              MatchesLatencyBoundaries())));
+              AllOf(MatchesLatencyBoundaries(),
+                    MatchesRecordedSeconds(expected_seconds)))));
 }
 
 template <typename Matcher>
@@ -140,6 +177,15 @@ auto MatchesInstrumentName(std::string name) {
         return md.instrument_descriptor.name_;
       },
       std::move(name));
+}
+
+auto MatchesInstrumentUnit(std::string unit) {
+  return ResultOf(
+      "instrument descriptor unit",
+      [](opentelemetry::sdk::metrics::MetricData const& md) {
+        return md.instrument_descriptor.unit_;
+      },
+      std::move(unit));
 }
 
 auto MetricDataEmpty() {
@@ -184,6 +230,27 @@ TEST(ChannelMetrics, NullMeterYieldsEmptyCallback) {
   EXPECT_FALSE(MakeChannelMetricsCallback(provider));
 }
 
+/// @test Verify a meter that returns a null histogram yields no callback.
+///
+/// `Meter::CreateDoubleHistogram()` returns an owning pointer with no
+/// non-null guarantee. Returning a callback would defer the null dereference
+/// to the completion queue thread, once the channel becomes ready.
+TEST(ChannelMetrics, NullHistogramYieldsEmptyCallback) {
+  auto mock_meter = std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce(
+          Return(ByMove(opentelemetry::nostd::unique_ptr<
+                        opentelemetry::metrics::Histogram<double>>{nullptr})));
+  auto mock = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock, GetMeter)
+      .WillOnce(Return(
+          opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>{
+              mock_meter}));
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider =
+      std::move(mock);
+  EXPECT_FALSE(MakeChannelMetricsCallback(provider));
+}
+
 /// @test Verify an authority with no registered provider yields no callback.
 ///
 /// `EnableGrpcMetricsImpl()` never ran for this authority, which is what
@@ -191,16 +258,58 @@ TEST(ChannelMetrics, NullMeterYieldsEmptyCallback) {
 /// can be determined.
 TEST(ChannelMetrics, UnknownAuthorityYieldsEmptyCallback) {
   Options const options =
-      Options{}.set<AuthorityOption>("test-only-unknown.example.com");
+      Options{}
+          .set<AuthorityOption>("test-only-unknown.example.com")
+          .set<storage_experimental::EnableGrpcMetricsOption>(true);
   EXPECT_FALSE(MakeChannelMetricsCallback(options));
+}
+
+/// @test Verify a client's own opt-out wins over a registered provider.
+///
+/// The registry is process-wide and keyed by authority. Once any client
+/// enables metrics for an authority, a later client for the same authority
+/// that sets `EnableGrpcMetricsOption(false)` must still record nothing,
+/// even though `FindMeterProvider()` would succeed.
+TEST(ChannelMetrics, RegisteredAuthorityHonorsOption) {
+  // The registry is process-wide, so use an authority unique to this test.
+  std::string const authority = "test-only-registered.example.com";
+  ScopedEnvironment const env("GOOGLE_CLOUD_PROJECT", std::nullopt);
+  Options const base = DefaultOptionsGrpc(
+      Options{}
+          .set<AuthorityOption>(authority)
+          .set<storage::ProjectIdOption>("test-project")
+          .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+              "unused",
+              std::chrono::system_clock::now() + std::chrono::minutes(15))));
+  std::optional<ExporterConfig> config = MakeMeterProviderConfig(
+      opentelemetry::sdk::resource::Resource::Create({}), base);
+  ASSERT_TRUE(config.has_value());
+  EnableGrpcMetricsImpl(*std::move(config));
+  ASSERT_TRUE(FindMeterProvider(authority));
+
+  struct TestCase {
+    bool enabled;
+    bool expect_callback;
+  } const cases[] = {{true, true}, {false, false}};
+  for (auto const& t : cases) {
+    SCOPED_TRACE(std::string("EnableGrpcMetricsOption=") +
+                 (t.enabled ? "true" : "false"));
+    Options options = base;
+    options.set<storage_experimental::EnableGrpcMetricsOption>(t.enabled);
+    EXPECT_EQ(static_cast<bool>(MakeChannelMetricsCallback(options)),
+              t.expect_callback);
+  }
 }
 
 /// @test Verify a recorded latency reaches the exporter as a histogram.
 ///
-/// This is the end-to-end path: instrument name, the `transport_type` label,
-/// and the latency bucket boundaries are all part of the contract with Cloud
-/// Monitoring, so each is asserted rather than assumed.
+/// This is the end-to-end path: instrument name and unit, the
+/// `transport_type` label, the latency bucket boundaries, and the recorded
+/// value in seconds are all part of the contract with Cloud Monitoring, so
+/// each is asserted rather than assumed.
 TEST(ChannelMetrics, RecordsChannelCreationLatency) {
+  auto constexpr kElapsed = std::chrono::milliseconds(250);
+  auto constexpr kExpectedSeconds = 0.25;
   std::atomic<int> export_count{0};
   auto mock = std::make_unique<MockPushMetricExporter>();
   EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
@@ -220,8 +329,9 @@ TEST(ChannelMetrics, RecordsChannelCreationLatency) {
                 data.scope_metric_data_,
                 Contains(WithMetricsData(Contains(AllOf(
                     MatchesInstrumentName(ChannelCreationLatencyInstrument()),
-                    WithPointData(Contains(
-                        ExpectedPointData("DirectPathInterconnect"))))))));
+                    MatchesInstrumentUnit("s"),
+                    WithPointData(Contains(ExpectedPointData(
+                        "DirectPathInterconnect", kExpectedSeconds))))))));
             ++export_count;
             return opentelemetry::sdk::common::ExportResult::kSuccess;
           });
@@ -236,8 +346,7 @@ TEST(ChannelMetrics, RecordsChannelCreationLatency) {
     // data. We do 50 iterations to minimize flakes: each iteration should be
     // enough to succeed, so we are giving this 50 chances to succeed.
     for (int i = 0; i != 50 && export_count.load() == 0; ++i) {
-      callback(TransportType::kDirectPathInterconnect,
-               std::chrono::milliseconds(250));
+      callback(TransportType::kDirectPathInterconnect, kElapsed);
       std::this_thread::sleep_for(kExportInterval);
     }
   }

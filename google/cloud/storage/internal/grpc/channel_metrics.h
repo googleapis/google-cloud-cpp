@@ -45,9 +45,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Cloud Storage service namespace this metric belongs to.
  *
  * Returns an empty callback when the library is built without
- * `GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS`, when the customer disabled
- * metrics, or when no meter provider exists for the authority in @p options
- * (for example, when running outside Google Cloud).
+ * `GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS`, when @p options disables
+ * `EnableGrpcMetricsOption`, or when no meter provider exists for the
+ * authority in @p options (for example, when running outside Google Cloud).
+ *
+ * The option is checked here, and not only in `EnableGrpcMetrics()`, because
+ * the provider registry is process-wide: an earlier client may have enabled
+ * metrics for the same authority, and this client's opt-out must still win.
  */
 ChannelReadyCallback MakeChannelMetricsCallback(Options const& options);
 

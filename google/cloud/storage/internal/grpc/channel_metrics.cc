@@ -16,6 +16,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
 #include "google/cloud/common_options.h"
@@ -59,6 +60,7 @@ ChannelReadyCallback MakeChannelMetricsCallback(
       histogram =
           meter->CreateDoubleHistogram(ChannelCreationLatencyInstrument(),
                                        kChannelCreationLatencyDescription, "s");
+  if (!histogram) return {};
   return [histogram = std::move(histogram)](
              TransportType transport,
              std::chrono::steady_clock::duration elapsed) {
@@ -77,6 +79,10 @@ ChannelReadyCallback MakeChannelMetricsCallback(
 }
 
 ChannelReadyCallback MakeChannelMetricsCallback(Options const& options) {
+  // The registry is process-wide and keyed by authority, so a provider may
+  // exist because an earlier client enabled metrics. This client's own opt-out
+  // must still win.
+  if (!options.get<storage_experimental::EnableGrpcMetricsOption>()) return {};
   return MakeChannelMetricsCallback(
       FindMeterProvider(options.get<AuthorityOption>()));
 }
