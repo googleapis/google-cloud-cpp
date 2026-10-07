@@ -164,6 +164,30 @@ InterconnectsConnection::SetLabels(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsConnection::SetName(
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsConnection::SetName(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsConnection::SetName(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnects_v1
 }  // namespace cloud

@@ -267,7 +267,6 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
 
  private:
   static constexpr char kProjectBucketPrefix[] = "projects/_/buckets/";
-  static constexpr char kGlobalLocation[] = "global";
 
   BucketMetadataCache& cache() const { return *cache_; }
 
@@ -291,17 +290,14 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
           StatusOr<google::storage::v2::Bucket> metadata = f.get();
           if (metadata.ok()) {
             BucketCacheEntry entry = BucketCacheEntry::FromLocation(
-                metadata->project() + "/buckets/" +
-                    BucketMetadataCache::NormalizeBucketName(bucket_name),
+                BucketCacheEntry::ResourceName(metadata->project(),
+                                               bucket_name),
                 metadata->location(), metadata->location_type());
             cache->Put(bucket_name, std::move(entry));
           } else if (metadata.status().code() ==
                      StatusCode::kPermissionDenied) {
-            BucketCacheEntry entry{
-                std::string(kProjectBucketPrefix) +
-                    BucketMetadataCache::NormalizeBucketName(bucket_name),
-                kGlobalLocation};
-            cache->Put(bucket_name, std::move(entry));
+            cache->Put(bucket_name,
+                       BucketCacheEntry::FromUnknownProject(bucket_name));
           }
         });
   }
@@ -321,8 +317,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
         google::cloud::storage_experimental::OTelSpanEnrichmentOption>();
     if (!enabled) return;
     auto entry = BucketCacheEntry::FromLocation(
-        bucket.project() + "/buckets/" +
-            BucketMetadataCache::NormalizeBucketName(bucket_name),
+        BucketCacheEntry::ResourceName(bucket.project(), bucket_name),
         bucket.location(), bucket.location_type());
     EnrichSpan(span, entry);
     cache.Put(bucket_name, std::move(entry));

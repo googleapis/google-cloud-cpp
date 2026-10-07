@@ -590,7 +590,8 @@ TEST(ConnectionTracing, RewriteObjectSpanEnrichment) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/"
+                                         "123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -890,7 +891,8 @@ TEST(ConnectionTracing, GetBucketSpanEnrichment) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/"
+                                         "123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -953,7 +955,8 @@ TEST(ConnectionTracing, BucketMetadataCacheSuccess) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/"
+                                         "123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }
@@ -1054,7 +1057,8 @@ TEST(ConnectionTracing, DeleteObjectNoEvictOnError) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
               OTelAttribute<std::string>("gcp.resource.destination.id",
-                                         "projects/123456/buckets/test-bucket"),
+                                         "//storage.googleapis.com/projects/"
+                                         "123456/buckets/test-bucket"),
               OTelAttribute<std::string>("gcp.resource.destination.location",
                                          "us-east1")))));
 }

@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionInstanceTemplates resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates
 ///
+/// This client uses RegionInstanceTemplates version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -120,7 +122,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L90}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,7 +177,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L90}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -236,7 +238,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L125}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L126}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L109}
   ///
   // clang-format on
@@ -268,7 +270,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L125}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L126}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L109}
   ///
   // clang-format on
@@ -306,7 +308,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L140}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L141}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -365,7 +367,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L140}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L141}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -435,7 +437,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L176}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L177}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L109}
   ///
   // clang-format on
@@ -477,7 +479,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L176}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L177}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L109}
   ///
   // clang-format on

@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the zones resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/zones
 ///
+/// This client uses Zones version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -105,7 +107,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_032.proto#L140}
-  /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
+  /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
@@ -136,7 +138,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_032.proto#L140}
-  /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
+  /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
@@ -172,7 +174,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_032.proto#L140}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L69}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L70}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
@@ -212,7 +214,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_032.proto#L140}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L69}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L70}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(

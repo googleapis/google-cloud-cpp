@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the managedRulesets resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/managedRulesets
 ///
+/// This client uses ManagedRulesets version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -106,7 +108,7 @@ class ManagedRulesetsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.managed_rulesets.v1.GetManagedRulesetRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L60}
+  /// [google.cloud.cpp.compute.managed_rulesets.v1.GetManagedRulesetRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L61}
   /// [google.cloud.cpp.compute.v1.ManagedRuleset]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_099.proto#L30}
   ///
   // clang-format on
@@ -138,7 +140,7 @@ class ManagedRulesetsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.managed_rulesets.v1.GetManagedRulesetRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L60}
+  /// [google.cloud.cpp.compute.managed_rulesets.v1.GetManagedRulesetRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L61}
   /// [google.cloud.cpp.compute.v1.ManagedRuleset]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_099.proto#L30}
   ///
   // clang-format on
@@ -175,7 +177,7 @@ class ManagedRulesetsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.managed_rulesets.v1.ListManagedRulesetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L71}
+  /// [google.cloud.cpp.compute.managed_rulesets.v1.ListManagedRulesetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L72}
   /// [google.cloud.cpp.compute.v1.ManagedRuleset]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_099.proto#L30}
   ///
   // clang-format on
@@ -215,7 +217,7 @@ class ManagedRulesetsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.managed_rulesets.v1.ListManagedRulesetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L71}
+  /// [google.cloud.cpp.compute.managed_rulesets.v1.ListManagedRulesetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/managed_rulesets/v1/managed_rulesets.proto#L72}
   /// [google.cloud.cpp.compute.v1.ManagedRuleset]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_099.proto#L30}
   ///
   // clang-format on

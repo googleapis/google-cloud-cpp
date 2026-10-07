@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the targetGrpcProxies resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies
 ///
+/// This client uses TargetGrpcProxies version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -115,7 +117,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L102}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L103}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -169,7 +171,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L102}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L103}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -228,7 +230,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L132}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_165.proto#L31}
   ///
   // clang-format on
@@ -260,7 +262,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L132}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_165.proto#L31}
   ///
   // clang-format on
@@ -297,7 +299,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L142}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L143}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -355,7 +357,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L142}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L143}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -422,7 +424,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L172}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_165.proto#L31}
   ///
   // clang-format on
@@ -462,7 +464,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L172}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_165.proto#L31}
   ///
   // clang-format on
@@ -502,7 +504,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L272}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -564,7 +566,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L272}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

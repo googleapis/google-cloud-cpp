@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the globalOrganizationOperations resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations
 ///
+/// This client uses GlobalOrganizationOperations version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -110,7 +112,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L73}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L74}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& operation, Options opts = {});
@@ -137,7 +139,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L73}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L74}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -166,7 +168,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L85}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_020.proto#L240}
   ///
   // clang-format on
@@ -198,7 +200,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L85}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_020.proto#L240}
   ///
   // clang-format on
@@ -241,7 +243,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L95}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L96}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_020.proto#L240}
   ///
   // clang-format on

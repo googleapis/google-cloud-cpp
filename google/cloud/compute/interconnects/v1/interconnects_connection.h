@@ -255,6 +255,18 @@ class InterconnectsConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
+      NoAwaitTag,
+      google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

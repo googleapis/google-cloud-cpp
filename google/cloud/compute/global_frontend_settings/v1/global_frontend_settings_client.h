@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the globalFrontendSettings resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/globalFrontendSettings
 ///
+/// This client uses GlobalFrontendSettings version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -109,7 +111,7 @@ class GlobalFrontendSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_frontend_settings.v1.GetGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L62}
+  /// [google.cloud.cpp.compute.global_frontend_settings.v1.GetGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L63}
   /// [google.cloud.cpp.compute.v1.GlobalFrontendSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L27}
   ///
   // clang-format on
@@ -140,7 +142,7 @@ class GlobalFrontendSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_frontend_settings.v1.GetGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L62}
+  /// [google.cloud.cpp.compute.global_frontend_settings.v1.GetGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L63}
   /// [google.cloud.cpp.compute.v1.GlobalFrontendSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L27}
   ///
   // clang-format on
@@ -171,7 +173,7 @@ class GlobalFrontendSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_frontend_settings.v1.PatchGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L69}
+  /// [google.cloud.cpp.compute.global_frontend_settings.v1.PatchGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L70}
   /// [google.cloud.cpp.compute.v1.GlobalFrontendSettingsPatchResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L61}
   ///
   // clang-format on
@@ -206,7 +208,7 @@ class GlobalFrontendSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_frontend_settings.v1.PatchGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L69}
+  /// [google.cloud.cpp.compute.global_frontend_settings.v1.PatchGlobalFrontendSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_frontend_settings/v1/global_frontend_settings.proto#L70}
   /// [google.cloud.cpp.compute.v1.GlobalFrontendSettingsPatchResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L61}
   ///
   // clang-format on

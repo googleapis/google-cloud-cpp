@@ -39,6 +39,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionInstanceGroupManagerResizeRequests resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagerResizeRequests
 ///
+/// This client uses RegionInstanceGroupManagerResizeRequests version
+/// 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -131,7 +134,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L114}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
@@ -189,7 +192,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L114}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.CancelRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
@@ -263,7 +266,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L159}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L160}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -322,7 +325,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L159}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.DeleteInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L160}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -390,7 +393,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L204}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L205}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L33}
   ///
   // clang-format on
@@ -424,7 +427,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L204}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.GetInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L205}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L33}
   ///
   // clang-format on
@@ -467,7 +470,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L228}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -529,7 +532,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L228}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.InsertInstanceGroupManagerResizeRequestRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -604,7 +607,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.ListRegionInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L273}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.ListRegionInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L274}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L33}
   ///
   // clang-format on
@@ -648,7 +651,7 @@ class RegionInstanceGroupManagerResizeRequestsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.ListRegionInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L273}
+  /// [google.cloud.cpp.compute.region_instance_group_manager_resize_requests.v1.ListRegionInstanceGroupManagerResizeRequestsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_manager_resize_requests/v1/region_instance_group_manager_resize_requests.proto#L274}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagerResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_079.proto#L33}
   ///
   // clang-format on

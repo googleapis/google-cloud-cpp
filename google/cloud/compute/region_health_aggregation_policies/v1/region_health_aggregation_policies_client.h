@@ -40,6 +40,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionHealthAggregationPolicies resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthAggregationPolicies
 ///
+/// This client uses RegionHealthAggregationPolicies version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -126,7 +128,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.AggregatedListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L135}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.AggregatedListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L136}
   /// [google.cloud.cpp.compute.v1.HealthAggregationPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L24}
   ///
   // clang-format on
@@ -172,7 +174,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.AggregatedListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L135}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.AggregatedListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L136}
   /// [google.cloud.cpp.compute.v1.HealthAggregationPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L24}
   ///
   // clang-format on
@@ -211,7 +213,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.DeleteHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L250}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.DeleteHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -268,7 +270,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.DeleteHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L250}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.DeleteHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -330,7 +332,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.GetHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L288}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.GetHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L282}
   /// [google.cloud.cpp.compute.v1.HealthAggregationPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L143}
   ///
   // clang-format on
@@ -364,7 +366,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.GetHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L288}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.GetHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L282}
   /// [google.cloud.cpp.compute.v1.HealthAggregationPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L143}
   ///
   // clang-format on
@@ -403,7 +405,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.InsertHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L305}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.InsertHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L299}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -463,7 +465,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.InsertHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L305}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.InsertHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L299}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -533,7 +535,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.ListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L342}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.ListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L336}
   /// [google.cloud.cpp.compute.v1.HealthAggregationPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L143}
   ///
   // clang-format on
@@ -575,7 +577,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.ListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L342}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.ListRegionHealthAggregationPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L336}
   /// [google.cloud.cpp.compute.v1.HealthAggregationPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L143}
   ///
   // clang-format on
@@ -618,7 +620,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.PatchHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L447}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.PatchHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L434}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -682,7 +684,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.PatchHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L447}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.PatchHealthAggregationPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L434}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -745,7 +747,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L491}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L478}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -781,7 +783,7 @@ class RegionHealthAggregationPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L491}
+  /// [google.cloud.cpp.compute.region_health_aggregation_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_aggregation_policies/v1/region_health_aggregation_policies.proto#L478}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on

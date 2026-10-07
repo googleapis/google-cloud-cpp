@@ -81,6 +81,11 @@ Idempotency InterconnectsConnectionIdempotencyPolicy::SetLabels(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency InterconnectsConnectionIdempotencyPolicy::SetName(
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<InterconnectsConnectionIdempotencyPolicy>
 MakeDefaultInterconnectsConnectionIdempotencyPolicy() {
   return std::make_unique<InterconnectsConnectionIdempotencyPolicy>();

@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the reservationSlots resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSlots
 ///
+/// This client uses ReservationSlots version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -112,7 +114,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L134}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L135}
   /// [google.cloud.cpp.compute.v1.ReservationSlotsGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L103}
   ///
   // clang-format on
@@ -147,7 +149,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L134}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L135}
   /// [google.cloud.cpp.compute.v1.ReservationSlotsGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L103}
   ///
   // clang-format on
@@ -189,7 +191,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L103}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L104}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
@@ -244,7 +246,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L103}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L104}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetHealth(
@@ -314,7 +316,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L154}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L155}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
@@ -373,7 +375,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L154}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L155}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
@@ -442,7 +444,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L201}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L202}
   /// [google.cloud.cpp.compute.v1.ReservationSlot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L27}
   ///
   // clang-format on
@@ -483,7 +485,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L201}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.ListReservationSlotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L202}
   /// [google.cloud.cpp.compute.v1.ReservationSlot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L27}
   ///
   // clang-format on
@@ -522,7 +524,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L310}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L304}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -583,7 +585,7 @@ class ReservationSlotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L310}
+  /// [google.cloud.cpp.compute.reservation_slots.v1.UpdateReservationSlotsGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_slots/v1/reservation_slots.proto#L304}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

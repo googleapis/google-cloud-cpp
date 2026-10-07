@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the imageFamilyViews resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/imageFamilyViews
 ///
+/// This client uses ImageFamilyViews version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -109,7 +111,7 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L52}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L26}
   ///
   // clang-format on
@@ -142,7 +144,7 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L52}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L26}
   ///
   // clang-format on

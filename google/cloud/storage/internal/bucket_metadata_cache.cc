@@ -24,6 +24,13 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::string BucketCacheEntry::ResourceName(std::string const& project,
+                                           std::string const& bucket) {
+  return std::string(kStorageResourceNamePrefix) +
+         (project.empty() ? std::string("projects/_") : project) + "/buckets/" +
+         BucketMetadataCache::NormalizeBucketName(bucket);
+}
+
 BucketCacheEntry BucketCacheEntry::FromLocation(
     std::string id, std::string location, std::string const& location_type) {
   if (location_type == "multi-region" || location_type == "dual-region") {
@@ -34,9 +41,16 @@ BucketCacheEntry BucketCacheEntry::FromLocation(
 
 BucketCacheEntry BucketCacheEntry::FromMetadata(
     storage::BucketMetadata const& m) {
-  return FromLocation(
-      "projects/" + std::to_string(m.project_number()) + "/buckets/" + m.name(),
-      m.location(), m.location_type());
+  auto project = m.project_number() == 0
+                     ? std::string{}
+                     : "projects/" + std::to_string(m.project_number());
+  return FromLocation(ResourceName(project, m.name()), m.location(),
+                      m.location_type());
+}
+
+BucketCacheEntry BucketCacheEntry::FromUnknownProject(
+    std::string const& bucket) {
+  return {ResourceName(std::string{}, bucket), "global"};
 }
 
 std::string BucketMetadataCache::NormalizeBucketName(

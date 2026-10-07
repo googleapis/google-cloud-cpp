@@ -59,8 +59,6 @@ DefaultSubnetworksRestStub::AggregatedListSubnetworks(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params.push_back(
       {"service_project_number", request.service_project_number()});
   query_params.push_back({"views", request.views()});
@@ -304,8 +302,6 @@ DefaultSubnetworksRestStub::ListSubnetworks(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params.push_back({"views", request.views()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -330,8 +326,6 @@ DefaultSubnetworksRestStub::ListUsable(
       {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
   query_params.push_back({"service_project", request.service_project()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));

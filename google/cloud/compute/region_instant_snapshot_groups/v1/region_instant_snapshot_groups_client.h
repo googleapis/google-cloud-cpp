@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionInstantSnapshotGroups resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshotGroups
 ///
+/// This client uses RegionInstantSnapshotGroups version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -121,7 +123,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.DeleteInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L129}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.DeleteInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L130}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -178,7 +180,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.DeleteInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L129}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.DeleteInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L130}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -241,7 +243,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L186}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L187}
   /// [google.cloud.cpp.compute.v1.InstantSnapshotGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L28}
   ///
   // clang-format on
@@ -275,7 +277,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L186}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L187}
   /// [google.cloud.cpp.compute.v1.InstantSnapshotGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L28}
   ///
   // clang-format on
@@ -307,7 +309,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L167}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L168}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -340,7 +342,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L167}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L168}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -377,7 +379,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.InsertInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L203}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.InsertInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -436,7 +438,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.InsertInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L203}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.InsertInstantSnapshotGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -507,7 +509,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.ListRegionInstantSnapshotGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L243}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.ListRegionInstantSnapshotGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L244}
   /// [google.cloud.cpp.compute.v1.InstantSnapshotGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L28}
   ///
   // clang-format on
@@ -549,7 +551,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.ListRegionInstantSnapshotGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L243}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.ListRegionInstantSnapshotGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L244}
   /// [google.cloud.cpp.compute.v1.InstantSnapshotGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L28}
   ///
   // clang-format on
@@ -582,7 +584,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L348}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L342}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -618,7 +620,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L348}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L342}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -649,7 +651,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L368}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L362}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -685,7 +687,7 @@ class RegionInstantSnapshotGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L368}
+  /// [google.cloud.cpp.compute.region_instant_snapshot_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshot_groups/v1/region_instant_snapshot_groups.proto#L362}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on

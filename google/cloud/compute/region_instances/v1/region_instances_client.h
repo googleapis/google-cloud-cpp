@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionInstances resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstances
 ///
+/// This client uses RegionInstances version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -116,7 +118,7 @@ class RegionInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L55}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -174,7 +176,7 @@ class RegionInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L55}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(

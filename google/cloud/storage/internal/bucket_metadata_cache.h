@@ -38,13 +38,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// The App Hub / Cloud Asset Inventory full resource name prefix for Cloud
+// Storage resources.
+inline constexpr char kStorageResourceNamePrefix[] =
+    "//storage.googleapis.com/";
+
 struct BucketCacheEntry {
   std::string id;
   std::string location;
 
+  /**
+   * Returns the full resource name for a bucket, i.e.
+   * `//storage.googleapis.com/{project}/buckets/{bucket}`.
+   *
+   * @param project the project in `projects/{project-id-or-number}` format. If
+   *     empty, `projects/_` is used.
+   * @param bucket the bucket name, optionally in `projects/_/buckets/{bucket}`
+   *     format.
+   */
+  static std::string ResourceName(std::string const& project,
+                                  std::string const& bucket);
+
   static BucketCacheEntry FromLocation(std::string id, std::string location,
                                        std::string const& location_type);
   static BucketCacheEntry FromMetadata(storage::BucketMetadata const& m);
+  // Creates an entry for a bucket whose project and location are unknown,
+  // e.g. when fetching its metadata fails with `kPermissionDenied`.
+  static BucketCacheEntry FromUnknownProject(std::string const& bucket);
 };
 
 class BucketMetadataCache {

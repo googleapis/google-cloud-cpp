@@ -69,18 +69,19 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
 
   auto guard = ScopedFetch(cache_, bucket_name);
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  runner()([impl = impl_, cache = cache_, bucket_name, current_options,
-            guard]() {
-    google::cloud::internal::OptionsSpan span(current_options);
-    storage::internal::GetBucketMetadataRequest request(bucket_name);
-    auto result = impl->GetBucketMetadata(request);
+  runner()(
+      [impl = impl_, cache = cache_, bucket_name, current_options, guard]() {
+        google::cloud::internal::OptionsSpan span(current_options);
+        storage::internal::GetBucketMetadataRequest request(bucket_name);
+        auto result = impl->GetBucketMetadata(request);
 
-    if (result.ok()) {
-      cache->Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
-    } else if (result.status().code() == StatusCode::kPermissionDenied) {
-      cache->Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
-    }
-  });
+        if (result.ok()) {
+          cache->Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
+        } else if (result.status().code() == StatusCode::kPermissionDenied) {
+          cache->Put(bucket_name,
+                     BucketCacheEntry::FromUnknownProject(bucket_name));
+        }
+      });
 }
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,

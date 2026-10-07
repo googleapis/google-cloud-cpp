@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the disks resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/disks
 ///
+/// This client uses Disks version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -117,7 +119,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L318}
+  /// [google.cloud.cpp.compute.disks.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L319}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -179,7 +181,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L318}
+  /// [google.cloud.cpp.compute.disks.v1.AddResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L319}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -250,7 +252,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L358}
+  /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L359}
   /// [google.cloud.cpp.compute.v1.DisksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L211}
   ///
   // clang-format on
@@ -294,7 +296,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L358}
+  /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L359}
   /// [google.cloud.cpp.compute.v1.DisksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L211}
   ///
   // clang-format on
@@ -333,7 +335,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L473}
+  /// [google.cloud.cpp.compute.disks.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L467}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -390,7 +392,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L473}
+  /// [google.cloud.cpp.compute.disks.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L467}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -456,7 +458,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.BulkSetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L509}
+  /// [google.cloud.cpp.compute.disks.v1.BulkSetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L503}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkSetLabels(
@@ -515,7 +517,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.BulkSetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L509}
+  /// [google.cloud.cpp.compute.disks.v1.BulkSetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L503}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkSetLabels(
@@ -585,7 +587,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.CreateSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L549}
+  /// [google.cloud.cpp.compute.disks.v1.CreateSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L543}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
@@ -645,7 +647,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.CreateSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L549}
+  /// [google.cloud.cpp.compute.disks.v1.CreateSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L543}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
@@ -715,7 +717,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.DeleteDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L592}
+  /// [google.cloud.cpp.compute.disks.v1.DeleteDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L586}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
@@ -772,7 +774,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.DeleteDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L592}
+  /// [google.cloud.cpp.compute.disks.v1.DeleteDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L586}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
@@ -829,7 +831,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L627}
+  /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L621}
   /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
@@ -861,7 +863,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L627}
+  /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L621}
   /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
@@ -891,7 +893,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L640}
+  /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L634}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -924,7 +926,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L640}
+  /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L634}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -966,7 +968,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.InsertDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L658}
+  /// [google.cloud.cpp.compute.disks.v1.InsertDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L652}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
@@ -1026,7 +1028,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.InsertDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L658}
+  /// [google.cloud.cpp.compute.disks.v1.InsertDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L652}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
@@ -1092,7 +1094,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L697}
+  /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L691}
   /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
@@ -1133,7 +1135,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L697}
+  /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L691}
   /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L75}
   ///
   // clang-format on
@@ -1170,7 +1172,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L801}
+  /// [google.cloud.cpp.compute.disks.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L788}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1230,7 +1232,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L801}
+  /// [google.cloud.cpp.compute.disks.v1.RemoveResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L788}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1299,7 +1301,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L841}
+  /// [google.cloud.cpp.compute.disks.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L828}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -1359,7 +1361,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L841}
+  /// [google.cloud.cpp.compute.disks.v1.ResizeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L828}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -1418,7 +1420,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L880}
+  /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L867}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -1454,7 +1456,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L880}
+  /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L867}
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L317}
   ///
   // clang-format on
@@ -1493,7 +1495,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L898}
+  /// [google.cloud.cpp.compute.disks.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L885}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -1553,7 +1555,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L898}
+  /// [google.cloud.cpp.compute.disks.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L885}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -1619,7 +1621,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.StartAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L938}
+  /// [google.cloud.cpp.compute.disks.v1.StartAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L925}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1680,7 +1682,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.StartAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L938}
+  /// [google.cloud.cpp.compute.disks.v1.StartAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L925}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1748,7 +1750,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.StopAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L978}
+  /// [google.cloud.cpp.compute.disks.v1.StopAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L965}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1802,7 +1804,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.StopAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L978}
+  /// [google.cloud.cpp.compute.disks.v1.StopAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L965}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1872,7 +1874,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.StopGroupAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1013}
+  /// [google.cloud.cpp.compute.disks.v1.StopGroupAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1000}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1933,7 +1935,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.StopGroupAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1013}
+  /// [google.cloud.cpp.compute.disks.v1.StopGroupAsyncReplicationRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1000}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1994,7 +1996,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1051}
+  /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1038}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -2030,7 +2032,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1051}
+  /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1038}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_177.proto#L30}
   ///
   // clang-format on
@@ -2072,7 +2074,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.UpdateDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1069}
+  /// [google.cloud.cpp.compute.disks.v1.UpdateDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1056}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
@@ -2131,7 +2133,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.UpdateDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1069}
+  /// [google.cloud.cpp.compute.disks.v1.UpdateDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1056}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
@@ -2197,7 +2199,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.UpdateKmsKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1113}
+  /// [google.cloud.cpp.compute.disks.v1.UpdateKmsKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1100}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
@@ -2257,7 +2259,7 @@ class DisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disks.v1.UpdateKmsKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1113}
+  /// [google.cloud.cpp.compute.disks.v1.UpdateKmsKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L1100}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(

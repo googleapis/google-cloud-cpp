@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the advice resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/advice
 ///
+/// This client uses Advice version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -108,7 +110,7 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L80}
+  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L81}
   /// [google.cloud.cpp.compute.v1.CalendarModeAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L40}
   ///
   // clang-format on
@@ -145,7 +147,7 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L80}
+  /// [google.cloud.cpp.compute.advice.v1.CalendarModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L81}
   /// [google.cloud.cpp.compute.v1.CalendarModeAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L40}
   ///
   // clang-format on
@@ -178,8 +180,8 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CapacityRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L111}
-  /// [google.cloud.cpp.compute.v1.CapacityAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L165}
+  /// [google.cloud.cpp.compute.advice.v1.CapacityRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L112}
+  /// [google.cloud.cpp.compute.v1.CapacityAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L170}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse> Capacity(
@@ -214,8 +216,8 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CapacityRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L111}
-  /// [google.cloud.cpp.compute.v1.CapacityAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L165}
+  /// [google.cloud.cpp.compute.advice.v1.CapacityRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L112}
+  /// [google.cloud.cpp.compute.v1.CapacityAdviceResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L170}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse> Capacity(
@@ -243,8 +245,8 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L96}
-  /// [google.cloud.cpp.compute.v1.CapacityHistoryResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L280}
+  /// [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L97}
+  /// [google.cloud.cpp.compute.v1.CapacityHistoryResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L301}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
@@ -277,8 +279,8 @@ class AdviceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L96}
-  /// [google.cloud.cpp.compute.v1.CapacityHistoryResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L280}
+  /// [google.cloud.cpp.compute.advice.v1.CapacityHistoryRequest]: @cloud_cpp_reference_link{google/cloud/compute/advice/v1/advice.proto#L97}
+  /// [google.cloud.cpp.compute.v1.CapacityHistoryResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L301}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>

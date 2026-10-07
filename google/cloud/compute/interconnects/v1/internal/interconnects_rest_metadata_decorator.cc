@@ -159,6 +159,27 @@ InterconnectsRestMetadata::SetLabels(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectsRestMetadata::AsyncSetName(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetName(cq, std::move(rest_context), std::move(options),
+                              request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsRestMetadata::SetName(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetName(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -184,6 +205,7 @@ future<Status> InterconnectsRestMetadata::AsyncCancelOperation(
 void InterconnectsRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
+  rest_context.AddHeader("x-goog-api-version", "2026-09-01");
   google::cloud::rest_internal::SetMetadata(rest_context, options, params,
                                             api_client_header_);
 }

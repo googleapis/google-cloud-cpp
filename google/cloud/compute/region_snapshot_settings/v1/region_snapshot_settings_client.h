@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionSnapshotSettings resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSnapshotSettings
 ///
+/// This client uses RegionSnapshotSettings version 2026-09-01.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -111,7 +113,7 @@ class RegionSnapshotSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L65}
+  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L66}
   /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_154.proto#L24}
   ///
   // clang-format on
@@ -143,7 +145,7 @@ class RegionSnapshotSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L65}
+  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L66}
   /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_154.proto#L24}
   ///
   // clang-format on
@@ -181,7 +183,7 @@ class RegionSnapshotSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.PatchSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L76}
+  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.PatchSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L77}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -240,7 +242,7 @@ class RegionSnapshotSettingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.PatchSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L76}
+  /// [google.cloud.cpp.compute.region_snapshot_settings.v1.PatchSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_snapshot_settings/v1/region_snapshot_settings.proto#L77}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

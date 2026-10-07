@@ -68,6 +68,10 @@ class InterconnectsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request);
+
+  virtual google::cloud::Idempotency SetName(
+      google::cloud::cpp::compute::interconnects::v1::SetNameRequest const&
+          request);
 };
 
 std::unique_ptr<InterconnectsConnectionIdempotencyPolicy>
