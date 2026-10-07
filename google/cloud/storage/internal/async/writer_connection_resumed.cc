@@ -240,7 +240,45 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
+    // The connection may have failed permanently while a callback ran, e.g.,
+    // a chained operation failed inline. Never write on a failed connection.
+    if (!resume_status_.ok()) return;
     WriteLoop(std::move(lk));
+  }
+
+  /**
+   * Notifies @p handlers and @p flushes with the lock released, then restarts
+   * the write loop.
+   *
+   * Callbacks may re-enter this class and complete another flush inline,
+   * which calls this function recursively. Notifications are delivered in
+   * FIFO order from the outermost call, so a flush future never completes
+   * before an earlier one and the recursion depth stays bounded.
+   */
+  void NotifyAndStartWriting(
+      std::unique_lock<std::mutex> lk,
+      std::vector<std::unique_ptr<BufferShrinkHandler>> handlers,
+      std::vector<promise<Status>> flushes, Status const& result) {
+    for (auto& h : handlers) {
+      pending_notifications_.push_back({std::move(h), Status{}});
+    }
+    for (auto& f : flushes) {
+      pending_notifications_.push_back({MakeLwmWaiter(std::move(f)), result});
+    }
+    // An outer call is draining the queue and will deliver these too.
+    if (notifying_) return;
+    notifying_ = true;
+    while (!pending_notifications_.empty()) {
+      auto n = std::move(pending_notifications_.front());
+      pending_notifications_.pop_front();
+      // The callback may re-enter this class and need the lock.
+      lk.unlock();
+      n.handler->Execute(std::move(n.status));
+      lk.lock();
+    }
+    notifying_ = false;
+    // A no-op if a callback already restarted the write loop.
+    StartWriting(std::move(lk));
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
@@ -432,21 +470,13 @@ class AsyncWriterConnectionResumedState
       // connection. The `WriteLoop` will trigger a flush (potentially empty)
       // if `flush_` is still true, which will satisfy the promises when it
       // completes.
-      auto const handlers = ClearHandlersIfEmpty(lk);
+      auto handlers = ClearHandlersIfEmpty(lk);
       // Mark the writer idle under the lock so any operation chained from a
-      // handler below sees an idle writer and is dispatched immediately, and
+      // handler sees an idle writer and is dispatched immediately, and
       // `state_` is never modified without holding `mu_`.
       state_ = State::kIdle;
-      lk.unlock();  // Release lock before notifying
-      // The notifications are deferred until the lock is released, as they
-      // might call back and try to acquire the lock.
-      for (auto const& h : handlers) {
-        h->Execute(Status{});
-      }
-      // Re-acquire the lock to restart the write loop. This is a no-op if a
-      // handler above already restarted it.
-      StartWriting(std::unique_lock<std::mutex>(mu_));
-      return;
+      return NotifyAndStartWriting(std::move(lk), std::move(handlers), {},
+                                   Status{});
     }
     SetFlushed(std::move(lk), Status{}, persisted_size);
   }
@@ -651,18 +681,11 @@ class AsyncWriterConnectionResumedState
     // not released above are released by a later flush.
     flush_ = NeedsFlush(lk);
     // Mark the writer idle under the lock so any operation chained from a
-    // callback below sees an idle writer and is dispatched immediately, and
+    // callback sees an idle writer and is dispatched immediately, and
     // `state_` is never modified without holding `mu_`.
     state_ = State::kIdle;
-    lk.unlock();  // Release lock before notifying
-    // Notify handlers and satisfied flush promises before restarting the
-    // write loop so callbacks cannot be overtaken by a queued flush that
-    // completes inline.
-    for (auto& h : handlers) h->Execute(Status{});
-    for (auto& f : flushes_to_complete) f.set_value(result);
-    // Re-acquire the lock to resume writing any remaining buffered data.
-    // This is a no-op if a callback above already restarted the write loop.
-    StartWriting(std::unique_lock<std::mutex>(mu_));
+    NotifyAndStartWriting(std::move(lk), std::move(handlers),
+                          std::move(flushes_to_complete), result);
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
@@ -815,6 +838,19 @@ class AsyncWriterConnectionResumedState
   // - A Flush() call that returns an unsatisified future until the buffer is
   //   small enough.
   std::vector<std::unique_ptr<BufferShrinkHandler>> flush_handlers_;
+
+  // A callback and the status to deliver to it.
+  struct PendingNotification {
+    std::unique_ptr<BufferShrinkHandler> handler;
+    Status status;
+  };
+
+  // Callbacks awaiting delivery, oldest first. See `NotifyAndStartWriting()`.
+  std::deque<PendingNotification> pending_notifications_;
+
+  // True while a `NotifyAndStartWriting()` call is draining
+  // `pending_notifications_`. Nested calls must only enqueue.
+  bool notifying_ = false;
 
   // True if the writing loop is activate.
   enum class State {
