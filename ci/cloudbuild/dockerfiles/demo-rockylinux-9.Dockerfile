@@ -168,6 +168,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     mkdir -p third_party/boringssl-with-bazel && \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
         -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_CXX_STANDARD=17 \
