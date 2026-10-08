@@ -1,9 +1,5 @@
 permissions:
   contents: read
-  pull-requests: read
-  issues: read
-  statuses: write
-  checks: write
 
 name: "gha: macOS & Windows"
 
@@ -40,6 +36,12 @@ on: # zizmor: ignore[dangerous-triggers]
 
 jobs:
   pre-flight:
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      statuses: write
+      checks: write
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     if: >-
       github.event_name != 'issue_comment' ||
@@ -239,6 +241,9 @@ jobs:
     secrets: inherit # zizmor: ignore[secrets-inherit]
 
   report-status:
+    permissions:
+      statuses: write
+      checks: write
     name: Report GHA Status
     needs: [pre-flight, macos-bazel, windows-cmake]
     if: >-
