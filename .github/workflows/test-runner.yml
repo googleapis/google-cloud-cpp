@@ -41,7 +41,6 @@ jobs:
       pull-requests: read
       issues: read
       statuses: write
-      checks: write
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     if: >-
       github.event_name != 'issue_comment' ||
@@ -66,6 +65,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
           REF: ${{ github.ref }}
+          HEAD_REPO_FULL_NAME: ${{ github.event.pull_request.head.repo.full_name }}
           PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
           USER_TO_CHECK: >-
             ${{
@@ -90,18 +90,23 @@ jobs:
                 ;;
             esac
           elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
-            permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
-            echo "Author: ${USER_TO_CHECK}, permission: ${permission}"
-            case "${permission}" in
-              admin|write|maintain)
-                echo "Author '${USER_TO_CHECK}' is trusted."
-                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                ;;
-              *)
-                echo "Author '${USER_TO_CHECK}' is untrusted (permission: '${permission}'). A maintainer must comment '/gharun' on the PR to trigger builds for this commit."
-                echo "is_trusted=false" >> "${GITHUB_OUTPUT}"
-                ;;
-            esac
+            if [[ "${HEAD_REPO_FULL_NAME}" == "${GITHUB_REPOSITORY}" ]]; then
+              echo "PR head branch is in '${GITHUB_REPOSITORY}' (author: '${USER_TO_CHECK}'). Trusted."
+              echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+            else
+              permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
+              echo "Author: ${USER_TO_CHECK}, permission: ${permission}"
+              case "${permission}" in
+                admin|write|maintain)
+                  echo "Author '${USER_TO_CHECK}' is trusted."
+                  echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+                  ;;
+                *)
+                  echo "Author '${USER_TO_CHECK}' is untrusted (permission: '${permission}'). A maintainer must comment '/gharun' on the PR to trigger builds for this commit."
+                  echo "is_trusted=false" >> "${GITHUB_OUTPUT}"
+                  ;;
+              esac
+            fi
           elif [[ "${EVENT_NAME}" == "push" && "${REF}" == refs/heads/ci-gha* ]]; then
             permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
             echo "Pusher: ${USER_TO_CHECK}, permission: ${permission}"
@@ -139,23 +144,12 @@ jobs:
           echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
 
           if [[ "${EVENT_NAME}" == "issue_comment" && "${IS_TRUSTED}" == "true" && -n "${sha}" ]]; then
-            run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             echo "Setting pending commit status for ${sha}..."
             gh api "repos/${GITHUB_REPOSITORY}/statuses/${sha}" \
               -f state="pending" \
               -f context="gha: macOS & Windows" \
               -f description="macOS and Windows builds in progress via /gharun..." \
-              -f target_url="${run_url}" || true
-            while IFS=$'\t' read -r check_name check_id; do
-              [[ -z "${check_id}" ]] && continue
-              echo "Setting check run ${check_name} (${check_id}) to in_progress..."
-              gh api --method PATCH "repos/${GITHUB_REPOSITORY}/check-runs/${check_id}" \
-                -f status="in_progress" \
-                -f details_url="${run_url}" \
-                -f 'output[title]=Summary' \
-                -f 'output[summary]=Build in progress via `/gharun`' || true
-            done < <(gh api --paginate "repos/${GITHUB_REPOSITORY}/commits/${sha}/check-runs" \
-              --jq '.check_runs[] | select(.app.slug == "github-actions" and (.name == "macOS-Bazel" or .name == "Windows-CMake")) | "\(.name)\t\(.id)"' || true)
+              -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
           fi
 
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
@@ -243,7 +237,6 @@ jobs:
   report-status:
     permissions:
       statuses: write
-      checks: write
     name: Report GHA Status
     needs: [pre-flight, macos-bazel, windows-cmake]
     if: >-
@@ -255,35 +248,15 @@ jobs:
       - name: Publish commit status
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EVENT_NAME: ${{ github.event_name }}
           IS_TRUSTED: ${{ needs.pre-flight.outputs.is-trusted }}
           PR_SHA: ${{ needs.pre-flight.outputs.checkout-sha }}
           MACOS_BAZEL_RESULT: ${{ needs.macos-bazel.result }}
           WINDOWS_CMAKE_RESULT: ${{ needs.windows-cmake.result }}
         run: |
-          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-
           if [[ "${IS_TRUSTED}" != "true" ]]; then
-            echo "Setting pending commit status and action_required check runs on ${PR_SHA}..."
-            gh api "repos/${GITHUB_REPOSITORY}/statuses/${PR_SHA}" \
-              -f state="pending" \
-              -f context="gha: macOS & Windows" \
-              -f description="Needs /gharun comment from a maintainer to run" \
-              -f target_url="${run_url}" || true
-            while IFS=$'\t' read -r check_name check_id; do
-              [[ -z "${check_id}" ]] && continue
-              echo "Setting check run ${check_name} (${check_id}) to action_required..."
-              gh api --method PATCH "repos/${GITHUB_REPOSITORY}/check-runs/${check_id}" \
-                -f status="completed" \
-                -f conclusion="action_required" \
-                -f 'output[title]=Summary' \
-                -f "output[summary]=Needs \`\`\`/gharun(${PR_SHA})\`\`\` to run latest commit" || true
-            done < <(gh api --paginate "repos/${GITHUB_REPOSITORY}/commits/${PR_SHA}/check-runs" \
-              --jq '.check_runs[] | select(.app.slug == "github-actions" and (.name == "macOS-Bazel" or .name == "Windows-CMake")) | "\(.name)\t\(.id)"' || true)
-            exit 0
-          fi
-
-          if [[ "${MACOS_BAZEL_RESULT}" == "success" && "${WINDOWS_CMAKE_RESULT}" == "success" ]]; then
+            state="pending"
+            desc="Needs /gharun comment from a maintainer to run"
+          elif [[ "${MACOS_BAZEL_RESULT}" == "success" && "${WINDOWS_CMAKE_RESULT}" == "success" ]]; then
             state="success"
             desc="macOS and Windows builds passed"
           elif [[ "${MACOS_BAZEL_RESULT}" == "failure" || "${WINDOWS_CMAKE_RESULT}" == "failure" ]]; then
@@ -301,25 +274,4 @@ jobs:
             -f state="${state}" \
             -f context="gha: macOS & Windows" \
             -f description="${desc}" \
-            -f target_url="${run_url}"
-
-          if [[ "${EVENT_NAME}" == "issue_comment" ]]; then
-            while IFS=$'\t' read -r check_name check_id; do
-              [[ -z "${check_id}" ]] && continue
-              if [[ "${check_name}" == "macOS-Bazel" ]]; then
-                conclusion="${MACOS_BAZEL_RESULT}"
-              elif [[ "${check_name}" == "Windows-CMake" ]]; then
-                conclusion="${WINDOWS_CMAKE_RESULT}"
-              else
-                continue
-              fi
-              echo "Updating check run ${check_name} (${check_id}) to ${conclusion}..."
-              gh api --method PATCH "repos/${GITHUB_REPOSITORY}/check-runs/${check_id}" \
-                -f status="completed" \
-                -f conclusion="${conclusion}" \
-                -f details_url="${run_url}" \
-                -f 'output[title]=Summary' \
-                -f 'output[summary]=Completed via `/gharun`' || true
-            done < <(gh api --paginate "repos/${GITHUB_REPOSITORY}/commits/${PR_SHA}/check-runs" \
-              --jq '.check_runs[] | select(.app.slug == "github-actions" and (.name == "macOS-Bazel" or .name == "Windows-CMake")) | "\(.name)\t\(.id)"' || true)
-          fi
+            -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
