@@ -353,6 +353,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
     cmake \
+      -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
       -DBUILD_SHARED_LIBS=ON \
@@ -529,6 +530,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
@@ -733,6 +735,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=ON \
@@ -869,6 +872,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
@@ -1114,6 +1118,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
@@ -1312,6 +1317,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=yes \
