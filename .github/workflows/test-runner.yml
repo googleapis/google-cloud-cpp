@@ -51,7 +51,8 @@ jobs:
     environment: >-
       ${{
           (github.event_name != 'pull_request_target' && 'internal') ||
-          (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
+          (github.event.pull_request.head.repo.full_name == github.repository && 'internal') ||
+          (github.event.pull_request.head.repo.full_name == 'renovate-bot/google-cloud-cpp' && 'internal')
       }}
     name: Save PR ref
     runs-on: ubuntu-latest
@@ -90,23 +91,31 @@ jobs:
                 ;;
             esac
           elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
-            if [[ "${HEAD_REPO_FULL_NAME}" == "${GITHUB_REPOSITORY}" ]]; then
-              echo "PR head branch is in '${GITHUB_REPOSITORY}' (author: '${USER_TO_CHECK}'). Trusted."
-              echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-            else
-              permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
-              echo "Author: ${USER_TO_CHECK}, permission: ${permission}"
-              case "${permission}" in
-                admin|write|maintain)
-                  echo "Author '${USER_TO_CHECK}' is trusted."
+            case "${USER_TO_CHECK}" in
+              renovate-bot|dependabot\[bot\]|release-please\[bot\]|gcf-merge-on-green\[bot\]|yoshi-code-bot|gcf-owl-bot\[bot\]|google-cloud-policy-bot\[bot\])
+                echo "Author '${USER_TO_CHECK}' is a trusted automation bot."
+                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+                ;;
+              *)
+                if [[ "${HEAD_REPO_FULL_NAME}" == "${GITHUB_REPOSITORY}" ]]; then
+                  echo "PR head branch is in '${GITHUB_REPOSITORY}' (author: '${USER_TO_CHECK}'). Trusted."
                   echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                  ;;
-                *)
-                  echo "Author '${USER_TO_CHECK}' is untrusted (permission: '${permission}'). A maintainer must comment '/gharun' on the PR to trigger builds for this commit."
-                  echo "is_trusted=false" >> "${GITHUB_OUTPUT}"
-                  ;;
-              esac
-            fi
+                else
+                  permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
+                  echo "Author: ${USER_TO_CHECK}, permission: ${permission}"
+                  case "${permission}" in
+                    admin|write|maintain)
+                      echo "Author '${USER_TO_CHECK}' is trusted."
+                      echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
+                      ;;
+                    *)
+                      echo "Author '${USER_TO_CHECK}' is untrusted (permission: '${permission}'). A maintainer must comment '/gharun' on the PR to trigger builds for this commit."
+                      echo "is_trusted=false" >> "${GITHUB_OUTPUT}"
+                      ;;
+                  esac
+                fi
+                ;;
+            esac
           elif [[ "${EVENT_NAME}" == "push" && "${REF}" == refs/heads/ci-gha* ]]; then
             permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
             echo "Pusher: ${USER_TO_CHECK}, permission: ${permission}"
