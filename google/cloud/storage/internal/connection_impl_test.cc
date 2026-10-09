@@ -25,6 +25,8 @@
 #include <gmock/gmock.h>
 #include <opentelemetry/metrics/provider.h>
 #include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <cstdint>
 #include <functional>
 #include <future>
@@ -824,7 +826,6 @@ ReadSourceResult MakeReadResult(std::string const& payload, char* buf) {
 }
 
 TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
-  GTEST_SKIP() << "Skipping test that is leaking mock objects #16522";
   auto dispatched = std::make_unique<MockCounter<std::uint64_t>>();
   auto won = std::make_unique<MockCounter<std::uint64_t>>();
   EXPECT_CALL(*dispatched, Add(std::uint64_t{1})).Times(1);
@@ -852,37 +853,44 @@ TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
   // A single read thread, so the first read tells us which thread opens every
   // primary attempt. Any other thread is running a hedge.
   auto primary_thread = std::make_shared<std::thread::id>();
+  auto primary_opens = std::make_shared<std::atomic<int>>(0);
   auto unblock_primary = std::make_shared<std::promise<void>>();
-  auto primary_closed = std::make_shared<std::promise<void>>();
+  std::shared_future<void> const primary_unblocked =
+      unblock_primary->get_future().share();
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options).Times(AtLeast(0));
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([primary_thread](auto&, auto const&,
-                                 ReadObjectRangeRequest const&) {
-        *primary_thread = std::this_thread::get_id();
-        auto source = std::make_unique<testing::MockObjectReadSource>();
-        EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
-          return MakeReadResult("warm-up", buf);
-        });
-        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
-      })
-      .WillRepeatedly([primary_thread, unblock_primary, primary_closed](
+      .WillRepeatedly([primary_thread, primary_opens, primary_unblocked](
                           auto&, auto const&, ReadObjectRangeRequest const&) {
         auto source = std::make_unique<testing::MockObjectReadSource>();
-        if (std::this_thread::get_id() == *primary_thread) {
-          EXPECT_CALL(*source, Read)
-              .WillOnce([unblock_primary](char* buf, std::size_t) {
-                unblock_primary->get_future().wait();
-                return MakeReadResult("slow", buf);
-              });
-          EXPECT_CALL(*source, Close).WillOnce([primary_closed] {
-            primary_closed->set_value();
-            return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
-          });
-        } else {
+        if (*primary_opens == 0) *primary_thread = std::this_thread::get_id();
+        if (std::this_thread::get_id() != *primary_thread) {
           EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
             return MakeReadResult("hedge", buf);
           });
+          return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+        }
+        switch ((*primary_opens)++) {
+          case 0:
+            EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+              return MakeReadResult("warm-up", buf);
+            });
+            break;
+          case 1:
+            EXPECT_CALL(*source, Read)
+                .WillOnce([primary_unblocked](char* buf, std::size_t) {
+                  primary_unblocked.wait();
+                  return MakeReadResult("slow", buf);
+                });
+            EXPECT_CALL(*source, Close).WillOnce([] {
+              return make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}});
+            });
+            break;
+          default:
+            EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+              return MakeReadResult("drain", buf);
+            });
+            break;
         }
         return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
       });
@@ -908,18 +916,40 @@ TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
   }
 
   // Primary stalls, the hedge wins.
-  google::cloud::internal::OptionsSpan const span(
-      client->options().set<storage_experimental::ReadHedgeDelayOption>(
-          std::chrono::milliseconds(1)));
-  StatusOr<std::unique_ptr<ObjectReadSource>> source =
-      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
-  ASSERT_THAT(source, IsOk());
-  StatusOr<ReadSourceResult> result =
-      (*source)->Read(buffer.data(), buffer.size());
+  StatusOr<std::unique_ptr<ObjectReadSource>> source;
+  {
+    google::cloud::internal::OptionsSpan const span(
+        client->options().set<storage_experimental::ReadHedgeDelayOption>(
+            std::chrono::milliseconds(1)));
+    source = client->ReadObject(
+        ReadObjectRangeRequest("test-bucket", "test-object"));
+    ASSERT_THAT(source, IsOk());
+    StatusOr<ReadSourceResult> const result =
+        (*source)->Read(buffer.data(), buffer.size());
+    ASSERT_THAT(result, IsOk());
+    EXPECT_THAT(std::string(buffer.data(), result->bytes_received),
+                Eq("hedge"));
+  }
+
+  // The losing primary is still closing its `RetryObjectReadSource` (which
+  // holds a reference to `client`) on the single read thread. A synchronous
+  // read on that same thread can only run after the loser's task has finished,
+  // so `client` is destroyed on this thread rather than on a detached worker.
   unblock_primary->set_value();
-  primary_closed->get_future().wait();
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(std::string(buffer.data(), result->bytes_received), Eq("hedge"));
+  {
+    google::cloud::internal::OptionsSpan const span(
+        client->options().set<storage_experimental::ReadHedgeDelayOption>(
+            std::chrono::seconds(30)));
+    StatusOr<std::unique_ptr<ObjectReadSource>> drain =
+        client->ReadObject(ReadObjectRangeRequest("test-bucket", "drain"));
+    ASSERT_THAT(drain, IsOk());
+    StatusOr<ReadSourceResult> const result =
+        (*drain)->Read(buffer.data(), buffer.size());
+    ASSERT_THAT(result, IsOk());
+    EXPECT_THAT(std::string(buffer.data(), result->bytes_received),
+                Eq("drain"));
+  }
+  EXPECT_EQ(3, primary_opens->load());
 }
 
 }  // namespace

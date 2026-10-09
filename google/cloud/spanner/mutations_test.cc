@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <cstdint>
@@ -38,6 +39,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoApproximatelyEqual;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
@@ -487,6 +489,130 @@ TEST(MutationsTest, FluentDeleteBuilder) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, SendDefault) {
+  Mutation send = MakeSendMutation("queue-name", MakeKey(std::int64_t{123}),
+                                   Value("payload-data"));
+  EXPECT_EQ(send, SendMutationBuilder("queue-name", MakeKey(std::int64_t{123}),
+                                      Value("payload-data"))
+                      .Build());
+  EXPECT_NE(send, MakeSendMutation("other-queue", MakeKey(std::int64_t{123}),
+                                   Value("payload-data")));
+
+  google::spanner::v1::Mutation actual = std::move(send).as_proto();
+  char constexpr kText[] = R"pb(
+    send: {
+      queue: "queue-name"
+      key: { values { string_value: "123" } }
+      payload: { string_value: "payload-data" }
+    }
+  )pb";
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, SendWithDeliverTime) {
+  StatusOr<Timestamp> ts = MakeTimestamp(absl::FromUnixSeconds(1700000000) +
+                                         absl::Nanoseconds(123456789));
+  ASSERT_THAT(ts, IsOk());
+
+  Mutation send =
+      MakeSendMutation("queue-name", MakeKey("msg-1"),
+                       Value(Bytes(std::string("binary-payload"))), *ts);
+  Mutation from_builder =
+      SendMutationBuilder("queue-name", MakeKey("msg-1"),
+                          Value(Bytes(std::string("binary-payload"))))
+          .SetDeliverTime(*ts)
+          .Build();
+  EXPECT_EQ(send, from_builder);
+
+  google::spanner::v1::Mutation actual = std::move(send).as_proto();
+  char constexpr kText[] = R"pb(
+    send: {
+      queue: "queue-name"
+      key: { values { string_value: "msg-1" } }
+      deliver_time: { seconds: 1700000000 nanos: 123456789 }
+      payload: { string_value: "YmluYXJ5LXBheWxvYWQ=" }
+    }
+  )pb";
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, FluentSendBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(std::declval<SendMutationBuilder>()
+                                            .SetDeliverTime(
+                                                std::declval<Timestamp>())
+                                            .Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  SendMutationBuilder builder("queue-name", MakeKey("k1"), Value("v1"));
+  Mutation m1 = builder.Build();
+  Mutation m2 = std::move(builder).Build();
+  EXPECT_EQ(m1, m2);
+}
+
+TEST(MutationsTest, AckDefault) {
+  Mutation ack =
+      MakeAckMutation("queue-name", MakeKey(std::int64_t{42}, "sub"));
+  EXPECT_EQ(ack,
+            AckMutationBuilder("queue-name", MakeKey(std::int64_t{42}, "sub"))
+                .Build());
+  EXPECT_NE(ack,
+            MakeAckMutation("other-queue", MakeKey(std::int64_t{42}, "sub")));
+
+  google::spanner::v1::Mutation actual = std::move(ack).as_proto();
+  char constexpr kText[] = R"pb(
+    ack: {
+      queue: "queue-name"
+      key: {
+        values { string_value: "42" }
+        values { string_value: "sub" }
+      }
+      ignore_not_found: false
+    }
+  )pb";
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, AckWithIgnoreNotFound) {
+  Mutation ack = MakeAckMutation("queue-name", MakeKey("msg-1"), true);
+  Mutation from_builder = AckMutationBuilder("queue-name", MakeKey("msg-1"))
+                              .SetIgnoreNotFound(true)
+                              .Build();
+  EXPECT_EQ(ack, from_builder);
+  EXPECT_NE(ack, MakeAckMutation("queue-name", MakeKey("msg-1"), false));
+
+  google::spanner::v1::Mutation actual = std::move(ack).as_proto();
+  char constexpr kText[] = R"pb(
+    ack: {
+      queue: "queue-name"
+      key: { values { string_value: "msg-1" } }
+      ignore_not_found: true
+    }
+  )pb";
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, FluentAckBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(std::declval<AckMutationBuilder>()
+                                            .SetIgnoreNotFound(true)
+                                            .Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  AckMutationBuilder builder("queue-name", MakeKey("k1"));
+  Mutation m1 = builder.Build();
+  Mutation m2 = std::move(builder).Build();
+  EXPECT_EQ(m1, m2);
 }
 
 }  // namespace

@@ -18,4 +18,4 @@ module(
 )
 
 bazel_dep(name = "rules_cc", version = "0.2.17")
-bazel_dep(name = "google_cloud_cpp", version = "3.8.0")
+bazel_dep(name = "google_cloud_cpp", version = "3.11.0")

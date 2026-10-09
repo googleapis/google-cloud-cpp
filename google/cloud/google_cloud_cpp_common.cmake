@@ -105,6 +105,7 @@ add_library(
     internal/opentelemetry.h
     internal/opentelemetry_context.cc
     internal/opentelemetry_context.h
+    internal/opentelemetry_semantic_convention_compatibility.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h

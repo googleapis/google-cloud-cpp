@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/internal/tracing_http_payload.h"
@@ -57,18 +58,16 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     RestContext& context,
     StatusOr<std::unique_ptr<RestResponse>> request_result) {
+  namespace sc = opentelemetry::semconv;
   if (context.primary_ip_address() && context.primary_port()) {
-    span->SetAttribute(/*sc::kServerAddress=*/"server.address",
+    span->SetAttribute(sc::server::kServerAddress,
                        *context.primary_ip_address());
-    span->SetAttribute(/*sc::kServerPort=*/"server.port",
-                       *context.primary_port());
+    span->SetAttribute(sc::server::kServerPort, *context.primary_port());
   }
 
   if (context.local_ip_address() && context.local_port()) {
-    span->SetAttribute(/*sc::kClientAddress=*/"client.address",
-                       *context.local_ip_address());
-    span->SetAttribute(/*sc::kClientPort=*/"client.port",
-                       *context.local_port());
+    span->SetAttribute(sc::client::kClientAddress, *context.local_ip_address());
+    span->SetAttribute(sc::client::kClientPort, *context.local_port());
   }
   for (auto const& kv : context.headers()) {
     auto const name = absl::StrCat("http.request.header.", kv.first.name());

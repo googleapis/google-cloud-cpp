@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/future_generic.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -92,13 +93,10 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
               OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
-              OTelAttribute<
-                  std::
-                      int64_t>(/*sc::messaging::kMessagingMessageEnvelopeSize=*/
-                               "messaging.message.envelope.size", 45),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "create"),
+              OTelAttribute<std::int64_t>(
+                  sc::messaging::kMessagingMessageEnvelopeSize, 45),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "create"),
               OTelAttribute<std::string>(sc::messaging::kMessagingMessageId,
                                          "test-id-0"),
               OTelAttribute<std::string>(
@@ -142,14 +140,11 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "create"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "create"),
               OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode),
-              OTelAttribute<
-                  std::
-                      int64_t>(/*sc::messaging::kMessagingMessageEnvelopeSize=*/
-                               "messaging.message.envelope.size", 45)))));
+              OTelAttribute<std::int64_t>(
+                  sc::messaging::kMessagingMessageEnvelopeSize, 45)))));
 }
 
 TEST(PublisherTracingConnectionTest, PublishInjectsTraceContext) {

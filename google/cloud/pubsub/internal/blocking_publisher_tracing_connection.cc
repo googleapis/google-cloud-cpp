@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/status_or.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
@@ -40,10 +41,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
       {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
        {sc::messaging::kMessagingDestinationName, topic.topic_id()},
        {"gcp.project_id", topic.project_id()},
-       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-        "create"},
-       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
-                                                         "envelope.size",
+       {sc::messaging::kMessagingOperationType, "create"},
+       {sc::messaging::kMessagingMessageEnvelopeSize,
         static_cast<std::int64_t>(MessageSize(m))},
        {sc::code::kCodeFunctionName, "pubsub::BlockingPublisher::Publish"}},
       options);

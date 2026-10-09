@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/tracing_rest_response.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
@@ -20,7 +21,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/semconv/incubating/network_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -87,7 +87,7 @@ TEST(TracingRestResponseTest, Success) {
                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                        SpanKindIsClient(),
                        SpanHasAttributes(OTelAttribute<std::string>(
-                           /*sc::kNetworkTransport=*/"network.transport",
+                           sc::network::kNetworkTransport,
                            sc::network::NetworkTransportValues::kTcp)),
                        SpanHasEvents(MakeReadMatcher(kBufferSize, content_size),
                                      MakeReadMatcher(kBufferSize, 0)))));

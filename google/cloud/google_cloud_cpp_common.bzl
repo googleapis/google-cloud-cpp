@@ -67,6 +67,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/non_constructible.h",
     "internal/opentelemetry.h",
     "internal/opentelemetry_context.h",
+    "internal/opentelemetry_semantic_convention_compatibility.h",
     "internal/pagination_range.h",
     "internal/parse_rfc3339.h",
     "internal/populate_common_options.h",

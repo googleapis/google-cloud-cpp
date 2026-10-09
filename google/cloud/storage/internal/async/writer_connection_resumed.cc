@@ -224,7 +224,11 @@ class AsyncWriterConnectionResumedState
                                bool flush = false) {
     if (!resume_status_.ok()) return make_ready_future(resume_status_);
     auto const buffer_size = resend_buffer_.size();
-    flush_ = (buffer_size >= buffer_size_lwm_) || flush;
+    // `NeedsFlush()` stays true while `Flush()` calls are pending, so a small
+    // `Write()`, possibly chained from a callback, cannot turn a queued flush
+    // into a plain write. The explicit low-water mark check preserves the
+    // existing behavior for an empty `Write()` when the low-water mark is 0.
+    flush_ = flush || NeedsFlush(lk) || buffer_size >= buffer_size_lwm_;
     auto result = make_ready_future(Status{});
     if (buffer_size >= buffer_size_hwm_) {
       auto p = promise<Status>();
@@ -236,7 +240,45 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
+    // The connection may have failed permanently while a callback ran, e.g.,
+    // a chained operation failed inline. Never write on a failed connection.
+    if (!resume_status_.ok()) return;
     WriteLoop(std::move(lk));
+  }
+
+  /**
+   * Notifies @p handlers and @p flushes with the lock released, then restarts
+   * the write loop.
+   *
+   * Callbacks may re-enter this class and complete another flush inline,
+   * which calls this function recursively. Notifications are delivered in
+   * FIFO order from the outermost call, so a flush future never completes
+   * before an earlier one and the recursion depth stays bounded.
+   */
+  void NotifyAndStartWriting(
+      std::unique_lock<std::mutex> lk,
+      std::vector<std::unique_ptr<BufferShrinkHandler>> handlers,
+      std::vector<promise<Status>> flushes, Status const& result) {
+    for (auto& h : handlers) {
+      pending_notifications_.push_back({std::move(h), Status{}});
+    }
+    for (auto& f : flushes) {
+      pending_notifications_.push_back({MakeLwmWaiter(std::move(f)), result});
+    }
+    // An outer call is draining the queue and will deliver these too.
+    if (notifying_) return;
+    notifying_ = true;
+    while (!pending_notifications_.empty()) {
+      auto n = std::move(pending_notifications_.front());
+      pending_notifications_.pop_front();
+      // The callback may re-enter this class and need the lock.
+      lk.unlock();
+      n.handler->Execute(std::move(n.status));
+      lk.lock();
+    }
+    notifying_ = false;
+    // A no-op if a callback already restarted the write loop.
+    StartWriting(std::move(lk));
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
@@ -363,9 +405,27 @@ class AsyncWriterConnectionResumedState
 
   auto ClearHandlersIfEmpty(std::unique_lock<std::mutex> const& /* lk */) {
     decltype(flush_handlers_) tmp;
-    if (resend_buffer_.size() >= buffer_size_lwm_) return tmp;
+    // Release the waiters once the buffer is empty or below the low-water
+    // mark. The emptiness check matters when the low-water mark is 0.
+    if (!resend_buffer_.empty() && resend_buffer_.size() >= buffer_size_lwm_) {
+      return tmp;
+    }
     flush_handlers_.swap(tmp);
     return tmp;
+  }
+
+  /**
+   * Returns true if the write loop must send data with `Flush()`.
+   *
+   * That is the case while `Flush()` calls are pending, or while the buffer is
+   * non-empty and at or above the low-water mark. An empty buffer only needs a
+   * flush if a `Flush()` is pending, which avoids an endless loop of empty
+   * flushes when the low-water mark is 0.
+   */
+  bool NeedsFlush(std::unique_lock<std::mutex> const& /* lk */) const {
+    return !pending_flush_promises_.empty() ||
+           (!resend_buffer_.empty() &&
+            resend_buffer_.size() >= buffer_size_lwm_);
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size,
@@ -404,28 +464,21 @@ class AsyncWriterConnectionResumedState
         write_offset_ -= static_cast<std::size_t>(n);
       }
     }
-    // If the buffer is small enough, collect all the handlers to notify them.
-    auto const handlers = ClearHandlersIfEmpty(lk);
     if (is_resume) {
+      // We are resuming. The pending flush promises (if any) should not be
+      // satisfied yet, because we haven't actually flushed the data on the new
+      // connection. The `WriteLoop` will trigger a flush (potentially empty)
+      // if `flush_` is still true, which will satisfy the promises when it
+      // completes.
+      auto handlers = ClearHandlersIfEmpty(lk);
+      // Mark the writer idle under the lock so any operation chained from a
+      // handler sees an idle writer and is dispatched immediately, and
+      // `state_` is never modified without holding `mu_`.
       state_ = State::kIdle;
-      StartWriting(std::move(lk));
-      // The notifications are deferred until the lock is released, as they
-      // might call back and try to acquire the lock.
-      for (auto const& h : handlers) {
-        h->Execute(Status{});
-      }
-      return;
+      return NotifyAndStartWriting(std::move(lk), std::move(handlers), {},
+                                   Status{});
     }
-    // SetFlushed will release the lock before returning.
     SetFlushed(std::move(lk), Status{}, persisted_size);
-    // Re-acquire the lock to resume writing now that flush_ has been updated.
-    state_ = State::kIdle;
-    StartWriting(std::unique_lock<std::mutex>(mu_));
-    // The notifications are deferred until the lock is released, as they might
-    // call back and try to acquire the lock.
-    for (auto const& h : handlers) {
-      h->Execute(Status{});
-    }
   }
 
   void WriteStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -614,7 +667,9 @@ class AsyncWriterConnectionResumedState
                   std::int64_t persisted_size) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
     // Do NOT reset finalize_ or finalizing_ here.
-    auto handlers = ClearHandlers(lk);
+    // Only release the high-water mark waiters once the buffer drops below the
+    // low-water mark (or is empty).
+    auto handlers = ClearHandlersIfEmpty(lk);
     std::vector<promise<Status>> flushes_to_complete;
     while (!pending_flush_promises_.empty() &&
            pending_flush_promises_.front().target_offset <= persisted_size) {
@@ -622,14 +677,15 @@ class AsyncWriterConnectionResumedState
           std::move(pending_flush_promises_.front().p));
       pending_flush_promises_.pop_front();
     }
-    if (pending_flush_promises_.empty()) {
-      flush_ = false;
-    }
-    lk.unlock();  // Unlock only once before notifying
-    // Notify handlers and the specific flush promises *after* releasing the
-    // lock.
-    for (auto& h : handlers) h->Execute(Status{});
-    for (auto& f : flushes_to_complete) f.set_value(result);
+    // Keep flushing while `NeedsFlush()` holds, so any high-water mark waiters
+    // not released above are released by a later flush.
+    flush_ = NeedsFlush(lk);
+    // Mark the writer idle under the lock so any operation chained from a
+    // callback sees an idle writer and is dispatched immediately, and
+    // `state_` is never modified without holding `mu_`.
+    state_ = State::kIdle;
+    NotifyAndStartWriting(std::move(lk), std::move(handlers),
+                          std::move(flushes_to_complete), result);
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
@@ -782,6 +838,19 @@ class AsyncWriterConnectionResumedState
   // - A Flush() call that returns an unsatisified future until the buffer is
   //   small enough.
   std::vector<std::unique_ptr<BufferShrinkHandler>> flush_handlers_;
+
+  // A callback and the status to deliver to it.
+  struct PendingNotification {
+    std::unique_ptr<BufferShrinkHandler> handler;
+    Status status;
+  };
+
+  // Callbacks awaiting delivery, oldest first. See `NotifyAndStartWriting()`.
+  std::deque<PendingNotification> pending_notifications_;
+
+  // True while a `NotifyAndStartWriting()` call is draining
+  // `pending_notifications_`. Nested calls must only enqueue.
+  bool notifying_ = false;
 
   // True if the writing loop is activate.
   enum class State {

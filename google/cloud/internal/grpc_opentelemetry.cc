@@ -16,6 +16,7 @@
 #include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -24,8 +25,6 @@
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/semconv/incubating/rpc_attributes.h>
-#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -110,13 +109,18 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
   namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  return internal::MakeSpan(
+  // OpenTelemetry RPC semantic conventions specify that `rpc.method` should
+  // be the fully-qualified logical name (e.g. "<service>/<method>") and that
+  // `rpc.service` is deprecated in favor of it.
+  // https://opentelemetry.io/docs/specs/semconv/rpc/rpc-spans/
+  std::string const fully_qualified_method =
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
-                   absl::string_view{method.data(), method.size()}),
-      {{sc::rpc::kRpcSystem, sc::rpc::RpcSystemValues::kGrpc},
-       {sc::rpc::kRpcService, service},
-       {sc::rpc::kRpcMethod, method},
-       {/*sc::kNetworkTransport=*/"network.transport",
+                   absl::string_view{method.data(), method.size()});
+  return internal::MakeSpan(
+      fully_qualified_method,
+      {{sc::rpc::kRpcSystemName, sc::rpc::RpcSystemNameValues::kGrpc},
+       {sc::rpc::kRpcMethod, fully_qualified_method},
+       {sc::network::kNetworkTransport,
         sc::network::NetworkTransportValues::kTcp},
        {"grpc.version", grpc::Version()}},
       options);

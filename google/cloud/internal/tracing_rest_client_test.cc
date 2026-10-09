@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/tracing_rest_client.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
@@ -20,7 +21,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/semconv/incubating/network_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 
 namespace google {
@@ -98,25 +98,23 @@ TEST(TracingRestClient, Delete) {
       spans,
       UnorderedElementsAre(
           // Request span
-          AllOf(
-              SpanNamed("HTTP/DELETE"), SpanHasInstrumentationScope(),
-              SpanKindIsClient(),
-              SpanHasAttributes(
-                  OTelAttribute<std::string>(
-                      /*sc::kNetworkTransport=*/"network.transport",
-                      sc::network::NetworkTransportValues::kTcp),
-                  OTelAttribute<std::string>(
-                      /*sc::kHttpRequestMethod=*/"http.request.method",
-                      "DELETE"),
-                  OTelAttribute<std::string>(/*sc::kUrlFull=*/"url.full", kUrl),
-                  OTelAttribute<std::string>(
-                      "http.request.header.x-test-header-3", "value3"),
-                  OTelAttribute<std::string>(
-                      "http.response.header.x-test-header-1", "value1"),
-                  OTelAttribute<std::string>(
-                      "http.response.header.x-test-header-2", "value2")),
-              SpanHasEvents(EventNamed("gl-cpp.read"),
-                            EventNamed("gl-cpp.read"))),
+          AllOf(SpanNamed("HTTP/DELETE"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>(
+                        sc::network::kNetworkTransport,
+                        sc::network::NetworkTransportValues::kTcp),
+                    OTelAttribute<std::string>(sc::http::kHttpRequestMethod,
+                                               "DELETE"),
+                    OTelAttribute<std::string>(sc::url::kUrlFull, kUrl),
+                    OTelAttribute<std::string>(
+                        "http.request.header.x-test-header-3", "value3"),
+                    OTelAttribute<std::string>(
+                        "http.response.header.x-test-header-1", "value1"),
+                    OTelAttribute<std::string>(
+                        "http.response.header.x-test-header-2", "value2")),
+                SpanHasEvents(EventNamed("gl-cpp.read"),
+                              EventNamed("gl-cpp.read"))),
           SpanNamed("SendRequest")));
 }
 
@@ -252,19 +250,17 @@ TEST(TracingRestClient, WithRestContextDetails) {
               SpanNamed("HTTP/POST"),
               SpanHasAttributes(
                   OTelAttribute<std::string>(
-                      /*sc::kNetworkTransport=*/"network.transport",
+                      sc::network::kNetworkTransport,
                       sc::network::NetworkTransportValues::kTcp),
-                  OTelAttribute<std::string>(
-                      /*sc::kHttpRequestMethod=*/"http.request.method", "POST"),
-                  OTelAttribute<std::string>(/*sc::kUrlFull=*/"url.full", kUrl),
-                  OTelAttribute<std::string>(
-                      /*sc::kServerAddress=*/"server.address", "192.168.1.1"),
-                  OTelAttribute<std::int32_t>(/*sc::kServerPort=*/"server.port",
-                                              443),
-                  OTelAttribute<std::string>(
-                      /*sc::kClientAddress=*/"client.address", "127.0.0.1"),
-                  OTelAttribute<std::int32_t>(/*sc::kClientPort=*/"client.port",
-                                              32000)),
+                  OTelAttribute<std::string>(sc::http::kHttpRequestMethod,
+                                             "POST"),
+                  OTelAttribute<std::string>(sc::url::kUrlFull, kUrl),
+                  OTelAttribute<std::string>(sc::server::kServerAddress,
+                                             "192.168.1.1"),
+                  OTelAttribute<std::int32_t>(sc::server::kServerPort, 443),
+                  OTelAttribute<std::string>(sc::client::kClientAddress,
+                                             "127.0.0.1"),
+                  OTelAttribute<std::int32_t>(sc::client::kClientPort, 32000)),
               SpanHasEvents(EventNamed("gl-cpp.read"),
                             EventNamed("gl-cpp.read"))),
           AllOf(SpanNamed("SendRequest"),

@@ -31,6 +31,6 @@ for lib in $(quickstart::libraries); do
     bazel build --enable_workspace --noenable_bzlmod "${args[@]}" :quickstart
 
   io::log_h2 "Building Bazel quickstart for ${lib} using MODULE"
-  USE_BAZEL_VERSION=8.5.1 io::run env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
+  USE_BAZEL_VERSION=8.8.1 io::run env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
     bazel build --noenable_workspace --enable_bzlmod "${args[@]}" :quickstart
 done

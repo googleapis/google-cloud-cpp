@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -23,8 +24,6 @@
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/semconv/incubating/rpc_attributes.h>
-#include <opentelemetry/semconv/network_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -68,13 +67,12 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("google.cloud.foo.v1.Foo/GetBar"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::rpc::kRpcSystem,
-                                         sc::rpc::RpcSystemValues::kGrpc),
-              OTelAttribute<std::string>(sc::rpc::kRpcService,
-                                         "google.cloud.foo.v1.Foo"),
-              OTelAttribute<std::string>(sc::rpc::kRpcMethod, "GetBar"),
+              OTelAttribute<std::string>(sc::rpc::kRpcSystemName,
+                                         sc::rpc::RpcSystemNameValues::kGrpc),
+              OTelAttribute<std::string>(sc::rpc::kRpcMethod,
+                                         "google.cloud.foo.v1.Foo/GetBar"),
               OTelAttribute<std::string>(
-                  /*sc::kNetworkTransport=*/"network.transport",
+                  sc::network::kNetworkTransport,
                   sc::network::NetworkTransportValues::kTcp),
               OTelAttribute<std::string>("grpc.version", grpc::Version())))));
 }

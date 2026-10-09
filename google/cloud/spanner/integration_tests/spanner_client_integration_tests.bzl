@@ -19,5 +19,6 @@
 spanner_client_integration_tests = [
     "client_stress_test.cc",
     "data_types_integration_test.cc",
+    "queue_integration_test.cc",
     "session_pool_integration_test.cc",
 ]

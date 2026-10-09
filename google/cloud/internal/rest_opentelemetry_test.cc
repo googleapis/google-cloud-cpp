@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/semconv/network_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -64,11 +64,10 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
           SpanNamed("HTTP/GET"),
           SpanHasAttributes(
               OTelAttribute<std::string>(
-                  /*sc::kNetworkTransport=*/"network.transport",
+                  sc::network::kNetworkTransport,
                   sc::network::NetworkTransportValues::kTcp),
-              OTelAttribute<std::string>(
-                  /*sc::kHttpRequestMethod=*/"http.request.method", "GET"),
-              OTelAttribute<std::string>(/*sc::kUrlFull=*/"url.full", kUrl),
+              OTelAttribute<std::string>(sc::http::kHttpRequestMethod, "GET"),
+              OTelAttribute<std::string>(sc::url::kUrlFull, kUrl),
               OTelAttribute<std::string>("http.request.header.empty", ""),
               OTelAttribute<std::string>("http.request.header.x-goog-foo",
                                          "bar"),
