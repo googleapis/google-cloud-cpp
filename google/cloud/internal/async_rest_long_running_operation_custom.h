@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/async_rest_polling_loop_custom.h"
 #include "google/cloud/internal/async_rest_retry_loop.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"

@@ -21,6 +21,7 @@
 #include "google/cloud/internal/async_rest_polling_loop_impl.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_TRACED_ROW_READER_H
 
 #include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 
 namespace google {
 namespace cloud {

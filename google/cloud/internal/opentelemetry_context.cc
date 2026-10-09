@@ -13,7 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/opentelemetry_context.h"
+#include "google/cloud/internal/call_context.h"
 #include <opentelemetry/nostd/unique_ptr.h>
+#include <algorithm>
+#include <iterator>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -70,6 +75,38 @@ OTelScope::OTelScope(
 }
 
 OTelScope::~OTelScope() { DetachOTelContext(context_); }
+
+CallContext::CallContext(ImmutableOptions o)
+    : options(std::move(o)), otel_context(CurrentOTelContext()) {}
+
+CallContext::CallContext() : CallContext(SaveCurrentOptions()) {}
+
+CallContext::~CallContext() = default;
+CallContext::CallContext(CallContext const&) = default;
+CallContext::CallContext(CallContext&&) noexcept = default;
+CallContext& CallContext::operator=(CallContext const&) = default;
+CallContext& CallContext::operator=(CallContext&&) noexcept = default;
+
+ScopedCallContext::ScopedCallContext(CallContext call_context)
+    : options_span_(std::move(call_context.options)),
+      contexts_(std::move(call_context.otel_context)),
+      noop_(contexts_.empty() ||
+            contexts_.back() ==
+                opentelemetry::context::RuntimeContext::GetCurrent()) {
+  if (noop_) return;
+  for (opentelemetry::context::Context const& c : contexts_) {
+    AttachOTelContext(c);
+  }
+}
+
+ScopedCallContext::~ScopedCallContext() {
+  if (noop_) return;
+  // NOLINTNEXTLINE(modernize-loop-convert)
+  for (auto it = contexts_.rbegin(); it != contexts_.rend(); ++it) {
+    opentelemetry::context::Context const& c = *it;
+    DetachOTelContext(c);
+  }
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

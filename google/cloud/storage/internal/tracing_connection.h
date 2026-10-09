@@ -20,6 +20,7 @@
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
 #include "absl/base/call_once.h"
+#include <opentelemetry/trace/span.h>
 #include <functional>
 #include <memory>
 #include <string>

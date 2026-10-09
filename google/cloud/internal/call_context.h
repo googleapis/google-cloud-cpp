@@ -15,14 +15,34 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CALL_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CALL_CONTEXT_H
 
-#include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <cstddef>
+#include <utility>
+#include <vector>
+
+namespace opentelemetry {
+#if defined(OPENTELEMETRY_ABI_VERSION_NO) && OPENTELEMETRY_ABI_VERSION_NO >= 2
+inline namespace v2 {
+#else
+inline namespace v1 {
+#endif
+namespace context {
+class Context;
+}  // namespace context
+#if defined(OPENTELEMETRY_ABI_VERSION_NO) && OPENTELEMETRY_ABI_VERSION_NO >= 2
+}  // namespace v2
+#else
+}  // namespace v1
+#endif
+}  // namespace opentelemetry
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+using OTelContext = std::vector<opentelemetry::context::Context>;
 
 /**
  * The context in which a client call is made.
@@ -31,13 +51,18 @@ namespace internal {
  * enabled, it also contains the parent span that encompasses the client call.
  */
 struct CallContext {
-  explicit CallContext(ImmutableOptions o) : options(std::move(o)) {}
+  explicit CallContext(ImmutableOptions o);
   // TODO(#12359) - maybe this can be removed once the explicit options cleanup
   //     is done.
-  CallContext() : CallContext(SaveCurrentOptions()) {}
+  CallContext();
+  ~CallContext();
+  CallContext(CallContext const&);
+  CallContext(CallContext&&) noexcept;
+  CallContext& operator=(CallContext const&);
+  CallContext& operator=(CallContext&&) noexcept;
 
   ImmutableOptions options;
-  OTelContext otel_context = CurrentOTelContext();
+  OTelContext otel_context;
 };
 
 /**
@@ -47,12 +72,8 @@ struct CallContext {
  */
 class ScopedCallContext {
  public:
-  explicit ScopedCallContext(CallContext call_context)
-      : options_span_(std::move(call_context.options))
-        // clang-format off
-        , scoped_otel_context_(std::move(call_context.otel_context))
-  // clang-format on
-  {}
+  explicit ScopedCallContext(CallContext call_context);
+  ~ScopedCallContext();
 
   // `ScopedCallContext` should not be copied/moved.
   ScopedCallContext(ScopedCallContext const&) = delete;
@@ -66,7 +87,8 @@ class ScopedCallContext {
 
  private:
   OptionsSpan options_span_;
-  ScopedOTelContext scoped_otel_context_;
+  OTelContext contexts_;
+  bool noop_;
 };
 
 }  // namespace internal

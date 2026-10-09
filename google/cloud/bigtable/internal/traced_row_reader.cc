@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/traced_row_reader.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_context.h"
 
 namespace google {
 namespace cloud {
