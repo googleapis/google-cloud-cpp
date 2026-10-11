@@ -90,6 +90,9 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROO
 # We need a gzip file to test ReadObject() with decompressive transcoding
 #  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${PROJECT_ROOT}/ci/data/fox.txt.gz"
+# The zone for the Rapid Cache integration tests. Each run creates its own
+# buckets in GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID, and a cache in this zone.
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_RAPID_ZONE="us-central1-a"
 
 # Cloud Spanner configuration parameters
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
