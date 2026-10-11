@@ -27,7 +27,7 @@ local_path_override(
 # Keep these dependencies updated to their latest released versions.
 bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.2")
-bazel_dep(name = "rules_cc", version = "0.2.25")
+bazel_dep(name = "rules_cc", version = "0.2.26")
 bazel_dep(name = "abseil-cpp", version = "20260817.0")
 bazel_dep(name = "protobuf", version = "36.2", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.20260413.0")
