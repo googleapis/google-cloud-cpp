@@ -92,6 +92,23 @@ TEST(AsyncStreamReadWriteAuth, Start) {
               UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
+TEST(AsyncStreamReadWriteAuth, StartWithCorkedInitialMetadata) {
+  auto factory = AuthStream::StreamFactory([](auto) {
+    auto mock = std::make_unique<StrictMock<MockStream>>();
+    EXPECT_CALL(*mock, StartWithCorkedInitialMetadata).WillOnce([] {
+      return make_ready_future(true);
+    });
+    return std::unique_ptr<BaseStream>(std::move(mock));
+  });
+  auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
+  EXPECT_CALL(*strategy, AsyncConfigureContext).WillOnce([](auto context) {
+    return make_ready_future(make_status_or(std::move(context)));
+  });
+  auto uut = std::make_unique<AuthStream>(
+      std::make_shared<grpc::ClientContext>(), strategy, factory);
+  EXPECT_TRUE(uut->StartWithCorkedInitialMetadata().get());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

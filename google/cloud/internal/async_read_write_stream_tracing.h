@@ -43,19 +43,13 @@ class AsyncStreamingReadWriteRpcTracing
   }
 
   future<bool> Start() override {
-    // It is sufficient to set `span_` as the parent of `start_span`, because
-    // the lower levels do not create any spans.
-    opentelemetry::trace::StartSpanOptions options;
-    options.parent = span_->GetContext();
-    auto start_span = internal::MakeSpan("Start", options);
-    return impl_->Start().then(
-        [this, ss = std::move(start_span)](future<bool> f) {
-          EndSpan(*ss);
-          auto started = f.get();
-          span_->SetAttribute("gl-cpp.stream_started", started);
-          started_ = started;
-          return started;
-        });
+    return StartInternal<&decltype(impl_)::element_type::Start>("Start");
+  }
+
+  future<bool> StartWithCorkedInitialMetadata() override {
+    return StartInternal<
+        &decltype(impl_)::element_type::StartWithCorkedInitialMetadata>(
+        "StartWithCorkedInitialMetadata");
   }
 
   future<std::optional<Response>> Read() override {
@@ -117,6 +111,23 @@ class AsyncStreamingReadWriteRpcTracing
                      std::move(status));
     }
     return EndSpan(*std::move(span_), std::move(status));
+  }
+
+  template <auto StartFunc>
+  future<bool> StartInternal(std::string_view span_name) {
+    // It is sufficient to set `span_` as the parent of `start_span`, because
+    // the lower levels do not create any spans.
+    opentelemetry::trace::StartSpanOptions options;
+    options.parent = span_->GetContext();
+    auto start_span = internal::MakeSpan(span_name, options);
+    return std::invoke(StartFunc, *impl_)
+        .then([this, ss = std::move(start_span)](future<bool> f) {
+          EndSpan(*ss);
+          auto started = f.get();
+          span_->SetAttribute("gl-cpp.stream_started", started);
+          started_ = started;
+          return started;
+        });
   }
 
   std::shared_ptr<grpc::ClientContext> context_;

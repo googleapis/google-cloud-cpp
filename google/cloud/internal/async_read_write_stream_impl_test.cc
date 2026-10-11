@@ -199,12 +199,39 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   EXPECT_THAT(finish.get(), IsOk());
 }
 
+TEST(AsyncReadWriteStreamingRpcTest, StartWithCorkedInitialMetadata) {
+  MockStub mock;
+  EXPECT_CALL(mock, FakeRpc)
+      .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
+        auto stream = std::make_unique<MockReaderWriter>();
+        EXPECT_CALL(*stream, StartCall(nullptr)).Times(1);
+        return stream;
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
+  EXPECT_CALL(*mock_cq, StartOperation).Times(0);
+
+  google::cloud::CompletionQueue cq(mock_cq);
+  auto stream = MakeStreamingReadWriteRpc<FakeRequest, FakeResponse>(
+      cq, std::make_shared<grpc::ClientContext>(), MakeImmutableOptions({}),
+      [&mock](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return mock.FakeRpc(context, cq);
+      });
+
+  auto start = stream->StartWithCorkedInitialMetadata();
+  // If metadata is corked, the start future should be ready immediately.
+  EXPECT_TRUE(start.is_ready());
+  EXPECT_TRUE(start.get());
+}
+
 TEST(AsyncReadWriteStreamingRpcTest, Error) {
   auto stream = AsyncStreamingReadWriteRpcError<FakeRequest, FakeResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 
   stream.Cancel();
   EXPECT_FALSE(stream.Start().get());
+  EXPECT_FALSE(stream.StartWithCorkedInitialMetadata().get());
   EXPECT_FALSE(stream.Read().get().has_value());
   EXPECT_FALSE(stream.Write(FakeRequest{}, grpc::WriteOptions()).get());
   EXPECT_FALSE(stream.WritesDone().get());

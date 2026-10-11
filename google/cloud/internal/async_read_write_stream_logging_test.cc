@@ -64,6 +64,18 @@ TEST_F(StreamingReadRpcLoggingTest, Start) {
               Contains(AllOf(HasSubstr("Start"), HasSubstr("test-id"))));
 }
 
+TEST_F(StreamingReadRpcLoggingTest, StartWithCorkedInitialMetadata) {
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, StartWithCorkedInitialMetadata).WillOnce([] {
+    return make_ready_future(true);
+  });
+  TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
+  EXPECT_TRUE(stream.StartWithCorkedInitialMetadata().get());
+  EXPECT_THAT(log_.ExtractLines(),
+              Contains(AllOf(HasSubstr("StartWithCorkedInitialMetadata"),
+                             HasSubstr("test-id"))));
+}
+
 TEST_F(StreamingReadRpcLoggingTest, ReadWithValue) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
