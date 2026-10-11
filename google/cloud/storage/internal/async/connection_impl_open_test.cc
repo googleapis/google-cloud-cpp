@@ -104,7 +104,7 @@ auto TestOptions(Options options = {}) {
 std::unique_ptr<BidiReadStream> MakeErrorStream(AsyncSequencer<void>& sequencer,
                                                 Status const& status) {
   auto stream = std::make_unique<MockStream>();
-  EXPECT_CALL(*stream, Start).WillOnce([&] {
+  EXPECT_CALL(*stream, StartWithCorkedInitialMetadata).WillOnce([&] {
     return sequencer.PushBack("Start").then([](auto) { return false; });
   });
   EXPECT_CALL(*stream, Finish).WillOnce([&, status] {
@@ -158,10 +158,11 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
 
         auto stream = std::make_unique<MockStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-          return sequencer.PushBack("Start").then(
-              [](auto f) { return f.get(); });
-        });
+        EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+            .WillOnce([&sequencer]() {
+              return sequencer.PushBack("Start").then(
+                  [](auto f) { return f.get(); });
+            });
         EXPECT_CALL(*stream, Write)
             .WillOnce(
                 [=, &sequencer](
@@ -214,9 +215,9 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
                          std::shared_ptr<grpc::ClientContext> const&,
                          google::cloud::internal::ImmutableOptions const&) {
         auto stream = std::make_unique<NiceMock<MockStream>>();
-        ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
-          return make_ready_future(false);
-        }));
+        ON_CALL(*stream, StartWithCorkedInitialMetadata)
+            .WillByDefault(
+                InvokeWithoutArgs([] { return make_ready_future(false); }));
         ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
           return make_ready_future(Status{});
         }));
@@ -294,7 +295,7 @@ TEST(AsyncConnectionImplTest, HandleRedirectErrors) {
   AsyncSequencer<void> sequencer;
   auto make_redirect_stream = [&sequencer](char const* expected_text) {
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Start).WillOnce([&] {
+    EXPECT_CALL(*stream, StartWithCorkedInitialMetadata).WillOnce([&] {
       return sequencer.PushBack("Start").then([](auto) { return true; });
     });
     EXPECT_CALL(*stream, Write)
@@ -476,9 +477,9 @@ TEST(AsyncConnectionImplTest, ResumeReopenIsSilent) {
   // cleanly, which is what prompts the descriptor to resume.
   auto closing_stream = [] {
     auto stream = std::make_unique<NiceMock<MockStream>>();
-    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
-      return make_ready_future(true);
-    }));
+    ON_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillByDefault(
+            InvokeWithoutArgs([] { return make_ready_future(true); }));
     ON_CALL(*stream, Write).WillByDefault([](auto const&, auto) {
       return make_ready_future(true);
     });
@@ -501,9 +502,9 @@ TEST(AsyncConnectionImplTest, ResumeReopenIsSilent) {
   // `kInternal` error, which the retry policy retries.
   auto teardown_stream = [] {
     auto stream = std::make_unique<NiceMock<MockStream>>();
-    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
-      return make_ready_future(false);
-    }));
+    ON_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillByDefault(
+            InvokeWithoutArgs([] { return make_ready_future(false); }));
     ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
       return make_ready_future(Status{});
     }));
@@ -518,9 +519,9 @@ TEST(AsyncConnectionImplTest, ResumeReopenIsSilent) {
   // the descriptor in the state a healthy session is normally in.
   auto parked_stream = [&sequencer] {
     auto stream = std::make_unique<NiceMock<MockStream>>();
-    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
-      return make_ready_future(true);
-    }));
+    ON_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillByDefault(
+            InvokeWithoutArgs([] { return make_ready_future(true); }));
     ON_CALL(*stream, Write).WillByDefault([](auto const&, auto) {
       return make_ready_future(true);
     });
@@ -623,10 +624,11 @@ TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
 
         auto stream = std::make_unique<MockStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-          return sequencer.PushBack("Start").then(
-              [](auto f) { return f.get(); });
-        });
+        EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+            .WillOnce([&sequencer]() {
+              return sequencer.PushBack("Start").then(
+                  [](auto f) { return f.get(); });
+            });
         EXPECT_CALL(*stream, Write)
             .WillOnce(
                 [=, &sequencer](
@@ -679,9 +681,9 @@ TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
                          std::shared_ptr<grpc::ClientContext> const&,
                          google::cloud::internal::ImmutableOptions const&) {
         auto stream = std::make_unique<NiceMock<MockStream>>();
-        ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
-          return make_ready_future(false);
-        }));
+        ON_CALL(*stream, StartWithCorkedInitialMetadata)
+            .WillByDefault(
+                InvokeWithoutArgs([] { return make_ready_future(false); }));
         ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
           return make_ready_future(Status{});
         }));
