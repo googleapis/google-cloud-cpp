@@ -25,11 +25,14 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/cord.h"
+#include "absl/strings/str_join.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <iterator>
 #include <numeric>
 #include <string>
+#include <string_view>
 #include <tuple>
 #include <utility>
 #include <variant>
@@ -45,11 +48,27 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Gt;
 using ::testing::IsEmpty;
 using ::testing::Le;
 using ::testing::Not;
 using ::testing::Optional;
+using ::testing::Pointwise;
+using ::testing::SizeIs;
 using ::testing::VariantWith;
+
+// Matches a (string_view, string_view) tuple if both refer to the same buffer,
+// i.e., they have the same data pointer and size.
+MATCHER(SameBuffer, "refers to the same buffer") {
+  std::string_view const lhs = std::get<0>(arg);
+  std::string_view const rhs = std::get<1>(arg);
+  if (lhs.data() == rhs.data() && lhs.size() == rhs.size()) return true;
+  *result_listener << "lhs={data=" << static_cast<void const*>(lhs.data())
+                   << ", size=" << lhs.size()
+                   << "}, rhs={data=" << static_cast<void const*>(rhs.data())
+                   << ", size=" << rhs.size() << "}";
+  return false;
+}
 
 class AsyncClientIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -72,6 +91,37 @@ class AsyncClientIntegrationTest
                           .set_generation(object.generation()));
   }
 
+  /// Returns ~5MiB of random data, enough to require multiple `Read()` calls.
+  std::vector<std::string> MakeCordTestData() {
+    std::size_t constexpr kBlockSize = 1024 * 1024;
+    std::size_t constexpr kBlockCount = 5;
+    std::vector<std::string> blocks(kBlockCount);
+    std::generate(blocks.begin(), blocks.end(),
+                  [&] { return MakeRandomData(kBlockSize); });
+    return blocks;
+  }
+
+  /// Creates an appendable object, these work in zonal and regional buckets.
+  StatusOr<google::storage::v2::Object> CreateAppendableObject(
+      AsyncClient& async, std::string const& object_name,
+      std::vector<std::string> const& blocks) {
+    StatusOr<std::pair<AsyncWriter, AsyncToken>> w =
+        async
+            .StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+            .get();
+    if (!w) return std::move(w).status();
+    AsyncWriter writer;
+    AsyncToken token;
+    std::tie(writer, token) = *std::move(w);
+    for (std::string const& block : blocks) {
+      StatusOr<AsyncToken> p =
+          writer.Write(std::move(token), WritePayload(block)).get();
+      if (!p) return std::move(p).status();
+      token = *std::move(p);
+    }
+    return writer.Finalize(std::move(token)).get();
+  }
+
  private:
   std::string bucket_name_;
 };
@@ -88,6 +138,45 @@ auto TestOptions() {
 auto AlwaysRetry() {
   return TestOptions().set<AsyncIdempotencyPolicyOption>(
       MakeAlwaysRetryAsyncIdempotencyPolicy);
+}
+
+// Reads all the data from @p reader. For each payload, verifies that
+// `cord_contents()` refers to the same buffers as `contents()`, and that
+// copying the Cord does not copy the data. Retains each Cord in @p retained.
+void ReadAndRetainCords(AsyncReader reader, AsyncToken token,
+                        std::vector<absl::Cord>& retained) {
+  while (token.valid()) {
+    StatusOr<std::pair<ReadPayload, AsyncToken>> p =
+        reader.Read(std::move(token)).get();
+    ASSERT_STATUS_OK(p);
+    ReadPayload payload;
+    std::tie(payload, token) = *std::move(p);
+
+    absl::Cord const& cord = payload.cord_contents();
+    EXPECT_EQ(cord.size(), payload.size());
+    std::vector<std::string_view> const chunks(cord.chunk_begin(),
+                                               cord.chunk_end());
+    EXPECT_THAT(chunks, Pointwise(SameBuffer(), payload.contents()));
+
+    absl::Cord const copy = payload.cord_contents();
+    std::vector<std::string_view> const copy_chunks(copy.chunk_begin(),
+                                                    copy.chunk_end());
+    EXPECT_THAT(copy_chunks, Pointwise(SameBuffer(), chunks));
+
+    if (payload.size() == 0) continue;
+    retained.push_back(std::move(payload).cord_contents());
+  }
+}
+
+// Verifies the Cords retained by `ReadAndRetainCords()` contain @p expected.
+// Called after the payloads, reader, and client have been destroyed.
+void VerifyRetainedCords(std::vector<absl::Cord> retained,
+                         std::string const& expected) {
+  EXPECT_THAT(retained, SizeIs(Gt(1)));
+  absl::Cord actual;
+  for (absl::Cord& c : retained) actual.Append(std::move(c));
+  EXPECT_EQ(actual.size(), expected.size());
+  EXPECT_TRUE(actual == expected);
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
@@ -293,6 +382,60 @@ TEST_F(AsyncClientIntegrationTest, StreamingReadRange) {
 
   EXPECT_EQ(absl::string_view(actual),
             absl::string_view(contents).substr(kReadOffset));
+}
+
+TEST_F(AsyncClientIntegrationTest, StreamingReadCordContents) {
+  auto async = AsyncClient(TestOptions());
+  std::string const object_name = MakeRandomObjectName();
+  std::vector<std::string> const blocks = MakeCordTestData();
+  std::string const expected = absl::StrJoin(blocks, "");
+  StatusOr<google::storage::v2::Object> metadata =
+      CreateAppendableObject(async, object_name, blocks);
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  std::vector<absl::Cord> retained;
+  {
+    // Use a separate client, so we can verify the retained Cords outlive it.
+    auto reader_client = AsyncClient(TestOptions());
+    StatusOr<std::pair<AsyncReader, AsyncToken>> r =
+        reader_client.ReadObject(BucketName(bucket_name()), object_name).get();
+    ASSERT_STATUS_OK(r);
+    AsyncReader reader;
+    AsyncToken token;
+    std::tie(reader, token) = *std::move(r);
+    ReadAndRetainCords(std::move(reader), std::move(token), retained);
+    if (HasFatalFailure()) return;
+  }
+  VerifyRetainedCords(std::move(retained), expected);
+}
+
+TEST_F(AsyncClientIntegrationTest, OpenReadCordContents) {
+  auto async = AsyncClient(TestOptions());
+  std::string const object_name = MakeRandomObjectName();
+  std::vector<std::string> const blocks = MakeCordTestData();
+  std::string const expected = absl::StrJoin(blocks, "");
+  StatusOr<google::storage::v2::Object> metadata =
+      CreateAppendableObject(async, object_name, blocks);
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  std::vector<absl::Cord> retained;
+  {
+    // Use a separate client, so we can verify the retained Cords outlive it.
+    auto reader_client = AsyncClient(TestOptions());
+    auto spec = google::storage::v2::BidiReadObjectSpec{};
+    spec.set_bucket(BucketName(bucket_name()).FullName());
+    spec.set_object(object_name);
+    StatusOr<ObjectDescriptor> descriptor = reader_client.Open(spec).get();
+    ASSERT_STATUS_OK(descriptor);
+    AsyncReader reader;
+    AsyncToken token;
+    std::tie(reader, token) = descriptor->Read(0, expected.size());
+    ReadAndRetainCords(std::move(reader), std::move(token), retained);
+    if (HasFatalFailure()) return;
+  }
+  VerifyRetainedCords(std::move(retained), expected);
 }
 
 TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadEmpty) {
