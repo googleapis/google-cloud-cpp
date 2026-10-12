@@ -171,6 +171,10 @@ storage::ObjectMetadata FromProto(google::storage::v2::Object object,
     metadata.set_hard_delete_time(
         google::cloud::internal::ToChronoTimePoint(object.hard_delete_time()));
   }
+  if (object.has_finalize_time()) {
+    metadata.set_finalize_time(
+        google::cloud::internal::ToChronoTimePoint(object.finalize_time()));
+  }
   if (object.has_contexts()) {
     storage::ObjectContexts contexts;
     for (auto& kv : *object.mutable_contexts()->mutable_custom()) {
