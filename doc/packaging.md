@@ -344,9 +344,17 @@ sudo ldconfig
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
 sudo dnf makecache && sudo dnf install -y c-ares-devel re2-devel
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+    mkdir -p third_party/boringssl-with-bazel && \
+    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
+    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
+      -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
       -DBUILD_SHARED_LIBS=ON \
@@ -357,7 +365,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
       -DgRPC_PROTOBUF_PROVIDER=package \
       -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
       -DgRPC_RE2_PROVIDER=package \
-      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=module \
       -DgRPC_ZLIB_PROVIDER=package \
       -DgRPC_OPENTELEMETRY_PROVIDER=package \
       -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
@@ -514,9 +522,17 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+    mkdir -p third_party/boringssl-with-bazel && \
+    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
+    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
@@ -526,7 +542,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=module \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -S . -B cmake-out && \
@@ -712,9 +728,17 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+    mkdir -p third_party/boringssl-with-bazel && \
+    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
+    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=ON \
@@ -724,7 +748,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=module \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
@@ -842,9 +866,17 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+    mkdir -p third_party/boringssl-with-bazel && \
+    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
+    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
@@ -854,7 +886,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=module \
         -DgRPC_ZLIB_PROVIDER=package \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1081,9 +1113,17 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+    mkdir -p third_party/boringssl-with-bazel && \
+    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
+    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
@@ -1093,7 +1133,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=module \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -S . -B cmake-out && \
@@ -1273,9 +1313,17 @@ install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+    mkdir -p third_party/boringssl-with-bazel && \
+    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
+    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
+    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=yes \
@@ -1285,7 +1333,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=module \
         -DgRPC_ZLIB_PROVIDER=package \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
