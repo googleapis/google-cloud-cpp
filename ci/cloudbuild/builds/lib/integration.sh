@@ -352,11 +352,8 @@ function integration::bazel_generator_with_emulators() {
   else
     io::log_h2 "Running generator integration test"
     bazel_output_base="$(bazel info output_base)"
-
-    # As we support both WORKSPACE and MODULE modes for bazel, we need to determine
-    # the path to these dependencies dynamically.
-    read -r protobuf_proto_path < <(find "${bazel_output_base}/external" -name "empty.proto" | sed -nE 's/(.+\/src)\/google\/protobuf\/empty.proto/\1/p')
-    read -r googleapis_proto_path < <(find "${bazel_output_base}/external" -name "generator-versions.json" | sed -nE 's/(.+)\/generator-versions.json/\1/p')
+    protobuf_proto_path="${bazel_output_base}/external/protobuf+/src"
+    googleapis_proto_path="${bazel_output_base}/external/googleapis+"
 
     bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
       //generator:google-cloud-cpp-codegen -- \

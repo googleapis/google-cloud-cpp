@@ -607,6 +607,27 @@ class ObjectMetadata {
     return *this;
   }
 
+  /// Returns true if the object has a finalize timestamp.
+  bool has_finalize_time() const { return finalize_time_.has_value(); }
+
+  /// The time when the object was finalized, or the system clock's epoch if
+  /// not set (for example, when an appendable object is still open for writes).
+  std::chrono::system_clock::time_point finalize_time() const {
+    return finalize_time_.value_or(std::chrono::system_clock::time_point{});
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_finalize_time(std::chrono::system_clock::time_point v) {
+    finalize_time_ = v;
+    return *this;
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& reset_finalize_time() {
+    finalize_time_.reset();
+    return *this;
+  }
+
   friend bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs);
   friend bool operator!=(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
     return !(lhs == rhs);
@@ -651,6 +672,7 @@ class ObjectMetadata {
   std::chrono::system_clock::time_point updated_;
   std::optional<std::chrono::system_clock::time_point> soft_delete_time_;
   std::optional<std::chrono::system_clock::time_point> hard_delete_time_;
+  std::optional<std::chrono::system_clock::time_point> finalize_time_;
 };
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);

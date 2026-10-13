@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
 #include <string>
@@ -26,6 +27,8 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(ComposeSourceObject, IOStream) {
   auto to_string = [](ComposeSourceObject const& r) {
@@ -139,7 +142,8 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "updated": "2018-05-19T19:31:24Z",
       "customTime": "2020-08-10T12:34:56Z",
       "softDeleteTime": "2024-03-04T12:34:56.789Z",
-      "hardDeleteTime": "2024-03-11T12:34:56.789Z"
+      "hardDeleteTime": "2024-03-11T12:34:56.789Z",
+      "timeFinalized": "2024-05-06T07:08:09.123Z"
 })""";
   return internal::ObjectMetadataParser::FromString(text).value();
 }
@@ -216,6 +220,11 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ(actual.hard_delete_time(),
             std::chrono::system_clock::from_time_t(1710160496L) +
                 std::chrono::milliseconds(789));
+  // Use `date -u +%s --date=2024-05-06T07:08:09Z` to get the magic number:
+  ASSERT_TRUE(actual.has_finalize_time());
+  EXPECT_EQ(actual.finalize_time(),
+            std::chrono::system_clock::from_time_t(1714979289L) +
+                std::chrono::milliseconds(123));
   EXPECT_EQ(
       actual.contexts().custom().at("environment"),
       (ObjectCustomContextPayload{
@@ -223,6 +232,29 @@ TEST(ObjectMetadataTest, Parse) {
           google::cloud::internal::ParseRfc3339("2024-07-18T00:00:00Z").value(),
           google::cloud::internal::ParseRfc3339("2024-07-18T00:00:00Z")
               .value()}));
+}
+
+/// @test Verify an absent `timeFinalized` field is reported as unset.
+TEST(ObjectMetadataTest, ParseWithoutFinalizeTime) {
+  StatusOr<ObjectMetadata> actual =
+      internal::ObjectMetadataParser::FromString(R"""({
+      "bucket": "foo-bar",
+      "name": "baz",
+      "timeCreated": "2018-05-19T19:31:14Z"
+  })""");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_FALSE(actual->has_finalize_time());
+}
+
+/// @test Verify a non-string `timeFinalized` field is rejected.
+TEST(ObjectMetadataTest, ParseInvalidFinalizeTime) {
+  StatusOr<ObjectMetadata> actual =
+      internal::ObjectMetadataParser::FromString(R"""({
+      "bucket": "foo-bar",
+      "name": "baz",
+      "timeFinalized": 42
+  })""");
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -246,6 +278,7 @@ TEST(ObjectMetadataTest, IOStream) {
 
   EXPECT_THAT(actual, HasSubstr("soft_delete_time=2024-03-04T12:34:56.789Z"));
   EXPECT_THAT(actual, HasSubstr("hard_delete_time=2024-03-11T12:34:56.789Z"));
+  EXPECT_THAT(actual, HasSubstr("finalize_time=2024-05-06T07:08:09.123Z"));
 }
 
 /// @test Verify that ObjectMetadataJsonForCompose works as expected.
@@ -661,6 +694,28 @@ TEST(ObjectMetadataTest, ResetHardDeleteTime) {
   auto copy = expected;
   copy.reset_hard_delete_time();
   EXPECT_FALSE(copy.has_hard_delete_time());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the timeFinalized field.
+TEST(ObjectMetadataTest, SetFinalizeTime) {
+  ObjectMetadata const expected = CreateObjectMetadataForTest();
+  ObjectMetadata copy = expected;
+  std::chrono::system_clock::time_point const tp =
+      google::cloud::internal::ParseRfc3339("2020-08-11T09:00:00Z").value();
+  copy.set_finalize_time(tp);
+  EXPECT_TRUE(expected.has_finalize_time());
+  EXPECT_TRUE(copy.has_finalize_time());
+  EXPECT_EQ(tp, copy.finalize_time());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can reset the timeFinalized field.
+TEST(ObjectMetadataTest, ResetFinalizeTime) {
+  ObjectMetadata const expected = CreateObjectMetadataForTest();
+  ObjectMetadata copy = expected;
+  copy.reset_finalize_time();
+  EXPECT_FALSE(copy.has_finalize_time());
   EXPECT_NE(expected, copy);
 }
 

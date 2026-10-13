@@ -265,6 +265,16 @@ Status ParseHardDeleteTime(ObjectMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseFinalizeTime(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("timeFinalized");
+  if (f == json.end()) return Status{};
+  StatusOr<std::chrono::system_clock::time_point> v =
+      ParseTimestampField(json, "timeFinalized");
+  if (!v) return std::move(v).status();
+  meta.set_finalize_time(*std::move(v));
+  return Status{};
+}
+
 Status SetStringField(ObjectMetadata& meta, nlohmann::json const& json,
                       char const* key,
                       ObjectMetadata& (ObjectMetadata::*setter)(std::string)) {
@@ -361,6 +371,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       ParseUpdated,
       ParseSoftDeleteTime,
       ParseHardDeleteTime,
+      ParseFinalizeTime,
   };
   ObjectMetadata meta;
   for (auto const& p : parsers) {

@@ -126,6 +126,10 @@ TEST(GrpcClientFromProto, ObjectSimple) {
       seconds: 1710160496
       nanos: 987654321
     }
+    finalize_time {
+      seconds: 1714979289
+      nanos: 123456789
+    }
 )""",
                                                             &input));
 
@@ -199,13 +203,25 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     },
     "etag": "test-etag",
     "softDeleteTime": "2024-03-04T12:34:56.987654321Z",
-    "hardDeleteTime": "2024-03-11T12:34:56.987654321Z"
+    "hardDeleteTime": "2024-03-11T12:34:56.987654321Z",
+    "timeFinalized": "2024-05-06T07:08:09.123456789Z"
 })""");
   ASSERT_STATUS_OK(expected);
 
   auto actual = FromProto(input, Options{}.set<storage::RestEndpointOption>(
                                      "https://storage.googleapis.com"));
   EXPECT_EQ(actual, *expected);
+}
+
+/// @test Verify an `Object` without `finalize_time` maps to an unset value.
+TEST(GrpcClientFromProto, ObjectWithoutFinalizeTime) {
+  auto constexpr kText = R"pb(
+    name: "test-object-name" bucket: "test-bucket"
+  )pb";
+  storage_proto::Object input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
+  storage::ObjectMetadata const actual = FromProto(input, Options{});
+  EXPECT_FALSE(actual.has_finalize_time());
 }
 
 TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
