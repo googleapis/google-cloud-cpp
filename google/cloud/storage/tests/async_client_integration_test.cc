@@ -48,6 +48,7 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Eq;
 using ::testing::Gt;
 using ::testing::IsEmpty;
 using ::testing::Le;
@@ -101,7 +102,7 @@ class AsyncClientIntegrationTest
     return blocks;
   }
 
-  /// Creates an appendable object, these work in zonal and regional buckets.
+  /// Creates an appendable object, supported in zonal buckets and the emulator.
   StatusOr<google::storage::v2::Object> CreateAppendableObject(
       AsyncClient& async, std::string const& object_name,
       std::vector<std::string> const& blocks) {
@@ -158,6 +159,7 @@ void ReadAndRetainCords(AsyncReader reader, AsyncToken token,
                                                cord.chunk_end());
     EXPECT_THAT(chunks, Pointwise(SameBuffer(), payload.contents()));
 
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
     absl::Cord const copy = payload.cord_contents();
     std::vector<std::string_view> const copy_chunks(copy.chunk_begin(),
                                                     copy.chunk_end());
@@ -176,7 +178,7 @@ void VerifyRetainedCords(std::vector<absl::Cord> retained,
   absl::Cord actual;
   for (absl::Cord& c : retained) actual.Append(std::move(c));
   EXPECT_EQ(actual.size(), expected.size());
-  EXPECT_TRUE(actual == expected);
+  EXPECT_THAT(actual, Eq(expected));
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
@@ -390,7 +392,10 @@ TEST_F(AsyncClientIntegrationTest, StreamingReadCordContents) {
   std::vector<std::string> const blocks = MakeCordTestData();
   std::string const expected = absl::StrJoin(blocks, "");
   StatusOr<google::storage::v2::Object> metadata =
-      CreateAppendableObject(async, object_name, blocks);
+      async
+          .InsertObject(BucketName(bucket_name()), object_name, blocks,
+                        AlwaysRetry())
+          .get();
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
@@ -411,8 +416,17 @@ TEST_F(AsyncClientIntegrationTest, StreamingReadCordContents) {
 }
 
 TEST_F(AsyncClientIntegrationTest, OpenReadCordContents) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
   std::string const object_name = MakeRandomObjectName();
+
+  StatusOr<storage::BucketMetadata> create = client.CreateBucket(
+      bucket_name(), storage::BucketMetadata{}.set_location("us-west4"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+
   std::vector<std::string> const blocks = MakeCordTestData();
   std::string const expected = absl::StrJoin(blocks, "");
   StatusOr<google::storage::v2::Object> metadata =

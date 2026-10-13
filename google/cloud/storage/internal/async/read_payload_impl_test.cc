@@ -190,6 +190,7 @@ TEST(ReadPayload, CordContents) {
   std::optional<std::string_view> const original =
       actual.cord_contents().TryFlat();
   ASSERT_TRUE(original.has_value());
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   absl::Cord const copy = actual.cord_contents();
   EXPECT_THAT(copy, Eq(std::string_view(kQuick)));
   std::optional<std::string_view> const copied = copy.TryFlat();
@@ -206,15 +207,20 @@ TEST(ReadPayload, CordContentsFromVector) {
 }
 
 TEST(ReadPayload, CordContentsMove) {
-  storage::ReadPayload payload = ReadPayloadImpl::Make(absl::Cord(kQuick));
+  bool released = false;
+  storage::ReadPayload payload = ReadPayloadImpl::Make(
+      absl::MakeCordFromExternal(kQuick, [&released] { released = true; }));
   std::optional<std::string_view> const original =
       payload.cord_contents().TryFlat();
   ASSERT_TRUE(original.has_value());
-  absl::Cord const moved = std::move(payload).cord_contents();
+  absl::Cord moved = std::move(payload).cord_contents();
   EXPECT_THAT(moved, Eq(std::string_view(kQuick)));
   std::optional<std::string_view> const flat = moved.TryFlat();
   ASSERT_TRUE(flat.has_value());
   EXPECT_THAT(flat->data(), Eq(original->data()));
+  EXPECT_FALSE(released);
+  moved.Clear();
+  EXPECT_TRUE(released);
 }
 
 TEST(ReadPayload, CordContentsEmpty) {
