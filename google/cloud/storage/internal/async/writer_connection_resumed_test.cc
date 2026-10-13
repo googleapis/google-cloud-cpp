@@ -2173,6 +2173,140 @@ TEST(WriteConnectionResumed,
               StatusIs(PermanentError().code()));
 }
 
+/// Operations that may start the write loop from the calling thread.
+enum class WriterOp { kWrite, kFlush, kFinalize, kClose };
+
+std::string WriterOpName(WriterOp op) {
+  switch (op) {
+    case WriterOp::kWrite:
+      return "Write";
+    case WriterOp::kFlush:
+      return "Flush";
+    case WriterOp::kFinalize:
+      return "Finalize";
+    case WriterOp::kClose:
+      return "Close";
+  }
+  return "Unknown";
+}
+
+/// Starts @p op on @p connection and returns its completion as a `Status`.
+future<Status> StartWriterOp(storage::AsyncWriterConnection& connection,
+                             WriterOp op) {
+  switch (op) {
+    case WriterOp::kWrite:
+      return connection.Write(storage::WritePayload{});
+    case WriterOp::kFlush:
+      return connection.Flush(storage::WritePayload{});
+    case WriterOp::kFinalize:
+      return connection.Finalize(storage::WritePayload{})
+          .then([](future<StatusOr<google::storage::v2::Object>> result) {
+            return result.get().status();
+          });
+    case WriterOp::kClose:
+      return connection.Close(storage::WritePayload{});
+  }
+  return make_ready_future(
+      internal::UnknownError("unknown operation", GCP_ERROR_INFO()));
+}
+
+class WriterConnectionResumedLifetimeTest
+    : public ::testing::TestWithParam<WriterOp> {};
+
+/// @test Verify that no operation accesses the writer state after a
+/// synchronous callback destroys the connection.
+///
+/// A second thread is required because the write loop is idle with a pending
+/// future only while a `Flush()` callback is running, and that callback's
+/// continuation holds a reference to the writer state. Calling the operation
+/// from another thread while the `Flush()` callback is in flight lets the
+/// callback unwind and drop its reference before the operation returns.
+TEST_P(WriterConnectionResumedLifetimeTest,
+       SurvivesConnectionDestroyedByCallback) {
+  AsyncSequencer<bool> sequencer;
+  auto persisted = std::make_shared<std::int64_t>(0);
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([persisted] {
+    return MakePersistedState(*persisted);
+  });
+  EXPECT_CALL(*mock, Flush)
+      .WillOnce([&sequencer, persisted](storage::WritePayload const& payload) {
+        auto const size = static_cast<std::int64_t>(payload.size());
+        return sequencer.PushBack("Flush").then(
+            [persisted, size](future<bool>) {
+              *persisted += size;
+              return Status{};
+            });
+      })
+      .WillOnce([](storage::WritePayload const&) {
+        return make_ready_future(PermanentError());
+      });
+  EXPECT_CALL(*mock, Finalize).Times(0);
+  EXPECT_CALL(*mock, Close).Times(0);
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeWriterConnectionResumed(
+          mock_factory.AsStdFunction(), std::move(mock),
+          google::storage::v2::BidiWriteObjectRequest{}, nullptr,
+          google::storage::v2::BidiWriteObjectResponse{}, WatermarkOptions());
+
+  // Refill the buffer to the high-water mark so `blocked_write` remains pending
+  // after the first flush completes.
+  future<Status> flush_future = connection->Flush(TestPayload(32 * 1024));
+  future<Status> blocked_write = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(blocked_write.is_ready());
+
+  promise<void> flush_callback_started;
+  promise<void> unblock_flush_callback;
+  promise<void> flush_callback_returned;
+  future<void> flush_done = flush_future.then([&](future<Status> result) {
+    EXPECT_STATUS_OK(result.get());
+    flush_callback_started.set_value();
+    unblock_flush_callback.get_future().wait();
+  });
+
+  // Destroy `connection` and wait for the main thread to unwind the first
+  // flush's continuation so the terminal operation holds the last reference to
+  // the writer state.
+  Status write_status;
+  future<void> write_done = blocked_write.then([&](future<Status> result) {
+    write_status = result.get();
+    connection.reset();
+    unblock_flush_callback.set_value();
+    flush_callback_returned.get_future().wait();
+  });
+
+  std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, Eq("Flush"));
+
+  future<Status> op_future;
+  std::thread op_thread([&] {
+    flush_callback_started.get_future().wait();
+    op_future = StartWriterOp(*connection, GetParam());
+  });
+  next.first.set_value(true);
+  flush_callback_returned.set_value();
+  op_thread.join();
+
+  ASSERT_TRUE(flush_done.is_ready());
+  ASSERT_TRUE(write_done.is_ready());
+  EXPECT_THAT(write_status, StatusIs(PermanentError().code()));
+  EXPECT_THAT(op_future.get(), StatusIs(PermanentError().code()));
+}
+
+INSTANTIATE_TEST_SUITE_P(WriteConnectionResumed,
+                         WriterConnectionResumedLifetimeTest,
+                         ::testing::Values(WriterOp::kWrite, WriterOp::kFlush,
+                                           WriterOp::kFinalize,
+                                           WriterOp::kClose),
+                         [](::testing::TestParamInfo<WriterOp> const& info) {
+                           return WriterOpName(info.param);
+                         });
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

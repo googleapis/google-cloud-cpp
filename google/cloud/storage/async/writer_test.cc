@@ -31,6 +31,7 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -294,6 +295,72 @@ TEST(AsyncWriterTest, ErrorWithMismatchedToken) {
           .Write(storage_internal::MakeAsyncToken(&placeholder), WritePayload{})
           .get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
+}
+
+/// @test Verify that `AsyncWriter` operations do not access member variables
+/// after a synchronous callback destroys the `AsyncWriter`.
+///
+/// `writer_` is the sole owner of `mock_`, so each test also verifies that the
+/// operation keeps the connection alive until the call completes.
+class AsyncWriterLifetimeTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    auto mock = std::make_unique<MockAsyncWriterConnection>();
+    mock_ = mock.get();
+    writer_ = std::make_unique<AsyncWriter>(std::move(mock));
+  }
+
+  AsyncToken Token() { return storage_internal::MakeAsyncToken(mock_); }
+  void DestroyWriter() { writer_.reset(); }
+
+  MockAsyncWriterConnection* mock_ = nullptr;
+  std::unique_ptr<AsyncWriter> writer_;
+};
+
+TEST_F(AsyncWriterLifetimeTest, WriteSurvivesWriterDestroyedByCallback) {
+  EXPECT_CALL(*mock_, Write).WillOnce([this] {
+    DestroyWriter();
+    return make_ready_future(Status{});
+  });
+  StatusOr<AsyncToken> const actual =
+      writer_->Write(Token(), WritePayload{}).get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST_F(AsyncWriterLifetimeTest, FinalizeSurvivesWriterDestroyedByCallback) {
+  EXPECT_CALL(*mock_, Finalize).WillOnce([this] {
+    DestroyWriter();
+    return make_ready_future(make_status_or(google::storage::v2::Object{}));
+  });
+  StatusOr<google::storage::v2::Object> const actual =
+      writer_->Finalize(Token(), WritePayload{}).get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST_F(AsyncWriterLifetimeTest, FlushSurvivesWriterDestroyedByCallback) {
+  EXPECT_CALL(*mock_, Flush).WillOnce([this] {
+    DestroyWriter();
+    return make_ready_future(Status{});
+  });
+  Status const actual = writer_->Flush().get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST_F(AsyncWriterLifetimeTest, CloseSurvivesWriterDestroyedByCallback) {
+  EXPECT_CALL(*mock_, Close).WillOnce([this] {
+    // A callback that re-enters the writer while `Close()` is still running
+    // must observe a closed stream rather than reach the connection.
+    EXPECT_THAT(writer_->Write(Token(), WritePayload{}).get(),
+                StatusIs(StatusCode::kCancelled, HasSubstr("closed stream")));
+    EXPECT_THAT(writer_->Finalize(Token(), WritePayload{}).get(),
+                StatusIs(StatusCode::kCancelled, HasSubstr("closed stream")));
+    EXPECT_THAT(writer_->Flush().get(),
+                StatusIs(StatusCode::kCancelled, HasSubstr("closed stream")));
+    DestroyWriter();
+    return make_ready_future(Status{});
+  });
+  Status const actual = writer_->Close().get();
+  EXPECT_STATUS_OK(actual);
 }
 
 }  // namespace

@@ -61,9 +61,12 @@ future<StatusOr<AsyncToken>> AsyncWriter::Write(AsyncToken token,
   auto t = storage_internal::MakeAsyncToken(impl_.get());
   if (token != t) return TokenError<AsyncToken>(GCP_ERROR_INFO());
 
-  return impl_->Write(std::move(payload))
-      .then([impl = impl_, token = std::move(t)](auto f) mutable {
-        auto status = f.get();
+  // `Write()` may invoke a callback synchronously that destroys `*this`, so
+  // do not access member variables after the call.
+  std::shared_ptr<AsyncWriterConnection> impl = impl_;
+  return impl->Write(std::move(payload))
+      .then([impl, token = std::move(t)](future<Status> f) mutable {
+        Status status = f.get();
         if (status.ok()) return make_status_or(std::move(token));
         return StatusOr<AsyncToken>(std::move(status));
       });
@@ -77,9 +80,13 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
     return TokenError<google::storage::v2::Object>(GCP_ERROR_INFO());
   }
 
-  return impl_->Finalize(std::move(payload)).then([impl = impl_](auto f) {
-    return f.get();
-  });
+  // `Finalize()` may invoke a callback synchronously that destroys `*this`, so
+  // do not access member variables after the call.
+  std::shared_ptr<AsyncWriterConnection> impl = impl_;
+  return impl->Finalize(std::move(payload))
+      .then([impl](future<StatusOr<google::storage::v2::Object>> f) {
+        return f.get();
+      });
 }
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
@@ -93,7 +100,10 @@ future<Status> AsyncWriter::Flush() {
         "closed stream", GCP_ERROR_INFO()));
   }
 
-  return impl_->Flush(WritePayload{}).then([impl = impl_](auto f) {
+  // `Flush()` may invoke a callback synchronously that destroys `*this`, so
+  // do not access member variables after the call.
+  std::shared_ptr<AsyncWriterConnection> impl = impl_;
+  return impl->Flush(WritePayload{}).then([impl](future<Status> f) {
     return f.get();
   });
 }
@@ -104,7 +114,11 @@ future<Status> AsyncWriter::Close() {
         "closed stream", GCP_ERROR_INFO()));
   }
 
-  return impl_->Close(WritePayload{}).then([impl = std::move(impl_)](auto f) {
+  // Move `impl_` before `Close()`, as a synchronous callback may destroy
+  // `*this` or re-enter this writer (which should then observe a closed
+  // stream).
+  std::shared_ptr<AsyncWriterConnection> impl = std::move(impl_);
+  return impl->Close(WritePayload{}).then([impl](future<Status> f) {
     return f.get();
   });
 }
