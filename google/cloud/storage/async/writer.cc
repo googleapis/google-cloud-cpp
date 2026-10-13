@@ -65,8 +65,7 @@ future<StatusOr<AsyncToken>> AsyncWriter::Write(AsyncToken token,
   // do not access member variables after the call.
   std::shared_ptr<AsyncWriterConnection> impl = impl_;
   return impl->Write(std::move(payload))
-      .then([impl = std::move(impl),
-             token = std::move(t)](future<Status> f) mutable {
+      .then([impl, token = std::move(t)](future<Status> f) mutable {
         Status status = f.get();
         if (status.ok()) return make_status_or(std::move(token));
         return StatusOr<AsyncToken>(std::move(status));
@@ -85,8 +84,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
   // do not access member variables after the call.
   std::shared_ptr<AsyncWriterConnection> impl = impl_;
   return impl->Finalize(std::move(payload))
-      .then([impl = std::move(impl)](
-                future<StatusOr<google::storage::v2::Object>> f) {
+      .then([impl](future<StatusOr<google::storage::v2::Object>> f) {
         return f.get();
       });
 }
@@ -105,8 +103,9 @@ future<Status> AsyncWriter::Flush() {
   // `Flush()` may invoke a callback synchronously that destroys `*this`, so
   // do not access member variables after the call.
   std::shared_ptr<AsyncWriterConnection> impl = impl_;
-  return impl->Flush(WritePayload{})
-      .then([impl = std::move(impl)](future<Status> f) { return f.get(); });
+  return impl->Flush(WritePayload{}).then([impl](future<Status> f) {
+    return f.get();
+  });
 }
 
 future<Status> AsyncWriter::Close() {
@@ -119,8 +118,9 @@ future<Status> AsyncWriter::Close() {
   // `*this` or re-enter this writer (which should then observe a closed
   // stream).
   std::shared_ptr<AsyncWriterConnection> impl = std::move(impl_);
-  return impl->Close(WritePayload{})
-      .then([impl = std::move(impl)](future<Status> f) { return f.get(); });
+  return impl->Close(WritePayload{}).then([impl](future<Status> f) {
+    return f.get();
+  });
 }
 
 RpcMetadata AsyncWriter::GetRequestMetadata() const {
