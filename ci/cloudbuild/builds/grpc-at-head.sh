@@ -23,14 +23,11 @@ source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/etc/quickstart-config.sh
 
 rm -fr /h/grpc && git -C /h clone -q --depth 1 https://github.com/grpc/grpc.git
-rm -fr /h/protobuf && mkdir -p /h/protobuf &&
-  curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz |
-  tar -C /h/protobuf -xzf - --strip-components=1
 
 mapfile -t args < <(bazel::common_args)
 args+=(
-  "--override_repository=com_github_grpc_grpc=/h/grpc"
-  "--override_repository=com_google_protobuf=/h/protobuf"
+  "--override_module=grpc=/h/grpc"
+  "--incompatible_autoload_externally=+@rules_cc"
 )
 bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
