@@ -7,7 +7,33 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.12.0 - TBD
+## v3.13.0 - TBD
+
+## v3.12.0 - 2026-10
+
+**BREAKING CHANGES**
+
+- [Compute](/google/cloud/compute/README.md): Interface-based versioning (IBV) is now enabled, targeting Compute Engine API version `2026-09-01`. In this version, the `return_partial_success` field (`returnPartialSuccess` query parameter) has been removed from `List*` and `AggregatedList*` request messages, and `AggregatedList*` methods now always return partial results when a scope is unreachable (as if `return_partial_success` were set to `true`). For more details, see the [official announcement](https://docs.cloud.google.com/compute/docs/release-notes#September_29_2026).
+
+### [Compute](/google/cloud/compute/README.md)
+
+- feat(compute): update discovery doc and generate new services ([#16535](https://github.com/googleapis/google-cloud-cpp/pull/16535))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add support for Queues in mutations ([#16549](https://github.com/googleapis/google-cloud-cpp/pull/16549))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): export gRPC channel creation latency metric by transport type ([#16538](https://github.com/googleapis/google-cloud-cpp/pull/16538))
+- fix(storage): hedged read attempts must not own the connection ([#16534](https://github.com/googleapis/google-cloud-cpp/pull/16534))
+- fix(storage): mark async writer idle before invoking flush callbacks ([#16504](https://github.com/googleapis/google-cloud-cpp/pull/16504))
+- fix(storage): add App Hub storage.googleapis.com prefix to destination.id ([#16480](https://github.com/googleapis/google-cloud-cpp/pull/16480))
+- fix(storage): preserve metadata in ReadAll() for 0-byte objects ([#16499](https://github.com/googleapis/google-cloud-cpp/pull/16499))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-09-29T15:45:54-07:00](https://github.com/googleapis/googleapis/tree/28769825ec5fa31815f172b0de490a84e74cb97a)
 
 ## v3.11.0 - 2026-10
 
