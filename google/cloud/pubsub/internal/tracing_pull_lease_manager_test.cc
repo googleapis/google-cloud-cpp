@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -171,11 +172,11 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
                          SpanNamed("test-subscription modack"),
                          SpanHasAttributes(OTelAttribute<std::string>(
                              sc::messaging::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription modack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 /*sc::messaging::kMessagingOperationType=*/
-                                 "messaging.operation.type", "modack")))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-subscription modack"),
+                     SpanHasAttributes(OTelAttribute<std::string>(
+                         sc::messaging::kMessagingOperationType, "modack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(

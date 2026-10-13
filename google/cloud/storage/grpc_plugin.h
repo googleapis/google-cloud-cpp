@@ -138,6 +138,11 @@ struct GrpcMetricsExcludedLabelsOption {
  * [Cloud Interconnect], where the usual GCE environment detection would
  * otherwise disable it.
  *
+ * This requires gRPC 1.85.0 or later. Older versions accept the `force-xds`
+ * query parameter but ignore it, and would silently connect over regular
+ * DirectPath or CloudPath instead. When compiled against an older version, the
+ * client logs a warning and falls back to the standard endpoint defaults.
+ *
  * The default is `false`. The
  * `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT` environment variable
  * overrides this option: set it to `"true"` to enable the feature, or to

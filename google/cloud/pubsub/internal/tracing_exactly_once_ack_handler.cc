@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/status.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
@@ -72,8 +73,7 @@ class TracingExactlyOnceAckHandler
          {sc::messaging::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
-         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-          "settle"}},
+         {sc::messaging::kMessagingOperationType, "settle"}},
         std::move(links), options);
     auto scope = internal::OTelScope(span);
     return internal::EndSpan(std::move(span), child_->ack());
@@ -102,8 +102,7 @@ class TracingExactlyOnceAckHandler
          {sc::messaging::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
-         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-          "settle"}},
+         {sc::messaging::kMessagingOperationType, "settle"}},
         std::move(links), options);
 
     auto scope = internal::OTelScope(span);

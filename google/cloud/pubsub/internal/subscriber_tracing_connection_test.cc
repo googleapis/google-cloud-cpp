@@ -25,6 +25,7 @@
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -152,11 +153,11 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::code::kCodeFunctionName,
                                  "pubsub::SubscriberConnection::Pull")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription receive"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 /*sc::messaging::kMessagingOperationType=*/
-                                 "messaging.operation.type", "receive")))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-subscription receive"),
+                     SpanHasAttributes(OTelAttribute<std::string>(
+                         sc::messaging::kMessagingOperationType, "receive")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription receive"),
                              SpanHasAttributes(OTelAttribute<std::string>(
@@ -171,11 +172,11 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
               Contains(AllOf(SpanNamed("test-subscription receive"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::messaging::kMessagingMessageId, _)))));
-  EXPECT_THAT(spans, Contains(AllOf(
-                         SpanNamed("test-subscription receive"),
-                         SpanHasAttributes(OTelAttribute<std::int64_t>(
-                             /*sc::messaging::kMessagingMessageEnvelopeSize=*/
-                             "messaging.message.envelope.size", 108)))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-subscription receive"),
+                     SpanHasAttributes(OTelAttribute<std::int64_t>(
+                         sc::messaging::kMessagingMessageEnvelopeSize, 108)))));
 }
 
 TEST(SubscriberTracingConnectionTest, PullSetsOrderingKeyAttributeIfExists) {

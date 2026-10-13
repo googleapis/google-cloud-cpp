@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
@@ -21,7 +22,6 @@
 #include "absl/strings/str_cat.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
@@ -75,10 +75,10 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span = internal::MakeSpan(
       absl::StrCat("HTTP/", absl::string_view{method.data(), method.size()}),
-      {{/*sc::kNetworkTransport=*/"network.transport",
+      {{sc::network::kNetworkTransport,
         sc::network::NetworkTransportValues::kTcp},
-       {/*sc::kHttpRequestMethod=*/"http.request.method", method},
-       {/*sc::kUrlFull=*/"url.full", request.path()}},
+       {sc::http::kHttpRequestMethod, method},
+       {sc::url::kUrlFull, request.path()}},
       options);
   for (auto const& kv : request.headers()) {
     auto const name = absl::StrCat("http.request.header.", kv.first.name());

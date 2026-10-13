@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/status.h"
 #include <opentelemetry/semconv/incubating/code_attributes.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
@@ -55,8 +56,7 @@ class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
         {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
-         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-          "modack"},
+         {sc::messaging::kMessagingOperationType, "modack"},
          {sc::code::kCodeFunctionName, "pubsub::PullLeaseManager::ExtendLease"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id_},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",

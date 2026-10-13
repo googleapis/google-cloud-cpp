@@ -24,7 +24,7 @@ function (spanner_client_define_integration_tests)
     set(spanner_client_integration_tests
         # cmake-format: sort
         client_stress_test.cc data_types_integration_test.cc
-        session_pool_integration_test.cc)
+        queue_integration_test.cc session_pool_integration_test.cc)
 
     set(spanner_client_session_mode_sensitive_integration_tests
         # cmake-format: sort

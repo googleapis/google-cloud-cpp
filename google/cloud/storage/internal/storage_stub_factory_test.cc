@@ -270,9 +270,10 @@ TEST_F(StorageStubFactory, LogsChannelConfiguration) {
 
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
-  // Only `LogChannelConfiguration()` emits the mismatch warning, and the
-  // endpoint supplied by `CreateTestStub()` does not request DirectPath over
-  // Interconnect, so enabling the option is enough to provoke it.
+  // `CreateTestStub()` sets `EndpointOption("localhost:1")`, so enabling
+  // `DirectPathXdsOverInterconnectOption` triggers a warning from
+  // `LogChannelConfiguration()` on both gRPC < 1.85 and >= 1.85. Match the
+  // common prefix to verify `CreateDecoratedStubs()` invokes it.
   std::shared_ptr<StorageStub> const stub = CreateTestStub(
       pool.cq(), factory.AsStdFunction(),
       Options{}
@@ -281,8 +282,7 @@ TEST_F(StorageStubFactory, LogsChannelConfiguration) {
   ASSERT_THAT(stub, NotNull());
 
   EXPECT_THAT(log.ExtractLines(),
-              Contains(AllOf(HasSubstr("DirectPath over Interconnect is "
-                                       "enabled"),
+              Contains(AllOf(HasSubstr("DirectPath over Interconnect"),
                              HasSubstr("endpoint=localhost:1"))));
 }
 

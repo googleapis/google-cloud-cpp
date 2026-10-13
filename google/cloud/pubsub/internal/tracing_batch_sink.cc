@@ -19,6 +19,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
@@ -67,11 +68,10 @@ auto MakeParent(Links const& links, Spans const& message_spans,
       {{sc::messaging::kMessagingBatchMessageCount,
         static_cast<std::int64_t>(message_spans.size())},
        {sc::code::kCodeFunctionName, "BatchSink::AsyncPublish"},
-       {/*sc::messaging::kMessagingOperationType=*/
-        "messaging.operation.type", "publish"},
+       {sc::messaging::kMessagingOperationType, "publish"},
        {sc::thread::kThreadId, internal::CurrentThreadId()},
        {sc::messaging::kMessagingSystem, "gcp_pubsub"},
-       {/*sc::kServerAddress=*/"server.address", endpoint},
+       {sc::server::kServerAddress, endpoint},
        {"gcp.project_id", topic.project_id()},
        {sc::messaging::kMessagingDestinationName, topic.topic_id()}},
       /*links*/ std::move(links), options);

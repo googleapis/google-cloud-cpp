@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/status.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
@@ -64,9 +65,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
     attributes.emplace_back(std::make_pair(sc::code::kCodeFunctionName,
                                            "pubsub::PullAckHandler::ack"));
-    attributes.emplace_back(std::make_pair(
-        /*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-        "ack"));
+    attributes.emplace_back(
+        std::make_pair(sc::messaging::kMessagingOperationType, "ack"));
     auto span =
         internal::MakeSpan(subscription.subscription_id() + " ack", attributes,
                            CreateLinks(consumer_span_context_), options);
@@ -91,9 +91,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
     attributes.emplace_back(std::make_pair(sc::code::kCodeFunctionName,
                                            "pubsub::PullAckHandler::nack"));
-    attributes.emplace_back(std::make_pair(
-        /*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-        "nack"));
+    attributes.emplace_back(
+        std::make_pair(sc::messaging::kMessagingOperationType, "nack"));
     auto span =
         internal::MakeSpan(subscription.subscription_id() + " nack", attributes,
                            CreateLinks(consumer_span_context_), options);

@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
@@ -39,8 +40,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
   auto span = internal::MakeSpan(
       subscription.subscription_id() + " receive",
       {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
-       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-        "receive"},
+       {sc::messaging::kMessagingOperationType, "receive"},
        {sc::code::kCodeFunctionName, "pubsub::SubscriberConnection::Pull"},
        {"gcp.project_id", subscription.project_id()},
        {sc::messaging::kMessagingDestinationName,
@@ -64,10 +64,8 @@ StatusOr<pubsub::PullResponse> EndPullSpan(
       span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
                          message.ordering_key());
     }
-    span->SetAttribute(
-        /*sc::messaging::kMessagingMessageEnvelopeSize=*/
-        "messaging.message.envelope.size",
-        static_cast<std::int64_t>(MessageSize(message)));
+    span->SetAttribute(sc::messaging::kMessagingMessageEnvelopeSize,
+                       static_cast<std::int64_t>(MessageSize(message)));
 
     auto current = opentelemetry::context::RuntimeContext::GetCurrent();
     auto context = ExtractTraceContext(message, *propagator);

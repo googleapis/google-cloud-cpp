@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_exactly_once_ack_handler_impl.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -164,9 +165,8 @@ TEST(TracingAckHandlerTest, AckAttributes) {
               OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
                                          "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "settle"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "settle"),
               OTelAttribute<std::string>(sc::code::kCodeFunctionName,
                                          "pubsub::AckHandler::ack"),
               OTelAttribute<std::int32_t>(
@@ -274,9 +274,8 @@ TEST(TracingAckHandlerTest, NackAttributes) {
               OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
                                          "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "settle"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "settle"),
               OTelAttribute<std::string>(sc::code::kCodeFunctionName,
                                          "pubsub::AckHandler::nack"),
               OTelAttribute<std::int32_t>(

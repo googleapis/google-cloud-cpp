@@ -13,11 +13,55 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/mutations.h"
+#include <google/protobuf/timestamp.pb.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <iostream>
+#include <utility>
 
 namespace google {
 namespace cloud {
+namespace spanner_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+SendMutationBuilder::SendMutationBuilder(std::string queue, spanner::Key key,
+                                         spanner::Value payload) {
+  google::spanner::v1::Mutation::Send& send = *m_.proto().mutable_send();
+  send.set_queue(std::move(queue));
+  google::protobuf::ListValue& key_proto = *send.mutable_key();
+  key_proto.mutable_values()->Reserve(static_cast<int>(key.size()));
+  for (spanner::Value& k : key) {
+    *key_proto.add_values() = spanner_internal::ToProto(std::move(k)).second;
+  }
+  *send.mutable_payload() =
+      spanner_internal::ToProto(std::move(payload)).second;
+}
+
+SendMutationBuilder& SendMutationBuilder::SetDeliverTime(
+    spanner::Timestamp deliver_time) & {
+  *m_.proto().mutable_send()->mutable_deliver_time() =
+      deliver_time.get<google::protobuf::Timestamp>().value();
+  return *this;
+}
+
+AckMutationBuilder::AckMutationBuilder(std::string queue, spanner::Key key) {
+  google::spanner::v1::Mutation::Ack& ack = *m_.proto().mutable_ack();
+  ack.set_queue(std::move(queue));
+  google::protobuf::ListValue& key_proto = *ack.mutable_key();
+  key_proto.mutable_values()->Reserve(static_cast<int>(key.size()));
+  for (spanner::Value& k : key) {
+    *key_proto.add_values() = spanner_internal::ToProto(std::move(k)).second;
+  }
+}
+
+AckMutationBuilder& AckMutationBuilder::SetIgnoreNotFound(
+    bool ignore_not_found) & {
+  m_.proto().mutable_ack()->set_ignore_not_found(ignore_not_found);
+  return *this;
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner_internal
+
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

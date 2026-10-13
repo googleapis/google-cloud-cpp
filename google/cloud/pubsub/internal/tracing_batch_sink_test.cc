@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -206,11 +207,11 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::code::kCodeFunctionName,
                                  "BatchSink::AsyncPublish")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-topic publish"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 /*sc::messaging::kMessagingOperationType=*/
-                                 "messaging.operation.type", "publish")))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-topic publish"),
+                     SpanHasAttributes(OTelAttribute<std::string>(
+                         sc::messaging::kMessagingOperationType, "publish")))));
   EXPECT_THAT(spans, Contains(AllOf(
                          SpanNamed("test-topic publish"),
                          SpanHasAttributes(OTelAttribute<std::string>(
@@ -219,10 +220,10 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
       spans, Contains(AllOf(SpanNamed("test-topic publish"),
                             SpanHasAttributes(OTelAttribute<std::string>(
                                 "gcp.project_id", TestTopic().project_id())))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-topic publish"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 "server.address", kDefaultEndpoint)))));
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanNamed("test-topic publish"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::server::kServerAddress, kDefaultEndpoint)))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-topic publish"),
                              SpanHasAttributes(OTelAttribute<std::string>(

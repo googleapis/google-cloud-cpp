@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -158,9 +159,8 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForOneMessage) {
               OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
                                          "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "extend"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "extend"),
               OTelAttribute<int64_t>(sc::messaging::kMessagingBatchMessageCount,
                                      1),
               OTelAttribute<int64_t>(
@@ -198,9 +198,8 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForMultipleMessages) {
               OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
                                          "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "extend"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "extend"),
               OTelAttribute<int64_t>(sc::messaging::kMessagingBatchMessageCount,
                                      2),
               OTelAttribute<int64_t>(
@@ -253,14 +252,14 @@ TEST(TracingBatchCallback, SubscribeAttributes) {
               OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
                                          "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(
-                  /*sc::messaging::kMessagingOperationType=*/
-                  "messaging.operation.type", "subscribe"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingOperationType,
+                                         "subscribe"),
               OTelAttribute<std::string>(sc::messaging::kMessagingMessageId,
                                          "id-0"),
               OTelAttribute<std::string>("messaging.gcp_pubsub.message.ack_id",
                                          "ack-id-0"),
-              OTelAttribute<int64_t>("messaging.message.envelope.size", 101),
+              OTelAttribute<int64_t>(
+                  sc::messaging::kMessagingMessageEnvelopeSize, 101),
               OTelAttribute<std::string>(
                   sc::messaging::kMessagingDestinationName, "test-sub")))));
 }

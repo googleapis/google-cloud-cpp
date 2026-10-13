@@ -15,7 +15,9 @@
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
+#include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
 #include "google/cloud/storage/internal/grpc/metrics_histograms.h"
+#include "google/cloud/version.h"
 #include "absl/strings/str_cat.h"
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/version.h>
@@ -44,12 +46,26 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
-                      std::vector<double> boundaries, std::string const& name,
-                      std::string const& unit) {
-  auto constexpr kGrpcMeterName = "grpc-c++";
-  auto constexpr kGrpcSchema = "";  // gRPC sets an empty schema.
+// Identifies the instrumentation scope that a view applies to.
+struct MeterScope {
+  std::string name;
+  std::string version;
+  std::string schema;
+};
 
+// The scope gRPC uses for its own instruments. gRPC sets an empty schema.
+MeterScope GrpcMeterScope() {
+  return MeterScope{"grpc-c++", grpc::Version(), ""};
+}
+
+// The scope this library uses for the instruments it creates itself.
+MeterScope StorageMeterScope() {
+  return MeterScope{kStorageMeterName, google::cloud::version_string(), ""};
+}
+
+void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
+                      MeterScope const& scope, std::vector<double> boundaries,
+                      std::string const& name, std::string const& unit) {
   auto histogram_aggregation_config = std::make_unique<
       opentelemetry::sdk::metrics::HistogramAggregationConfig>();
   histogram_aggregation_config->boundaries_ = std::move(boundaries);
@@ -72,7 +88,7 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
       opentelemetry::sdk::metrics::InstrumentSelectorFactory::Create(
           opentelemetry::sdk::metrics::InstrumentType::kHistogram, name, unit),
       opentelemetry::sdk::metrics::MeterSelectorFactory::Create(
-          kGrpcMeterName, grpc::Version(), kGrpcSchema),
+          scope.name, scope.version, scope.schema),
       opentelemetry::sdk::metrics::ViewFactory::Create(
           name, std::move(description),
           opentelemetry::sdk::metrics::AggregationType::kHistogram,
@@ -83,7 +99,7 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
       opentelemetry::sdk::metrics::InstrumentSelectorFactory::Create(
           opentelemetry::sdk::metrics::InstrumentType::kHistogram, name, unit),
       opentelemetry::sdk::metrics::MeterSelectorFactory::Create(
-          kGrpcMeterName, grpc::Version(), kGrpcSchema),
+          scope.name, scope.version, scope.schema),
       opentelemetry::sdk::metrics::ViewFactory::Create(
           name, std::move(description), unit,
           opentelemetry::sdk::metrics::AggregationType::kHistogram,
@@ -94,7 +110,7 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
       std::make_unique<opentelemetry::sdk::metrics::InstrumentSelector>(
           opentelemetry::sdk::metrics::InstrumentType::kHistogram, name),
       std::make_unique<opentelemetry::sdk::metrics::MeterSelector>(
-          kGrpcMeterName, grpc::Version(), kGrpcSchema),
+          scope.name, scope.version, scope.schema),
       std::make_unique<opentelemetry::sdk::metrics::View>(
           name, std::move(description),
           opentelemetry::sdk::metrics::AggregationType::kHistogram,
@@ -104,17 +120,22 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
 
 void AddLatencyHistogramView(
     opentelemetry::sdk::metrics::MeterProvider& provider,
-    std::string const& name) {
-  return AddHistogramView(provider, MakeLatencyHistogramBoundaries(), name,
-                          "s");
+    MeterScope const& scope, std::string const& name) {
+  return AddHistogramView(provider, scope, MakeLatencyHistogramBoundaries(),
+                          name, "s");
 }
 
 void AddSizeHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
-                          std::string const& name) {
-  return AddHistogramView(provider, MakeSizeHistogramBoundaries(), name, "By");
+                          MeterScope const& scope, std::string const& name) {
+  return AddHistogramView(provider, scope, MakeSizeHistogramBoundaries(), name,
+                          "By");
 }
 
 }  // namespace
+
+std::string ChannelCreationLatencyInstrument() {
+  return absl::StrCat(kInternalMetricPrefix, "channel_creation_latency");
+}
 
 std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
     std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter,
@@ -132,11 +153,16 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
 #endif
   auto* p =
       static_cast<opentelemetry::sdk::metrics::MeterProvider*>(provider.get());
-  AddLatencyHistogramView(*p, "grpc.client.attempt.duration");
+  MeterScope const grpc_scope = GrpcMeterScope();
+  AddLatencyHistogramView(*p, grpc_scope, "grpc.client.attempt.duration");
   AddSizeHistogramView(
-      *p, "grpc.client.attempt.rcvd_total_compressed_message_size");
+      *p, grpc_scope, "grpc.client.attempt.rcvd_total_compressed_message_size");
   AddSizeHistogramView(
-      *p, "grpc.client.attempt.sent_total_compressed_message_size");
+      *p, grpc_scope, "grpc.client.attempt.sent_total_compressed_message_size");
+  // Instruments created by this library, rather than by gRPC, use a different
+  // instrumentation scope and therefore need their own views.
+  AddLatencyHistogramView(*p, StorageMeterScope(),
+                          ChannelCreationLatencyInstrument());
 
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || OPENTELEMETRY_VERSION_MINOR >= 10
   p->AddMetricReader(

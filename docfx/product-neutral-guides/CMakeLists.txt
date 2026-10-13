@@ -8,16 +8,18 @@ add_executable(transform_guides transform_guides.cc)
 
 # Define the guide files in separate lists to avoid string(SPLIT).
 set(guide_target_names "getting-started" "core-concepts" "client-configuration"
-                       "occ" "troubleshooting")
+                       "occ" "post-quantum-cryptography" "troubleshooting")
 set(guide_source_files
     "${PROJECT_SOURCE_DIR}/README.md"
     "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/core-concepts.md"
     "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/client-configuration.md"
     "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/occ.md"
+    "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/post-quantum-cryptography.md"
     "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/troubleshooting.md")
 set(guide_display_names
     "Getting Started" "Core Concepts" "Client Configuration"
-    "Optimistic Concurrency Control (OCC)" "Troubleshooting")
+    "Optimistic Concurrency Control (OCC)" "Post-Quantum Cryptography (PQC)"
+    "Troubleshooting")
 
 set(copied_files "")
 set(toc_items "")

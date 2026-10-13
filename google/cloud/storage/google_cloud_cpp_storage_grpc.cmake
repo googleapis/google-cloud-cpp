@@ -170,6 +170,8 @@ add_library(
     internal/grpc/bucket_request_parser.h
     internal/grpc/buffer_read_object_data.cc
     internal/grpc/buffer_read_object_data.h
+    internal/grpc/channel_metrics.cc
+    internal/grpc/channel_metrics.h
     internal/grpc/channel_refresh.cc
     internal/grpc/channel_refresh.h
     internal/grpc/channel_telemetry.cc
@@ -453,6 +455,7 @@ set(storage_client_grpc_unit_tests
     internal/grpc/bucket_name_test.cc
     internal/grpc/bucket_request_parser_test.cc
     internal/grpc/buffer_read_object_data_test.cc
+    internal/grpc/channel_metrics_test.cc
     internal/grpc/channel_telemetry_test.cc
     internal/grpc/configure_client_context_test.cc
     internal/grpc/default_options_test.cc

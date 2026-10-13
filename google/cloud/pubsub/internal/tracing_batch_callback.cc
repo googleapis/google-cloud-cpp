@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/pubsub/v1/pubsub.pb.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
@@ -51,15 +52,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
   auto span = internal::MakeSpan(
       subscription.subscription_id() + " subscribe",
       {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
-       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-        "subscribe"},
+       {sc::messaging::kMessagingOperationType, "subscribe"},
        {"gcp.project_id", subscription.project_id()},
        {sc::messaging::kMessagingDestinationName,
         subscription.subscription_id()},
        {sc::messaging::kMessagingMessageId, m.message_id()},
-       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
-                                                         "envelope."
-                                                         "size",
+       {sc::messaging::kMessagingMessageEnvelopeSize,
         static_cast<std::int64_t>(MessageSize(m))},
        {"messaging.gcp_pubsub.message.ack_id", message.ack_id()},
        {"messaging.gcp_pubsub.subscription.exactly_once_delivery",
@@ -206,8 +204,7 @@ class TracingBatchCallback : public BatchCallback {
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
         {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
-         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
-          "extend"},
+         {sc::messaging::kMessagingOperationType, "extend"},
          {sc::messaging::kMessagingBatchMessageCount,
           static_cast<int64_t>(request.ack_ids().size())},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",

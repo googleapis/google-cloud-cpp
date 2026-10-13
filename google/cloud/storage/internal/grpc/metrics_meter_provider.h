@@ -22,11 +22,34 @@
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * The instrumentation scope for instruments created by this library.
+ *
+ * gRPC's own instruments use the `grpc-c++` scope. Using the same scope name
+ * as the tracer (`gl-cpp`) keeps the library's telemetry identifiable and
+ * lets `MakeGrpcMeterProvider()` attach a latency view to it.
+ */
+auto constexpr kStorageMeterName = "gl-cpp";
+
+/**
+ * The fully qualified name of the `channel_creation_latency` instrument.
+ *
+ * Returns `internal/client/channel_creation_latency`. The exporter's name
+ * formatter turns that into
+ * `storage.googleapis.com/internal/client/channel_creation_latency`.
+ *
+ * `MakeGrpcMeterProvider()` registers a latency view for this instrument and
+ * `MakeChannelMetricsCallback()` creates it; both go through this function so
+ * the two cannot drift apart.
+ */
+std::string ChannelCreationLatencyInstrument();
 
 /**
  * Create a meter provider used for gRPC metrics.

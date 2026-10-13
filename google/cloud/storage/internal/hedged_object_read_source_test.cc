@@ -23,6 +23,7 @@
 #include <chrono>
 #include <future>
 #include <memory>
+#include <optional>
 #include <string>
 #include <thread>
 #include <vector>
@@ -1525,6 +1526,53 @@ TEST(HedgedObjectReadSourceTest,
   // Leaving the scope destroys `source` and the last external reference to
   // `HedgingThreadPool`, which joins the in-flight worker thread and destroys
   // the losing hedge's mock before returning.
+}
+
+TEST(HedgedObjectReadSourceTest, QueuedAttemptAfterDestructionDoesNotOpen) {
+  // An attempt that starts running only after the `HedgedObjectReadSource` has
+  // been destroyed must retire without calling the factory.
+  std::optional<PrimaryReadPool> read_pool;
+  read_pool.emplace();
+  std::thread::id const primary_thread = read_pool->worker_id();
+
+  // Hold the single read worker so the primary attempt stays queued until
+  // `source` has been destroyed.
+  auto release_worker = std::make_shared<std::promise<void>>();
+  ASSERT_TRUE(read_pool->pool()->Enqueue(
+      [release_worker] { release_worker->get_future().wait(); }));
+
+  auto primary_opens = std::make_shared<std::atomic<int>>(0);
+  auto factory =
+      [primary_opens,
+       primary_thread]() -> StatusOr<std::unique_ptr<ObjectReadSource>> {
+    auto mock = std::make_unique<MockObjectReadSource>();
+    if (OnPrimaryThread(primary_thread)) {
+      ++*primary_opens;
+      EXPECT_CALL(*mock, Read).WillOnce(ImmediateRead("stale"));
+      EXPECT_CALL(*mock, Close)
+          .Times(AtMost(1))
+          .WillRepeatedly(Return(
+              make_status_or(HttpResponse{HttpStatusCode::kOk, {}, {}})));
+      return std::unique_ptr<ObjectReadSource>(std::move(mock));
+    }
+    EXPECT_CALL(*mock, Read).WillOnce(ImmediateRead("hedge"));
+    return std::unique_ptr<ObjectReadSource>(std::move(mock));
+  };
+
+  {
+    HedgedObjectReadSource source(read_pool->pool(), MakeUnlimitedHedgePool(),
+                                  Adapt(factory), std::chrono::milliseconds(1),
+                                  /*max_hedges=*/1, kUnlimitedBuffer);
+    std::vector<char> buffer(100);
+    StatusOr<ReadSourceResult> result =
+        source.Read(buffer.data(), buffer.size());
+    ASSERT_THAT(result, IsOk());
+    EXPECT_THAT(std::string(buffer.data(), result->bytes_received),
+                Eq("hedge"));
+  }
+  release_worker->set_value();
+  read_pool.reset();
+  EXPECT_THAT(primary_opens->load(), Eq(0));
 }
 
 // The hedging counters backed by mocks. The counters are owned by `metrics`,

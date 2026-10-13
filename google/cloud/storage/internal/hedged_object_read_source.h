@@ -121,7 +121,7 @@ class HedgedObjectReadSource : public ObjectReadSource {
 
   std::shared_ptr<ThreadPool> read_pool_;
   std::shared_ptr<HedgingThreadPool> hedge_pool_;
-  // Shared with the racing attempts, which may outlive this object.
+  // Held by the racing attempts through a `std::weak_ptr`, see `RunAttempt()`.
   std::shared_ptr<ChildFactory const> child_factory_;
   std::chrono::milliseconds delay_;
   int max_hedges_;

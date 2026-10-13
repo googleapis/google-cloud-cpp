@@ -26,6 +26,12 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <future>
+#include <memory>
+#include <optional>
+#include <string>
+#include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -34,6 +40,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::Eq;
+using ::testing::IsNull;
+using ::testing::NotNull;
 
 auto EmptyResource() {
   return opentelemetry::sdk::resource::Resource::Create({});
@@ -213,6 +222,61 @@ TEST(MakeMeterProviderConfigTest, EmptyExcludedLabels) {
   auto actual_excluded =
       config->exporter_options.get<otel_internal::ResourceFilterDataFnOption>();
   EXPECT_TRUE(actual_excluded.empty());
+}
+
+/// @test Verify `EnableGrpcMetricsImpl()` retains its provider for lookup.
+///
+/// Instruments created by this library, rather than by gRPC, find the provider
+/// through `FindMeterProvider()`, so they share one exporter with gRPC's own
+/// instruments. A repeated call for the same authority must keep the original
+/// provider, otherwise those instruments would be split across two exporters.
+/// The authority is unique to this test because the registry is process-wide.
+TEST(GrpcMetricsExporter, FindMeterProviderAfterEnable) {
+  std::string const authority = "test-only-find-provider.example.com";
+  std::optional<ExporterConfig> config = MakeMeterProviderConfig(
+      FullResource(), TestOptions().set<AuthorityOption>(authority));
+  ASSERT_TRUE(config.has_value());
+  EXPECT_THAT(FindMeterProvider(authority), IsNull());
+
+  EnableGrpcMetricsImpl(*config);
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> const provider =
+      FindMeterProvider(authority);
+  EXPECT_THAT(provider, NotNull());
+
+  EnableGrpcMetricsImpl(*config);
+  EXPECT_THAT(FindMeterProvider(authority), Eq(provider));
+  EXPECT_THAT(FindMeterProvider("test-only-unknown.example.com"), IsNull());
+}
+
+/// @test Verify concurrent callers for the same authority all observe the
+/// initialized provider.
+TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
+  std::string const authority = "test-only-concurrent-provider.example.com";
+  std::optional<ExporterConfig> const config = MakeMeterProviderConfig(
+      FullResource(), TestOptions().set<AuthorityOption>(authority));
+  ASSERT_TRUE(config.has_value());
+
+  int constexpr kThreadCount = 8;
+  std::promise<void> start_promise;
+  std::shared_future<void> const start = start_promise.get_future().share();
+  std::vector<std::shared_ptr<opentelemetry::metrics::MeterProvider>> providers(
+      kThreadCount);
+  std::vector<std::thread> threads;
+  threads.reserve(kThreadCount);
+  for (int i = 0; i != kThreadCount; ++i) {
+    threads.emplace_back([&, i] {
+      start.wait();
+      EnableGrpcMetricsImpl(*config);
+      providers[i] = FindMeterProvider(authority);
+    });
+  }
+  start_promise.set_value();
+  for (auto& t : threads) t.join();
+
+  EXPECT_THAT(providers[0], NotNull());
+  for (int i = 1; i != kThreadCount; ++i) {
+    EXPECT_THAT(providers[i], Eq(providers[0]));
+  }
 }
 
 }  // namespace

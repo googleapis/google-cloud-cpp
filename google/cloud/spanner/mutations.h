@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_MUTATIONS_H
 
 #include "google/cloud/spanner/keys.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include "google/spanner/v1/mutation.pb.h"
@@ -29,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 template <typename Op>
 class WriteMutationBuilder;
 class DeleteMutationBuilder;
+class SendMutationBuilder;
+class AckMutationBuilder;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
@@ -87,6 +90,8 @@ class Mutation {
   template <typename Op>
   friend class spanner_internal::WriteMutationBuilder;
   friend class spanner_internal::DeleteMutationBuilder;
+  friend class spanner_internal::SendMutationBuilder;
+  friend class spanner_internal::AckMutationBuilder;
   explicit Mutation(google::spanner::v1::Mutation m) : m_(std::move(m)) {}
 
   google::spanner::v1::Mutation m_;
@@ -183,6 +188,39 @@ class DeleteMutationBuilder {
     auto& field = *m_.proto().mutable_delete_();
     field.set_table(std::move(table_name));
     *field.mutable_key_set() = spanner_internal::ToProto(std::move(keys));
+  }
+
+  spanner::Mutation Build() const& { return m_; }
+  spanner::Mutation&& Build() && { return std::move(m_); }
+
+ private:
+  spanner::Mutation m_;
+};
+
+class SendMutationBuilder {
+ public:
+  SendMutationBuilder(std::string queue, spanner::Key key,
+                      spanner::Value payload);
+
+  SendMutationBuilder& SetDeliverTime(spanner::Timestamp deliver_time) &;
+  SendMutationBuilder&& SetDeliverTime(spanner::Timestamp deliver_time) && {
+    return std::move(SetDeliverTime(std::move(deliver_time)));
+  }
+
+  spanner::Mutation Build() const& { return m_; }
+  spanner::Mutation&& Build() && { return std::move(m_); }
+
+ private:
+  spanner::Mutation m_;
+};
+
+class AckMutationBuilder {
+ public:
+  AckMutationBuilder(std::string queue, spanner::Key key);
+
+  AckMutationBuilder& SetIgnoreNotFound(bool ignore_not_found) &;
+  AckMutationBuilder&& SetIgnoreNotFound(bool ignore_not_found) && {
+    return std::move(SetIgnoreNotFound(ignore_not_found));
   }
 
   spanner::Mutation Build() const& { return m_; }
@@ -368,6 +406,92 @@ using DeleteMutationBuilder = spanner_internal::DeleteMutationBuilder;
  */
 inline Mutation MakeDeleteMutation(std::string table_name, KeySet keys) {
   return DeleteMutationBuilder(std::move(table_name), std::move(keys)).Build();
+}
+
+/**
+ * A helper class to construct queue "send" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+using SendMutationBuilder = spanner_internal::SendMutationBuilder;
+
+/**
+ * Creates a "send" mutation to enqueue a message with @p key and @p payload
+ * into @p queue for immediate delivery.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+inline Mutation MakeSendMutation(std::string queue, Key key, Value payload) {
+  return SendMutationBuilder(std::move(queue), std::move(key),
+                             std::move(payload))
+      .Build();
+}
+
+/**
+ * Creates a "send" mutation to enqueue a message with @p key and @p payload
+ * into @p queue scheduled for @p deliver_time.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+inline Mutation MakeSendMutation(std::string queue, Key key, Value payload,
+                                 Timestamp deliver_time) {
+  return SendMutationBuilder(std::move(queue), std::move(key),
+                             std::move(payload))
+      .SetDeliverTime(std::move(deliver_time))
+      .Build();
+}
+
+/**
+ * A helper class to construct queue "ack" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+using AckMutationBuilder = spanner_internal::AckMutationBuilder;
+
+/**
+ * Creates an "ack" mutation to acknowledge the message with @p key in @p queue.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+inline Mutation MakeAckMutation(std::string queue, Key key) {
+  return AckMutationBuilder(std::move(queue), std::move(key)).Build();
+}
+
+/**
+ * Creates an "ack" mutation to acknowledge the message with @p key in @p queue,
+ * optionally ignoring `NOT_FOUND` errors according to @p ignore_not_found.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+inline Mutation MakeAckMutation(std::string queue, Key key,
+                                bool ignore_not_found) {
+  return AckMutationBuilder(std::move(queue), std::move(key))
+      .SetIgnoreNotFound(ignore_not_found)
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,6 +27,17 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Instruments whose name starts with this prefix are published under the
+ * Google-owned internal namespace.
+ *
+ * gRPC's instruments are published under `storage.googleapis.com/client/`,
+ * which is customer-visible. Instruments created by this library go to
+ * `storage.googleapis.com/internal/client/` instead, mirroring
+ * `bigtable.googleapis.com/internal/client/`.
+ */
+auto constexpr kInternalMetricPrefix = "internal/client/";
+
 /// Returns the monitoring exporter options given the project and resource.
 Options MetricsExporterOptions(
     Project const& project,

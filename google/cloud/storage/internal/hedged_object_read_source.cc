@@ -115,7 +115,8 @@ struct RaceState {
 // loser closes its own child. A failed attempt only resolves the race if it
 // is the last one standing, or if it is the primary failing permanently.
 void RunAttempt(std::shared_ptr<RaceState> const& state,
-                HedgedObjectReadSource::ChildFactory const& factory,
+                std::weak_ptr<HedgedObjectReadSource::ChildFactory const> const&
+                    weak_factory,
                 std::unique_ptr<ObjectReadSource> child,
                 std::unique_ptr<char[]> buffer, std::size_t buffer_capacity,
                 std::int64_t offset, std::optional<std::int64_t> generation,
@@ -141,8 +142,20 @@ void RunAttempt(std::shared_ptr<RaceState> const& state,
   } guard{std::move(release_slot)};
 
   if (!child) {
-    StatusOr<std::unique_ptr<ObjectReadSource>> source =
-        factory(offset, generation);
+    // Lock `weak_factory` only for the open call: the factory captures the
+    // connection, which owns the thread pools this task runs on, so the task
+    // must not keep it alive past `promise.set_value()`.
+    StatusOr<std::unique_ptr<ObjectReadSource>> source = [&] {
+      std::shared_ptr<HedgedObjectReadSource::ChildFactory const> const
+          factory = weak_factory.lock();
+      if (!factory) {
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(
+            google::cloud::internal::CancelledError(
+                "stream destroyed before the read attempt started",
+                GCP_ERROR_INFO()));
+      }
+      return (*factory)(offset, generation);
+    }();
     if (!source) return state->Fail(std::move(source).status(), is_primary);
     child = *std::move(source);
   }
@@ -310,9 +323,10 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
   staging_buffer_.reset();
   staging_buffer_capacity_ = 0;
 
-  auto primary = [state, factory = child_factory_, offset = current_offset_,
-                  gen = generation_, n] {
-    RunAttempt(state, *factory, std::move(state->primary_child),
+  auto primary = [state,
+                  factory = std::weak_ptr<ChildFactory const>(child_factory_),
+                  offset = current_offset_, gen = generation_, n] {
+    RunAttempt(state, factory, std::move(state->primary_child),
                std::move(state->primary_buffer), state->primary_buffer_capacity,
                offset, gen, n,
                /*is_primary=*/true, std::weak_ptr<HedgingThreadPool>{});
@@ -339,10 +353,11 @@ StatusOr<ReadSourceResult> HedgedObjectReadSource::ReadRaced(char* buf,
       continue;
     }
     state->active_attempts.fetch_add(1);
-    auto hedge = [state, factory = child_factory_, offset = current_offset_,
-                  gen = generation_, n,
+    auto hedge = [state,
+                  factory = std::weak_ptr<ChildFactory const>(child_factory_),
+                  offset = current_offset_, gen = generation_, n,
                   pool = std::weak_ptr<HedgingThreadPool>(hedge_pool_)] {
-      RunAttempt(state, *factory, /*child=*/nullptr, /*buffer=*/nullptr,
+      RunAttempt(state, factory, /*child=*/nullptr, /*buffer=*/nullptr,
                  /*buffer_capacity=*/0, offset, gen, n, /*is_primary=*/false,
                  pool);
     };
