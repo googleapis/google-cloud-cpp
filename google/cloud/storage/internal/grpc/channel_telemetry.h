@@ -60,12 +60,17 @@ TransportType DetectTransportType(std::string_view endpoint);
  * Logs the effective connectivity configuration.
  *
  * Emits a `WARNING` when the application asked for DirectPath over
- * Interconnect but the effective endpoint does not use it, which happens, for
- * instance, when the application also sets `EndpointOption` or
- * `UniverseDomainOption`. Otherwise emits an `INFO` line describing the
- * transport in use.
+ * Interconnect but the effective endpoint does not use it (for instance, when
+ * `EndpointOption` or `UniverseDomainOption` is also set), or when `force-xds`
+ * is requested on a gRPC version that ignores it. Otherwise emits an `INFO`
+ * line describing the transport in use.
  */
 void LogChannelConfiguration(Options const& options);
+
+/// Overload of `LogChannelConfiguration` that takes an explicit `force-xds`
+/// support flag for testing.
+void LogChannelConfiguration(Options const& options,
+                             bool grpc_supports_force_xds);
 
 /// Logs the outcome of waiting for the first channel to become ready.
 void LogChannelReady(TransportType transport,

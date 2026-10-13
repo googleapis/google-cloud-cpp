@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc/channel_telemetry.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_status.h"
@@ -141,8 +142,8 @@ TEST(ChannelTelemetry, LogChannelConfigurationInterconnect) {
   LogChannelConfiguration(
       Options{}
           .set<EndpointOption>(kInterconnectEndpoint)
-          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(
-              true));
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true),
+      /*grpc_supports_force_xds=*/true);
   auto const lines = log.ExtractLines();
   EXPECT_THAT(lines,
               Contains(AllOf(HasSubstr("Configured gRPC transport"),
@@ -160,14 +161,77 @@ TEST(ChannelTelemetry, LogChannelConfigurationRequestedButNotApplied) {
   LogChannelConfiguration(
       Options{}
           .set<EndpointOption>(kCloudPathEndpoint)
-          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(
-              true));
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true),
+      /*grpc_supports_force_xds=*/true);
   auto const lines = log.ExtractLines();
   EXPECT_THAT(lines, Contains(AllOf(
                          HasSubstr("DirectPath over Interconnect is enabled"),
                          HasSubstr("transport_type=CloudPath"),
                          HasSubstr("endpoint=storage.googleapis.com"))));
   EXPECT_THAT(lines, Each(Not(HasSubstr("Configured gRPC transport"))));
+}
+
+/// @test Verify that when gRPC does not support `force-xds`, enabling the
+/// option logs the gRPC version requirement rather than the `EndpointOption`
+/// override warning.
+TEST(ChannelTelemetry, LogChannelConfigurationUnsupportedGrpc) {
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(
+      Options{}
+          .set<EndpointOption>(kCloudPathEndpoint)
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(true),
+      /*grpc_supports_force_xds=*/false);
+  std::vector<std::string> const lines = log.ExtractLines();
+  EXPECT_THAT(
+      lines,
+      Contains(AllOf(HasSubstr("DirectPath over Interconnect requires gRPC"),
+                     HasSubstr("1.85.0"), HasSubstr(grpc::Version()),
+                     HasSubstr("transport_type=CloudPath"),
+                     HasSubstr("endpoint=storage.googleapis.com"))));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("Configured gRPC transport"))));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("`EndpointOption`"))));
+}
+
+/// @test Verify that an application-supplied `?force-xds` endpoint also logs a
+/// warning when gRPC does not support `force-xds`.
+TEST(ChannelTelemetry, LogChannelConfigurationUnsupportedGrpcExplicitEndpoint) {
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(Options{}.set<EndpointOption>(kInterconnectEndpoint),
+                          /*grpc_supports_force_xds=*/false);
+  std::vector<std::string> const lines = log.ExtractLines();
+  EXPECT_THAT(lines,
+              Contains(AllOf(HasSubstr("1.85.0"), HasSubstr(grpc::Version()),
+                             HasSubstr("transport_type=DirectPathInterconnect"),
+                             HasSubstr(kInterconnectEndpoint))));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("Configured gRPC transport"))));
+}
+
+/// @test Verify no warning is logged on older gRPC when DirectPath over
+/// Interconnect is neither requested nor present in the endpoint.
+TEST(ChannelTelemetry, LogChannelConfigurationUnsupportedGrpcNotRequested) {
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(Options{}.set<EndpointOption>(kDirectPathEndpoint),
+                          /*grpc_supports_force_xds=*/false);
+  std::vector<std::string> const lines = log.ExtractLines();
+  EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Configured gRPC transport"),
+                                    HasSubstr("transport_type=DirectPath,"))));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("1.85.0"))));
+}
+
+/// @test Verify the 1-argument `LogChannelConfiguration` overload delegates
+/// using `GrpcForceXdsIsSupported()`.
+TEST(ChannelTelemetry, LogChannelConfigurationFollowsGrpcVersion) {
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(
+      Options{}
+          .set<EndpointOption>(kCloudPathEndpoint)
+          .set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+              true));
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(HasSubstr(GrpcForceXdsIsSupported()
+                             ? "DirectPath over Interconnect is enabled"
+                             : "DirectPath over Interconnect requires gRPC")));
 }
 
 /// @test Verify a ready channel logs its transport and elapsed time.
