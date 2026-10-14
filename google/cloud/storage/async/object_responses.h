@@ -56,6 +56,23 @@ class ReadPayload {
     return {impl_.chunk_begin(), impl_.chunk_end()};
   }
 
+  ///@{
+  /**
+   * The payload contents as an `absl::Cord`.
+   *
+   * Copying an `absl::Cord` is relatively cheap, as the underlying buffers are
+   * reference counted and shared between copies. Applications that need to
+   * retain the payload data beyond the lifetime of this object can copy (or
+   * move) the returned value instead of copying the data in `contents()`.
+   *
+   * Retaining a copy of this value keeps the underlying buffers alive, but
+   * it does not extend the lifetime of any other resources (such as the RPC
+   * that received the data).
+   */
+  absl::Cord const& cord_contents() const& { return impl_; }
+  absl::Cord cord_contents() && { return std::move(impl_); }
+  ///@}
+
   /// The object metadata.
   std::optional<google::storage::v2::Object> metadata() const {
     return metadata_;
