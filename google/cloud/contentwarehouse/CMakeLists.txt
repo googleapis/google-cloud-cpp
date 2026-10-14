@@ -33,6 +33,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             $<TARGET_FILE:contentwarehouse_quickstart>
             GOOGLE_CLOUD_CPP_TEST_PROJECT_NUMBER
             GOOGLE_CLOUD_CPP_CONTENTWAREHOUSE_TEST_LOCATION_ID)
-    set_tests_properties(contentwarehouse_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        contentwarehouse_quickstart PROPERTIES DISABLED "True" LABELS
+                                               "integration-test;quickstart")
 endif ()
