@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/ssl_ec_curves.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -22,6 +23,7 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
@@ -53,12 +55,74 @@ TEST(SslEcCurvesTest, PrependPqcEcCurveCaseInsensitive) {
   EXPECT_EQ(*actual, "x25519mlkem768:P-256:P-384");
 }
 
+TEST(SslEcCurvesTest, PrependPqcEcCurveDefaultDoesNotPrioritizeMlKem1024) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", std::nullopt);
+  std::vector<std::string> groups = {"P-256", "X25519MLKEM768", "MLKEM1024",
+                                     "P-384"};
+  auto actual = PrependPqcEcCurve(groups, /*supports_ssl_ec_curves=*/true);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, "X25519MLKEM768:P-256:MLKEM1024:P-384");
+}
+
+TEST(SslEcCurvesTest, PrependPqcEcCurveMlKem1024SuccessWithFallback) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+  std::vector<std::string> groups = {"P-256", "X25519MLKEM768", "MLKEM1024",
+                                     "P-384"};
+  auto actual = PrependPqcEcCurve(groups, /*supports_ssl_ec_curves=*/true);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, "MLKEM1024:X25519MLKEM768:P-256:P-384");
+}
+
+TEST(SslEcCurvesTest, PrependPqcEcCurveMlKem1024SuccessWithoutHybrid) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+  std::vector<std::string> groups = {"P-256", "MLKEM1024", "P-384"};
+  auto actual = PrependPqcEcCurve(groups, /*supports_ssl_ec_curves=*/true);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, "MLKEM1024:P-256:P-384");
+}
+
+TEST(SslEcCurvesTest, PrependPqcEcCurveMlKem1024CaseInsensitive) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+  std::vector<std::string> groups = {"P-256", "x25519mlkem768", "mlkem1024",
+                                     "P-384"};
+  auto actual = PrependPqcEcCurve(groups, /*supports_ssl_ec_curves=*/true);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, "mlkem1024:x25519mlkem768:P-256:P-384");
+}
+
+TEST(SslEcCurvesTest, PrependPqcEcCurveMlKem1024NotSupportedByLibrary) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+  std::vector<std::string> groups = {"P-256", "X25519MLKEM768", "P-384"};
+  auto actual = PrependPqcEcCurve(groups, /*supports_ssl_ec_curves=*/true);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
+                               HasSubstr("MLKEM1024 is not supported")));
+}
+
+TEST(SslEcCurvesTest, PrependPqcEcCurveDisablePqcTakesPrecedence) {
+  ScopedEnvironment disable_pqc("GOOGLE_CLOUD_CPP_DISABLE_PQC", "true");
+  ScopedEnvironment enable_mlkem("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+  std::vector<std::string> groups = {"P-256", "X25519MLKEM768", "MLKEM1024"};
+  auto actual = PrependPqcEcCurve(groups, /*supports_ssl_ec_curves=*/true);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, "P-256:X25519MLKEM768:MLKEM1024");
+}
+
 TEST(SslEcCurvesTest, GetPqcEcCurvesDoesNotCrash) {
   // We cannot assume the host machine has PQC support or OpenSSL 3+, but
   // calling GetPqcEcCurves() should execute cleanly without crashing.
   auto actual = GetPqcEcCurves();
   if (actual.ok()) {
     EXPECT_THAT(*actual, HasSubstr("X25519MLKEM768"));
+  } else {
+    EXPECT_THAT(actual.status().code(), StatusCode::kUnavailable);
+  }
+}
+
+TEST(SslEcCurvesTest, GetPqcEcCurvesWithMlKem1024DoesNotCrash) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+  auto actual = GetPqcEcCurves();
+  if (actual.ok()) {
+    EXPECT_THAT(*actual, HasSubstr("MLKEM1024"));
   } else {
     EXPECT_THAT(actual.status().code(), StatusCode::kUnavailable);
   }

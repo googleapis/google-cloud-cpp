@@ -29,7 +29,63 @@ If the runtime environment does not support `X25519MLKEM768` (for example, when
 linked against OpenSSL < 3.5.0 or `libcurl < 7.73.0`), the client logs an
 informational (`INFO`) message and falls back to the default classical curves.
 
-## 2. Disabling Post-Quantum Cryptography
+## 2. Requesting `ML-KEM-1024`
+
+Applications that require the higher-security NIST Level 5 standalone key
+encapsulation mechanism **`MLKEM1024`** (`ML-KEM-1024`) can explicitly request
+it.
+
+### Requesting `ML-KEM-1024` with REST
+
+Set the `GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024` environment variable to any value
+before starting your application:
+
+```
+export GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024="true"
+./my_application
+```
+
+When `GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024` is set and the underlying SSL/TLS
+library supports `MLKEM1024` (BoringSSL >= `0.20250818.0` or OpenSSL >= 3.5.0,
+with `libcurl >= 7.73.0`), the REST client prepends `MLKEM1024` ahead of
+`X25519MLKEM768` and the classical curves in `CURLOPT_SSL_EC_CURVES` (keeping
+`X25519MLKEM768` in the fallback list). If `MLKEM1024` is not supported by the
+linked cryptographic library, the client logs an informational (`INFO`) message
+and falls back to the library's default curve order.
+
+### Requesting `ML-KEM-1024` with gRPC
+
+With gRPC >= 1.85.0 (built with BoringSSL >= `0.20250818.0` or OpenSSL >=
+3.5.0), configure custom TLS channel credentials with `GRPC_TLS_GROUP_MLKEM1024`
+using `grpc::experimental::TlsChannelCredentialsOptions` and pass them via
+`google::cloud::GrpcCredentialOption`:
+
+```cpp
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include <grpcpp/grpcpp.h>
+#include <grpcpp/security/tls_credentials_options.h>
+
+google::cloud::Options ConfigureMlKem1024TlsForGrpc(
+    std::shared_ptr<grpc::CallCredentials> call_credentials) {
+  grpc::experimental::TlsChannelCredentialsOptions tls_options;
+  tls_options.set_key_exchange_groups({
+      GRPC_TLS_GROUP_MLKEM1024,
+      GRPC_TLS_GROUP_X25519_MLKEM768,
+      GRPC_TLS_GROUP_X25519,
+      GRPC_TLS_GROUP_SECP256R1,
+  });
+
+  auto channel_credentials = grpc::CompositeChannelCredentials(
+      grpc::experimental::TlsCredentials(tls_options),
+      std::move(call_credentials));
+
+  return google::cloud::Options{}
+      .set<google::cloud::GrpcCredentialOption>(std::move(channel_credentials));
+}
+```
+
+## 3. Disabling Post-Quantum Cryptography
 
 In certain network environments, legacy firewalls, proxies, or middleboxes may
 drop or time out TLS handshakes containing larger hybrid post-quantum
@@ -47,7 +103,7 @@ export GOOGLE_CLOUD_CPP_DISABLE_PQC="true"
 ```
 
 When `GOOGLE_CLOUD_CPP_DISABLE_PQC` is set, the REST client does not prioritize
-`X25519MLKEM768` and leaves the underlying SSL library's default curve order
+PQC algorithms and leaves the underlying SSL library's default curve order
 unchanged.
 
 ### Disabling PQC with gRPC
@@ -70,8 +126,8 @@ google::cloud::Options ConfigureClassicalTlsForGrpc(
     std::shared_ptr<grpc::CallCredentials> call_credentials) {
   grpc::experimental::TlsChannelCredentialsOptions tls_options;
   tls_options.set_key_exchange_groups({
-      GRPC_TLS_KEY_EXCHANGE_GROUP_X25519,
-      GRPC_TLS_KEY_EXCHANGE_GROUP_SECP256R1,
+      GRPC_TLS_GROUP_X25519,
+      GRPC_TLS_GROUP_SECP256R1,
   });
 
   auto channel_credentials = grpc::CompositeChannelCredentials(

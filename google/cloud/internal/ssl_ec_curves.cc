@@ -19,6 +19,7 @@
 #include "absl/strings/str_join.h"
 #include <curl/curl.h>
 #include <algorithm>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -45,6 +46,18 @@ bool SupportsSslEcCurves() {
   return kSupports;
 }
 
+bool PrependCurve(std::vector<std::string>& groups, std::string_view target) {
+  auto it = std::find_if(groups.begin(), groups.end(),
+                         [target](std::string const& s) {
+                           return absl::EqualsIgnoreCase(s, target);
+                         });
+  if (it == groups.end()) return false;
+  std::string exact_name = std::move(*it);
+  groups.erase(it);
+  groups.insert(groups.begin(), std::move(exact_name));
+  return true;
+}
+
 }  // namespace
 
 StatusOr<std::string> PrependPqcEcCurve(std::vector<std::string> groups,
@@ -57,20 +70,19 @@ StatusOr<std::string> PrependPqcEcCurve(std::vector<std::string> groups,
         "libcurl version 7.73.0 or later is required to set SSL EC curves.");
   }
 
-  std::string_view constexpr kTarget = "X25519MLKEM768";
-  auto it = std::find_if(groups.begin(), groups.end(),
-                         [&kTarget](std::string const& s) {
-                           return absl::EqualsIgnoreCase(s, kTarget);
-                         });
+  if (internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024")) {
+    PrependCurve(groups, "X25519MLKEM768");
+    if (!PrependCurve(groups, "MLKEM1024")) {
+      return internal::UnavailableError(
+          "MLKEM1024 is not supported by the underlying crypto library.");
+    }
+    return absl::StrJoin(groups, ":");
+  }
 
-  if (it == groups.end()) {
+  if (!PrependCurve(groups, "X25519MLKEM768")) {
     return internal::UnavailableError(
         "X25519MLKEM768 is not supported by the underlying crypto library.");
   }
-
-  std::string exact_name = *it;
-  groups.erase(it);
-  groups.insert(groups.begin(), std::move(exact_name));
 
   return absl::StrJoin(groups, ":");
 }

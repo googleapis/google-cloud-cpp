@@ -18,6 +18,7 @@
 #include "google/cloud/internal/curl_options.h"  // for HttpVersionOption
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
@@ -47,6 +48,8 @@ using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -215,6 +218,115 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithPqcVerification) {
   // Assert PQC was used.
   EXPECT_THAT(tls_group, Eq("X25519MLKEM768"));
   EXPECT_THAT(supported_groups, HasSubstr("X25519MLKEM768"));
+}
+
+TEST(EchoRestIntegrationTest, EchoSuccessRestWithMlKem1024Verification) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
+
+  std::string ca_path;
+  if (auto* ca_env = std::getenv("SHOWCASE_CA_CERT")) {
+    ca_path = ca_env;
+  } else {
+    auto* test_srcdir = std::getenv("TEST_SRCDIR");
+    ASSERT_THAT(test_srcdir, NotNull());
+    ca_path = std::string(test_srcdir) + "/_main/ci/showcase/showcase.pem";
+  }
+
+  std::ifstream ca_file(ca_path);
+  ASSERT_TRUE(ca_file.good()) << "Failed to open CA file at " << ca_path;
+
+  std::string port = "7469";
+  if (auto* port_env = std::getenv("SHOWCASE_PORT")) {
+    port = port_env;
+  }
+  std::string endpoint = absl::StrCat("https://localhost:", port);
+
+  auto credentials = MakeAccessTokenCredentials(
+      "dummy-token", std::chrono::system_clock::now() + std::chrono::hours(1));
+
+  // Force HTTP/1.1 to make sure showcase multiplexer routes to REST.
+  // Use https:// prefix for TLS.
+  auto options =
+      Options{}
+          .set<EndpointOption>(endpoint)
+          .set<CARootsFilePathOption>(ca_path)
+          .set<UnifiedCredentialsOption>(credentials)
+          .set<google::cloud::rest_internal::HttpVersionOption>("1.1");
+  options = v1beta1_internal::EchoDefaultOptions(std::move(options));
+
+  std::multimap<std::string, std::string> intercepted_headers;
+  auto header_callback =
+      [&intercepted_headers](
+          std::multimap<std::string, std::string> const& headers) {
+        intercepted_headers = headers;
+      };
+
+  // Create the real REST client
+  auto real_client = rest_internal::MakePooledRestClient(endpoint, options);
+  ASSERT_THAT(real_client, NotNull()) << "Failed to create real REST client";
+
+  // Wrap it with our interceptor
+  auto intercepting_client = std::make_shared<HeaderInterceptingRestClient>(
+      std::move(real_client), header_callback);
+
+  // Create DefaultEchoRestStub using the intercepting client
+  std::shared_ptr<v1beta1_internal::EchoRestStub> stub =
+      std::make_shared<v1beta1_internal::DefaultEchoRestStub>(
+          intercepting_client, intercepting_client, options);
+
+  // Decorate with metadata decorator (required for X-Goog-Api-Client header)
+  // We must append "rest/" to the API client header to satisfy showcase REST
+  // checks.
+  std::string api_client_header = absl::StrCat(
+      "rest/1.0.0 ", google::cloud::internal::GeneratedLibClientHeader());
+  stub = std::make_shared<v1beta1_internal::EchoRestMetadata>(
+      std::move(stub), std::move(api_client_header));
+
+  // Create ConnectionImpl
+  auto background = std::make_unique<
+      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
+  auto connection = std::make_shared<v1beta1_internal::EchoRestConnectionImpl>(
+      std::move(background), std::move(stub), options);
+
+  auto client = EchoClient(connection);
+
+  ::google::showcase::v1beta1::EchoRequest request;
+  request.set_content("Hello from C++ GAPIC REST with ML-KEM-1024!");
+
+  auto response = client.Echo(request);
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(response->content(),
+              Eq("Hello from C++ GAPIC REST with ML-KEM-1024!"));
+
+  // Verify headers
+  auto get_header_value =
+      [](std::multimap<std::string, std::string> const& headers,
+         std::string const& key) -> std::string {
+    for (auto const& pair : headers) {
+      if (absl::EqualsIgnoreCase(pair.first, key)) {
+        return pair.second;
+      }
+    }
+    return "";
+  };
+
+  std::string tls_group =
+      get_header_value(intercepted_headers, "x-showcase-tls-group");
+  std::string supported_groups = get_header_value(
+      intercepted_headers, "x-showcase-tls-client-supported-groups");
+
+  EXPECT_THAT(tls_group, Not(IsEmpty()))
+      << "x-showcase-tls-group header not found";
+  EXPECT_THAT(supported_groups, Not(IsEmpty()))
+      << "x-showcase-tls-client-supported-groups header not found";
+
+  // Assert PQC was used (MLKEM1024 if supported by the showcase server's Go
+  // runtime, or X25519MLKEM768 fallback) and MLKEM1024 (IANA CurveID 0x0202 =
+  // 514) was advertised by the client.
+  EXPECT_THAT(tls_group, AnyOf(Eq("MLKEM1024"), Eq("X25519MLKEM768")));
+  EXPECT_THAT(supported_groups, HasSubstr("X25519MLKEM768"));
+  EXPECT_THAT(supported_groups,
+              AnyOf(HasSubstr("MLKEM1024"), HasSubstr("514")));
 }
 
 }  // namespace
