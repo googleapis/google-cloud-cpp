@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TRACED_STREAM_RANGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TRACED_STREAM_RANGE_H
 
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/stream_range.h"
 #include <opentelemetry/nostd/shared_ptr.h>

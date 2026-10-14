@@ -358,7 +358,8 @@ Status ConnectionGenerator::GenerateCc() {
        "google/cloud/background_threads.h", "google/cloud/common_options.h",
        "google/cloud/credentials.h", "google/cloud/grpc_options.h",
        "google/cloud/internal/unified_grpc_credentials.h",
-       HasStreamingReadMethod() ? "google/cloud/stream_range.h" : "",
+       HasStreamingReadMethod() ? "google/cloud/internal/make_stream_range.h"
+                                : "",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory", "utility"});
 

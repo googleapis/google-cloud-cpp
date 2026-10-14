@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/random_names.h"
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/project.h"
 #include <gmock/gmock.h>
 

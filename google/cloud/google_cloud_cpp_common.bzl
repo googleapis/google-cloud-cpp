@@ -63,6 +63,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/ios_flags_saver.h",
     "internal/log_impl.h",
     "internal/make_status.h",
+    "internal/make_stream_range.h",
     "internal/noexcept_action.h",
     "internal/non_constructible.h",
     "internal/opentelemetry.h",

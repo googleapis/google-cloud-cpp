@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
 #include <iterator>
