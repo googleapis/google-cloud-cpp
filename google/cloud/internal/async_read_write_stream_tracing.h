@@ -43,12 +43,13 @@ class AsyncStreamingReadWriteRpcTracing
   }
 
   future<bool> Start() override {
-    return StartInternal<&decltype(impl_)::element_type::Start>("Start");
+    return StartInternal<&AsyncStreamingReadWriteRpc<Request, Response>::Start>(
+        "Start");
   }
 
   future<bool> StartWithCorkedInitialMetadata() override {
-    return StartInternal<
-        &decltype(impl_)::element_type::StartWithCorkedInitialMetadata>(
+    return StartInternal<&AsyncStreamingReadWriteRpc<
+        Request, Response>::StartWithCorkedInitialMetadata>(
         "StartWithCorkedInitialMetadata");
   }
 
