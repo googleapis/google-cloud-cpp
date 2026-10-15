@@ -21,6 +21,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <functional>
+#include <memory>
 #include <utility>
 #include <variant>
 
@@ -29,26 +30,36 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/**
- * A function that repeatedly returns `T`s, and ends with a `Status`.
- *
- * This function should return instances of `T` from its underlying stream
- * until there are no more. The end-of-stream is indicated by returning a
- * `Status` indicating either success or an error. This function will not be
- * invoked any more after it returns any `Status`.
- *
- * @par Example: returning the integers from 1-10.
- *
- * @code
- * int counter = 0;
- * auto reader = [&counter](Options const&) -> StreamReader<int>::result_type {
- *   if (++counter <= 10) return counter;
- *   return Status{};  // OK
- * };
- * @endcode
- */
 template <typename T>
-using StreamReader = std::function<std::variant<Status, T>()>;
+using StreamReaderExplicit =
+    std::function<std::variant<Status, T>(Options const&)>;
+
+template <typename T>
+class StreamReaderWrapper {
+ public:
+  explicit StreamReaderWrapper(ImmutableOptions options,
+                               StreamReaderExplicit<T> reader)
+      : call_context_(std::move(options)), reader_(std::move(reader)) {}
+
+  ~StreamReaderWrapper() {
+    ScopedCallContext scope(call_context_);
+    reader_ = nullptr;
+  }
+
+  StreamReaderWrapper(StreamReaderWrapper const&) = delete;
+  StreamReaderWrapper& operator=(StreamReaderWrapper const&) = delete;
+  StreamReaderWrapper(StreamReaderWrapper&&) = delete;
+  StreamReaderWrapper& operator=(StreamReaderWrapper&&) = delete;
+
+  std::variant<Status, T> operator()() {
+    ScopedCallContext scope(call_context_);
+    return reader_(*call_context_.options);
+  }
+
+ private:
+  CallContext call_context_;
+  StreamReaderExplicit<T> reader_;
+};
 
 /**
  * Factory to construct a `StreamRange<T>` with the given `StreamReader<T>`.
@@ -58,13 +69,15 @@ using StreamReader = std::function<std::variant<Status, T>()>;
  * `StreamReader<T>` (i.e., std::function). For example:
  *
  * @code
- * StreamReader<int> empty = MakeStreamReader<int>([] { return Status{}; });
+ * StreamRange<int> empty = MakeStreamRange<int>([] { return Status{}; });
  * @endcode
  */
 template <typename T>
 StreamRange<T> MakeStreamRange(ImmutableOptions options,
                                StreamReaderExplicit<T> reader) {
-  return StreamRange<T>{std::move(options), std::move(reader)};
+  auto impl = std::make_shared<StreamReaderWrapper<T>>(std::move(options),
+                                                       std::move(reader));
+  return MakeStreamRangeImpl<T>([impl = std::move(impl)] { return (*impl)(); });
 }
 
 // TODO(#12359) - remove overload when `*Stub` consumes Options.

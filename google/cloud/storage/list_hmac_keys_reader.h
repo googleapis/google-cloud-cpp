@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include <iterator>
 
 namespace google {
@@ -30,8 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A range to paginate over the HmacKeys for a project.
  */
-using ListHmacKeysReader =
-    google::cloud::internal::PaginationRange<HmacKeyMetadata>;
+using ListHmacKeysReader = StreamRange<HmacKeyMetadata>;
 
 using ListHmacKeysIterator = ListHmacKeysReader::iterator;
 

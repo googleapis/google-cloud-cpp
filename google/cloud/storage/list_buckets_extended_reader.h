@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/stream_range.h"
 #include <string>
 #include <vector>
 
@@ -31,8 +31,7 @@ struct BucketsExtended {
   std::vector<std::string> unreachable;
 };
 
-using ListBucketsExtendedReader =
-    google::cloud::internal::PaginationRange<BucketsExtended>;
+using ListBucketsExtendedReader = StreamRange<BucketsExtended>;
 
 using ListBucketsExtendedIterator = ListBucketsExtendedReader::iterator;
 

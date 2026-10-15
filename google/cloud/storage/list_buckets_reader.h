@@ -18,15 +18,14 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/stream_range.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ListBucketsReader =
-    google::cloud::internal::PaginationRange<BucketMetadata>;
+using ListBucketsReader = StreamRange<BucketMetadata>;
 
 using ListBucketsIterator = ListBucketsReader::iterator;
 
