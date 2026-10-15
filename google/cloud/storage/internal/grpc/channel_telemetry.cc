@@ -47,6 +47,27 @@ constexpr char const* kC2pExperimentalPrefix = "google-c2p-experimental:///";
 /// The query parameter that requests DirectPath over Cloud Interconnect.
 constexpr char const* kForceXds = "force-xds";
 
+/// The top-level LB policy of every xDS resolver result (gRFC A31), which is
+/// what the `google-c2p` resolver produces when it selects DirectPath.
+constexpr std::string_view kXdsLbPolicyName =
+    "xds_cluster_manager_experimental";
+
+/// gRPC's default LB policy, and therefore what a DNS result produces for this
+/// library, which configures neither an LB policy nor a service config.
+constexpr std::string_view kDnsLbPolicyName = "pick_first";
+
+/// Only the two names above are interpreted. Anything else, including an empty
+/// name, is `kUnknown`: if a future gRPC release renames a policy, the label
+/// stays at the requested transport and the ready log says so, rather than
+/// relabeling every channel.
+enum class LbPolicyKind { kXds, kDns, kUnknown };
+
+LbPolicyKind ClassifyLbPolicy(std::string_view lb_policy_name) {
+  if (lb_policy_name == kXdsLbPolicyName) return LbPolicyKind::kXds;
+  if (lb_policy_name == kDnsLbPolicyName) return LbPolicyKind::kDns;
+  return LbPolicyKind::kUnknown;
+}
+
 bool HasQueryParameter(std::string_view uri, std::string_view key) {
   // Per RFC 3986 the fragment follows the query, so anything after `#` cannot
   // contain query parameters. Strip it before looking for the `?`, otherwise
@@ -67,6 +88,13 @@ bool HasQueryParameter(std::string_view uri, std::string_view key) {
         return name == key;
       });
 }
+
+struct ChannelReadyOutcome {
+  Status status;
+  /// The channel's LB policy when the wait ended. Empty if the channel was
+  /// released, or if its resolver had not produced a result yet.
+  std::string lb_policy_name;
+};
 
 /**
  * Waits for a channel to become ready without extending its lifetime.
@@ -92,7 +120,7 @@ class ChannelReadyWaiter
       std::chrono::system_clock::time_point deadline)
       : cq_(std::move(cq)), channel_(std::move(channel)), deadline_(deadline) {}
 
-  future<Status> Start() {
+  future<ChannelReadyOutcome> Start() {
     RunIteration();
     return promise_.get_future();
   }
@@ -103,21 +131,23 @@ class ChannelReadyWaiter
         cq_.lock();
     std::shared_ptr<grpc::Channel> channel = channel_.lock();
     if (!cq || !channel) {
-      promise_.set_value(google::cloud::internal::CancelledError(
-          "The channel or completion queue was released before the channel "
-          "became ready.",
-          GCP_ERROR_INFO()));
+      Complete(google::cloud::internal::CancelledError(
+                   "The channel or completion queue was released before the "
+                   "channel became ready.",
+                   GCP_ERROR_INFO()),
+               channel);
       return;
     }
     grpc_connectivity_state const state = channel->GetState(true);
     if (state == GRPC_CHANNEL_READY) {
-      promise_.set_value(Status{});
+      Complete(Status{}, channel);
       return;
     }
     if (state == GRPC_CHANNEL_SHUTDOWN) {
-      promise_.set_value(google::cloud::internal::CancelledError(
-          "The channel was shut down before it became ready.",
-          GCP_ERROR_INFO()));
+      Complete(google::cloud::internal::CancelledError(
+                   "The channel was shut down before it became ready.",
+                   GCP_ERROR_INFO()),
+               channel);
       return;
     }
     // `NotifyOnStateChange` uses the channel only to register the watch, so
@@ -133,19 +163,58 @@ class ChannelReadyWaiter
 
   void OnStateChange(bool ok) {
     if (!ok) {
-      promise_.set_value(google::cloud::internal::DeadlineExceededError(
-          "The channel did not become ready before the deadline.",
-          GCP_ERROR_INFO()));
+      Complete(google::cloud::internal::DeadlineExceededError(
+                   "The channel did not become ready before the deadline.",
+                   GCP_ERROR_INFO()),
+               channel_.lock());
       return;
     }
     RunIteration();
   }
 
+  // The continuation in `StartChannelTelemetry()` deliberately holds no
+  // reference to the channel, so the LB policy must be read here while
+  // `channel` is still alive.
+  void Complete(Status status, std::shared_ptr<grpc::Channel> const& channel) {
+    promise_.set_value(ChannelReadyOutcome{
+        std::move(status),
+        channel ? channel->GetLoadBalancingPolicyName() : std::string{}});
+  }
+
   std::weak_ptr<google::cloud::internal::CompletionQueueImpl> const cq_;
   std::weak_ptr<grpc::Channel> const channel_;
   std::chrono::system_clock::time_point const deadline_;
-  promise<Status> promise_;
+  promise<ChannelReadyOutcome> promise_;
 };
+
+/// Returns a log suffix qualifying `transport_type` on the ready line, or an
+/// empty view when the requested transport was confirmed.
+///
+/// The explanations assume the rules in `SelectedTransportType()`; keep the two
+/// in sync. A pair no rule produces today gets a neutral note rather than a
+/// wrong reason.
+std::string_view ChannelReadyNote(TransportType requested_transport,
+                                  TransportType selected_transport,
+                                  std::string_view lb_policy_name) {
+  if (requested_transport != selected_transport) {
+    if (selected_transport == TransportType::kCloudPath) {
+      return ", but gRPC resolved the endpoint with DNS, so DirectPath is not "
+             "in use";
+    }
+    if (requested_transport == TransportType::kDirectPathInterconnect &&
+        selected_transport == TransportType::kDirectPath) {
+      return ", but this gRPC version ignores `force-xds`, so DirectPath over "
+             "Interconnect is not in use";
+    }
+    return ", but gRPC selected a different transport";
+  }
+  if (requested_transport != TransportType::kCloudPath &&
+      ClassifyLbPolicy(lb_policy_name) == LbPolicyKind::kUnknown) {
+    return ", but the LB policy was not recognized, so transport_type assumes "
+           "the requested transport";
+  }
+  return {};
+}
 
 }  // namespace
 
@@ -172,6 +241,25 @@ TransportType DetectTransportType(std::string_view endpoint) {
   return TransportType::kDirectPath;
 }
 
+TransportType SelectedTransportType(TransportType requested_transport,
+                                    std::string_view lb_policy_name,
+                                    bool grpc_supports_force_xds) {
+  // Non-`google-c2p` endpoints never use DirectPath, regardless of LB policy.
+  if (requested_transport == TransportType::kCloudPath) {
+    return TransportType::kCloudPath;
+  }
+  if (ClassifyLbPolicy(lb_policy_name) == LbPolicyKind::kDns) {
+    return TransportType::kCloudPath;
+  }
+  // gRPC < 1.85.0 ignores `force-xds`, so an xDS channel uses standard
+  // DirectPath rather than DirectPath over Interconnect.
+  if (requested_transport == TransportType::kDirectPathInterconnect &&
+      !grpc_supports_force_xds) {
+    return TransportType::kDirectPath;
+  }
+  return requested_transport;
+}
+
 void LogChannelConfiguration(Options const& options) {
   LogChannelConfiguration(options, GrpcForceXdsIsSupported());
 }
@@ -179,28 +267,32 @@ void LogChannelConfiguration(Options const& options) {
 void LogChannelConfiguration(Options const& options,
                              bool grpc_supports_force_xds) {
   std::string const& endpoint = options.get<EndpointOption>();
-  TransportType const transport = DetectTransportType(endpoint);
-  bool const requested =
+  TransportType const requested_transport = DetectTransportType(endpoint);
+  bool const interconnect_enabled =
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
   // Check gRPC version support before the endpoint-override warning: on gRPC <
   // 1.85 `DefaultOptionsGrpc()` intentionally leaves the default endpoint in
   // place, and an application-supplied `?force-xds` endpoint is also ignored by
   // the `google-c2p` resolver without a diagnostic.
   if (!grpc_supports_force_xds &&
-      (requested || transport == TransportType::kDirectPathInterconnect)) {
+      (interconnect_enabled ||
+       requested_transport == TransportType::kDirectPathInterconnect)) {
     GCP_LOG(WARNING) << "DirectPath over Interconnect requires gRPC >= 1.85.0, "
                      << "as older versions of the `google-c2p` resolver ignore "
                      << "the `force-xds` query parameter, but this application "
                      << "uses gRPC " << grpc::Version()
-                     << ". transport_type=" << ToString(transport)
+                     << ". requested_transport_type="
+                     << ToString(requested_transport)
                      << ", endpoint=" << endpoint;
     return;
   }
-  if (requested && transport != TransportType::kDirectPathInterconnect) {
+  if (interconnect_enabled &&
+      requested_transport != TransportType::kDirectPathInterconnect) {
     GCP_LOG(WARNING) << "DirectPath over Interconnect is enabled, but the "
                      << "effective endpoint does not request it. Setting "
                      << "`EndpointOption` or `UniverseDomainOption` disables "
-                     << "the feature. transport_type=" << ToString(transport)
+                     << "the feature. requested_transport_type="
+                     << ToString(requested_transport)
                      << ", endpoint=" << endpoint;
     return;
   }
@@ -208,34 +300,48 @@ void LogChannelConfiguration(Options const& options,
       options.has<AuthorityOption>()
           ? std::string_view{options.get<AuthorityOption>()}
           : std::string_view{"(default)"};
-  GCP_LOG(INFO) << "Configured gRPC transport. transport_type="
-                << ToString(transport) << ", endpoint=" << endpoint
-                << ", authority=" << authority;
+  GCP_LOG(INFO) << "Configured gRPC transport. requested_transport_type="
+                << ToString(requested_transport) << ", endpoint=" << endpoint
+                << ", authority=" << authority
+                << ", grpc_version=" << grpc::Version();
 }
 
-void LogChannelReady(TransportType transport,
+void LogChannelReady(TransportType requested_transport,
+                     TransportType selected_transport,
+                     std::string_view lb_policy_name,
                      std::chrono::steady_clock::duration elapsed,
                      Status const& status) {
   std::int64_t const elapsed_ms =
       std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count();
+  std::string_view const logged_lb_policy =
+      lb_policy_name.empty() ? std::string_view{"(unknown)"} : lb_policy_name;
   if (!status.ok()) {
     // This is not necessarily an error. A completion queue that shuts down
     // before the channel connects also reports `kDeadlineExceeded`, and that
     // is indistinguishable from a real timeout, so report at INFO and include
     // the status.
     GCP_LOG(INFO) << "gRPC channel [0] did not become ready. "
-                  << "transport_type=" << ToString(transport)
+                  << "requested_transport_type="
+                  << ToString(requested_transport)
+                  << ", lb_policy=" << logged_lb_policy
                   << ", elapsed_ms=" << elapsed_ms << ", status=" << status;
     return;
   }
-  GCP_LOG(INFO) << "gRPC channel [0] is ready. transport_type="
-                << ToString(transport) << ", elapsed_ms=" << elapsed_ms;
+  GCP_LOG(INFO) << "gRPC channel [0] is ready"
+                << ChannelReadyNote(requested_transport, selected_transport,
+                                    lb_policy_name)
+                << ". transport_type=" << ToString(selected_transport)
+                << ", requested_transport_type="
+                << ToString(requested_transport)
+                << ", lb_policy=" << logged_lb_policy
+                << ", elapsed_ms=" << elapsed_ms;
 }
 
 future<void> StartChannelTelemetry(
     CompletionQueue cq,
     std::vector<std::shared_ptr<grpc::Channel>> const& channels,
-    TransportType transport, std::chrono::steady_clock::time_point start,
+    TransportType requested_transport,
+    std::chrono::steady_clock::time_point start,
     std::chrono::milliseconds timeout, ChannelReadyCallback on_ready) {
   if (channels.empty()) return make_ready_future();
   // We create hundreds of channels in some VMs. Observing only the first
@@ -243,6 +349,7 @@ future<void> StartChannelTelemetry(
   // all the log output with uninteresting lines.
   std::chrono::system_clock::time_point const deadline =
       std::chrono::system_clock::now() + timeout;
+  bool const grpc_supports_force_xds = GrpcForceXdsIsSupported();
   return std::make_shared<ChannelReadyWaiter>(
              google::cloud::internal::GetCompletionQueueImpl(std::move(cq)),
              channels.front(), deadline)
@@ -250,16 +357,23 @@ future<void> StartChannelTelemetry(
       // The continuation captures values only. It holds no reference to the
       // stub, the channel refresh loop, or the completion queue, so it cannot
       // create an ownership cycle and needs no `std::weak_ptr`.
-      .then(
-          [transport, start, on_ready = std::move(on_ready)](future<Status> f) {
-            std::chrono::steady_clock::duration const elapsed =
-                std::chrono::steady_clock::now() - start;
-            Status const status = f.get();
-            LogChannelReady(transport, elapsed, status);
-            // A failed or abandoned connection attempt has no meaningful
-            // latency, and recording it would skew the histogram.
-            if (status.ok() && on_ready) on_ready(transport, elapsed);
-          });
+      .then([requested_transport, grpc_supports_force_xds, start,
+             on_ready = std::move(on_ready)](
+                future<ChannelReadyOutcome> outcome_future) {
+        std::chrono::steady_clock::duration const elapsed =
+            std::chrono::steady_clock::now() - start;
+        ChannelReadyOutcome const outcome = std::move(outcome_future).get();
+        TransportType const selected_transport =
+            SelectedTransportType(requested_transport, outcome.lb_policy_name,
+                                  grpc_supports_force_xds);
+        LogChannelReady(requested_transport, selected_transport,
+                        outcome.lb_policy_name, elapsed, outcome.status);
+        // A failed or abandoned connection attempt has no meaningful
+        // latency, and recording it would skew the histogram.
+        if (outcome.status.ok() && on_ready) {
+          on_ready(selected_transport, elapsed);
+        }
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
