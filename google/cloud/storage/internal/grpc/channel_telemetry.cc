@@ -362,7 +362,7 @@ future<void> StartChannelTelemetry(
                 future<ChannelReadyOutcome> outcome_future) {
         std::chrono::steady_clock::duration const elapsed =
             std::chrono::steady_clock::now() - start;
-        ChannelReadyOutcome const outcome = outcome_future.get();
+        ChannelReadyOutcome const outcome = std::move(outcome_future).get();
         TransportType const selected_transport =
             SelectedTransportType(requested_transport, outcome.lb_policy_name,
                                   grpc_supports_force_xds);

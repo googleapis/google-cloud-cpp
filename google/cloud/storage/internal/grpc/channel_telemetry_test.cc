@@ -371,7 +371,7 @@ TEST(ChannelTelemetry, LogChannelReadyForceXdsIgnored) {
 /// rather than a wrong reason.
 ///
 /// `SelectedTransportType()` never selects `kDirectPath` for a `kCloudPath`
-/// request, so this pair reaches the fallback in `TransportMismatchNote()`.
+/// request.
 TEST(ChannelTelemetry, LogChannelReadyOtherTransportMismatch) {
   testing_util::ScopedLog log;
   LogChannelReady(TransportType::kCloudPath, TransportType::kDirectPath,
@@ -597,9 +597,12 @@ TEST(ChannelTelemetry, StartChannelTelemetryDoesNotExtendChannelLifetime) {
   ASSERT_EQ(done.wait_for(std::chrono::seconds(5)), std::future_status::ready);
 
   EXPECT_EQ(recorded, 0);
-  EXPECT_THAT(log.ExtractLines(),
-              Contains(AllOf(HasSubstr("did not become ready"),
-                             HasSubstr("CANCELLED"))));
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("did not become ready"), HasSubstr("CANCELLED"),
+                     HasSubstr("requested_transport_type="
+                               "DirectPathInterconnect"),
+                     HasSubstr("lb_policy=(unknown)"))));
 }
 
 }  // namespace
