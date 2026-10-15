@@ -14,9 +14,15 @@
 
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
+#include <optional>
+#include <string>
+#include <string_view>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -27,6 +33,7 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::Field;
 using ::testing::IsEmpty;
 using ::testing::Optional;
@@ -173,6 +180,52 @@ TEST(ReadPayload, AccumulateEmptyIntoEmpty) {
   ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
   EXPECT_THAT(actual.contents(), IsEmpty());
   EXPECT_FALSE(actual.metadata().has_value());
+}
+
+TEST(ReadPayload, CordContents) {
+  storage::ReadPayload const actual = ReadPayloadImpl::Make(absl::Cord(kQuick));
+  EXPECT_THAT(actual.cord_contents(), Eq(std::string_view(kQuick)));
+
+  // Copying the Cord shares the underlying buffer, the data is not copied.
+  std::optional<std::string_view> const original =
+      actual.cord_contents().TryFlat();
+  ASSERT_TRUE(original.has_value());
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+  absl::Cord const copy = actual.cord_contents();
+  EXPECT_THAT(copy, Eq(std::string_view(kQuick)));
+  std::optional<std::string_view> const copied = copy.TryFlat();
+  ASSERT_TRUE(copied.has_value());
+  EXPECT_THAT(copied->data(), Eq(original->data()));
+}
+
+TEST(ReadPayload, CordContentsFromVector) {
+  storage::ReadPayload const actual = storage::ReadPayload(
+      std::vector<std::string>({std::string(kQuick), std::string(kQuick)}));
+  EXPECT_THAT(std::string(actual.cord_contents()),
+              Eq(std::string(kQuick) + kQuick));
+  EXPECT_THAT(actual.cord_contents().size(), Eq(actual.size()));
+}
+
+TEST(ReadPayload, CordContentsMove) {
+  bool released = false;
+  storage::ReadPayload payload = ReadPayloadImpl::Make(
+      absl::MakeCordFromExternal(kQuick, [&released] { released = true; }));
+  std::optional<std::string_view> const original =
+      payload.cord_contents().TryFlat();
+  ASSERT_TRUE(original.has_value());
+  absl::Cord moved = std::move(payload).cord_contents();
+  EXPECT_THAT(moved, Eq(std::string_view(kQuick)));
+  std::optional<std::string_view> const flat = moved.TryFlat();
+  ASSERT_TRUE(flat.has_value());
+  EXPECT_THAT(flat->data(), Eq(original->data()));
+  EXPECT_FALSE(released);
+  moved.Clear();
+  EXPECT_TRUE(released);
+}
+
+TEST(ReadPayload, CordContentsEmpty) {
+  storage::ReadPayload const actual;
+  EXPECT_THAT(actual.cord_contents(), IsEmpty());
 }
 
 }  // namespace
