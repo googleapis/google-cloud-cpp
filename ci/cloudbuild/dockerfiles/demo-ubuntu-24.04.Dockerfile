@@ -23,7 +23,7 @@ ARG NCPU=4
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        cmake ca-certificates curl git gcc g++ golang-go m4 make tar libc6-dbg
+        cmake ca-certificates curl git gcc g++ m4 make tar libc6-dbg
 # ```
 
 # Ubuntu:24 includes packages for most of the direct dependencies of
@@ -166,11 +166,26 @@ RUN curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
+## [BEGIN IGNORED]
+## The [BEGIN IGNORED] / [DONE IGNORED] sections below are omitted when
+## generating doc/packaging.md via ci/generate-markdown/generate-packaging.sh.
+## They work around an upstream gRPC + OpenSSL issue
+## (https://github.com/grpc/grpc/issues/42068) in CI by building gRPC against
+## its bundled BoringSSL (-DgRPC_SSL_PROVIDER=module) with prefixed symbols
+## (BORINGSSL_PREFIX=bssl_grpc) and renamed shared libraries (bssl_crypto,
+## bssl_ssl) so they do not collide with system OpenSSL (libssl.so, libcrypto.so)
+## at build or run time.
+RUN apt-get update && apt-get --no-install-recommends install -y golang-go
+## [DONE IGNORED]
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
+## [BEGIN IGNORED]
+## Build BoringSSL once to extract its symbol list with Go, disable its CMake
+## install rules (to avoid overwriting system OpenSSL headers/pkg-config), and
+## rename its shared libraries so they can be installed alongside OpenSSL.
     mkdir -p third_party/boringssl-with-bazel && \
     curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
     tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
@@ -187,20 +202,27 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
         'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
         'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
         >> third_party/boringssl-with-bazel/CMakeLists.txt && \
+## [DONE IGNORED]
     cmake \
+## [BEGIN IGNORED]
         -DCMAKE_INSTALL_PREFIX=/usr/local \
+        -DBORINGSSL_PREFIX=bssl_grpc \
+        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
+## [DONE IGNORED]
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=ON \
-        -DBORINGSSL_PREFIX=bssl_grpc \
-        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
+## [BEGIN IGNORED]
         -DgRPC_SSL_PROVIDER=module \
+## [DONE IGNORED]
+## Emit -DgRPC_SSL_PROVIDER=package into doc/packaging.md while ignoring it in Docker.
+#         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \

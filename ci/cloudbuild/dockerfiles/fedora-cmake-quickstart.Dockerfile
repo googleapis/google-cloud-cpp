@@ -177,6 +177,12 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+# Work around an upstream gRPC + OpenSSL issue
+# (https://github.com/grpc/grpc/issues/42068) by building gRPC against its
+# bundled BoringSSL (-DgRPC_SSL_PROVIDER=module) with prefixed symbols
+# (BORINGSSL_PREFIX=bssl_grpc) and renamed shared libraries (bssl_crypto,
+# bssl_ssl) so they do not collide with system OpenSSL (libssl.so, libcrypto.so)
+# at build or run time.
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel golang re2-devel
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \

@@ -343,35 +343,16 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-sudo dnf makecache && sudo dnf install -y c-ares-devel golang re2-devel
+sudo dnf makecache && sudo dnf install -y c-ares-devel re2-devel
 curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
-    mkdir -p third_party/boringssl-with-bazel && \
-    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
-    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
-    printf 'module boringssl.googlesource.com/boringssl.git\n\ngo 1.18\n' > third_party/boringssl-with-bazel/go.mod && \
-    cmake -S third_party/boringssl-with-bazel -B bssl-build && \
-    cmake --build bssl-build --target crypto ssl -- -j ${NCPU:-4} && \
-    (cd third_party/boringssl-with-bazel && go run util/read_symbols.go -out ../../bssl_symbols.txt ../../bssl-build/libcrypto.a ../../bssl-build/libssl.a) && \
-    rm -rf bssl-build && \
-    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
-    printf '%s\n' \
-        'set_target_properties(crypto PROPERTIES OUTPUT_NAME bssl_crypto)' \
-        'set_target_properties(ssl PROPERTIES OUTPUT_NAME bssl_ssl)' \
-        'add_dependencies(ssl boringssl_prefix_symbols)' \
-        'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
-        'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
-        >> third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
-      -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
       -DBUILD_SHARED_LIBS=ON \
-      -DBORINGSSL_PREFIX=bssl_grpc \
-      -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
       -DgRPC_INSTALL=ON \
       -DgRPC_BUILD_TESTS=OFF \
       -DgRPC_ABSL_PROVIDER=package \
@@ -379,7 +360,7 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
       -DgRPC_PROTOBUF_PROVIDER=package \
       -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
       -DgRPC_RE2_PROVIDER=package \
-      -DgRPC_SSL_PROVIDER=module \
+      -DgRPC_SSL_PROVIDER=package \
       -DgRPC_ZLIB_PROVIDER=package \
       -DgRPC_OPENTELEMETRY_PROVIDER=package \
       -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
@@ -424,7 +405,7 @@ use GCC 8 or higher to compile `google-cloud-cpp`.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake cmake curl \
-        gcc gcc-c++ git go gzip libtool make patch tar wget
+        gcc gcc-c++ git gzip libtool make patch tar wget
 ```
 
 Install some of the dependencies for `google-cloud-cpp`.
@@ -541,36 +522,17 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
-    mkdir -p third_party/boringssl-with-bazel && \
-    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
-    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
-    printf 'module boringssl.googlesource.com/boringssl.git\n\ngo 1.18\n' > third_party/boringssl-with-bazel/go.mod && \
-    cmake -S third_party/boringssl-with-bazel -B bssl-build && \
-    cmake --build bssl-build --target crypto ssl -- -j ${NCPU:-4} && \
-    (cd third_party/boringssl-with-bazel && go run util/read_symbols.go -out ../../bssl_symbols.txt ../../bssl-build/libcrypto.a ../../bssl-build/libssl.a) && \
-    rm -rf bssl-build && \
-    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
-    printf '%s\n' \
-        'set_target_properties(crypto PROPERTIES OUTPUT_NAME bssl_crypto)' \
-        'set_target_properties(ssl PROPERTIES OUTPUT_NAME bssl_ssl)' \
-        'add_dependencies(ssl boringssl_prefix_symbols)' \
-        'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
-        'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
-        >> third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
-        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
-        -DBORINGSSL_PREFIX=bssl_grpc \
-        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=module \
+        -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -S . -B cmake-out && \
@@ -610,7 +572,7 @@ Install the minimal development tools, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        cmake ca-certificates curl git gcc g++ golang-go m4 make tar libc6-dbg
+        cmake ca-certificates curl git gcc g++ m4 make tar libc6-dbg
 ```
 
 Ubuntu:24 includes packages for most of the direct dependencies of
@@ -761,36 +723,17 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
-    mkdir -p third_party/boringssl-with-bazel && \
-    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
-    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
-    printf 'module boringssl.googlesource.com/boringssl.git\n\ngo 1.18\n' > third_party/boringssl-with-bazel/go.mod && \
-    cmake -S third_party/boringssl-with-bazel -B bssl-build && \
-    cmake --build bssl-build --target crypto ssl -- -j ${NCPU:-4} && \
-    (cd third_party/boringssl-with-bazel && go run util/read_symbols.go -out ../../bssl_symbols.txt ../../bssl-build/libcrypto.a ../../bssl-build/libssl.a) && \
-    rm -rf bssl-build && \
-    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
-    printf '%s\n' \
-        'set_target_properties(crypto PROPERTIES OUTPUT_NAME bssl_crypto)' \
-        'set_target_properties(ssl PROPERTIES OUTPUT_NAME bssl_ssl)' \
-        'add_dependencies(ssl boringssl_prefix_symbols)' \
-        'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
-        'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
-        >> third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
-        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=ON \
-        -DBORINGSSL_PREFIX=bssl_grpc \
-        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=module \
+        -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
@@ -832,7 +775,7 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential cmake ca-certificates curl git \
-        gcc g++ golang-go libc-ares-dev libc-ares2 libnghttp2-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libnghttp2-dev libre2-dev \
         libssl-dev m4 make pkg-config tar wget zlib1g-dev libc6-dbg
 ```
 
@@ -913,36 +856,17 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
-    mkdir -p third_party/boringssl-with-bazel && \
-    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
-    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
-    printf 'module boringssl.googlesource.com/boringssl.git\n\ngo 1.18\n' > third_party/boringssl-with-bazel/go.mod && \
-    cmake -S third_party/boringssl-with-bazel -B bssl-build && \
-    cmake --build bssl-build --target crypto ssl -- -j ${NCPU:-4} && \
-    (cd third_party/boringssl-with-bazel && go run util/read_symbols.go -out ../../bssl_symbols.txt ../../bssl-build/libcrypto.a ../../bssl-build/libssl.a) && \
-    rm -rf bssl-build && \
-    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
-    printf '%s\n' \
-        'set_target_properties(crypto PROPERTIES OUTPUT_NAME bssl_crypto)' \
-        'set_target_properties(ssl PROPERTIES OUTPUT_NAME bssl_ssl)' \
-        'add_dependencies(ssl boringssl_prefix_symbols)' \
-        'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
-        'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
-        >> third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
-        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
-        -DBORINGSSL_PREFIX=bssl_grpc \
-        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=module \
+        -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1023,8 +947,7 @@ Install the minimal development tools.
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates cmake curl git \
-        gcc g++ golang-go m4 make ninja-build pkg-config tar wget zlib1g-dev \
-        libc6-dbg
+        gcc g++ m4 make ninja-build pkg-config tar wget zlib1g-dev libc6-dbg
 ```
 
 Install the development packages for direct `google-cloud-cpp` dependencies:
@@ -1175,36 +1098,17 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
-    mkdir -p third_party/boringssl-with-bazel && \
-    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
-    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
-    printf 'module boringssl.googlesource.com/boringssl.git\n\ngo 1.18\n' > third_party/boringssl-with-bazel/go.mod && \
-    cmake -S third_party/boringssl-with-bazel -B bssl-build && \
-    cmake --build bssl-build --target crypto ssl -- -j ${NCPU:-4} && \
-    (cd third_party/boringssl-with-bazel && go run util/read_symbols.go -out ../../bssl_symbols.txt ../../bssl-build/libcrypto.a ../../bssl-build/libssl.a) && \
-    rm -rf bssl-build && \
-    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
-    printf '%s\n' \
-        'set_target_properties(crypto PROPERTIES OUTPUT_NAME bssl_crypto)' \
-        'set_target_properties(ssl PROPERTIES OUTPUT_NAME bssl_ssl)' \
-        'add_dependencies(ssl boringssl_prefix_symbols)' \
-        'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
-        'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
-        >> third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
-        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
-        -DBORINGSSL_PREFIX=bssl_grpc \
-        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=module \
+        -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -S . -B cmake-out && \
@@ -1247,7 +1151,7 @@ sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf config-manager --set-enabled crb && \
 sudo dnf makecache && \
-sudo dnf install -y cmake findutils gcc-c++ git golang make openssl-devel \
+sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libnghttp2-devel c-ares-devel tar wget which \
         autoconf automake libtool binutils dnf-utils
 sudo dnf makecache && sudo dnf debuginfo-install -y glibc
@@ -1389,36 +1293,17 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
     tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
-    mkdir -p third_party/boringssl-with-bazel && \
-    curl -fsSL https://github.com/google/boringssl/archive/2b44a3701a4788e1ef866ddc7f143060a3d196c9.tar.gz | \
-    tar -xzf - -C third_party/boringssl-with-bazel --strip-components=1 && \
-    printf 'module boringssl.googlesource.com/boringssl.git\n\ngo 1.18\n' > third_party/boringssl-with-bazel/go.mod && \
-    cmake -S third_party/boringssl-with-bazel -B bssl-build && \
-    cmake --build bssl-build --target crypto ssl -- -j ${NCPU:-4} && \
-    (cd third_party/boringssl-with-bazel && go run util/read_symbols.go -out ../../bssl_symbols.txt ../../bssl-build/libcrypto.a ../../bssl-build/libssl.a) && \
-    rm -rf bssl-build && \
-    sed -i 's/set(INSTALL_ENABLED 1)/set(INSTALL_ENABLED 0)/' third_party/boringssl-with-bazel/CMakeLists.txt && \
-    printf '%s\n' \
-        'set_target_properties(crypto PROPERTIES OUTPUT_NAME bssl_crypto)' \
-        'set_target_properties(ssl PROPERTIES OUTPUT_NAME bssl_ssl)' \
-        'add_dependencies(ssl boringssl_prefix_symbols)' \
-        'target_compile_definitions(crypto PUBLIC $<BUILD_INTERFACE:BORINGSSL_PREFIX=${BORINGSSL_PREFIX}>)' \
-        'target_include_directories(crypto PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/symbol_prefix_include>)' \
-        >> third_party/boringssl-with-bazel/CMakeLists.txt && \
     cmake \
-        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=yes \
-        -DBORINGSSL_PREFIX=bssl_grpc \
-        -DBORINGSSL_PREFIX_SYMBOLS="$(pwd)/bssl_symbols.txt" \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
         -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=module \
+        -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
