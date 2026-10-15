@@ -143,6 +143,7 @@ class MockAsyncPullStream : public MockSubscriberStub::StreamingPullStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<bool>, StartWithCorkedInitialMetadata, (), (override));
   MOCK_METHOD(future<std::optional<google::pubsub::v1::StreamingPullResponse>>,
               Read, (), (override));
   MOCK_METHOD(future<bool>, Write,
