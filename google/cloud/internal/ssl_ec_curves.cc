@@ -20,7 +20,6 @@
 #include <curl/curl.h>
 #include <algorithm>
 #include <string_view>
-#include <utility>
 
 namespace google {
 namespace cloud {
@@ -52,9 +51,7 @@ bool PrependCurve(std::vector<std::string>& groups, std::string_view target) {
                            return absl::EqualsIgnoreCase(s, target);
                          });
   if (it == groups.end()) return false;
-  std::string exact_name = std::move(*it);
-  groups.erase(it);
-  groups.insert(groups.begin(), std::move(exact_name));
+  std::rotate(groups.begin(), it, it + 1);
   return true;
 }
 

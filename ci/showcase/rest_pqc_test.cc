@@ -224,10 +224,10 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithMlKem1024Verification) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_ML_KEM_1024", "true");
 
   std::string ca_path;
-  if (auto* ca_env = std::getenv("SHOWCASE_CA_CERT")) {
+  if (auto const* ca_env = std::getenv("SHOWCASE_CA_CERT")) {
     ca_path = ca_env;
   } else {
-    auto* test_srcdir = std::getenv("TEST_SRCDIR");
+    auto const* test_srcdir = std::getenv("TEST_SRCDIR");
     ASSERT_THAT(test_srcdir, NotNull());
     ca_path = std::string(test_srcdir) + "/_main/ci/showcase/showcase.pem";
   }
@@ -236,17 +236,17 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithMlKem1024Verification) {
   ASSERT_TRUE(ca_file.good()) << "Failed to open CA file at " << ca_path;
 
   std::string port = "7469";
-  if (auto* port_env = std::getenv("SHOWCASE_PORT")) {
+  if (auto const* port_env = std::getenv("SHOWCASE_PORT")) {
     port = port_env;
   }
   std::string endpoint = absl::StrCat("https://localhost:", port);
 
-  auto credentials = MakeAccessTokenCredentials(
+  std::shared_ptr<Credentials> credentials = MakeAccessTokenCredentials(
       "dummy-token", std::chrono::system_clock::now() + std::chrono::hours(1));
 
   // Force HTTP/1.1 to make sure showcase multiplexer routes to REST.
   // Use https:// prefix for TLS.
-  auto options =
+  Options options =
       Options{}
           .set<EndpointOption>(endpoint)
           .set<CARootsFilePathOption>(ca_path)
@@ -262,7 +262,8 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithMlKem1024Verification) {
       };
 
   // Create the real REST client
-  auto real_client = rest_internal::MakePooledRestClient(endpoint, options);
+  std::unique_ptr<RestClient> real_client =
+      rest_internal::MakePooledRestClient(endpoint, options);
   ASSERT_THAT(real_client, NotNull()) << "Failed to create real REST client";
 
   // Wrap it with our interceptor
@@ -293,7 +294,8 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithMlKem1024Verification) {
   ::google::showcase::v1beta1::EchoRequest request;
   request.set_content("Hello from C++ GAPIC REST with ML-KEM-1024!");
 
-  auto response = client.Echo(request);
+  StatusOr<google::showcase::v1beta1::EchoResponse> response =
+      client.Echo(request);
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(response->content(),
               Eq("Hello from C++ GAPIC REST with ML-KEM-1024!"));
@@ -302,10 +304,8 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithMlKem1024Verification) {
   auto get_header_value =
       [](std::multimap<std::string, std::string> const& headers,
          std::string const& key) -> std::string {
-    for (auto const& pair : headers) {
-      if (absl::EqualsIgnoreCase(pair.first, key)) {
-        return pair.second;
-      }
+    for (auto const& [k, v] : headers) {
+      if (absl::EqualsIgnoreCase(k, key)) return v;
     }
     return "";
   };
