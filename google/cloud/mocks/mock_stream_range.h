@@ -60,7 +60,7 @@ StreamRange<T> MakeStreamRange(std::vector<T> values,
     if (it == v.end()) return s;
     return *it++;
   };
-  return internal::MakeStreamRange<T>(std::move(reader));
+  return internal::MakeStreamRangeImpl<T>(std::move(reader));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

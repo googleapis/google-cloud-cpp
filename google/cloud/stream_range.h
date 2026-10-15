@@ -15,8 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
 
-#include "google/cloud/internal/call_context.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -35,13 +33,30 @@ class StreamRange;
 
 namespace internal {
 
+/**
+ * A function that repeatedly returns `T`s, and ends with a `Status`.
+ *
+ * This function should return instances of `T` from its underlying stream
+ * until there are no more. The end-of-stream is indicated by returning a
+ * `Status` indicating either success or an error. This function will not be
+ * invoked any more after it returns any `Status`.
+ *
+ * @par Example: returning the integers from 1-10.
+ *
+ * @code
+ * int counter = 0;
+ * auto reader = [&counter]() -> StreamReader<int>::result_type {
+ *   if (++counter <= 10) return counter;
+ *   return Status{};  // OK
+ * };
+ * @endcode
+ */
 template <typename T>
-using StreamReaderExplicit =
-    std::function<std::variant<Status, T>(Options const&)>;
+using StreamReader = std::function<std::variant<Status, T>()>;
 
-// Defined in make_stream_range.h.
+// Defined below.
 template <typename T>
-StreamRange<T> MakeStreamRange(ImmutableOptions, StreamReaderExplicit<T>);
+StreamRange<T> MakeStreamRangeImpl(StreamReader<T> reader);
 
 }  // namespace internal
 
@@ -144,10 +159,7 @@ class StreamRange {
    */
   StreamRange() = default;
 
-  ~StreamRange() {
-    internal::ScopedCallContext scope(call_context_);
-    reader_ = nullptr;
-  }
+  ~StreamRange() = default;
 
   ///@{
   /// @name Move-only
@@ -182,14 +194,13 @@ class StreamRange {
         sr.current_ = std::move(t);
       }
     };
-    internal::ScopedCallContext scope(call_context_);
-    auto v = reader_(*call_context_.options);
+    auto v = reader_();
     std::visit(UnpackVariant{*this}, std::move(v));
   }
 
   template <typename U>
-  friend StreamRange<U> internal::MakeStreamRange(
-      internal::ImmutableOptions, internal::StreamReaderExplicit<U>);
+  friend StreamRange<U> internal::MakeStreamRangeImpl(
+      internal::StreamReader<U>);
 
   /**
    * Constructs a `StreamRange<T>` that will use the given @p reader.
@@ -215,21 +226,27 @@ class StreamRange {
    * }
    * @endcode
    *
-   * @param options the options in effect during this pagination.
    * @param reader must not be nullptr.
    */
-  explicit StreamRange(internal::ImmutableOptions options,
-                       internal::StreamReaderExplicit<T> reader)
-      : call_context_(std::move(options)), reader_(std::move(reader)) {
+  explicit StreamRange(internal::StreamReader<T> reader)
+      : reader_(std::move(reader)) {
     Next();
   }
 
-  internal::CallContext call_context_;
-  internal::StreamReaderExplicit<T> reader_;
+  internal::StreamReader<T> reader_;
   StatusOr<T> current_;
   bool current_ok_ = false;
   bool is_end_ = true;
 };
+
+namespace internal {
+
+template <typename T>
+StreamRange<T> MakeStreamRangeImpl(StreamReader<T> reader) {
+  return StreamRange<T>{std::move(reader)};
+}
+
+}  // namespace internal
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

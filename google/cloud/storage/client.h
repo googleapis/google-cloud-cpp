@@ -340,13 +340,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListBucketsRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = connection_;
-    return google::cloud::internal::MakePaginationRange<ListBucketsReader>(
-        request,
-        [client](internal::ListBucketsRequest const& r) {
-          return client->ListBuckets(r);
-        },
-        [](internal::ListBucketsResponse r) { return std::move(r.items); });
+    return ListBucketsForProjectImpl(request);
   }
 
   /**
@@ -377,8 +371,7 @@ class Client {
     auto project_id = storage_internal::RequestProjectId(
         GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
     if (!project_id) {
-      return google::cloud::internal::MakeErrorPaginationRange<
-          ListBucketsReader>(std::move(project_id).status());
+      return ListBucketsErrorImpl(std::move(project_id).status());
     }
     google::cloud::internal::OptionsSpan const span(std::move(opts));
     return ListBucketsForProject(*std::move(project_id),
@@ -415,24 +408,13 @@ class Client {
     auto project_id = storage_internal::RequestProjectId(
         GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
     if (!project_id) {
-      return google::cloud::internal::MakeErrorPaginationRange<
-          ListBucketsExtendedReader>(std::move(project_id).status());
+      return ListBucketsExtendedErrorImpl(std::move(project_id).status());
     }
     google::cloud::internal::OptionsSpan const span(std::move(opts));
 
     internal::ListBucketsRequest request(*std::move(project_id));
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = connection_;
-    return google::cloud::internal::MakePaginationRange<
-        ListBucketsExtendedReader>(
-        request,
-        [client](internal::ListBucketsRequest const& r) {
-          return client->ListBuckets(r);
-        },
-        [](internal::ListBucketsResponse res) {
-          return std::vector<BucketsExtended>{BucketsExtended{
-              std::move(res.items), std::move(res.unreachable)}};
-        });
+    return ListBucketsExtendedImpl(request);
   }
 
   /**
@@ -1105,13 +1087,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = connection_;
-    return google::cloud::internal::MakePaginationRange<ListObjectsReader>(
-        request,
-        [client](internal::ListObjectsRequest const& r) {
-          return client->ListObjects(r);
-        },
-        [](internal::ListObjectsResponse r) { return std::move(r.items); });
+    return ListObjectsImpl(request);
   }
 
   /**
@@ -1141,24 +1117,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return google::cloud::internal::MakePaginationRange<
-        ListObjectsAndPrefixesReader>(
-        request,
-        [client = connection_](internal::ListObjectsRequest const& r) {
-          return client->ListObjects(r);
-        },
-        [](internal::ListObjectsResponse r) {
-          std::vector<ObjectOrPrefix> result;
-          result.reserve(r.items.size() + r.prefixes.size());
-          for (auto& item : r.items) {
-            result.emplace_back(std::move(item));
-          }
-          for (auto& prefix : r.prefixes) {
-            result.emplace_back(std::move(prefix));
-          }
-          internal::SortObjectsAndPrefixes(result);
-          return result;
-        });
+    return ListObjectsAndPrefixesImpl(request);
   }
 
   /**
@@ -2795,19 +2754,13 @@ class Client {
     auto project_id = storage_internal::RequestProjectId(
         GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
     if (!project_id) {
-      return google::cloud::internal::MakeErrorPaginationRange<
-          ListHmacKeysReader>(std::move(project_id).status());
+      return ListHmacKeysErrorImpl(std::move(project_id).status());
     }
     google::cloud::internal::OptionsSpan const span(std::move(opts));
 
     internal::ListHmacKeysRequest request(*std::move(project_id));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
-        request,
-        [stub = connection_](internal::ListHmacKeysRequest const& r) {
-          return stub->ListHmacKeys(r);
-        },
-        [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
+    return ListHmacKeysImpl(request);
   }
 
   /**
@@ -3459,6 +3412,20 @@ class Client {
          std::shared_ptr<internal::StorageConnection> connection);
   /// Create a connection from @p opts, applying all decorators if needed.
   Client(InternalOnly, Options const& opts);
+
+  ListBucketsReader ListBucketsForProjectImpl(
+      internal::ListBucketsRequest const& request);
+  static ListBucketsReader ListBucketsErrorImpl(Status status);
+  ListBucketsExtendedReader ListBucketsExtendedImpl(
+      internal::ListBucketsRequest const& request);
+  static ListBucketsExtendedReader ListBucketsExtendedErrorImpl(Status status);
+  ListObjectsReader ListObjectsImpl(
+      internal::ListObjectsRequest const& request);
+  ListObjectsAndPrefixesReader ListObjectsAndPrefixesImpl(
+      internal::ListObjectsRequest const& request);
+  ListHmacKeysReader ListHmacKeysImpl(
+      internal::ListHmacKeysRequest const& request);
+  static ListHmacKeysReader ListHmacKeysErrorImpl(Status status);
 
   ObjectReadStream ReadObjectImpl(
       internal::ReadObjectRangeRequest const& request);

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/tracing_object_read_source.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/parallel_upload.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include <memory>

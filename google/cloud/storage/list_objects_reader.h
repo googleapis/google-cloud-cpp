@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include <iterator>
 
 namespace google {
@@ -27,8 +27,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ListObjectsReader =
-    google::cloud::internal::PaginationRange<ObjectMetadata>;
+using ListObjectsReader = StreamRange<ObjectMetadata>;
 
 using ListObjectsIterator = ListObjectsReader::iterator;
 
