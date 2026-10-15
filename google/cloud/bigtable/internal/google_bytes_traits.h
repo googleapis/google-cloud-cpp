@@ -46,6 +46,9 @@ inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 inline bool IsEmptyRowKey(std::string_view key) { return key.empty(); }
 #endif  // GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L
 
+/// Clear the row key.
+inline void Clear(std::string& key) { key.clear(); }
+
 /// Return `< 0` if `lhs < rhs`, 0 if `lhs == rhs`, and `> 0' otherwise.
 inline int CompareRowKey(std::string const& lhs, std::string const& rhs) {
   return lhs.compare(rhs);
