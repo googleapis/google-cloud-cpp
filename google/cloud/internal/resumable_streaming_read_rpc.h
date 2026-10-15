@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RESUMABLE_STREAMING_READ_RPC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RESUMABLE_STREAMING_READ_RPC_H
 
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/version.h"
 #include <chrono>

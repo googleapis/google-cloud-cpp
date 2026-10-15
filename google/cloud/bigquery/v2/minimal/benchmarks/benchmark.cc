@@ -17,6 +17,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/stream_range.h"

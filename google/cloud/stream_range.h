@@ -35,32 +35,11 @@ class StreamRange;
 
 namespace internal {
 
-/**
- * A function that repeatedly returns `T`s, and ends with a `Status`.
- *
- * This function should return instances of `T` from its underlying stream
- * until there are no more. The end-of-stream is indicated by returning a
- * `Status` indicating either success or an error. This function will not be
- * invoked any more after it returns any `Status`.
- *
- * @par Example: returning the integers from 1-10.
- *
- * @code
- * int counter = 0;
- * auto reader = [&counter](Options const&) -> StreamReader<int>::result_type {
- *   if (++counter <= 10) return counter;
- *   return Status{};  // OK
- * };
- * @endcode
- */
-template <typename T>
-using StreamReader = std::function<std::variant<Status, T>()>;
-
 template <typename T>
 using StreamReaderExplicit =
     std::function<std::variant<Status, T>(Options const&)>;
 
-// Defined below.
+// Defined in make_stream_range.h.
 template <typename T>
 StreamRange<T> MakeStreamRange(ImmutableOptions, StreamReaderExplicit<T>);
 
@@ -251,34 +230,6 @@ class StreamRange {
   bool current_ok_ = false;
   bool is_end_ = true;
 };
-
-namespace internal {
-
-/**
- * Factory to construct a `StreamRange<T>` with the given `StreamReader<T>`.
- *
- * Callers should explicitly specify the `T` parameter when calling this
- * function template so that lambdas will implicitly convert to the underlying
- * `StreamReader<T>` (i.e., std::function). For example:
- *
- * @code
- * StreamReader<int> empty = MakeStreamReader<int>([] { return Status{}; });
- * @endcode
- */
-template <typename T>
-StreamRange<T> MakeStreamRange(ImmutableOptions options,
-                               StreamReaderExplicit<T> reader) {
-  return StreamRange<T>{std::move(options), std::move(reader)};
-}
-
-// TODO(#12359) - remove overload when `*Stub` consumes Options.
-template <typename T>
-StreamRange<T> MakeStreamRange(StreamReader<T> reader) {
-  auto wrapper = [r = std::move(reader)](Options const&) { return r(); };
-  return MakeStreamRange<T>(SaveCurrentOptions(), std::move(wrapper));
-}
-
-}  // namespace internal
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

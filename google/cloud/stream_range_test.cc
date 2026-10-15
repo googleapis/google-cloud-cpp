@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/stream_range.h"
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"

@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
+#include "google/cloud/internal/make_stream_range.h"
 
 namespace google {
 namespace cloud {
