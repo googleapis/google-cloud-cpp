@@ -34,8 +34,19 @@ Options DefaultOptionsGrpc(Options = {},
                            std::shared_ptr<internal::GcpDetector> const&
                                gcp_detector = internal::MakeGcpDetector());
 
+/// Overload of `DefaultOptionsGrpc` that takes an explicit `force-xds` support
+/// flag for testing.
+Options DefaultOptionsGrpc(
+    Options options, std::shared_ptr<internal::GcpDetector> const& gcp_detector,
+    bool grpc_supports_force_xds);
+
 bool GrpcEnableMetricsIsSafe(int major, int minor, int patch);
 bool GrpcEnableMetricsIsSafe();
+
+/// Returns true if gRPC `major.minor.patch` honors the `force-xds` query
+/// parameter in `google-c2p` targets (gRPC >= 1.85.0).
+bool GrpcForceXdsIsSupported(int major, int minor, int patch);
+bool GrpcForceXdsIsSupported();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

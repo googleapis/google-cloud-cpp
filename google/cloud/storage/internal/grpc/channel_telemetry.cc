@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc/channel_telemetry.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/async_connection_ready.h"
 #include "google/cloud/internal/call_context.h"
@@ -23,6 +24,7 @@
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include <grpcpp/channel.h>
+#include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <chrono>
 #include <cstddef>
@@ -171,10 +173,29 @@ TransportType DetectTransportType(std::string_view endpoint) {
 }
 
 void LogChannelConfiguration(Options const& options) {
+  LogChannelConfiguration(options, GrpcForceXdsIsSupported());
+}
+
+void LogChannelConfiguration(Options const& options,
+                             bool grpc_supports_force_xds) {
   std::string const& endpoint = options.get<EndpointOption>();
   TransportType const transport = DetectTransportType(endpoint);
   bool const requested =
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
+  // Check gRPC version support before the endpoint-override warning: on gRPC <
+  // 1.85 `DefaultOptionsGrpc()` intentionally leaves the default endpoint in
+  // place, and an application-supplied `?force-xds` endpoint is also ignored by
+  // the `google-c2p` resolver without a diagnostic.
+  if (!grpc_supports_force_xds &&
+      (requested || transport == TransportType::kDirectPathInterconnect)) {
+    GCP_LOG(WARNING) << "DirectPath over Interconnect requires gRPC >= 1.85.0, "
+                     << "as older versions of the `google-c2p` resolver ignore "
+                     << "the `force-xds` query parameter, but this application "
+                     << "uses gRPC " << grpc::Version()
+                     << ". transport_type=" << ToString(transport)
+                     << ", endpoint=" << endpoint;
+    return;
+  }
   if (requested && transport != TransportType::kDirectPathInterconnect) {
     GCP_LOG(WARNING) << "DirectPath over Interconnect is enabled, but the "
                      << "effective endpoint does not request it. Setting "

@@ -26,6 +26,8 @@
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <thread>
+#include <tuple>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -62,6 +64,13 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 Options DefaultOptionsGrpc(
     Options options,
     std::shared_ptr<internal::GcpDetector> const& gcp_detector) {
+  return DefaultOptionsGrpc(std::move(options), gcp_detector,
+                            GrpcForceXdsIsSupported());
+}
+
+Options DefaultOptionsGrpc(
+    Options options, std::shared_ptr<internal::GcpDetector> const& gcp_detector,
+    bool grpc_supports_force_xds) {
   using ::google::cloud::internal::GetEnv;
   // Experiments show that gRPC gets better upload throughput when the upload
   // buffer is at least 32MiB.
@@ -122,12 +131,18 @@ Options DefaultOptionsGrpc(
           false);
     }
   }
+  // gRPC < 1.85 ignores the `force-xds` query parameter, which would silently
+  // connect over regular DirectPath or CloudPath while telemetry reports
+  // `DirectPathInterconnect`. Leave the option set so
+  // `LogChannelConfiguration()` can warn that the request was ignored.
+  //     https://github.com/grpc/grpc/pull/42980
   bool const direct_path_interconnect =
+      grpc_supports_force_xds &&
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>();
 
   // Unless the application configured an endpoint or universe domain, default
   // to direct connectivity: the Interconnect target when that feature is
-  // enabled, otherwise the standard target when running in GCP.
+  // enabled and supported, otherwise the standard target when running in GCP.
   if (!options.has<EndpointOption>() &&
       !options.has<internal::UniverseDomainOption>()) {
     if (direct_path_interconnect) {
@@ -182,6 +197,21 @@ bool GrpcEnableMetricsIsSafe() {
   return false;
 #else
   return GrpcEnableMetricsIsSafe(GRPC_CPP_VERSION_MAJOR, GRPC_CPP_VERSION_MINOR,
+                                 GRPC_CPP_VERSION_PATCH);
+#endif  // GRPC_CPP_VERSION_MAJOR
+}
+
+bool GrpcForceXdsIsSupported(int major, int minor, int patch) {
+  // The `google-c2p` resolver started honoring `force-xds` in gRPC 1.85.0:
+  //     https://github.com/grpc/grpc/pull/42980
+  return std::make_tuple(major, minor, patch) >= std::make_tuple(1, 85, 0);
+}
+
+bool GrpcForceXdsIsSupported() {
+#ifndef GRPC_CPP_VERSION_MAJOR
+  return false;
+#else
+  return GrpcForceXdsIsSupported(GRPC_CPP_VERSION_MAJOR, GRPC_CPP_VERSION_MINOR,
                                  GRPC_CPP_VERSION_PATCH);
 #endif  // GRPC_CPP_VERSION_MAJOR
 }

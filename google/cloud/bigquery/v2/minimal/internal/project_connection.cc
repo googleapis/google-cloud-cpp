@@ -18,6 +18,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/project_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/make_stream_range.h"
 #include <memory>
 
 namespace google {

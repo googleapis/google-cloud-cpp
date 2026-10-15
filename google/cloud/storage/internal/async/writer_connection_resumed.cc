@@ -148,9 +148,12 @@ class AsyncWriterConnectionResumedState
     finalize_called_ = true;
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
+    // `HandleNewData()` may invoke a callback synchronously that destroys the
+    // connection and `*this`, so move `finalized_future_` before calling it.
+    future<StatusOr<google::storage::v2::Object>> result =
+        std::move(finalized_future_);
     HandleNewData(std::move(lk));
-    // Return the unique future associated with this finalization.
-    return std::move(finalized_future_);
+    return result;
   }
 
   future<Status> Flush(storage::WritePayload const& p) {
@@ -183,9 +186,12 @@ class AsyncWriterConnectionResumedState
     close_called_ = true;
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     close_ = true;
+    // `HandleNewData()` may invoke a callback synchronously that destroys the
+    // connection and `*this`, so move `closed_future_` before calling it.
+    future<Status> result = std::move(closed_future_);
     // Force flush to drain the buffer first.
     HandleNewData(std::move(lk), true);
-    return std::move(closed_future_);
+    return result;
   }
 
   future<StatusOr<std::int64_t>> Query() {

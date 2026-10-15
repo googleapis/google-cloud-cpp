@@ -25,7 +25,7 @@ rm -fr /h/protobuf && git -C /h clone -q --depth 1 https://github.com/protocolbu
 
 mapfile -t args < <(bazel::common_args)
 args+=(
-  "--override_repository=com_google_protobuf=/h/protobuf"
+  "--override_module=protobuf=/h/protobuf"
 )
 bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 

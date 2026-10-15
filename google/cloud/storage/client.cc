@@ -25,6 +25,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
@@ -97,6 +98,90 @@ Client::Client(InternalOnly, Options const& opts,
 Client::Client(InternalOnly, Options const& opts)
     : Client(InternalOnlyNoDecorations{},
              storage_internal::MakeStorageConnection(opts)) {}
+
+ListBucketsReader Client::ListBucketsForProjectImpl(
+    internal::ListBucketsRequest const& request) {
+  auto& client = connection_;
+  return google::cloud::internal::MakePaginationRange<ListBucketsReader>(
+      request,
+      [client](internal::ListBucketsRequest const& r) {
+        return client->ListBuckets(r);
+      },
+      [](internal::ListBucketsResponse r) { return std::move(r.items); });
+}
+
+ListBucketsReader Client::ListBucketsErrorImpl(Status status) {
+  return google::cloud::internal::MakeErrorPaginationRange<ListBucketsReader>(
+      std::move(status));
+}
+
+ListBucketsExtendedReader Client::ListBucketsExtendedImpl(
+    internal::ListBucketsRequest const& request) {
+  auto& client = connection_;
+  return google::cloud::internal::MakePaginationRange<
+      ListBucketsExtendedReader>(
+      request,
+      [client](internal::ListBucketsRequest const& r) {
+        return client->ListBuckets(r);
+      },
+      [](internal::ListBucketsResponse res) {
+        return std::vector<BucketsExtended>{
+            BucketsExtended{std::move(res.items), std::move(res.unreachable)}};
+      });
+}
+
+ListBucketsExtendedReader Client::ListBucketsExtendedErrorImpl(Status status) {
+  return google::cloud::internal::MakeErrorPaginationRange<
+      ListBucketsExtendedReader>(std::move(status));
+}
+
+ListObjectsReader Client::ListObjectsImpl(
+    internal::ListObjectsRequest const& request) {
+  auto& client = connection_;
+  return google::cloud::internal::MakePaginationRange<ListObjectsReader>(
+      request,
+      [client](internal::ListObjectsRequest const& r) {
+        return client->ListObjects(r);
+      },
+      [](internal::ListObjectsResponse r) { return std::move(r.items); });
+}
+
+ListObjectsAndPrefixesReader Client::ListObjectsAndPrefixesImpl(
+    internal::ListObjectsRequest const& request) {
+  return google::cloud::internal::MakePaginationRange<
+      ListObjectsAndPrefixesReader>(
+      request,
+      [client = connection_](internal::ListObjectsRequest const& r) {
+        return client->ListObjects(r);
+      },
+      [](internal::ListObjectsResponse r) {
+        std::vector<ObjectOrPrefix> result;
+        result.reserve(r.items.size() + r.prefixes.size());
+        for (auto& item : r.items) {
+          result.emplace_back(std::move(item));
+        }
+        for (auto& prefix : r.prefixes) {
+          result.emplace_back(std::move(prefix));
+        }
+        internal::SortObjectsAndPrefixes(result);
+        return result;
+      });
+}
+
+ListHmacKeysReader Client::ListHmacKeysImpl(
+    internal::ListHmacKeysRequest const& request) {
+  return google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
+      request,
+      [stub = connection_](internal::ListHmacKeysRequest const& r) {
+        return stub->ListHmacKeys(r);
+      },
+      [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
+}
+
+ListHmacKeysReader Client::ListHmacKeysErrorImpl(Status status) {
+  return google::cloud::internal::MakeErrorPaginationRange<ListHmacKeysReader>(
+      std::move(status));
+}
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {

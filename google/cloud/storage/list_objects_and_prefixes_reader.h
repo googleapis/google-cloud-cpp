@@ -16,7 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_AND_PREFIXES_READER_H
 
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/stream_range.h"
+#include <algorithm>
 #include <iterator>
 #include <string>
 #include <variant>
@@ -28,8 +29,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ObjectOrPrefix = std::variant<ObjectMetadata, std::string>;
 
-using ListObjectsAndPrefixesReader =
-    google::cloud::internal::PaginationRange<ObjectOrPrefix>;
+using ListObjectsAndPrefixesReader = StreamRange<ObjectOrPrefix>;
 
 using ListObjectsAndPrefixesIterator = ListObjectsAndPrefixesReader::iterator;
 

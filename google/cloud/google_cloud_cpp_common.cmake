@@ -98,6 +98,7 @@ add_library(
     internal/log_impl.h
     internal/make_status.cc
     internal/make_status.h
+    internal/make_stream_range.h
     internal/noexcept_action.cc
     internal/noexcept_action.h
     internal/non_constructible.h
