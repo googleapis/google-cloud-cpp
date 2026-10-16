@@ -344,8 +344,11 @@ sudo ldconfig
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
 sudo dnf makecache && sudo dnf install -y c-ares-devel re2-devel
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
@@ -514,8 +517,11 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
@@ -712,8 +718,11 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
@@ -842,8 +851,11 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1081,8 +1093,11 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1273,8 +1288,11 @@ install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE=Debug \
