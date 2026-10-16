@@ -51,6 +51,17 @@ class AsyncStreamingReadWriteRpcLogging
     });
   }
 
+  future<bool> StartWithCorkedInitialMetadata() override {
+    auto prefix = std::string(__func__) + "(" + request_id_ + ")";
+    GCP_LOG(DEBUG) << prefix << " <<";
+    return child_->StartWithCorkedInitialMetadata().then(
+        [prefix](future<bool> f) {
+          auto r = f.get();
+          GCP_LOG(DEBUG) << prefix << " >> " << (r ? "true" : "false");
+          return r;
+        });
+  }
+
   future<std::optional<Response>> Read() override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
     auto const& opt = tracing_options_;

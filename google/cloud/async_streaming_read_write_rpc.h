@@ -51,13 +51,35 @@ class AsyncStreamingReadWriteRpc {
   /**
    * Start the streaming RPC.
    *
-   * Applications should call `Start()` and wait for its result before calling
-   * `Read()` and/or `Write()`. If `Start()` completes with `false` the stream
-   * has completed with an error.  The application should not call `Read()` or
-   * `Write()` in this case. On errors, the application should call`Finish()` to
-   * determine the status of the streaming RPC.
+   * Applications should call one of `Start()` or
+   * `StartWithCorkedInitialMetadata()` and wait for its result before calling
+   * `Read()` and/or `Write()`.
+   *
+   * If `Start()` completes with `false` the stream has completed with an error.
+   * The application should not call `Read()` or `Write()` in this case. On
+   * errors, the application should call `Finish()` to determine the status of
+   * the streaming RPC.
    */
   virtual future<bool> Start() = 0;
+
+  /**
+   * Start the streaming RPC with corked initial metadata.
+   *
+   * Applications should call one of `Start()` or
+   * `StartWithCorkedInitialMetadata()` and wait for its result before calling
+   * `Read()` and/or `Write()`.
+   *
+   * If `StartWithCorkedInitialMetadata()` completes with `false` the stream has
+   * completed with an error. The application should not call `Read()` or
+   * `Write()` in this case. On errors, the application should call `Finish()`
+   * to determine the status of the streaming RPC.
+   *
+   * This method differs from `Start()` by not sending the initial metadata
+   * until the first `Write()` call on the stream. That saves a bounce through
+   * the gRPC CompletionQueue at stream startup if the caller does not need the
+   * initial metadata in order to send the first `Write()`.
+   */
+  virtual future<bool> StartWithCorkedInitialMetadata() = 0;
 
   /**
    * Read one response from the streaming RPC.

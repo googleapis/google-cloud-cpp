@@ -76,6 +76,12 @@ class AsyncStreamingReadWriteRpcImpl
     return op->p.get_future();
   }
 
+  future<bool> StartWithCorkedInitialMetadata() override {
+    context_->set_initial_metadata_corked(true);
+    stream_->StartCall(nullptr);
+    return make_ready_future(true);
+  }
+
   future<std::optional<Response>> Read() override {
     struct OnRead : public AsyncGrpcOperation {
       explicit OnRead(ImmutableOptions o) : call_context(std::move(o)) {}
@@ -223,6 +229,9 @@ class AsyncStreamingReadWriteRpcError
 
   void Cancel() override {}
   future<bool> Start() override { return make_ready_future(false); }
+  future<bool> StartWithCorkedInitialMetadata() override {
+    return make_ready_future(false);
+  }
   future<std::optional<Response>> Read() override {
     return make_ready_future<std::optional<Response>>(std::nullopt);
   }

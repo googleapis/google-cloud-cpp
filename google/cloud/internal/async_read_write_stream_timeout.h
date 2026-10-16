@@ -66,6 +66,10 @@ class AsyncStreamingReadWriteRpcTimeout
 
   future<bool> Start() override { return state_->Start(); }
 
+  future<bool> StartWithCorkedInitialMetadata() override {
+    return state_->StartWithCorkedInitialMetadata();
+  }
+
   future<std::optional<Response>> Read() override { return state_->Read(); }
 
   future<bool> Write(Request const& request,
@@ -101,6 +105,17 @@ class AsyncStreamingReadWriteRpcTimeout
     future<bool> Start() {
       auto watchdog = CreateWatchdog(start_timeout);
       return child->Start().then(
+          [watchdog = std::move(watchdog), w = WeakFromThis()](auto f) mutable {
+            if (auto self = w.lock()) {
+              return self->OnStart(std::move(watchdog), f.get());
+            }
+            return make_ready_future(false);
+          });
+    }
+
+    future<bool> StartWithCorkedInitialMetadata() {
+      auto watchdog = CreateWatchdog(start_timeout);
+      return child->StartWithCorkedInitialMetadata().then(
           [watchdog = std::move(watchdog), w = WeakFromThis()](auto f) mutable {
             if (auto self = w.lock()) {
               return self->OnStart(std::move(watchdog), f.get());
