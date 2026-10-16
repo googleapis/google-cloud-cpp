@@ -70,6 +70,9 @@ $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${env:GOOGLE_CLOUD_PROJE
 # We need a gzip file to test ReadObject() with decompressive transcoding
 #  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${env:PROJECT_ROOT}/ci/data/fox.txt.gz"
+# The zone for the Rapid Cache integration tests. Each run creates its own
+# buckets in GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID, and a cache in this zone.
+$env:GOOGLE_CLOUD_CPP_STORAGE_TEST_RAPID_ZONE="us-central1-a"
 # Another preexisting bucket, created with folders enabled, for tests that do
 # not modify the bucket:
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME="cloud-cpp-testing-folder-bucket"
