@@ -46,8 +46,14 @@ class BulkMutatorState {
   /// Returns the Request parameter for the next MutateRows() RPC.
   google::bigtable::v2::MutateRowsRequest const& BeforeStart();
 
-  /// Handle the result of a `Read()` operation on the MutateRows RPC.
-  void OnRead(google::bigtable::v2::MutateRowsResponse response);
+  /**
+   * Handle the result of a `Read()` operation on the MutateRows RPC.
+   *
+   * @param options the options in effect for the request that produced
+   *     @p response. They determine if a failed mutation is worth retrying.
+   */
+  void OnRead(google::bigtable::v2::MutateRowsResponse response,
+              Options const& options);
 
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
   void OnFinish(Status finish_status, bool enable_server_retries = false);
