@@ -43,7 +43,7 @@ service ReservationSlots {
   rpc GetReservationSlotsGetResponse(GetReservationSlotsGetResponseRequest)
       returns (google.cloud.cpp.compute.v1.ReservationSlotsGetResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSlots/{reservation_slot}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSlots/{reservation_slot}"
     };
     option (google.api.method_signature) =
         "project,zone,parent_name,reservation_slot";
@@ -54,7 +54,7 @@ service ReservationSlots {
   rpc GetHealth(GetHealthRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSlots/{reservation_slot}/getHealth"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSlots/{reservation_slot}/getHealth"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -67,7 +67,7 @@ service ReservationSlots {
   rpc GetVersion(GetVersionRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSlots/{reservation_slot}/getVersion"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSlots/{reservation_slot}/getVersion"
       body: "reservation_slots_get_version_request_resource"
     };
     option (google.api.method_signature) =
@@ -80,7 +80,7 @@ service ReservationSlots {
   rpc ListReservationSlots(ListReservationSlotsRequest)
       returns (google.cloud.cpp.compute.v1.ReservationSlotsListResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSlots"
+      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSlots"
     };
     option (google.api.method_signature) = "project,zone,parent_name";
   }
@@ -91,7 +91,7 @@ service ReservationSlots {
       UpdateReservationSlotsGetResponseRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSlots/{reservation_slot}"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSlots/{reservation_slot}"
       body: "reservation_slot_resource"
     };
     option (google.api.method_signature) =

@@ -24,6 +24,8 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+/// Percent-encodes all characters outside RFC 3986 unreserved characters
+/// (`[-_.~0-9a-zA-Z]`).
 std::string UrlEncode(absl::string_view value);
 
 std::string UrlDecode(absl::string_view value);

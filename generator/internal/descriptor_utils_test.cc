@@ -1310,13 +1310,17 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
                         Pair("method_request_params",
                              "\"name=\", internal::UrlEncode(request.name())")),
                     Contains(Pair("method_rest_path",
-                                  "absl::StrCat(\"/\", "
+                                  "rest_internal::EncodePath("
                                   "rest_internal::DetermineApiVersion(\"v1\", "
-                                  "options), \"/\", request.name())")),
+                                  "options), "
+                                  "rest_internal::PathPiece::MultiSegment("
+                                  "request.name()))")),
                     Contains(Pair("method_rest_path_async",
-                                  "absl::StrCat(\"/\", "
+                                  "rest_internal::EncodePath("
                                   "rest_internal::DetermineApiVersion(\"v1\", "
-                                  "*options), \"/\", request.name())")),
+                                  "*options), "
+                                  "rest_internal::PathPiece::MultiSegment("
+                                  "request.name()))")),
                     Contains(Pair("request_resource", "request")),
                     Contains(Pair("request_type",
                                   "google::cloud::location::Request")),
@@ -1340,9 +1344,13 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
                         Pair("method_request_params",
                              "\"name=\", internal::UrlEncode(request.name())")),
                     Contains(Pair("method_rest_path",
-                                  "absl::StrCat(\"/\", request.name())")),
+                                  "rest_internal::EncodePath("
+                                  "rest_internal::PathPiece::MultiSegment("
+                                  "request.name()))")),
                     Contains(Pair("method_rest_path_async",
-                                  "absl::StrCat(\"/\", request.name())")),
+                                  "rest_internal::EncodePath("
+                                  "rest_internal::PathPiece::MultiSegment("
+                                  "request.name()))")),
                     Contains(Pair("request_resource", "request")),
                     Contains(Pair("request_type",
                                   "google::cloud::location::Request")),
@@ -1491,7 +1499,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "kNonIdempotent"),
         MethodVarsTestValues(
             "my.service.v1.Service.Method5", "method_rest_path",
-            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"))"""),
+            R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.parent()), "databases"))"""),
         // Method6
         MethodVarsTestValues("my.service.v1.Service.Method6",
                              "method_request_params",
@@ -1538,7 +1546,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "request_resource", "request.namespace_()"),
         MethodVarsTestValues(
             "my.service.v1.Service.Method8", "method_rest_path",
-            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.namespace_().name()))"""),
+            R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.namespace_().name())))"""),
         // Method9
         MethodVarsTestValues("my.service.v1.Service.Method9",
                              "method_http_query_parameters", ""),

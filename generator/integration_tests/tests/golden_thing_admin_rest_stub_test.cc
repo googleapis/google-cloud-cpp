@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -36,11 +37,13 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 
 std::unique_ptr<MockRestResponse> CreateMockRestResponse(
     std::string const& json_response,
@@ -987,6 +990,198 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
   t.join();
 
   EXPECT_THAT(success, IsOk());
+}
+
+TEST(GoldenThingAdminRestStubTest, RejectsDotSegmentInPathVariable) {
+  auto mock_service_client = std::make_unique<MockRestClient>();
+  auto mock_operations_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_service_client, Get).Times(0);
+
+  RestContext rest_context;
+  google::test::admin::database::v1::GetDatabaseRequest proto_request;
+  proto_request.set_name(
+      "projects/my_project/instances/../databases/my_database");
+
+  DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
+                                       std::move(mock_operations_client), {});
+  StatusOr<google::test::admin::database::v1::Database> status =
+      stub.GetDatabase(rest_context, Options{}, proto_request);
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("URI path piece "
+                                 "\"projects/my_project/instances/../databases/"
+                                 "my_database\" must not contain segments "
+                                 "that are \".\" or \"..\".")));
+}
+
+TEST(GoldenThingAdminRestStubTest, EncodesReservedCharsInPathVariable) {
+  auto mock_service_client = std::make_unique<MockRestClient>();
+  auto mock_operations_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload =
+      R"({"name":"db","state":2})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::test::admin::database::v1::GetDatabaseRequest proto_request;
+  proto_request.set_name(
+      "projects/my_project/instances/my_instance/databases/"
+      "db?$httpMethod=DELETE#frag");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_service_client, Get)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(),
+                    Eq("/v1/projects/my_project/instances/my_instance/"
+                       "databases/db%3F%24httpMethod%3DDELETE%23frag"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
+                                       std::move(mock_operations_client), {});
+  StatusOr<google::test::admin::database::v1::Database> success =
+      stub.GetDatabase(rest_context, Options{}, proto_request);
+  ASSERT_THAT(success, IsOk());
+}
+
+TEST(GoldenThingAdminRestStubTest, GetLocation) {
+  auto mock_service_client = std::make_unique<MockRestClient>();
+  auto mock_operations_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload =
+      R"({"name":"projects/my_project/locations/us-central1"})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::cloud::location::GetLocationRequest proto_request;
+  proto_request.set_name("projects/my_project/locations/us-central1");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_service_client, Get)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(),
+                    Eq("/v1/projects/my_project/locations/us-central1"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
+                                       std::move(mock_operations_client), {});
+  StatusOr<google::cloud::location::Location> success =
+      stub.GetLocation(rest_context, Options{}, proto_request);
+  ASSERT_THAT(success, IsOk());
+  EXPECT_THAT(success->name(), Eq("projects/my_project/locations/us-central1"));
+}
+
+TEST(GoldenThingAdminRestStubTest, ListOperations) {
+  auto mock_service_client = std::make_unique<MockRestClient>();
+  auto mock_operations_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload =
+      R"({"operations":[{"name":"op1"}]})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::longrunning::ListOperationsRequest proto_request;
+  proto_request.set_name("projects/my_project");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_service_client, Get)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/operations"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
+                                       std::move(mock_operations_client), {});
+  StatusOr<google::longrunning::ListOperationsResponse> success =
+      stub.ListOperations(rest_context, Options{}, proto_request);
+  ASSERT_THAT(success, IsOk());
+  ASSERT_THAT(success->operations(), ElementsAre(_));
+  EXPECT_THAT(success->operations(0).name(), Eq("op1"));
+}
+
+TEST(GoldenThingAdminRestStubTest, AsyncMethodsRejectDotSegment) {
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
+  auto mock_service_client = std::make_unique<MockRestClient>();
+  auto mock_operations_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_service_client, Get).Times(0);
+  EXPECT_CALL(*mock_service_client,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .Times(0);
+  EXPECT_CALL(*mock_service_client, Patch).Times(0);
+  EXPECT_CALL(*mock_service_client, Delete).Times(0);
+  EXPECT_CALL(*mock_operations_client, Get).Times(0);
+  EXPECT_CALL(*mock_operations_client,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .Times(0);
+
+  DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
+                                       std::move(mock_operations_client), {});
+
+  google::test::admin::database::v1::CreateDatabaseRequest create_db_req;
+  create_db_req.set_parent("projects/..");
+  EXPECT_THAT(stub.AsyncCreateDatabase(cq, std::make_unique<RestContext>(),
+                                       internal::MakeImmutableOptions({}),
+                                       create_db_req)
+                  .get(),
+              StatusIs(StatusCode::kInvalidArgument));
+
+  google::test::admin::database::v1::UpdateDatabaseDdlRequest update_ddl_req;
+  update_ddl_req.set_database("databases/..");
+  EXPECT_THAT(stub.AsyncUpdateDatabaseDdl(cq, std::make_unique<RestContext>(),
+                                          internal::MakeImmutableOptions({}),
+                                          update_ddl_req)
+                  .get(),
+              StatusIs(StatusCode::kInvalidArgument));
+
+  google::test::admin::database::v1::CreateBackupRequest create_backup_req;
+  create_backup_req.set_parent("projects/..");
+  EXPECT_THAT(stub.AsyncCreateBackup(cq, std::make_unique<RestContext>(),
+                                     internal::MakeImmutableOptions({}),
+                                     create_backup_req)
+                  .get(),
+              StatusIs(StatusCode::kInvalidArgument));
+
+  google::test::admin::database::v1::RestoreDatabaseRequest restore_db_req;
+  restore_db_req.set_parent("projects/..");
+  EXPECT_THAT(stub.AsyncRestoreDatabase(cq, std::make_unique<RestContext>(),
+                                        internal::MakeImmutableOptions({}),
+                                        restore_db_req)
+                  .get(),
+              StatusIs(StatusCode::kInvalidArgument));
+
+  google::test::admin::database::v1::GetDatabaseRequest get_db_req;
+  get_db_req.set_name("databases/..");
+  EXPECT_THAT(
+      stub.AsyncGetDatabase(cq, std::make_unique<RestContext>(),
+                            internal::MakeImmutableOptions({}), get_db_req)
+          .get(),
+      StatusIs(StatusCode::kInvalidArgument));
+
+  google::test::admin::database::v1::DropDatabaseRequest drop_db_req;
+  drop_db_req.set_database("databases/..");
+  EXPECT_THAT(
+      stub.AsyncDropDatabase(cq, std::make_unique<RestContext>(),
+                             internal::MakeImmutableOptions({}), drop_db_req)
+          .get(),
+      StatusIs(StatusCode::kInvalidArgument));
+
+  google::longrunning::GetOperationRequest get_op_req;
+  get_op_req.set_name("operations/..");
+  EXPECT_THAT(
+      stub.AsyncGetOperation(cq, std::make_unique<RestContext>(),
+                             internal::MakeImmutableOptions({}), get_op_req)
+          .get(),
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("URI path piece \"operations/..\" must not "
+                         "contain segments that are \".\" or \"..\".")));
+
+  google::longrunning::CancelOperationRequest cancel_op_req;
+  cancel_op_req.set_name("operations/..");
+  EXPECT_THAT(stub.AsyncCancelOperation(cq, std::make_unique<RestContext>(),
+                                        internal::MakeImmutableOptions({}),
+                                        cancel_op_req)
+                  .get(),
+              StatusIs(StatusCode::kInvalidArgument));
+
+  cq.Shutdown();
+  t.join();
 }
 
 }  // namespace
