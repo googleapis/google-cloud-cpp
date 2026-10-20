@@ -22,7 +22,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -47,14 +46,14 @@ DefaultGlobalFrontendSettingsRestStub::GetGlobalFrontendSettings(
     Options const& options,
     google::cloud::cpp::compute::global_frontend_settings::v1::
         GetGlobalFrontendSettingsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "globalFrontendSettings");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::GlobalFrontendSettings>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "globalFrontendSettings"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -64,6 +63,10 @@ DefaultGlobalFrontendSettingsRestStub::PatchGlobalFrontendSettings(
     Options const& options,
     google::cloud::cpp::compute::global_frontend_settings::v1::
         PatchGlobalFrontendSettingsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "globalFrontendSettings");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params.push_back({"update_mask", request.update_mask()});
@@ -72,12 +75,7 @@ DefaultGlobalFrontendSettingsRestStub::PatchGlobalFrontendSettings(
   return rest_internal::Patch<
       google::cloud::cpp::compute::v1::GlobalFrontendSettingsPatchResponse>(
       *service_, rest_context, request.global_frontend_settings_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "globalFrontendSettings"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

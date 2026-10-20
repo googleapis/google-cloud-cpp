@@ -22,7 +22,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -57,17 +56,21 @@ DefaultLicensesRestStub::AsyncDeleteLicense(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "licenses",
+            request.license());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "licenses", "/", request.license()),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -87,16 +90,16 @@ DefaultLicensesRestStub::DeleteLicense(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses", request.license());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.license()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -106,13 +109,13 @@ DefaultLicensesRestStub::GetLicense(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses", request.license());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.license()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -122,6 +125,11 @@ DefaultLicensesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses", request.resource(),
+      "getIamPolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"options_requested_policy_version",
@@ -129,11 +137,7 @@ DefaultLicensesRestStub::GetIamPolicy(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.resource(), "/", "getIamPolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -149,6 +153,13 @@ DefaultLicensesRestStub::AsyncInsertLicense(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "licenses");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -156,11 +167,7 @@ DefaultLicensesRestStub::AsyncInsertLicense(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.license_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "licenses"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -179,17 +186,17 @@ DefaultLicensesRestStub::InsertLicense(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.license_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
@@ -198,6 +205,10 @@ DefaultLicensesRestStub::ListLicenses(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -208,11 +219,7 @@ DefaultLicensesRestStub::ListLicenses(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::LicensesListResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -222,15 +229,15 @@ DefaultLicensesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses", request.resource(),
+      "setIamPolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.resource(), "/", "setIamPolicy"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -239,17 +246,16 @@ DefaultLicensesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses", request.resource(),
+      "testIamPermissions");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.resource(), "/",
-                   "testIamPermissions"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -264,6 +270,14 @@ DefaultLicensesRestStub::AsyncUpdateLicense(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "licenses",
+            request.license());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params.push_back({"update_mask", request.update_mask()});
@@ -272,11 +286,7 @@ DefaultLicensesRestStub::AsyncUpdateLicense(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.license_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "licenses", "/", request.license()),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -295,6 +305,10 @@ DefaultLicensesRestStub::UpdateLicense(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "licenses", request.license());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params.push_back({"update_mask", request.update_mask()});
@@ -302,11 +316,7 @@ DefaultLicensesRestStub::UpdateLicense(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.license_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.license()),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -322,13 +332,17 @@ DefaultLicensesRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(),
-                             "/global/operations/", request.operation())));
+                *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -352,12 +366,16 @@ future<Status> DefaultLicensesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/projects/", request.project(), "/global/operations/",
-                         request.operation())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

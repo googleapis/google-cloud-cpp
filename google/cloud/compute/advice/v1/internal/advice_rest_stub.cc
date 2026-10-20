@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,16 +44,15 @@ DefaultAdviceRestStub::CalendarMode(
     Options const& options,
     google::cloud::cpp::compute::advice::v1::CalendarModeRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "advice", "calendarMode");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::CalendarModeAdviceResponse>(
       *service_, rest_context, request.calendar_mode_advice_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "advice", "/", "calendarMode"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::CapacityAdviceResponse>
@@ -62,16 +60,15 @@ DefaultAdviceRestStub::Capacity(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::advice::v1::CapacityRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "advice", "capacity");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::CapacityAdviceResponse>(
       *service_, rest_context, request.capacity_advice_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "advice", "/", "capacity"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::CapacityHistoryResponse>
@@ -80,16 +77,16 @@ DefaultAdviceRestStub::CapacityHistory(
     Options const& options,
     google::cloud::cpp::compute::advice::v1::CapacityHistoryRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "advice",
+      "capacityHistory");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::CapacityHistoryResponse>(
       *service_, rest_context, request.capacity_history_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "advice", "/", "capacityHistory"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

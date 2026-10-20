@@ -22,7 +22,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -51,6 +50,10 @@ DefaultRoutersRestStub::AggregatedListRouters(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::
         AggregatedListRoutersRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "aggregated", "routers");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -65,11 +68,7 @@ DefaultRoutersRestStub::AggregatedListRouters(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterAggregatedList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "aggregated", "/",
-                   "routers"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -85,18 +84,21 @@ DefaultRoutersRestStub::AsyncDeleteRouter(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router()),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -116,16 +118,17 @@ DefaultRoutersRestStub::DeleteRouter(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -141,15 +144,18 @@ DefaultRoutersRestStub::AsyncDeleteNamedSet(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router(), "deleteNamedSet");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router(), "/", "deleteNamedSet"),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -169,14 +175,14 @@ DefaultRoutersRestStub::DeleteNamedSet(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "deleteNamedSet");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "deleteNamedSet"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -192,15 +198,18 @@ DefaultRoutersRestStub::AsyncDeleteRoutePolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router(), "deleteRoutePolicy");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router(), "/", "deleteRoutePolicy"),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -220,14 +229,14 @@ DefaultRoutersRestStub::DeleteRoutePolicy(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "deleteRoutePolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "deleteRoutePolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -236,13 +245,14 @@ DefaultRoutersRestStub::GetRouter(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -252,18 +262,18 @@ DefaultRoutersRestStub::GetNamedSet(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "getNamedSet");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"named_set", request.named_set()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "getNamedSet"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -273,17 +283,17 @@ DefaultRoutersRestStub::GetNatIpInfo(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "getNatIpInfo");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"nat_name", request.nat_name()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::NatIpInfoResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "getNatIpInfo"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -293,6 +303,11 @@ DefaultRoutersRestStub::GetNatMappingInfo(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "getNatMappingInfo");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -304,12 +319,7 @@ DefaultRoutersRestStub::GetNatMappingInfo(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "getNatMappingInfo"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -319,18 +329,18 @@ DefaultRoutersRestStub::GetRoutePolicy(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "getRoutePolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"policy", request.policy()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "getRoutePolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -340,15 +350,15 @@ DefaultRoutersRestStub::GetRouterStatus(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "getRouterStatus");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterStatusResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "getRouterStatus"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -364,6 +374,14 @@ DefaultRoutersRestStub::AsyncInsertRouter(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -371,11 +389,7 @@ DefaultRoutersRestStub::AsyncInsertRouter(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.router_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -394,17 +408,17 @@ DefaultRoutersRestStub::InsertRouter(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.router_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
@@ -413,6 +427,10 @@ DefaultRoutersRestStub::ListRouters(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -422,11 +440,7 @@ DefaultRoutersRestStub::ListRouters(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -436,6 +450,11 @@ DefaultRoutersRestStub::ListBgpRoutes(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "listBgpRoutes");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"address_family", request.address_family()});
   query_params.push_back({"destination_prefix", request.destination_prefix()});
@@ -452,12 +471,7 @@ DefaultRoutersRestStub::ListBgpRoutes(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RoutersListBgpRoutes>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "listBgpRoutes"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -467,6 +481,11 @@ DefaultRoutersRestStub::ListNamedSets(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "listNamedSets");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -477,12 +496,7 @@ DefaultRoutersRestStub::ListNamedSets(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RoutersListNamedSets>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "listNamedSets"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -492,6 +506,11 @@ DefaultRoutersRestStub::ListRoutePolicies(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "listRoutePolicies");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -502,12 +521,7 @@ DefaultRoutersRestStub::ListRoutePolicies(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RoutersListRoutePolicies>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "listRoutePolicies"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -523,6 +537,14 @@ DefaultRoutersRestStub::AsyncPatchRouter(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -530,12 +552,7 @@ DefaultRoutersRestStub::AsyncPatchRouter(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.router_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router()),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -554,17 +571,18 @@ DefaultRoutersRestStub::PatchRouter(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.router_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router()),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -579,6 +597,14 @@ DefaultRoutersRestStub::AsyncPatchNamedSet(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router(), "patchNamedSet");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -586,12 +612,7 @@ DefaultRoutersRestStub::AsyncPatchNamedSet(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.named_set_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router(), "/", "patchNamedSet"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -610,18 +631,18 @@ DefaultRoutersRestStub::PatchNamedSet(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "patchNamedSet");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.named_set_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "patchNamedSet"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -636,6 +657,14 @@ DefaultRoutersRestStub::AsyncPatchRoutePolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router(), "patchRoutePolicy");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -643,12 +672,7 @@ DefaultRoutersRestStub::AsyncPatchRoutePolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.route_policy_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router(), "/", "patchRoutePolicy"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -667,18 +691,18 @@ DefaultRoutersRestStub::PatchRoutePolicy(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "patchRoutePolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.route_policy_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "patchRoutePolicy"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -686,16 +710,16 @@ DefaultRoutersRestStub::Preview(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "preview");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request.router_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "preview"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -710,6 +734,14 @@ DefaultRoutersRestStub::AsyncUpdateRouter(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -717,12 +749,7 @@ DefaultRoutersRestStub::AsyncUpdateRouter(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.router_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router()),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -741,17 +768,18 @@ DefaultRoutersRestStub::UpdateRouter(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.router_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router()),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -766,6 +794,14 @@ DefaultRoutersRestStub::AsyncUpdateNamedSet(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router(), "updateNamedSet");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -773,12 +809,7 @@ DefaultRoutersRestStub::AsyncUpdateNamedSet(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.named_set_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router(), "/", "updateNamedSet"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -797,18 +828,18 @@ DefaultRoutersRestStub::UpdateNamedSet(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "updateNamedSet");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.named_set_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "updateNamedSet"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -823,6 +854,14 @@ DefaultRoutersRestStub::AsyncUpdateRoutePolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "routers", request.router(), "updateRoutePolicy");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -830,12 +869,7 @@ DefaultRoutersRestStub::AsyncUpdateRoutePolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.route_policy_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "routers",
-                             "/", request.router(), "/", "updateRoutePolicy"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -854,18 +888,18 @@ DefaultRoutersRestStub::UpdateRoutePolicy(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "regions", request.region(), "routers",
+      request.router(), "updateRoutePolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.route_policy_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router(), "/",
-                   "updateRoutePolicy"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -881,14 +915,17 @@ DefaultRoutersRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "operations", request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(), "/regions/",
-                             request.region(), "/operations/",
-                             request.operation())));
+                *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -912,12 +949,16 @@ future<Status> DefaultRoutersRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "regions", request.region(),
+            "operations", request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
-                "/projects/", request.project(), "/regions/", request.region(),
-                "/operations/", request.operation())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

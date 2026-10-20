@@ -20,7 +20,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include "google/longrunning/operations.pb.h"
 #include "google/spanner/admin/database/v1/spanner_database_admin.pb.h"
 #include <memory>
@@ -50,6 +49,10 @@ DefaultDatabaseAdminRestStub::ListDatabases(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "databases");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -57,9 +60,7 @@ DefaultDatabaseAdminRestStub::ListDatabases(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabasesResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databases"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -74,12 +75,17 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "databases");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "databases"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -99,11 +105,13 @@ DefaultDatabaseAdminRestStub::CreateDatabase(
     Options const& options,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "databases");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databases"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -112,11 +120,13 @@ DefaultDatabaseAdminRestStub::GetDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::spanner::admin::database::v1::Database>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -131,13 +141,17 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabase(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.database().name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request.database(), false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.database().name()),
-            std::move(query_params)));
+            *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -156,11 +170,13 @@ DefaultDatabaseAdminRestStub::UpdateDatabase(
     Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.database().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request.database(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.database().name()),
+      *service_, rest_context, request.database(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -175,12 +191,16 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.database()), "ddl");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.database(), "/", "ddl"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -200,11 +220,13 @@ DefaultDatabaseAdminRestStub::UpdateDatabaseDdl(
     Options const& options,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.database()), "ddl");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.database(), "/", "ddl"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -212,11 +234,13 @@ Status DefaultDatabaseAdminRestStub::DropDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.database()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.database()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -226,12 +250,14 @@ DefaultDatabaseAdminRestStub::GetDatabaseDdl(
     Options const& options,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.database()), "ddl");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.database(), "/", "ddl"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -239,11 +265,14 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.resource()),
+      rest_internal::PathPiece::Verb("setIamPolicy"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::iam::v1::Policy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":setIamPolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -251,11 +280,14 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.resource()),
+      rest_internal::PathPiece::Verb("getIamPolicy"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::iam::v1::Policy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":getIamPolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -264,11 +296,14 @@ DefaultDatabaseAdminRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.resource()),
+      rest_internal::PathPiece::Verb("testIamPermissions"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":testIamPermissions"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -282,15 +317,20 @@ DefaultDatabaseAdminRestStub::AsyncCreateBackup(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "backups");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"backup_id", request.backup_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request.backup(), false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "backups"),
+            *service, *rest_context, request.backup(), false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -309,14 +349,16 @@ DefaultDatabaseAdminRestStub::CreateBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "backups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"backup_id", request.backup_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request.backup(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backups"),
+      *service_, rest_context, request.backup(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -330,12 +372,17 @@ DefaultDatabaseAdminRestStub::AsyncCopyBackup(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()), "backups",
+            rest_internal::PathPiece::Verb("copy"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "backups", ":copy"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -354,11 +401,14 @@ DefaultDatabaseAdminRestStub::CopyBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "backups",
+      rest_internal::PathPiece::Verb("copy"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backups", ":copy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -367,11 +417,13 @@ DefaultDatabaseAdminRestStub::GetBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::spanner::admin::database::v1::Backup>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -380,11 +432,13 @@ DefaultDatabaseAdminRestStub::UpdateBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.backup().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::spanner::admin::database::v1::Backup>(
-      *service_, rest_context, request.backup(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.backup().name()),
+      *service_, rest_context, request.backup(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -392,11 +446,13 @@ Status DefaultDatabaseAdminRestStub::DeleteBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -405,6 +461,10 @@ DefaultDatabaseAdminRestStub::ListBackups(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "backups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -413,9 +473,7 @@ DefaultDatabaseAdminRestStub::ListBackups(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backups"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -430,12 +488,17 @@ DefaultDatabaseAdminRestStub::AsyncRestoreDatabase(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "databases", rest_internal::PathPiece::Verb("restore"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "databases", ":restore"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -455,11 +518,14 @@ DefaultDatabaseAdminRestStub::RestoreDatabase(
     Options const& options,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "databases",
+      rest_internal::PathPiece::Verb("restore"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databases", ":restore"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -469,6 +535,11 @@ DefaultDatabaseAdminRestStub::ListDatabaseOperations(
     Options const& options,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "databaseOperations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -477,9 +548,7 @@ DefaultDatabaseAdminRestStub::ListDatabaseOperations(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databaseOperations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -489,6 +558,11 @@ DefaultDatabaseAdminRestStub::ListBackupOperations(
     Options const& options,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "backupOperations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -497,9 +571,7 @@ DefaultDatabaseAdminRestStub::ListBackupOperations(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backupOperations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -509,6 +581,11 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
     Options const& options,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "databaseRoles");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -516,9 +593,7 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseRolesResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databaseRoles"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -528,12 +603,15 @@ DefaultDatabaseAdminRestStub::AddSplitPoints(
     Options const& options,
     google::spanner::admin::database::v1::AddSplitPointsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.database()),
+      rest_internal::PathPiece::Verb("addSplitPoints"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::spanner::admin::database::v1::AddSplitPointsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.database(), ":addSplitPoints"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -543,6 +621,11 @@ DefaultDatabaseAdminRestStub::CreateBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "backupSchedules");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"backup_schedule_id", request.backup_schedule_id()});
   query_params =
@@ -550,9 +633,7 @@ DefaultDatabaseAdminRestStub::CreateBackupSchedule(
   return rest_internal::Post<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request.backup_schedule(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backupSchedules"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -561,12 +642,14 @@ DefaultDatabaseAdminRestStub::GetBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::GetBackupScheduleRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::spanner::admin::database::v1::BackupSchedule>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -576,13 +659,15 @@ DefaultDatabaseAdminRestStub::UpdateBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.backup_schedule().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request.backup_schedule(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.backup_schedule().name()),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 Status DefaultDatabaseAdminRestStub::DeleteBackupSchedule(
@@ -590,11 +675,13 @@ Status DefaultDatabaseAdminRestStub::DeleteBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -604,6 +691,11 @@ DefaultDatabaseAdminRestStub::ListBackupSchedules(
     Options const& options,
     google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "backupSchedules");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -611,9 +703,7 @@ DefaultDatabaseAdminRestStub::ListBackupSchedules(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupSchedulesResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backupSchedules"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -622,6 +712,10 @@ DefaultDatabaseAdminRestStub::ListOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -629,9 +723,7 @@ DefaultDatabaseAdminRestStub::ListOperations(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::longrunning::ListOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -640,11 +732,13 @@ DefaultDatabaseAdminRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::GetOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -652,11 +746,13 @@ Status DefaultDatabaseAdminRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -664,11 +760,14 @@ Status DefaultDatabaseAdminRestStub::CancelOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("cancel"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":cancel"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -683,11 +782,15 @@ DefaultDatabaseAdminRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Get<google::longrunning::Operation>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -710,11 +813,16 @@ future<Status> DefaultDatabaseAdminRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()),
+            rest_internal::PathPiece::Verb("cancel"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name(), ":cancel")));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

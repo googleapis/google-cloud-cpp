@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,6 +44,11 @@ DefaultGatewayControlRestStub::GenerateCredentials(
     Options const& options,
     google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("generateCredentials"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"force_use_agent", (request.force_use_agent() ? "1" : "0")});
@@ -57,9 +61,7 @@ DefaultGatewayControlRestStub::GenerateCredentials(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":generateCredentials"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 

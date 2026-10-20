@@ -23,7 +23,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -61,18 +60,22 @@ DefaultInterconnectAttachmentGroupsRestStub::
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global",
+            "interconnectAttachmentGroups",
+            request.interconnect_attachment_group());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "interconnectAttachmentGroups", "/",
-                             request.interconnect_attachment_group()),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -92,17 +95,17 @@ DefaultInterconnectAttachmentGroupsRestStub::DeleteInterconnectAttachmentGroup(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         DeleteInterconnectAttachmentGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.interconnect_attachment_group());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/",
-                   request.interconnect_attachment_group()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -112,15 +115,15 @@ DefaultInterconnectAttachmentGroupsRestStub::GetInterconnectAttachmentGroup(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         GetInterconnectAttachmentGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.interconnect_attachment_group());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentGroup>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/",
-                   request.interconnect_attachment_group()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -130,6 +133,11 @@ DefaultInterconnectAttachmentGroupsRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         GetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.resource(), "getIamPolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"options_requested_policy_version",
@@ -137,12 +145,7 @@ DefaultInterconnectAttachmentGroupsRestStub::GetIamPolicy(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/", request.resource(), "/",
-                   "getIamPolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -153,17 +156,16 @@ DefaultInterconnectAttachmentGroupsRestStub::GetOperationalStatus(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         GetOperationalStatusRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.interconnect_attachment_group(), "getOperationalStatus");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::
           InterconnectAttachmentGroupsGetOperationalStatusResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/",
-                   request.interconnect_attachment_group(), "/",
-                   "getOperationalStatus"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -180,6 +182,14 @@ DefaultInterconnectAttachmentGroupsRestStub::
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global",
+            "interconnectAttachmentGroups");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -188,11 +198,7 @@ DefaultInterconnectAttachmentGroupsRestStub::
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_group_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "interconnectAttachmentGroups"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -211,18 +217,17 @@ DefaultInterconnectAttachmentGroupsRestStub::InsertInterconnectAttachmentGroup(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         InsertInterconnectAttachmentGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.interconnect_attachment_group_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<
@@ -232,6 +237,10 @@ DefaultInterconnectAttachmentGroupsRestStub::ListInterconnectAttachmentGroups(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         ListInterconnectAttachmentGroupsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -242,11 +251,7 @@ DefaultInterconnectAttachmentGroupsRestStub::ListInterconnectAttachmentGroups(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 InterconnectAttachmentGroupsListResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -263,6 +268,15 @@ DefaultInterconnectAttachmentGroupsRestStub::
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global",
+            "interconnectAttachmentGroups",
+            request.interconnect_attachment_group());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params.push_back({"update_mask", request.update_mask()});
@@ -272,12 +286,7 @@ DefaultInterconnectAttachmentGroupsRestStub::
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_group_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "interconnectAttachmentGroups", "/",
-                             request.interconnect_attachment_group()),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -296,6 +305,11 @@ DefaultInterconnectAttachmentGroupsRestStub::PatchInterconnectAttachmentGroup(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         PatchInterconnectAttachmentGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.interconnect_attachment_group());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params.push_back({"update_mask", request.update_mask()});
@@ -303,13 +317,7 @@ DefaultInterconnectAttachmentGroupsRestStub::PatchInterconnectAttachmentGroup(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.interconnect_attachment_group_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/",
-                   request.interconnect_attachment_group()),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -318,16 +326,15 @@ DefaultInterconnectAttachmentGroupsRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         SetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.resource(), "setIamPolicy");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/", request.resource(), "/",
-                   "setIamPolicy"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -336,17 +343,16 @@ DefaultInterconnectAttachmentGroupsRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachment_groups::v1::
         TestIamPermissionsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectAttachmentGroups",
+      request.resource(), "testIamPermissions");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectAttachmentGroups", "/", request.resource(), "/",
-                   "testIamPermissions"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -362,13 +368,17 @@ DefaultInterconnectAttachmentGroupsRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(),
-                             "/global/operations/", request.operation())));
+                *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -393,12 +403,16 @@ DefaultInterconnectAttachmentGroupsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/projects/", request.project(), "/global/operations/",
-                         request.operation())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
