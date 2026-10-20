@@ -14,8 +14,10 @@
 
 #ifndef _WIN32
 #include "google/cloud/internal/ssl_ec_curves.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENSSL
 #include <openssl/ec.h>
 #include <openssl/ssl.h>
+#endif
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -39,6 +41,7 @@ struct OpenSslDeleter {
 
 std::vector<std::string> AvailableCryptoGroups() {
   std::vector<std::string> groups;
+#if GOOGLE_CLOUD_CPP_HAVE_OPENSSL
 #if OPENSSL_VERSION_NUMBER >= 0x30500000L
   auto ctx =
       std::unique_ptr<SSL_CTX, OpenSslDeleter>(SSL_CTX_new(TLS_method()));
@@ -75,6 +78,7 @@ std::vector<std::string> AvailableCryptoGroups() {
     if (name != nullptr) groups.emplace_back(name);
   }
 #endif  // OPENSSL_VERSION_NUMBER >= 0x30500000L
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENSSL
   return groups;
 }
 
