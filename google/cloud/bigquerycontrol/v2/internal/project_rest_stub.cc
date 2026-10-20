@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,14 +43,14 @@ DefaultProjectServiceRestStub::GetServiceAccount(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "serviceAccount");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::bigquery::v2::GetServiceAccountResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/",
-                   "serviceAccount"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
