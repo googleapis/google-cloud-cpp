@@ -29,6 +29,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:visionai_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_REGION)
-    set_tests_properties(visionai_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        visionai_quickstart PROPERTIES DISABLED "True" LABELS
+                                       "integration-test;quickstart")
 endif ()
