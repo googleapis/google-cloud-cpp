@@ -28,6 +28,7 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#if GOOGLE_CLOUD_CPP_HAVE_OPENSSL
 #if OPENSSL_VERSION_NUMBER >= 0x30500000L
 namespace {
 struct OpenSslDeleter {
@@ -37,7 +38,8 @@ struct OpenSslDeleter {
   void operator()(SSL_CTX* ptr) { SSL_CTX_free(ptr); }
 };
 }  // namespace
-#endif
+#endif  // OPENSSL_VERSION_NUMBER >= 0x30500000L
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENSSL
 
 std::vector<std::string> AvailableCryptoGroups() {
   std::vector<std::string> groups;
