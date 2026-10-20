@@ -126,6 +126,64 @@ TEST(AsyncStreamingReadWriteRpcTimeout, StartTimeout) {
   EXPECT_FALSE(result.get());
 }
 
+TEST(AsyncStreamingReadWriteRpcTimeout, StartWithCorkedInitialMetadataSuccess) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, StartWithCorkedInitialMetadata).WillOnce([&] {
+    return sequencer.PushBack("StartWithCorkedInitialMetadata");
+  });
+  EXPECT_CALL(*mock, Cancel).Times(0);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq,
+              MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
+      .WillOnce([&](auto) {
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
+      });
+
+  CompletionQueue cq(mock_cq);
+
+  TestedStream uut(cq, kStartTimeout, kReadTimeout, kWriteTimeout,
+                   std::move(mock));
+  auto result = uut.StartWithCorkedInitialMetadata();
+  auto timer = sequencer.PopFrontWithName();
+  auto start = sequencer.PopFrontWithName();
+  ASSERT_THAT(timer.second, "MakeRelativeTimer");
+  ASSERT_THAT(start.second, "StartWithCorkedInitialMetadata");
+  start.first.set_value(true);
+  timer.first.set_value(false);
+  EXPECT_TRUE(result.get());
+}
+
+TEST(AsyncStreamingReadWriteRpcTimeout, StartWithCorkedInitialMetadataTimeout) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, StartWithCorkedInitialMetadata).WillOnce([&] {
+    return sequencer.PushBack("StartWithCorkedInitialMetadata");
+  });
+  EXPECT_CALL(*mock, Cancel).Times(1);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq,
+              MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
+      .WillOnce([&](auto) {
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
+      });
+
+  CompletionQueue cq(mock_cq);
+
+  TestedStream uut(cq, kStartTimeout, kReadTimeout, kWriteTimeout,
+                   std::move(mock));
+  auto result = uut.StartWithCorkedInitialMetadata();
+  auto timer = sequencer.PopFrontWithName();
+  auto start = sequencer.PopFrontWithName();
+  ASSERT_THAT(timer.second, "MakeRelativeTimer");
+  ASSERT_THAT(start.second, "StartWithCorkedInitialMetadata");
+  timer.first.set_value(true);
+  start.first.set_value(true);
+  EXPECT_FALSE(result.get());
+}
+
 TEST(AsyncStreamingReadWriteRpcTimeout, ReadSuccess) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();

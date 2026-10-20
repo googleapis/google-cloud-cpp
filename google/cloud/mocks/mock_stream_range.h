@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MOCKS_MOCK_STREAM_RANGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MOCKS_MOCK_STREAM_RANGE_H
 
+#include "google/cloud/internal/make_stream_range.h"
 #include "google/cloud/status.h"
 #include "google/cloud/stream_range.h"
 #include <vector>
@@ -59,7 +60,7 @@ StreamRange<T> MakeStreamRange(std::vector<T> values,
     if (it == v.end()) return s;
     return *it++;
   };
-  return internal::MakeStreamRange<T>(std::move(reader));
+  return internal::MakeStreamRangeImpl<T>(std::move(reader));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

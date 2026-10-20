@@ -87,6 +87,9 @@ class AsyncStreamingReadWriteRpcTracking
 
   void Cancel() override { child_->Cancel(); }
   future<bool> Start() override { return child_->Start(); }
+  future<bool> StartWithCorkedInitialMetadata() override {
+    return child_->StartWithCorkedInitialMetadata();
+  }
   future<std::optional<Response>> Read() override { return child_->Read(); }
   future<bool> Write(Request const& r, grpc::WriteOptions o) override {
     return child_->Write(r, std::move(o));

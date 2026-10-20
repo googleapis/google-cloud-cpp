@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "absl/base/call_once.h"
 #include <functional>
 #include <memory>

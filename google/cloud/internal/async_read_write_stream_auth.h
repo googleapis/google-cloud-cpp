@@ -46,13 +46,11 @@ class AsyncStreamingReadWriteRpcAuth
   void Cancel() override { state_->Cancel(); }
 
   future<bool> Start() override {
-    using Result = StatusOr<std::shared_ptr<grpc::ClientContext>>;
-    auto weak = std::weak_ptr<SharedState>(state_);
-    return auth_->AsyncConfigureContext(state_->ReleaseInitialContext())
-        .then([weak](future<Result> f) mutable {
-          if (auto state = weak.lock()) return state->OnStart(f.get());
-          return make_ready_future(false);
-        });
+    return StartInternal(/*initial_metadata_corked=*/false);
+  }
+
+  future<bool> StartWithCorkedInitialMetadata() override {
+    return StartInternal(/*initial_metadata_corked=*/true);
   }
 
   future<std::optional<Response>> Read() override {
@@ -93,8 +91,8 @@ class AsyncStreamingReadWriteRpcAuth
       return std::move(initial_context);
     }
 
-    future<bool> OnStart(
-        StatusOr<std::shared_ptr<grpc::ClientContext>> context) {
+    future<bool> OnStart(StatusOr<std::shared_ptr<grpc::ClientContext>> context,
+                         bool initial_metadata_corked) {
       std::lock_guard<std::mutex> g{mu};
       if (cancelled) return make_ready_future(false);
       if (context) {
@@ -104,7 +102,8 @@ class AsyncStreamingReadWriteRpcAuth
             AsyncStreamingReadWriteRpcError<Request, Response>>(
             std::move(context).status());
       }
-      return stream->Start();
+      return initial_metadata_corked ? stream->StartWithCorkedInitialMetadata()
+                                     : stream->Start();
     }
 
     future<Status> Finish() {
@@ -134,6 +133,18 @@ class AsyncStreamingReadWriteRpcAuth
         stream;              // ABSL_GUARDED_BY(mu)
     bool cancelled = false;  // ABSL_GUARDED_BY(mu)
   };
+
+  future<bool> StartInternal(bool initial_metadata_corked) {
+    using Result = StatusOr<std::shared_ptr<grpc::ClientContext>>;
+    auto weak = std::weak_ptr<SharedState>(state_);
+    return auth_->AsyncConfigureContext(state_->ReleaseInitialContext())
+        .then([weak, initial_metadata_corked](future<Result> f) mutable {
+          if (auto state = weak.lock()) {
+            return state->OnStart(f.get(), initial_metadata_corked);
+          }
+          return make_ready_future(false);
+        });
+  }
 
   std::shared_ptr<GrpcAuthenticationStrategy> const auth_;
   std::shared_ptr<SharedState> const state_;

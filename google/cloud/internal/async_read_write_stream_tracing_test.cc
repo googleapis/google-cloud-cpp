@@ -108,6 +108,31 @@ TEST(AsyncStreamingReadWriteRpcTracing, Start) {
                  AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
+TEST(AsyncStreamingReadWriteRpcTracing, StartWithCorkedInitialMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, StartWithCorkedInitialMetadata).WillOnce([] {
+    return make_ready_future(true);
+  });
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
+
+  TestedStream stream(context(), std::move(mock), span);
+  EXPECT_TRUE(stream.StartWithCorkedInitialMetadata().get());
+  (void)stream.Finish().get();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, UnorderedElementsAre(
+                 AllOf(SpanNamed("StartWithCorkedInitialMetadata"),
+                       SpanWithParent(span)),
+                 AllOf(SpanNamed("span"), SpanHasAttributes(OTelAttribute<bool>(
+                                              "gl-cpp.stream_started", true))),
+                 AllOf(SpanNamed("Finish"), SpanWithParent(span))));
+}
+
 TEST(AsyncStreamingReadWriteRpcTracing, Read) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
