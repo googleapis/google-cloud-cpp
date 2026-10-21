@@ -92,6 +92,15 @@ auto constexpr kExternalAccountContents = R"""({
   "credential_source": {"url": "https://subject.example.com/"}
 })""";
 
+auto constexpr kExternalAccountAuthorizedUserContents = R"""({
+  "type": "external_account_authorized_user",
+  "audience": "//iam.googleapis.com/locations/global/workforcePools/pool-id/providers/provider-id",
+  "client_id": "test-client-id",
+  "client_secret": "test-client-secret",
+  "refresh_token": "test-refresh-token",
+  "token_url": "https://sts.example.com/v1/oauthtoken"
+})""";
+
 auto constexpr kImpersonatedServiceAccountContents = R"""({
   "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com:generateAccessToken",
   "delegates": [
@@ -195,6 +204,41 @@ TEST_F(GoogleCredentialsTest,
   ASSERT_STATUS_OK(creds);
   EXPECT_THAT(creds->get(),
               WhenDynamicCastTo<ExternalAccountCredentials*>(NotNull()));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadValidExternalAccountAuthorizedUserCredentialsViaEnvVar) {
+  auto const filename = TempFileName();
+  std::ofstream(filename) << kExternalAccountAuthorizedUserContents;
+  auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto creds =
+      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+  (void)std::remove(filename.c_str());
+  ASSERT_STATUS_OK(creds);
+  EXPECT_THAT(
+      creds->get(),
+      WhenDynamicCastTo<ExternalAccountAuthorizedUserCredentials*>(NotNull()));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadValidExternalAccountAuthorizedUserCredentialsViaGcloudFile) {
+  auto const filename = TempFileName();
+  std::ofstream(filename) << kExternalAccountAuthorizedUserContents;
+  auto const env =
+      ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto creds =
+      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+  (void)std::remove(filename.c_str());
+  ASSERT_STATUS_OK(creds);
+  EXPECT_THAT(
+      creds->get(),
+      WhenDynamicCastTo<ExternalAccountAuthorizedUserCredentials*>(NotNull()));
 }
 
 /**

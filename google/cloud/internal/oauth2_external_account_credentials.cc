@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
@@ -332,6 +333,103 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(
   auto response = client->Post(context, request, {request_payload.dump()});
   if (!response) return std::move(response).status();
   return ParseGenerateAccessTokenResponse(**response, ec);
+}
+
+StatusOr<ExternalAccountAuthorizedUserInfo>
+ParseExternalAccountAuthorizedUserConfiguration(
+    std::string const& configuration, internal::ErrorContext const& ec) {
+  auto json = nlohmann::json::parse(configuration, nullptr, false);
+  if (!json.is_object()) {
+    return InvalidArgumentError(
+        "external account authorized user configuration was not a JSON object",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto type = ValidateStringField(json, "type", "credentials-file", ec);
+  if (!type) return std::move(type).status();
+  if (*type != "external_account_authorized_user") {
+    return InvalidArgumentError(
+        "mismatched type (" + *type +
+            ") in external account authorized user configuration",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto client_id =
+      ValidateStringField(json, "client_id", "credentials-file", ec);
+  if (!client_id) return std::move(client_id).status();
+  auto client_secret =
+      ValidateStringField(json, "client_secret", "credentials-file", ec);
+  if (!client_secret) return std::move(client_secret).status();
+  auto refresh_token =
+      ValidateStringField(json, "refresh_token", "credentials-file", ec);
+  if (!refresh_token) return std::move(refresh_token).status();
+  auto token_url =
+      ValidateStringField(json, "token_url", "credentials-file", ec);
+  if (!token_url) return std::move(token_url).status();
+  auto universe_domain = GetUniverseDomainFromCredentialsJson(json);
+  if (!universe_domain) return std::move(universe_domain).status();
+
+  return ExternalAccountAuthorizedUserInfo{
+      *std::move(client_id), *std::move(client_secret),
+      *std::move(refresh_token), *std::move(token_url),
+      *std::move(universe_domain)};
+}
+
+ExternalAccountAuthorizedUserCredentials::
+    ExternalAccountAuthorizedUserCredentials(
+        ExternalAccountAuthorizedUserInfo info,
+        HttpClientFactory client_factory, Options options)
+    : info_(std::move(info)),
+      client_factory_(std::move(client_factory)),
+      options_(std::move(options)) {}
+
+StatusOr<AccessToken> ExternalAccountAuthorizedUserCredentials::GetToken(
+    std::chrono::system_clock::time_point tp) {
+  internal::Base64Encoder encoder;
+  for (unsigned char const c :
+       absl::StrCat(info_.client_id, ":", info_.client_secret)) {
+    encoder.PushBack(c);
+  }
+  auto request =
+      rest_internal::RestRequest(info_.token_url)
+          .AddHeader("content-type", "application/x-www-form-urlencoded")
+          .AddHeader("Authorization",
+                     absl::StrCat("Basic ", std::move(encoder).FlushAndPad()));
+
+  auto form_data = std::vector<std::pair<std::string, std::string>>{
+      {"grant_type", "refresh_token"},
+      {"refresh_token", info_.refresh_token},
+  };
+
+  auto client = client_factory_(options_);
+  rest_internal::RestContext unused;
+  auto response = client->Post(unused, request, form_data);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload) return std::move(payload).status();
+
+  auto ec = internal::ErrorContext({
+      {"token_url", info_.token_url},
+  });
+
+  auto access = nlohmann::json::parse(*payload, nullptr, false);
+  if (!access.is_object()) {
+    return InvalidArgumentError(
+        "token refresh response cannot be parsed as JSON object",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto token =
+      ValidateStringField(access, "access_token", "token-refresh-response", ec);
+  if (!token) return std::move(token).status();
+  auto expires_in =
+      ValidateIntField(access, "expires_in", "token-refresh-response", ec);
+  if (!expires_in) return std::move(expires_in).status();
+  auto refresh_token = ValidateStringField(access, "refresh_token",
+                                           "token-refresh-response", "", ec);
+  if (!refresh_token) return std::move(refresh_token).status();
+  if (!refresh_token->empty()) {
+    info_.refresh_token = *std::move(refresh_token);
+  }
+  return AccessToken{*std::move(token), tp + std::chrono::seconds(*expires_in)};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

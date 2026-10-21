@@ -121,6 +121,40 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
   Options options_;
 };
 
+struct ExternalAccountAuthorizedUserInfo {
+  std::string client_id;
+  std::string client_secret;
+  std::string refresh_token;
+  std::string token_url;
+  std::string universe_domain;
+};
+
+/// Parse a JSON string with an external account authorized user configuration.
+StatusOr<ExternalAccountAuthorizedUserInfo>
+ParseExternalAccountAuthorizedUserConfiguration(
+    std::string const& configuration, internal::ErrorContext const& ec);
+
+class ExternalAccountAuthorizedUserCredentials
+    : public oauth2_internal::Credentials {
+ public:
+  ExternalAccountAuthorizedUserCredentials(
+      ExternalAccountAuthorizedUserInfo info, HttpClientFactory client_factory,
+      Options options = {});
+  ~ExternalAccountAuthorizedUserCredentials() override = default;
+
+  StatusOr<AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
+
+  StatusOr<std::string> universe_domain(Options const&) const override {
+    return info_.universe_domain;
+  }
+
+ private:
+  ExternalAccountAuthorizedUserInfo info_;
+  HttpClientFactory client_factory_;
+  Options options_;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

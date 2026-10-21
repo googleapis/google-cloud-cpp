@@ -28,6 +28,7 @@
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -131,6 +132,27 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
 
     void visit(ExternalAccountConfig const& cfg) override {
       auto const ec = internal::ErrorContext();
+      auto const json =
+          nlohmann::json::parse(cfg.json_object(), nullptr, false);
+      if (json.is_object()) {
+        auto const it = json.find("type");
+        if (it != json.end() && it->is_string() &&
+            *it == "external_account_authorized_user") {
+          auto info =
+              oauth2_internal::ParseExternalAccountAuthorizedUserConfiguration(
+                  cfg.json_object(), ec);
+          if (!info) {
+            result = MakeErrorCredentials(std::move(info).status());
+            return;
+          }
+          auto creds = std::make_shared<
+              oauth2_internal::ExternalAccountAuthorizedUserCredentials>(
+              *std::move(info), client_factory_, cfg.options());
+          result = Decorate(std::move(creds), std::move(client_factory_),
+                            cfg.options());
+          return;
+        }
+      }
       auto info = oauth2_internal::ParseExternalAccountConfiguration(
           cfg.json_object(), ec);
       if (!info) {

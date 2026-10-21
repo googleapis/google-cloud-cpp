@@ -1361,6 +1361,247 @@ TEST(ExternalAccount, InvalidExpiresIn) {
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
+TEST(ExternalAccountAuthorizedUser, ParseSuccess) {
+  auto constexpr kUniverseDomain = "my-domain.net";
+  auto const configuration = nlohmann::json{
+      {"type", "external_account_authorized_user"},
+      {"audience",
+       "//iam.googleapis.com/locations/global/workforcePools/pool-id/providers/"
+       "provider-id"},
+      {"client_id", "test-client-id"},
+      {"client_secret", "test-client-secret"},
+      {"refresh_token", "test-refresh-token"},
+      {"token_url", "https://sts.example.com/v1/oauthtoken"},
+      {"token_info_url", "https://sts.example.com/v1/introspect"},
+      {"universe_domain", kUniverseDomain},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountAuthorizedUserConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->client_id, "test-client-id");
+  EXPECT_EQ(actual->client_secret, "test-client-secret");
+  EXPECT_EQ(actual->refresh_token, "test-refresh-token");
+  EXPECT_EQ(actual->token_url, "https://sts.example.com/v1/oauthtoken");
+  EXPECT_EQ(actual->universe_domain, kUniverseDomain);
+}
+
+TEST(ExternalAccountAuthorizedUser, ParseMissingUniverseDomain) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account_authorized_user"},
+      {"client_id", "test-client-id"},
+      {"client_secret", "test-client-secret"},
+      {"refresh_token", "test-refresh-token"},
+      {"token_url", "https://sts.example.com/v1/oauthtoken"},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountAuthorizedUserConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->universe_domain, "googleapis.com");
+}
+
+TEST(ExternalAccountAuthorizedUser, ParseErrors) {
+  auto const valid = nlohmann::json{
+      {"type", "external_account_authorized_user"},
+      {"client_id", "test-client-id"},
+      {"client_secret", "test-client-secret"},
+      {"refresh_token", "test-refresh-token"},
+      {"token_url", "https://sts.example.com/v1/oauthtoken"},
+  };
+  auto ec = internal::ErrorContext({{"program", "test"}});
+
+  EXPECT_THAT(
+      ParseExternalAccountAuthorizedUserConfiguration("not-json", ec),
+      StatusIs(StatusCode::kInvalidArgument, HasSubstr("not a JSON object")));
+  EXPECT_THAT(
+      ParseExternalAccountAuthorizedUserConfiguration(R"("not-an-object")", ec),
+      StatusIs(StatusCode::kInvalidArgument, HasSubstr("not a JSON object")));
+
+  {
+    auto config = valid;
+    config["type"] = "external_account";
+    EXPECT_THAT(
+        ParseExternalAccountAuthorizedUserConfiguration(config.dump(), ec),
+        StatusIs(StatusCode::kInvalidArgument,
+                 HasSubstr("mismatched type (external_account)")));
+  }
+
+  for (auto const* field :
+       {"type", "client_id", "client_secret", "refresh_token", "token_url"}) {
+    auto missing = valid;
+    missing.erase(field);
+    EXPECT_THAT(
+        ParseExternalAccountAuthorizedUserConfiguration(missing.dump(), ec),
+        StatusIs(StatusCode::kInvalidArgument,
+                 HasSubstr(absl::StrCat("cannot find `", field, "` field"))));
+
+    auto invalid_type = valid;
+    invalid_type[field] = true;
+    EXPECT_THAT(ParseExternalAccountAuthorizedUserConfiguration(
+                    invalid_type.dump(), ec),
+                StatusIs(StatusCode::kInvalidArgument,
+                         HasSubstr(absl::StrCat("invalid type for `", field,
+                                                "` field"))));
+  }
+
+  {
+    auto empty_ud = valid;
+    empty_ud["universe_domain"] = "";
+    EXPECT_THAT(
+        ParseExternalAccountAuthorizedUserConfiguration(empty_ud.dump(), ec),
+        StatusIs(
+            StatusCode::kInvalidArgument,
+            HasSubstr(
+                "universe_domain field in credentials file cannot be empty")));
+  }
+}
+
+TEST(ExternalAccountAuthorizedUser, Working) {
+  auto const test_url = std::string{"https://sts.example.com/v1/oauthtoken"};
+  auto const expected_access_token = std::string{"test-access-token"};
+  auto const expected_expires_in = std::chrono::seconds(3456);
+  auto const json_response = nlohmann::json{
+      {"access_token", expected_access_token},
+      {"expires_in", expected_expires_in.count()},
+      {"token_type", "Bearer"},
+  };
+  auto const info = ExternalAccountAuthorizedUserInfo{
+      "test-client-id", "test-client-secret", "test-refresh-token", test_url,
+      "my-domain.net"};
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
+    auto mock = std::make_unique<MockRestClient>();
+    auto expected_request = AllOf(
+        make_expected_token_exchange_request(test_url),
+        Property(
+            &RestRequest::headers,
+            Contains(Pair(
+                "authorization",
+                Contains("Basic "
+                         "dGVzdC1jbGllbnQtaWQ6dGVzdC1jbGllbnQtc2VjcmV0")))));
+    auto expected_payload = MatcherCast<FormDataType const&>(
+        UnorderedElementsAre(Pair("grant_type", "refresh_token"),
+                             Pair("refresh_token", "test-refresh-token")));
+    EXPECT_CALL(*mock, Post(_, expected_request, expected_payload))
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
+    return mock;
+  });
+
+  auto credentials = ExternalAccountAuthorizedUserCredentials(
+      info, client_factory.AsStdFunction(),
+      Options{}.set<TestOnlyOption>("test-option"));
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials.GetToken(now);
+  ASSERT_STATUS_OK(access_token);
+  EXPECT_EQ(access_token->expiration, now + expected_expires_in);
+  EXPECT_EQ(access_token->token, expected_access_token);
+  auto ud = credentials.universe_domain(Options{});
+  ASSERT_STATUS_OK(ud);
+  EXPECT_EQ(*ud, "my-domain.net");
+}
+
+TEST(ExternalAccountAuthorizedUser, WorkingWithRefreshTokenRotation) {
+  auto const test_url = std::string{"https://sts.example.com/v1/oauthtoken"};
+  auto const expected_expires_in = std::chrono::seconds(3456);
+  auto const json_response_1 = nlohmann::json{
+      {"access_token", "test-access-token-1"},
+      {"expires_in", expected_expires_in.count()},
+      {"refresh_token", "rotated-refresh-token"},
+      {"token_type", "Bearer"},
+  };
+  auto const json_response_2 = nlohmann::json{
+      {"access_token", "test-access-token-2"},
+      {"expires_in", expected_expires_in.count()},
+      {"token_type", "Bearer"},
+  };
+  auto const info = ExternalAccountAuthorizedUserInfo{
+      "test-client-id", "test-client-secret", "initial-refresh-token", test_url,
+      "googleapis.com"};
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call)
+      .WillOnce([&]() {
+        auto mock = std::make_unique<MockRestClient>();
+        auto expected_payload =
+            MatcherCast<FormDataType const&>(UnorderedElementsAre(
+                Pair("grant_type", "refresh_token"),
+                Pair("refresh_token", "initial-refresh-token")));
+        EXPECT_CALL(*mock, Post(_, _, expected_payload))
+            .WillOnce(Return(
+                ByMove(MakeMockResponseSuccess(json_response_1.dump()))));
+        return mock;
+      })
+      .WillOnce([&]() {
+        auto mock = std::make_unique<MockRestClient>();
+        auto expected_payload =
+            MatcherCast<FormDataType const&>(UnorderedElementsAre(
+                Pair("grant_type", "refresh_token"),
+                Pair("refresh_token", "rotated-refresh-token")));
+        EXPECT_CALL(*mock, Post(_, _, expected_payload))
+            .WillOnce(Return(
+                ByMove(MakeMockResponseSuccess(json_response_2.dump()))));
+        return mock;
+      });
+
+  auto credentials = ExternalAccountAuthorizedUserCredentials(
+      info, client_factory.AsStdFunction());
+  auto const now = std::chrono::system_clock::now();
+  auto token1 = credentials.GetToken(now);
+  ASSERT_STATUS_OK(token1);
+  EXPECT_EQ(token1->token, "test-access-token-1");
+
+  auto token2 = credentials.GetToken(now);
+  ASSERT_STATUS_OK(token2);
+  EXPECT_EQ(token2->token, "test-access-token-2");
+}
+
+TEST(ExternalAccountAuthorizedUser, HandleErrors) {
+  auto const test_url = std::string{"https://sts.example.com/v1/oauthtoken"};
+  auto const info = ExternalAccountAuthorizedUserInfo{
+      "test-client-id", "test-client-secret", "test-refresh-token", test_url,
+      "googleapis.com"};
+  auto const now = std::chrono::system_clock::now();
+
+  {
+    MockClientFactory client_factory;
+    EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+      auto mock = std::make_unique<MockRestClient>();
+      EXPECT_CALL(*mock, Post(_, _, An<FormDataType const&>()))
+          .WillOnce(Return(ByMove(MakeMockResponseError())));
+      return mock;
+    });
+    auto credentials = ExternalAccountAuthorizedUserCredentials(
+        info, client_factory.AsStdFunction());
+    EXPECT_THAT(credentials.GetToken(now), StatusIs(StatusCode::kNotFound));
+  }
+
+  for (
+      auto const& bad_payload : std::vector<std::string>{
+          "not-json",
+          R"({"expires_in": 3600})",
+          R"({"access_token": "tok"})",
+          R"({"access_token": "tok", "expires_in": "invalid"})",
+          R"({"access_token": "tok", "expires_in": 3600, "refresh_token": 123})",
+      }) {
+    MockClientFactory client_factory;
+    EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+      auto mock = std::make_unique<MockRestClient>();
+      EXPECT_CALL(*mock, Post(_, _, An<FormDataType const&>()))
+          .WillOnce(Return(ByMove(MakeMockResponseSuccess(bad_payload))));
+      return mock;
+    });
+    auto credentials = ExternalAccountAuthorizedUserCredentials(
+        info, client_factory.AsStdFunction());
+    EXPECT_THAT(credentials.GetToken(now),
+                StatusIs(StatusCode::kInvalidArgument));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
