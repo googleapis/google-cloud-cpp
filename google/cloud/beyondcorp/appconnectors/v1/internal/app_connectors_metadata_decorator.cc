@@ -142,6 +142,18 @@ AppConnectorsServiceMetadata::DeleteAppConnector(
   return child_->DeleteAppConnector(context, options, request);
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceMetadata::ResolveInstanceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("app_connector=",
+                           internal::UrlEncode(request.app_connector())));
+  return child_->ResolveInstanceConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,

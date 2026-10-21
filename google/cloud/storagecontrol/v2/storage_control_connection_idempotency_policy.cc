@@ -53,7 +53,8 @@ Idempotency StorageControlConnectionIdempotencyPolicy::GetFolder(
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::ListFolders(
-    google::storage::control::v2::ListFoldersRequest) {  // NOLINT
+    google::storage::control::v2::ListFoldersRequest request) {  // NOLINT
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kIdempotent;
 }
 
@@ -101,7 +102,8 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::UpdateManagedFolder(
-    google::storage::control::v2::UpdateManagedFolderRequest const&) {
+    google::storage::control::v2::UpdateManagedFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
@@ -149,27 +151,32 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListAnywhereCaches(
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::CreateRapidCache(
-    google::storage::control::v2::CreateRapidCacheRequest const&) {
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::UpdateRapidCache(
-    google::storage::control::v2::UpdateRapidCacheRequest const&) {
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::DisableRapidCache(
-    google::storage::control::v2::DisableRapidCacheRequest const&) {
+    google::storage::control::v2::DisableRapidCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::GetRapidCache(
-    google::storage::control::v2::GetRapidCacheRequest const&) {
+    google::storage::control::v2::GetRapidCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::ListRapidCaches(
-    google::storage::control::v2::ListRapidCachesRequest) {  // NOLINT
+    google::storage::control::v2::ListRapidCachesRequest request) {  // NOLINT
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
@@ -181,8 +188,9 @@ StorageControlConnectionIdempotencyPolicy::GetProjectIntelligenceConfig(
 
 Idempotency
 StorageControlConnectionIdempotencyPolicy::UpdateProjectIntelligenceConfig(
-    google::storage::control::v2::
-        UpdateProjectIntelligenceConfigRequest const&) {
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
@@ -194,8 +202,9 @@ StorageControlConnectionIdempotencyPolicy::GetFolderIntelligenceConfig(
 
 Idempotency
 StorageControlConnectionIdempotencyPolicy::UpdateFolderIntelligenceConfig(
-    google::storage::control::v2::
-        UpdateFolderIntelligenceConfigRequest const&) {
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
@@ -209,7 +218,8 @@ StorageControlConnectionIdempotencyPolicy::GetOrganizationIntelligenceConfig(
 Idempotency
 StorageControlConnectionIdempotencyPolicy::UpdateOrganizationIntelligenceConfig(
     google::storage::control::v2::
-        UpdateOrganizationIntelligenceConfigRequest const&) {
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 

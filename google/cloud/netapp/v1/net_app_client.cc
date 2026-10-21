@@ -408,6 +408,56 @@ future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::RevertVolume(
   return connection_->RevertVolume(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::StartSplit(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::StartSplitRequest request;
+  request.set_name(name);
+  return connection_->StartSplit(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::StartSplit(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::StartSplitRequest request;
+  request.set_name(name);
+  return connection_->StartSplit(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::StartSplit(
+    google::cloud::netapp::v1::StartSplitRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartSplit(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::StartSplit(
+    NoAwaitTag, google::cloud::netapp::v1::StartSplitRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartSplit(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::StartSplit(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartSplit(operation);
+}
+
+StatusOr<google::cloud::netapp::v1::SplitStatus> NetAppClient::GetSplitStatus(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::GetSplitStatusRequest request;
+  request.set_name(name);
+  return connection_->GetSplitStatus(request);
+}
+
+StatusOr<google::cloud::netapp::v1::SplitStatus> NetAppClient::GetSplitStatus(
+    google::cloud::netapp::v1::GetSplitStatusRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSplitStatus(request);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppClient::EstablishVolumePeering(
     google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request,
@@ -2066,6 +2116,120 @@ NetAppClient::ExecuteOntapPatch(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExecuteOntapPatch(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppClient::RestoreVolume(
+    std::string const& name,
+    google::cloud::netapp::v1::BackupSource const& backup_source,
+    google::cloud::netapp::v1::OntapVolumeTarget const& ontap_volume_target,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::RestoreVolumeRequest request;
+  request.set_name(name);
+  *request.mutable_backup_source() = backup_source;
+  *request.mutable_ontap_volume_target() = ontap_volume_target;
+  return connection_->RestoreVolume(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::RestoreVolume(
+    NoAwaitTag, std::string const& name,
+    google::cloud::netapp::v1::BackupSource const& backup_source,
+    google::cloud::netapp::v1::OntapVolumeTarget const& ontap_volume_target,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::RestoreVolumeRequest request;
+  request.set_name(name);
+  *request.mutable_backup_source() = backup_source;
+  *request.mutable_ontap_volume_target() = ontap_volume_target;
+  return connection_->RestoreVolume(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppClient::RestoreVolume(
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreVolume(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::RestoreVolume(
+    NoAwaitTag, google::cloud::netapp::v1::RestoreVolumeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreVolume(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppClient::RestoreVolume(google::longrunning::Operation const& operation,
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreVolume(operation);
+}
+
+StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>
+NetAppClient::ListBackupConfigs(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::ListBackupConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackupConfigs(request);
+}
+
+StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>
+NetAppClient::ListBackupConfigs(
+    google::cloud::netapp::v1::ListBackupConfigsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackupConfigs(std::move(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppClient::UpdateBackupConfig(
+    std::string const& name, std::string const& volume_uuid,
+    google::cloud::netapp::v1::BackupConfig const& backup_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateBackupConfigRequest request;
+  request.set_name(name);
+  request.set_volume_uuid(volume_uuid);
+  *request.mutable_backup_config() = backup_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupConfig(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackupConfig(
+    NoAwaitTag, std::string const& name, std::string const& volume_uuid,
+    google::cloud::netapp::v1::BackupConfig const& backup_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateBackupConfigRequest request;
+  request.set_name(name);
+  request.set_volume_uuid(volume_uuid);
+  *request.mutable_backup_config() = backup_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppClient::UpdateBackupConfig(
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupConfig(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackupConfig(
+    NoAwaitTag,
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppClient::UpdateBackupConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupConfig(operation);
 }
 
 StreamRange<google::cloud::location::Location> NetAppClient::ListLocations(

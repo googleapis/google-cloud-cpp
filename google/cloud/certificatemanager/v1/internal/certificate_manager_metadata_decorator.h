@@ -265,6 +265,19 @@ class CertificateManagerMetadata : public CertificateManagerStub {
           CreateCertificateIssuanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateCertificateIssuanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateCertificateIssuanceConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateIssuanceConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

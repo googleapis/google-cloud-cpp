@@ -871,6 +871,62 @@ CertificateManagerClient::CreateCertificateIssuanceConfig(
   return connection_->CreateCertificateIssuanceConfig(operation);
 }
 
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerClient::UpdateCertificateIssuanceConfig(
+    google::cloud::certificatemanager::v1::CertificateIssuanceConfig const&
+        certificate_issuance_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::UpdateCertificateIssuanceConfigRequest
+      request;
+  *request.mutable_certificate_issuance_config() = certificate_issuance_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCertificateIssuanceConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerClient::UpdateCertificateIssuanceConfig(
+    NoAwaitTag,
+    google::cloud::certificatemanager::v1::CertificateIssuanceConfig const&
+        certificate_issuance_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::UpdateCertificateIssuanceConfigRequest
+      request;
+  *request.mutable_certificate_issuance_config() = certificate_issuance_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCertificateIssuanceConfig(NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerClient::UpdateCertificateIssuanceConfig(
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCertificateIssuanceConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerClient::UpdateCertificateIssuanceConfig(
+    NoAwaitTag,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCertificateIssuanceConfig(NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerClient::UpdateCertificateIssuanceConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCertificateIssuanceConfig(operation);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerClient::DeleteCertificateIssuanceConfig(
     std::string const& name, Options opts) {

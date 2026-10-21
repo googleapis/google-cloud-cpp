@@ -65,6 +65,13 @@ Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::DeleteAppConnector(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+AppConnectorsServiceConnectionIdempotencyPolicy::ResolveInstanceConfig(
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency AppConnectorsServiceConnectionIdempotencyPolicy::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -107,8 +107,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L346}
-  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L359}
+  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L389}
+  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L402}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
@@ -138,8 +138,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L346}
-  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L359}
+  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L389}
+  /// [google.cloud.apphub.v1.LookupServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L402}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
@@ -177,7 +177,7 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.ListServiceProjectAttachmentsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L365}
+  /// [google.cloud.apphub.v1.ListServiceProjectAttachmentsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L408}
   /// [google.cloud.apphub.v1.ServiceProjectAttachment]: @googleapis_reference_link{google/cloud/apphub/v1/service_project_attachment.proto#L37}
   ///
   // clang-format on
@@ -216,7 +216,7 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.ListServiceProjectAttachmentsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L365}
+  /// [google.cloud.apphub.v1.ListServiceProjectAttachmentsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L408}
   /// [google.cloud.apphub.v1.ServiceProjectAttachment]: @googleapis_reference_link{google/cloud/apphub/v1/service_project_attachment.proto#L37}
   ///
   // clang-format on
@@ -256,7 +256,7 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.CreateServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L403}
+  /// [google.cloud.apphub.v1.CreateServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L446}
   /// [google.cloud.apphub.v1.ServiceProjectAttachment]: @googleapis_reference_link{google/cloud/apphub/v1/service_project_attachment.proto#L37}
   ///
   // clang-format on
@@ -314,7 +314,7 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.CreateServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L403}
+  /// [google.cloud.apphub.v1.CreateServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L446}
   /// [google.cloud.apphub.v1.ServiceProjectAttachment]: @googleapis_reference_link{google/cloud/apphub/v1/service_project_attachment.proto#L37}
   ///
   // clang-format on
@@ -374,7 +374,7 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.GetServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L441}
+  /// [google.cloud.apphub.v1.GetServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L487}
   /// [google.cloud.apphub.v1.ServiceProjectAttachment]: @googleapis_reference_link{google/cloud/apphub/v1/service_project_attachment.proto#L37}
   ///
   // clang-format on
@@ -404,7 +404,7 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.GetServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L441}
+  /// [google.cloud.apphub.v1.GetServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L487}
   /// [google.cloud.apphub.v1.ServiceProjectAttachment]: @googleapis_reference_link{google/cloud/apphub/v1/service_project_attachment.proto#L37}
   ///
   // clang-format on
@@ -441,8 +441,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L454}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L500}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -492,8 +492,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L454}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L500}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -554,8 +554,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L482}
-  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L495}
+  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L531}
+  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L544}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -586,8 +586,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L482}
-  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L495}
+  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L531}
+  /// [google.cloud.apphub.v1.DetachServiceProjectAttachmentResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L544}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -625,8 +625,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L140}
-  /// [google.cloud.apphub.v1.ListDiscoveredServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L536}
+  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L159}
+  /// [google.cloud.apphub.v1.ListDiscoveredServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L585}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::DiscoveredService>
@@ -665,8 +665,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L140}
-  /// [google.cloud.apphub.v1.ListDiscoveredServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L536}
+  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L159}
+  /// [google.cloud.apphub.v1.ListDiscoveredServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L585}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::DiscoveredService>
@@ -694,8 +694,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L140}
-  /// [google.cloud.apphub.v1.GetDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L621}
+  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L159}
+  /// [google.cloud.apphub.v1.GetDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L673}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DiscoveredService> GetDiscoveredService(
@@ -724,8 +724,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L140}
-  /// [google.cloud.apphub.v1.GetDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L621}
+  /// [google.cloud.apphub.v1.DiscoveredService]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L159}
+  /// [google.cloud.apphub.v1.GetDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L673}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DiscoveredService> GetDiscoveredService(
@@ -755,8 +755,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.LookupDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L634}
-  /// [google.cloud.apphub.v1.LookupDiscoveredServiceResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L651}
+  /// [google.cloud.apphub.v1.LookupDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L686}
+  /// [google.cloud.apphub.v1.LookupDiscoveredServiceResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L703}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
@@ -787,8 +787,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.LookupDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L634}
-  /// [google.cloud.apphub.v1.LookupDiscoveredServiceResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L651}
+  /// [google.cloud.apphub.v1.LookupDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L686}
+  /// [google.cloud.apphub.v1.LookupDiscoveredServiceResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L703}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
@@ -825,8 +825,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L498}
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
+  /// [google.cloud.apphub.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L547}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::Service> ListServices(
@@ -864,8 +864,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L498}
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
+  /// [google.cloud.apphub.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L547}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::Service> ListServices(
@@ -904,8 +904,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L573}
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
+  /// [google.cloud.apphub.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L622}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
@@ -959,8 +959,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L573}
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
+  /// [google.cloud.apphub.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L622}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
@@ -1015,8 +1015,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L610}
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
+  /// [google.cloud.apphub.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L662}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::Service> GetService(
@@ -1045,8 +1045,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L610}
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
+  /// [google.cloud.apphub.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L662}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::Service> GetService(
@@ -1058,7 +1058,7 @@ class AppHubClient {
   /// Updates a Service in an Application.
   ///
   /// @param service  Required. The resource being updated.
-  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
   ///  Service resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request.
@@ -1087,8 +1087,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
-  /// [google.cloud.apphub.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L657}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
+  /// [google.cloud.apphub.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L709}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
@@ -1140,8 +1140,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
-  /// [google.cloud.apphub.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L657}
+  /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L37}
+  /// [google.cloud.apphub.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L709}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
@@ -1203,8 +1203,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L690}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L745}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
@@ -1254,8 +1254,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L690}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L745}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
@@ -1319,8 +1319,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L141}
-  /// [google.cloud.apphub.v1.ListDiscoveredWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L901}
+  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L156}
+  /// [google.cloud.apphub.v1.ListDiscoveredWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L968}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
@@ -1359,8 +1359,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L141}
-  /// [google.cloud.apphub.v1.ListDiscoveredWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L901}
+  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L156}
+  /// [google.cloud.apphub.v1.ListDiscoveredWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L968}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
@@ -1388,8 +1388,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L141}
-  /// [google.cloud.apphub.v1.GetDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L986}
+  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L156}
+  /// [google.cloud.apphub.v1.GetDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1056}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> GetDiscoveredWorkload(
@@ -1418,8 +1418,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L141}
-  /// [google.cloud.apphub.v1.GetDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L986}
+  /// [google.cloud.apphub.v1.DiscoveredWorkload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L156}
+  /// [google.cloud.apphub.v1.GetDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1056}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> GetDiscoveredWorkload(
@@ -1449,8 +1449,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L999}
-  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1016}
+  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1069}
+  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1086}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
@@ -1481,8 +1481,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L999}
-  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1016}
+  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1069}
+  /// [google.cloud.apphub.v1.LookupDiscoveredWorkloadResponse]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1086}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
@@ -1519,8 +1519,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L863}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L930}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::Workload> ListWorkloads(
@@ -1558,8 +1558,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L863}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L930}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::Workload> ListWorkloads(
@@ -1598,8 +1598,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.CreateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L938}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.CreateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1005}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
@@ -1653,8 +1653,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.CreateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L938}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.CreateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1005}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
@@ -1709,8 +1709,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.GetWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L975}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.GetWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1045}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
@@ -1739,8 +1739,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.GetWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L975}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.GetWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1045}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
@@ -1752,7 +1752,7 @@ class AppHubClient {
   /// Updates a Workload in an Application.
   ///
   /// @param workload  Required. The resource being updated.
-  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
   ///  Workload resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request.
@@ -1781,8 +1781,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.UpdateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1022}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.UpdateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1092}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
@@ -1834,8 +1834,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.UpdateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1022}
-  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
+  /// [google.cloud.apphub.v1.UpdateWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1092}
+  /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L38}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
@@ -1897,8 +1897,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1055}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1128}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
@@ -1948,8 +1948,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1055}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1128}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
@@ -2012,8 +2012,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.ListApplicationsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L716}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.ListApplicationsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L774}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::Application> ListApplications(
@@ -2051,8 +2051,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.ListApplicationsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L716}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.ListApplicationsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L774}
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::Application> ListApplications(
@@ -2090,8 +2090,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.CreateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L753}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.CreateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L811}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
@@ -2145,8 +2145,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.CreateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L753}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.CreateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L811}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
@@ -2201,8 +2201,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.GetApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L789}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.GetApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L850}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::Application> GetApplication(
@@ -2231,8 +2231,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.GetApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L789}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.GetApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L850}
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::Application> GetApplication(
@@ -2244,7 +2244,7 @@ class AppHubClient {
   /// Updates an Application in a host project and location.
   ///
   /// @param application  Required. The resource being updated.
-  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
   ///  Application resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request.
@@ -2273,8 +2273,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L802}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L863}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
@@ -2326,8 +2326,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L37}
-  /// [google.cloud.apphub.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L802}
+  /// [google.cloud.apphub.v1.Application]: @googleapis_reference_link{google/cloud/apphub/v1/application.proto#L38}
+  /// [google.cloud.apphub.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L863}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
@@ -2389,8 +2389,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L835}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L899}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -2440,8 +2440,8 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.apphub.v1.DeleteApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L835}
-  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
+  /// [google.cloud.apphub.v1.DeleteApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L899}
+  /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -2477,6 +2477,321 @@ class AppHubClient {
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteApplication(google::longrunning::Operation const& operation,
                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Boundary.
+  ///
+  /// @param name  Required. The name of the boundary to retrieve.
+  ///  Format: `projects/{project}/locations/{location}/boundary`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.apphub.v1.Boundary])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.Boundary]: @googleapis_reference_link{google/cloud/apphub/v1/boundary.proto#L32}
+  /// [google.cloud.apphub.v1.GetBoundaryRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1157}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::apphub::v1::Boundary> GetBoundary(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Boundary.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.apphub.v1.GetBoundaryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.apphub.v1.Boundary])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.Boundary]: @googleapis_reference_link{google/cloud/apphub/v1/boundary.proto#L32}
+  /// [google.cloud.apphub.v1.GetBoundaryRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1157}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::apphub::v1::Boundary> GetBoundary(
+      google::cloud::apphub::v1::GetBoundaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a Boundary.
+  ///
+  /// @param boundary  Required. The boundary to update.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  Boundary resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.apphub.v1.Boundary] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.Boundary]: @googleapis_reference_link{google/cloud/apphub/v1/boundary.proto#L32}
+  /// [google.cloud.apphub.v1.UpdateBoundaryRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1167}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::cloud::apphub::v1::Boundary const& boundary,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBoundary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBoundary(
+      NoAwaitTag, google::cloud::apphub::v1::Boundary const& boundary,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a Boundary.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.apphub.v1.UpdateBoundaryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.apphub.v1.Boundary] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.Boundary]: @googleapis_reference_link{google/cloud/apphub/v1/boundary.proto#L32}
+  /// [google.cloud.apphub.v1.UpdateBoundaryRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1167}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBoundary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBoundary(
+      NoAwaitTag,
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBoundary
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an Extended Metadata Schema.
+  ///
+  /// @param name  Required. Schema resource name.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/extendedMetadataSchemas/{extended_metadata_schema}`.
+  ///  @n
+  ///  `{extended_metadata_schema}` has the format
+  ///  `"apphub.googleapis.com/{SchemaName}"`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.apphub.v1.ExtendedMetadataSchema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.ExtendedMetadataSchema]: @googleapis_reference_link{google/cloud/apphub/v1/extended_metadata_schema.proto#L32}
+  /// [google.cloud.apphub.v1.GetExtendedMetadataSchemaRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1230}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  GetExtendedMetadataSchema(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an Extended Metadata Schema.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.apphub.v1.GetExtendedMetadataSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.apphub.v1.ExtendedMetadataSchema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.ExtendedMetadataSchema]: @googleapis_reference_link{google/cloud/apphub/v1/extended_metadata_schema.proto#L32}
+  /// [google.cloud.apphub.v1.GetExtendedMetadataSchemaRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1230}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  GetExtendedMetadataSchema(
+      google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Extended Metadata Schemas available in a host project and location.
+  ///
+  /// @param parent  Required. Project and location to list Extended Metadata Schemas on.
+  ///  Expected format: `projects/{project}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.apphub.v1.ExtendedMetadataSchema], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.ExtendedMetadataSchema]: @googleapis_reference_link{google/cloud/apphub/v1/extended_metadata_schema.proto#L32}
+  /// [google.cloud.apphub.v1.ListExtendedMetadataSchemasRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1246}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  ListExtendedMetadataSchemas(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Extended Metadata Schemas available in a host project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.apphub.v1.ListExtendedMetadataSchemasRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.apphub.v1.ExtendedMetadataSchema], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.apphub.v1.ExtendedMetadataSchema]: @googleapis_reference_link{google/cloud/apphub/v1/extended_metadata_schema.proto#L32}
+  /// [google.cloud.apphub.v1.ListExtendedMetadataSchemasRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1246}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  ListExtendedMetadataSchemas(
+      google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request,
+      Options opts = {});
 
   // clang-format off
   ///

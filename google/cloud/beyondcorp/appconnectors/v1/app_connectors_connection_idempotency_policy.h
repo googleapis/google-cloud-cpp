@@ -60,6 +60,10 @@ class AppConnectorsServiceConnectionIdempotencyPolicy {
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request);
 
+  virtual google::cloud::Idempotency ResolveInstanceConfig(
+      google::cloud::beyondcorp::appconnectors::v1::
+          ResolveInstanceConfigRequest const& request);
+
   virtual google::cloud::Idempotency ReportStatus(
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request);

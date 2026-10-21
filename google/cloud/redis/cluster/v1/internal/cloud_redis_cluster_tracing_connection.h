@@ -41,8 +41,16 @@ class CloudRedisClusterTracingConnection
   StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
       google::cloud::redis::cluster::v1::ListClustersRequest request) override;
 
+  StreamRange<google::cloud::redis::cluster::v1::AclPolicy> ListAclPolicies(
+      google::cloud::redis::cluster::v1::ListAclPoliciesRequest request)
+      override;
+
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
       google::cloud::redis::cluster::v1::GetClusterRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AclPolicy> GetAclPolicy(
+      google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
@@ -57,6 +65,19 @@ class CloudRedisClusterTracingConnection
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+  UpdateAclPolicy(
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAclPolicy(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+  UpdateAclPolicy(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::protobuf::Any>> DeleteCluster(
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
       override;
@@ -69,6 +90,29 @@ class CloudRedisClusterTracingConnection
   future<StatusOr<google::protobuf::Any>> DeleteCluster(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAclPolicy(
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAclPolicy(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAclPolicy(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+  GetAclPolicyRevision(
+      google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+          request) override;
+
+  StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>
+  ListAclPolicyRevisions(
+      google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest request)
+      override;
+
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
@@ -80,6 +124,10 @@ class CloudRedisClusterTracingConnection
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
       google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AclPolicy> CreateAclPolicy(
+      google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request)
+      override;
 
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
   GetClusterCertificateAuthority(
@@ -158,6 +206,73 @@ class CloudRedisClusterTracingConnection
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
       google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>
+  ListTokenAuthUsers(
+      google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser> GetTokenAuthUser(
+      google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const& request)
+      override;
+
+  StreamRange<google::cloud::redis::cluster::v1::AuthToken> ListAuthTokens(
+      google::cloud::redis::cluster::v1::ListAuthTokensRequest request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AuthToken> GetAuthToken(
+      google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> AddTokenAuthUser(
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> AddTokenAuthUser(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteTokenAuthUser(
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteTokenAuthUser(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+  AddAuthToken(google::cloud::redis::cluster::v1::AddAuthTokenRequest const&
+                   request) override;
+
+  StatusOr<google::longrunning::Operation> AddAuthToken(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+  AddAuthToken(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAuthToken(
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAuthToken(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

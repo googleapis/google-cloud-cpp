@@ -431,6 +431,33 @@ CertificateManagerConnection::CreateCertificateIssuanceConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerConnection::UpdateCertificateIssuanceConfig(
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnection::UpdateCertificateIssuanceConfig(
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    UpdateCertificateIssuanceConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerConnection::UpdateCertificateIssuanceConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::

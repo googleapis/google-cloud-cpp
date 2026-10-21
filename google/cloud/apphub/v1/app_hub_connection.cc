@@ -380,6 +380,46 @@ AppHubConnection::DeleteApplication(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubConnection::GetBoundary(
+    google::cloud::apphub::v1::GetBoundaryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubConnection::UpdateBoundary(
+    google::cloud::apphub::v1::UpdateBoundaryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::apphub::v1::Boundary>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AppHubConnection::UpdateBoundary(
+    NoAwaitTag, google::cloud::apphub::v1::UpdateBoundaryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubConnection::UpdateBoundary(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::apphub::v1::Boundary>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubConnection::GetExtendedMetadataSchema(
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubConnection::ListExtendedMetadataSchemas(
+    google::cloud::apphub::v1::
+        ListExtendedMetadataSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>>();
+}
+
 StreamRange<google::cloud::location::Location> AppHubConnection::ListLocations(
     google::cloud::location::
         ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)

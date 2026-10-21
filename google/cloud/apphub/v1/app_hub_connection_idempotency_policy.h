@@ -126,6 +126,19 @@ class AppHubConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteApplication(
       google::cloud::apphub::v1::DeleteApplicationRequest const& request);
 
+  virtual google::cloud::Idempotency GetBoundary(
+      google::cloud::apphub::v1::GetBoundaryRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateBoundary(
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request);
+
+  virtual google::cloud::Idempotency GetExtendedMetadataSchema(
+      google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListExtendedMetadataSchemas(
+      google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

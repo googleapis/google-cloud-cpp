@@ -525,6 +525,71 @@ StatusOr<google::longrunning::Operation> AppHubTracingStub::DeleteApplication(
       context, *span, child_->DeleteApplication(context, options, request));
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubTracingStub::GetBoundary(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetBoundary");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetBoundary(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AppHubTracingStub::AsyncUpdateBoundary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateBoundary");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateBoundary(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> AppHubTracingStub::UpdateBoundary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateBoundary");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBoundary(context, options, request));
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubTracingStub::GetExtendedMetadataSchema(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
+                                     "GetExtendedMetadataSchema");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetExtendedMetadataSchema(context, options, request));
+}
+
+StatusOr<google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse>
+AppHubTracingStub::ListExtendedMetadataSchemas(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
+                                     "ListExtendedMetadataSchemas");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListExtendedMetadataSchemas(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 AppHubTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -77,6 +77,7 @@ StorageControlTracingStub::ListFolders(
     google::storage::control::v2::ListFoldersRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "ListFolders");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -210,6 +211,7 @@ StorageControlTracingStub::UpdateManagedFolder(
     google::storage::control::v2::UpdateManagedFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "UpdateManagedFolder");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -347,6 +349,7 @@ StorageControlTracingStub::AsyncCreateRapidCache(
     google::storage::control::v2::CreateRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "CreateRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f =
@@ -360,6 +363,7 @@ StorageControlTracingStub::CreateRapidCache(
     google::storage::control::v2::CreateRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "CreateRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -374,6 +378,7 @@ StorageControlTracingStub::AsyncUpdateRapidCache(
     google::storage::control::v2::UpdateRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "UpdateRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f =
@@ -387,6 +392,7 @@ StorageControlTracingStub::UpdateRapidCache(
     google::storage::control::v2::UpdateRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "UpdateRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -401,6 +407,7 @@ StorageControlTracingStub::AsyncDisableRapidCache(
     google::storage::control::v2::DisableRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "DisableRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f =
@@ -414,6 +421,7 @@ StorageControlTracingStub::DisableRapidCache(
     google::storage::control::v2::DisableRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "DisableRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -426,6 +434,7 @@ StorageControlTracingStub::GetRapidCache(
     google::storage::control::v2::GetRapidCacheRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "GetRapidCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -438,6 +447,7 @@ StorageControlTracingStub::ListRapidCaches(
     google::storage::control::v2::ListRapidCachesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "ListRapidCaches");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -465,6 +475,7 @@ StorageControlTracingStub::UpdateProjectIntelligenceConfig(
         request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "UpdateProjectIntelligenceConfig");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -493,6 +504,7 @@ StorageControlTracingStub::UpdateFolderIntelligenceConfig(
         request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "UpdateFolderIntelligenceConfig");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
@@ -521,6 +533,7 @@ StorageControlTracingStub::UpdateOrganizationIntelligenceConfig(
         UpdateOrganizationIntelligenceConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "UpdateOrganizationIntelligenceConfig");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(

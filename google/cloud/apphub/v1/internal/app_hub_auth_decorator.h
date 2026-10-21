@@ -247,6 +247,32 @@ class AppHubAuth : public AppHubStub {
       google::cloud::apphub::v1::DeleteApplicationRequest const& request)
       override;
 
+  StatusOr<google::cloud::apphub::v1::Boundary> GetBoundary(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetBoundaryRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBoundary(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBoundary(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request) override;
+
+  StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  GetExtendedMetadataSchema(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+          request) override;
+
+  StatusOr<google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse>
+  ListExtendedMetadataSchemas(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

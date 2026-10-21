@@ -583,6 +583,75 @@ StatusOr<google::longrunning::Operation> AppHubLogging::DeleteApplication(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubLogging::GetBoundary(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+        return child_->GetBoundary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AppHubLogging::AsyncUpdateBoundary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+        return child_->AsyncUpdateBoundary(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateBoundary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+        return child_->UpdateBoundary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubLogging::GetExtendedMetadataSchema(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+                 request) {
+        return child_->GetExtendedMetadataSchema(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse>
+AppHubLogging::ListExtendedMetadataSchemas(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+              request) {
+        return child_->ListExtendedMetadataSchemas(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 AppHubLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

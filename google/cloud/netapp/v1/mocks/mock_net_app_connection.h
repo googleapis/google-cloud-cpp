@@ -409,6 +409,45 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// StartSplit(Matcher<google::cloud::netapp::v1::StartSplitRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, StartSplit,
+              (google::cloud::netapp::v1::StartSplitRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartSplit(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartSplit,
+              (NoAwaitTag,
+               google::cloud::netapp::v1::StartSplitRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StartSplit(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, StartSplit,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::SplitStatus>, GetSplitStatus,
+              (google::cloud::netapp::v1::GetSplitStatusRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// EstablishVolumePeering(Matcher<google::cloud::netapp::v1::EstablishVolumePeeringRequest
   /// const&>(_)))
   /// @endcode
@@ -1855,6 +1894,90 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
       StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>,
       ExecuteOntapPatch,
       (google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreVolume(Matcher<google::cloud::netapp::v1::RestoreVolumeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>,
+      RestoreVolume,
+      (google::cloud::netapp::v1::RestoreVolumeRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestoreVolume(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RestoreVolume,
+              (NoAwaitTag,
+               google::cloud::netapp::v1::RestoreVolumeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RestoreVolume(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>,
+      RestoreVolume, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>),
+              ListBackupConfigs,
+              (google::cloud::netapp::v1::ListBackupConfigsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupConfig(Matcher<google::cloud::netapp::v1::UpdateBackupConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>,
+      UpdateBackupConfig,
+      (google::cloud::netapp::v1::UpdateBackupConfigRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateBackupConfig(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateBackupConfig,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::UpdateBackupConfigRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>,
+      UpdateBackupConfig, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,

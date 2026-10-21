@@ -728,7 +728,7 @@ class ConversationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.GenerateSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L1287}
-  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L919}
+  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L923}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
@@ -760,7 +760,7 @@ class ConversationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.GenerateSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L1287}
-  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L919}
+  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L923}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
