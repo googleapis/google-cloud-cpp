@@ -175,6 +175,13 @@ CertificateManagerConnectionIdempotencyPolicy::CreateCertificateIssuanceConfig(
 }
 
 Idempotency
+CertificateManagerConnectionIdempotencyPolicy::UpdateCertificateIssuanceConfig(
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const&) {

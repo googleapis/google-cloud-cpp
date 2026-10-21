@@ -490,6 +490,62 @@ StatusOr<google::longrunning::Operation> AppHubAuth::DeleteApplication(
   return child_->DeleteApplication(context, options, request);
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubAuth::GetBoundary(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBoundary(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AppHubAuth::AsyncUpdateBoundary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateBoundary(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> AppHubAuth::UpdateBoundary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBoundary(context, options, request);
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubAuth::GetExtendedMetadataSchema(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetExtendedMetadataSchema(context, options, request);
+}
+
+StatusOr<google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse>
+AppHubAuth::ListExtendedMetadataSchemas(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListExtendedMetadataSchemas(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 AppHubAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

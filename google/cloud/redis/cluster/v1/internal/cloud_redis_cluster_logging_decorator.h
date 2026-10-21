@@ -47,9 +47,20 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
                google::cloud::redis::cluster::v1::ListClustersRequest const&
                    request) override;
 
+  StatusOr<google::cloud::redis::cluster::v1::ListAclPoliciesResponse>
+  ListAclPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListAclPoliciesRequest const& request)
+      override;
+
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
       grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::GetClusterRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AclPolicy> GetAclPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
@@ -64,6 +75,18 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAclPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAclPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -76,6 +99,30 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAclPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAclPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+  GetAclPolicyRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::ListAclPolicyRevisionsResponse>
+  ListAclPolicyRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -86,6 +133,11 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
   StatusOr<google::longrunning::Operation> CreateCluster(
       grpc::ClientContext& context, Options options,
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AclPolicy> CreateAclPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -170,6 +222,75 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
   StatusOr<google::longrunning::Operation> BackupCluster(
       grpc::ClientContext& context, Options options,
       google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::ListTokenAuthUsersResponse>
+  ListTokenAuthUsers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest const&
+          request) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser> GetTokenAuthUser(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::ListAuthTokensResponse>
+  ListAuthTokens(grpc::ClientContext& context, Options const& options,
+                 google::cloud::redis::cluster::v1::ListAuthTokensRequest const&
+                     request) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::AuthToken> GetAuthToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncAddTokenAuthUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteTokenAuthUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncAddAuthToken(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddAuthToken(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAuthToken(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

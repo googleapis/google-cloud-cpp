@@ -84,6 +84,12 @@ class AppConnectorsServiceTracingConnection
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+               ResolveInstanceConfigResponse>
+  ResolveInstanceConfig(
+      google::cloud::beyondcorp::appconnectors::v1::
+          ResolveInstanceConfigRequest const& request) override;
+
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&

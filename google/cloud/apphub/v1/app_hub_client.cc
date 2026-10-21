@@ -775,6 +775,97 @@ AppHubClient::DeleteApplication(google::longrunning::Operation const& operation,
   return connection_->DeleteApplication(operation);
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubClient::GetBoundary(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::apphub::v1::GetBoundaryRequest request;
+  request.set_name(name);
+  return connection_->GetBoundary(request);
+}
+
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubClient::GetBoundary(
+    google::cloud::apphub::v1::GetBoundaryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBoundary(request);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubClient::UpdateBoundary(
+    google::cloud::apphub::v1::Boundary const& boundary,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::apphub::v1::UpdateBoundaryRequest request;
+  *request.mutable_boundary() = boundary;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBoundary(request);
+}
+
+StatusOr<google::longrunning::Operation> AppHubClient::UpdateBoundary(
+    NoAwaitTag, google::cloud::apphub::v1::Boundary const& boundary,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::apphub::v1::UpdateBoundaryRequest request;
+  *request.mutable_boundary() = boundary;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBoundary(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubClient::UpdateBoundary(
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBoundary(request);
+}
+
+StatusOr<google::longrunning::Operation> AppHubClient::UpdateBoundary(
+    NoAwaitTag, google::cloud::apphub::v1::UpdateBoundaryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBoundary(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubClient::UpdateBoundary(google::longrunning::Operation const& operation,
+                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBoundary(operation);
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubClient::GetExtendedMetadataSchema(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest request;
+  request.set_name(name);
+  return connection_->GetExtendedMetadataSchema(request);
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubClient::GetExtendedMetadataSchema(
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetExtendedMetadataSchema(request);
+}
+
+StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubClient::ListExtendedMetadataSchemas(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request;
+  request.set_parent(parent);
+  return connection_->ListExtendedMetadataSchemas(request);
+}
+
+StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubClient::ListExtendedMetadataSchemas(
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListExtendedMetadataSchemas(std::move(request));
+}
+
 StreamRange<google::cloud::location::Location> AppHubClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -260,6 +260,33 @@ NetAppConnection::RevertVolume(google::longrunning::Operation const&) {
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnection::StartSplit(
+    google::cloud::netapp::v1::StartSplitRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Volume>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::StartSplit(
+    NoAwaitTag, google::cloud::netapp::v1::StartSplitRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnection::StartSplit(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Volume>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::netapp::v1::SplitStatus>
+NetAppConnection::GetSplitStatus(
+    google::cloud::netapp::v1::GetSplitStatusRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppConnection::EstablishVolumePeering(
     google::cloud::netapp::v1::EstablishVolumePeeringRequest const&) {
   return google::cloud::make_ready_future<
@@ -1154,6 +1181,56 @@ StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
 NetAppConnection::ExecuteOntapPatch(
     google::cloud::netapp::v1::ExecuteOntapPatchRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppConnection::RestoreVolume(
+    google::cloud::netapp::v1::RestoreVolumeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::RestoreVolume(
+    NoAwaitTag, google::cloud::netapp::v1::RestoreVolumeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppConnection::RestoreVolume(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>
+NetAppConnection::ListBackupConfigs(
+    google::cloud::netapp::v1::
+        ListBackupConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>>();
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppConnection::UpdateBackupConfig(
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::UpdateBackupConfig(
+    NoAwaitTag, google::cloud::netapp::v1::UpdateBackupConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppConnection::UpdateBackupConfig(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::location::Location> NetAppConnection::ListLocations(

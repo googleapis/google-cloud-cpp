@@ -228,6 +228,27 @@ AppConnectorsServiceClient::DeleteAppConnector(
   return connection_->DeleteAppConnector(operation);
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceClient::ResolveInstanceConfig(
+    std::string const& app_connector, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigRequest
+      request;
+  request.set_app_connector(app_connector);
+  return connection_->ResolveInstanceConfig(request);
+}
+
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceClient::ResolveInstanceConfig(
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResolveInstanceConfig(request);
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceClient::ReportStatus(
     std::string const& app_connector,

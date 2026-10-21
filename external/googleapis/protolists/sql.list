@@ -1,6 +1,7 @@
 @googleapis//google/cloud/sql/v1:cloud_sql_available_database_versions.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_backup_runs.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_backups.proto
+@googleapis//google/cloud/sql/v1:cloud_sql_blue_green_deployments.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_connect.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_databases.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_events.proto
@@ -15,3 +16,4 @@
 @googleapis//google/cloud/sql/v1:cloud_sql_ssl_certs.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_tiers.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_users.proto
+@googleapis//google/cloud/sql/v1:cloud_sql_workload_captures.proto

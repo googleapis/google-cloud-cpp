@@ -425,6 +425,56 @@ StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteApplication(
   return child_->DeleteApplication(context, options, request);
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubMetadata::GetBoundary(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBoundary(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AppHubMetadata::AsyncUpdateBoundary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("boundary.name=",
+                           internal::UrlEncode(request.boundary().name())));
+  return child_->AsyncUpdateBoundary(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateBoundary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("boundary.name=",
+                           internal::UrlEncode(request.boundary().name())));
+  return child_->UpdateBoundary(context, options, request);
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubMetadata::GetExtendedMetadataSchema(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetExtendedMetadataSchema(context, options, request);
+}
+
+StatusOr<google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse>
+AppHubMetadata::ListExtendedMetadataSchemas(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListExtendedMetadataSchemas(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 AppHubMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,
