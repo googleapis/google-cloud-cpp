@@ -24,6 +24,7 @@
 #include <nlohmann/json_fwd.hpp>
 #include <functional>
 #include <memory>
+#include <mutex>
 #include <optional>
 
 namespace google {
@@ -138,8 +139,10 @@ class ExternalAccountAuthorizedUserCredentials
     : public oauth2_internal::Credentials {
  public:
   ExternalAccountAuthorizedUserCredentials(
+      ExternalAccountAuthorizedUserInfo info, HttpClientFactory client_factory);
+  ExternalAccountAuthorizedUserCredentials(
       ExternalAccountAuthorizedUserInfo info, HttpClientFactory client_factory,
-      Options options = {});
+      Options options);
   ~ExternalAccountAuthorizedUserCredentials() override = default;
 
   StatusOr<AccessToken> GetToken(
@@ -150,6 +153,7 @@ class ExternalAccountAuthorizedUserCredentials
   }
 
  private:
+  mutable std::mutex mu_;
   ExternalAccountAuthorizedUserInfo info_;
   HttpClientFactory client_factory_;
   Options options_;

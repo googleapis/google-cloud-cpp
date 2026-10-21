@@ -1411,7 +1411,8 @@ TEST(ExternalAccountAuthorizedUser, ParseErrors) {
       {"refresh_token", "test-refresh-token"},
       {"token_url", "https://sts.example.com/v1/oauthtoken"},
   };
-  auto ec = internal::ErrorContext({{"program", "test"}});
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", valid.dump()}});
 
   EXPECT_THAT(
       ParseExternalAccountAuthorizedUserConfiguration("not-json", ec),
@@ -1578,6 +1579,32 @@ TEST(ExternalAccountAuthorizedUser, HandleErrors) {
     auto credentials = ExternalAccountAuthorizedUserCredentials(
         info, client_factory.AsStdFunction());
     EXPECT_THAT(credentials.GetToken(now), StatusIs(StatusCode::kNotFound));
+  }
+
+  {
+    MockClientFactory client_factory;
+    EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+      auto mock = std::make_unique<MockRestClient>();
+      EXPECT_CALL(*mock, Post(_, _, An<FormDataType const&>()))
+          .WillOnce([]() -> StatusOr<std::unique_ptr<RestResponse>> {
+            auto response = std::make_unique<MockRestResponse>();
+            EXPECT_CALL(*response, StatusCode)
+                .WillRepeatedly(Return(HttpStatusCode::kOk));
+            EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+              auto payload = std::make_unique<MockHttpPayload>();
+              EXPECT_CALL(*payload, Read)
+                  .WillOnce(
+                      Return(Status(StatusCode::kUnavailable, "read error")));
+              return payload;
+            });
+            return std::unique_ptr<RestResponse>(std::move(response));
+          });
+      return mock;
+    });
+    auto credentials = ExternalAccountAuthorizedUserCredentials(
+        info, client_factory.AsStdFunction());
+    EXPECT_THAT(credentials.GetToken(now),
+                StatusIs(StatusCode::kUnavailable, HasSubstr("read error")));
   }
 
   for (

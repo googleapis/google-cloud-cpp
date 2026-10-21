@@ -27,6 +27,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
+#include <mutex>
 #include <regex>
 
 namespace google {
@@ -338,13 +339,14 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(
 StatusOr<ExternalAccountAuthorizedUserInfo>
 ParseExternalAccountAuthorizedUserConfiguration(
     std::string const& configuration, internal::ErrorContext const& ec) {
-  auto json = nlohmann::json::parse(configuration, nullptr, false);
+  nlohmann::json json = nlohmann::json::parse(configuration, nullptr, false);
   if (!json.is_object()) {
     return InvalidArgumentError(
         "external account authorized user configuration was not a JSON object",
         GCP_ERROR_INFO().WithContext(ec));
   }
-  auto type = ValidateStringField(json, "type", "credentials-file", ec);
+  StatusOr<std::string> type =
+      ValidateStringField(json, "type", "credentials-file", ec);
   if (!type) return std::move(type).status();
   if (*type != "external_account_authorized_user") {
     return InvalidArgumentError(
@@ -352,19 +354,20 @@ ParseExternalAccountAuthorizedUserConfiguration(
             ") in external account authorized user configuration",
         GCP_ERROR_INFO().WithContext(ec));
   }
-  auto client_id =
+  StatusOr<std::string> client_id =
       ValidateStringField(json, "client_id", "credentials-file", ec);
   if (!client_id) return std::move(client_id).status();
-  auto client_secret =
+  StatusOr<std::string> client_secret =
       ValidateStringField(json, "client_secret", "credentials-file", ec);
   if (!client_secret) return std::move(client_secret).status();
-  auto refresh_token =
+  StatusOr<std::string> refresh_token =
       ValidateStringField(json, "refresh_token", "credentials-file", ec);
   if (!refresh_token) return std::move(refresh_token).status();
-  auto token_url =
+  StatusOr<std::string> token_url =
       ValidateStringField(json, "token_url", "credentials-file", ec);
   if (!token_url) return std::move(token_url).status();
-  auto universe_domain = GetUniverseDomainFromCredentialsJson(json);
+  StatusOr<std::string> universe_domain =
+      GetUniverseDomainFromCredentialsJson(json);
   if (!universe_domain) return std::move(universe_domain).status();
 
   return ExternalAccountAuthorizedUserInfo{
@@ -376,6 +379,13 @@ ParseExternalAccountAuthorizedUserConfiguration(
 ExternalAccountAuthorizedUserCredentials::
     ExternalAccountAuthorizedUserCredentials(
         ExternalAccountAuthorizedUserInfo info,
+        HttpClientFactory client_factory)
+    : ExternalAccountAuthorizedUserCredentials(
+          std::move(info), std::move(client_factory), Options{}) {}
+
+ExternalAccountAuthorizedUserCredentials::
+    ExternalAccountAuthorizedUserCredentials(
+        ExternalAccountAuthorizedUserInfo info,
         HttpClientFactory client_factory, Options options)
     : info_(std::move(info)),
       client_factory_(std::move(client_factory)),
@@ -383,51 +393,58 @@ ExternalAccountAuthorizedUserCredentials::
 
 StatusOr<AccessToken> ExternalAccountAuthorizedUserCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
+  std::string current_refresh_token;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    current_refresh_token = info_.refresh_token;
+  }
   internal::Base64Encoder encoder;
   for (unsigned char const c :
        absl::StrCat(info_.client_id, ":", info_.client_secret)) {
     encoder.PushBack(c);
   }
-  auto request =
+  rest_internal::RestRequest request =
       rest_internal::RestRequest(info_.token_url)
           .AddHeader("content-type", "application/x-www-form-urlencoded")
           .AddHeader("Authorization",
                      absl::StrCat("Basic ", std::move(encoder).FlushAndPad()));
 
-  auto form_data = std::vector<std::pair<std::string, std::string>>{
+  std::vector<std::pair<std::string, std::string>> form_data = {
       {"grant_type", "refresh_token"},
-      {"refresh_token", info_.refresh_token},
+      {"refresh_token", std::move(current_refresh_token)},
   };
 
-  auto client = client_factory_(options_);
+  std::unique_ptr<rest_internal::RestClient> client = client_factory_(options_);
   rest_internal::RestContext unused;
-  auto response = client->Post(unused, request, form_data);
+  StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
+      client->Post(unused, request, form_data);
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
-  auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
+  StatusOr<std::string> payload =
+      rest_internal::ReadAll(std::move(**response).ExtractPayload());
   if (!payload) return std::move(payload).status();
 
-  auto ec = internal::ErrorContext({
-      {"token_url", info_.token_url},
-  });
+  internal::ErrorContext const ec(
+      internal::ErrorContext::Container{{"token_url", info_.token_url}});
 
-  auto access = nlohmann::json::parse(*payload, nullptr, false);
+  nlohmann::json access = nlohmann::json::parse(*payload, nullptr, false);
   if (!access.is_object()) {
     return InvalidArgumentError(
         "token refresh response cannot be parsed as JSON object",
         GCP_ERROR_INFO().WithContext(ec));
   }
-  auto token =
+  StatusOr<std::string> token =
       ValidateStringField(access, "access_token", "token-refresh-response", ec);
   if (!token) return std::move(token).status();
-  auto expires_in =
+  StatusOr<std::int32_t> expires_in =
       ValidateIntField(access, "expires_in", "token-refresh-response", ec);
   if (!expires_in) return std::move(expires_in).status();
-  auto refresh_token = ValidateStringField(access, "refresh_token",
-                                           "token-refresh-response", "", ec);
-  if (!refresh_token) return std::move(refresh_token).status();
-  if (!refresh_token->empty()) {
-    info_.refresh_token = *std::move(refresh_token);
+  StatusOr<std::string> new_refresh_token = ValidateStringField(
+      access, "refresh_token", "token-refresh-response", "", ec);
+  if (!new_refresh_token) return std::move(new_refresh_token).status();
+  if (!new_refresh_token->empty()) {
+    std::lock_guard<std::mutex> lk(mu_);
+    info_.refresh_token = *std::move(new_refresh_token);
   }
   return AccessToken{*std::move(token), tp + std::chrono::seconds(*expires_in)};
 }

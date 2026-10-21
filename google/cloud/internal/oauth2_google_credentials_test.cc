@@ -398,6 +398,21 @@ TEST_F(GoogleCredentialsTest, LoadInvalidServiceAccountCredentialsViaADC) {
 }
 
 TEST_F(GoogleCredentialsTest,
+       LoadInvalidExternalAccountAuthorizedUserCredentials) {
+  auto const filename = TempFileName();
+  std::ofstream(filename)
+      << R"""({"type": "external_account_authorized_user"})""";
+  auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto creds =
+      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+  EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument));
+  (void)std::remove(filename.c_str());
+}
+
+TEST_F(GoogleCredentialsTest,
        LoadInvalidImpersonatedServiceAccountCredentials) {
   auto const filename = TempFileName();
   std::ofstream(filename) << R"""({"type": "impersonated_service_account"})""";
