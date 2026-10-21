@@ -1051,6 +1051,10 @@
 ./include/google/cloud/notebooks/v2
 ./include/google/cloud/notebooks/v2/internal
 ./include/google/cloud/notebooks/v2/mocks
+./include/google/cloud/observability
+./include/google/cloud/observability/v1
+./include/google/cloud/observability/v1/internal
+./include/google/cloud/observability/v1/mocks
 ./include/google/cloud/optimization
 ./include/google/cloud/optimization/v1
 ./include/google/cloud/optimization/v1/internal
@@ -1602,6 +1606,8 @@
 ./lib64/cmake/google_cloud_cpp_networkservices_mocks
 ./lib64/cmake/google_cloud_cpp_notebooks
 ./lib64/cmake/google_cloud_cpp_notebooks_mocks
+./lib64/cmake/google_cloud_cpp_observability
+./lib64/cmake/google_cloud_cpp_observability_mocks
 ./lib64/cmake/google_cloud_cpp_optimization
 ./lib64/cmake/google_cloud_cpp_optimization_mocks
 ./lib64/cmake/google_cloud_cpp_oracledatabase
