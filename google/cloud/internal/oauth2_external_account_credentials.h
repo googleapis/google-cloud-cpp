@@ -68,6 +68,12 @@ struct WorkloadIdentityFederationInfo {
   std::string pool_id;
 };
 
+struct ExternalAccountAuthorizedUserInfo {
+  std::string client_id;
+  std::string client_secret;
+  std::string refresh_token;
+};
+
 /**
  * An external account configuration.
  *
@@ -85,6 +91,8 @@ struct ExternalAccountInfo {
   std::variant<std::monostate, WorkforceIdentityFederationInfo,
                WorkloadIdentityFederationInfo>
       identity_federation_info;
+  std::optional<ExternalAccountAuthorizedUserInfo> authorized_user_info =
+      std::nullopt;
   bool IsWorkforceIdentityFederation() const;
   bool IsWorkloadIdentityFederation() const;
 };
@@ -116,45 +124,11 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
  private:
   StatusOr<AccessToken> GetTokenImpersonation(std::string const& access_token,
                                               internal::ErrorContext const& ec);
+  StatusOr<AccessToken> GetTokenAuthorizedUser(
+      std::chrono::system_clock::time_point tp);
 
-  ExternalAccountInfo info_;
-  HttpClientFactory client_factory_;
-  Options options_;
-};
-
-struct ExternalAccountAuthorizedUserInfo {
-  std::string client_id;
-  std::string client_secret;
-  std::string refresh_token;
-  std::string token_url;
-  std::string universe_domain;
-};
-
-/// Parse a JSON string with an external account authorized user configuration.
-StatusOr<ExternalAccountAuthorizedUserInfo>
-ParseExternalAccountAuthorizedUserConfiguration(
-    std::string const& configuration, internal::ErrorContext const& ec);
-
-class ExternalAccountAuthorizedUserCredentials
-    : public oauth2_internal::Credentials {
- public:
-  ExternalAccountAuthorizedUserCredentials(
-      ExternalAccountAuthorizedUserInfo info, HttpClientFactory client_factory);
-  ExternalAccountAuthorizedUserCredentials(
-      ExternalAccountAuthorizedUserInfo info, HttpClientFactory client_factory,
-      Options options);
-  ~ExternalAccountAuthorizedUserCredentials() override = default;
-
-  StatusOr<AccessToken> GetToken(
-      std::chrono::system_clock::time_point tp) override;
-
-  StatusOr<std::string> universe_domain(Options const&) const override {
-    return info_.universe_domain;
-  }
-
- private:
   mutable std::mutex mu_;
-  ExternalAccountAuthorizedUserInfo info_;
+  ExternalAccountInfo info_;
   HttpClientFactory client_factory_;
   Options options_;
 };

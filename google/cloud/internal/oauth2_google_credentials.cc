@@ -52,21 +52,13 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
         std::make_unique<AuthorizedUserCredentials>(*info, options,
                                                     std::move(client_factory)));
   }
-  if (cred_type == "external_account") {
+  if (cred_type == "external_account" ||
+      cred_type == "external_account_authorized_user") {
     auto info =
         ParseExternalAccountConfiguration(contents, internal::ErrorContext{});
     if (!info) return std::move(info).status();
     return std::unique_ptr<Credentials>(
         std::make_unique<ExternalAccountCredentials>(
-            *std::move(info), std::move(client_factory), options));
-  }
-  if (cred_type == "external_account_authorized_user") {
-    StatusOr<ExternalAccountAuthorizedUserInfo> info =
-        ParseExternalAccountAuthorizedUserConfiguration(
-            contents, internal::ErrorContext{});
-    if (!info) return std::move(info).status();
-    return std::unique_ptr<Credentials>(
-        std::make_unique<ExternalAccountAuthorizedUserCredentials>(
             *std::move(info), std::move(client_factory), options));
   }
   if (cred_type == "service_account") {

@@ -1378,13 +1378,17 @@ TEST(ExternalAccountAuthorizedUser, ParseSuccess) {
   auto ec = internal::ErrorContext(
       {{"program", "test"}, {"full-configuration", configuration.dump()}});
   auto const actual =
-      ParseExternalAccountAuthorizedUserConfiguration(configuration.dump(), ec);
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(actual->client_id, "test-client-id");
-  EXPECT_EQ(actual->client_secret, "test-client-secret");
-  EXPECT_EQ(actual->refresh_token, "test-refresh-token");
+  ASSERT_TRUE(actual->authorized_user_info.has_value());
+  EXPECT_EQ(actual->authorized_user_info->client_id, "test-client-id");
+  EXPECT_EQ(actual->authorized_user_info->client_secret, "test-client-secret");
+  EXPECT_EQ(actual->authorized_user_info->refresh_token, "test-refresh-token");
   EXPECT_EQ(actual->token_url, "https://sts.example.com/v1/oauthtoken");
   EXPECT_EQ(actual->universe_domain, kUniverseDomain);
+  EXPECT_THAT(actual->identity_federation_info,
+              VariantWith<WorkforceIdentityFederationInfo>(
+                  WorkforceIdentityIs("pool-id")));
 }
 
 TEST(ExternalAccountAuthorizedUser, ParseMissingUniverseDomain) {
@@ -1398,7 +1402,7 @@ TEST(ExternalAccountAuthorizedUser, ParseMissingUniverseDomain) {
   auto ec = internal::ErrorContext(
       {{"program", "test"}, {"full-configuration", configuration.dump()}});
   auto const actual =
-      ParseExternalAccountAuthorizedUserConfiguration(configuration.dump(), ec);
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(actual->universe_domain, "googleapis.com");
 }
@@ -1414,45 +1418,36 @@ TEST(ExternalAccountAuthorizedUser, ParseErrors) {
   auto ec = internal::ErrorContext(
       {{"program", "test"}, {"full-configuration", valid.dump()}});
 
-  EXPECT_THAT(
-      ParseExternalAccountAuthorizedUserConfiguration("not-json", ec),
-      StatusIs(StatusCode::kInvalidArgument, HasSubstr("not a JSON object")));
-  EXPECT_THAT(
-      ParseExternalAccountAuthorizedUserConfiguration(R"("not-an-object")", ec),
-      StatusIs(StatusCode::kInvalidArgument, HasSubstr("not a JSON object")));
-
-  {
-    auto config = valid;
-    config["type"] = "external_account";
-    EXPECT_THAT(
-        ParseExternalAccountAuthorizedUserConfiguration(config.dump(), ec),
-        StatusIs(StatusCode::kInvalidArgument,
-                 HasSubstr("mismatched type (external_account)")));
-  }
-
   for (auto const* field :
        {"type", "client_id", "client_secret", "refresh_token", "token_url"}) {
     auto missing = valid;
     missing.erase(field);
     EXPECT_THAT(
-        ParseExternalAccountAuthorizedUserConfiguration(missing.dump(), ec),
+        ParseExternalAccountConfiguration(missing.dump(), ec),
         StatusIs(StatusCode::kInvalidArgument,
                  HasSubstr(absl::StrCat("cannot find `", field, "` field"))));
 
     auto invalid_type = valid;
     invalid_type[field] = true;
-    EXPECT_THAT(ParseExternalAccountAuthorizedUserConfiguration(
-                    invalid_type.dump(), ec),
+    EXPECT_THAT(ParseExternalAccountConfiguration(invalid_type.dump(), ec),
                 StatusIs(StatusCode::kInvalidArgument,
                          HasSubstr(absl::StrCat("invalid type for `", field,
                                                 "` field"))));
   }
 
   {
+    auto invalid_audience = valid;
+    invalid_audience["audience"] = true;
+    EXPECT_THAT(ParseExternalAccountConfiguration(invalid_audience.dump(), ec),
+                StatusIs(StatusCode::kInvalidArgument,
+                         HasSubstr("invalid type for `audience` field")));
+  }
+
+  {
     auto empty_ud = valid;
     empty_ud["universe_domain"] = "";
     EXPECT_THAT(
-        ParseExternalAccountAuthorizedUserConfiguration(empty_ud.dump(), ec),
+        ParseExternalAccountConfiguration(empty_ud.dump(), ec),
         StatusIs(
             StatusCode::kInvalidArgument,
             HasSubstr(
@@ -1469,9 +1464,17 @@ TEST(ExternalAccountAuthorizedUser, Working) {
       {"expires_in", expected_expires_in.count()},
       {"token_type", "Bearer"},
   };
-  auto const info = ExternalAccountAuthorizedUserInfo{
-      "test-client-id", "test-client-secret", "test-refresh-token", test_url,
-      "my-domain.net"};
+  auto const info = ExternalAccountInfo{
+      {},
+      {},
+      test_url,
+      {},
+      std::nullopt,
+      "my-domain.net",
+      std::nullopt,
+      std::monostate{},
+      ExternalAccountAuthorizedUserInfo{"test-client-id", "test-client-secret",
+                                        "test-refresh-token"}};
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
@@ -1493,9 +1496,9 @@ TEST(ExternalAccountAuthorizedUser, Working) {
     return mock;
   });
 
-  auto credentials = ExternalAccountAuthorizedUserCredentials(
-      info, client_factory.AsStdFunction(),
-      Options{}.set<TestOnlyOption>("test-option"));
+  auto credentials =
+      ExternalAccountCredentials(info, client_factory.AsStdFunction(),
+                                 Options{}.set<TestOnlyOption>("test-option"));
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
   ASSERT_STATUS_OK(access_token);
@@ -1520,9 +1523,17 @@ TEST(ExternalAccountAuthorizedUser, WorkingWithRefreshTokenRotation) {
       {"expires_in", expected_expires_in.count()},
       {"token_type", "Bearer"},
   };
-  auto const info = ExternalAccountAuthorizedUserInfo{
-      "test-client-id", "test-client-secret", "initial-refresh-token", test_url,
-      "googleapis.com"};
+  auto const info = ExternalAccountInfo{
+      {},
+      {},
+      test_url,
+      {},
+      std::nullopt,
+      "googleapis.com",
+      std::nullopt,
+      std::monostate{},
+      ExternalAccountAuthorizedUserInfo{"test-client-id", "test-client-secret",
+                                        "initial-refresh-token"}};
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call)
@@ -1549,8 +1560,8 @@ TEST(ExternalAccountAuthorizedUser, WorkingWithRefreshTokenRotation) {
         return mock;
       });
 
-  auto credentials = ExternalAccountAuthorizedUserCredentials(
-      info, client_factory.AsStdFunction());
+  auto credentials =
+      ExternalAccountCredentials(info, client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto token1 = credentials.GetToken(now);
   ASSERT_STATUS_OK(token1);
@@ -1563,9 +1574,17 @@ TEST(ExternalAccountAuthorizedUser, WorkingWithRefreshTokenRotation) {
 
 TEST(ExternalAccountAuthorizedUser, HandleErrors) {
   auto const test_url = std::string{"https://sts.example.com/v1/oauthtoken"};
-  auto const info = ExternalAccountAuthorizedUserInfo{
-      "test-client-id", "test-client-secret", "test-refresh-token", test_url,
-      "googleapis.com"};
+  auto const info = ExternalAccountInfo{
+      {},
+      {},
+      test_url,
+      {},
+      std::nullopt,
+      "googleapis.com",
+      std::nullopt,
+      std::monostate{},
+      ExternalAccountAuthorizedUserInfo{"test-client-id", "test-client-secret",
+                                        "test-refresh-token"}};
   auto const now = std::chrono::system_clock::now();
 
   {
@@ -1576,8 +1595,8 @@ TEST(ExternalAccountAuthorizedUser, HandleErrors) {
           .WillOnce(Return(ByMove(MakeMockResponseError())));
       return mock;
     });
-    auto credentials = ExternalAccountAuthorizedUserCredentials(
-        info, client_factory.AsStdFunction());
+    auto credentials =
+        ExternalAccountCredentials(info, client_factory.AsStdFunction());
     EXPECT_THAT(credentials.GetToken(now), StatusIs(StatusCode::kNotFound));
   }
 
@@ -1601,8 +1620,8 @@ TEST(ExternalAccountAuthorizedUser, HandleErrors) {
           });
       return mock;
     });
-    auto credentials = ExternalAccountAuthorizedUserCredentials(
-        info, client_factory.AsStdFunction());
+    auto credentials =
+        ExternalAccountCredentials(info, client_factory.AsStdFunction());
     EXPECT_THAT(credentials.GetToken(now),
                 StatusIs(StatusCode::kUnavailable, HasSubstr("read error")));
   }
@@ -1622,8 +1641,8 @@ TEST(ExternalAccountAuthorizedUser, HandleErrors) {
           .WillOnce(Return(ByMove(MakeMockResponseSuccess(bad_payload))));
       return mock;
     });
-    auto credentials = ExternalAccountAuthorizedUserCredentials(
-        info, client_factory.AsStdFunction());
+    auto credentials =
+        ExternalAccountCredentials(info, client_factory.AsStdFunction());
     EXPECT_THAT(credentials.GetToken(now),
                 StatusIs(StatusCode::kInvalidArgument));
   }

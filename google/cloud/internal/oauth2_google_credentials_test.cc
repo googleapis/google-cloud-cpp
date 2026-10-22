@@ -218,9 +218,8 @@ TEST_F(GoogleCredentialsTest,
       GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
   (void)std::remove(filename.c_str());
   ASSERT_STATUS_OK(creds);
-  EXPECT_THAT(
-      creds->get(),
-      WhenDynamicCastTo<ExternalAccountAuthorizedUserCredentials*>(NotNull()));
+  EXPECT_THAT(creds->get(),
+              WhenDynamicCastTo<ExternalAccountCredentials*>(NotNull()));
 }
 
 TEST_F(GoogleCredentialsTest,
@@ -236,9 +235,8 @@ TEST_F(GoogleCredentialsTest,
       GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
   (void)std::remove(filename.c_str());
   ASSERT_STATUS_OK(creds);
-  EXPECT_THAT(
-      creds->get(),
-      WhenDynamicCastTo<ExternalAccountAuthorizedUserCredentials*>(NotNull()));
+  EXPECT_THAT(creds->get(),
+              WhenDynamicCastTo<ExternalAccountCredentials*>(NotNull()));
 }
 
 /**
