@@ -1,0 +1,25 @@
+/*!
+@page observability-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `observability_v1::ObservabilityClient`:
+
+@snippet observability_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page observability_v1::ObservabilityClient-endpoint-snippet Override observability_v1::ObservabilityClient Endpoint Configuration
+
+@snippet google/cloud/observability/v1/samples/observability_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

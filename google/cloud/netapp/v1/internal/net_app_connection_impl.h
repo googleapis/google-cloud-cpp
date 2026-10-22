@@ -166,6 +166,19 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::Volume>> StartSplit(
+      google::cloud::netapp::v1::StartSplitRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> StartSplit(
+      NoAwaitTag,
+      google::cloud::netapp::v1::StartSplitRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> StartSplit(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::netapp::v1::SplitStatus> GetSplitStatus(
+      google::cloud::netapp::v1::GetSplitStatusRequest const& request) override;
+
   future<StatusOr<google::cloud::netapp::v1::Volume>> EstablishVolumePeering(
       google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
       override;
@@ -655,6 +668,32 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
   ExecuteOntapPatch(google::cloud::netapp::v1::ExecuteOntapPatchRequest const&
                         request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+  RestoreVolume(
+      google::cloud::netapp::v1::RestoreVolumeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreVolume(
+      NoAwaitTag,
+      google::cloud::netapp::v1::RestoreVolumeRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+  RestoreVolume(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::netapp::v1::VolumeBackupConfig> ListBackupConfigs(
+      google::cloud::netapp::v1::ListBackupConfigsRequest request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+  UpdateBackupConfig(google::cloud::netapp::v1::UpdateBackupConfigRequest const&
+                         request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackupConfig(
+      NoAwaitTag,
+      google::cloud::netapp::v1::UpdateBackupConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+  UpdateBackupConfig(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

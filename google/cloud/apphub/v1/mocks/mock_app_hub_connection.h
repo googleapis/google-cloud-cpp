@@ -562,6 +562,60 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               DeleteApplication,
               (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Boundary>, GetBoundary,
+              (google::cloud::apphub::v1::GetBoundaryRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBoundary(Matcher<google::cloud::apphub::v1::UpdateBoundaryRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Boundary>>,
+              UpdateBoundary,
+              (google::cloud::apphub::v1::UpdateBoundaryRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateBoundary(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateBoundary,
+              (NoAwaitTag,
+               google::cloud::apphub::v1::UpdateBoundaryRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateBoundary(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Boundary>>,
+              UpdateBoundary, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>,
+      GetExtendedMetadataSchema,
+      (google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>),
+      ListExtendedMetadataSchemas,
+      (google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

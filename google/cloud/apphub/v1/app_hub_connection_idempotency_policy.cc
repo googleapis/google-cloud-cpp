@@ -170,6 +170,26 @@ Idempotency AppHubConnectionIdempotencyPolicy::DeleteApplication(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AppHubConnectionIdempotencyPolicy::GetBoundary(
+    google::cloud::apphub::v1::GetBoundaryRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AppHubConnectionIdempotencyPolicy::UpdateBoundary(
+    google::cloud::apphub::v1::UpdateBoundaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AppHubConnectionIdempotencyPolicy::GetExtendedMetadataSchema(
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AppHubConnectionIdempotencyPolicy::ListExtendedMetadataSchemas(
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency AppHubConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

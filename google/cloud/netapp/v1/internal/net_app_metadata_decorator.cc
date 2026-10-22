@@ -269,6 +269,34 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::RevertVolume(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncStartSplit(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::StartSplitRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartSplit(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::StartSplit(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::StartSplitRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartSplit(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::SplitStatus> NetAppMetadata::GetSplitStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetSplitStatusRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSplitStatus(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncEstablishVolumePeering(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -1195,6 +1223,55 @@ NetAppMetadata::ExecuteOntapPatch(
       context, options,
       absl::StrCat("ontap_path=", internal::UrlEncode(request.ontap_path())));
   return child_->ExecuteOntapPatch(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncRestoreVolume(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRestoreVolume(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::RestoreVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestoreVolume(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ListBackupConfigsResponse>
+NetAppMetadata::ListBackupConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListBackupConfigsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupConfigs(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncUpdateBackupConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUpdateBackupConfig(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::UpdateBackupConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateBackupConfig(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

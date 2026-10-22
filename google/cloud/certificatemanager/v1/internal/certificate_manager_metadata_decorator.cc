@@ -464,6 +464,33 @@ CertificateManagerMetadata::CreateCertificateIssuanceConfig(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CertificateManagerMetadata::AsyncUpdateCertificateIssuanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("certificate_issuance_config.name=",
+                           internal::UrlEncode(
+                               request.certificate_issuance_config().name())));
+  return child_->AsyncUpdateCertificateIssuanceConfig(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerMetadata::UpdateCertificateIssuanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("certificate_issuance_config.name=",
+                           internal::UrlEncode(
+                               request.certificate_issuance_config().name())));
+  return child_->UpdateCertificateIssuanceConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

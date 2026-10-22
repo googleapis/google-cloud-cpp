@@ -370,6 +370,28 @@ class AppHubConnection {
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteApplication(google::longrunning::Operation const& operation);
 
+  virtual StatusOr<google::cloud::apphub::v1::Boundary> GetBoundary(
+      google::cloud::apphub::v1::GetBoundaryRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBoundary(
+      NoAwaitTag,
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  GetExtendedMetadataSchema(
+      google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  ListExtendedMetadataSchemas(
+      google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

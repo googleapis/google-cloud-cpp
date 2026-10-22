@@ -185,6 +185,13 @@ class MockAppConnectorsServiceConnection
               DeleteAppConnector,
               (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                           ResolveInstanceConfigResponse>,
+              ResolveInstanceConfig,
+              (google::cloud::beyondcorp::appconnectors::v1::
+                   ResolveInstanceConfigRequest const& request),
+              (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

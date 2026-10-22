@@ -169,6 +169,21 @@ AppConnectorsServiceLogging::DeleteAppConnector(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceLogging::ResolveInstanceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnectors::v1::
+                 ResolveInstanceConfigRequest const& request) {
+        return child_->ResolveInstanceConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceLogging::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,

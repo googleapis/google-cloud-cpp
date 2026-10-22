@@ -190,8 +190,15 @@ class CloudRedisClusterConnection {
   virtual StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
       google::cloud::redis::cluster::v1::ListClustersRequest request);
 
+  virtual StreamRange<google::cloud::redis::cluster::v1::AclPolicy>
+  ListAclPolicies(
+      google::cloud::redis::cluster::v1::ListAclPoliciesRequest request);
+
   virtual StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
       google::cloud::redis::cluster::v1::GetClusterRequest const& request);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::AclPolicy> GetAclPolicy(
+      google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   UpdateCluster(
@@ -204,6 +211,17 @@ class CloudRedisClusterConnection {
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   UpdateCluster(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+  UpdateAclPolicy(
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAclPolicy(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+  UpdateAclPolicy(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::protobuf::Any>> DeleteCluster(
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
 
@@ -213,6 +231,26 @@ class CloudRedisClusterConnection {
 
   virtual future<StatusOr<google::protobuf::Any>> DeleteCluster(
       google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAclPolicy(
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAclPolicy(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAclPolicy(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+  GetAclPolicyRevision(
+      google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>
+  ListAclPolicyRevisions(
+      google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   CreateCluster(
@@ -224,6 +262,10 @@ class CloudRedisClusterConnection {
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   CreateCluster(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+  CreateAclPolicy(
+      google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
   GetClusterCertificateAuthority(
@@ -294,6 +336,70 @@ class CloudRedisClusterConnection {
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   BackupCluster(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>
+  ListTokenAuthUsers(
+      google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest request);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>
+  GetTokenAuthUser(
+      google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::redis::cluster::v1::AuthToken>
+  ListAuthTokens(
+      google::cloud::redis::cluster::v1::ListAuthTokensRequest request);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::AuthToken> GetAuthToken(
+      google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  AddTokenAuthUser(
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  AddTokenAuthUser(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteTokenAuthUser(
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteTokenAuthUser(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+  AddAuthToken(
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> AddAuthToken(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+  AddAuthToken(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAuthToken(
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+  DeleteAuthToken(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

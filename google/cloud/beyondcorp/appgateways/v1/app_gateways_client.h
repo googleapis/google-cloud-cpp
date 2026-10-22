@@ -52,6 +52,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// The AppGatewaysService service provides methods to manage
 /// (create/read/update/delete) BeyondCorp AppGateways.
 ///
+///
+/// Deprecated: App Connector is deprecated and creation of new App Connector
+/// resources is no longer permitted. Use Security Gateway instead.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -75,7 +79,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class AppGatewaysServiceClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "AppGatewaysService has been deprecated and will be turned down in the "
+    "future.") AppGatewaysServiceClient {
  public:
   explicit AppGatewaysServiceClient(
       std::shared_ptr<AppGatewaysServiceConnection> connection,
@@ -105,6 +111,8 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Lists AppGateways in a given project and location.
   ///
   /// @param parent  Required. The resource name of the AppGateway location using the form:
@@ -131,14 +139,17 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L231}
-  /// [google.cloud.beyondcorp.appgateways.v1.ListAppGatewaysRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L99}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L241}
+  /// [google.cloud.beyondcorp.appgateways.v1.ListAppGatewaysRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L109}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
   ListAppGateways(std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists AppGateways in a given project and location.
   ///
@@ -170,10 +181,11 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L231}
-  /// [google.cloud.beyondcorp.appgateways.v1.ListAppGatewaysRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L99}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L241}
+  /// [google.cloud.beyondcorp.appgateways.v1.ListAppGatewaysRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L109}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
   ListAppGateways(
       google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
@@ -181,6 +193,8 @@ class AppGatewaysServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets details of a single AppGateway.
   ///
@@ -199,14 +213,17 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L231}
-  /// [google.cloud.beyondcorp.appgateways.v1.GetAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L145}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L241}
+  /// [google.cloud.beyondcorp.appgateways.v1.GetAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L155}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
   GetAppGateway(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets details of a single AppGateway.
   ///
@@ -229,10 +246,11 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L231}
-  /// [google.cloud.beyondcorp.appgateways.v1.GetAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L145}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L241}
+  /// [google.cloud.beyondcorp.appgateways.v1.GetAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L155}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
   GetAppGateway(
       google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
@@ -240,6 +258,8 @@ class AppGatewaysServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new AppGateway in a given project and location.
   ///
@@ -270,10 +290,11 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L231}
-  /// [google.cloud.beyondcorp.appgateways.v1.CreateAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L157}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L241}
+  /// [google.cloud.beyondcorp.appgateways.v1.CreateAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L167}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
   CreateAppGateway(
       std::string const& parent,
@@ -281,6 +302,8 @@ class AppGatewaysServiceClient {
       std::string const& app_gateway_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAppGateway
   ///
@@ -291,12 +314,15 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAppGateway(
       NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
       std::string const& app_gateway_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new AppGateway in a given project and location.
   ///
@@ -326,10 +352,11 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L231}
-  /// [google.cloud.beyondcorp.appgateways.v1.CreateAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L157}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGateway]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L241}
+  /// [google.cloud.beyondcorp.appgateways.v1.CreateAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L167}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
   CreateAppGateway(
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
@@ -337,6 +364,8 @@ class AppGatewaysServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAppGateway
   ///
@@ -347,6 +376,7 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAppGateway(
       NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
@@ -355,6 +385,8 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief CreateAppGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -362,11 +394,14 @@ class AppGatewaysServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
   CreateAppGateway(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a single AppGateway.
   ///
@@ -392,15 +427,18 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGatewayOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L329}
-  /// [google.cloud.beyondcorp.appgateways.v1.DeleteAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L197}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGatewayOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L345}
+  /// [google.cloud.beyondcorp.appgateways.v1.DeleteAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L207}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAppGateway
   ///
@@ -411,10 +449,13 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a single AppGateway.
   ///
@@ -444,10 +485,11 @@ class AppGatewaysServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appgateways.v1.AppGatewayOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L329}
-  /// [google.cloud.beyondcorp.appgateways.v1.DeleteAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L197}
+  /// [google.cloud.beyondcorp.appgateways.v1.AppGatewayOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L345}
+  /// [google.cloud.beyondcorp.appgateways.v1.DeleteAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L207}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(
@@ -456,6 +498,8 @@ class AppGatewaysServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAppGateway
   ///
@@ -466,6 +510,7 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
       NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
@@ -474,6 +519,8 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief DeleteAppGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -481,6 +528,7 @@ class AppGatewaysServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(google::longrunning::Operation const& operation,

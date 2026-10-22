@@ -155,6 +155,21 @@ AppConnectorsServiceTracingStub::DeleteAppConnector(
       context, *span, child_->DeleteAppConnector(context, options, request));
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceTracingStub::ResolveInstanceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ResolveInstanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ResolveInstanceConfig(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,

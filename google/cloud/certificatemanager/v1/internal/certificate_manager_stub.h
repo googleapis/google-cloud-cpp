@@ -278,6 +278,20 @@ class CertificateManagerStub {
           CreateCertificateIssuanceConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateCertificateIssuanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCertificateIssuanceConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateIssuanceConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -615,6 +629,19 @@ class DefaultCertificateManagerStub : public CertificateManagerStub {
       grpc::ClientContext& context, Options options,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateCertificateIssuanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateCertificateIssuanceConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateIssuanceConfig(

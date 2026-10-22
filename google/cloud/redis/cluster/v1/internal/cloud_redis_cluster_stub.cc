@@ -46,12 +46,36 @@ DefaultCloudRedisClusterStub::ListClusters(
   return response;
 }
 
+StatusOr<google::cloud::redis::cluster::v1::ListAclPoliciesResponse>
+DefaultCloudRedisClusterStub::ListAclPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::ListAclPoliciesRequest const& request) {
+  google::cloud::redis::cluster::v1::ListAclPoliciesResponse response;
+  auto status = grpc_stub_->ListAclPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 DefaultCloudRedisClusterStub::GetCluster(
     grpc::ClientContext& context, Options const&,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
   google::cloud::redis::cluster::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+DefaultCloudRedisClusterStub::GetAclPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request) {
+  google::cloud::redis::cluster::v1::AclPolicy response;
+  auto status = grpc_stub_->GetAclPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -90,6 +114,37 @@ DefaultCloudRedisClusterStub::UpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAclPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::UpdateAclPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAclPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisClusterStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -121,6 +176,64 @@ DefaultCloudRedisClusterStub::DeleteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAclPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::DeleteAclPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAclPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+DefaultCloudRedisClusterStub::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  google::cloud::redis::cluster::v1::AclPolicyRevision response;
+  auto status = grpc_stub_->GetAclPolicyRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListAclPolicyRevisionsResponse>
+DefaultCloudRedisClusterStub::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  google::cloud::redis::cluster::v1::ListAclPolicyRevisionsResponse response;
+  auto status =
+      grpc_stub_->ListAclPolicyRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisClusterStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -145,6 +258,18 @@ DefaultCloudRedisClusterStub::CreateCluster(
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+DefaultCloudRedisClusterStub::CreateAclPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request) {
+  google::cloud::redis::cluster::v1::AclPolicy response;
+  auto status = grpc_stub_->CreateAclPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -352,6 +477,182 @@ DefaultCloudRedisClusterStub::BackupCluster(
     google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->BackupCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListTokenAuthUsersResponse>
+DefaultCloudRedisClusterStub::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest const&
+        request) {
+  google::cloud::redis::cluster::v1::ListTokenAuthUsersResponse response;
+  auto status = grpc_stub_->ListTokenAuthUsers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>
+DefaultCloudRedisClusterStub::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const& request) {
+  google::cloud::redis::cluster::v1::TokenAuthUser response;
+  auto status = grpc_stub_->GetTokenAuthUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListAuthTokensResponse>
+DefaultCloudRedisClusterStub::ListAuthTokens(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::ListAuthTokensRequest const& request) {
+  google::cloud::redis::cluster::v1::ListAuthTokensResponse response;
+  auto status = grpc_stub_->ListAuthTokens(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AuthToken>
+DefaultCloudRedisClusterStub::GetAuthToken(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request) {
+  google::cloud::redis::cluster::v1::AuthToken response;
+  auto status = grpc_stub_->GetAuthToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncAddTokenAuthUser(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::AddTokenAuthUser(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddTokenAuthUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteTokenAuthUser(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTokenAuthUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncAddAuthToken(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::AddAuthToken(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddAuthToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAuthToken(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::DeleteAuthToken(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAuthToken(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

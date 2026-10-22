@@ -633,6 +633,41 @@ CertificateManagerLogging::CreateCertificateIssuanceConfig(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CertificateManagerLogging::AsyncUpdateCertificateIssuanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::
+                 UpdateCertificateIssuanceConfigRequest const& request) {
+        return child_->AsyncUpdateCertificateIssuanceConfig(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerLogging::UpdateCertificateIssuanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 UpdateCertificateIssuanceConfigRequest const& request) {
+        return child_->UpdateCertificateIssuanceConfig(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

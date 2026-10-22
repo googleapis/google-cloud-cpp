@@ -161,6 +161,21 @@ DefaultAppConnectorsServiceStub::DeleteAppConnector(
   return response;
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+DefaultAppConnectorsServiceStub::ResolveInstanceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request) {
+  google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse
+      response;
+  auto status = grpc_stub_->ResolveInstanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,

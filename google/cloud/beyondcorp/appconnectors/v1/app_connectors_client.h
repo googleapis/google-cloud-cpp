@@ -52,6 +52,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// The AppConnectorsService provides methods to manage
 /// (create/read/update/delete) BeyondCorp AppConnectors.
 ///
+///
+/// Deprecated: App Connector is deprecated and creation of new App Connector
+/// resources is no longer permitted. Use Security Gateway instead.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -75,7 +79,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class AppConnectorsServiceClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "AppConnectorsService has been deprecated and will be turned down in the "
+    "future.") AppConnectorsServiceClient {
  public:
   explicit AppConnectorsServiceClient(
       std::shared_ptr<AppConnectorsServiceConnection> connection,
@@ -105,6 +111,8 @@ class AppConnectorsServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Lists AppConnectors in a given project and location.
   ///
   /// @param parent  Required. The resource name of the AppConnector location using the form:
@@ -131,14 +139,17 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.ListAppConnectorsRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L130}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.ListAppConnectorsRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L153}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
   ListAppConnectors(std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists AppConnectors in a given project and location.
   ///
@@ -170,10 +181,11 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.ListAppConnectorsRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L130}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.ListAppConnectorsRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L153}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
   ListAppConnectors(
       google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
@@ -181,6 +193,8 @@ class AppConnectorsServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets details of a single AppConnector.
   ///
@@ -199,14 +213,17 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.GetAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L176}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.GetAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L199}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
   GetAppConnector(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets details of a single AppConnector.
   ///
@@ -229,16 +246,19 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.GetAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L176}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.GetAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L199}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
   GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                       GetAppConnectorRequest const& request,
                   Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new AppConnector in a given project and location.
   ///
@@ -270,10 +290,11 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.CreateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L188}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.CreateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L211}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   CreateAppConnector(
       std::string const& parent,
@@ -282,6 +303,8 @@ class AppConnectorsServiceClient {
       std::string const& app_connector_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAppConnector
   ///
@@ -292,6 +315,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAppConnector(
       NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
@@ -299,6 +323,8 @@ class AppConnectorsServiceClient {
       std::string const& app_connector_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new AppConnector in a given project and location.
   ///
@@ -328,16 +354,19 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.CreateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L188}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.CreateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L211}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          CreateAppConnectorRequest const& request,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAppConnector
   ///
@@ -348,6 +377,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAppConnector(
       NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
@@ -356,6 +386,8 @@ class AppConnectorsServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief CreateAppConnector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -363,11 +395,14 @@ class AppConnectorsServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   CreateAppConnector(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates the parameters of a single AppConnector.
   ///
@@ -398,10 +433,11 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.UpdateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L229}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.UpdateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L252}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   UpdateAppConnector(
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
@@ -409,6 +445,8 @@ class AppConnectorsServiceClient {
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAppConnector
   ///
@@ -419,6 +457,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
       NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
@@ -426,6 +465,8 @@ class AppConnectorsServiceClient {
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates the parameters of a single AppConnector.
   ///
@@ -455,16 +496,19 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.UpdateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L229}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.UpdateAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L252}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          UpdateAppConnectorRequest const& request,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAppConnector
   ///
@@ -475,6 +519,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
       NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
@@ -483,6 +528,8 @@ class AppConnectorsServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief UpdateAppConnector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -490,11 +537,14 @@ class AppConnectorsServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   UpdateAppConnector(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a single AppConnector.
   ///
@@ -520,15 +570,18 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnectorOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L408}
-  /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L263}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnectorOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L449}
+  /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L286}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAppConnector
   ///
@@ -539,10 +592,13 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a single AppConnector.
   ///
@@ -572,10 +628,11 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnectorOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L408}
-  /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L263}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnectorOperationMetadata]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L449}
+  /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L286}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
@@ -583,6 +640,8 @@ class AppConnectorsServiceClient {
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAppConnector
   ///
@@ -593,6 +652,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
       NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
@@ -601,6 +661,8 @@ class AppConnectorsServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief DeleteAppConnector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -608,12 +670,83 @@ class AppConnectorsServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
+  ///
+  /// Gets instance configuration for a given AppConnector.
+  /// An internal method called by a AppConnector to get its container config.
+  ///
+  /// @param app_connector  Required. BeyondCorp AppConnector name using the form:
+  ///  `projects/{project_id}/locations/{location_id}/appConnectors/{app_connector}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L317}
+  /// [google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigResponse]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L329}
+  ///
+  // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
+  StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+               ResolveInstanceConfigResponse>
+  ResolveInstanceConfig(std::string const& app_connector, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
+  ///
+  /// Gets instance configuration for a given AppConnector.
+  /// An internal method called by a AppConnector to get its container config.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L317}
+  /// [google.cloud.beyondcorp.appconnectors.v1.ResolveInstanceConfigResponse]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L329}
+  ///
+  // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
+  StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+               ResolveInstanceConfigResponse>
+  ResolveInstanceConfig(google::cloud::beyondcorp::appconnectors::v1::
+                            ResolveInstanceConfigRequest const& request,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Report status for a given connector.
   ///
@@ -640,10 +773,11 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.ReportStatusRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L294}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.ReportStatusRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L335}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(std::string const& app_connector,
                google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
@@ -651,6 +785,8 @@ class AppConnectorsServiceClient {
                Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief ReportStatus
   ///
@@ -661,6 +797,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> ReportStatus(
       NoAwaitTag, std::string const& app_connector,
       google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
@@ -668,6 +805,8 @@ class AppConnectorsServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Report status for a given connector.
   ///
@@ -697,10 +836,11 @@ class AppConnectorsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L332}
-  /// [google.cloud.beyondcorp.appconnectors.v1.ReportStatusRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L294}
+  /// [google.cloud.beyondcorp.appconnectors.v1.AppConnector]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L373}
+  /// [google.cloud.beyondcorp.appconnectors.v1.ReportStatusRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L335}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
@@ -708,6 +848,8 @@ class AppConnectorsServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief ReportStatus
   ///
@@ -718,6 +860,7 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> ReportStatus(
       NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
@@ -726,6 +869,8 @@ class AppConnectorsServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief ReportStatus
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -733,6 +878,7 @@ class AppConnectorsServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(google::longrunning::Operation const& operation,
                Options opts = {});

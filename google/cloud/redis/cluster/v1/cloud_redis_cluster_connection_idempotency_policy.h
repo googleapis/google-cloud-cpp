@@ -42,17 +42,39 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListClusters(
       google::cloud::redis::cluster::v1::ListClustersRequest request);
 
+  virtual google::cloud::Idempotency ListAclPolicies(
+      google::cloud::redis::cluster::v1::ListAclPoliciesRequest request);
+
   virtual google::cloud::Idempotency GetCluster(
       google::cloud::redis::cluster::v1::GetClusterRequest const& request);
+
+  virtual google::cloud::Idempotency GetAclPolicy(
+      google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request);
 
   virtual google::cloud::Idempotency UpdateCluster(
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateAclPolicy(
+      google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request);
+
   virtual google::cloud::Idempotency DeleteCluster(
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
 
+  virtual google::cloud::Idempotency DeleteAclPolicy(
+      google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetAclPolicyRevision(
+      google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAclPolicyRevisions(
+      google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest request);
+
   virtual google::cloud::Idempotency CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+
+  virtual google::cloud::Idempotency CreateAclPolicy(
+      google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetClusterCertificateAuthority(
       google::cloud::redis::cluster::v1::
@@ -87,6 +109,33 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency BackupCluster(
       google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+
+  virtual google::cloud::Idempotency ListTokenAuthUsers(
+      google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest request);
+
+  virtual google::cloud::Idempotency GetTokenAuthUser(
+      google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAuthTokens(
+      google::cloud::redis::cluster::v1::ListAuthTokensRequest request);
+
+  virtual google::cloud::Idempotency GetAuthToken(
+      google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request);
+
+  virtual google::cloud::Idempotency AddTokenAuthUser(
+      google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteTokenAuthUser(
+      google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+          request);
+
+  virtual google::cloud::Idempotency AddAuthToken(
+      google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAuthToken(
+      google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

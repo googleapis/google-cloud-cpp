@@ -606,6 +606,43 @@ CertificateManagerTracingConnection::CreateCertificateIssuanceConfig(
                            child_->CreateCertificateIssuanceConfig(operation));
 }
 
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerTracingConnection::UpdateCertificateIssuanceConfig(
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "UpdateCertificateIssuanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateIssuanceConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerTracingConnection::UpdateCertificateIssuanceConfig(
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    UpdateCertificateIssuanceConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "UpdateCertificateIssuanceConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCertificateIssuanceConfig(NoAwaitTag{}, request));
+}
+
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerTracingConnection::UpdateCertificateIssuanceConfig(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "UpdateCertificateIssuanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateIssuanceConfig(operation));
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::

@@ -43,6 +43,18 @@ CloudRedisClusterTracingConnection::ListClusters(
                                                   std::move(sr));
 }
 
+StreamRange<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterTracingConnection::ListAclPolicies(
+    google::cloud::redis::cluster::v1::ListAclPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::ListAclPolicies");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAclPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::redis::cluster::v1::AclPolicy>(std::move(span),
+                                                    std::move(sr));
+}
+
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterTracingConnection::GetCluster(
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
@@ -50,6 +62,15 @@ CloudRedisClusterTracingConnection::GetCluster(
       "redis_cluster_v1::CloudRedisClusterConnection::GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCluster(request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterTracingConnection::GetAclPolicy(
+    google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::GetAclPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAclPolicy(request));
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -80,6 +101,35 @@ CloudRedisClusterTracingConnection::UpdateCluster(
   return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
+future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+CloudRedisClusterTracingConnection::UpdateAclPolicy(
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::UpdateAclPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateAclPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::UpdateAclPolicy(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::UpdateAclPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateAclPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+CloudRedisClusterTracingConnection::UpdateAclPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::UpdateAclPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateAclPolicy(operation));
+}
+
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterTracingConnection::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
@@ -108,6 +158,57 @@ CloudRedisClusterTracingConnection::DeleteCluster(
   return internal::EndSpan(std::move(span), child_->DeleteCluster(operation));
 }
 
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterTracingConnection::DeleteAclPolicy(
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteAclPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAclPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::DeleteAclPolicy(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteAclPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteAclPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterTracingConnection::DeleteAclPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteAclPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAclPolicy(operation));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterTracingConnection::GetAclPolicyRevision(
+    google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::GetAclPolicyRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAclPolicyRevision(request));
+}
+
+StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterTracingConnection::ListAclPolicyRevisions(
+    google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::ListAclPolicyRevisions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAclPolicyRevisions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::redis::cluster::v1::AclPolicyRevision>(std::move(span),
+                                                            std::move(sr));
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterTracingConnection::CreateCluster(
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
@@ -134,6 +235,15 @@ CloudRedisClusterTracingConnection::CreateCluster(
       "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(operation));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterTracingConnection::CreateAclPolicy(
+    google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::CreateAclPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAclPolicy(request));
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -320,6 +430,168 @@ CloudRedisClusterTracingConnection::BackupCluster(
       "redis_cluster_v1::CloudRedisClusterConnection::BackupCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->BackupCluster(operation));
+}
+
+StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterTracingConnection::ListTokenAuthUsers(
+    google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::ListTokenAuthUsers");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListTokenAuthUsers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::redis::cluster::v1::TokenAuthUser>(std::move(span),
+                                                        std::move(sr));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterTracingConnection::GetTokenAuthUser(
+    google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::GetTokenAuthUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTokenAuthUser(request));
+}
+
+StreamRange<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterTracingConnection::ListAuthTokens(
+    google::cloud::redis::cluster::v1::ListAuthTokensRequest request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::ListAuthTokens");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAuthTokens(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::redis::cluster::v1::AuthToken>(std::move(span),
+                                                    std::move(sr));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterTracingConnection::GetAuthToken(
+    google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::GetAuthToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAuthToken(request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterTracingConnection::AddTokenAuthUser(
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::AddTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->AddTokenAuthUser(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::AddTokenAuthUser");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->AddTokenAuthUser(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterTracingConnection::AddTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::AddTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddTokenAuthUser(operation));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterTracingConnection::DeleteTokenAuthUser(
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTokenAuthUser(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteTokenAuthUser");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteTokenAuthUser(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterTracingConnection::DeleteTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteTokenAuthUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTokenAuthUser(operation));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+CloudRedisClusterTracingConnection::AddAuthToken(
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::AddAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->AddAuthToken(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::AddAuthToken(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::AddAuthToken");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->AddAuthToken(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+CloudRedisClusterTracingConnection::AddAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::AddAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->AddAuthToken(operation));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterTracingConnection::DeleteAuthToken(
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAuthToken(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::DeleteAuthToken(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteAuthToken");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteAuthToken(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterTracingConnection::DeleteAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteAuthToken");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAuthToken(operation));
 }
 
 StreamRange<google::cloud::location::Location>

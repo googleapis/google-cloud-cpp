@@ -424,6 +424,22 @@ class CertificateManagerConnection {
   CreateCertificateIssuanceConfig(
       google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  UpdateCertificateIssuanceConfig(
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCertificateIssuanceConfig(
+      NoAwaitTag, google::cloud::certificatemanager::v1::
+                      UpdateCertificateIssuanceConfigRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  UpdateCertificateIssuanceConfig(
+      google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(

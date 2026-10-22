@@ -1,0 +1,49 @@
+/*!
+
+@mainpage Observability API C++ Client Library
+
+An idiomatic C++ client library for the [Observability API][cloud-service-docs].
+
+Provides functionality for configuring the observability scope, which
+controls the log, metric, and trace data that you can view.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/observability/quickstart/` directory,
+which should give you a taste of the Observability API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`observability_v1::ObservabilityClient`](@ref google::cloud::observability_v1::ObservabilityClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`observability_v1::ObservabilityClient`](@ref google::cloud::observability_v1::ObservabilityClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref observability-override-endpoint - describes how to override the default
+  endpoint.
+- @ref observability-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref observability-override-retry - describes how to change the default retry
+  policies.
+- @ref observability-env - describes environment variables that can configure the
+  behavior of the library.
+- @ref observability-override-universe-domain - describes how to override the default universe domain.
+
+[cloud-service-docs]: https://cloud.google.com/stackdriver/docs/
+
+*/
