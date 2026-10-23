@@ -105,16 +105,11 @@ class StatusOr final {
 
   StatusOr(StatusOr const&) = default;
   StatusOr& operator=(StatusOr const&) = default;
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StatusOr(StatusOr&& other)
-      : status_(std::move(other.status_)), value_(std::move(other.value_)) {
-    other.status_ = MakeDefaultStatus();
-  }
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StatusOr& operator=(StatusOr&& other) {
+  StatusOr(StatusOr&& other) noexcept
+      : status_(std::move(other.status_)), value_(std::move(other.value_)) {}
+  StatusOr& operator=(StatusOr&& other) noexcept {
     status_ = std::move(other.status_);
     value_ = std::move(other.value_);
-    other.status_ = MakeDefaultStatus();
     return *this;
   }
 
