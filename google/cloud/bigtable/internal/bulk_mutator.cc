@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_options.h"
@@ -80,7 +81,19 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
 }
 
 void BulkMutatorState::OnRead(
-    google::bigtable::v2::MutateRowsResponse response) {
+    google::bigtable::v2::MutateRowsResponse response,
+    Options const& options) {
+  // Use the retry policy configured by the application to decide if a failed
+  // mutation is worth retrying, like we do for the stream failures. The policy
+  // is only asked to classify the error, it should not count it: this is not a
+  // new attempt of the operation, and the retry loop driving the RPC does the
+  // accounting. We fall back to the default classification when the caller did
+  // not configure a policy.
+  auto const& retry_policy = options.get<bigtable::DataRetryPolicyOption>();
+  auto is_transient = [&retry_policy](Status const& status) {
+    if (retry_policy) return !retry_policy->IsPermanentFailure(status);
+    return SafeGrpcRetry::IsTransientFailure(status);
+  };
   for (auto& entry : *response.mutable_entries()) {
     // The type of `entry.index()` is a 64-bit int. But we can never create more
     // than std::numeric_limits<std::size_t>::max() entries in the request
@@ -108,7 +121,7 @@ void BulkMutatorState::OnRead(
     if (status.ok()) continue;
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(status) &&
+    if (is_transient(status) &&
         (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
@@ -222,7 +235,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
       break;
     }
     limiter.Update(response);
-    state_.OnRead(std::move(response));
+    state_.OnRead(std::move(response), options);
   }
   state_.OnFinish(*std::move(status), enable_server_retries);
   operation_context_->PostCall(*client_context, state_.last_status());
