@@ -132,9 +132,11 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
     absl::StrAppend(&output, path.substr(current, open - current + 1));
     current = open + 1;
     auto close = path.find('}', current);
+    bool const is_multi_segment = current < close && path[current] == '+';
+    if (is_multi_segment) ++current;
     absl::StrAppend(
         &output, CamelCaseToSnakeCase(path.substr(current, close - current)));
-    absl::StrReplaceAll({{"{+", "{"}}, &output);
+    if (is_multi_segment) absl::StrAppend(&output, "=**");
     current = close;
   }
   absl::StrAppend(&output, path.substr(current));

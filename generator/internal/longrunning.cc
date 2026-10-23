@@ -163,9 +163,9 @@ void SetLongrunningOperationServiceVars(
       service_vars["longrunning_cancel_operation_path"] =
           R"""(absl::StrCat("/v1/", request.name(), ":cancel"))""";
       service_vars["longrunning_get_operation_path_rest"] =
-          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options) ,"/", request.name()))""";
+          R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), rest_internal::PathPiece::MultiSegment(request.name())))""";
       service_vars["longrunning_cancel_operation_path_rest"] =
-          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options) ,"/", request.name(), ":cancel"))""";
+          R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), rest_internal::PathPiece::MultiSegment(request.name()), rest_internal::PathPiece::Verb("cancel")))""";
       return;
     }
     if (IsHttpLongrunningOperation(*method)) {
@@ -194,10 +194,10 @@ void SetLongrunningOperationServiceVars(
       r.set_operation(info.operation);
 )""";
         std::string global_lro_path =
-            R"""(absl::StrCat("/compute/",
+            R"""(rest_internal::EncodePath("compute",
                               rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/global/operations/", request.operation()))""";
+                              "projects", request.project(),
+                              "global", "operations", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] = global_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
             global_lro_path;
@@ -221,9 +221,9 @@ void SetLongrunningOperationServiceVars(
       r.set_operation(info.operation);
 )""";
         std::string global_org_lro_path =
-            R"""(absl::StrCat("/compute/",
+            R"""(rest_internal::EncodePath("compute",
                               rest_internal::DetermineApiVersion("v1", *options),
-                              "/locations/global/operations/", request.operation()))""";
+                              "locations", "global", "operations", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] =
             global_org_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
@@ -248,11 +248,11 @@ void SetLongrunningOperationServiceVars(
       r.set_operation(info.operation);
 )""";
         std::string region_lro_path =
-            R"""(absl::StrCat("/compute/",
+            R"""(rest_internal::EncodePath("compute",
                               rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/regions/", request.region(),
-                              "/operations/", request.operation()))""";
+                              "projects", request.project(),
+                              "regions", request.region(),
+                              "operations", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] = region_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
             region_lro_path;
@@ -275,11 +275,12 @@ void SetLongrunningOperationServiceVars(
       r.set_zone(info.zone);
       r.set_operation(info.operation);
 )""";
-        std::string zone_lro_path = R"""(absl::StrCat("/compute/",
+        std::string zone_lro_path =
+            R"""(rest_internal::EncodePath("compute",
                               rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/zones/", request.zone(),
-                              "/operations/", request.operation()))""";
+                              "projects", request.project(),
+                              "zones", request.zone(),
+                              "operations", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] = zone_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] = zone_lro_path;
       } else {

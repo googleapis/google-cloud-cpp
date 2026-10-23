@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -34,11 +35,13 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 
 std::unique_ptr<MockRestResponse> CreateMockRestResponse(
     std::string const& json_response,
@@ -269,6 +272,125 @@ TEST(GoldenKitchenSinkRestStubTest, ExplicitRouting2) {
   DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
   auto success = stub.ExplicitRouting2(rest_context, Options{}, proto_request);
   EXPECT_THAT(success, IsOk());
+}
+
+TEST(GoldenKitchenSinkRestStubTest,
+     ExplicitRouting1RejectsDotSegmentInRecursivePathVariable) {
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .Times(0);
+
+  RestContext rest_context;
+  google::test::admin::database::v1::ExplicitRoutingRequest proto_request;
+  proto_request.set_table_name("projects/my_project/tables/../other");
+
+  DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
+  Status status = stub.ExplicitRouting1(rest_context, Options{}, proto_request);
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("URI path piece "
+                                 "\"projects/my_project/tables/../other\" "
+                                 "must not contain segments that are "
+                                 "\".\" or \"..\".")));
+}
+
+TEST(GoldenKitchenSinkRestStubTest,
+     ExplicitRouting1EncodesReservedCharsInRecursivePathVariable) {
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload = R"({})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::test::admin::database::v1::ExplicitRoutingRequest proto_request;
+  proto_request.set_table_name(
+      "projects/my_project/tables/my_table?foo=bar#baz");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_rest_client,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
+                    std::vector<absl::Span<char const>> const&) {
+        EXPECT_THAT(request.path(),
+                    Eq("/v1/projects/my_project/tables/"
+                       "my_table%3Ffoo%3Dbar%23baz:explicitRouting1"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
+  Status success =
+      stub.ExplicitRouting1(rest_context, Options{}, proto_request);
+  EXPECT_THAT(success, IsOk());
+}
+
+TEST(GoldenKitchenSinkRestStubTest, GetLocation) {
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload =
+      R"({"name":"projects/my_project/locations/us-central1"})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::cloud::location::GetLocationRequest proto_request;
+  proto_request.set_name("projects/my_project/locations/us-central1");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_rest_client, Get)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(),
+                    Eq("/v1/projects/my_project/locations/us-central1"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
+  StatusOr<google::cloud::location::Location> success =
+      stub.GetLocation(rest_context, Options{}, proto_request);
+  ASSERT_THAT(success, IsOk());
+  EXPECT_THAT(success->name(), Eq("projects/my_project/locations/us-central1"));
+}
+
+TEST(GoldenKitchenSinkRestStubTest, GetIamPolicy) {
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload = R"({"version":3})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::iam::v1::GetIamPolicyRequest proto_request;
+  proto_request.set_resource("projects/my_project/databases/my_db");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_rest_client, Get)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(),
+                    Eq("/v1/projects/my_project/databases/my_db:getIamPolicy"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
+  StatusOr<google::iam::v1::Policy> success =
+      stub.GetIamPolicy(rest_context, Options{}, proto_request);
+  ASSERT_THAT(success, IsOk());
+  EXPECT_THAT(success->version(), Eq(3));
+}
+
+TEST(GoldenKitchenSinkRestStubTest, ListOperations) {
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  std::string_view constexpr kJsonResponsePayload =
+      R"({"operations":[{"name":"op1"}]})";
+  std::string json_response(kJsonResponsePayload);
+  RestContext rest_context;
+  google::longrunning::ListOperationsRequest proto_request;
+  proto_request.set_name("projects/my_project");
+
+  auto mock_200_response = CreateMockRestResponse(json_response);
+  EXPECT_CALL(*mock_rest_client, Get)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/operations"));
+        return std::unique_ptr<rest_internal::RestResponse>(
+            mock_200_response.release());
+      });
+  DefaultGoldenKitchenSinkRestStub stub(std::move(mock_rest_client), {});
+  StatusOr<google::longrunning::ListOperationsResponse> success =
+      stub.ListOperations(rest_context, Options{}, proto_request);
+  ASSERT_THAT(success, IsOk());
+  ASSERT_THAT(success->operations(), ElementsAre(_));
+  EXPECT_THAT(success->operations(0).name(), Eq("op1"));
 }
 
 }  // namespace

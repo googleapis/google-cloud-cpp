@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,15 +44,16 @@ DefaultSqlInstancesServiceRestStub::AddServerCa(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "addServerCa");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "addServerCa"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -63,15 +63,17 @@ DefaultSqlInstancesServiceRestStub::AddServerCertificate(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "addServerCertificate");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "addServerCertificate"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -81,15 +83,17 @@ DefaultSqlInstancesServiceRestStub::AddEntraIdCertificate(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "addEntraIdCertificate");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "addEntraIdCertificate"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -98,15 +102,16 @@ DefaultSqlInstancesServiceRestStub::Clone(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "clone");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "clone"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -115,6 +120,10 @@ DefaultSqlInstancesServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"enable_final_backup", (request.enable_final_backup() ? "1" : "0")});
@@ -126,10 +135,7 @@ DefaultSqlInstancesServiceRestStub::Delete(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -138,15 +144,16 @@ DefaultSqlInstancesServiceRestStub::DemoteMaster(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "demoteMaster");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "demoteMaster"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -155,15 +162,16 @@ DefaultSqlInstancesServiceRestStub::Demote(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "demote");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "demote"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -172,15 +180,16 @@ DefaultSqlInstancesServiceRestStub::Export(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "export");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "export"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -189,15 +198,16 @@ DefaultSqlInstancesServiceRestStub::Failover(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "failover");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "failover"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -206,15 +216,16 @@ DefaultSqlInstancesServiceRestStub::Reencrypt(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "reencrypt");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "reencrypt"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -223,15 +234,16 @@ DefaultSqlInstancesServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::DatabaseInstance>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -240,15 +252,16 @@ DefaultSqlInstancesServiceRestStub::Import(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "import");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "import"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -257,14 +270,16 @@ DefaultSqlInstancesServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -273,6 +288,10 @@ DefaultSqlInstancesServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -282,9 +301,7 @@ DefaultSqlInstancesServiceRestStub::List(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::InstancesListResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -293,16 +310,17 @@ DefaultSqlInstancesServiceRestStub::ListServerCas(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "listServerCas");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::InstancesListServerCasResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "listServerCas"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -312,16 +330,18 @@ DefaultSqlInstancesServiceRestStub::ListServerCertificates(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "listServerCertificates");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::InstancesListServerCertificatesResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "listServerCertificates"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -331,16 +351,18 @@ DefaultSqlInstancesServiceRestStub::ListEntraIdCertificates(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "listEntraIdCertificates");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "listEntraIdCertificates"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -349,6 +371,10 @@ DefaultSqlInstancesServiceRestStub::Patch(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"reconcile_psc_networking",
                           (request.reconcile_psc_networking() ? "1" : "0")});
@@ -359,10 +385,7 @@ DefaultSqlInstancesServiceRestStub::Patch(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance()),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -371,16 +394,17 @@ DefaultSqlInstancesServiceRestStub::PromoteReplica(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "promoteReplica");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"failover", (request.failover() ? "1" : "0")});
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "promoteReplica"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -389,15 +413,16 @@ DefaultSqlInstancesServiceRestStub::Switchover(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "switchover");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "switchover"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -406,16 +431,17 @@ DefaultSqlInstancesServiceRestStub::ResetSslConfig(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "resetSslConfig");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"mode", std::to_string(request.mode())});
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "resetSslConfig"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -424,15 +450,16 @@ DefaultSqlInstancesServiceRestStub::Restart(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "restart");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "restart"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -441,15 +468,16 @@ DefaultSqlInstancesServiceRestStub::RestoreBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "restoreBackup");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "restoreBackup"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -458,15 +486,16 @@ DefaultSqlInstancesServiceRestStub::RotateServerCa(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "rotateServerCa");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "rotateServerCa"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -476,15 +505,17 @@ DefaultSqlInstancesServiceRestStub::RotateServerCertificate(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "rotateServerCertificate");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "rotateServerCertificate"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -494,15 +525,17 @@ DefaultSqlInstancesServiceRestStub::RotateEntraIdCertificate(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "rotateEntraIdCertificate");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "rotateEntraIdCertificate"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -511,15 +544,16 @@ DefaultSqlInstancesServiceRestStub::StartReplica(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "startReplica");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "startReplica"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -528,15 +562,16 @@ DefaultSqlInstancesServiceRestStub::StopReplica(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "stopReplica");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "stopReplica"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -545,15 +580,16 @@ DefaultSqlInstancesServiceRestStub::TruncateLog(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "truncateLog");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "truncateLog"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -562,15 +598,16 @@ DefaultSqlInstancesServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance()),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -580,15 +617,16 @@ DefaultSqlInstancesServiceRestStub::CreateEphemeral(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "createEphemeral");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::SslCert>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "createEphemeral"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -598,15 +636,17 @@ DefaultSqlInstancesServiceRestStub::RescheduleMaintenance(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "rescheduleMaintenance");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "rescheduleMaintenance"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -616,13 +656,15 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "verifyExternalSyncSettings");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "verifyExternalSyncSettings"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -632,12 +674,13 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "startExternalSync");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "startExternalSync"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -647,15 +690,16 @@ DefaultSqlInstancesServiceRestStub::PerformDiskShrink(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "performDiskShrink");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "performDiskShrink"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -665,16 +709,18 @@ DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "getDiskShrinkConfig");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "getDiskShrinkConfig"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -684,12 +730,13 @@ DefaultSqlInstancesServiceRestStub::ResetReplicaSize(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "resetReplicaSize");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "resetReplicaSize"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -699,16 +746,18 @@ DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "getLatestRecoveryTime");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "getLatestRecoveryTime"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -717,16 +766,17 @@ DefaultSqlInstancesServiceRestStub::ExecuteSql(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "executeSql");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "executeSql"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -736,16 +786,17 @@ DefaultSqlInstancesServiceRestStub::AcquireSsrsLease(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "acquireSsrsLease");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "acquireSsrsLease"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -755,16 +806,17 @@ DefaultSqlInstancesServiceRestStub::ReleaseSsrsLease(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "releaseSsrsLease");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "releaseSsrsLease"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -774,15 +826,17 @@ DefaultSqlInstancesServiceRestStub::PreCheckMajorVersionUpgrade(
     Options const& options,
     google::cloud::sql::v1::
         SqlInstancesPreCheckMajorVersionUpgradeRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(),
+      "preCheckMajorVersionUpgrade");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "preCheckMajorVersionUpgrade"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -792,11 +846,14 @@ DefaultSqlInstancesServiceRestStub::PointInTimeRestore(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      rest_internal::PathPiece::Verb("pointInTimeRestore"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.context(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), ":pointInTimeRestore"),
+      *service_, rest_context, request.context(), true, *std::move(path),
       std::move(query_params));
 }
 

@@ -23,7 +23,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -56,6 +55,10 @@ DefaultGlobalVmExtensionPoliciesRestStub::
         Options const& options,
         google::cloud::cpp::compute::global_vm_extension_policies::v1::
             AggregatedListGlobalVmExtensionPoliciesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "aggregated", "vmExtensionPolicies");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -70,11 +73,7 @@ DefaultGlobalVmExtensionPoliciesRestStub::
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VmExtensionPolicyAggregatedListResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "aggregated", "/",
-                   "vmExtensionPolicies"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -90,6 +89,14 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncDeleteGlobalVmExtensionPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "vmExtensionPolicies",
+            request.global_vm_extension_policy(), "delete");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -99,13 +106,7 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncDeleteGlobalVmExtensionPolicy(
             *service, *rest_context,
             request
                 .global_vm_extension_policy_rollout_operation_rollout_input_resource(),
-            false,
-            absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", "projects", "/", request.project(), "/", "global",
-                         "/", "vmExtensionPolicies", "/",
-                         request.global_vm_extension_policy(), "/", "delete"),
-            std::move(query_params)));
+            false, *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -124,6 +125,11 @@ DefaultGlobalVmExtensionPoliciesRestStub::DeleteGlobalVmExtensionPolicy(
     Options const& options,
     google::cloud::cpp::compute::global_vm_extension_policies::v1::
         DeleteGlobalVmExtensionPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "vmExtensionPolicies",
+      request.global_vm_extension_policy(), "delete");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
@@ -132,13 +138,7 @@ DefaultGlobalVmExtensionPoliciesRestStub::DeleteGlobalVmExtensionPolicy(
       *service_, rest_context,
       request
           .global_vm_extension_policy_rollout_operation_rollout_input_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "vmExtensionPolicies", "/",
-                   request.global_vm_extension_policy(), "/", "delete"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GlobalVmExtensionPolicy>
@@ -147,15 +147,15 @@ DefaultGlobalVmExtensionPoliciesRestStub::GetGlobalVmExtensionPolicy(
     Options const& options,
     google::cloud::cpp::compute::global_vm_extension_policies::v1::
         GetGlobalVmExtensionPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "vmExtensionPolicies",
+      request.global_vm_extension_policy());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::GlobalVmExtensionPolicy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "vmExtensionPolicies", "/",
-                   request.global_vm_extension_policy()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -171,6 +171,13 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncInsertGlobalVmExtensionPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "vmExtensionPolicies");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -179,11 +186,7 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncInsertGlobalVmExtensionPolicy(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.global_vm_extension_policy_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "vmExtensionPolicies"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -202,18 +205,17 @@ DefaultGlobalVmExtensionPoliciesRestStub::InsertGlobalVmExtensionPolicy(
     Options const& options,
     google::cloud::cpp::compute::global_vm_extension_policies::v1::
         InsertGlobalVmExtensionPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "vmExtensionPolicies");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.global_vm_extension_policy_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "vmExtensionPolicies"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GlobalVmExtensionPolicyList>
@@ -222,6 +224,10 @@ DefaultGlobalVmExtensionPoliciesRestStub::ListGlobalVmExtensionPolicies(
     Options const& options,
     google::cloud::cpp::compute::global_vm_extension_policies::v1::
         ListGlobalVmExtensionPoliciesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "vmExtensionPolicies");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -232,11 +238,7 @@ DefaultGlobalVmExtensionPoliciesRestStub::ListGlobalVmExtensionPolicies(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::GlobalVmExtensionPolicyList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "vmExtensionPolicies"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -252,6 +254,14 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncUpdateGlobalVmExtensionPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "vmExtensionPolicies",
+            request.global_vm_extension_policy());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -260,12 +270,7 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncUpdateGlobalVmExtensionPolicy(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.global_vm_extension_policy_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "vmExtensionPolicies", "/",
-                             request.global_vm_extension_policy()),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -284,19 +289,18 @@ DefaultGlobalVmExtensionPoliciesRestStub::UpdateGlobalVmExtensionPolicy(
     Options const& options,
     google::cloud::cpp::compute::global_vm_extension_policies::v1::
         UpdateGlobalVmExtensionPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "vmExtensionPolicies",
+      request.global_vm_extension_policy());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.global_vm_extension_policy_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "vmExtensionPolicies", "/",
-                   request.global_vm_extension_policy()),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -312,13 +316,17 @@ DefaultGlobalVmExtensionPoliciesRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(),
-                             "/global/operations/", request.operation())));
+                *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -342,12 +350,16 @@ future<Status> DefaultGlobalVmExtensionPoliciesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/projects/", request.project(), "/global/operations/",
-                         request.operation())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

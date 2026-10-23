@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -46,6 +45,10 @@ DefaultStoragePoolTypesRestStub::AggregatedListStoragePoolTypes(
     Options const& options,
     google::cloud::cpp::compute::storage_pool_types::v1::
         AggregatedListStoragePoolTypesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "aggregated", "storagePoolTypes");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -60,11 +63,7 @@ DefaultStoragePoolTypesRestStub::AggregatedListStoragePoolTypes(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "aggregated", "/",
-                   "storagePoolTypes"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -74,14 +73,14 @@ DefaultStoragePoolTypesRestStub::GetStoragePoolType(
     Options const& options,
     google::cloud::cpp::compute::storage_pool_types::v1::
         GetStoragePoolTypeRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "zones", request.zone(), "storagePoolTypes",
+      request.storage_pool_type());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::StoragePoolType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "storagePoolTypes", "/",
-                   request.storage_pool_type()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -91,6 +90,10 @@ DefaultStoragePoolTypesRestStub::ListStoragePoolTypes(
     Options const& options,
     google::cloud::cpp::compute::storage_pool_types::v1::
         ListStoragePoolTypesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "zones", request.zone(), "storagePoolTypes");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -101,11 +104,7 @@ DefaultStoragePoolTypesRestStub::ListStoragePoolTypes(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::StoragePoolTypeList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "storagePoolTypes"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 

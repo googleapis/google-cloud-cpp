@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,16 +43,16 @@ DefaultJobServiceRestStub::CancelJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::CancelJobRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "jobs", request.job_id(), "cancel");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::JobCancelResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "jobs", "/",
-                   request.job_id(), "/", "cancel"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -61,16 +60,16 @@ StatusOr<google::cloud::bigquery::v2::Job> DefaultJobServiceRestStub::GetJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetJobRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "jobs", request.job_id());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::Job>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "jobs", "/",
-                   request.job_id()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -78,12 +77,13 @@ StatusOr<google::cloud::bigquery::v2::Job> DefaultJobServiceRestStub::InsertJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::InsertJobRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "jobs");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::bigquery::v2::Job>(
-      *service_, rest_context, request.job(), false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "jobs"),
+      *service_, rest_context, request.job(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -91,16 +91,16 @@ Status DefaultJobServiceRestStub::DeleteJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::DeleteJobRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "jobs", request.job_id(), "delete");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "jobs", "/",
-                   request.job_id(), "/", "delete"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -109,6 +109,10 @@ DefaultJobServiceRestStub::ListJobs(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListJobsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "jobs");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"all_users", (request.all_users() ? "1" : "0")});
   query_params.push_back(
@@ -128,10 +132,7 @@ DefaultJobServiceRestStub::ListJobs(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::JobList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "jobs"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -140,6 +141,10 @@ DefaultJobServiceRestStub::GetQueryResults(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "queries", request.job_id());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"start_index", (request.has_start_index()
@@ -159,11 +164,7 @@ DefaultJobServiceRestStub::GetQueryResults(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::bigquery::v2::GetQueryResultsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "queries", "/",
-                   request.job_id()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -172,12 +173,13 @@ DefaultJobServiceRestStub::Query(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::PostQueryRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "bigquery", rest_internal::DetermineApiVersion("v2", options), "projects",
+      request.project_id(), "queries");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::bigquery::v2::QueryResponse>(
-      *service_, rest_context, request.query_request(), false,
-      absl::StrCat("/", "bigquery", "/",
-                   rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "queries"),
+      *service_, rest_context, request.query_request(), false, *std::move(path),
       std::move(query_params));
 }
 

@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include "google/longrunning/operations.pb.h"
 #include <memory>
 #include <utility>
@@ -50,6 +49,10 @@ DefaultCloudFtpRestStub::ListServers(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::ListServersRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "servers");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -59,9 +62,7 @@ DefaultCloudFtpRestStub::ListServers(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::ftp::v1::ListServersResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "servers"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -69,14 +70,16 @@ StatusOr<google::cloud::ftp::v1::Server> DefaultCloudFtpRestStub::GetServer(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::GetServerRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"view", std::to_string(request.view())});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::ftp::v1::Server>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -90,16 +93,21 @@ DefaultCloudFtpRestStub::AsyncCreateServer(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "servers");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"server_id", request.server_id()});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request.server(), false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "servers"),
+            *service, *rest_context, request.server(), false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -117,15 +125,17 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::CreateServer(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::CreateServerRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "servers");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"server_id", request.server_id()});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request.server(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "servers"),
+      *service_, rest_context, request.server(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -139,15 +149,19 @@ DefaultCloudFtpRestStub::AsyncUpdateServer(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.server().name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request.server(), false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.server().name()),
+            *service, *rest_context, request.server(), false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -165,14 +179,16 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::UpdateServer(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::UpdateServerRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.server().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request.server(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.server().name()),
+      *service_, rest_context, request.server(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -186,12 +202,16 @@ DefaultCloudFtpRestStub::AsyncDeleteServer(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Delete<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name()),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -209,11 +229,13 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::DeleteServer(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::DeleteServerRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -222,6 +244,10 @@ DefaultCloudFtpRestStub::ListUsers(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::ListUsersRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "users");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -231,9 +257,7 @@ DefaultCloudFtpRestStub::ListUsers(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::ftp::v1::ListUsersResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "users"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -241,14 +265,16 @@ StatusOr<google::cloud::ftp::v1::User> DefaultCloudFtpRestStub::GetUser(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::GetUserRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"view", std::to_string(request.view())});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::ftp::v1::User>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -262,16 +288,20 @@ DefaultCloudFtpRestStub::AsyncCreateUser(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()), "users");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"user_id", request.user_id()});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request.user(), false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "users"),
+            *service, *rest_context, request.user(), false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -289,15 +319,17 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::CreateUser(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::CreateUserRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "users");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"user_id", request.user_id()});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request.user(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "users"),
+      *service_, rest_context, request.user(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -311,12 +343,16 @@ DefaultCloudFtpRestStub::AsyncUpdateUser(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.user().name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request.user(), false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.user().name()),
+            *service, *rest_context, request.user(), false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -334,11 +370,13 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::UpdateUser(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::UpdateUserRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.user().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request.user(), false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.user().name()),
+      *service_, rest_context, request.user(), false, *std::move(path),
       std::move(query_params));
 }
 
@@ -352,15 +390,19 @@ DefaultCloudFtpRestStub::AsyncDeleteUser(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"force", (request.force() ? "1" : "0")});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Delete<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name()),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -378,14 +420,16 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::DeleteUser(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::DeleteUserRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"force", (request.force() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -399,12 +443,17 @@ DefaultCloudFtpRestStub::AsyncStartServer(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()),
+            rest_internal::PathPiece::Verb("start"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name(), ":start"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -422,11 +471,14 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::StartServer(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::StartServerRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("start"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":start"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -440,12 +492,17 @@ DefaultCloudFtpRestStub::AsyncStopServer(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()),
+            rest_internal::PathPiece::Verb("stop"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name(), ":stop"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -463,11 +520,14 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::StopServer(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::ftp::v1::StopServerRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("stop"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":stop"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -476,6 +536,10 @@ DefaultCloudFtpRestStub::ListLocations(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()), "locations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -483,9 +547,7 @@ DefaultCloudFtpRestStub::ListLocations(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::location::ListLocationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), "/", "locations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -494,11 +556,13 @@ DefaultCloudFtpRestStub::GetLocation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::location::Location>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -507,6 +571,10 @@ DefaultCloudFtpRestStub::ListOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()), "operations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -514,9 +582,7 @@ DefaultCloudFtpRestStub::ListOperations(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::longrunning::ListOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), "/", "operations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -524,11 +590,13 @@ StatusOr<google::longrunning::Operation> DefaultCloudFtpRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::GetOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -536,11 +604,13 @@ Status DefaultCloudFtpRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -548,11 +618,14 @@ Status DefaultCloudFtpRestStub::CancelOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("cancel"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":cancel"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -567,11 +640,15 @@ DefaultCloudFtpRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Get<google::longrunning::Operation>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -594,11 +671,16 @@ future<Status> DefaultCloudFtpRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()),
+            rest_internal::PathPiece::Verb("cancel"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name(), ":cancel")));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
