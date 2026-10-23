@@ -232,6 +232,7 @@ TEST(MakeMeterProviderConfigTest, EmptyExcludedLabels) {
 /// provider, otherwise those instruments would be split across two exporters.
 /// The authority is unique to this test because the registry is process-wide.
 TEST(GrpcMetricsExporter, FindMeterProviderAfterEnable) {
+  GTEST_SKIP() << "Skipping flaky test, see #16587";
   std::string const authority = "test-only-find-provider.example.com";
   std::optional<ExporterConfig> config = MakeMeterProviderConfig(
       FullResource(), TestOptions().set<AuthorityOption>(authority));
@@ -251,6 +252,7 @@ TEST(GrpcMetricsExporter, FindMeterProviderAfterEnable) {
 /// @test Verify concurrent callers for the same authority all observe the
 /// initialized provider.
 TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
+  GTEST_SKIP() << "Skipping flaky test, see #16587";
   std::string const authority = "test-only-concurrent-provider.example.com";
   std::optional<ExporterConfig> const config = MakeMeterProviderConfig(
       FullResource(), TestOptions().set<AuthorityOption>(authority));

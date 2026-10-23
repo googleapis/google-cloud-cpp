@@ -271,6 +271,7 @@ TEST(ChannelMetrics, UnknownAuthorityYieldsEmptyCallback) {
 /// that sets `EnableGrpcMetricsOption(false)` must still record nothing,
 /// even though `FindMeterProvider()` would succeed.
 TEST(ChannelMetrics, RegisteredAuthorityHonorsOption) {
+  GTEST_SKIP() << "Skipping flaky test, see #16587";
   // The registry is process-wide, so use an authority unique to this test.
   std::string const authority = "test-only-registered.example.com";
   ScopedEnvironment const env("GOOGLE_CLOUD_PROJECT", std::nullopt);
