@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/rest/stub.h"
+#include "google/cloud/storage/internal/adaptive_object_read_source.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
@@ -512,9 +513,11 @@ StatusOr<ObjectMetadata> RestStub::GetObjectMetadata(
 StatusOr<std::unique_ptr<ObjectReadSource>> RestStub::ReadObject(
     rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
-  RestRequestBuilder builder(absl::StrCat(
-      "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEncode(request.object_name())));
+  RestRequestBuilder builder(
+      absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
+                   request.bucket_name(), "/o/",
+                   UrlEncode(request.object_name())),
+      AdaptiveReadApiClientHeader(options));
   auto headers = AddHeaders(options, builder);
   if (!headers.ok()) return headers;
   request.AddOptionsToHttpRequest(builder);

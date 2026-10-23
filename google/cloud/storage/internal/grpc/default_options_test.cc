@@ -530,6 +530,28 @@ TEST(DefaultOptionsGrpc, MinMetricsPeriod) {
             std::chrono::seconds(0));
 }
 
+/// @test Verify the adaptive reads environment variable applies to gRPC
+/// clients too.
+TEST(DefaultOptionsGrpc, AdaptiveReadRangeEnv) {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  ScopedEnvironment enable(
+      "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE", "true");
+  auto options = DefaultOptionsGrpc(TestOptions(), mock_detector);
+  EXPECT_TRUE(options.has<storage_experimental::AdaptiveReadRangeOption>());
+
+  ScopedEnvironment disable(
+      "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE", "false");
+  options = DefaultOptionsGrpc(
+      TestOptions().set<storage_experimental::AdaptiveReadRangeOption>({}),
+      mock_detector);
+  EXPECT_FALSE(options.has<storage_experimental::AdaptiveReadRangeOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

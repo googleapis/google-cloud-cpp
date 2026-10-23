@@ -22,8 +22,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 RestRequestBuilder::RestRequestBuilder(std::string path)
+    : RestRequestBuilder(std::move(path), x_goog_api_client()) {}
+
+RestRequestBuilder::RestRequestBuilder(std::string path,
+                                       std::string const& api_client_header)
     : request_(google::cloud::rest_internal::RestRequest(std::move(path))
-                   .AddHeader("x-goog-api-client", x_goog_api_client())) {}
+                   .AddHeader("x-goog-api-client", api_client_header)) {}
 
 RestRequestBuilder& RestRequestBuilder::AddOption(CustomHeader const& p) {
   if (p.has_value()) {
