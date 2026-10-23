@@ -13,7 +13,7 @@ on:
         type: boolean
       sccache-mode:
         required: true
-        description: "READ_WRITE or DISABLED"
+        description: "READ_WRITE, READ_ONLY, or DISABLED"
         type: string
       vcpkg-cache-mode:
         required: true
@@ -69,7 +69,6 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
         persist-credentials: false
-        allow-unsafe-pr-checkout: true
     - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
       if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
