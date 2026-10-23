@@ -82,7 +82,7 @@ bool TargetsDirectPathInterconnectHost(std::string_view endpoint) {
     if (!absl::StartsWith(endpoint, prefix)) continue;
     std::string_view const host_and_query = endpoint.substr(prefix.size());
     std::string_view const host =
-        host_and_query.substr(0, host_and_query.find_first_of("/?#"));
+        host_and_query.substr(0, host_and_query.find_first_of("/?#:"));
     return host == kDirectPathInterconnectHost;
   }
   return false;
