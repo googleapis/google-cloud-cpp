@@ -33,7 +33,11 @@ namespace internal {
  */
 class RestRequestBuilder {
  public:
+  /// Creates a builder using the default `x-goog-api-client` header.
   explicit RestRequestBuilder(std::string path);
+
+  /// Creates a builder using @p api_client_header as `x-goog-api-client`.
+  RestRequestBuilder(std::string path, std::string const& api_client_header);
 
   /**
    * Creates a RestRequest from the builder.

@@ -24,6 +24,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invocation_id_generator.h"
+#include "google/cloud/options.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -187,11 +188,24 @@ class StorageConnectionImpl
     return invocation_id_generator_.MakeInvocationId();
   }
 
+  /// Creates the (retrying, and possibly hedged) source for a download.
+  StatusOr<std::unique_ptr<ObjectReadSource>> MakeReadSource(
+      ReadObjectRangeRequest const& request,
+      google::cloud::internal::ImmutableOptions current);
+
+  /// Downloads an open-ended range as a series of bounded windows.
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectAdaptive(
+      ReadObjectRangeRequest const& request,
+      google::cloud::internal::ImmutableOptions current);
+
   std::unique_ptr<storage_internal::GenericStub> stub_;
   Options options_;
   std::shared_ptr<ThreadPool> read_pool_;
   std::shared_ptr<HedgingThreadPool> hedge_pool_;
   std::shared_ptr<HedgedReadMetrics> hedged_read_metrics_;
+  // Opens the next window of adaptive reads in the background. The pool only
+  // creates threads when it receives work.
+  std::shared_ptr<ThreadPool> prefetch_pool_;
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 

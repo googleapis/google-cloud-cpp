@@ -226,6 +226,101 @@ struct HttpConnectTimeoutOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * Configures adaptive bounded range reads.
+ *
+ * @see `AdaptiveReadRangeOption` for details.
+ *
+ * @ingroup storage-options
+ */
+struct AdaptiveReadRangeConfig {
+  /**
+   * The size of the first window, in bytes.
+   *
+   * Keep this below 2 MiB: the service flushes data to the network in 2 MiB
+   * units, so a larger first window saves little when the application stops
+   * reading early. Values less than or equal to 0 use the default (1 MiB).
+   */
+  std::int64_t initial_window = std::int64_t{1} << 20;
+
+  /**
+   * The size of the largest window, in bytes.
+   *
+   * Values smaller than `initial_window` are treated as `initial_window`.
+   */
+  std::int64_t max_window = std::int64_t{64} << 20;
+
+  /**
+   * Each window is this many times larger than the previous one, up to
+   * `max_window`.
+   *
+   * Values smaller than 1.0 (or NaN) are treated as 1.0, that is, all windows
+   * have the same size.
+   */
+  double growth_factor = 2.0;
+
+  /**
+   * Start opening the next window once this fraction of the current window has
+   * been read.
+   *
+   * Opening the next window in the background hides the round trip to the
+   * service at each window boundary. Values outside the `(0.0, 1.0)` interval
+   * disable prefetching, the next window is then opened when the application
+   * reads past the end of the current window.
+   */
+  double prefetch_threshold = 0.5;
+};
+
+/**
+ * Read open-ended ranges as a series of growing, bounded windows.
+ *
+ * When this option is set, a `ReadObject()` download that does not bound the
+ * range it reads, that is, a download of the full object or a download using
+ * `ReadFromOffset()`, requests the data in bounded windows. The first window
+ * covers `initial_window` bytes, and each window after that is
+ * `growth_factor` times larger than the previous one, up to `max_window`
+ * bytes. The next window is opened in the background once a read reaches
+ * `prefetch_threshold` of the current window.
+ *
+ * Applications that read only the beginning of a download and then close the
+ * stream (this is common for file formats such as Parquet, ArrayRecord, or
+ * Riegeli) leave at most one small window outstanding. The service sends far
+ * fewer bytes that are then discarded, and a small remainder is read to
+ * completion so the connection can be reused instead of torn down.
+ *
+ * Downloads with a bounded range (`ReadRange()`, `ReadLast()`) are unchanged.
+ * All windows read the object generation returned by the first window, and the
+ * library validates the checksums of full object downloads across all the
+ * windows. The service does not honor byte ranges for objects served with
+ * decompressive transcoding: when the first window shows this, the library
+ * discards it and reads the object with a regular download (one extra
+ * request).
+ *
+ * Reading the full object takes more requests: with the default configuration
+ * 22 requests for a 1 GiB object.
+ *
+ * Request hedging (`EnableReadHedgingOption`) does not apply to the windows of
+ * an adaptive read.
+ *
+ * Requests issued by adaptive reads include `gccl-feat/adaptive-read` in their
+ * `x-goog-api-client` header (when using the JSON API).
+ *
+ * Applications that know how much data they need should still say so: use
+ * `ReadRange()` for bounded reads, or, with gRPC, `AsyncClient::Open()` and
+ * `ObjectDescriptor::Read(offset, limit)` for random access.
+ *
+ * Deployments can also turn adaptive reads on or off without changing the
+ * code, for example when a library creates the `Client`, by setting the
+ * `GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE` environment variable to
+ * `true` or `false`. The variable takes precedence over this option when the
+ * `Client` is created. See @ref storage-env for details.
+ *
+ * @ingroup storage-options
+ */
+struct AdaptiveReadRangeOption {
+  using Type = AdaptiveReadRangeConfig;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -562,7 +657,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     storage_experimental::MaxReadHedgesOption,
     storage_experimental::ReadThreadPoolSizeOption,
     storage_experimental::HedgingThreadPoolSizeOption,
-    storage_experimental::OTelSpanEnrichmentOption>;
+    storage_experimental::OTelSpanEnrichmentOption,
+    storage_experimental::AdaptiveReadRangeOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

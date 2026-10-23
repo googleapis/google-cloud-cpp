@@ -702,6 +702,22 @@ Options DefaultOptions(Options opts) {
     o.set<OpenTelemetryTracingOption>(true);
   }
 
+  // The environment variable takes precedence over the option, so deployments
+  // can turn adaptive reads on (or off) without rebuilding the application,
+  // for example when a library creates the `Client`. It only controls whether
+  // the feature is enabled, the windows use the configuration set by the
+  // application (if any). Any value other than "true" or "false" is treated as
+  // if the variable were not set.
+  auto const adaptive_reads =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE");
+  if (adaptive_reads == "true") {
+    if (!o.has<storage_experimental::AdaptiveReadRangeOption>()) {
+      o.set<storage_experimental::AdaptiveReadRangeOption>({});
+    }
+  } else if (adaptive_reads == "false") {
+    o.unset<storage_experimental::AdaptiveReadRangeOption>();
+  }
+
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
   if (project_id.has_value()) {
     o.set<ProjectIdOption>(std::move(*project_id));
