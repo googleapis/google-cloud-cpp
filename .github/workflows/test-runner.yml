@@ -5,7 +5,7 @@ name: "gha: macOS & Windows"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
-on: # zizmor: ignore[dangerous-triggers]
+on:
   # Start these builds on pushes (think "after the merge") too. Normally there
   # are no `ci-gha**` branches in our repository. The contributors to the repo
   # can create such branches when testing or troubleshooting builds. In such
@@ -13,198 +13,52 @@ on: # zizmor: ignore[dangerous-triggers]
   # without impacting the rest of the team.
   push:
     branches: [ 'ci-gha**', 'main' ]
-  # Start the build in the context of the target branch. This is considered
-  # "safe", as the workflow files are already committed. These types of builds
-  # have access to the secrets in the build, which we need to use the remote
-  # caches (Bazel and sccache).
-  pull_request_target:
+  pull_request:
     types:
     - opened
     - synchronize
     - reopened
-  # Allow trusted maintainers to trigger this workflow on external PRs by
-  # commenting `/gharun`.
-  issue_comment:
-    types: [ created ]
   schedule:
     - cron: '0 5 * * 1,2,3,4,5'
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
-# PR or branch, or if a maintainer posts a new `/gharun` command.
-# Concurrency is defined at the job level so that issue comments without `/gharun`
-# (which are skipped in pre-flight) do not cancel in-progress builds.
+# PR or branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  pre-flight:
-    permissions:
-      contents: read
-      pull-requests: read
-      issues: read
-      statuses: write
-    # Save the `ref` of the pull request, so downstream jobs know what to checkout.
-    if: >-
-      github.event_name != 'issue_comment' ||
-      (github.event.issue.pull_request != null && contains(github.event.comment.body, '/gharun'))
-    concurrency:
-      group: ${{ github.workflow }}-pre-flight-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
-      cancel-in-progress: true
-    environment: >-
-      ${{
-          (github.event_name != 'pull_request_target' && 'internal') ||
-          (github.event.pull_request.head.repo.full_name == github.repository && 'internal') ||
-          (github.event.pull_request.head.repo.full_name == 'renovate-bot/google-cloud-cpp' && 'internal') ||
-          (github.event.pull_request.head.repo.full_name == 'google-cloud-cpp-bot/google-cloud-cpp' && 'internal')
-      }}
-    name: Save PR ref
-    runs-on: ubuntu-latest
-    outputs:
-      checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
-      is-trusted: ${{ steps.verify-permissions.outputs.is_trusted }}
-    steps:
-      - name: Verify permissions
-        id: verify-permissions
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EVENT_NAME: ${{ github.event_name }}
-          REF: ${{ github.ref }}
-          HEAD_REPO_FULL_NAME: ${{ github.event.pull_request.head.repo.full_name }}
-          PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
-          USER_TO_CHECK: >-
-            ${{
-              (github.event_name == 'pull_request_target' && github.event.pull_request.user.login) ||
-              (github.event_name == 'issue_comment' && (github.event.comment.user.login || github.actor)) ||
-              github.actor
-            }}
-        run: |
-          set -euo pipefail
-
-          if [[ "${EVENT_NAME}" == "issue_comment" ]]; then
-            permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
-            echo "Commenter: ${USER_TO_CHECK}, permission: ${permission}"
-            case "${permission}" in
-              admin|write|maintain)
-                echo "Commenter '${USER_TO_CHECK}' is trusted."
-                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                ;;
-              *)
-                echo "::error::User '${USER_TO_CHECK}' is not trusted (permission: '${permission}'). Only collaborators can trigger runs with /gharun."
-                exit 1
-                ;;
-            esac
-          elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
-            case "${USER_TO_CHECK}" in
-              renovate-bot|google-cloud-cpp-bot|dependabot\[bot\]|release-please\[bot\]|gcf-merge-on-green\[bot\]|yoshi-code-bot|gcf-owl-bot\[bot\]|google-cloud-policy-bot\[bot\])
-                echo "Author '${USER_TO_CHECK}' is a trusted automation bot."
-                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                ;;
-              *)
-                if [[ "${HEAD_REPO_FULL_NAME}" == "${GITHUB_REPOSITORY}" ]]; then
-                  echo "PR head branch is in '${GITHUB_REPOSITORY}' (author: '${USER_TO_CHECK}'). Trusted."
-                  echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                else
-                  permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
-                  echo "Author: ${USER_TO_CHECK}, permission: ${permission}"
-                  case "${permission}" in
-                    admin|write|maintain)
-                      echo "Author '${USER_TO_CHECK}' is trusted."
-                      echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                      ;;
-                    *)
-                      echo "Author '${USER_TO_CHECK}' is untrusted (permission: '${permission}'). A maintainer must comment '/gharun' on the PR to trigger builds for this commit."
-                      echo "is_trusted=false" >> "${GITHUB_OUTPUT}"
-                      ;;
-                  esac
-                fi
-                ;;
-            esac
-          elif [[ "${EVENT_NAME}" == "push" && "${REF}" == refs/heads/ci-gha* ]]; then
-            permission=$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${USER_TO_CHECK}/permission" --jq '.permission')
-            echo "Pusher: ${USER_TO_CHECK}, permission: ${permission}"
-            case "${permission}" in
-              admin|write|maintain)
-                echo "User '${USER_TO_CHECK}' is trusted."
-                echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-                ;;
-              *)
-                echo "::error::User '${USER_TO_CHECK}' is not trusted (permission: '${permission}')."
-                exit 1
-                ;;
-            esac
-          else
-            echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
-          fi
-      - name: Save Pull Request
-        id: save-pull-request
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EVENT_NAME: ${{ github.event_name }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          PR_NUMBER: ${{ github.event.issue.number }}
-          FALLBACK_SHA: ${{ github.ref }}
-          IS_TRUSTED: ${{ steps.verify-permissions.outputs.is_trusted }}
-        run: |
-          if [[ "${EVENT_NAME}" == "issue_comment" ]]; then
-            sha=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')
-          elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
-            sha="${PR_HEAD_SHA}"
-          else
-            sha="${FALLBACK_SHA}"
-          fi
-          echo "Resolved checkout SHA: ${sha}"
-          echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
-
-          if [[ "${EVENT_NAME}" == "issue_comment" && "${IS_TRUSTED}" == "true" && -n "${sha}" ]]; then
-            echo "Setting pending commit status for ${sha}..."
-            gh api "repos/${GITHUB_REPOSITORY}/statuses/${sha}" \
-              -f state="pending" \
-              -f context="gha: macOS & Windows" \
-              -f description="macOS and Windows builds in progress via /gharun..." \
-              -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
-          fi
-
-  # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
-  # job requires approval, these blocks all the other jobs. The jobs are defined
-  # in separate files to keep the size of this file under control. Note how
-  # the additional jobs inherit any secrets needed to use the remote caches and
-  # receive what version to checkout as an input.
   macos-bazel:
-    if: needs.pre-flight.outputs.is-trusted == 'true'
     name: macOS-Bazel
-    needs: [pre-flight]
-    concurrency:
-      group: ${{ github.workflow }}-macos-bazel-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
-      cancel-in-progress: true
     uses: ./.github/workflows/macos-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      bazel-cache-mode: 'READ_WRITE'
-      execute-integration-tests: true
+      checkout-ref: ${{ github.sha }}
+      bazel-cache-mode: >-
+        ${{
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'READ_WRITE' || 'READ_ONLY'
+        }}
+      execute-integration-tests: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     secrets: inherit # zizmor: ignore[secrets-inherit]
   windows-bazel:
     # Disabled
     if: false
     name: Windows-Bazel
-    needs: [pre-flight]
-    concurrency:
-      group: ${{ github.workflow }}-windows-bazel-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
-      cancel-in-progress: true
     uses: ./.github/workflows/windows-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      bazel-cache-mode: 'READ_WRITE'
-      execute-integration-tests: true
+      checkout-ref: ${{ github.sha }}
+      bazel-cache-mode: >-
+        ${{
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'READ_WRITE' || 'READ_ONLY'
+        }}
+      execute-integration-tests: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     secrets: inherit # zizmor: ignore[secrets-inherit]
   macos-cmake:
     # Disabled
     if: false
     name: macOS-CMake
-    needs: [pre-flight]
-    concurrency:
-      group: ${{ github.workflow }}-macos-cmake-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
-      cancel-in-progress: true
     uses: ./.github/workflows/macos-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      checkout-ref: ${{ github.sha }}
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
@@ -212,23 +66,23 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build') ||
-          contains(github.event.issue.labels.*.name, 'gha:full-build')
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
-      sccache-mode: 'READ_WRITE'
-      vcpkg-cache-mode: 'readwrite'
-      execute-integration-tests: true
+      sccache-mode: >-
+        ${{
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'READ_WRITE' || 'READ_ONLY'
+        }}
+      vcpkg-cache-mode: >-
+        ${{
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'readwrite' || 'read'
+        }}
+      execute-integration-tests: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     secrets: inherit # zizmor: ignore[secrets-inherit]
   windows-cmake:
-    if: needs.pre-flight.outputs.is-trusted == 'true'
     name: Windows-CMake
-    needs: [pre-flight]
-    concurrency:
-      group: ${{ github.workflow }}-windows-cmake-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref }}
-      cancel-in-progress: true
     uses: ./.github/workflows/windows-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      checkout-ref: ${{ github.sha }}
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
@@ -236,52 +90,15 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build') ||
-          contains(github.event.issue.labels.*.name, 'gha:full-build')
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
-      sccache-mode: 'READ_WRITE'
-      vcpkg-cache-mode: 'readwrite'
-      execute-integration-tests: true
+      sccache-mode: >-
+        ${{
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'READ_WRITE' || 'READ_ONLY'
+        }}
+      vcpkg-cache-mode: >-
+        ${{
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'readwrite' || 'read'
+        }}
+      execute-integration-tests: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     secrets: inherit # zizmor: ignore[secrets-inherit]
-
-  report-status:
-    permissions:
-      statuses: write
-    name: Report GHA Status
-    needs: [pre-flight, macos-bazel, windows-cmake]
-    if: >-
-      always() &&
-      needs.pre-flight.result == 'success' &&
-      (github.event_name == 'issue_comment' || github.event_name == 'pull_request_target')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Publish commit status
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IS_TRUSTED: ${{ needs.pre-flight.outputs.is-trusted }}
-          PR_SHA: ${{ needs.pre-flight.outputs.checkout-sha }}
-          MACOS_BAZEL_RESULT: ${{ needs.macos-bazel.result }}
-          WINDOWS_CMAKE_RESULT: ${{ needs.windows-cmake.result }}
-        run: |
-          if [[ "${IS_TRUSTED}" != "true" ]]; then
-            state="pending"
-            desc="Needs /gharun comment from a maintainer to run"
-          elif [[ "${MACOS_BAZEL_RESULT}" == "success" && "${WINDOWS_CMAKE_RESULT}" == "success" ]]; then
-            state="success"
-            desc="macOS and Windows builds passed"
-          elif [[ "${MACOS_BAZEL_RESULT}" == "failure" || "${WINDOWS_CMAKE_RESULT}" == "failure" ]]; then
-            state="failure"
-            desc="macOS and Windows builds failed"
-          elif [[ "${MACOS_BAZEL_RESULT}" == "cancelled" || "${WINDOWS_CMAKE_RESULT}" == "cancelled" ]]; then
-            state="error"
-            desc="macOS and Windows builds cancelled"
-          else
-            state="success"
-            desc="macOS and Windows builds completed"
-          fi
-          echo "Setting commit status on ${PR_SHA} to ${state}: ${desc}"
-          gh api "repos/${GITHUB_REPOSITORY}/statuses/${PR_SHA}" \
-            -f state="${state}" \
-            -f context="gha: macOS & Windows" \
-            -f description="${desc}" \
-            -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
