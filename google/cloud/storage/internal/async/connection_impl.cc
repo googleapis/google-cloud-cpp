@@ -54,6 +54,7 @@
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_read_write_stream_timeout.h"
 #include "google/cloud/internal/async_retry_loop.h"
@@ -61,6 +62,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
+#include <cstdint>
 #include <memory>
 #include <set>
 #include <utility>
@@ -191,6 +193,17 @@ OpenStreamFactory MakeOpenStreamFactory(
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         DummyRequest const&) mutable {
+          // Every stream the descriptor opens (the first one, resumes, and
+          // the extra streams of the multi-stream optimization) goes through
+          // this factory, so this is where the service learns which client
+          // features are in play for the read.
+          std::uint32_t features = 0;
+          if (options->get<storage::EnableMultiStreamOptimizationOption>()) {
+            features |= FeatureBit(TrackedFeature::kMultistreamInMrd);
+          }
+          if (features != 0) {
+            context->AddMetadata(kFeaturesHeader, EncodeFeatureMask(features));
+          }
           auto open = std::make_shared<OpenObject>(
               *stub, cq, std::move(context), std::move(options), request);
           // Extend the lifetime of the coroutine until it finishes.

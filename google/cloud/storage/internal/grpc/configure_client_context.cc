@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/internal/url_encode.h"
 #include <regex>
 
@@ -36,15 +37,26 @@ void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
 
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
+namespace {
+
+/// Copies every value of @p name from @p context into @p ctx.
+void CopyHeader(grpc::ClientContext& ctx,
+                rest_internal::RestContext const& context,
+                std::string const& name) {
+  auto const& headers = context.headers();
+  auto const l = headers.find(name);
+  if (l == headers.end()) return;
+  for (auto const& v : l->second.values()) ctx.AddMetadata(name, v);
+}
+
+}  // namespace
+
 void AddIdempotencyToken(grpc::ClientContext& ctx,
                          rest_internal::RestContext const& context) {
-  auto const& headers = context.headers();
-  auto const l = headers.find(kIdempotencyTokenHeader);
-  if (l != headers.end()) {
-    for (auto const& v : l->second.values()) {
-      ctx.AddMetadata(kIdempotencyTokenHeader, v);
-    }
-  }
+  CopyHeader(ctx, context, kIdempotencyTokenHeader);
+  // The connection layer sets the client feature mask on the `RestContext` so
+  // it is transport-agnostic; forward it alongside the idempotency token.
+  CopyHeader(ctx, context, kFeaturesHeader);
 }
 
 void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token) {
