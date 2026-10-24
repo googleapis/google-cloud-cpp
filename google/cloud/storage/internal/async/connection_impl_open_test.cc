@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_resume_policy.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
@@ -29,10 +31,13 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -49,6 +54,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
 using ::testing::AtLeast;
@@ -57,10 +63,12 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::InvokeWithoutArgs;
 using ::testing::IsEmpty;
+using ::testing::Key;
 using ::testing::NiceMock;
 using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Optional;
+using ::testing::Pair;
 
 using BidiReadStream = google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
@@ -394,6 +402,65 @@ TEST(AsyncConnectionImplTest, StopOnPermanentError) {
 
   // A permanent error is never retried, so there is nothing to report.
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
+}
+
+// Opens a stream with @p options and returns the metadata the connection set
+// on the `grpc::ClientContext`. The stream fails with a permanent error, so a
+// single `AsyncBidiReadObject()` call is all the test needs to observe.
+std::multimap<std::string, std::string> OpenAndCaptureMetadata(
+    Options options) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+  )pb";
+
+  ValidateMetadataFixture fixture;
+  std::multimap<std::string, std::string> metadata;
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const&) {
+        metadata = fixture.GetMetadata(*context);
+        return MakeErrorStream(sequencer, PermanentError());
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions(std::move(options)));
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending = connection->Open({std::move(request), connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value();
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value();
+
+  EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
+  return metadata;
+}
+
+TEST(AsyncConnectionImplTest, OpenFeatureHeaderWithMultiStream) {
+  auto const expected =
+      EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
+  EXPECT_THAT(
+      OpenAndCaptureMetadata(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(true)),
+      Contains(Pair(kFeaturesHeader, expected)));
+}
+
+TEST(AsyncConnectionImplTest, OpenFeatureHeaderWithoutMultiStream) {
+  EXPECT_THAT(
+      OpenAndCaptureMetadata(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(false)),
+      Not(Contains(Key(kFeaturesHeader))));
 }
 
 TEST(AsyncConnectionImplTest, TooManyTransientErrors) {

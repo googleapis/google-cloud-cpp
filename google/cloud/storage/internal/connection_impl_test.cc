@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/tracing_connection.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -57,6 +58,7 @@ using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
@@ -823,6 +825,53 @@ ReadSourceResult MakeReadResult(std::string const& payload, char* buf) {
   std::copy(payload.begin(), payload.end(), buf);
   return ReadSourceResult{payload.size(),
                           HttpResponse{HttpStatusCode::kOk, {}, {}}};
+}
+
+// The feature tracking header reports read hedging to the service, and only
+// when hedging is in effect. The primary attempt is opened lazily by the read
+// pool, so the header is observed on the first `Read()`.
+std::vector<std::string> FeatureHeaderForReadObject(Options options) {
+  auto captured = std::make_shared<std::vector<std::string>>();
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).Times(AtLeast(0));
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([captured](rest_internal::RestContext& context, Options const&,
+                           ReadObjectRangeRequest const&) {
+        *captured =
+            context.GetHeader(storage_internal::kFeaturesHeader).values();
+        auto source = std::make_unique<testing::MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+          return MakeReadResult("payload", buf);
+        });
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+      });
+  auto client = StorageConnectionImpl::Create(std::move(mock), options);
+  std::vector<char> buffer(100);
+  google::cloud::internal::OptionsSpan const span(
+      client->options().set<storage_experimental::ReadHedgeDelayOption>(
+          std::chrono::seconds(30)));
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  EXPECT_THAT(source, IsOk());
+  if (!source) return *captured;
+  EXPECT_THAT((*source)->Read(buffer.data(), buffer.size()), IsOk());
+  return *captured;
+}
+
+TEST(RetryClientTest, ReadObjectFeatureHeaderWithHedging) {
+  auto const expected =
+      storage_internal::EncodeFeatureMask(storage_internal::FeatureBit(
+          storage_internal::TrackedFeature::kReadHedging));
+  EXPECT_THAT(FeatureHeaderForReadObject(
+                  BasicTestPolicies()
+                      .set<storage_experimental::EnableReadHedgingOption>(true)
+                      .set<storage_experimental::MaxReadHedgesOption>(1)
+                      .set<storage_experimental::ReadThreadPoolSizeOption>(1)),
+              ElementsAre(expected));
+}
+
+TEST(RetryClientTest, ReadObjectFeatureHeaderWithoutHedging) {
+  EXPECT_THAT(FeatureHeaderForReadObject(BasicTestPolicies()), IsEmpty());
 }
 
 TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {
