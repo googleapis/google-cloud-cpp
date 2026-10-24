@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/sign_blob_requests.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -62,6 +63,28 @@ TEST_F(GrpcConfigureClientContext, AddIdempotencyTokenString) {
   auto metadata = GetMetadata(ctx);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+}
+
+TEST_F(GrpcConfigureClientContext, AddIdempotencyTokenForwardsFeaturesHeader) {
+  grpc::ClientContext ctx;
+  auto const context =
+      rest_internal::RestContext{}
+          .AddHeader("x-goog-gcs-idempotency-token", "token-123")
+          .AddHeader(kFeaturesHeader, "AAAAAg==");
+  AddIdempotencyToken(ctx, context);
+  auto metadata = GetMetadata(ctx);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+  EXPECT_THAT(metadata, Contains(Pair(kFeaturesHeader, "AAAAAg==")));
+}
+
+TEST_F(GrpcConfigureClientContext, AddIdempotencyTokenNoFeaturesHeader) {
+  grpc::ClientContext ctx;
+  auto const context = rest_internal::RestContext{}.AddHeader(
+      "x-goog-gcs-idempotency-token", "token-123");
+  AddIdempotencyToken(ctx, context);
+  auto metadata = GetMetadata(ctx);
+  EXPECT_THAT(metadata, Not(Contains(Pair(kFeaturesHeader, _))));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
