@@ -59,7 +59,9 @@ using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::Contains;
+using ::testing::Each;
 using ::testing::ElementsAre;
+using ::testing::Ge;
 using ::testing::HasSubstr;
 using ::testing::InvokeWithoutArgs;
 using ::testing::IsEmpty;
@@ -69,6 +71,7 @@ using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::Pair;
+using ::testing::SizeIs;
 
 using BidiReadStream = google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
@@ -461,6 +464,108 @@ TEST(AsyncConnectionImplTest, OpenFeatureHeaderWithoutMultiStream) {
       OpenAndCaptureMetadata(
           Options{}.set<storage::EnableMultiStreamOptimizationOption>(false)),
       Not(Contains(Key(kFeaturesHeader))));
+}
+
+// The header is not something only the first stream carries. With the
+// multi-stream optimization on, the descriptor opens an extra stream in the
+// background as soon as the first one is up, and later re-opens streams on
+// resume. All of them go through the same factory, so this test opens a
+// descriptor and checks every `AsyncBidiReadObject()` call it triggers.
+TEST(AsyncConnectionImplTest, OpenFeatureHeaderOnEveryDescriptorStream) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+  )pb";
+  auto const expected =
+      EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
+
+  ValidateMetadataFixture fixture;
+  std::vector<std::multimap<std::string, std::string>> metadata;
+  AsyncSequencer<bool> sequencer;
+
+  // The stream the caller opens on. It serves one response and then stays
+  // open, as in a healthy session, until the test releases the parked read.
+  auto parked_stream = [&sequencer] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(true);
+    }));
+    ON_CALL(*stream, Write).WillByDefault([](auto const&, auto) {
+      return make_ready_future(true);
+    });
+    ON_CALL(*stream, Read)
+        .WillByDefault(InvokeWithoutArgs([&sequencer, n = 0]() mutable {
+          using Response = google::storage::v2::BidiReadObjectResponse;
+          if (n++ == 0) {
+            return make_ready_future(std::optional<Response>(Response{}));
+          }
+          return sequencer.PushBack("Read").then(
+              [](auto) { return std::optional<Response>(); });
+        }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(Status{});
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  // The streams the descriptor opens in the background. They never start, so
+  // the open retries and eventually gives up. That is fine: only the metadata
+  // each attempt was sent with matters here.
+  auto failing_stream = [] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(false);
+    }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(TransientError());
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      // `AtLeast(2)` matters: with a single stream the test would pass
+      // without exercising the descriptor's own opens at all.
+      .Times(AtLeast(2))
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const&) {
+        metadata.push_back(fixture.GetMetadata(*context));
+        return parked_stream();
+      })
+      .WillRepeatedly([&](CompletionQueue const&,
+                          std::shared_ptr<grpc::ClientContext> const& context,
+                          google::cloud::internal::ImmutableOptions const&) {
+        metadata.push_back(fixture.GetMetadata(*context));
+        return failing_stream();
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            StatusOr<std::chrono::system_clock::time_point>(
+                std::chrono::system_clock::now()));
+      });
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(true)));
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto p = connection->Open({std::move(request), connection->options()}).get();
+  ASSERT_THAT(p, IsOkAndHolds(NotNull()));
+  auto descriptor = *std::move(p);
+  descriptor.reset();
+
+  // Release the parked read so the stream can wind down.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(false);
+
+  ASSERT_THAT(metadata, SizeIs(Ge(2)));
+  EXPECT_THAT(metadata, Each(Contains(Pair(kFeaturesHeader, expected))));
 }
 
 TEST(AsyncConnectionImplTest, TooManyTransientErrors) {
