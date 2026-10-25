@@ -22,6 +22,9 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+
 void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
                              std::string const& bucket_name,
                              RoutingHeaderOptions const& options) {
@@ -33,13 +36,8 @@ void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
   }
   context.AddMetadata("x-goog-request-params", std::move(params));
 }
-}  // namespace
 
-auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
-
-namespace {
-
-/// Copies every value of @p name from @p context into @p ctx.
+// Copies every value of the @p name header from @p context into @p ctx.
 void CopyHeader(grpc::ClientContext& ctx,
                 rest_internal::RestContext const& context,
                 std::string const& name) {
