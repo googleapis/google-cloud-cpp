@@ -54,8 +54,8 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing
   // across multiple sockets, it makes little sense to perform additional load
   // balancing in the client library.
-  if (absl::StartsWith(endpoint, "google-c2p:///") ||
-      absl::StartsWith(endpoint, "google-c2p-experimental:///")) {
+  if (absl::StartsWith(endpoint, kC2pPrefix) ||
+      absl::StartsWith(endpoint, kC2pExperimentalPrefix)) {
     return 1;
   }
   // When not using Direct Connectivity, there are limits to the bandwidth per
@@ -72,13 +72,14 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 /// Returns true if @p endpoint targets `kDirectPathInterconnectHost` through
 /// the `google-c2p` resolver, whatever its query parameters.
 ///
-/// `DetectTransportType()` classifies a `force-xds` target for any host as
-/// DirectPath over Interconnect, which is the right label for telemetry. The
-/// service recognizes the Interconnect `:authority` only for this host, so
-/// other hosts keep the standard default authority.
+/// This is deliberately narrower than `DetectTransportType()`, which classifies
+/// a `force-xds` target for any host as DirectPath over Interconnect. That
+/// label describes the network path the client requested, and is what the
+/// telemetry reports. The service decides Interconnect routing by the
+/// `:authority` of each RPC instead, and recognizes only this host there, so a
+/// `force-xds` target for any other host keeps the standard default authority.
 bool TargetsDirectPathInterconnectHost(std::string_view endpoint) {
-  for (std::string_view prefix :
-       {"google-c2p:///", "google-c2p-experimental:///"}) {
+  for (std::string_view prefix : {kC2pPrefix, kC2pExperimentalPrefix}) {
     if (!absl::StartsWith(endpoint, prefix)) continue;
     std::string_view const host_and_query = endpoint.substr(prefix.size());
     std::string_view const host =

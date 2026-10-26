@@ -333,6 +333,62 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpointOtherHost) {
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
 }
 
+struct InterconnectHostDelimiterTestCase {
+  std::string test_name;
+  std::string endpoint;
+  std::string expected_authority;
+};
+
+class DirectPathOverInterconnectHostDelimiterTest
+    : public ::testing::TestWithParam<InterconnectHostDelimiterTestCase> {};
+
+/// @test Verify the host of an application-supplied `force-xds` endpoint is
+/// compared against `storage-direct.googleapis.com` up to the first delimiter
+/// (`:`, `/`, `?`, `#`), so a port, path or fragment does not hide a match,
+/// and a look-alike host that merely starts with it does not produce one.
+TEST_P(DirectPathOverInterconnectHostDelimiterTest, DetectsExactHostOnly) {
+  InterconnectHostDelimiterTestCase const& test_case = GetParam();
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options =
+      DefaultOptionsGrpc(Options{}.set<EndpointOption>(test_case.endpoint),
+                         mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<EndpointOption>(), test_case.endpoint);
+  EXPECT_EQ(options.get<AuthorityOption>(), test_case.expected_authority);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    DefaultOptionsGrpc, DirectPathOverInterconnectHostDelimiterTest,
+    ::testing::Values(
+        InterconnectHostDelimiterTestCase{
+            "Port", "google-c2p:///storage-direct.googleapis.com:443?force-xds",
+            "storage-direct.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "Path", "google-c2p:///storage-direct.googleapis.com/?force-xds",
+            "storage-direct.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "FragmentAfterQuery",
+            "google-c2p:///storage-direct.googleapis.com?force-xds#frag",
+            "storage-direct.googleapis.com"},
+        // Per RFC 3986 a `?` inside the fragment is not a query, so this is a
+        // plain DirectPath target and keeps the standard authority.
+        InterconnectHostDelimiterTestCase{
+            "FragmentBeforeQuery",
+            "google-c2p:///storage-direct.googleapis.com#frag?force-xds",
+            "storage.googleapis.com"},
+        // The host starts with `storage-direct.googleapis.com` but is a
+        // different host.
+        InterconnectHostDelimiterTestCase{
+            "LookAlikeHost",
+            "google-c2p:///storage-direct.googleapis.com.example.com?force-xds",
+            "storage.googleapis.com"}),
+    [](::testing::TestParamInfo<InterconnectHostDelimiterTestCase> const&
+           info) { return info.param.test_name; });
+
 /// @test Verify the `google-c2p-experimental` scheme selects the Interconnect
 /// `:authority` like `google-c2p` does; the library treats both as DirectPath.
 TEST(DefaultOptionsGrpc,
