@@ -23,10 +23,13 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <opentelemetry/trace/scope.h>
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -103,9 +106,11 @@ MATCHER_P(WindowDestroyed, expected, "") {
 // Small windows keep the test objects small. Prefetching is disabled, the
 // tests for prefetching enable it explicitly.
 AdaptiveReadSettings TestSettings() {
-  return AdaptiveReadSettings{/*initial_window=*/1024, /*max_window=*/8192,
-                              /*growth_factor=*/2.0,
-                              /*prefetch_threshold=*/0.0};
+  AdaptiveReadSettings settings{/*initial_window=*/1024, /*max_window=*/8192,
+                                /*growth_factor=*/2.0,
+                                /*prefetch_threshold=*/0.0};
+  settings.max_drain = 1024;
+  return settings;
 }
 
 AdaptiveReadSettings PrefetchSettings() {
@@ -456,16 +461,30 @@ class ManualExecutor {
   std::vector<std::function<void()>> tasks_;
 };
 
-std::unique_ptr<ObjectReadSource> MakeSource(FakeService& service,
-                                             AdaptiveReadSettings settings,
-                                             std::int64_t offset,
-                                             Executor executor) {
+std::unique_ptr<ObjectReadSource> MakeSource(
+    FakeService& service, AdaptiveReadSettings settings, std::int64_t offset,
+    Executor executor,
+    AdaptiveObjectReadSource::SummaryCallback on_summary = {}) {
   auto source = MakeAdaptiveObjectReadSource(
       service.Factory(), service.Unbounded(offset), std::move(executor),
-      settings, offset, /*generation=*/std::nullopt);
+      settings, offset, /*generation=*/std::nullopt, std::move(on_summary));
   if (!source) return nullptr;
   return *std::move(source);
 }
+
+/// Records the summaries reported by a source.
+class SummaryRecorder {
+ public:
+  AdaptiveObjectReadSource::SummaryCallback callback() {
+    return [this](AdaptiveReadSummary const& s) { summaries_.push_back(s); };
+  }
+  std::vector<AdaptiveReadSummary> const& summaries() const {
+    return summaries_;
+  }
+
+ private:
+  std::vector<AdaptiveReadSummary> summaries_;
+};
 
 struct ReadAllResult {
   std::string data;
@@ -506,6 +525,26 @@ TEST(AdaptiveReadSettings, Defaults) {
   EXPECT_THAT(settings.max_window, Eq(64 * 1024 * 1024));
   EXPECT_THAT(settings.growth_factor, Eq(2.0));
   EXPECT_THAT(settings.prefetch_threshold, Eq(0.5));
+  EXPECT_THAT(settings.max_drain, Eq(1024 * 1024));
+  EXPECT_THAT(settings.request_cost_bytes, Eq(1024 * 1024));
+  EXPECT_TRUE(settings.learn_initial_window);
+}
+
+TEST(AdaptiveReadSettings, CopiesValidValues) {
+  storage_experimental::AdaptiveReadRangeConfig config;
+  config.max_drain = 0;
+  config.request_cost_bytes = 0;
+  config.learn_initial_window = false;
+  auto settings = MakeAdaptiveReadSettings(config);
+  EXPECT_THAT(settings.max_drain, Eq(0));
+  EXPECT_THAT(settings.request_cost_bytes, Eq(0));
+  EXPECT_FALSE(settings.learn_initial_window);
+
+  config.max_drain = 4096;
+  config.request_cost_bytes = 65536;
+  settings = MakeAdaptiveReadSettings(config);
+  EXPECT_THAT(settings.max_drain, Eq(4096));
+  EXPECT_THAT(settings.request_cost_bytes, Eq(65536));
 }
 
 TEST(AdaptiveReadSettings, ReplacesInvalidValues) {
@@ -514,11 +553,15 @@ TEST(AdaptiveReadSettings, ReplacesInvalidValues) {
   config.max_window = 16;
   config.growth_factor = 0.5;
   config.prefetch_threshold = 0.25;
+  config.max_drain = -1;
+  config.request_cost_bytes = -1;
   auto settings = MakeAdaptiveReadSettings(config);
   EXPECT_THAT(settings.initial_window, Eq(1024 * 1024));
   EXPECT_THAT(settings.max_window, Eq(1024 * 1024));
   EXPECT_THAT(settings.growth_factor, Eq(1.0));
   EXPECT_THAT(settings.prefetch_threshold, Eq(0.25));
+  EXPECT_THAT(settings.max_drain, Eq(1024 * 1024));
+  EXPECT_THAT(settings.request_cost_bytes, Eq(1024 * 1024));
 
   config.initial_window = -5;
   config.growth_factor = std::numeric_limits<double>::quiet_NaN();
@@ -876,6 +919,43 @@ TEST(AdaptiveObjectReadSource, IgnoredRangeInLaterWindowIsAnError) {
   EXPECT_FALSE(source->IsOpen());
 }
 
+TEST(AdaptiveObjectReadSource, NoPrefetchInFirstWindow) {
+  // Many applications read a small prefix and close the stream, a prefetch
+  // from the first window would open a window they never use.
+  FakeService service(kObjectSize);
+  ManualExecutor executor;
+  SummaryRecorder recorder;
+  auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor(),
+                           recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  std::vector<char> buffer(256);
+  // Read the first window in full, well past the threshold.
+  for (int i = 0; i != 4; ++i) {
+    ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+    EXPECT_THAT(executor.pending(), Eq(0U));
+  }
+  EXPECT_THAT(service.windows(), ElementsAre(WindowIs(0, 1024)));
+  EXPECT_THAT(source->Close(), IsOk());
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  EXPECT_THAT(recorder.summaries()[0].prefetch_started, Eq(0));
+  EXPECT_THAT(recorder.summaries()[0].windows_opened, Eq(1));
+}
+
+TEST(AdaptiveObjectReadSource, NoPrefetchInFirstWindowWithLargeRead) {
+  FakeService service(kObjectSize);
+  ManualExecutor executor;
+  auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor());
+  ASSERT_THAT(source, NotNull());
+
+  // A single read of most of the first window does not prefetch either.
+  std::vector<char> buffer(1000);
+  ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+  EXPECT_THAT(executor.pending(), Eq(0U));
+  EXPECT_THAT(source->Close(), IsOk());
+  EXPECT_THAT(service.windows(), ElementsAre(WindowIs(0, 1024)));
+}
+
 TEST(AdaptiveObjectReadSource, PrefetchesNextWindowAtThreshold) {
   FakeService service(kObjectSize);
   ManualExecutor executor;
@@ -889,22 +969,28 @@ TEST(AdaptiveObjectReadSource, PrefetchesNextWindowAtThreshold) {
     ASSERT_THAT(r, IsOk());
     data.append(buffer.data(), r->bytes_received);
   };
-  // 256 of the 1024 bytes in the first window: below the threshold.
-  read();
+  // The first window, [0, 1024), is never prefetched past.
+  for (int i = 0; i != 4; ++i) read();
   EXPECT_THAT(executor.pending(), Eq(0U));
-  // 512 bytes: the threshold.
+  // 768 of the 2048 bytes in the second window: below the threshold.
+  for (int i = 0; i != 3; ++i) read();
+  EXPECT_THAT(executor.pending(), Eq(0U));
+  // 1024 bytes: the threshold.
   read();
   EXPECT_THAT(executor.pending(), Eq(1U));
-  EXPECT_THAT(service.windows(), ElementsAre(WindowIs(0, 1024)));
+  EXPECT_THAT(service.windows(),
+              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048)));
 
   executor.RunAll();
   EXPECT_THAT(service.windows(),
-              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048)));
+              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048),
+                          WindowIs(3072, 4096)));
 
-  // Reading into the second window uses the prefetched window.
-  for (int i = 0; i != 4; ++i) read();
+  // Reading into the third window uses the prefetched window.
+  for (int i = 0; i != 6; ++i) read();
   EXPECT_THAT(service.windows(),
-              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048)));
+              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048),
+                          WindowIs(3072, 4096)));
 
   // The rest of the object is read correctly, prefetching every window.
   while (source->IsOpen()) {
@@ -921,21 +1007,34 @@ TEST(AdaptiveObjectReadSource, PrefetchesNextWindowAtThreshold) {
 TEST(AdaptiveObjectReadSource, OpensWindowWhenPrefetchHasNotStarted) {
   FakeService service(kObjectSize);
   ManualExecutor executor;
-  auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor());
+  SummaryRecorder recorder;
+  auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor(),
+                           recorder.callback());
   ASSERT_THAT(source, NotNull());
 
-  std::vector<char> buffer(1024);
-  ASSERT_THAT(source->Read(buffer.data(), 600), IsOk());
+  // Read past the threshold of the second window, [1024, 3072).
+  std::vector<char> buffer(4096);
+  ASSERT_THAT(source->Read(buffer.data(), 2124), IsOk());
   EXPECT_THAT(executor.pending(), Eq(1U));
   // The prefetch is still queued when the application needs the window: the
   // window is opened directly, the source does not wait for the queue. The
-  // read stops before the threshold of the second window.
-  ASSERT_THAT(source->Read(buffer.data(), 524), IsOk());
+  // read stops before the threshold of the third window.
+  ASSERT_THAT(source->Read(buffer.data(), 1048), IsOk());
   EXPECT_THAT(service.windows(),
-              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048)));
+              ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048),
+                          WindowIs(3072, 4096)));
   // The abandoned prefetch does nothing when it eventually runs.
   executor.RunAll();
-  EXPECT_THAT(service.windows(), SizeIs(2));
+  EXPECT_THAT(service.windows(), SizeIs(3));
+
+  EXPECT_THAT(source->Close(), IsOk());
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  auto const& summary = recorder.summaries()[0];
+  // The prefetch never requested its window.
+  EXPECT_THAT(summary.prefetch_started, Eq(1));
+  EXPECT_THAT(summary.prefetch_used, Eq(0));
+  EXPECT_THAT(summary.prefetch_abandoned, Eq(0));
+  EXPECT_THAT(summary.windows_opened, Eq(3));
 }
 
 TEST(AdaptiveObjectReadSource, PrefetchDisabledOutsideInterval) {
@@ -977,18 +1076,18 @@ TEST(AdaptiveObjectReadSource, PrefetchRejectedByExecutor) {
 
 TEST(AdaptiveObjectReadSource, PrefetchErrorIsReported) {
   FakeService service(kObjectSize);
-  service.set_open_error(1024, PermanentError());
+  service.set_open_error(3072, PermanentError());
   ManualExecutor executor;
   auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor());
   ASSERT_THAT(source, NotNull());
 
-  std::vector<char> buffer(1024);
-  ASSERT_THAT(source->Read(buffer.data(), 600), IsOk());
+  std::vector<char> buffer(4096);
+  ASSERT_THAT(source->Read(buffer.data(), 2124), IsOk());
   executor.RunAll();
-  // The data of the first window is returned, the error follows.
-  auto r = source->Read(buffer.data(), buffer.size());
+  // The data of the second window is returned, the error follows.
+  auto r = source->Read(buffer.data(), 1024);
   ASSERT_THAT(r, IsOk());
-  EXPECT_THAT(r->bytes_received, Eq(424U));
+  EXPECT_THAT(r->bytes_received, Eq(948U));
   EXPECT_TRUE(source->IsOpen());
   EXPECT_THAT(source->Read(buffer.data(), buffer.size()),
               StatusIs(PermanentError().code()));
@@ -998,30 +1097,45 @@ TEST(AdaptiveObjectReadSource, PrefetchErrorIsReported) {
 TEST(AdaptiveObjectReadSource, CloseReleasesPrefetchedWindow) {
   FakeService service(kObjectSize);
   ManualExecutor executor;
-  auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor());
+  SummaryRecorder recorder;
+  auto source = MakeSource(service, PrefetchSettings(), 0, executor.executor(),
+                           recorder.callback());
   ASSERT_THAT(source, NotNull());
 
-  std::vector<char> buffer(600);
+  std::vector<char> buffer(2124);
   ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
   executor.RunAll();
-  ASSERT_THAT(service.stats(), SizeIs(2));
+  ASSERT_THAT(service.stats(), SizeIs(3));
   EXPECT_THAT(source->Close(), IsOk());
 
   auto const stats = service.stats();
-  EXPECT_THAT(stats[1]->delivered.load(), Eq(0));
-  EXPECT_TRUE(stats[1]->destroyed);
+  EXPECT_THAT(stats[2]->delivered.load(), Eq(0));
+  EXPECT_TRUE(stats[2]->destroyed);
+
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kEarlyClose));
+  EXPECT_THAT(summary.prefetch_started, Eq(1));
+  EXPECT_THAT(summary.prefetch_used, Eq(0));
+  EXPECT_THAT(summary.prefetch_abandoned, Eq(1));
+  // The prefetched window was requested, even if it was not used.
+  EXPECT_THAT(summary.windows_opened, Eq(3));
+  EXPECT_THAT(summary.bytes_requested, Eq(1024 + 2048 + 4096));
 }
 
 TEST(AdaptiveObjectReadSource, PrefetchesDuringLargeReads) {
   // A single `Read()` may span several windows, for example when the
-  // application reads large blocks. Each window is prefetched while the
-  // previous one is read.
+  // application reads large blocks. Each window after the second is prefetched
+  // while the previous one is read.
   FakeService service(kObjectSize);
   auto inline_executor = [](std::function<void()> task) {
     task();
     return true;
   };
-  auto source = MakeSource(service, PrefetchSettings(), 0, inline_executor);
+  SummaryRecorder recorder;
+  auto source = MakeSource(service, PrefetchSettings(), 0, inline_executor,
+                           recorder.callback());
   ASSERT_THAT(source, NotNull());
 
   // The first read returns the size of the object, like the `peek()` in
@@ -1041,10 +1155,19 @@ TEST(AdaptiveObjectReadSource, PrefetchesDuringLargeReads) {
       service.windows(),
       ElementsAre(WindowIs(0, 1024), WindowIs(1024, 2048), WindowIs(3072, 4096),
                   WindowIs(7168, 8192), WindowIs(15360, 4640)));
-  // Every window after the first was opened before the previous window
-  // completed, that is, it was prefetched.
+  // The second window is opened once the first window completes, every window
+  // after that was opened before the previous window completed, that is, it
+  // was prefetched.
   EXPECT_THAT(service.previous_completed(),
-              ElementsAre(true, false, false, false, false));
+              ElementsAre(true, true, false, false, false));
+
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.prefetch_started, Eq(3));
+  EXPECT_THAT(summary.prefetch_used, Eq(3));
+  EXPECT_THAT(summary.prefetch_abandoned, Eq(0));
+  EXPECT_THAT(summary.windows_opened, Eq(5));
+  EXPECT_THAT(summary.bytes_requested, Eq(kObjectSize));
 }
 
 TEST(AdaptiveObjectReadSource, DestructorDoesNotWaitForPrefetch) {
@@ -1054,7 +1177,7 @@ TEST(AdaptiveObjectReadSource, DestructorDoesNotWaitForPrefetch) {
   std::promise<void> release;
   auto release_future = release.get_future().share();
   service.set_on_open([&entered, release_future](Window const& w) {
-    if (w.offset != 1024) return;
+    if (w.offset != 3072) return;
     entered.set_value();
     release_future.wait();
   });
@@ -1068,7 +1191,7 @@ TEST(AdaptiveObjectReadSource, DestructorDoesNotWaitForPrefetch) {
 
   // No assertion may return early from here on: the prefetch must be released
   // and joined on all paths.
-  std::vector<char> buffer(600);
+  std::vector<char> buffer(2124);
   EXPECT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
   auto const blocked = entered_future.wait_for(std::chrono::seconds(30));
   EXPECT_THAT(blocked, Eq(std::future_status::ready));
@@ -1085,9 +1208,9 @@ TEST(AdaptiveObjectReadSource, DestructorDoesNotWaitForPrefetch) {
 
   // The window opened by the abandoned prefetch is released.
   auto const stats = service.stats();
-  ASSERT_THAT(stats, SizeIs(2));
-  EXPECT_THAT(stats[1]->delivered.load(), Eq(0));
-  EXPECT_TRUE(stats[1]->destroyed);
+  ASSERT_THAT(stats, SizeIs(3));
+  EXPECT_THAT(stats[2]->delivered.load(), Eq(0));
+  EXPECT_TRUE(stats[2]->destroyed);
 }
 
 TEST(AdaptiveObjectReadSource, PrefetchOnThreadPool) {
@@ -1374,6 +1497,269 @@ TEST(AdaptiveObjectReadSource, CloseTranscodedDownloadDoesNotDrain) {
   EXPECT_THAT(stats[0]->delivered.load(), Eq(100));
   EXPECT_FALSE(stats[0]->completed);
   EXPECT_TRUE(stats[0]->closed);
+}
+
+TEST(AdaptiveObjectReadSource, DrainUsesMaxDrainNotInitialWindow) {
+  // The remainder of the third window, [3072, 7168), is larger than the first
+  // window, but within `max_drain`.
+  FakeService service(kObjectSize);
+  auto settings = TestSettings();
+  settings.max_drain = 4096;
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, settings, 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  std::vector<char> buffer(3172);
+  ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+  EXPECT_THAT(source->Close(), IsOk());
+
+  auto const stats = service.stats();
+  ASSERT_THAT(stats, SizeIs(3));
+  EXPECT_THAT(stats[2]->delivered.load(), Eq(4096));
+  EXPECT_TRUE(stats[2]->completed);
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  EXPECT_THAT(recorder.summaries()[0].bytes_drained, Eq(3996));
+  EXPECT_THAT(recorder.summaries()[0].windows_abandoned, Eq(0));
+}
+
+TEST(AdaptiveObjectReadSource, AbandonsRemainderAboveMaxDrain) {
+  // The remainder of the first window is within `initial_window`, but larger
+  // than `max_drain`.
+  FakeService service(kObjectSize);
+  auto settings = TestSettings();
+  settings.max_drain = 512;
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, settings, 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  std::vector<char> buffer(100);
+  ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+  EXPECT_THAT(source->Close(), IsOk());
+
+  auto const stats = service.stats();
+  ASSERT_THAT(stats, SizeIs(1));
+  EXPECT_THAT(stats[0]->delivered.load(), Eq(100));
+  EXPECT_FALSE(stats[0]->completed);
+  EXPECT_TRUE(stats[0]->closed);
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  EXPECT_THAT(recorder.summaries()[0].bytes_drained, Eq(0));
+  EXPECT_THAT(recorder.summaries()[0].windows_abandoned, Eq(1));
+}
+
+TEST(AdaptiveObjectReadSource, ZeroMaxDrainDisablesDrain) {
+  FakeService service(kObjectSize);
+  auto settings = TestSettings();
+  settings.max_drain = 0;
+  auto source = MakeSource(service, settings, 0, Executor{});
+  ASSERT_THAT(source, NotNull());
+
+  std::vector<char> buffer(1000);
+  ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+  EXPECT_THAT(source->Close(), IsOk());
+  auto const stats = service.stats();
+  ASSERT_THAT(stats, SizeIs(1));
+  EXPECT_FALSE(stats[0]->completed);
+}
+
+TEST(AdaptiveObjectReadSource, SummaryAtEndOfData) {
+  FakeService service(kObjectSize);
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, TestSettings(), 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  EXPECT_THAT(ReadAll(*source, 512).status, IsOk());
+  // The summary is reported with the last read.
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  EXPECT_THAT(source->Close(), IsOk());
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kEndOfData));
+  EXPECT_THAT(summary.bytes_delivered, Eq(kObjectSize));
+  EXPECT_THAT(summary.initial_window, Eq(1024));
+  EXPECT_THAT(summary.windows_opened, Eq(5));
+  EXPECT_THAT(summary.bytes_requested, Eq(kObjectSize));
+  EXPECT_THAT(summary.bytes_drained, Eq(0));
+  EXPECT_THAT(summary.windows_abandoned, Eq(0));
+  EXPECT_THAT(summary.prefetch_started, Eq(0));
+  EXPECT_FALSE(summary.unbounded_fallback);
+}
+
+TEST(AdaptiveObjectReadSource, SummaryOnEarlyClose) {
+  FakeService service(kObjectSize);
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, TestSettings(), 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  std::vector<char> buffer(100);
+  ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+  EXPECT_THAT(recorder.summaries(), IsEmpty());
+  EXPECT_THAT(source->Close(), IsOk());
+  source.reset();
+
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kEarlyClose));
+  EXPECT_THAT(summary.bytes_delivered, Eq(100));
+  EXPECT_THAT(summary.windows_opened, Eq(1));
+  EXPECT_THAT(summary.bytes_requested, Eq(1024));
+  EXPECT_THAT(summary.bytes_drained, Eq(924));
+  EXPECT_THAT(summary.windows_abandoned, Eq(0));
+}
+
+TEST(AdaptiveObjectReadSource, SummaryOnDestructionWithoutClose) {
+  FakeService service(kObjectSize);
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, TestSettings(), 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  std::vector<char> buffer(3172);
+  ASSERT_THAT(source->Read(buffer.data(), buffer.size()), IsOk());
+  source.reset();
+
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kEarlyClose));
+  EXPECT_THAT(summary.bytes_delivered, Eq(3172));
+  EXPECT_THAT(summary.windows_opened, Eq(3));
+  EXPECT_THAT(summary.bytes_requested, Eq(1024 + 2048 + 4096));
+  EXPECT_THAT(summary.windows_abandoned, Eq(1));
+}
+
+TEST(AdaptiveObjectReadSource, SummaryOnError) {
+  FakeService service(kObjectSize);
+  service.set_open_error(1024, PermanentError());
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, TestSettings(), 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  auto const actual = ReadAll(*source, 4096);
+  EXPECT_THAT(actual.status, StatusIs(PermanentError().code()));
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  EXPECT_THAT(source->Close(), IsOk());
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kError));
+  EXPECT_THAT(summary.bytes_delivered, Eq(1024));
+  EXPECT_THAT(summary.windows_opened, Eq(1));
+}
+
+TEST(AdaptiveObjectReadSource, SummaryOnCloseWithPendingError) {
+  FakeService service(kObjectSize);
+  service.set_open_error(1024, PermanentError());
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, TestSettings(), 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  // The data is returned, the error is pending.
+  std::vector<char> buffer(4096);
+  auto r = source->Read(buffer.data(), buffer.size());
+  ASSERT_THAT(r, IsOk());
+  EXPECT_THAT(r->bytes_received, Eq(1024U));
+  EXPECT_THAT(source->Close(), IsOk());
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  EXPECT_THAT(recorder.summaries()[0].close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kError));
+}
+
+TEST(AdaptiveObjectReadSource, SummaryForTranscodedObject) {
+  FakeService service(kObjectSize);
+  service.set_behavior(Behavior::kTranscode);
+  SummaryRecorder recorder;
+  auto source =
+      MakeSource(service, TestSettings(), 0, Executor{}, recorder.callback());
+  ASSERT_THAT(source, NotNull());
+
+  EXPECT_THAT(ReadAll(*source, 4096).status, IsOk());
+  ASSERT_THAT(recorder.summaries(), SizeIs(1));
+  auto const& summary = recorder.summaries()[0];
+  EXPECT_THAT(summary.close_reason,
+              Eq(AdaptiveReadSummary::CloseReason::kEndOfData));
+  EXPECT_TRUE(summary.unbounded_fallback);
+  EXPECT_THAT(summary.bytes_delivered, Eq(kObjectSize));
+  // The first window was discarded.
+  EXPECT_THAT(summary.windows_abandoned, Eq(1));
+}
+
+TEST(AdaptiveReadSummary, Format) {
+  AdaptiveReadSummary summary;
+  summary.close_reason = AdaptiveReadSummary::CloseReason::kEndOfData;
+  summary.bytes_delivered = 100;
+  summary.initial_window = 512;
+  summary.windows_opened = 2;
+  summary.bytes_requested = 1536;
+  summary.bytes_drained = 3;
+  summary.windows_abandoned = 4;
+  summary.prefetch_started = 5;
+  summary.prefetch_used = 6;
+  summary.prefetch_abandoned = 7;
+  EXPECT_EQ(FormatAdaptiveReadSummary(summary),
+            "close_reason=eof bytes_delivered=100 initial_window=512"
+            " windows_opened=2 bytes_requested=1536 bytes_drained=3"
+            " windows_abandoned=4 prefetch_started=5 prefetch_used=6"
+            " prefetch_abandoned=7 unbounded_fallback=false");
+  EXPECT_THAT(ToString(AdaptiveReadSummary::CloseReason::kEarlyClose),
+              Eq(std::string("early_close")));
+  EXPECT_THAT(ToString(AdaptiveReadSummary::CloseReason::kError),
+              Eq(std::string("error")));
+}
+
+TEST(AdaptiveReadSummary, SpanAttributes) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  AdaptiveReadSummary summary;
+  summary.close_reason = AdaptiveReadSummary::CloseReason::kEarlyClose;
+  summary.bytes_delivered = 100;
+  summary.initial_window = 512;
+  summary.windows_opened = 2;
+  summary.bytes_requested = 1536;
+  summary.bytes_drained = 412;
+  summary.prefetch_started = 1;
+  summary.prefetch_abandoned = 1;
+  {
+    auto span = google::cloud::internal::MakeSpan("test-span");
+    auto scope = opentelemetry::trace::Scope(span);
+    AddAdaptiveReadSpanAttributes(summary);
+    span->End();
+  }
+  using testing_util::OTelAttribute;
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          testing_util::SpanNamed("test-span"),
+          testing_util::SpanHasAttributes(
+              OTelAttribute<std::string>("gcs.adaptive_read.close_reason",
+                                         "early_close"),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.bytes_delivered",
+                                          100),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.initial_window",
+                                          512),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.windows_opened",
+                                          2),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.bytes_requested",
+                                          1536),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.bytes_drained",
+                                          412),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.windows_abandoned",
+                                          0),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.prefetch_started",
+                                          1),
+              OTelAttribute<std::int64_t>("gcs.adaptive_read.prefetch_used", 0),
+              OTelAttribute<std::int64_t>(
+                  "gcs.adaptive_read.prefetch_abandoned", 1),
+              OTelAttribute<bool>("gcs.adaptive_read.unbounded_fallback",
+                                  false)))));
 }
 
 // Reads all the data in @p buf. Errors are reported as exceptions when they

@@ -269,6 +269,43 @@ struct AdaptiveReadRangeConfig {
    * reads past the end of the current window.
    */
   double prefetch_threshold = 0.5;
+
+  /**
+   * Choose the size of the first window from the downloads already completed.
+   *
+   * The library keeps a short history of how many bytes the recent adaptive
+   * downloads from each bucket used, and whether they reached the end of the
+   * object. Once the history has enough downloads, the first window is the
+   * size (a power of two between 256 KiB and `max_window`) that would have
+   * minimized the bytes sent but not used, plus `request_cost_bytes` for each
+   * additional request. Until then, and when this is `false`, the first window
+   * is `initial_window` bytes.
+   *
+   * The history is shared by all the clients in the process, as some libraries
+   * create a new `Client` for each object they read.
+   */
+  bool learn_initial_window = true;
+
+  /**
+   * The cost of an additional request, in bytes, when choosing the size of the
+   * first window.
+   *
+   * Larger values favor larger first windows, which take fewer requests but
+   * may send more data that the application does not read. Values less than 0
+   * use the default (1 MiB).
+   */
+  std::int64_t request_cost_bytes = std::int64_t{1} << 20;
+
+  /**
+   * The largest remainder read and discarded when the application closes the
+   * stream before the end of a window.
+   *
+   * Reading the rest of a window completes the response, so the connection can
+   * be reused. Windows with more data left are abandoned, which closes the
+   * connection. A value of 0 disables this. Values less than 0 use the default
+   * (1 MiB).
+   */
+  std::int64_t max_drain = std::int64_t{1} << 20;
 };
 
 /**
@@ -301,6 +338,18 @@ struct AdaptiveReadRangeConfig {
  *
  * Request hedging (`EnableReadHedgingOption`) does not apply to the windows of
  * an adaptive read.
+ *
+ * By default the size of the first window is learned from the recent adaptive
+ * reads from the same bucket, see
+ * `AdaptiveReadRangeConfig::learn_initial_window`. The next window is only
+ * prefetched once the application has read a full window.
+ *
+ * Each adaptive read reports a summary once it is done (bytes delivered,
+ * windows and bytes requested, bytes drained, windows abandoned, prefetches,
+ * the size of the first window, and why the read ended). The summary is added
+ * to the download span as `gcs.adaptive_read.*` attributes when OpenTelemetry
+ * tracing is enabled, and logged when the `adaptive-read` logging component is
+ * enabled (for example, `GOOGLE_CLOUD_CPP_ENABLE_TRACING=adaptive-read`).
  *
  * Requests issued by adaptive reads include `gccl-feat/adaptive-read` in their
  * `x-goog-api-client` header (when using the JSON API).

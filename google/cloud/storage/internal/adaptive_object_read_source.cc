@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/adaptive_object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
@@ -102,19 +103,27 @@ void MergeResult(ReadSourceResult& result, ReadSourceResult data) {
 //
 // Returns the metadata (headers, hashes, etc.) of the responses, without any
 // data. Fails if @p source returns more than @p limit bytes, or if it stops
-// making progress without closing.
-StatusOr<ReadSourceResult> Discard(ObjectReadSource& source,
-                                   std::int64_t limit) {
+// making progress without closing. If @p discarded is not null, it receives
+// the number of bytes discarded, also on failure.
+StatusOr<ReadSourceResult> Discard(ObjectReadSource& source, std::int64_t limit,
+                                   std::int64_t* discarded = nullptr) {
   std::vector<char> buffer(static_cast<std::size_t>(
       std::clamp<std::int64_t>(limit, 1, kMaxDiscardBuffer)));
   auto metadata = EmptyResult();
-  std::int64_t discarded = 0;
+  std::int64_t count = 0;
+  auto update = [&] {
+    if (discarded != nullptr) *discarded = count;
+  };
   while (source.IsOpen()) {
     StatusOr<ReadSourceResult> r = source.Read(buffer.data(), buffer.size());
-    if (!r) return std::move(r).status();
+    if (!r) {
+      update();
+      return std::move(r).status();
+    }
     auto const received = r->bytes_received;
-    discarded += static_cast<std::int64_t>(received);
-    if (discarded > limit) {
+    count += static_cast<std::int64_t>(received);
+    update();
+    if (count > limit) {
       return google::cloud::internal::InternalError(
           "the service returned more data than requested", GCP_ERROR_INFO());
     }
@@ -136,6 +145,53 @@ bool PrefetchEnabled(AdaptiveReadSettings const& settings) {
 
 }  // namespace
 
+char const* ToString(AdaptiveReadSummary::CloseReason reason) {
+  switch (reason) {
+    case AdaptiveReadSummary::CloseReason::kEndOfData:
+      return "eof";
+    case AdaptiveReadSummary::CloseReason::kEarlyClose:
+      return "early_close";
+    case AdaptiveReadSummary::CloseReason::kError:
+      return "error";
+  }
+  return "unknown";
+}
+
+std::string FormatAdaptiveReadSummary(AdaptiveReadSummary const& summary) {
+  return absl::StrCat(
+      "close_reason=", ToString(summary.close_reason),
+      " bytes_delivered=", summary.bytes_delivered,
+      " initial_window=", summary.initial_window,
+      " windows_opened=", summary.windows_opened,
+      " bytes_requested=", summary.bytes_requested,
+      " bytes_drained=", summary.bytes_drained,
+      " windows_abandoned=", summary.windows_abandoned,
+      " prefetch_started=", summary.prefetch_started,
+      " prefetch_used=", summary.prefetch_used,
+      " prefetch_abandoned=", summary.prefetch_abandoned,
+      " unbounded_fallback=", summary.unbounded_fallback ? "true" : "false");
+}
+
+void AddAdaptiveReadSpanAttributes(AdaptiveReadSummary const& summary) {
+  auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
+  auto set = [&span](char const* key, std::int64_t value) {
+    span->SetAttribute(key, value);
+  };
+  span->SetAttribute("gcs.adaptive_read.close_reason",
+                     ToString(summary.close_reason));
+  set("gcs.adaptive_read.bytes_delivered", summary.bytes_delivered);
+  set("gcs.adaptive_read.initial_window", summary.initial_window);
+  set("gcs.adaptive_read.windows_opened", summary.windows_opened);
+  set("gcs.adaptive_read.bytes_requested", summary.bytes_requested);
+  set("gcs.adaptive_read.bytes_drained", summary.bytes_drained);
+  set("gcs.adaptive_read.windows_abandoned", summary.windows_abandoned);
+  set("gcs.adaptive_read.prefetch_started", summary.prefetch_started);
+  set("gcs.adaptive_read.prefetch_used", summary.prefetch_used);
+  set("gcs.adaptive_read.prefetch_abandoned", summary.prefetch_abandoned);
+  span->SetAttribute("gcs.adaptive_read.unbounded_fallback",
+                     summary.unbounded_fallback);
+}
+
 std::string AdaptiveReadApiClientHeader(Options const& options) {
   auto header = x_goog_api_client();
   if (options.get<AdaptiveReadAttributionOption>()) {
@@ -155,6 +211,12 @@ AdaptiveReadSettings MakeAdaptiveReadSettings(
   settings.growth_factor =
       config.growth_factor >= 1.0 ? config.growth_factor : 1.0;
   settings.prefetch_threshold = config.prefetch_threshold;
+  settings.max_drain =
+      config.max_drain >= 0 ? config.max_drain : defaults.max_drain;
+  settings.request_cost_bytes = config.request_cost_bytes >= 0
+                                    ? config.request_cost_bytes
+                                    : defaults.request_cost_bytes;
+  settings.learn_initial_window = config.learn_initial_window;
   return settings;
 }
 
@@ -193,19 +255,34 @@ AdaptiveObjectReadSource::AdaptiveObjectReadSource(
     std::shared_ptr<WindowFactory const> factory,
     UnboundedFactory open_unbounded, Executor executor,
     AdaptiveReadSettings settings, Window first_window,
-    std::unique_ptr<ObjectReadSource> first_source)
+    std::unique_ptr<ObjectReadSource> first_source, SummaryCallback on_summary)
     : factory_(std::move(factory)),
       open_unbounded_(std::move(open_unbounded)),
       executor_(std::move(executor)),
       settings_(settings),
+      on_summary_(std::move(on_summary)),
       start_offset_(first_window.offset),
       offset_(first_window.offset),
       generation_(first_window.generation),
       window_(std::move(first_window)),
       window_nominal_(settings_.initial_window),
-      source_(std::move(first_source)) {}
+      source_(std::move(first_source)) {
+  summary_.initial_window = window_.length;
+  summary_.windows_opened = 1;
+  summary_.bytes_requested = window_.length;
+}
 
-AdaptiveObjectReadSource::~AdaptiveObjectReadSource() { AbandonPrefetch(); }
+AdaptiveObjectReadSource::~AdaptiveObjectReadSource() {
+  AbandonPrefetch();
+  if (reported_) return;
+  // The application destroyed the stream without closing it. The current
+  // window, if any, is abandoned.
+  if (!pass_through_ && source_ && source_->IsOpen()) {
+    ++summary_.windows_abandoned;
+  }
+  Report(failed_ ? AdaptiveReadSummary::CloseReason::kError
+                 : AdaptiveReadSummary::CloseReason::kEarlyClose);
+}
 
 bool AdaptiveObjectReadSource::IsOpen() const {
   if (closed_) return false;
@@ -219,7 +296,12 @@ StatusOr<HttpResponse> AdaptiveObjectReadSource::Close() {
   closed_ = true;
   AbandonPrefetch();
   auto source = std::move(source_);
-  if (!source) return HttpResponse{HttpStatusCode::kOk, {}, {}};
+  auto const reason = failed_ ? AdaptiveReadSummary::CloseReason::kError
+                              : AdaptiveReadSummary::CloseReason::kEarlyClose;
+  if (!source) {
+    Report(reason);
+    return HttpResponse{HttpStatusCode::kOk, {}, {}};
+  }
   if (!pass_through_ && source->IsOpen()) {
     // Reading the rest of a small window completes the request. That costs
     // little, as the service has most likely sent these bytes already. And it
@@ -227,10 +309,15 @@ StatusOr<HttpResponse> AdaptiveObjectReadSource::Close() {
     // a cancelled download. Larger windows are abandoned. Any error is ignored:
     // the application is no longer interested in the data.
     auto const remaining = WindowEnd() - offset_;
-    if (remaining <= settings_.initial_window) {
-      (void)Discard(*source, remaining);
+    auto drained = false;
+    if (remaining <= settings_.max_drain) {
+      std::int64_t discarded = 0;
+      drained = Discard(*source, remaining, &discarded).ok();
+      summary_.bytes_drained += discarded;
     }
+    if (!drained) ++summary_.windows_abandoned;
   }
+  Report(reason);
   return source->Close();
 }
 
@@ -240,6 +327,20 @@ StatusOr<ReadSourceResult> AdaptiveObjectReadSource::Read(char* buf,
     return google::cloud::internal::FailedPreconditionError(
         "Stream is not open", GCP_ERROR_INFO());
   }
+  auto result = ReadImpl(buf, n);
+  if (result) {
+    summary_.bytes_delivered +=
+        static_cast<std::int64_t>(result->bytes_received);
+  }
+  if (!IsOpen()) {
+    Report(failed_ ? AdaptiveReadSummary::CloseReason::kError
+                   : AdaptiveReadSummary::CloseReason::kEndOfData);
+  }
+  return result;
+}
+
+StatusOr<ReadSourceResult> AdaptiveObjectReadSource::ReadImpl(char* buf,
+                                                              std::size_t n) {
   auto result = EmptyResult();
   if (!pending_error_.ok()) {
     auto status = std::exchange(pending_error_, Status{});
@@ -342,6 +443,7 @@ StatusOr<ReadSourceResult> AdaptiveObjectReadSource::FallBackToUnbounded(
   // range based on the window, which the transformed data overruns. A regular
   // download resumes correctly, and no data has been returned yet, so the
   // download can switch to one.
+  ++summary_.windows_abandoned;
   AbandonPrefetch();
   pass_through_ = true;
   if (!open_unbounded_) {
@@ -480,11 +582,18 @@ Status AdaptiveObjectReadSource::OpenNextWindow() {
   source_ = *std::move(source);
   window_ = window;
   window_nominal_ = nominal;
+  ++summary_.windows_opened;
+  summary_.bytes_requested += window.length;
   return Status{};
 }
 
 void AdaptiveObjectReadSource::MaybePrefetch(std::int64_t read_end) {
   if (prefetch_ || !executor_ || !PrefetchEnabled(settings_)) return;
+  // Many applications read a small prefix of the object and then close the
+  // stream. Prefetching from the first window would open a larger window that
+  // these applications do not use. Reading a full window is evidence of a
+  // sequential reader.
+  if (in_first_window_) return;
   // Without a size the next window may be past the end of the object.
   if (!object_size_ || WindowEnd() >= *object_size_) return;
   auto const consumed = read_end - window_.offset;
@@ -500,6 +609,7 @@ void AdaptiveObjectReadSource::MaybePrefetch(std::int64_t read_end) {
   // If the task cannot be scheduled the window is opened when needed.
   if (!executor_(std::move(task))) return;
   prefetch_ = std::move(state);
+  ++summary_.prefetch_started;
 }
 
 void AdaptiveObjectReadSource::RunPrefetch(
@@ -545,11 +655,14 @@ AdaptiveObjectReadSource::TakePrefetch(Window const& window) {
     // the window directly is faster. A prefetch for a different window (e.g.
     // after a window ended early) is of no use.
     state->abandoned = true;
+    auto const started = state->started;
     auto discarded = std::move(state->source);
     lk.unlock();
+    CountAbandonedPrefetch(started, state->window);
     return std::nullopt;
   }
   state->cv.wait(lk, [&state] { return state->done; });
+  ++summary_.prefetch_used;
   return std::move(state->source);
 }
 
@@ -557,16 +670,29 @@ void AdaptiveObjectReadSource::AbandonPrefetch() {
   if (!prefetch_) return;
   auto state = std::move(prefetch_);
   StatusOr<std::unique_ptr<ObjectReadSource>> discarded;
+  bool started = false;
   {
     std::lock_guard<std::mutex> lk(state->mu);
     state->abandoned = true;
+    started = state->started;
     discarded = std::move(state->source);
   }
+  CountAbandonedPrefetch(started, state->window);
   // Any prefetched window is released here, outside the lock.
+}
+
+void AdaptiveObjectReadSource::CountAbandonedPrefetch(bool started,
+                                                      Window const& window) {
+  // A prefetch that never started did not request anything.
+  if (!started) return;
+  ++summary_.prefetch_abandoned;
+  ++summary_.windows_opened;
+  summary_.bytes_requested += window.length;
 }
 
 StatusOr<ReadSourceResult> AdaptiveObjectReadSource::Fail(
     ReadSourceResult result, Status status) {
+  failed_ = true;
   if (result.bytes_received != 0) {
     // Return the data received so far, and the error in the next call.
     pending_error_ = std::move(status);
@@ -580,11 +706,20 @@ StatusOr<ReadSourceResult> AdaptiveObjectReadSource::Fail(
   return status;
 }
 
+void AdaptiveObjectReadSource::Report(AdaptiveReadSummary::CloseReason reason) {
+  if (reported_) return;
+  reported_ = true;
+  summary_.close_reason = reason;
+  summary_.unbounded_fallback = pass_through_;
+  if (on_summary_) on_summary_(summary_);
+}
+
 StatusOr<std::unique_ptr<ObjectReadSource>> MakeAdaptiveObjectReadSource(
     std::shared_ptr<AdaptiveObjectReadSource::WindowFactory const> factory,
     AdaptiveObjectReadSource::UnboundedFactory open_unbounded,
     AdaptiveObjectReadSource::Executor executor, AdaptiveReadSettings settings,
-    std::int64_t offset, std::optional<std::int64_t> generation) {
+    std::int64_t offset, std::optional<std::int64_t> generation,
+    AdaptiveObjectReadSource::SummaryCallback on_summary) {
   AdaptiveObjectReadSource::Window first{
       offset,
       (std::min)(settings.initial_window,
@@ -603,7 +738,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> MakeAdaptiveObjectReadSource(
   return std::unique_ptr<ObjectReadSource>(
       std::make_unique<AdaptiveObjectReadSource>(
           std::move(factory), std::move(open_unbounded), std::move(executor),
-          settings, std::move(first), *std::move(source)));
+          settings, std::move(first), *std::move(source),
+          std::move(on_summary)));
 }
 
 }  // namespace internal

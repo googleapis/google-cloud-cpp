@@ -14,13 +14,16 @@
 
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/adaptive_object_read_source.h"
+#include "google/cloud/storage/internal/adaptive_read_size_estimator.h"
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
@@ -53,6 +56,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtLeast;
+using ::testing::Contains;
 using ::testing::Each;
 using ::testing::ElementsAre;
 using ::testing::Eq;
@@ -60,6 +64,7 @@ using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Ne;
+using ::testing::Not;
 using ::testing::Optional;
 using ::testing::SizeIs;
 
@@ -71,7 +76,11 @@ Options TestOptions() {
       .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
       .set<BackoffPolicyOption>(
           ExponentialBackoffPolicy(ms(1), ms(2), 2).clone())
-      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone());
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone())
+      // Each test has its own history, so the first windows do not depend on
+      // the tests that ran before.
+      .set<AdaptiveReadSizeEstimatorOption>(
+          std::make_shared<AdaptiveReadSizeEstimator>());
 }
 
 // Small windows keep the test objects small.
@@ -359,6 +368,133 @@ TEST(StorageConnectionImplAdaptiveRead, DefaultConfiguration) {
   EXPECT_THAT(service.requests(), ElementsAre(RangeIs("bytes=0-1048575")));
 }
 
+// An estimator whose history has small reads from `test-bucket`.
+std::shared_ptr<AdaptiveReadSizeEstimator> SmallReadsEstimator() {
+  auto estimator = std::make_shared<AdaptiveReadSizeEstimator>();
+  for (int i = 0; i != 64; ++i) {
+    estimator->Record("test-bucket", 400 * 1024, /*reached_eof=*/false);
+  }
+  return estimator;
+}
+
+TEST(StorageConnectionImplAdaptiveRead, FirstWindowUsesRecommendation) {
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  storage_experimental::AdaptiveReadRangeConfig config;
+  config.prefetch_threshold = 0.0;
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions()
+          .set<storage_experimental::AdaptiveReadRangeOption>(config)
+          .set<AdaptiveReadSizeEstimatorOption>(SmallReadsEstimator()));
+
+  auto source = connection->ReadObject(
+      ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  // The history recommends 512 KiB.
+  EXPECT_THAT(service.requests(), ElementsAre(RangeIs("bytes=0-524287")));
+
+  // Other buckets have no history.
+  source = connection->ReadObject(
+      ReadObjectRangeRequest("other-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  EXPECT_THAT(service.requests(), ElementsAre(RangeIs("bytes=0-524287"),
+                                              RangeIs("bytes=0-1048575")));
+}
+
+TEST(StorageConnectionImplAdaptiveRead, LearningDisabledKeepsConfiguredWindow) {
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  storage_experimental::AdaptiveReadRangeConfig config;
+  config.prefetch_threshold = 0.0;
+  config.learn_initial_window = false;
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions()
+          .set<storage_experimental::AdaptiveReadRangeOption>(config)
+          .set<AdaptiveReadSizeEstimatorOption>(SmallReadsEstimator()));
+
+  auto source = connection->ReadObject(
+      ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  EXPECT_THAT(service.requests(), ElementsAre(RangeIs("bytes=0-1048575")));
+}
+
+TEST(StorageConnectionImplAdaptiveRead, RecordsCompletedReads) {
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  auto estimator = std::make_shared<AdaptiveReadSizeEstimator>();
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions()
+          .set<storage_experimental::AdaptiveReadRangeOption>(TestConfig())
+          .set<AdaptiveReadSizeEstimatorOption>(estimator));
+
+  for (std::size_t i = 0; i != AdaptiveReadSizeEstimator::kMinSamples; ++i) {
+    auto source = connection->ReadObject(
+        ReadObjectRangeRequest("test-bucket", "test-object"));
+    ASSERT_THAT(source, IsOk());
+    ASSERT_THAT(ReadAll(**source, 4096), IsOk());
+  }
+  // Each read of the 6000 bytes reached the end of the object, the smallest
+  // window is enough.
+  auto const settings =
+      MakeAdaptiveReadSettings(storage_experimental::AdaptiveReadRangeConfig{});
+  EXPECT_THAT(estimator->Recommend("test-bucket", settings),
+              Eq(AdaptiveReadSizeEstimator::kMinCandidate));
+}
+
+TEST(StorageConnectionImplAdaptiveRead, LearningDisabledDoesNotRecord) {
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  auto estimator = std::make_shared<AdaptiveReadSizeEstimator>();
+  auto config = TestConfig();
+  config.learn_initial_window = false;
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions()
+          .set<storage_experimental::AdaptiveReadRangeOption>(config)
+          .set<AdaptiveReadSizeEstimatorOption>(estimator));
+
+  auto source = connection->ReadObject(
+      ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  ASSERT_THAT(ReadAll(**source, 4096), IsOk());
+  EXPECT_THAT(estimator->bucket_count(), Eq(0U));
+}
+
+TEST(StorageConnectionImplAdaptiveRead, LogsSummaryWhenEnabled) {
+  testing_util::ScopedLog log;
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions()
+          .set<storage_experimental::AdaptiveReadRangeOption>(TestConfig())
+          .set<LoggingComponentsOption>({"adaptive-read"}));
+
+  auto source = connection->ReadObject(
+      ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  ASSERT_THAT(ReadAll(**source, 4096), IsOk());
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(
+          HasSubstr("adaptive read summary"), HasSubstr("bucket=test-bucket"),
+          HasSubstr("close_reason=eof"), HasSubstr("bytes_delivered=6000"))));
+}
+
+TEST(StorageConnectionImplAdaptiveRead, NoSummaryLogByDefault) {
+  testing_util::ScopedLog log;
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions().set<storage_experimental::AdaptiveReadRangeOption>(
+          TestConfig()));
+
+  auto source = connection->ReadObject(
+      ReadObjectRangeRequest("test-bucket", "test-object"));
+  ASSERT_THAT(source, IsOk());
+  ASSERT_THAT(ReadAll(**source, 4096), IsOk());
+  EXPECT_THAT(log.ExtractLines(),
+              Not(Contains(HasSubstr("adaptive read summary"))));
+}
+
 TEST(StorageConnectionImplAdaptiveRead, DisabledByDefault) {
   FakeObjectService service(6000);
   auto connection = MakeConnection(service);
@@ -487,7 +623,7 @@ TEST(StorageConnectionImplAdaptiveRead, PrefetchesOnBackgroundThread) {
   FakeObjectService service(6000);
   std::promise<void> prefetched;
   service.set_on_request([&prefetched](RecordedRequest const& r) {
-    if (r.range == "bytes=1024-3071") prefetched.set_value();
+    if (r.range == "bytes=3072-5999") prefetched.set_value();
   });
   auto connection = MakeConnection(service);
   auto config = TestConfig();
@@ -498,8 +634,9 @@ TEST(StorageConnectionImplAdaptiveRead, PrefetchesOnBackgroundThread) {
   auto source = connection->ReadObject(
       ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_THAT(source, IsOk());
-  // Read past half of the first window, and wait for the prefetch.
-  std::vector<char> buffer(600);
+  // The first window is never prefetched past. Read past half of the second
+  // window, [1024, 3072), and wait for the prefetch of the third window.
+  std::vector<char> buffer(2100);
   auto r = (*source)->Read(buffer.data(), buffer.size());
   ASSERT_THAT(r, IsOk());
   std::string data(buffer.data(), r->bytes_received);
@@ -514,7 +651,8 @@ TEST(StorageConnectionImplAdaptiveRead, PrefetchesOnBackgroundThread) {
   auto const requests = service.requests();
   ASSERT_THAT(requests, SizeIs(3));
   EXPECT_THAT(requests[0].thread, Eq(std::this_thread::get_id()));
-  EXPECT_THAT(requests[1].thread, Ne(std::this_thread::get_id()));
+  EXPECT_THAT(requests[1].thread, Eq(std::this_thread::get_id()));
+  EXPECT_THAT(requests[2].thread, Ne(std::this_thread::get_id()));
   EXPECT_THAT(requests, Each(IsTagged(true)));
 }
 

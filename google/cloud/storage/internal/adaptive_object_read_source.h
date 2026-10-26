@@ -63,7 +63,66 @@ struct AdaptiveReadSettings {
   std::int64_t max_window;
   double growth_factor;
   double prefetch_threshold;
+  // The largest remainder of a window read and discarded on `Close()`.
+  std::int64_t max_drain = std::int64_t{1} << 20;
+  // The cost of an additional request, in bytes, used to choose the first
+  // window. See `AdaptiveReadSizeEstimator`.
+  std::int64_t request_cost_bytes = std::int64_t{1} << 20;
+  bool learn_initial_window = true;
 };
+
+/**
+ * Describes a single adaptive read, once it is done.
+ *
+ * `AdaptiveObjectReadSource` reports this summary once per stream: when the
+ * stream reaches the end of the data, fails, or is closed (or destroyed)
+ * before the end.
+ */
+struct AdaptiveReadSummary {
+  enum class CloseReason {
+    // All the requested data was delivered.
+    kEndOfData,
+    // The application closed (or destroyed) the stream before the end.
+    kEarlyClose,
+    // The download failed.
+    kError,
+  };
+
+  // The bytes returned to the application.
+  std::int64_t bytes_delivered = 0;
+  // The windows requested from the service, including prefetched windows that
+  // were not used.
+  std::int64_t windows_opened = 0;
+  // The sum of the lengths of `windows_opened`.
+  std::int64_t bytes_requested = 0;
+  // The bytes read and discarded on close, to complete the last window.
+  std::int64_t bytes_drained = 0;
+  // Windows closed with data still pending.
+  std::int64_t windows_abandoned = 0;
+  // Prefetches scheduled, used as the next window, and requested but not used.
+  std::int64_t prefetch_started = 0;
+  std::int64_t prefetch_used = 0;
+  std::int64_t prefetch_abandoned = 0;
+  // The size of the first window.
+  std::int64_t initial_window = 0;
+  // The service did not honor the range of the first window, and the source
+  // switched to a regular download.
+  bool unbounded_fallback = false;
+  CloseReason close_reason = CloseReason::kEarlyClose;
+};
+
+/// Returns the name of @p reason, as used in logs and span attributes.
+char const* ToString(AdaptiveReadSummary::CloseReason reason);
+
+/// Formats @p summary as a single line of `key=value` pairs.
+std::string FormatAdaptiveReadSummary(AdaptiveReadSummary const& summary);
+
+/**
+ * Adds @p summary to the active span, as `gcs.adaptive_read.*` attributes.
+ *
+ * The caller is responsible for checking that tracing is enabled.
+ */
+void AddAdaptiveReadSpanAttributes(AdaptiveReadSummary const& summary);
 
 /// Validates @p config, replacing invalid values with usable ones.
 AdaptiveReadSettings MakeAdaptiveReadSettings(
@@ -102,15 +161,20 @@ std::int64_t NextAdaptiveWindowSize(std::int64_t current,
  *   first window shows that the service ignored its range, the source
  *   discards that response and switches to a regular download (created by an
  *   `UnboundedFactory`), which also resumes correctly after a failure.
- * - Prefetching: once a read reaches `prefetch_threshold` of a window, the next
- *   window is opened in the background using the `Executor`. The threshold is
- *   checked before each read, so a single large read that spans several
- *   windows also prefetches them. If the prefetch has not started by the time
- *   the application needs the window, the window is opened directly instead.
+ * - Prefetching: once the application has read a full window, which suggests
+ *   it reads sequentially, and a read reaches `prefetch_threshold` of a later
+ *   window, the next window is opened in the background using the `Executor`.
+ *   The first window is never prefetched past: many applications read a small
+ *   prefix and close the stream. The threshold is checked before each read, so
+ *   a single large read that spans several windows also prefetches them. If
+ *   the prefetch has not started by the time the application needs the
+ *   window, the window is opened directly instead.
  * - Bounded drain on close: if the application closes the stream with at most
- *   `initial_window` bytes left in the current window, those bytes are read
- *   and discarded. The response completes normally, and the connection can be
+ *   `max_drain` bytes left in the current window, those bytes are read and
+ *   discarded. The response completes normally, and the connection can be
  *   reused.
+ * - Telemetry: once the stream is done, the source reports an
+ *   `AdaptiveReadSummary` to the `SummaryCallback`.
  */
 class AdaptiveObjectReadSource : public ObjectReadSource {
  public:
@@ -142,6 +206,9 @@ class AdaptiveObjectReadSource : public ObjectReadSource {
   /// Runs a task in the background. Returns false if the task cannot run.
   using Executor = std::function<bool(std::function<void()>)>;
 
+  /// Receives the summary of the stream, see `AdaptiveReadSummary`.
+  using SummaryCallback = std::function<void(AdaptiveReadSummary const&)>;
+
   /**
    * Creates a source whose first window is already open.
    *
@@ -154,11 +221,15 @@ class AdaptiveObjectReadSource : public ObjectReadSource {
    * @param first_window the first window, its offset is the start of the
    *     download.
    * @param first_source the source reading @p first_window.
+   * @param on_summary receives the summary of the stream, called once, from
+   *     the thread that calls `Read()`, `Close()`, or the destructor. May be
+   *     empty.
    */
   AdaptiveObjectReadSource(std::shared_ptr<WindowFactory const> factory,
                            UnboundedFactory open_unbounded, Executor executor,
                            AdaptiveReadSettings settings, Window first_window,
-                           std::unique_ptr<ObjectReadSource> first_source);
+                           std::unique_ptr<ObjectReadSource> first_source,
+                           SummaryCallback on_summary = {});
   ~AdaptiveObjectReadSource() override;
 
   AdaptiveObjectReadSource(AdaptiveObjectReadSource const&) = delete;
@@ -179,6 +250,7 @@ class AdaptiveObjectReadSource : public ObjectReadSource {
   std::int64_t WindowEnd() const { return window_.offset + window_.length; }
   Window MakeWindow(std::int64_t offset, std::int64_t nominal) const;
 
+  StatusOr<ReadSourceResult> ReadImpl(char* buf, std::size_t n);
   StatusOr<ReadSourceResult> ReadWindows(char* buf, std::size_t n,
                                          ReadSourceResult result);
   StatusOr<ReadSourceResult> FallBackToUnbounded(char* buf, std::size_t n,
@@ -195,12 +267,18 @@ class AdaptiveObjectReadSource : public ObjectReadSource {
   std::optional<StatusOr<std::unique_ptr<ObjectReadSource>>> TakePrefetch(
       Window const& window);
   void AbandonPrefetch();
+  // Counts a prefetch that was not used. @p started is true if it requested
+  // (or is requesting) its window from the service.
+  void CountAbandonedPrefetch(bool started, Window const& window);
   StatusOr<ReadSourceResult> Fail(ReadSourceResult result, Status status);
+  // Reports the summary of the stream, at most once.
+  void Report(AdaptiveReadSummary::CloseReason reason);
 
   std::shared_ptr<WindowFactory const> factory_;
   UnboundedFactory open_unbounded_;
   Executor executor_;
   AdaptiveReadSettings settings_;
+  SummaryCallback on_summary_;
   std::int64_t start_offset_;
   // The offset of the next byte returned to the caller.
   std::int64_t offset_;
@@ -219,9 +297,13 @@ class AdaptiveObjectReadSource : public ObjectReadSource {
   bool pass_through_ = false;
   bool eof_ = false;
   bool closed_ = false;
+  // The download found an error, it may still be pending.
+  bool failed_ = false;
   // An error found after some data was returned, reported on the next call.
   Status pending_error_;
   std::shared_ptr<PrefetchState> prefetch_;
+  AdaptiveReadSummary summary_;
+  bool reported_ = false;
 };
 
 /**
@@ -233,13 +315,14 @@ class AdaptiveObjectReadSource : public ObjectReadSource {
  * The service rejects any range for an empty object. If the first window of a
  * full object download (@p offset is 0) fails with `kOutOfRange`, this function
  * returns the source created by @p open_unbounded, a regular download of the
- * full object.
+ * full object. @p on_summary is not called in that case.
  */
 StatusOr<std::unique_ptr<ObjectReadSource>> MakeAdaptiveObjectReadSource(
     std::shared_ptr<AdaptiveObjectReadSource::WindowFactory const> factory,
     AdaptiveObjectReadSource::UnboundedFactory open_unbounded,
     AdaptiveObjectReadSource::Executor executor, AdaptiveReadSettings settings,
-    std::int64_t offset, std::optional<std::int64_t> generation);
+    std::int64_t offset, std::optional<std::int64_t> generation,
+    AdaptiveObjectReadSource::SummaryCallback on_summary = {});
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

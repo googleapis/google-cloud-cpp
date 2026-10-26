@@ -69,6 +69,8 @@ add_library(
     include_folders_as_prefixes.h
     internal/adaptive_object_read_source.cc
     internal/adaptive_object_read_source.h
+    internal/adaptive_read_size_estimator.cc
+    internal/adaptive_read_size_estimator.h
     internal/base64.cc
     internal/base64.h
     internal/binary_data_as_debug_string.h
@@ -430,6 +432,7 @@ if (BUILD_TESTING)
         hmac_key_metadata_test.cc
         idempotency_policy_test.cc
         internal/adaptive_object_read_source_test.cc
+        internal/adaptive_read_size_estimator_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_metadata_cache_test.cc

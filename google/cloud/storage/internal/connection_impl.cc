@@ -15,11 +15,14 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/adaptive_object_read_source.h"
+#include "google/cloud/storage/internal/adaptive_read_size_estimator.h"
 #include "google/cloud/storage/internal/hedged_object_read_source.h"
 #include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -517,8 +520,40 @@ StatusOr<std::unique_ptr<ObjectReadSource>>
 StorageConnectionImpl::ReadObjectAdaptive(
     ReadObjectRangeRequest const& request,
     google::cloud::internal::ImmutableOptions current) {
-  auto const settings = MakeAdaptiveReadSettings(
+  auto settings = MakeAdaptiveReadSettings(
       current->get<storage_experimental::AdaptiveReadRangeOption>());
+  auto estimator = current->get<AdaptiveReadSizeEstimatorOption>();
+  if (!estimator) estimator = AdaptiveReadSizeEstimator::Global();
+  auto const& bucket = request.bucket_name();
+  if (settings.learn_initial_window) {
+    settings.initial_window = estimator->Recommend(bucket, settings);
+  }
+  // Reports the summary of each adaptive read: as span attributes when tracing
+  // is enabled, as a log line when the `adaptive-read` logging component is
+  // enabled, and to the estimator that chooses the first window.
+  auto on_summary = [estimator, bucket, object = request.object_name(),
+                     learn = settings.learn_initial_window,
+                     tracing =
+                         google::cloud::internal::TracingEnabled(*current),
+                     logging = google::cloud::internal::Contains(
+                         current->get<LoggingComponentsOption>(),
+                         "adaptive-read")](AdaptiveReadSummary const& summary) {
+    if (tracing) AddAdaptiveReadSpanAttributes(summary);
+    if (logging) {
+      GCP_LOG(INFO) << "adaptive read summary: bucket=" << bucket
+                    << " object=" << object << " "
+                    << FormatAdaptiveReadSummary(summary);
+    }
+    // Failed reads do not show how much data the application needs, and
+    // the windows do not apply to a regular download.
+    if (!learn || summary.unbounded_fallback ||
+        summary.close_reason == AdaptiveReadSummary::CloseReason::kError) {
+      return;
+    }
+    estimator->Record(
+        bucket, summary.bytes_delivered,
+        summary.close_reason == AdaptiveReadSummary::CloseReason::kEndOfData);
+  };
   // The windows are tagged, so the service logs can tell them apart from other
   // downloads. Windows are not hedged: a hedged source opens its download on
   // the first `Read()`, which defeats prefetching and delays errors (such as
@@ -563,7 +598,7 @@ StorageConnectionImpl::ReadObjectAdaptive(
   }
   return MakeAdaptiveObjectReadSource(
       std::move(factory), std::move(open_unbounded), std::move(executor),
-      settings, request.StartingByte(), generation);
+      settings, request.StartingByte(), generation, std::move(on_summary));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(
