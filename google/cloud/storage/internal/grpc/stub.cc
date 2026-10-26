@@ -206,7 +206,7 @@ StatusOr<storage::internal::ListBucketsResponse> GrpcStub::ListBuckets(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->ListBuckets(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
@@ -218,7 +218,7 @@ StatusOr<storage::BucketMetadata> GrpcStub::CreateBucket(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->CreateBucket(ctx, options, proto);
   if (response) return FromProto(*response, options);
   // GCS returns kFailedPrecondition when the bucket already exists. I filed
@@ -247,7 +247,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteBucket(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto status = stub_->DeleteBucket(ctx, options, proto);
   if (!status.ok()) return status;
   return storage::internal::EmptyResponse{};
@@ -259,7 +259,7 @@ StatusOr<storage::BucketMetadata> GrpcStub::UpdateBucket(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->UpdateBucket(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -279,7 +279,7 @@ StatusOr<storage::NativeIamPolicy> GrpcStub::GetNativeBucketIamPolicy(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->GetIamPolicy(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
@@ -291,7 +291,7 @@ StatusOr<storage::NativeIamPolicy> GrpcStub::SetNativeBucketIamPolicy(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->SetIamPolicy(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
@@ -304,7 +304,7 @@ GrpcStub::TestBucketIamPermissions(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->TestIamPermissions(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
@@ -316,7 +316,7 @@ StatusOr<storage::BucketMetadata> GrpcStub::LockBucketRetentionPolicy(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->LockBucketRetentionPolicy(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -344,7 +344,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
 
   auto ctx = std::make_shared<grpc::ClientContext>();
   ApplyQueryParameters(*ctx, options, request);
-  AddIdempotencyToken(*ctx, context);
+  ApplyRestContextHeaders(*ctx, context);
   ApplyRoutingHeaders(*ctx, request);
   auto stream = stub_->WriteObject(std::move(ctx), options);
 
@@ -410,7 +410,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::CopyObject(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->RewriteObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   if (!response->done()) {
@@ -435,7 +435,7 @@ GrpcStub::ReadObject(rest_internal::RestContext& context,
                      storage::internal::ReadObjectRangeRequest const& request) {
   auto ctx = std::make_shared<grpc::ClientContext>();
   ApplyQueryParameters(*ctx, options, request);
-  AddIdempotencyToken(*ctx, context);
+  ApplyRestContextHeaders(*ctx, context);
   auto proto_request = ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
   auto stream = stub_->ReadObject(std::move(ctx), options, *proto_request);
@@ -474,7 +474,7 @@ StatusOr<storage::internal::ListObjectsResponse> GrpcStub::ListObjects(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->ListObjects(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -486,7 +486,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteObject(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->DeleteObject(ctx, options, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
@@ -499,7 +499,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::UpdateObject(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->UpdateObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -512,7 +512,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::MoveObject(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->MoveObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -533,7 +533,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::ComposeObject(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->ComposeObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -546,7 +546,7 @@ StatusOr<storage::internal::RewriteObjectResponse> GrpcStub::RewriteObject(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->RewriteObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -559,7 +559,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::RestoreObject(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = stub_->RestoreObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -574,7 +574,7 @@ GrpcStub::CreateResumableUpload(
 
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -592,7 +592,7 @@ GrpcStub::QueryResumableUpload(
     storage::internal::QueryResumableUploadRequest const& request) {
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -607,7 +607,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteResumableUpload(
     storage::internal::DeleteResumableUploadRequest const& request) {
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -638,7 +638,7 @@ StatusOr<storage::internal::QueryResumableUploadResponse> GrpcStub::UploadChunk(
 
   auto ctx = std::make_shared<grpc::ClientContext>();
   ApplyQueryParameters(*ctx, options, request);
-  AddIdempotencyToken(*ctx, context);
+  ApplyRestContextHeaders(*ctx, context);
   ApplyRoutingHeaders(*ctx, request);
   auto stream = stub_->WriteObject(std::move(ctx), options);
 
@@ -1046,7 +1046,7 @@ StatusOr<storage::internal::SignBlobResponse> GrpcStub::SignBlob(
   grpc::ClientContext ctx;
   // This request does not have any options that require using
   //     ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   auto response = iam_stub_->SignBlob(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
@@ -1087,7 +1087,7 @@ StatusOr<google::storage::v2::Bucket> GrpcStub::GetBucketMetadataImpl(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   return stub_->GetBucket(ctx, options, proto);
 }
 
@@ -1098,7 +1098,7 @@ StatusOr<google::storage::v2::Bucket> GrpcStub::PatchBucketImpl(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   return stub_->UpdateBucket(ctx, options, *proto);
 }
 
@@ -1108,7 +1108,7 @@ StatusOr<google::storage::v2::Object> GrpcStub::GetObjectMetadataImpl(
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   return stub_->GetObject(ctx, options, proto);
 }
 
@@ -1119,7 +1119,7 @@ StatusOr<google::storage::v2::Object> GrpcStub::PatchObjectImpl(
   if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
   return stub_->UpdateObject(ctx, options, *proto);
 }
 
