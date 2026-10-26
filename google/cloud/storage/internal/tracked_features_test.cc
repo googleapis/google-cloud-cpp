@@ -56,8 +56,8 @@ TEST(TrackedFeatures, FeatureBit) {
 
 TEST(TrackedFeatures, FeatureBitsAreSingleDistinctBits) {
   std::uint32_t seen = 0;
-  for (auto feature : kAllFeatures) {
-    auto const bit = FeatureBit(feature);
+  for (TrackedFeature feature : kAllFeatures) {
+    std::uint32_t const bit = FeatureBit(feature);
     // Exactly one bit set.
     EXPECT_NE(bit, 0U);
     EXPECT_EQ(bit & (bit - 1), 0U) << "feature bit " << bit;
@@ -109,7 +109,8 @@ TEST(TrackedFeatures, EncodeUsesUrlSafeAlphabet) {
   // Exercise every 6-bit group value; none of the outputs may contain the
   // standard alphabet's `+` or `/`.
   for (std::uint32_t mask = 1; mask != 0; mask <<= 1) {
-    auto const encoded = EncodeFeatureMask(mask | (mask >> 1) | (mask >> 2));
+    std::string const encoded =
+        EncodeFeatureMask(mask | (mask >> 1) | (mask >> 2));
     EXPECT_EQ(encoded.find_first_of("+/"), std::string::npos) << encoded;
     EXPECT_EQ(encoded.size(), 8U) << encoded;
   }
@@ -118,7 +119,7 @@ TEST(TrackedFeatures, EncodeUsesUrlSafeAlphabet) {
   // in each of them.
   for (int shift : {26, 20, 14, 8, 2}) {
     for (std::uint32_t sextet : {0x3EU, 0x3FU}) {
-      auto const encoded = EncodeFeatureMask(sextet << shift);
+      std::string const encoded = EncodeFeatureMask(sextet << shift);
       EXPECT_THAT(encoded, Not(IsEmpty()));
       EXPECT_EQ(encoded.find_first_of("+/"), std::string::npos) << encoded;
     }
