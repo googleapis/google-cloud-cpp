@@ -201,9 +201,7 @@ OpenStreamFactory MakeOpenStreamFactory(
           if (options->get<storage::EnableMultiStreamOptimizationOption>()) {
             features |= FeatureBit(TrackedFeature::kMultistreamInMrd);
           }
-          if (features != 0) {
-            context->AddMetadata(kFeaturesHeader, EncodeFeatureMask(features));
-          }
+          AddFeaturesHeader(*context, features);
           auto open = std::make_shared<OpenObject>(
               *stub, cq, std::move(context), std::move(options), request);
           // Extend the lifetime of the coroutine until it finishes.

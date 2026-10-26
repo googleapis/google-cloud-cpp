@@ -879,11 +879,8 @@ Options HedgingCallOptions() {
 }
 
 TEST(RetryClientTest, ReadObjectFeatureHeaderWithHedging) {
-  // Pinned to the literal encoding: the service decodes the value by
-  // contract, not by calling this library.
-  EXPECT_EQ(storage_internal::EncodeFeatureMask(storage_internal::FeatureBit(
-                storage_internal::TrackedFeature::kReadHedging)),
-            "AAAAAg==");
+  // "AAAAAg==" is `FeatureBit(TrackedFeature::kReadHedging)`; the encoding
+  // itself is pinned in `tracked_features_test.cc`.
   EXPECT_THAT(FeatureHeaderForReadObject(HedgingConnectionOptions(),
                                          HedgingCallOptions()),
               ElementsAre("AAAAAg=="));
