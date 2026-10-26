@@ -48,6 +48,9 @@ namespace {
 using ::google::cloud::Idempotency;
 using ::google::cloud::internal::MergeOptions;
 using ::google::cloud::rest_internal::RestRetryLoop;
+using ::google::cloud::storage_internal::AddFeaturesHeader;
+using ::google::cloud::storage_internal::FeatureBit;
+using ::google::cloud::storage_internal::TrackedFeature;
 
 // Returns an error if the response contains an unexpected (or invalid)
 // committed size.
@@ -420,18 +423,16 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
       enable_hedging && max_hedges > 0 && hedge_pool_ && read_pool_;
 
   // Tell the service which client-side features shaped this read. Only the
-  // features actually in effect are reported, and the header is omitted when
-  // there are none.
+  // features actually in effect are reported; `kReadHedging` means hedging is
+  // in effect for this read, not that a hedge was dispatched.
   std::uint32_t features = 0;
   if (hedging_active) {
-    features |= storage_internal::FeatureBit(
-        storage_internal::TrackedFeature::kReadHedging);
+    features |= FeatureBit(TrackedFeature::kReadHedging);
   }
-  auto const features_value = storage_internal::EncodeFeatureMask(features);
 
   auto self = shared_from_this();
   auto const* where = __func__;
-  auto factory = [self = shared_from_this(), current, where, features_value](
+  auto factory = [self = shared_from_this(), current, where, features](
                      ReadObjectRangeRequest const& request,
                      RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
     auto const idempotency =
@@ -449,14 +450,11 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
                                            request.object_name()));
     return RestRetryLoop(
         logging_retry_policy, backoff_policy, idempotency,
-        [self, token = self->MakeIdempotencyToken(), features_value](
+        [self, token = self->MakeIdempotencyToken(), features](
             rest_internal::RestContext& context, Options const& options,
             ReadObjectRangeRequest const& request) {
           context.AddHeader(kIdempotencyTokenHeader, token);
-          if (!features_value.empty()) {
-            context.AddHeader(storage_internal::kFeaturesHeader,
-                              features_value);
-          }
+          AddFeaturesHeader(context, features);
           return self->stub_->ReadObject(context, options, request);
         },
         *current, request, where);

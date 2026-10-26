@@ -21,19 +21,21 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::uint32_t FeatureBit(TrackedFeature feature) {
-  return std::uint32_t{1} << static_cast<std::uint32_t>(feature);
-}
-
 std::string EncodeFeatureMask(std::uint32_t mask) {
   if (mask == 0) return {};
   std::array<std::uint8_t, 4> const bytes{
-      static_cast<std::uint8_t>((mask >> 24) & 0xFF),
-      static_cast<std::uint8_t>((mask >> 16) & 0xFF),
-      static_cast<std::uint8_t>((mask >> 8) & 0xFF),
-      static_cast<std::uint8_t>(mask & 0xFF),
+      static_cast<std::uint8_t>(mask >> 24),
+      static_cast<std::uint8_t>(mask >> 16),
+      static_cast<std::uint8_t>(mask >> 8),
+      static_cast<std::uint8_t>(mask),
   };
   return google::cloud::internal::UrlsafeBase64EncodeWithPadding(bytes);
+}
+
+void AddFeaturesHeader(rest_internal::RestContext& context,
+                       std::uint32_t mask) {
+  if (mask == 0) return;
+  context.AddHeader(kFeaturesHeader, EncodeFeatureMask(mask));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

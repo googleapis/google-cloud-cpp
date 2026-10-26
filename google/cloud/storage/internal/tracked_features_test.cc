@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/tracked_features.h"
+#include "google/cloud/internal/rest_context.h"
 #include <gmock/gmock.h>
 #include <array>
 #include <cstdint>
@@ -24,39 +25,23 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
 // Every tracked feature. Add new enumerators here so the tests below cover
-// them.
+// them. The header `static_assert`s that the positions are distinct and below
+// 32; this list drives the runtime checks on the derived bit values.
 constexpr std::array<TrackedFeature, 2> kAllFeatures = {
     TrackedFeature::kMultistreamInMrd,
     TrackedFeature::kReadHedging,
 };
 
-// The enumerators are bit positions in a 32-bit mask, so each must fit and no
-// two may collide. Both are checked at compile time; a bad enumerator fails
-// the build rather than the test.
-constexpr bool AllBitPositionsFit() {
-  for (auto feature : kAllFeatures) {
-    if (static_cast<std::uint32_t>(feature) >= 32) return false;
-  }
-  return true;
-}
-
-constexpr bool AllBitPositionsDistinct() {
-  for (std::size_t i = 0; i != kAllFeatures.size(); ++i) {
-    for (std::size_t j = i + 1; j != kAllFeatures.size(); ++j) {
-      if (kAllFeatures[i] == kAllFeatures[j]) return false;
-    }
-  }
-  return true;
-}
-
-static_assert(AllBitPositionsFit(),
-              "TrackedFeature values must be bit positions below 32");
-static_assert(AllBitPositionsDistinct(),
-              "TrackedFeature values must not be reused");
+// `FeatureBit()` is `constexpr`, so the bit values are usable at compile time.
+static_assert(FeatureBit(TrackedFeature::kMultistreamInMrd) == 1,
+              "kMultistreamInMrd is bit 0");
+static_assert(FeatureBit(TrackedFeature::kReadHedging) == 2,
+              "kReadHedging is bit 1");
 
 TEST(TrackedFeatures, HeaderName) {
   EXPECT_EQ(std::string(kFeaturesHeader), "x-goog-storage-cpp-features");
@@ -138,6 +123,20 @@ TEST(TrackedFeatures, EncodeUsesUrlSafeAlphabet) {
       EXPECT_EQ(encoded.find_first_of("+/"), std::string::npos) << encoded;
     }
   }
+}
+
+TEST(TrackedFeatures, AddFeaturesHeaderRestContext) {
+  rest_internal::RestContext context;
+  AddFeaturesHeader(context, FeatureBit(TrackedFeature::kReadHedging));
+  EXPECT_THAT(context.GetHeader(kFeaturesHeader).values(),
+              ElementsAre("AAAAAg=="));
+}
+
+// A zero mask means the header is omitted, not sent empty.
+TEST(TrackedFeatures, AddFeaturesHeaderRestContextZeroMask) {
+  rest_internal::RestContext context;
+  AddFeaturesHeader(context, 0);
+  EXPECT_THAT(context.GetHeader(kFeaturesHeader), IsEmpty());
 }
 
 }  // namespace
