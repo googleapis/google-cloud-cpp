@@ -53,14 +53,14 @@ void CopyHeader(grpc::ClientContext& ctx,
   auto const& headers = context.headers();
   auto const l = headers.find(name);
   if (l == headers.end()) return;
-  for (auto const& v : l->second.values()) ctx.AddMetadata(name, v);
+  for (std::string const& v : l->second.values()) ctx.AddMetadata(name, v);
 }
 
 }  // namespace
 
 void ApplyRestContextHeaders(grpc::ClientContext& ctx,
                              rest_internal::RestContext const& context) {
-  for (auto const* name : kForwardedHeaders) CopyHeader(ctx, context, name);
+  for (char const* name : kForwardedHeaders) CopyHeader(ctx, context, name);
 }
 
 void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token) {

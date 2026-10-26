@@ -451,7 +451,7 @@ std::multimap<std::string, std::string> OpenAndCaptureMetadata(
 }
 
 TEST(AsyncConnectionImplTest, OpenFeatureHeaderWithMultiStream) {
-  auto const expected =
+  std::string const expected =
       EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
   EXPECT_THAT(
       OpenAndCaptureMetadata(
@@ -476,7 +476,7 @@ TEST(AsyncConnectionImplTest, OpenFeatureHeaderOnEveryDescriptorStream) {
     bucket: "test-only-invalid"
     object: "test-object"
   )pb";
-  auto const expected =
+  std::string const expected =
       EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
 
   ValidateMetadataFixture fixture;

@@ -28,6 +28,7 @@
 #include <opentelemetry/metrics/provider.h>
 #include <algorithm>
 #include <chrono>
+#include <cstddef>
 #include <cstdint>
 #include <fstream>
 #include <functional>
@@ -412,12 +413,12 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
     ReadObjectRangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
 
-  auto const enable_hedging =
+  bool const enable_hedging =
       current->get<storage_experimental::EnableReadHedgingOption>();
   auto const delay = current->get<storage_experimental::ReadHedgeDelayOption>();
-  auto const max_hedges =
+  int const max_hedges =
       current->get<storage_experimental::MaxReadHedgesOption>();
-  auto const max_buffer =
+  std::size_t const max_buffer =
       current->get<storage_experimental::MaximumHedgeBufferOption>();
   bool const hedging_active =
       enable_hedging && max_hedges > 0 && hedge_pool_ && read_pool_;
