@@ -143,13 +143,20 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
       }
     }
     void visit(ExternalAccountConfig const& cfg) override {
+      auto external_account_creds = GrpcExternalAccountCredentials(cfg);
+      if (!external_account_creds) {
+        result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+            ErrorCredentialsConfig{InvalidArgumentError(
+                "Error creating grpc::ExternalAccountCredentials",
+                GCP_ERROR_INFO())});
+        return;
+      }
       grpc::SslCredentialsOptions ssl_options;
       auto cainfo = LoadCAInfo(options);
       if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
-          grpc::CompositeChannelCredentials(
-              grpc::SslCredentials(ssl_options),
-              GrpcExternalAccountCredentials(cfg)));
+          grpc::CompositeChannelCredentials(grpc::SslCredentials(ssl_options),
+                                            std::move(external_account_creds)));
     }
     void visit(ApiKeyConfig const& cfg) override {
       result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());

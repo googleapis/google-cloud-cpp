@@ -92,6 +92,15 @@ auto constexpr kExternalAccountContents = R"""({
   "credential_source": {"url": "https://subject.example.com/"}
 })""";
 
+auto constexpr kExternalAccountAuthorizedUserContents = R"""({
+  "type": "external_account_authorized_user",
+  "audience": "//iam.googleapis.com/locations/global/workforcePools/pool-id/providers/provider-id",
+  "client_id": "test-client-id",
+  "client_secret": "test-client-secret",
+  "refresh_token": "test-refresh-token",
+  "token_url": "https://sts.example.com/v1/oauthtoken"
+})""";
+
 auto constexpr kImpersonatedServiceAccountContents = R"""({
   "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com:generateAccessToken",
   "delegates": [
@@ -187,6 +196,39 @@ TEST_F(GoogleCredentialsTest,
 
   // Test that the authorized user credentials are loaded as the default when
   // stored in the well-known gcloud ADC file path.
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto creds =
+      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+  (void)std::remove(filename.c_str());
+  ASSERT_STATUS_OK(creds);
+  EXPECT_THAT(creds->get(),
+              WhenDynamicCastTo<ExternalAccountCredentials*>(NotNull()));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadValidExternalAccountAuthorizedUserCredentialsViaEnvVar) {
+  auto const filename = TempFileName();
+  std::ofstream(filename) << kExternalAccountAuthorizedUserContents;
+  auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto creds =
+      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+  (void)std::remove(filename.c_str());
+  ASSERT_STATUS_OK(creds);
+  EXPECT_THAT(creds->get(),
+              WhenDynamicCastTo<ExternalAccountCredentials*>(NotNull()));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadValidExternalAccountAuthorizedUserCredentialsViaGcloudFile) {
+  auto const filename = TempFileName();
+  std::ofstream(filename) << kExternalAccountAuthorizedUserContents;
+  auto const env =
+      ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
+
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =
@@ -343,6 +385,21 @@ TEST_F(GoogleCredentialsTest, LoadInvalidAuthorizedUserCredentialsViaADC) {
 TEST_F(GoogleCredentialsTest, LoadInvalidServiceAccountCredentialsViaADC) {
   auto const filename = TempFileName();
   std::ofstream(filename) << R"""("type": "service_account")""";
+  auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto creds =
+      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+  EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument));
+  (void)std::remove(filename.c_str());
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadInvalidExternalAccountAuthorizedUserCredentials) {
+  auto const filename = TempFileName();
+  std::ofstream(filename)
+      << R"""({"type": "external_account_authorized_user"})""";
   auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
 
   MockHttpClientFactory client_factory;

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
@@ -26,6 +27,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
+#include <mutex>
 #include <regex>
 
 namespace google {
@@ -151,10 +153,47 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
   }
   auto type = ValidateStringField(json, "type", "credentials-file", ec);
   if (!type) return std::move(type).status();
-  if (*type != "external_account") {
+  if (*type != "external_account" &&
+      *type != "external_account_authorized_user") {
     return InvalidArgumentError(
         "mismatched type (" + *type + ") in external account configuration",
         GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto token_url =
+      ValidateStringField(json, "token_url", "credentials-file", ec);
+  if (!token_url) return std::move(token_url).status();
+  auto universe_domain = GetUniverseDomainFromCredentialsJson(json);
+  if (!universe_domain) return std::move(universe_domain).status();
+
+  if (*type == "external_account_authorized_user") {
+    StatusOr<std::string> client_id =
+        ValidateStringField(json, "client_id", "credentials-file", ec);
+    if (!client_id) return std::move(client_id).status();
+    StatusOr<std::string> client_secret =
+        ValidateStringField(json, "client_secret", "credentials-file", ec);
+    if (!client_secret) return std::move(client_secret).status();
+    StatusOr<std::string> refresh_token =
+        ValidateStringField(json, "refresh_token", "credentials-file", ec);
+    if (!refresh_token) return std::move(refresh_token).status();
+    StatusOr<std::string> audience =
+        ValidateStringField(json, "audience", "credentials-file", "", ec);
+    if (!audience) return std::move(audience).status();
+    std::variant<std::monostate, WorkforceIdentityFederationInfo,
+                 WorkloadIdentityFederationInfo>
+        identity_federation = IdentityFederationFromAudience(*audience);
+
+    return ExternalAccountInfo{
+        *std::move(audience),
+        {},
+        *std::move(token_url),
+        {},
+        std::nullopt,
+        *std::move(universe_domain),
+        std::nullopt,
+        std::move(identity_federation),
+        ExternalAccountAuthorizedUserInfo{*std::move(client_id),
+                                          *std::move(client_secret),
+                                          *std::move(refresh_token)}};
   }
 
   auto audience = ValidateStringField(json, "audience", "credentials-file", ec);
@@ -164,11 +203,6 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
   auto subject_token_type =
       ValidateStringField(json, "subject_token_type", "credentials-file", ec);
   if (!subject_token_type) return std::move(subject_token_type).status();
-  auto token_url =
-      ValidateStringField(json, "token_url", "credentials-file", ec);
-  if (!token_url) return std::move(token_url).status();
-  auto universe_domain = GetUniverseDomainFromCredentialsJson(json);
-  if (!universe_domain) return std::move(universe_domain).status();
 
   auto credential_source = json.find("credential_source");
   if (credential_source == json.end()) {
@@ -218,6 +252,9 @@ ExternalAccountCredentials::ExternalAccountCredentials(
 
 StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
+  if (info_.authorized_user_info.has_value()) {
+    return GetTokenAuthorizedUser(tp);
+  }
   auto subject_token = (info_.token_source)(client_factory_, options_);
   if (!subject_token) return std::move(subject_token).status();
 
@@ -332,6 +369,65 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(
   auto response = client->Post(context, request, {request_payload.dump()});
   if (!response) return std::move(response).status();
   return ParseGenerateAccessTokenResponse(**response, ec);
+}
+
+StatusOr<AccessToken> ExternalAccountCredentials::GetTokenAuthorizedUser(
+    std::chrono::system_clock::time_point tp) {
+  std::string current_refresh_token;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    current_refresh_token = info_.authorized_user_info->refresh_token;
+  }
+  internal::Base64Encoder encoder;
+  for (unsigned char const c :
+       absl::StrCat(info_.authorized_user_info->client_id, ":",
+                    info_.authorized_user_info->client_secret)) {
+    encoder.PushBack(c);
+  }
+  rest_internal::RestRequest request =
+      rest_internal::RestRequest(info_.token_url)
+          .AddHeader("content-type", "application/x-www-form-urlencoded")
+          .AddHeader("Authorization",
+                     absl::StrCat("Basic ", std::move(encoder).FlushAndPad()));
+
+  std::vector<std::pair<std::string, std::string>> form_data = {
+      {"grant_type", "refresh_token"},
+      {"refresh_token", std::move(current_refresh_token)},
+  };
+
+  std::unique_ptr<rest_internal::RestClient> client = client_factory_(options_);
+  rest_internal::RestContext unused;
+  StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
+      client->Post(unused, request, form_data);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  StatusOr<std::string> payload =
+      rest_internal::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload) return std::move(payload).status();
+
+  internal::ErrorContext const ec(
+      internal::ErrorContext::Container{{"token_url", info_.token_url}});
+
+  nlohmann::json access = nlohmann::json::parse(*payload, nullptr, false);
+  if (!access.is_object()) {
+    return InvalidArgumentError(
+        "token refresh response cannot be parsed as JSON object",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  StatusOr<std::string> token =
+      ValidateStringField(access, "access_token", "token-refresh-response", ec);
+  if (!token) return std::move(token).status();
+  StatusOr<std::int32_t> expires_in =
+      ValidateIntField(access, "expires_in", "token-refresh-response", ec);
+  if (!expires_in) return std::move(expires_in).status();
+  StatusOr<std::string> new_refresh_token = ValidateStringField(
+      access, "refresh_token", "token-refresh-response", "", ec);
+  if (!new_refresh_token) return std::move(new_refresh_token).status();
+  if (!new_refresh_token->empty()) {
+    std::lock_guard<std::mutex> lk(mu_);
+    info_.authorized_user_info->refresh_token = *std::move(new_refresh_token);
+  }
+  return AccessToken{*std::move(token), tp + std::chrono::seconds(*expires_in)};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
