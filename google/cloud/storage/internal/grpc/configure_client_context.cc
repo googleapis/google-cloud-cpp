@@ -15,7 +15,11 @@
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/internal/url_encode.h"
+#include <array>
+#include <cstdint>
 #include <regex>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -24,6 +28,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+
+// The `RestContext` headers forwarded to gRPC as metadata. Anything else on
+// the `RestContext` is specific to the REST transport.
+constexpr std::array<char const*, 2> kForwardedHeaders{kIdempotencyTokenHeader,
+                                                       kFeaturesHeader};
 
 void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
                              std::string const& bucket_name,
@@ -49,16 +58,18 @@ void CopyHeader(grpc::ClientContext& ctx,
 
 }  // namespace
 
-void AddIdempotencyToken(grpc::ClientContext& ctx,
-                         rest_internal::RestContext const& context) {
-  CopyHeader(ctx, context, kIdempotencyTokenHeader);
-  // The connection layer sets the client feature mask on the `RestContext` so
-  // it is transport-agnostic; forward it alongside the idempotency token.
-  CopyHeader(ctx, context, kFeaturesHeader);
+void ApplyRestContextHeaders(grpc::ClientContext& ctx,
+                             rest_internal::RestContext const& context) {
+  for (auto const* name : kForwardedHeaders) CopyHeader(ctx, context, name);
 }
 
 void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token) {
   ctx.AddMetadata(kIdempotencyTokenHeader, token);
+}
+
+void AddFeaturesHeader(grpc::ClientContext& ctx, std::uint32_t mask) {
+  if (mask == 0) return;
+  ctx.AddMetadata(kFeaturesHeader, EncodeFeatureMask(mask));
 }
 
 void ApplyRoutingHeaders(
