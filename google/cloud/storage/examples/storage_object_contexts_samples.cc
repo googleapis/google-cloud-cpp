@@ -27,15 +27,17 @@ void SetObjectContexts(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [START storage_set_object_contexts] [set-object-contexts]
   namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
-    auto original = client.GetObjectMetadata(bucket_name, object_name);
+    StatusOr<gcs::ObjectMetadata> original =
+        client.GetObjectMetadata(bucket_name, object_name);
     if (!original) throw std::move(original).status();
 
     // `SetContext()` inserts or updates a single key, and `ResetContext()`
     // removes a single key. Keys not mentioned in the patch are unchanged.
     // The metageneration precondition avoids overwriting concurrent changes.
-    auto updated = client.PatchObject(
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder()
             .SetContext("key1", "newValue1")
@@ -58,9 +60,11 @@ void GetObjectContexts(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [START storage_get_object_contexts] [get-object-contexts]
   namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
-    auto metadata = client.GetObjectMetadata(bucket_name, object_name);
+    StatusOr<gcs::ObjectMetadata> metadata =
+        client.GetObjectMetadata(bucket_name, object_name);
     if (!metadata) throw std::move(metadata).status();
 
     if (!metadata->has_contexts() || metadata->contexts().custom().empty()) {
@@ -80,13 +84,15 @@ void DeleteObjectContexts(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [START storage_delete_object_contexts] [delete-object-contexts]
   namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
-    auto original = client.GetObjectMetadata(bucket_name, object_name);
+    StatusOr<gcs::ObjectMetadata> original =
+        client.GetObjectMetadata(bucket_name, object_name);
     if (!original) throw std::move(original).status();
 
     // `ResetContexts()` removes all the custom contexts in the object.
-    auto updated = client.PatchObject(
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().ResetContexts(),
         gcs::IfMetagenerationMatch(original->metageneration()));
@@ -107,13 +113,13 @@ void RunAll(std::vector<std::string> const& argv) {
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
   });
-  auto const project_id =
+  std::string const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto client = gcs::Client();
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
-  auto const bucket_name = examples::MakeRandomBucketName(generator);
+  std::string const bucket_name = examples::MakeRandomBucketName(generator);
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
   (void)client
@@ -122,7 +128,8 @@ void RunAll(std::vector<std::string> const& argv) {
                     examples::CreateBucketOptions())
       .value();
 
-  auto const object_name = examples::MakeRandomObjectName(generator, "object-");
+  std::string const object_name =
+      examples::MakeRandomObjectName(generator, "object-");
   std::cout << "\nInserting object" << std::endl;
   (void)client
       .InsertObject(bucket_name, object_name,
