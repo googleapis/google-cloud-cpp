@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/adaptive_object_read_source.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "absl/strings/numbers.h"
@@ -603,7 +604,9 @@ void AdaptiveObjectReadSource::MaybePrefetch(std::int64_t read_end) {
   }
   auto state = std::make_shared<PrefetchState>(MakeWindow(
       WindowEnd(), NextAdaptiveWindowSize(window_nominal_, settings_)));
-  auto task = [state, factory = std::weak_ptr<WindowFactory const>(factory_)] {
+  auto task = [state, factory = std::weak_ptr<WindowFactory const>(factory_),
+               call_context = google::cloud::internal::CallContext{}] {
+    google::cloud::internal::ScopedCallContext const scope(call_context);
     RunPrefetch(state, factory);
   };
   // If the task cannot be scheduled the window is opened when needed.

@@ -118,20 +118,21 @@ TEST(AdaptiveReadSizeEstimator, SmallReads) {
 }
 
 TEST(AdaptiveReadSizeEstimator, BimodalReadsDependOnRequestCost) {
-  // Three reads of 400 KiB for each read of 2 MiB.
+  // Five reads of 400 KiB for each read of 2 MiB.
   auto record = [](AdaptiveReadSizeEstimator& estimator) {
     for (int i = 0; i != 16; ++i) {
-      RecordMany(estimator, "bucket", 400 * kKiB, false, 3);
+      RecordMany(estimator, "bucket", 400 * kKiB, false, 5);
       estimator.Record("bucket", 2 * kMiB, false);
     }
   };
-  // With expensive requests a 1 MiB window serves the large reads with two
-  // requests, at the cost of draining more data from the small reads.
+  // With expensive requests a 768 KiB window serves the 2 MiB reads in two
+  // requests (768 KiB + 1.5 MiB) without abandoning a window, at the cost of
+  // draining more data from the small reads.
   AdaptiveReadSizeEstimator expensive;
   record(expensive);
   auto settings = DefaultSettings();
   settings.request_cost_bytes = kMiB;
-  EXPECT_THAT(expensive.Recommend("bucket", settings), Eq(kMiB));
+  EXPECT_THAT(expensive.Recommend("bucket", settings), Eq(768 * kKiB));
 
   // With cheap requests a 512 KiB window, which fits the small reads, wins.
   AdaptiveReadSizeEstimator cheap;
@@ -143,15 +144,42 @@ TEST(AdaptiveReadSizeEstimator, BimodalReadsDependOnRequestCost) {
 TEST(AdaptiveReadSizeEstimator, RecommendationFollowsSettings) {
   AdaptiveReadSizeEstimator estimator;
   for (int i = 0; i != 16; ++i) {
-    RecordMany(estimator, "bucket", 400 * kKiB, false, 3);
+    RecordMany(estimator, "bucket", 400 * kKiB, false, 5);
     estimator.Record("bucket", 2 * kMiB, false);
   }
   auto settings = DefaultSettings();
   settings.request_cost_bytes = kMiB;
-  EXPECT_THAT(estimator.Recommend("bucket", settings), Eq(kMiB));
+  EXPECT_THAT(estimator.Recommend("bucket", settings), Eq(768 * kKiB));
   // A change in the settings recomputes the recommendation.
   settings.request_cost_bytes = 64 * kKiB;
   EXPECT_THAT(estimator.Recommend("bucket", settings), Eq(512 * kKiB));
+}
+
+TEST(AdaptiveReadSizeEstimator, HalfStepCandidates) {
+  // Reads of 1.2 MiB fit in a 1.5 MiB half-step window, avoiding the extra
+  // 512 KiB of drain that a 2 MiB power-of-two window would incur.
+  AdaptiveReadSizeEstimator estimator;
+  RecordMany(estimator, "bucket", 1200 * kKiB, false, 64);
+  EXPECT_THAT(estimator.Recommend("bucket", DefaultSettings()),
+              Eq(1536 * kKiB));
+}
+
+TEST(AdaptiveReadSizeEstimator, SeparatesStartAndOffsetHistories) {
+  // Small header reads from the start of the object and larger chunk reads from
+  // a positive offset do not skew each other's window recommendation.
+  AdaptiveReadSizeEstimator estimator;
+  for (std::size_t i = 0; i != AdaptiveReadSizeEstimator::kMinSamples; ++i) {
+    estimator.Record("bucket", 64 * kKiB, /*reached_eof=*/false,
+                     /*from_offset=*/false);
+    estimator.Record("bucket", 1800 * kKiB, /*reached_eof=*/false,
+                     /*from_offset=*/true);
+  }
+  auto const settings = DefaultSettings();
+  EXPECT_THAT(estimator.Recommend("bucket", settings, /*from_offset=*/false),
+              Eq(AdaptiveReadSizeEstimator::kMinCandidate));
+  EXPECT_THAT(estimator.Recommend("bucket", settings, /*from_offset=*/true),
+              Eq(2 * kMiB));
+  EXPECT_THAT(estimator.bucket_count(), Eq(1U));
 }
 
 TEST(AdaptiveReadSizeEstimator, TailReadsToEndOfData) {
@@ -164,17 +192,17 @@ TEST(AdaptiveReadSizeEstimator, TailReadsToEndOfData) {
 }
 
 TEST(AdaptiveReadSizeEstimator, FullReadsToEndOfData) {
-  // Full reads of 3 MiB objects fit a single 4 MiB window, and the window is
+  // Full reads of 3.5 MiB objects fit a single 4 MiB window, and the window is
   // clamped to the end of the object.
   AdaptiveReadSizeEstimator estimator;
-  RecordMany(estimator, "bucket", 3 * kMiB, true, 64);
+  RecordMany(estimator, "bucket", 3500 * kKiB, true, 64);
   EXPECT_THAT(estimator.Recommend("bucket", DefaultSettings()), Eq(4 * kMiB));
 }
 
 TEST(AdaptiveReadSizeEstimator, KeepsRecentHistory) {
   AdaptiveReadSizeEstimator estimator;
   auto const settings = DefaultSettings();
-  RecordMany(estimator, "bucket", 3 * kMiB, true,
+  RecordMany(estimator, "bucket", 3500 * kKiB, true,
              AdaptiveReadSizeEstimator::kHistorySize);
   EXPECT_THAT(estimator.Recommend("bucket", settings), Eq(4 * kMiB));
   // The new reads replace the old ones.

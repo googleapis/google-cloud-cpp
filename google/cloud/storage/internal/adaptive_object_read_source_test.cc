@@ -1004,6 +1004,39 @@ TEST(AdaptiveObjectReadSource, PrefetchesNextWindowAtThreshold) {
                   WindowIs(7168, 8192), WindowIs(15360, 4640)));
 }
 
+TEST(AdaptiveObjectReadSource, PrefetchPropagatesCallContext) {
+  FakeService service(kObjectSize);
+  ManualExecutor executor;
+  std::optional<std::string> prefetch_user_project;
+  auto base_factory = service.Factory();
+  auto factory = std::make_shared<WindowFactory const>(
+      [base_factory, &prefetch_user_project](Window const& w) {
+        if (w.offset == 3072) {
+          auto const& current = google::cloud::internal::CurrentOptions();
+          if (current.has<UserProjectOption>()) {
+            prefetch_user_project = current.get<UserProjectOption>();
+          }
+        }
+        return (*base_factory)(w);
+      });
+  auto source = MakeAdaptiveObjectReadSource(
+      factory, service.Unbounded(0), executor.executor(), PrefetchSettings(), 0,
+      std::nullopt);
+  ASSERT_THAT(source, IsOk());
+
+  std::vector<char> buffer(2100);
+  {
+    google::cloud::internal::OptionsSpan const span(
+        Options{}.set<UserProjectOption>("caller-project"));
+    ASSERT_THAT((*source)->Read(buffer.data(), buffer.size()), IsOk());
+  }
+  ASSERT_THAT(executor.pending(), Eq(1U));
+  // Run the prefetch task outside the caller's OptionsSpan; it must restore
+  // the CallContext captured when `Read()` scheduled the prefetch.
+  executor.RunAll();
+  EXPECT_THAT(prefetch_user_project, Optional(Eq("caller-project")));
+}
+
 TEST(AdaptiveObjectReadSource, OpensWindowWhenPrefetchHasNotStarted) {
   FakeService service(kObjectSize);
   ManualExecutor executor;

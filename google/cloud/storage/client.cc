@@ -689,8 +689,10 @@ Options DefaultOptions(Options opts) {
     o.set<storage_experimental::MaxReadHedgesOption>(2);
   }
 
-  auto logging = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
-  if (logging) {
+  for (auto const* var :
+       {"CLOUD_STORAGE_ENABLE_TRACING", "GOOGLE_CLOUD_CPP_ENABLE_TRACING"}) {
+    auto logging = GetEnv(var);
+    if (!logging) continue;
     for (auto c : absl::StrSplit(*logging, ',')) {
       GCP_LOG(INFO) << "Enabling logging for " << c;
       o.lookup<LoggingComponentsOption>().insert(std::string(c));

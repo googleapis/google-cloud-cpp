@@ -96,6 +96,7 @@ class ClientTest : public ::testing::Test {
  public:
   ClientTest()
       : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING", {}),
+        enable_common_tracing_("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {}),
         endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
         old_endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}),
         generator_(std::random_device{}()) {}
@@ -114,6 +115,7 @@ class ClientTest : public ::testing::Test {
 
   std::shared_ptr<testing::MockClient> mock_;
   ScopedEnvironment enable_tracing_;
+  ScopedEnvironment enable_common_tracing_;
   ScopedEnvironment endpoint_;
   ScopedEnvironment old_endpoint_;
   google::cloud::internal::DefaultPRNG generator_;
@@ -411,6 +413,15 @@ TEST_F(ClientTest, LoggingWithEnv) {
   auto const options = internal::DefaultOptions();
   EXPECT_THAT(options.get<LoggingComponentsOption>(),
               UnorderedElementsAre("rpc", "http"));
+}
+
+TEST_F(ClientTest, LoggingWithCommonEnv) {
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                               "adaptive-read,http");
+  auto const options = internal::DefaultOptions();
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("adaptive-read", "http"));
 }
 
 TEST_F(ClientTest, TracingWithoutEnv) {

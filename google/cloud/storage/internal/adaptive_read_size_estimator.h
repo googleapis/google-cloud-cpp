@@ -38,9 +38,12 @@ namespace internal {
  *
  * The estimator keeps, for each bucket, the last `kHistorySize` adaptive reads:
  * how many bytes the application used, and whether the read reached the end
- * of the data. Once a bucket has `kMinSamples` reads, `Recommend()` returns the
- * first window (a power of two between `kMinCandidate` and `max_window`) that
- * would have minimized:
+ * of the data. Reads that start at the beginning of the object and reads that
+ * start at a non-zero offset have separate histories, as applications often
+ * use them for different access patterns (such as reading a file header versus
+ * reading a data chunk). Once a history has `kMinSamples` reads, `Recommend()`
+ * returns the first window (a power of two or a half-step `1.5 * 2^k` between
+ * `kMinCandidate` and `max_window`) that would have minimized:
  *
  * @code
  * sum over reads ( bytes sent but not used
@@ -86,13 +89,15 @@ class AdaptiveReadSizeEstimator {
    * @param bytes_delivered the bytes returned to the application.
    * @param reached_eof true if the read returned all the requested data, that
    *     is, until the end of the object.
+   * @param from_offset true if the read started at a positive offset.
    */
   void Record(std::string const& bucket, std::int64_t bytes_delivered,
-              bool reached_eof);
+              bool reached_eof, bool from_offset = false);
 
   /// Returns the size of the first window for a read from @p bucket.
   std::int64_t Recommend(std::string const& bucket,
-                         AdaptiveReadSettings const& settings);
+                         AdaptiveReadSettings const& settings,
+                         bool from_offset = false);
 
   /// The number of buckets with a history.
   std::size_t bucket_count() const;
@@ -117,10 +122,15 @@ class AdaptiveReadSizeEstimator {
     std::vector<Sample> samples;
     // The next position to overwrite once `samples` is full.
     std::size_t next = 0;
-    std::list<std::string>::iterator lru;
     std::size_t since_update = 0;
     std::optional<std::int64_t> recommendation;
     AdaptiveReadSettings recommendation_settings{};
+  };
+  struct BucketEntry {
+    // Indexed by `from_offset`: reads from the start of the object (0) and
+    // reads from a positive offset (1).
+    History by_origin[2];
+    std::list<std::string>::iterator lru;
   };
 
   static std::int64_t Compute(std::vector<Sample> const& samples,
@@ -129,8 +139,8 @@ class AdaptiveReadSizeEstimator {
   std::size_t const max_buckets_;
   mutable std::mutex mu_;
   // Most recently used first.
-  std::list<std::string> lru_;                        // GUARDED_BY(mu_)
-  std::unordered_map<std::string, History> history_;  // GUARDED_BY(mu_)
+  std::list<std::string> lru_;                            // GUARDED_BY(mu_)
+  std::unordered_map<std::string, BucketEntry> history_;  // GUARDED_BY(mu_)
 };
 
 /**

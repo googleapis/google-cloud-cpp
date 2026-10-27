@@ -46,7 +46,7 @@ std::shared_ptr<AdaptiveReadSizeEstimator> AdaptiveReadSizeEstimator::Global() {
 
 void AdaptiveReadSizeEstimator::Record(std::string const& bucket,
                                        std::int64_t bytes_delivered,
-                                       bool reached_eof) {
+                                       bool reached_eof, bool from_offset) {
   Sample const sample{(std::max)(bytes_delivered, std::int64_t{0}),
                       reached_eof};
   std::lock_guard<std::mutex> lk(mu_);
@@ -57,13 +57,13 @@ void AdaptiveReadSizeEstimator::Record(std::string const& bucket,
       lru_.pop_back();
     }
     lru_.push_front(bucket);
-    f = history_.emplace(bucket, History{}).first;
+    f = history_.emplace(bucket, BucketEntry{}).first;
     f->second.lru = lru_.begin();
-    f->second.samples.reserve(kHistorySize);
   } else {
     lru_.splice(lru_.begin(), lru_, f->second.lru);
   }
-  auto& h = f->second;
+  auto& h = f->second.by_origin[from_offset ? 1 : 0];
+  if (h.samples.empty()) h.samples.reserve(kHistorySize);
   if (h.samples.size() < kHistorySize) {
     h.samples.push_back(sample);
   } else {
@@ -74,12 +74,13 @@ void AdaptiveReadSizeEstimator::Record(std::string const& bucket,
 }
 
 std::int64_t AdaptiveReadSizeEstimator::Recommend(
-    std::string const& bucket, AdaptiveReadSettings const& settings) {
+    std::string const& bucket, AdaptiveReadSettings const& settings,
+    bool from_offset) {
   std::lock_guard<std::mutex> lk(mu_);
   auto f = history_.find(bucket);
   if (f == history_.end()) return settings.initial_window;
   lru_.splice(lru_.begin(), lru_, f->second.lru);
-  auto& h = f->second;
+  auto& h = f->second.by_origin[from_offset ? 1 : 0];
   if (h.samples.size() < kMinSamples) return settings.initial_window;
   if (h.recommendation && h.since_update < kRecomputeInterval &&
       SameModel(h.recommendation_settings, settings)) {
@@ -134,16 +135,21 @@ std::int64_t AdaptiveReadSizeEstimator::Compute(
   if (settings.max_window < kMinCandidate) return settings.initial_window;
   auto best = settings.initial_window;
   auto best_cost = std::numeric_limits<double>::infinity();
-  // Ties favor the smaller window, which is cheaper if the reads change.
-  for (std::int64_t w = kMinCandidate; w <= settings.max_window; w *= 2) {
+  auto consider = [&](std::int64_t w) {
+    if (w > settings.max_window) return;
     double cost = 0;
     for (auto const& s : samples) {
       cost += SimulatedCost(s.bytes, s.reached_eof, w, settings);
     }
+    // Ties favor the smaller window, which is cheaper if the reads change.
     if (cost < best_cost) {
       best = w;
       best_cost = cost;
     }
+  };
+  for (std::int64_t w = kMinCandidate; w <= settings.max_window; w *= 2) {
+    consider(w);
+    if (w <= settings.max_window - w / 2) consider(w + w / 2);
     if (w > settings.max_window / 2) break;
   }
   return best;

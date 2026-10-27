@@ -107,6 +107,8 @@ struct RecordedRequest {
   // The value of the `Range` header, empty for a download of the full object.
   std::string range;
   std::optional<std::int64_t> generation;
+  std::optional<std::int64_t> if_metageneration_match;
+  std::optional<std::int64_t> if_metageneration_not_match;
   // The request belongs to an adaptive read.
   bool tagged;
   std::thread::id thread;
@@ -118,6 +120,16 @@ MATCHER_P(RangeIs, matcher, "") {
 
 MATCHER_P(GenerationIs, matcher, "") {
   return ExplainMatchResult(matcher, arg.generation, result_listener);
+}
+
+MATCHER_P(IfMetagenerationMatchIs, matcher, "") {
+  return ExplainMatchResult(matcher, arg.if_metageneration_match,
+                            result_listener);
+}
+
+MATCHER_P(IfMetagenerationNotMatchIs, matcher, "") {
+  return ExplainMatchResult(matcher, arg.if_metageneration_not_match,
+                            result_listener);
 }
 
 MATCHER_P(IsTagged, matcher, "") {
@@ -238,13 +250,22 @@ class FakeObjectService {
 
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       Options const& options, ReadObjectRangeRequest const& request) {
-    RecordedRequest recorded{request.RangeHeaderValue(),
-                             request.HasOption<Generation>()
-                                 ? std::optional<std::int64_t>(
-                                       request.GetOption<Generation>().value())
-                                 : std::nullopt,
-                             options.get<AdaptiveReadAttributionOption>(),
-                             std::this_thread::get_id()};
+    RecordedRequest recorded{
+        request.RangeHeaderValue(),
+        request.HasOption<Generation>()
+            ? std::optional<std::int64_t>(
+                  request.GetOption<Generation>().value())
+            : std::nullopt,
+        request.HasOption<IfMetagenerationMatch>()
+            ? std::optional<std::int64_t>(
+                  request.GetOption<IfMetagenerationMatch>().value())
+            : std::nullopt,
+        request.HasOption<IfMetagenerationNotMatch>()
+            ? std::optional<std::int64_t>(
+                  request.GetOption<IfMetagenerationNotMatch>().value())
+            : std::nullopt,
+        options.get<AdaptiveReadAttributionOption>(),
+        std::this_thread::get_id()};
     if (on_request_) on_request_(recorded);
     std::optional<std::int64_t> fail_after;
     {
@@ -334,6 +355,65 @@ TEST(StorageConnectionImplAdaptiveRead, DownloadsFullObjectInWindows) {
   EXPECT_THAT(requests, ElementsAre(GenerationIs(Eq(std::nullopt)),
                                     GenerationIs(Optional(kGeneration)),
                                     GenerationIs(Optional(kGeneration))));
+}
+
+TEST(StorageConnectionImplAdaptiveRead,
+     MetagenerationPreconditionsClearedAfterFirstWindow) {
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions().set<storage_experimental::AdaptiveReadRangeOption>(
+          TestConfig()));
+
+  auto source = connection->ReadObject(
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_option(IfMetagenerationMatch(7))
+          .set_option(IfMetagenerationNotMatch(8)));
+  ASSERT_THAT(source, IsOk());
+  ASSERT_THAT(ReadAll(**source, 300), IsOk());
+
+  auto const requests = service.requests();
+  EXPECT_THAT(requests,
+              ElementsAre(AllOf(IfMetagenerationMatchIs(Optional(7)),
+                                IfMetagenerationNotMatchIs(Optional(8))),
+                          AllOf(IfMetagenerationMatchIs(Eq(std::nullopt)),
+                                IfMetagenerationNotMatchIs(Eq(std::nullopt)),
+                                GenerationIs(Optional(kGeneration))),
+                          AllOf(IfMetagenerationMatchIs(Eq(std::nullopt)),
+                                IfMetagenerationNotMatchIs(Eq(std::nullopt)),
+                                GenerationIs(Optional(kGeneration)))));
+}
+
+TEST(StorageConnectionImplAdaptiveRead,
+     SeparatesEstimatorHistoryForOffsetReads) {
+  FakeObjectService service(6000);
+  auto connection = MakeConnection(service);
+  auto estimator = std::make_shared<AdaptiveReadSizeEstimator>();
+  for (std::size_t i = 0; i != AdaptiveReadSizeEstimator::kMinSamples; ++i) {
+    estimator->Record("test-bucket", 64 * 1024, /*reached_eof=*/false,
+                      /*from_offset=*/false);
+    estimator->Record("test-bucket", 1800 * 1024, /*reached_eof=*/false,
+                      /*from_offset=*/true);
+  }
+  storage_experimental::AdaptiveReadRangeConfig config;
+  config.prefetch_threshold = 0.0;
+  google::cloud::internal::OptionsSpan const span(
+      TestOptions()
+          .set<storage_experimental::AdaptiveReadRangeOption>(config)
+          .set<AdaptiveReadSizeEstimatorOption>(estimator));
+
+  // A read from the start of the object uses the start-of-object history
+  // (256 KiB), whereas a read from a positive offset uses the offset history
+  // (2 MiB).
+  ASSERT_THAT(connection->ReadObject(
+                  ReadObjectRangeRequest("test-bucket", "test-object")),
+              IsOk());
+  ASSERT_THAT(connection->ReadObject(
+                  ReadObjectRangeRequest("test-bucket", "test-object")
+                      .set_option(ReadFromOffset(1000))),
+              IsOk());
+  EXPECT_THAT(service.requests(), ElementsAre(RangeIs("bytes=0-262143"),
+                                              RangeIs("bytes=1000-2098151")));
 }
 
 TEST(StorageConnectionImplAdaptiveRead, DownloadsFromOffsetInWindows) {

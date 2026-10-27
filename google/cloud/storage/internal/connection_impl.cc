@@ -152,6 +152,24 @@ Status PartialWriteStatus(int error_count, int upload_count,
 
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
+// Returns the thread pool that opens adaptive read windows in the background.
+//
+// Connections share one pool so applications (or libraries) that create a
+// `Client` per reader do not create a separate pool per reader. The pool only
+// creates threads when it receives work, and it is destroyed once the last
+// connection using it is released.
+std::shared_ptr<ThreadPool> SharedPrefetchThreadPool() {
+  static auto* const kMu = new std::mutex;
+  static auto* const kPool = new std::weak_ptr<ThreadPool>;
+  std::lock_guard<std::mutex> lk(*kMu);
+  auto pool = kPool->lock();
+  if (!pool) {
+    pool = std::make_shared<ThreadPool>(DefaultReadThreadPoolSize());
+    *kPool = pool;
+  }
+  return pool;
+}
+
 }  // namespace
 
 std::shared_ptr<StorageConnectionImpl> StorageConnectionImpl::Create(
@@ -165,8 +183,7 @@ StorageConnectionImpl::StorageConnectionImpl(
     std::unique_ptr<storage_internal::GenericStub> stub, Options options)
     : stub_(std::move(stub)),
       options_(MergeOptions(std::move(options), stub_->options())),
-      prefetch_pool_(
-          std::make_shared<ThreadPool>(DefaultReadThreadPoolSize())) {
+      prefetch_pool_(SharedPrefetchThreadPool()) {
   if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
     // `DefaultOptions()` normally resolves these, but a connection can be
     // built without it, in which case the option is left at 0 ("automatic").
@@ -525,14 +542,17 @@ StorageConnectionImpl::ReadObjectAdaptive(
   auto estimator = current->get<AdaptiveReadSizeEstimatorOption>();
   if (!estimator) estimator = AdaptiveReadSizeEstimator::Global();
   auto const& bucket = request.bucket_name();
+  auto const start_offset = request.StartingByte();
+  auto const from_offset = start_offset > 0;
   if (settings.learn_initial_window) {
-    settings.initial_window = estimator->Recommend(bucket, settings);
+    settings.initial_window =
+        estimator->Recommend(bucket, settings, from_offset);
   }
   // Reports the summary of each adaptive read: as span attributes when tracing
   // is enabled, as a log line when the `adaptive-read` logging component is
   // enabled, and to the estimator that chooses the first window.
   auto on_summary = [estimator, bucket, object = request.object_name(),
-                     learn = settings.learn_initial_window,
+                     from_offset, learn = settings.learn_initial_window,
                      tracing =
                          google::cloud::internal::TracingEnabled(*current),
                      logging = google::cloud::internal::Contains(
@@ -552,7 +572,8 @@ StorageConnectionImpl::ReadObjectAdaptive(
     }
     estimator->Record(
         bucket, summary.bytes_delivered,
-        summary.close_reason == AdaptiveReadSummary::CloseReason::kEndOfData);
+        summary.close_reason == AdaptiveReadSummary::CloseReason::kEndOfData,
+        from_offset);
   };
   // The windows are tagged, so the service logs can tell them apart from other
   // downloads. Windows are not hedged: a hedged source opens its download on
@@ -567,14 +588,23 @@ StorageConnectionImpl::ReadObjectAdaptive(
   // other download. A failure resumes inside the window.
   auto factory =
       std::make_shared<AdaptiveObjectReadSource::WindowFactory const>(
-          [self = shared_from_this(), window_options,
-           request](AdaptiveObjectReadSource::Window const& window) {
+          [self = shared_from_this(), window_options, request,
+           start_offset](AdaptiveObjectReadSource::Window const& window) {
             ReadObjectRangeRequest req = request;
             req.set_option(ReadFromOffset());
             req.set_option(
                 ReadRange(window.offset, window.offset + window.length));
-            if (window.generation)
+            if (window.generation) {
               req.set_option(Generation(*window.generation));
+            }
+            if (window.offset != start_offset && window.generation) {
+              // The first window checked the metageneration preconditions and
+              // captured the object's generation. Later windows read that same
+              // immutable generation; a metadata update in the meantime must
+              // not fail the download.
+              req.set_option(IfMetagenerationMatch());
+              req.set_option(IfMetagenerationNotMatch());
+            }
             // Prefetches open windows on a background thread, which has no
             // options in effect.
             google::cloud::internal::OptionsSpan const span(window_options);
@@ -598,7 +628,7 @@ StorageConnectionImpl::ReadObjectAdaptive(
   }
   return MakeAdaptiveObjectReadSource(
       std::move(factory), std::move(open_unbounded), std::move(executor),
-      settings, request.StartingByte(), generation, std::move(on_summary));
+      settings, start_offset, generation, std::move(on_summary));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(
