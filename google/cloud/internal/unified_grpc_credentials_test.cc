@@ -164,6 +164,37 @@ TEST(UnifiedGrpcCredentialsTest, WithAuthorizedUserCredentials) {
   EXPECT_THAT(configured_context, StatusIs(StatusCode::kUnimplemented));
 }
 
+TEST(UnifiedGrpcCredentialsTest, WithExternalAccountCredentialsInvalid) {
+  CompletionQueue cq;
+  auto creds = ExternalAccountConfig("{}", Options{});
+  auto auth = CreateAuthenticationStrategy(creds, cq);
+  ASSERT_THAT(auth, NotNull());
+  EXPECT_TRUE(auth->RequiresConfigureContext());
+
+  grpc::ClientContext context;
+  auto configured_context = auth->ConfigureContext(context);
+  EXPECT_THAT(configured_context, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST(UnifiedGrpcCredentialsTest, WithExternalAccountAuthorizedUserCredentials) {
+  CompletionQueue cq;
+  std::string const json = R"({
+    "type": "external_account_authorized_user",
+    "client_id": "test-client-id",
+    "client_secret": "test-client-secret",
+    "refresh_token": "test-refresh-token",
+    "token_url": "https://sts.googleapis.com/v1/oauthtoken"
+  })";
+  auto creds = ExternalAccountConfig(json, Options{});
+  auto auth = CreateAuthenticationStrategy(creds, cq);
+  ASSERT_THAT(auth, NotNull());
+  EXPECT_TRUE(auth->RequiresConfigureContext());
+
+  grpc::ClientContext context;
+  auto configured_context = auth->ConfigureContext(context);
+  EXPECT_THAT(configured_context, StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotSet) {
   auto contents = LoadCAInfo(Options{});
   EXPECT_FALSE(contents.has_value());
