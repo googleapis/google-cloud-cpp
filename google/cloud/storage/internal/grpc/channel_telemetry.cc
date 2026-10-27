@@ -40,10 +40,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-/// The scheme used by the C2P resolver, which is a prerequisite for DirectPath.
-constexpr char const* kC2pPrefix = "google-c2p:///";
-constexpr char const* kC2pExperimentalPrefix = "google-c2p-experimental:///";
-
 /// The query parameter that requests DirectPath over Cloud Interconnect.
 constexpr char const* kForceXds = "force-xds";
 

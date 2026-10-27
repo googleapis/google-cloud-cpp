@@ -32,6 +32,11 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// The schemes of the C2P resolver, which is a prerequisite for DirectPath.
+constexpr std::string_view kC2pPrefix = "google-c2p:///";
+constexpr std::string_view kC2pExperimentalPrefix =
+    "google-c2p-experimental:///";
+
 /**
  * The transport used to reach the GCS service.
  *

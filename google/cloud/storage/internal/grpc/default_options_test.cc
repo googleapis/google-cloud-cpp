@@ -122,7 +122,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectDefault) {
 }
 
 /// @test Verify enabling the option off-GCE targets the DirectPath resolver,
-/// overrides the authority so TLS/SNI matches, and uses a single channel.
+/// sets the Interconnect `:authority`, and uses a single channel.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectOption) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
@@ -136,7 +136,9 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectOption) {
       mock_detector, /*grpc_supports_force_xds=*/true);
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage-direct.googleapis.com?force-xds");
-  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  // The service identifies DirectPath over Interconnect traffic by this
+  // `:authority`.
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
 }
 
@@ -153,7 +155,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVar) {
                                              /*grpc_supports_force_xds=*/true);
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage-direct.googleapis.com?force-xds");
-  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
 }
 
@@ -227,7 +229,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarOverridesOption) {
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>());
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage-direct.googleapis.com?force-xds");
-  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
 }
 
@@ -255,7 +257,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarFalseOverridesOption) {
 }
 
 /// @test Verify a caller-supplied authority is preserved when the DirectPath
-/// target is selected; `storage.googleapis.com` is only the default.
+/// target is selected; `storage-direct.googleapis.com` is only the default.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectPreservesCustomAuthority) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
@@ -272,6 +274,161 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectPreservesCustomAuthority) {
             "google-c2p:///storage-direct.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "custom-authority");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+}
+
+/// @test Verify an application-supplied Interconnect endpoint also gets the
+/// Interconnect `:authority`, as the service keys on the authority regardless
+/// of how the endpoint was configured.
+TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpoint) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<EndpointOption>(
+          "google-c2p:///storage-direct.googleapis.com?force-xds"),
+      mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<EndpointOption>(),
+            "google-c2p:///storage-direct.googleapis.com?force-xds");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+}
+
+/// @test Verify an application-supplied Interconnect endpoint keeps the
+/// standard `:authority` when gRPC ignores `force-xds`, as the channel then
+/// uses regular DirectPath or CloudPath rather than Interconnect.
+TEST(DefaultOptionsGrpc,
+     DirectPathOverInterconnectExplicitEndpointUnsupportedGrpc) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<EndpointOption>(
+          "google-c2p:///storage-direct.googleapis.com?force-xds"),
+      mock_detector, /*grpc_supports_force_xds=*/false);
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+}
+
+/// @test Verify an application-supplied `force-xds` endpoint for any host other
+/// than `storage-direct.googleapis.com` keeps the standard `:authority`. The
+/// service recognizes the Interconnect authority only for that host.
+TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpointOtherHost) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options =
+      DefaultOptionsGrpc(Options{}.set<EndpointOption>(
+                             "google-c2p:///storage.googleapis.com?force-xds"),
+                         mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<EndpointOption>(),
+            "google-c2p:///storage.googleapis.com?force-xds");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+}
+
+struct InterconnectHostDelimiterTestCase {
+  std::string test_name;
+  std::string endpoint;
+  std::string expected_authority;
+};
+
+class DirectPathOverInterconnectHostDelimiterTest
+    : public ::testing::TestWithParam<InterconnectHostDelimiterTestCase> {};
+
+/// @test Verify the host of an application-supplied `force-xds` endpoint is
+/// compared against `storage-direct.googleapis.com` up to the first delimiter
+/// (`:`, `/`, `?`, `#`), so a port, path or fragment does not hide a match,
+/// and a look-alike host that merely starts with it does not produce one.
+TEST_P(DirectPathOverInterconnectHostDelimiterTest, DetectsExactHostOnly) {
+  InterconnectHostDelimiterTestCase const& test_case = GetParam();
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options =
+      DefaultOptionsGrpc(Options{}.set<EndpointOption>(test_case.endpoint),
+                         mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<EndpointOption>(), test_case.endpoint);
+  EXPECT_EQ(options.get<AuthorityOption>(), test_case.expected_authority);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    DefaultOptionsGrpc, DirectPathOverInterconnectHostDelimiterTest,
+    ::testing::Values(
+        InterconnectHostDelimiterTestCase{
+            "Port", "google-c2p:///storage-direct.googleapis.com:443?force-xds",
+            "storage-direct.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "Path", "google-c2p:///storage-direct.googleapis.com/?force-xds",
+            "storage-direct.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "FragmentAfterQuery",
+            "google-c2p:///storage-direct.googleapis.com?force-xds#frag",
+            "storage-direct.googleapis.com"},
+        // Per RFC 3986 a `?` inside the fragment is not a query, so this is a
+        // plain DirectPath target and keeps the standard authority.
+        InterconnectHostDelimiterTestCase{
+            "FragmentBeforeQuery",
+            "google-c2p:///storage-direct.googleapis.com#frag?force-xds",
+            "storage.googleapis.com"},
+        // The host starts with `storage-direct.googleapis.com` but is a
+        // different host.
+        InterconnectHostDelimiterTestCase{
+            "LookAlikeHost",
+            "google-c2p:///storage-direct.googleapis.com.example.com?force-xds",
+            "storage.googleapis.com"}),
+    [](::testing::TestParamInfo<InterconnectHostDelimiterTestCase> const&
+           info) { return info.param.test_name; });
+
+/// @test Verify the `google-c2p-experimental` scheme selects the Interconnect
+/// `:authority` like `google-c2p` does; the library treats both as DirectPath.
+TEST(DefaultOptionsGrpc,
+     DirectPathOverInterconnectExplicitEndpointExperimentalScheme) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<EndpointOption>(
+          "google-c2p-experimental:///storage-direct.googleapis.com?force-xds"),
+      mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+}
+
+/// @test Verify `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT=false`
+/// leaves an application-supplied Interconnect endpoint, and therefore its
+/// `:authority`, unchanged. The variable and the option govern only the
+/// endpoint the library selects, and the authority must match the endpoint
+/// actually in use.
+TEST(DefaultOptionsGrpc,
+     DirectPathOverInterconnectExplicitEndpointEnvVarFalse) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        "false");
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<EndpointOption>(
+          "google-c2p:///storage-direct.googleapis.com?force-xds"),
+      mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_FALSE(
+      options.get<storage_experimental::DirectPathXdsOverInterconnectOption>());
+  EXPECT_EQ(options.get<EndpointOption>(),
+            "google-c2p:///storage-direct.googleapis.com?force-xds");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
 }
 
 /// @test Verify universe domain precedence also holds when the domain comes
@@ -501,6 +658,9 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectFollowsGrpcVersion) {
             GrpcForceXdsIsSupported()
                 ? "google-c2p:///storage-direct.googleapis.com?force-xds"
                 : "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(),
+            GrpcForceXdsIsSupported() ? "storage-direct.googleapis.com"
+                                      : "storage.googleapis.com");
 }
 
 TEST(DefaultOptionsGrpc, MetricsDisabled) {
