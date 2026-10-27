@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/internal/rest_context.h"
 #include <gmock/gmock.h>
-#include <array>
 #include <cstdint>
 #include <string>
 
@@ -28,14 +27,6 @@ namespace {
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Not;
-
-// Every tracked feature. Add new enumerators here so the tests below cover
-// them. The header `static_assert`s that the positions are distinct and below
-// 32; this list drives the runtime checks on the derived bit values.
-constexpr std::array<TrackedFeature, 2> kAllFeatures = {
-    TrackedFeature::kMultistreamInMrd,
-    TrackedFeature::kReadHedging,
-};
 
 // `FeatureBit()` is `constexpr`, so the bit values are usable at compile time.
 static_assert(FeatureBit(TrackedFeature::kMultistreamInMrd) == 1,
@@ -56,7 +47,7 @@ TEST(TrackedFeatures, FeatureBit) {
 
 TEST(TrackedFeatures, FeatureBitsAreSingleDistinctBits) {
   std::uint32_t seen = 0;
-  for (TrackedFeature feature : kAllFeatures) {
+  for (TrackedFeature feature : kAllTrackedFeatures) {
     std::uint32_t const bit = FeatureBit(feature);
     // Exactly one bit set.
     EXPECT_NE(bit, 0U);
