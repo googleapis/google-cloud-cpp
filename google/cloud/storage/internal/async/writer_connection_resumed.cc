@@ -409,29 +409,39 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
-  auto ClearHandlersIfEmpty(std::unique_lock<std::mutex> const& /* lk */) {
+  auto ClearHandlersIfEmpty(std::unique_lock<std::mutex> const& lk) {
     decltype(flush_handlers_) tmp;
-    // Release the waiters once the buffer is empty or below the low-water
-    // mark. The emptiness check matters when the low-water mark is 0.
-    if (!resend_buffer_.empty() && resend_buffer_.size() >= buffer_size_lwm_) {
-      return tmp;
-    }
+    // Mirrors `NeedsFlush()`: a waiter held here must be released by a later
+    // flush, so it may only be held while there is unsent data to flush.
+    if (HasUnsentDataAtOrAboveLwm(lk)) return tmp;
     flush_handlers_.swap(tmp);
     return tmp;
   }
 
   /**
+   * Returns true if the buffer holds data not yet sent on the current stream
+   * and the buffer is at or above the low-water mark.
+   *
+   * The service may acknowledge a flush without persisting all of its data.
+   * Those bytes stay in the buffer for `Resume()`, but flushing them again
+   * without new data would not advance the persisted size, so they do not
+   * count as unsent. The unsent-data check also prevents an endless loop of
+   * empty flushes when the low-water mark is 0.
+   */
+  bool HasUnsentDataAtOrAboveLwm(
+      std::unique_lock<std::mutex> const& /* lk */) const {
+    return write_offset_ < resend_buffer_.size() &&
+           resend_buffer_.size() >= buffer_size_lwm_;
+  }
+
+  /**
    * Returns true if the write loop must send data with `Flush()`.
    *
-   * That is the case while `Flush()` calls are pending, or while the buffer is
-   * non-empty and at or above the low-water mark. An empty buffer only needs a
-   * flush if a `Flush()` is pending, which avoids an endless loop of empty
-   * flushes when the low-water mark is 0.
+   * That is the case while `Flush()` calls are pending, or while the buffer
+   * holds unsent data and is at or above the low-water mark.
    */
-  bool NeedsFlush(std::unique_lock<std::mutex> const& /* lk */) const {
-    return !pending_flush_promises_.empty() ||
-           (!resend_buffer_.empty() &&
-            resend_buffer_.size() >= buffer_size_lwm_);
+  bool NeedsFlush(std::unique_lock<std::mutex> const& lk) const {
+    return !pending_flush_promises_.empty() || HasUnsentDataAtOrAboveLwm(lk);
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size,
@@ -484,7 +494,7 @@ class AsyncWriterConnectionResumedState
       return NotifyAndStartWriting(std::move(lk), std::move(handlers), {},
                                    Status{});
     }
-    SetFlushed(std::move(lk), Status{}, persisted_size);
+    SetFlushed(std::move(lk), Status{});
   }
 
   void WriteStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -669,16 +679,19 @@ class AsyncWriterConnectionResumedState
     p.set_value(std::move(status));  // Set value on the moved promise.
   }
 
-  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result,
-                  std::int64_t persisted_size) {
+  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
     // Do NOT reset finalize_ or finalizing_ here.
     // Only release the high-water mark waiters once the buffer drops below the
-    // low-water mark (or is empty).
+    // low-water mark (or all of it has been sent).
     auto handlers = ClearHandlersIfEmpty(lk);
+    // A `Flush()` completes once the service acknowledges its data, even if
+    // the service has not persisted all of it (see `AsyncWriter::Flush()`).
+    std::int64_t const flushed_offset =
+        buffer_offset_ + static_cast<std::int64_t>(write_offset_);
     std::vector<promise<Status>> flushes_to_complete;
     while (!pending_flush_promises_.empty() &&
-           pending_flush_promises_.front().target_offset <= persisted_size) {
+           pending_flush_promises_.front().target_offset <= flushed_offset) {
       flushes_to_complete.push_back(
           std::move(pending_flush_promises_.front().p));
       pending_flush_promises_.pop_front();
@@ -802,9 +815,10 @@ class AsyncWriterConnectionResumedState
   future<Status> closed_future_;
 
   // Tracks an outstanding `Flush()` promise alongside the stream offset at the
-  // time `Flush()` was called. The target offset is used to satisfy promises
-  // once all data buffered at the time of the `Flush()` call has been
-  // persisted.
+  // time `Flush()` was called. The promise is satisfied by the first flush that
+  // completes after all data buffered at the time of the `Flush()` call has
+  // been sent on the current stream. The service may not have persisted that
+  // data yet (see `AsyncWriter::Flush()`).
   struct PendingFlush {
     promise<Status> p;
     std::int64_t target_offset;
@@ -816,9 +830,10 @@ class AsyncWriterConnectionResumedState
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.
   //
-  // If this is larger than `buffer_size_hwm_` then `Write()`, and `Flush()`
-  // will return futures that become satisfied only once the buffer size gets
-  // below `buffer_size_lwm_`.
+  // If this is larger than `buffer_size_hwm_` then `Write()` will return
+  // futures that become satisfied only once the buffer size gets below
+  // `buffer_size_lwm_`, or once all buffered data has been sent on the current
+  // stream.
   //
   // Note that `Finalize()` does not block when the buffer gets too large. It
   // always blocks on `finalized_`.
