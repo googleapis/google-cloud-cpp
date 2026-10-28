@@ -853,15 +853,16 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
 }
 
 TEST_F(GrpcClientTest, UnaryRpcAppliesTransferStallTimeoutAndGrpcSetupOption) {
-  auto const stall_timeout = std::chrono::seconds(30);
-  auto const custom_deadline =
+  std::chrono::seconds const stall_timeout(30);
+  std::chrono::system_clock::time_point const custom_deadline =
       std::chrono::system_clock::now() + std::chrono::seconds(5);
 
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([stall_timeout](grpc::ClientContext& context, Options const&,
                                 google::storage::v2::GetBucketRequest const&) {
-        auto const now = std::chrono::system_clock::now();
+        std::chrono::system_clock::time_point const now =
+            std::chrono::system_clock::now();
         EXPECT_GT(context.deadline(), now);
         EXPECT_LE(context.deadline(),
                   now + stall_timeout + std::chrono::seconds(2));
@@ -883,26 +884,26 @@ TEST_F(GrpcClientTest, UnaryRpcAppliesTransferStallTimeoutAndGrpcSetupOption) {
         return PermanentError();
       });
 
-  auto mock_iam =
-      std::make_shared<google::cloud::testing_util::MockMinimalIamCredentialsStub>();
+  auto mock_iam = std::make_shared<
+      google::cloud::testing_util::MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock_iam, SignBlob)
-      .WillOnce(
-          [custom_deadline](grpc::ClientContext& context,
-                            google::iam::credentials::v1::SignBlobRequest const&) {
-            EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
-                      std::chrono::milliseconds(5));
-            return PermanentError();
-          });
+      .WillOnce([custom_deadline](
+                    grpc::ClientContext& context,
+                    google::iam::credentials::v1::SignBlobRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
 
   auto client = std::make_unique<GrpcStub>(mock, mock_iam, TestOptions());
-  auto context = TestContext();
-  auto options_with_stall =
+  rest_internal::RestContext context = TestContext();
+  Options options_with_stall =
       TestOptions().set<storage::TransferStallTimeoutOption>(stall_timeout);
   (void)client->GetBucketMetadata(
       context, options_with_stall,
       storage::internal::GetBucketMetadataRequest("test-bucket"));
 
-  auto options_with_setup =
+  Options const options_with_setup =
       options_with_stall.set<google::cloud::internal::GrpcSetupOption>(
           [custom_deadline](grpc::ClientContext& c) {
             c.set_deadline(custom_deadline);

@@ -62,7 +62,8 @@ struct IsStreamingRequest<storage::internal::UploadChunkRequest>
 /// if a deadline has not already been set on @p ctx.
 inline void ApplyUnaryRpcDeadline(grpc::ClientContext& ctx,
                                   Options const& options) {
-  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
+  std::chrono::seconds const timeout =
+      options.get<storage::TransferStallTimeoutOption>();
   if (timeout > std::chrono::seconds::zero() &&
       ctx.deadline() == std::chrono::system_clock::time_point::max()) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
@@ -109,14 +110,14 @@ void ApplyQuotaUserAndFieldMask(grpc::ClientContext&, Request const&,
 template <typename Request>
 void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
                           Request const& request) {
-  using HasStandardParameters = std::integral_constant<
-      bool,
-      storage::internal::SupportsOption<Request,
-                                        storage::QuotaUser>::type::value &&
-          storage::internal::SupportsOption<Request,
-                                            storage::UserIp>::type::value &&
-          storage::internal::SupportsOption<Request,
-                                            storage::Fields>::type::value>;
+  using HasStandardParameters =
+      std::integral_constant<bool,
+                             storage::internal::SupportsOption<
+                                 Request, storage::QuotaUser>::type::value &&
+                                 storage::internal::SupportsOption<
+                                     Request, storage::UserIp>::type::value &&
+                                 storage::internal::SupportsOption<
+                                     Request, storage::Fields>::type::value>;
   ApplyQuotaUserAndFieldMask(ctx, request, HasStandardParameters{});
   if (!IsStreamingRequest<Request>::value) {
     ApplyUnaryRpcDeadline(ctx, options);

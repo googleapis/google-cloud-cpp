@@ -142,39 +142,43 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadline) {
-  auto const timeout = std::chrono::seconds(42);
-  auto const options =
+  std::chrono::seconds const timeout(42);
+  Options const options =
       Options{}.set<storage::TransferStallTimeoutOption>(timeout);
 
-  auto const before = std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point const before =
+      std::chrono::system_clock::now();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options,
                        storage::internal::GetObjectMetadataRequest(
                            "test-bucket", "test-object"));
-  auto const after = std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point const after =
+      std::chrono::system_clock::now();
 
   EXPECT_GE(ctx.deadline(), before + timeout);
   EXPECT_LE(ctx.deadline(), after + timeout);
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersSignBlobUnaryDeadline) {
-  auto const timeout = std::chrono::seconds(15);
-  auto const options =
+  std::chrono::seconds const timeout(15);
+  Options const options =
       Options{}.set<storage::TransferStallTimeoutOption>(timeout);
 
-  auto const before = std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point const before =
+      std::chrono::system_clock::now();
   grpc::ClientContext ctx;
   ApplyQueryParameters(
       ctx, options,
       storage::internal::SignBlobRequest("test-sa", "dGVzdA==", {}));
-  auto const after = std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point const after =
+      std::chrono::system_clock::now();
 
   EXPECT_GE(ctx.deadline(), before + timeout);
   EXPECT_LE(ctx.deadline(), after + timeout);
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadlineZero) {
-  auto const options = Options{}.set<storage::TransferStallTimeoutOption>(
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
       std::chrono::seconds(0));
 
   grpc::ClientContext ctx;
@@ -186,9 +190,9 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadlineZero) {
 
 TEST_F(GrpcConfigureClientContext,
        ApplyQueryParametersUnaryDeadlineRespectsExistingDeadline) {
-  auto const existing_deadline =
+  std::chrono::system_clock::time_point const existing_deadline =
       std::chrono::system_clock::now() + std::chrono::seconds(5);
-  auto const options = Options{}.set<storage::TransferStallTimeoutOption>(
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
       std::chrono::seconds(120));
 
   grpc::ClientContext ctx;
@@ -204,9 +208,9 @@ TEST_F(GrpcConfigureClientContext,
 
 TEST_F(GrpcConfigureClientContext,
        ApplyQueryParametersUnaryDeadlineOverriddenByGrpcSetupOption) {
-  auto const custom_deadline =
+  std::chrono::system_clock::time_point const custom_deadline =
       std::chrono::system_clock::now() + std::chrono::seconds(7);
-  auto const options =
+  Options const options =
       Options{}
           .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(120))
           .set<google::cloud::internal::GrpcSetupOption>(
@@ -224,7 +228,7 @@ TEST_F(GrpcConfigureClientContext,
 
 TEST_F(GrpcConfigureClientContext,
        ApplyQueryParametersStreamingRequestsExcludeWholeRpcDeadline) {
-  auto const options = Options{}.set<storage::TransferStallTimeoutOption>(
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
       std::chrono::seconds(42));
 
   {
