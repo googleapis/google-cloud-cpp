@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest/stub.h"
+#include "google/cloud/storage/internal/adaptive_object_read_source.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -401,6 +402,34 @@ TEST(RestStubTest, ReadObject) {
   auto context = TestContext();
   auto status =
       tested->ReadObject(context, TestOptions(), ReadObjectRangeRequest());
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, ReadObjectAdaptiveAttribution) {
+  // The windows of an adaptive read are tagged, so the service logs can tell
+  // them apart from other downloads.
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(
+      *mock,
+      Get(ExpectedContext(),
+          AllOf(ResultOf(
+                    "request includes the range",
+                    [](RestRequest const& r) { return r.headers(); },
+                    Contains(Pair("range", ElementsAre("bytes=0-1023")))),
+                ResultOf(
+                    "request includes the tagged x-goog-api-client header",
+                    [](RestRequest const& r) { return r.headers(); },
+                    Contains(Pair("x-goog-api-client",
+                                  ElementsAre(HandCraftedLibClientHeader() +
+                                              " gccl-feat/adaptive-read")))))))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->ReadObject(
+      context, TestOptions().set<AdaptiveReadAttributionOption>(true),
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_option(ReadRange(0, 1024)));
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
 }

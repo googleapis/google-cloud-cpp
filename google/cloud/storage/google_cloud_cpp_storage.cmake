@@ -67,6 +67,10 @@ add_library(
     idempotency_policy.cc
     idempotency_policy.h
     include_folders_as_prefixes.h
+    internal/adaptive_object_read_source.cc
+    internal/adaptive_object_read_source.h
+    internal/adaptive_read_size_estimator.cc
+    internal/adaptive_read_size_estimator.h
     internal/base64.cc
     internal/base64.h
     internal/binary_data_as_debug_string.h
@@ -427,6 +431,8 @@ if (BUILD_TESTING)
         hashing_options_test.cc
         hmac_key_metadata_test.cc
         idempotency_policy_test.cc
+        internal/adaptive_object_read_source_test.cc
+        internal/adaptive_read_size_estimator_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_metadata_cache_test.cc
@@ -434,6 +440,7 @@ if (BUILD_TESTING)
         internal/checksum_helpers_test.cc
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc
+        internal/connection_impl_adaptive_read_test.cc
         internal/connection_impl_bucket_acl_test.cc
         internal/connection_impl_bucket_test.cc
         internal/connection_impl_default_object_acl_test.cc

@@ -46,8 +46,12 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::storage_experimental::AdaptiveReadRangeConfig;
+using ::google::cloud::storage_experimental::AdaptiveReadRangeOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ElementsAre;
+using ::testing::Eq;
+using ::testing::Field;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -92,6 +96,7 @@ class ClientTest : public ::testing::Test {
  public:
   ClientTest()
       : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING", {}),
+        enable_common_tracing_("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {}),
         endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
         old_endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}),
         generator_(std::random_device{}()) {}
@@ -110,6 +115,7 @@ class ClientTest : public ::testing::Test {
 
   std::shared_ptr<testing::MockClient> mock_;
   ScopedEnvironment enable_tracing_;
+  ScopedEnvironment enable_common_tracing_;
   ScopedEnvironment endpoint_;
   ScopedEnvironment old_endpoint_;
   google::cloud::internal::DefaultPRNG generator_;
@@ -409,6 +415,15 @@ TEST_F(ClientTest, LoggingWithEnv) {
               UnorderedElementsAre("rpc", "http"));
 }
 
+TEST_F(ClientTest, LoggingWithCommonEnv) {
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                               "adaptive-read,http");
+  auto const options = internal::DefaultOptions();
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("adaptive-read", "http"));
+}
+
 TEST_F(ClientTest, TracingWithoutEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", std::nullopt);
   auto options = internal::DefaultOptions();
@@ -424,6 +439,61 @@ TEST_F(ClientTest, TracingWithEnv) {
   auto const options = internal::DefaultOptions(
       Options{}.set<OpenTelemetryTracingOption>(false));
   EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
+}
+
+auto constexpr kAdaptiveReadRangeEnv =
+    "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE";
+
+AdaptiveReadRangeConfig CustomAdaptiveReadRangeConfig() {
+  AdaptiveReadRangeConfig config;
+  config.initial_window = 512 * 1024;
+  return config;
+}
+
+TEST_F(ClientTest, AdaptiveReadRangeWithoutEnv) {
+  ScopedEnvironment env(kAdaptiveReadRangeEnv, std::nullopt);
+  auto options = internal::DefaultOptions();
+  EXPECT_FALSE(options.has<AdaptiveReadRangeOption>());
+
+  options = internal::DefaultOptions(
+      Options{}.set<AdaptiveReadRangeOption>(CustomAdaptiveReadRangeConfig()));
+  EXPECT_THAT(options.get<AdaptiveReadRangeOption>(),
+              Field(&AdaptiveReadRangeConfig::initial_window, Eq(512 * 1024)));
+}
+
+TEST_F(ClientTest, AdaptiveReadRangeEnvEnables) {
+  ScopedEnvironment env(kAdaptiveReadRangeEnv, "true");
+  // Without a configuration in code, the defaults apply.
+  auto options = internal::DefaultOptions();
+  ASSERT_TRUE(options.has<AdaptiveReadRangeOption>());
+  EXPECT_THAT(options.get<AdaptiveReadRangeOption>(),
+              Field(&AdaptiveReadRangeConfig::initial_window,
+                    Eq(AdaptiveReadRangeConfig{}.initial_window)));
+
+  // The variable does not replace the configuration set in code.
+  options = internal::DefaultOptions(
+      Options{}.set<AdaptiveReadRangeOption>(CustomAdaptiveReadRangeConfig()));
+  EXPECT_THAT(options.get<AdaptiveReadRangeOption>(),
+              Field(&AdaptiveReadRangeConfig::initial_window, Eq(512 * 1024)));
+}
+
+TEST_F(ClientTest, AdaptiveReadRangeEnvDisables) {
+  // An explicit "false" disables the feature even when the option is set.
+  ScopedEnvironment env(kAdaptiveReadRangeEnv, "false");
+  auto const options = internal::DefaultOptions(
+      Options{}.set<AdaptiveReadRangeOption>(CustomAdaptiveReadRangeConfig()));
+  EXPECT_FALSE(options.has<AdaptiveReadRangeOption>());
+}
+
+TEST_F(ClientTest, AdaptiveReadRangeEnvIgnoresOtherValues) {
+  for (auto const* value : {"", "1", "0", "TRUE", "False", "yes"}) {
+    SCOPED_TRACE(std::string("value=") + value);
+    ScopedEnvironment env(kAdaptiveReadRangeEnv, value);
+    EXPECT_FALSE(internal::DefaultOptions().has<AdaptiveReadRangeOption>());
+    EXPECT_TRUE(internal::DefaultOptions(Options{}.set<AdaptiveReadRangeOption>(
+                                             CustomAdaptiveReadRangeConfig()))
+                    .has<AdaptiveReadRangeOption>());
+  }
 }
 
 TEST_F(ClientTest, ProjectIdWithoutEnv) {

@@ -316,6 +316,107 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLastSmall) {
   }
 }
 
+// Adaptive reads download open-ended ranges in bounded windows. Small windows
+// make the objects in these tests span several windows.
+Options AdaptiveReadOptions() {
+  storage_experimental::AdaptiveReadRangeConfig config;
+  config.initial_window = 1024;
+  config.max_window = 4096;
+  return Options{}.set<storage_experimental::AdaptiveReadRangeOption>(config);
+}
+
+TEST_F(ObjectReadRangeIntegrationTest, AdaptiveReadFullObject) {
+  auto client = MakeIntegrationTestClient(AdaptiveReadOptions());
+
+  auto constexpr kObjectSize = 20000;
+  auto const contents = MakeRandomData(kObjectSize);
+  auto const object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(bucket_name(), object_name, contents,
+                                    IfGenerationMatch(0));
+  ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
+
+  auto reader = client.ReadObject(bucket_name(), object_name);
+  auto actual = std::string{std::istreambuf_iterator<char>(reader), {}};
+  EXPECT_THAT(reader.status(), IsOk());
+  EXPECT_EQ(contents, actual);
+  EXPECT_EQ(reader.size(), insert->size());
+  EXPECT_EQ(reader.generation(), insert->generation());
+  // The checksums computed across all the windows match the checksums of the
+  // full object.
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (!UsingEmulator() || !UsingGrpc()) {
+    EXPECT_EQ(reader.received_hash(), reader.computed_hash());
+    EXPECT_THAT(reader.received_hash(), ::testing::HasSubstr(insert->crc32c()));
+  }
+}
+
+TEST_F(ObjectReadRangeIntegrationTest, AdaptiveReadFromOffset) {
+  auto client = MakeIntegrationTestClient(AdaptiveReadOptions());
+
+  auto constexpr kChunk = 1000;
+  auto constexpr kObjectSize = 10 * kChunk;
+  auto const contents = MakeRandomData(kObjectSize);
+  auto const object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(bucket_name(), object_name, contents,
+                                    IfGenerationMatch(0));
+  ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
+
+  for (std::int64_t offset : {0, kChunk, 3 * kChunk + 7, 9 * kChunk}) {
+    SCOPED_TRACE("Testing from offset " + std::to_string(offset));
+    auto reader =
+        client.ReadObject(bucket_name(), object_name, ReadFromOffset(offset));
+    auto actual = std::string{std::istreambuf_iterator<char>(reader), {}};
+    EXPECT_THAT(reader.status(), IsOk());
+    EXPECT_EQ(contents.substr(static_cast<std::size_t>(offset)), actual);
+  }
+
+  if (UsingEmulator()) return;
+  auto reader = client.ReadObject(bucket_name(), object_name,
+                                  ReadFromOffset(kObjectSize + kChunk));
+  EXPECT_TRUE(reader.bad());
+  EXPECT_THAT(reader.status(), StatusIs(StatusCode::kOutOfRange));
+}
+
+TEST_F(ObjectReadRangeIntegrationTest, AdaptiveReadEmptyObject) {
+  auto client = MakeIntegrationTestClient(AdaptiveReadOptions());
+
+  auto const object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(bucket_name(), object_name, std::string{},
+                                    IfGenerationMatch(0));
+  ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
+
+  auto reader = client.ReadObject(bucket_name(), object_name);
+  auto actual = std::string{std::istreambuf_iterator<char>(reader), {}};
+  EXPECT_THAT(reader.status(), IsOk());
+  EXPECT_THAT(actual, ::testing::IsEmpty());
+}
+
+TEST_F(ObjectReadRangeIntegrationTest, AdaptiveReadEarlyClose) {
+  auto client = MakeIntegrationTestClient(AdaptiveReadOptions());
+
+  auto constexpr kObjectSize = 20000;
+  auto const contents = MakeRandomData(kObjectSize);
+  auto const object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(bucket_name(), object_name, contents,
+                                    IfGenerationMatch(0));
+  ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
+
+  // Read the beginning of the object, as file format readers often do, and
+  // close the stream.
+  auto reader = client.ReadObject(bucket_name(), object_name);
+  std::vector<char> buffer(100);
+  reader.read(buffer.data(), buffer.size());
+  EXPECT_THAT(reader.status(), IsOk());
+  EXPECT_EQ(contents.substr(0, buffer.size()),
+            std::string(buffer.begin(), buffer.end()));
+  reader.Close();
+  EXPECT_THAT(reader.status(), IsOk());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

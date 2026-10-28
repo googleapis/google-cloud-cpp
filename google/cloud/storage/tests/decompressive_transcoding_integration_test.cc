@@ -174,6 +174,93 @@ TEST_F(DecompressiveTranscodingIntegrationTest, ResumeGunzippedDownloadJson) {
   EXPECT_THAT(actual_lines, ElementsAreArray(decompressed_lines));
 }
 
+// Adaptive reads request bounded ranges, which the service ignores when it
+// decompresses an object. Small windows make the object span many of them.
+Options AdaptiveReadOptions() {
+  storage_experimental::AdaptiveReadRangeConfig config;
+  config.initial_window = 64 * 1024;
+  config.max_window = 256 * 1024;
+  return Options{}.set<storage_experimental::AdaptiveReadRangeOption>(config);
+}
+
+TEST_F(DecompressiveTranscodingIntegrationTest, AdaptiveReadJson) {
+  if (UsingGrpc()) GTEST_SKIP();
+
+  auto client = MakeIntegrationTestClient(AdaptiveReadOptions());
+
+  auto object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(
+      bucket_name(), object_name, gzipped_contents(), IfGenerationMatch(0),
+      WithObjectMetadata(
+          ObjectMetadata().set_content_encoding("gzip").set_content_type(
+              "text/plain")));
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  auto reader =
+      client.ReadObject(bucket_name(), object_name, IfGenerationNotMatch(0));
+  ASSERT_STATUS_OK(reader.status());
+  auto decompressed = std::string{std::istreambuf_iterator<char>(reader), {}};
+  ASSERT_STATUS_OK(reader.status());
+
+  ASSERT_NE(decompressed.substr(0, 32), gzipped_contents().substr(0, 32));
+  EXPECT_THAT(decompressed, StartsWith(kFirstLine));
+}
+
+TEST_F(DecompressiveTranscodingIntegrationTest,
+       AdaptiveResumeGunzippedDownloadJson) {
+  // This test requires the emulator to force specific download failures.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
+
+  auto client = MakeIntegrationTestClient(
+      AdaptiveReadOptions()
+          .set<MaximumCurlSocketRecvSizeOption>(16 * 1024)
+          .set<DownloadBufferSizeOption>(1024));
+
+  auto object_name = MakeRandomObjectName();
+  auto insert = client.InsertObject(
+      bucket_name(), object_name, gzipped_contents(), IfGenerationMatch(0),
+      WithObjectMetadata(
+          ObjectMetadata().set_content_encoding("gzip").set_content_type(
+              "text/plain")));
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  auto reader =
+      client.ReadObject(bucket_name(), object_name, IfGenerationNotMatch(0));
+  ASSERT_STATUS_OK(reader.status());
+  auto const decompressed =
+      std::string{std::istreambuf_iterator<char>(reader), {}};
+  ASSERT_STATUS_OK(reader.status());
+  // The test assumes the object is at least 512 KiB, so the failures happen
+  // past the first window.
+  ASSERT_GT(decompressed.size(), 512 * 1024);
+
+  auto retry_response = InsertRetryTest(RetryTestRequest{{
+      RetryTestConfiguration{"storage.objects.get",
+                             {
+                                 "return-broken-stream-after-128K",
+                                 "return-broken-stream-after-256K",
+                                 "return-broken-stream-after-512K",
+                             }},
+  }});
+  ASSERT_STATUS_OK(retry_response);
+
+  reader =
+      client.ReadObject(bucket_name(), object_name, IfGenerationNotMatch(0),
+                        CustomHeader("x-retry-test-id", retry_response->id));
+  std::vector<char> buffer(128 * 1024);
+  std::string actual;
+  while (!reader.read(buffer.data(), buffer.size()).bad()) {
+    actual +=
+        std::string{buffer.data(), static_cast<std::size_t>(reader.gcount())};
+    if (reader.eof()) break;
+  }
+  ASSERT_STATUS_OK(reader.status());
+  EXPECT_EQ(actual.size(), decompressed.size());
+  EXPECT_TRUE(actual == decompressed);
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

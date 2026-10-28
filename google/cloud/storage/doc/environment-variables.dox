@@ -50,6 +50,21 @@ precedence over the option.
 
 @see google::cloud::storage_experimental::DirectPathXdsOverInterconnectOption
 
+`GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE=true`: download open-ended
+ranges (full objects, or downloads using `ReadFromOffset()`) as a series of
+growing, bounded windows, as if the application had set
+`AdaptiveReadRangeOption`. This is useful when a library creates the `Client`
+on behalf of the application. The windows use the configuration set in code, if
+any, and the default configuration otherwise. Set it to `true` to enable the
+feature. Set it to `false` to disable the feature even when the option is set in
+code. Only these exact values are recognized, and the comparison is
+case-sensitive; any other value, such as `1` or `TRUE`, is treated as if the
+variable were not set. The variable is read when the `Client` is created, and
+takes precedence over the client options. Options passed to an individual
+`ReadObject()` call still apply.
+
+@see google::cloud::storage_experimental::AdaptiveReadRangeOption
+
 [project-definition-link]: https://cloud.google.com/storage/docs/projects
 'Project Definition in GCS'
 [interconnect-link]:

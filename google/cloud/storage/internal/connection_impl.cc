@@ -14,11 +14,15 @@
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/connection_impl.h"
+#include "google/cloud/storage/internal/adaptive_object_read_source.h"
+#include "google/cloud/storage/internal/adaptive_read_size_estimator.h"
 #include "google/cloud/storage/internal/hedged_object_read_source.h"
 #include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -148,6 +152,24 @@ Status PartialWriteStatus(int error_count, int upload_count,
 
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
+// Returns the thread pool that opens adaptive read windows in the background.
+//
+// Connections share one pool so applications (or libraries) that create a
+// `Client` per reader do not create a separate pool per reader. The pool only
+// creates threads when it receives work, and it is destroyed once the last
+// connection using it is released.
+std::shared_ptr<ThreadPool> SharedPrefetchThreadPool() {
+  static auto* const kMu = new std::mutex;
+  static auto* const kPool = new std::weak_ptr<ThreadPool>;
+  std::lock_guard<std::mutex> lk(*kMu);
+  auto pool = kPool->lock();
+  if (!pool) {
+    pool = std::make_shared<ThreadPool>(DefaultReadThreadPoolSize());
+    *kPool = pool;
+  }
+  return pool;
+}
+
 }  // namespace
 
 std::shared_ptr<StorageConnectionImpl> StorageConnectionImpl::Create(
@@ -160,7 +182,8 @@ std::shared_ptr<StorageConnectionImpl> StorageConnectionImpl::Create(
 StorageConnectionImpl::StorageConnectionImpl(
     std::unique_ptr<storage_internal::GenericStub> stub, Options options)
     : stub_(std::move(stub)),
-      options_(MergeOptions(std::move(options), stub_->options())) {
+      options_(MergeOptions(std::move(options), stub_->options())),
+      prefetch_pool_(SharedPrefetchThreadPool()) {
   if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
     // `DefaultOptions()` normally resolves these, but a connection can be
     // built without it, in which case the option is left at 0 ("automatic").
@@ -406,9 +429,20 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::GetObjectMetadata(
 StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
     ReadObjectRangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  // Bounded reads are unchanged: the application already said how much data
+  // it needs.
+  if (current->has<storage_experimental::AdaptiveReadRangeOption>() &&
+      !request.HasOption<ReadRange>() && !request.HasOption<ReadLast>()) {
+    return ReadObjectAdaptive(request, std::move(current));
+  }
+  return MakeReadSource(request, std::move(current));
+}
 
-  auto self = shared_from_this();
-  auto const* where = __func__;
+StatusOr<std::unique_ptr<ObjectReadSource>>
+StorageConnectionImpl::MakeReadSource(
+    ReadObjectRangeRequest const& request,
+    google::cloud::internal::ImmutableOptions current) {
+  auto const* where = "ReadObject";
   auto factory = [self = shared_from_this(), current, where](
                      ReadObjectRangeRequest const& request,
                      RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
@@ -497,6 +531,104 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
       std::make_unique<HedgedObjectReadSource>(
           read_pool_, hedge_pool_, std::move(child_factory), delay, max_hedges,
           max_buffer, position, hedged_read_metrics_));
+}
+
+StatusOr<std::unique_ptr<ObjectReadSource>>
+StorageConnectionImpl::ReadObjectAdaptive(
+    ReadObjectRangeRequest const& request,
+    google::cloud::internal::ImmutableOptions current) {
+  auto settings = MakeAdaptiveReadSettings(
+      current->get<storage_experimental::AdaptiveReadRangeOption>());
+  auto estimator = current->get<AdaptiveReadSizeEstimatorOption>();
+  if (!estimator) estimator = AdaptiveReadSizeEstimator::Global();
+  auto const& bucket = request.bucket_name();
+  auto const start_offset = request.StartingByte();
+  auto const from_offset = start_offset > 0;
+  if (settings.learn_initial_window) {
+    settings.initial_window =
+        estimator->Recommend(bucket, settings, from_offset);
+  }
+  // Reports the summary of each adaptive read: as span attributes when tracing
+  // is enabled, as a log line when the `adaptive-read` logging component is
+  // enabled, and to the estimator that chooses the first window.
+  auto on_summary = [estimator, bucket, object = request.object_name(),
+                     from_offset, learn = settings.learn_initial_window,
+                     tracing =
+                         google::cloud::internal::TracingEnabled(*current),
+                     logging = google::cloud::internal::Contains(
+                         current->get<LoggingComponentsOption>(),
+                         "adaptive-read")](AdaptiveReadSummary const& summary) {
+    if (tracing) AddAdaptiveReadSpanAttributes(summary);
+    if (logging) {
+      GCP_LOG(INFO) << "adaptive read summary: bucket=" << bucket
+                    << " object=" << object << " "
+                    << FormatAdaptiveReadSummary(summary);
+    }
+    // Failed reads do not show how much data the application needs, and
+    // the windows do not apply to a regular download.
+    if (!learn || summary.unbounded_fallback ||
+        summary.close_reason == AdaptiveReadSummary::CloseReason::kError) {
+      return;
+    }
+    estimator->Record(
+        bucket, summary.bytes_delivered,
+        summary.close_reason == AdaptiveReadSummary::CloseReason::kEndOfData,
+        from_offset);
+  };
+  // The windows are tagged, so the service logs can tell them apart from other
+  // downloads. Windows are not hedged: a hedged source opens its download on
+  // the first `Read()`, which defeats prefetching and delays errors (such as
+  // the `kOutOfRange` for an empty object) past `MakeAdaptiveObjectReadSource`.
+  auto window_options = std::make_shared<Options const>(
+      Options(*current)
+          .set<AdaptiveReadAttributionOption>(true)
+          .set<storage_experimental::EnableReadHedgingOption>(false));
+
+  // Each window is a regular download of a bounded range, retried like any
+  // other download. A failure resumes inside the window.
+  auto factory =
+      std::make_shared<AdaptiveObjectReadSource::WindowFactory const>(
+          [self = shared_from_this(), window_options, request,
+           start_offset](AdaptiveObjectReadSource::Window const& window) {
+            ReadObjectRangeRequest req = request;
+            req.set_option(ReadFromOffset());
+            req.set_option(
+                ReadRange(window.offset, window.offset + window.length));
+            if (window.generation) {
+              req.set_option(Generation(*window.generation));
+            }
+            if (window.offset != start_offset && window.generation) {
+              // The first window checked the metageneration preconditions and
+              // captured the object's generation. Later windows read that same
+              // immutable generation; a metadata update in the meantime must
+              // not fail the download.
+              req.set_option(IfMetagenerationMatch());
+              req.set_option(IfMetagenerationNotMatch());
+            }
+            // Prefetches open windows on a background thread, which has no
+            // options in effect.
+            google::cloud::internal::OptionsSpan const span(window_options);
+            return self->MakeReadSource(req, window_options);
+          });
+  // A regular download of the requested data. It replaces the windows of an
+  // empty object, or of an object that is decompressed on the fly. The source
+  // may call it from `Read()`, long after this function returns.
+  auto open_unbounded = [self = shared_from_this(), request, current] {
+    google::cloud::internal::OptionsSpan const span(current);
+    return self->MakeReadSource(request, current);
+  };
+  auto executor = [pool = std::weak_ptr<ThreadPool>(prefetch_pool_)](
+                      std::function<void()> task) {
+    auto p = pool.lock();
+    return p != nullptr && p->Enqueue(std::move(task));
+  };
+  std::optional<std::int64_t> generation;
+  if (request.HasOption<Generation>()) {
+    generation = request.GetOption<Generation>().value();
+  }
+  return MakeAdaptiveObjectReadSource(
+      std::move(factory), std::move(open_unbounded), std::move(executor),
+      settings, start_offset, generation, std::move(on_summary));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(

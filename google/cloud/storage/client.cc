@@ -689,8 +689,10 @@ Options DefaultOptions(Options opts) {
     o.set<storage_experimental::MaxReadHedgesOption>(2);
   }
 
-  auto logging = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
-  if (logging) {
+  for (auto const* var :
+       {"CLOUD_STORAGE_ENABLE_TRACING", "GOOGLE_CLOUD_CPP_ENABLE_TRACING"}) {
+    auto logging = GetEnv(var);
+    if (!logging) continue;
     for (auto c : absl::StrSplit(*logging, ',')) {
       GCP_LOG(INFO) << "Enabling logging for " << c;
       o.lookup<LoggingComponentsOption>().insert(std::string(c));
@@ -700,6 +702,22 @@ Options DefaultOptions(Options opts) {
   auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
   if (tracing && !tracing->empty()) {
     o.set<OpenTelemetryTracingOption>(true);
+  }
+
+  // The environment variable takes precedence over the option, so deployments
+  // can turn adaptive reads on (or off) without rebuilding the application,
+  // for example when a library creates the `Client`. It only controls whether
+  // the feature is enabled, the windows use the configuration set by the
+  // application (if any). Any value other than "true" or "false" is treated as
+  // if the variable were not set.
+  auto const adaptive_reads =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_ENABLE_ADAPTIVE_READ_RANGE");
+  if (adaptive_reads == "true") {
+    if (!o.has<storage_experimental::AdaptiveReadRangeOption>()) {
+      o.set<storage_experimental::AdaptiveReadRangeOption>({});
+    }
+  } else if (adaptive_reads == "false") {
+    o.unset<storage_experimental::AdaptiveReadRangeOption>();
   }
 
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
