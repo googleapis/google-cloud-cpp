@@ -107,6 +107,8 @@ TEST_F(AsyncConnectionImplTest, GetBucket) {
         EXPECT_THAT(GetMetadata(*context),
                     testing::Not(testing::Contains(
                         testing::Key("x-goog-gcs-idempotency-token"))));
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto expected = google::storage::v2::GetBucketRequest{};
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));

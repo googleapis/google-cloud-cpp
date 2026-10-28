@@ -17,11 +17,14 @@
 
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/storage/v2/storage.pb.h"
 #include <grpcpp/client_context.h>
+#include <chrono>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -40,18 +43,35 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
 /// Configures @p ctx using @p token.
 void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token);
 
-/**
- * Inject request query parameters into grpc::ClientContext.
- *
- * The REST API has a number of "standard" query parameters that are not part of
- * the gRPC request body, instead they are sent via metadata headers in the gRPC
- * request.
- *
- * @see https://cloud.google.com/apis/docs/system-parameters
- */
 template <typename Request>
-void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
-                          Request const& request) {
+struct IsStreamingRequest : std::false_type {};
+
+template <>
+struct IsStreamingRequest<storage::internal::ReadObjectRangeRequest>
+    : std::true_type {};
+
+template <>
+struct IsStreamingRequest<storage::internal::InsertObjectMediaRequest>
+    : std::true_type {};
+
+template <>
+struct IsStreamingRequest<storage::internal::UploadChunkRequest>
+    : std::true_type {};
+
+/// Applies the unary RPC deadline from `TransferStallTimeoutOption` to @p ctx
+/// if a deadline has not already been set on @p ctx.
+inline void ApplyUnaryRpcDeadline(grpc::ClientContext& ctx,
+                                  Options const& options) {
+  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
+  if (timeout > std::chrono::seconds::zero() &&
+      ctx.deadline() == std::chrono::system_clock::time_point::max()) {
+    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
+  }
+}
+
+template <typename Request>
+void ApplyQuotaUserAndFieldMask(grpc::ClientContext& ctx,
+                                Request const& request, std::true_type) {
   // The gRPC API has a single field for the `QuotaUser` parameter, while the
   // JSON API has two:
   //    https://cloud.google.com/storage/docs/json_api/v1/parameters#quotaUser
@@ -70,6 +90,36 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
   if (request.template HasOption<storage::Fields>()) {
     ctx.AddMetadata("x-goog-fieldmask",
                     request.template GetOption<storage::Fields>().value());
+  }
+}
+
+template <typename Request>
+void ApplyQuotaUserAndFieldMask(grpc::ClientContext&, Request const&,
+                                std::false_type) {}
+
+/**
+ * Inject request query parameters into grpc::ClientContext.
+ *
+ * The REST API has a number of "standard" query parameters that are not part of
+ * the gRPC request body, instead they are sent via metadata headers in the gRPC
+ * request.
+ *
+ * @see https://cloud.google.com/apis/docs/system-parameters
+ */
+template <typename Request>
+void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
+                          Request const& request) {
+  using HasStandardParameters = std::integral_constant<
+      bool,
+      storage::internal::SupportsOption<Request,
+                                        storage::QuotaUser>::type::value &&
+          storage::internal::SupportsOption<Request,
+                                            storage::UserIp>::type::value &&
+          storage::internal::SupportsOption<Request,
+                                            storage::Fields>::type::value>;
+  ApplyQuotaUserAndFieldMask(ctx, request, HasStandardParameters{});
+  if (!IsStreamingRequest<Request>::value) {
+    ApplyUnaryRpcDeadline(ctx, options);
   }
   internal::ConfigureContext(ctx, options);
 }
