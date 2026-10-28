@@ -24,14 +24,22 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/iam/credentials/v1/iamcredentials.grpc.pb.h"
 #include <gmock/gmock.h>
 #if __has_include(<grpcpp/version_info.h>)
 #include <grpcpp/version_info.h>
 #endif
+#include <grpcpp/security/server_credentials.h>
+#include <grpcpp/server.h>
+#include <grpcpp/server_builder.h>
+#include <grpcpp/server_context.h>
 #include <nlohmann/json.hpp>
 #include <algorithm>
 #include <chrono>
 #include <fstream>
+#include <map>
+#include <memory>
+#include <mutex>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -47,11 +55,14 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
+using ::testing::Optional;
 using ::testing::Pair;
+using ::testing::StartsWith;
 
 TEST(UnifiedGrpcCredentialsTest, GrpcCredentialOption) {
   CompletionQueue cq;
@@ -834,8 +845,8 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsTlsOnlyMissingFile) {
 }
 
 /// @test Verify the strategy is created when `CARootsFilePathOption` names a
-/// readable file. The roots themselves are not observable through
-/// `grpc::ChannelCredentials`; `LoadCAInfo()` is tested above.
+/// readable file. Whether the roots are used is verified by the loopback
+/// handshake test below.
 TEST(UnifiedGrpcCredentialsTest,
      WithDefaultCredentialsTlsOnlyCustomCACertPath) {
   std::string const ca_filename = WriteTempFile(kCACertificate);
@@ -871,6 +882,189 @@ TEST(UnifiedGrpcCredentialsTest,
   EXPECT_FALSE(auth->RequiresConfigureContext());
   grpc::ClientContext context;
   EXPECT_THAT(auth->ConfigureContext(context), IsOk());
+}
+
+// A throwaway certificate chain for the loopback TLS server below: a CA and a
+// leaf for `localhost`, both EC P-256, valid for 100 years so the test does not
+// rot. Generated with
+//   openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes
+//     -keyout ca.key -out ca.pem -days 36500 -subj "/CN=Test-Only Invalid CA"
+//     -addext "basicConstraints=critical,CA:TRUE"
+//   openssl req -new -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes
+//     -keyout server.key -out server.csr -subj "/CN=localhost"
+//   openssl x509 -req -in server.csr -CA ca.pem -CAkey ca.key -CAcreateserial
+//     -out server.pem -days 36500
+//     -extfile <(echo "subjectAltName=DNS:localhost,IP:127.0.0.1,IP:::1")
+// The keys were created for this test and are used nowhere else.
+constexpr std::string_view kTestCACertificate = R"""(-----BEGIN CERTIFICATE-----
+MIIB3jCCAYOgAwIBAgIUGgdWlyrdqVC6SB7IqHHL4f/EHGcwCgYIKoZIzj0EAwIw
+OzEaMBgGA1UECgwRVGVzdC1Pbmx5IEludmFsaWQxHTAbBgNVBAMMFFRlc3QtT25s
+eSBJbnZhbGlkIENBMCAXDTI2MTAyODA5MjkwNFoYDzIxMjYxMDA0MDkyOTA0WjA7
+MRowGAYDVQQKDBFUZXN0LU9ubHkgSW52YWxpZDEdMBsGA1UEAwwUVGVzdC1Pbmx5
+IEludmFsaWQgQ0EwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWO1bj6lDqEdh8
+9PlqSV7bMKm3P4ixev/nfnumdwn2lQhx/Nckk+94jKXEOMUBv0Ilvo2sNgVmOcUZ
+vqICpJeio2MwYTAdBgNVHQ4EFgQU0AIjsZUDLU/twvWi/omRpZyaCa8wHwYDVR0j
+BBgwFoAU0AIjsZUDLU/twvWi/omRpZyaCa8wDwYDVR0TAQH/BAUwAwEB/zAOBgNV
+HQ8BAf8EBAMCAQYwCgYIKoZIzj0EAwIDSQAwRgIhAI3eAc1hdKSyMr0HIeFXCQA5
++GRlfoR87VmVxat53/MwAiEAq5V/wLaYb6DCprrb2K4+lcCb28hWfeCyq8ui8Coq
++D4=
+-----END CERTIFICATE-----
+)""";
+
+constexpr std::string_view kTestServerCertificate =
+    R"""(-----BEGIN CERTIFICATE-----
+MIICFTCCAbqgAwIBAgIUGr/yJFruXynjDkWbnUnnjA+A454wCgYIKoZIzj0EAwIw
+OzEaMBgGA1UECgwRVGVzdC1Pbmx5IEludmFsaWQxHTAbBgNVBAMMFFRlc3QtT25s
+eSBJbnZhbGlkIENBMCAXDTI2MTAyODA5MjkwNFoYDzIxMjYxMDA0MDkyOTA0WjAw
+MRowGAYDVQQKDBFUZXN0LU9ubHkgSW52YWxpZDESMBAGA1UEAwwJbG9jYWxob3N0
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEGTEMyVXEeMa0qGVchcNT1OhG62AG
+bUZuZzCY9UjCIUurZ6UhyWUCcgsygBQRgtqYqF+2ym51wChnxjyaMgY1+qOBpDCB
+oTAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAKBggrBgEF
+BQcDATAsBgNVHREEJTAjgglsb2NhbGhvc3SHBH8AAAGHEAAAAAAAAAAAAAAAAAAA
+AAEwHQYDVR0OBBYEFMHpLnTOgcbHS4L3lhwvtg3pCOv+MB8GA1UdIwQYMBaAFNAC
+I7GVAy1P7cL1ov6JkaWcmgmvMAoGCCqGSM49BAMCA0kAMEYCIQDui5YFlxXHmreM
+IEQ0ff+Evhh2GfW1GYN3xi6P6v1cmwIhAO9Konn0DUEQ4BfOUn6sz9VI4NSbS3Al
+2tCUCwuh8AbG
+-----END CERTIFICATE-----
+)""";
+
+constexpr std::string_view kTestServerKey = R"""(-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg4q4eba/bxYvpXw3S
+oWV15dRs6eZBBi5mWfwgFC8f8jmhRANCAAQZMQzJVcR4xrSoZVyFw1PU6EbrYAZt
+Rm5nMJj1SMIhS6tnpSHJZQJyCzKAFBGC2pioX7bKbnXAKGfGPJoyBjX6
+-----END PRIVATE KEY-----
+)""";
+
+// Records the `authorization` metadata of the last `GenerateAccessToken()`
+// call, so a test can tell whether call credentials were attached to the
+// channel. `IAMCredentials` is used only because `grpc_utils` already links
+// its proto; any unary RPC would do.
+class RecordingIamCredentialsService
+    : public google::iam::credentials::v1::IAMCredentials::Service {
+ public:
+  grpc::Status GenerateAccessToken(
+      grpc::ServerContext* context,
+      google::iam::credentials::v1::GenerateAccessTokenRequest const*,
+      google::iam::credentials::v1::GenerateAccessTokenResponse*) override {
+    std::multimap<grpc::string_ref, grpc::string_ref> const& metadata =
+        context->client_metadata();
+    auto const it = metadata.find("authorization");
+    std::scoped_lock<std::mutex> lk(mu_);
+    authorization_ = it == metadata.end()
+                         ? std::nullopt
+                         : std::make_optional(std::string(it->second.data(),
+                                                          it->second.size()));
+    return grpc::Status::OK;
+  }
+
+  std::optional<std::string> authorization() const {
+    std::scoped_lock<std::mutex> lk(mu_);
+    return authorization_;
+  }
+
+ private:
+  mutable std::mutex mu_;
+  std::optional<std::string> authorization_;
+};
+
+// A TLS server on a loopback port that presents `kTestServerCertificate`.
+class TlsTestServer {
+ public:
+  TlsTestServer() {
+    grpc::SslServerCredentialsOptions ssl_options;
+    ssl_options.pem_key_cert_pairs.push_back(
+        {std::string(kTestServerKey), std::string(kTestServerCertificate)});
+    grpc::ServerBuilder builder;
+    builder.AddListeningPort("localhost:0",
+                             grpc::SslServerCredentials(ssl_options), &port_);
+    builder.RegisterService(&service_);
+    server_ = builder.BuildAndStart();
+  }
+  ~TlsTestServer() { server_->Shutdown(); }
+
+  std::string endpoint() const { return "localhost:" + std::to_string(port_); }
+  RecordingIamCredentialsService const& service() const { return service_; }
+
+ private:
+  RecordingIamCredentialsService service_;
+  int port_ = 0;
+  std::unique_ptr<grpc::Server> server_;
+};
+
+// Sends one empty RPC to @p server over a channel created by @p auth; only
+// the TLS handshake and channel-level metadata are under test.
+Status CallOverTls(GrpcAuthenticationStrategy& auth,
+                   TlsTestServer const& server, grpc::ClientContext& context) {
+  std::shared_ptr<grpc::Channel> channel =
+      auth.CreateChannel(server.endpoint(), grpc::ChannelArguments{});
+  std::unique_ptr<google::iam::credentials::v1::IAMCredentials::Stub> stub =
+      google::iam::credentials::v1::IAMCredentials::NewStub(channel);
+  Status configured = auth.ConfigureContext(context);
+  if (!configured.ok()) return configured;
+  google::iam::credentials::v1::GenerateAccessTokenRequest request;
+  google::iam::credentials::v1::GenerateAccessTokenResponse response;
+  return MakeStatusFromRpcError(
+      stub->GenerateAccessToken(&context, request, &response));
+}
+
+/// @test Verify the strategy uses TLS with the roots from
+/// `CARootsFilePathOption` and attaches the ADC call credentials at the
+/// channel level: an RPC to a loopback server presenting a test-only
+/// certificate completes, and the server receives a bearer token.
+/// `grpc::GoogleDefaultCredentials()` cannot pass this test because it ignores
+/// `CARootsFilePathOption` (see the next test).
+TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsTlsOnlyHandshakes) {
+  TlsTestServer server;
+  std::string const ca_filename = WriteTempFile(kTestCACertificate);
+  std::string const filename = WriteTempFile(kServiceAccountContents);
+  AdcEnvironment adc(filename);
+  CompletionQueue cq;
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(
+          *MakeGoogleDefaultCredentials(), cq,
+          TlsOnlyOptions().set<CARootsFilePathOption>(ca_filename));
+  (void)std::remove(ca_filename.c_str());
+  (void)std::remove(filename.c_str());
+  ASSERT_THAT(auth, NotNull());
+  grpc::ClientContext context;
+  // Connecting to ourselves can be slow under CI load; wait for the channel
+  // rather than failing fast, with a generous deadline.
+  context.set_wait_for_ready(true);
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::seconds(30));
+  EXPECT_THAT(CallOverTls(*auth, server, context), IsOk());
+  EXPECT_THAT(server.service().authorization(),
+              Optional(StartsWith("Bearer ")));
+}
+
+/// @test Verify the control for the previous test: with the option false the
+/// strategy is `grpc::GoogleDefaultCredentials()`, which ignores
+/// `CARootsFilePathOption`, so the loopback server's certificate is rejected
+/// and the RPC fails before reaching the service.
+TEST(UnifiedGrpcCredentialsTest,
+     WithDefaultCredentialsTlsOnlyFalseIgnoresCustomRoots) {
+  TlsTestServer server;
+  std::string const ca_filename = WriteTempFile(kTestCACertificate);
+  std::string const filename = WriteTempFile(kServiceAccountContents);
+  AdcEnvironment adc(filename);
+  CompletionQueue cq;
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(
+          *MakeGoogleDefaultCredentials(), cq,
+          Options{}
+              .set<GrpcGoogleDefaultTlsOnlyOption>(false)
+              .set<CARootsFilePathOption>(ca_filename));
+  (void)std::remove(ca_filename.c_str());
+  (void)std::remove(filename.c_str());
+  ASSERT_THAT(auth, NotNull());
+  grpc::ClientContext context;
+  // Fail fast: a rejected handshake puts the channel in TRANSIENT_FAILURE, and
+  // waiting for it to become ready would only run into the deadline.
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::seconds(30));
+  EXPECT_THAT(CallOverTls(*auth, server, context),
+              StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(server.service().authorization(), Eq(std::nullopt));
 }
 
 /// @test Verify the option only affects Google Default credentials: an

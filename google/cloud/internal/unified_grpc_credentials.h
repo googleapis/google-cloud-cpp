@@ -74,10 +74,11 @@ struct AdcLookup {
 /**
  * Finds and reads the Application Default Credentials file.
  *
- * Uses the same search order as the REST credentials and as gRPC:
+ * Uses the same search order as the REST credentials:
  * `GOOGLE_APPLICATION_CREDENTIALS`, then the gcloud file (the
  * `GOOGLE_GCLOUD_ADC_PATH_OVERRIDE` path or the well-known location), which
- * is used only if it exists. Returns an error only when a configured file
+ * is used only if it exists. gRPC's Google Default credentials search the same
+ * locations, minus the override. Returns an error only when a configured file
  * cannot be opened; every other outcome is described by `AdcLookup::source`.
  */
 StatusOr<AdcLookup> LookupApplicationDefaultCredentials();

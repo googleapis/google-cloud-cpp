@@ -147,7 +147,14 @@ std::shared_ptr<GrpcAuthenticationStrategy> ErrorStrategy(Status status) {
       ErrorCredentialsConfig{std::move(status)});
 }
 
-// Composes TLS channel credentials with channel-level call credentials.
+std::shared_ptr<grpc::ChannelCredentials> MakeSslCredentials(
+    Options const& options) {
+  grpc::SslCredentialsOptions ssl_options;
+  std::optional<std::string> cainfo = LoadCAInfo(options);
+  if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
+  return grpc::SslCredentials(ssl_options);
+}
+
 // gRPC's call-credential factories return nullptr on malformed input, and
 // `grpc::CompositeChannelCredentials()` dereferences its argument without
 // checking for null, so we validate @p call_creds first. @p factory names the
@@ -163,11 +170,8 @@ std::shared_ptr<GrpcAuthenticationStrategy> TlsWithCallCredentials(
                      path.empty() ? "" : " from ", path),
         GCP_ERROR_INFO()));
   }
-  grpc::SslCredentialsOptions ssl_options;
-  std::optional<std::string> cainfo = LoadCAInfo(options);
-  if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
   return std::make_shared<GrpcChannelCredentialsAuthentication>(
-      grpc::CompositeChannelCredentials(grpc::SslCredentials(ssl_options),
+      grpc::CompositeChannelCredentials(MakeSslCredentials(options),
                                         call_creds));
 }
 
@@ -312,11 +316,8 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
                 GCP_ERROR_INFO())});
         return;
       }
-      grpc::SslCredentialsOptions ssl_options;
-      auto cainfo = LoadCAInfo(options);
-      if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
-          grpc::CompositeChannelCredentials(grpc::SslCredentials(ssl_options),
+          grpc::CompositeChannelCredentials(MakeSslCredentials(options),
                                             std::move(external_account_creds)));
     }
     void visit(ApiKeyConfig const& cfg) override {
@@ -377,7 +378,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
           ca_cert_path = it->get<std::string>();
         }
       }
-      grpc::SslCredentialsOptions ssl_options;
+      std::shared_ptr<grpc::ChannelCredentials> ssl_creds;
       if (!ca_cert_path.empty()) {
         std::ifstream is(ca_cert_path);
         if (!is.is_open()) {
@@ -387,15 +388,15 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
                   GCP_ERROR_INFO())});
           return;
         }
+        grpc::SslCredentialsOptions ssl_options;
         ssl_options.pem_root_certs =
             std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
+        ssl_creds = grpc::SslCredentials(ssl_options);
       } else {
-        std::optional<std::string> cainfo = LoadCAInfo(options);
-        if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
+        ssl_creds = MakeSslCredentials(options);
       }
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
-          grpc::CompositeChannelCredentials(grpc::SslCredentials(ssl_options),
-                                            gdch_creds));
+          grpc::CompositeChannelCredentials(ssl_creds, gdch_creds));
 #else
       (void)cfg;
       result = std::make_unique<GrpcErrorCredentialsAuthentication>(
