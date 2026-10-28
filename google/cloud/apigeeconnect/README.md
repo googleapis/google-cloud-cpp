@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) try {
 
   auto const parent =
       std::string{"projects/"} + argv[1] + "/endpoints/" + argv[2];
-  for (auto r : client.ListConnections(parent)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListConnections(parent)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = licensemanager::LicenseManagerClient(
       licensemanager::MakeLicenseManagerConnection());
 
-  for (auto r : client.ListConfigurations(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListConfigurations(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

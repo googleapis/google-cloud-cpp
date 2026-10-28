@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   auto client = servicehealth::ServiceHealthClient(
       servicehealth::MakeServiceHealthConnection());
 
-  for (auto e : client.ListEvents(location.FullName())) {
-    if (!e) throw std::move(e).status();
+  for (auto const& e : client.ListEvents(location.FullName())) {
+    if (!e) throw google::cloud::Status(e.status());
     std::cout << e->DebugString() << "\n";
   }
 

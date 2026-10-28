@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) try {
 
   google::api::servicemanagement::v1::ListServicesRequest request;
   request.set_producer_project_id(argv[1]);
-  for (auto s : client.ListServices(request)) {
-    if (!s) throw std::move(s).status();
+  for (auto const& s : client.ListServices(request)) {
+    if (!s) throw google::cloud::Status(s.status());
     std::cout << s->DebugString() << "\n";
   }
 

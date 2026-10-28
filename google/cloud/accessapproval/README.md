@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
   auto client = accessapproval::AccessApprovalClient(
       accessapproval::MakeAccessApprovalConnection());
   auto const project = google::cloud::Project(argv[1]);
-  for (auto a : client.ListApprovalRequests(project.FullName())) {
-    if (!a) throw std::move(a).status();
+  for (auto const& a : client.ListApprovalRequests(project.FullName())) {
+    if (!a) throw google::cloud::Status(a.status());
     std::cout << a->DebugString() << "\n";
   }
 

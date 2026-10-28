@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   auto client = storageinsights::StorageInsightsClient(
       storageinsights::MakeStorageInsightsConnection());
 
-  for (auto rc : client.ListReportConfigs(location.FullName())) {
-    if (!rc) throw std::move(rc).status();
+  for (auto const& rc : client.ListReportConfigs(location.FullName())) {
+    if (!rc) throw google::cloud::Status(rc.status());
     std::cout << rc->DebugString() << "\n";
   }
 

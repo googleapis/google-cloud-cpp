@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
       recaptchaenterprise::MakeRecaptchaEnterpriseServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.ListKeys(project.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListKeys(project.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

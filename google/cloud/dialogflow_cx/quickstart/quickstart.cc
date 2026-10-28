@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = dialogflow_cx::AgentsClient(
       dialogflow_cx::MakeAgentsConnection(location.location_id()));
 
-  for (auto a : client.ListAgents(location.FullName())) {
-    if (!a) throw std::move(a).status();
+  for (auto const& a : client.ListAgents(location.FullName())) {
+    if (!a) throw google::cloud::Status(a.status());
     std::cout << a->DebugString() << "\n";
   }
 

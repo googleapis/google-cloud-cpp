@@ -26,8 +26,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       cloudbuild::CloudBuildClient(cloudbuild::MakeCloudBuildConnection());
   auto const* filter = R"""(status="WORKING")""";  // List only running builds
-  for (auto b : client.ListBuilds(argv[1], filter)) {
-    if (!b) throw std::move(b).status();
+  for (auto const& b : client.ListBuilds(argv[1], filter)) {
+    if (!b) throw google::cloud::Status(b.status());
     std::cout << b->DebugString() << "\n";
   }
 

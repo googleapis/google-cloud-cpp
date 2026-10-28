@@ -30,9 +30,9 @@ int main(int argc, char* argv[]) try {
   auto client = securitycentermanagement::SecurityCenterManagementClient(
       securitycentermanagement::MakeSecurityCenterManagementConnection());
 
-  for (auto m :
+  for (auto const& m :
        client.ListEventThreatDetectionCustomModules(location.FullName())) {
-    if (!m) throw std::move(m).status();
+    if (!m) throw google::cloud::Status(m.status());
     std::cout << m->DebugString() << "\n";
   }
 

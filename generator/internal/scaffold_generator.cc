@@ -983,8 +983,8 @@ int main(int argc, char* argv[]) try {
   auto client = $library$::ServiceClient(
       $library$::MakeServiceConnection());  // EDIT HERE
 
-  for (auto r : client.List/*EDIT HERE*/(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.List/*EDIT HERE*/(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 
