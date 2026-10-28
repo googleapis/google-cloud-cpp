@@ -18,6 +18,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/detect_gcp.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
@@ -42,6 +43,7 @@ class MockGcpDetector : public google::cloud::internal::GcpDetector {
   MOCK_METHOD(bool, IsGoogleCloudServerless, (), (override));
 };
 
+using ::google::cloud::internal::GrpcGoogleDefaultTlsOnlyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Return;
 
@@ -87,6 +89,7 @@ TEST(DefaultOptionsGrpc, DefaultEndpointsCloudPath) {
   auto options = DefaultOptionsGrpc(Options{}, mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPath) {
@@ -99,6 +102,9 @@ TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPath) {
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  // Regular DirectPath relies on ALTS, which only Google Default credentials
+  // select.
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify the option defaults to disabled, and that the resolved default
@@ -119,10 +125,12 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectDefault) {
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>());
   EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify enabling the option off-GCE targets the DirectPath resolver,
-/// sets the Interconnect `:authority`, and uses a single channel.
+/// sets the Interconnect `:authority`, uses a single channel, and switches the
+/// default credentials to TLS.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectOption) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
@@ -140,6 +148,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectOption) {
   // `:authority`.
   EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify the environment variable enables the feature when the option is
@@ -157,6 +166,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVar) {
             "google-c2p:///storage-direct.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify explicitly disabling the option off-GCE keeps the client on
@@ -177,6 +187,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectDisabled) {
   EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
   EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify a caller-supplied endpoint wins over the DirectPath target, so
@@ -194,6 +205,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUserEndpointOverride) {
       mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(), "custom-endpoint");
   EXPECT_EQ(options.get<AuthorityOption>(), "custom-authority");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify a caller-supplied universe domain wins over the DirectPath
@@ -210,6 +222,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUniverseDomainOverride) {
       mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT=true`
@@ -231,6 +244,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarOverridesOption) {
             "google-c2p:///storage-direct.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT=false`
@@ -254,10 +268,13 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectEnvVarFalseOverridesOption) {
   EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
   EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify a caller-supplied authority is preserved when the DirectPath
 /// target is selected; `storage-direct.googleapis.com` is only the default.
+/// The credentials still switch to TLS: the authority does not change what
+/// transport security the Interconnect endpoint accepts.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectPreservesCustomAuthority) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
@@ -274,6 +291,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectPreservesCustomAuthority) {
             "google-c2p:///storage-direct.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "custom-authority");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify an application-supplied Interconnect endpoint also gets the
@@ -294,11 +312,13 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpoint) {
             "google-c2p:///storage-direct.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify an application-supplied Interconnect endpoint keeps the
-/// standard `:authority` when gRPC ignores `force-xds`, as the channel then
-/// uses regular DirectPath or CloudPath rather than Interconnect.
+/// standard `:authority` and the standard credentials when gRPC ignores
+/// `force-xds`, as the channel then uses regular DirectPath or CloudPath
+/// rather than Interconnect.
 TEST(DefaultOptionsGrpc,
      DirectPathOverInterconnectExplicitEndpointUnsupportedGrpc) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
@@ -312,11 +332,14 @@ TEST(DefaultOptionsGrpc,
           "google-c2p:///storage-direct.googleapis.com?force-xds"),
       mock_detector, /*grpc_supports_force_xds=*/false);
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify an application-supplied `force-xds` endpoint for any host other
 /// than `storage-direct.googleapis.com` keeps the standard `:authority`. The
-/// service recognizes the Interconnect authority only for that host.
+/// service recognizes the Interconnect authority only for that host. The
+/// credentials still switch to TLS, because ALTS is unavailable to Interconnect
+/// clients whatever host they dial.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpointOtherHost) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
@@ -331,6 +354,7 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpointOtherHost) {
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 struct InterconnectHostDelimiterTestCase {
@@ -405,13 +429,14 @@ TEST(DefaultOptionsGrpc,
       mock_detector, /*grpc_supports_force_xds=*/true);
   EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
   EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT=false`
 /// leaves an application-supplied Interconnect endpoint, and therefore its
-/// `:authority`, unchanged. The variable and the option govern only the
-/// endpoint the library selects, and the authority must match the endpoint
-/// actually in use.
+/// `:authority` and credentials, unchanged. The variable and the option govern
+/// only the endpoint the library selects, and the authority and credentials
+/// must match the endpoint actually in use.
 TEST(DefaultOptionsGrpc,
      DirectPathOverInterconnectExplicitEndpointEnvVarFalse) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
@@ -429,6 +454,7 @@ TEST(DefaultOptionsGrpc,
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage-direct.googleapis.com?force-xds");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
+  EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 /// @test Verify universe domain precedence also holds when the domain comes
@@ -445,6 +471,45 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectUniverseDomainEnvVar) {
       mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+}
+
+/// @test Verify the testbench endpoint wins over the Interconnect option and
+/// keeps the (insecure) testbench credentials.
+TEST(DefaultOptionsGrpc, DirectPathOverInterconnectTestbenchOverride) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", "localhost:9999");
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+          true),
+      mock_detector, /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<EndpointOption>(), "localhost:9999");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+}
+
+/// @test Verify the credentials option is recomputed from the effective
+/// endpoint rather than inherited from the input options, so a value carried
+/// over from another client cannot select TLS on a CloudPath endpoint.
+TEST(DefaultOptionsGrpc, DirectPathOverInterconnectTlsOnlyRecomputed) {
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<GrpcGoogleDefaultTlsOnlyOption>(true), mock_detector,
+      /*grpc_supports_force_xds=*/true);
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
 class DirectPathOverInterconnectInvalidEnvVarTest
@@ -480,6 +545,7 @@ TEST_P(DirectPathOverInterconnectInvalidEnvVarTest, InvalidValueIgnored) {
   EXPECT_EQ(options.get<EndpointOption>(),
             configured ? "google-c2p:///storage-direct.googleapis.com?force-xds"
                        : "storage.googleapis.com");
+  EXPECT_EQ(options.get<GrpcGoogleDefaultTlsOnlyOption>(), configured);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -529,6 +595,7 @@ TEST_P(DirectPathOverInterconnectUnsupportedGrpcTest, FallsBackToDefaults) {
   EXPECT_TRUE(
       options.get<storage_experimental::DirectPathXdsOverInterconnectOption>());
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
   if (test_case.on_gce) {
     EXPECT_EQ(options.get<EndpointOption>(),
               "google-c2p:///storage.googleapis.com");
@@ -661,6 +728,8 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectFollowsGrpcVersion) {
   EXPECT_EQ(options.get<AuthorityOption>(),
             GrpcForceXdsIsSupported() ? "storage-direct.googleapis.com"
                                       : "storage.googleapis.com");
+  EXPECT_EQ(options.get<GrpcGoogleDefaultTlsOnlyOption>(),
+            GrpcForceXdsIsSupported());
 }
 
 TEST(DefaultOptionsGrpc, MetricsDisabled) {
