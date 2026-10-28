@@ -794,8 +794,10 @@ class AsyncWriterConnectionResumedState
   // Request a server-side flush if the buffer goes over this threshold.
   std::size_t const buffer_size_lwm_;
 
-  // Stop sending data if the buffer goes over this threshold. Only
-  // start sending data again if the size goes below buffer_size_lwm_.
+  // Block the application's `Write()` futures while the buffer is at or above
+  // this threshold. They are released once the buffer drops below
+  // `buffer_size_lwm_`, or once all buffered data has been sent on the current
+  // stream.
   std::size_t const buffer_size_hwm_;
 
   // The result of calling `Finalize()`. Note that only one such call is ever
