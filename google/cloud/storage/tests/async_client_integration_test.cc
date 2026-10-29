@@ -643,6 +643,48 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
 }
 
+/// @test Verify that the documented `StartBufferedUpload` sample finalizes when
+/// the total size (15,890 bytes) is not a multiple of 256 KiB, and that an
+/// explicit `Flush()` at such an offset completes while the upload continues on
+/// the same stream. Regular buckets only persist 256 KiB multiples before the
+/// upload is finalized.
+TEST_F(AsyncClientIntegrationTest, StartBufferedUploadUnaligned) {
+  // A writer waiting for a response that never arrives fails with
+  // `kCancelled` after this timeout, instead of the default 2 minutes.
+  auto client = AsyncClient(
+      TestOptions().set<TransferStallTimeoutOption>(std::chrono::seconds(5)));
+  std::string const object_name = MakeRandomObjectName();
+
+  StatusOr<std::pair<AsyncWriter, AsyncToken>> w =
+      client.StartBufferedUpload(BucketName(bucket_name()), object_name).get();
+  ASSERT_STATUS_OK(w);
+  auto [writer, token] = *std::move(w);
+  std::int64_t expected_size = 0;
+  for (int i = 0; i != 1000; ++i) {
+    std::string line = "line number " + std::to_string(i) + "\n";
+    expected_size += static_cast<std::int64_t>(line.size());
+    StatusOr<AsyncToken> p =
+        writer.Write(std::move(token), WritePayload(std::move(line))).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+    // Without this, the writer only flushes if a `Write()` is still in flight
+    // when `Finalize()` runs, so whether an unaligned flush happens at all
+    // would depend on scheduling.
+    if (i == 499) {
+      ASSERT_STATUS_OK(writer.Flush().get());
+    }
+  }
+
+  StatusOr<google::storage::v2::Object> metadata =
+      writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), expected_size);
+}
+
 TEST_F(AsyncClientIntegrationTest, RewriteObject) {
   auto async = AsyncClient(TestOptions());
   auto o1 = MakeRandomObjectName();

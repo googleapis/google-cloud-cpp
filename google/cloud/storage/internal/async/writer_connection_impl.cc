@@ -276,14 +276,20 @@ future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
   }
   std::unique_lock<std::mutex> lk(mu_);
   offset_ += upload_size;
-  auto expected_offset = offset_;
   auto impl = impl_;
   lk.unlock();
 
+  // The service answers a `state_lookup` with one response carrying the
+  // persisted size (or the object resource), possibly preceded by responses
+  // that only refresh the write handle. The persisted size "might lag behind
+  // the number of bytes written by the client" (`BidiWriteObjectRequest` in
+  // `google/storage/v2/storage.proto`), e.g., regular buckets only persist
+  // 256 KiB multiples until the upload is finalized. The service sends no
+  // further response, so waiting for a size that covers `offset_` would block
+  // until the stream is cancelled.
   struct ConsumeLoop {
     AsyncWriterConnectionImpl* self;
     std::shared_ptr<StreamingRpc> impl;
-    std::int64_t expected_offset;
 
     future<Status> operator()(
         future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
@@ -298,9 +304,7 @@ future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
       }
       if (response->has_persisted_size()) {
         self->persisted_state_ = response->persisted_size();
-        if (response->persisted_size() >= expected_offset) {
-          return make_ready_future(Status{});
-        }
+        return make_ready_future(Status{});
       }
       if (response->has_resource()) {
         self->persisted_state_ = response->resource();
@@ -310,7 +314,7 @@ future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
       return impl->Read().then(std::move(*this));
     }
   };
-  return impl->Read().then(ConsumeLoop{this, impl, expected_offset});
+  return impl->Read().then(ConsumeLoop{this, impl});
 }
 
 future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
