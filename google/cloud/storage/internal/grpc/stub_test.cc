@@ -16,8 +16,10 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_minimal_iam_credentials_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -848,6 +850,95 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, UnaryRpcAppliesTransferStallTimeoutAndGrpcSetupOption) {
+  std::chrono::seconds const stall_timeout(30);
+  std::chrono::system_clock::time_point const custom_deadline =
+      std::chrono::system_clock::now() + std::chrono::seconds(5);
+
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([stall_timeout](grpc::ClientContext& context, Options const&,
+                                google::storage::v2::GetBucketRequest const&) {
+        std::chrono::system_clock::time_point const now =
+            std::chrono::system_clock::now();
+        EXPECT_GT(context.deadline(), now);
+        EXPECT_LE(context.deadline(),
+                  now + stall_timeout + std::chrono::seconds(2));
+        return PermanentError();
+      })
+      .WillOnce(
+          [custom_deadline](grpc::ClientContext& context, Options const&,
+                            google::storage::v2::GetBucketRequest const&) {
+            EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                      std::chrono::milliseconds(5));
+            return PermanentError();
+          });
+
+  EXPECT_CALL(*mock, StartResumableWrite)
+      .WillOnce([custom_deadline](grpc::ClientContext& context, Options const&,
+                                  v2::StartResumableWriteRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
+
+  EXPECT_CALL(*mock, QueryWriteStatus)
+      .WillOnce([custom_deadline](grpc::ClientContext& context, Options const&,
+                                  v2::QueryWriteStatusRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
+
+  EXPECT_CALL(*mock, CancelResumableWrite)
+      .WillOnce([custom_deadline](grpc::ClientContext& context, Options const&,
+                                  v2::CancelResumableWriteRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
+
+  auto mock_iam = std::make_shared<
+      google::cloud::testing_util::MockMinimalIamCredentialsStub>();
+  EXPECT_CALL(*mock_iam, SignBlob)
+      .WillOnce([custom_deadline](
+                    grpc::ClientContext& context,
+                    google::iam::credentials::v1::SignBlobRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
+
+  auto client = std::make_unique<GrpcStub>(mock, mock_iam, TestOptions());
+  rest_internal::RestContext context = TestContext();
+  Options options_with_stall =
+      TestOptions().set<storage::TransferStallTimeoutOption>(stall_timeout);
+  (void)client->GetBucketMetadata(
+      context, options_with_stall,
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+
+  Options const options_with_setup =
+      options_with_stall.set<google::cloud::internal::GrpcSetupOption>(
+          [custom_deadline](grpc::ClientContext& c) {
+            c.set_deadline(custom_deadline);
+          });
+  (void)client->GetBucketMetadata(
+      context, options_with_setup,
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+  (void)client->CreateResumableUpload(
+      context, options_with_setup,
+      storage::internal::ResumableUploadRequest("test-bucket", "test-object"));
+  (void)client->QueryResumableUpload(
+      context, options_with_setup,
+      storage::internal::QueryResumableUploadRequest("test-upload-id"));
+  (void)client->DeleteResumableUpload(
+      context, options_with_setup,
+      storage::internal::DeleteResumableUploadRequest("test-upload-id"));
+  (void)client->SignBlob(
+      context, options_with_setup,
+      storage::internal::SignBlobRequest("sa@example.com", "blob", {}));
 }
 
 }  // namespace

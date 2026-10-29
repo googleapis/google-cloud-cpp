@@ -107,6 +107,8 @@ TEST_F(AsyncConnectionImplTest, GetBucket) {
         EXPECT_THAT(GetMetadata(*context),
                     testing::Not(testing::Contains(
                         testing::Key("x-goog-gcs-idempotency-token"))));
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto expected = google::storage::v2::GetBucketRequest{};
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
@@ -170,6 +172,8 @@ TEST_F(AsyncConnectionImplTest, ComposeObject) {
             GetMetadata(*context),
             testing::Contains(testing::Pair("x-goog-gcs-idempotency-token",
                                             testing::Not(testing::IsEmpty()))));
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
         // Verify at least one option is initialized with the correct value.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto expected = google::storage::v2::ComposeObjectRequest{};
@@ -275,6 +279,8 @@ TEST_F(AsyncConnectionImplTest, DeleteObject) {
             GetMetadata(*context),
             testing::Contains(testing::Pair("x-goog-gcs-idempotency-token",
                                             testing::Not(testing::IsEmpty()))));
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
         // Verify at least one option is initialized with the correct values.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         google::storage::v2::DeleteObjectRequest expected;
