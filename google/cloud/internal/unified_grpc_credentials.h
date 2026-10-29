@@ -66,9 +66,9 @@ enum class AdcSource {
 /// The parsed result of `LookupApplicationDefaultCredentials()`.
 struct AdcLookup {
   AdcSource source = AdcSource::kNone;
-  std::string path;      ///< Empty when `source` is `kNone`.
-  std::string contents;  ///< Empty when `source` is `kNone`.
-  std::string type;      ///< The JSON `type` field, or empty if absent.
+  std::optional<std::string> path;      ///< Set unless `source` is `kNone`.
+  std::optional<std::string> contents;  ///< Set unless `source` is `kNone`.
+  std::optional<std::string> type;      ///< The JSON `type`, if it is a string.
 };
 
 /**

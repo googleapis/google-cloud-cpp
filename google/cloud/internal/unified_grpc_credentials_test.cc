@@ -523,16 +523,16 @@ TEST(UnifiedGrpcCredentialsTest, LookupAdcExternalAccount) {
 }
 
 class UnifiedGrpcCredentialsAdcTypeTest
-    : public ::testing::TestWithParam<std::string> {};
+    : public ::testing::TestWithParam<std::optional<std::string>> {};
 
 /// @test Verify the `type` values that gRPC's Google Default credentials do
 /// not support are reported as unsupported, including
-/// `external_account_authorized_user`, which the REST credentials accept, and
-/// a missing `type`.
+/// `external_account_authorized_user`, which the REST credentials accept, an
+/// empty `type`, and a missing one, which is reported as unset.
 TEST_P(UnifiedGrpcCredentialsAdcTypeTest, LookupAdcUnsupportedType) {
-  std::string const& type = GetParam();
+  std::optional<std::string> const& type = GetParam();
   nlohmann::json contents{{"client_id", "test-client-id"}};
-  if (!type.empty()) contents["type"] = type;
+  if (type) contents["type"] = *type;
   std::string const filename = WriteTempFile(contents.dump());
   AdcEnvironment adc(filename);
   StatusOr<AdcLookup> lookup = LookupApplicationDefaultCredentials();
@@ -542,19 +542,18 @@ TEST_P(UnifiedGrpcCredentialsAdcTypeTest, LookupAdcUnsupportedType) {
   EXPECT_EQ(lookup->type, type);
 }
 
-INSTANTIATE_TEST_SUITE_P(UnifiedGrpcCredentialsTest,
-                         UnifiedGrpcCredentialsAdcTypeTest,
-                         ::testing::Values("external_account_authorized_user",
-                                           "impersonated_service_account",
-                                           "gdch_service_account",
-                                           "not-a-known-type", ""),
-                         [](::testing::TestParamInfo<std::string> const& info) {
-                           if (info.param.empty())
-                             return std::string{"MissingType"};
-                           std::string name = info.param;
-                           std::replace(name.begin(), name.end(), '-', '_');
-                           return name;
-                         });
+INSTANTIATE_TEST_SUITE_P(
+    UnifiedGrpcCredentialsTest, UnifiedGrpcCredentialsAdcTypeTest,
+    ::testing::Values("external_account_authorized_user",
+                      "impersonated_service_account", "gdch_service_account",
+                      "not-a-known-type", "", std::nullopt),
+    [](::testing::TestParamInfo<std::optional<std::string>> const& info) {
+      if (!info.param) return std::string{"MissingType"};
+      if (info.param->empty()) return std::string{"EmptyType"};
+      std::string name = *info.param;
+      std::replace(name.begin(), name.end(), '-', '_');
+      return name;
+    });
 
 /// @test Verify a `type` that is not a string is treated as absent rather than
 /// read as a string, which would throw inside the JSON library.
@@ -565,7 +564,7 @@ TEST(UnifiedGrpcCredentialsTest, LookupAdcNonStringType) {
   (void)std::remove(filename.c_str());
   ASSERT_STATUS_OK(lookup);
   EXPECT_EQ(lookup->source, AdcSource::kUnsupportedType);
-  EXPECT_THAT(lookup->type, IsEmpty());
+  EXPECT_EQ(lookup->type, std::nullopt);
 }
 
 struct AdcNonObjectContentsTestCase {
@@ -577,7 +576,8 @@ class UnifiedGrpcCredentialsAdcContentsTest
     : public ::testing::TestWithParam<AdcNonObjectContentsTestCase> {};
 
 /// @test Verify that files that do not hold a JSON object are reported as
-/// such, rather than as an unsupported type or a crash.
+/// such, rather than as an unsupported type or a crash. The contents are kept,
+/// so an empty file is distinguishable from no file at all.
 TEST_P(UnifiedGrpcCredentialsAdcContentsTest, LookupAdcNotJsonObject) {
   std::string const filename = WriteTempFile(GetParam().contents);
   AdcEnvironment adc(filename);
@@ -586,6 +586,7 @@ TEST_P(UnifiedGrpcCredentialsAdcContentsTest, LookupAdcNotJsonObject) {
   ASSERT_STATUS_OK(lookup);
   EXPECT_EQ(lookup->source, AdcSource::kNotJsonObject);
   EXPECT_EQ(lookup->path, filename);
+  EXPECT_EQ(lookup->contents, GetParam().contents);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -630,8 +631,8 @@ TEST(UnifiedGrpcCredentialsTest, LookupAdcNoFile) {
   StatusOr<AdcLookup> lookup = LookupApplicationDefaultCredentials();
   ASSERT_STATUS_OK(lookup);
   EXPECT_EQ(lookup->source, AdcSource::kNone);
-  EXPECT_THAT(lookup->path, IsEmpty());
-  EXPECT_THAT(lookup->contents, IsEmpty());
+  EXPECT_EQ(lookup->path, std::nullopt);
+  EXPECT_EQ(lookup->contents, std::nullopt);
 }
 
 /// @test Verify an empty environment variable is treated as unset, as the
@@ -653,6 +654,20 @@ TEST(UnifiedGrpcCredentialsTest, LookupAdcNoHome) {
   ScopedEnvironment gcloud("GOOGLE_GCLOUD_ADC_PATH_OVERRIDE", std::nullopt);
   ScopedEnvironment home("HOME", std::nullopt);
   ScopedEnvironment appdata("APPDATA", std::nullopt);
+  StatusOr<AdcLookup> lookup = LookupApplicationDefaultCredentials();
+  ASSERT_STATUS_OK(lookup);
+  EXPECT_EQ(lookup->source, AdcSource::kNone);
+}
+
+/// @test Verify that without an override the lookup consults the gcloud file
+/// in the home directory, and that its absence means there is no credentials
+/// file. `HOME` and `APPDATA` both name a directory that does not exist, so
+/// the test is hermetic on every platform.
+TEST(UnifiedGrpcCredentialsTest, LookupAdcNoGcloudFileInHome) {
+  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", std::nullopt);
+  ScopedEnvironment gcloud("GOOGLE_GCLOUD_ADC_PATH_OVERRIDE", std::nullopt);
+  ScopedEnvironment home("HOME", CreateRandomFileName());
+  ScopedEnvironment appdata("APPDATA", CreateRandomFileName());
   StatusOr<AdcLookup> lookup = LookupApplicationDefaultCredentials();
   ASSERT_STATUS_OK(lookup);
   EXPECT_EQ(lookup->source, AdcSource::kNone);
@@ -708,6 +723,22 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsTlsOnlyAuthorizedUser) {
   EXPECT_THAT(auth->ConfigureContext(context), IsOk());
 }
 
+/// @test Verify a well-formed external account configuration yields
+/// channel-level credentials: TLS composed with gRPC's call credentials, so no
+/// per-call configuration is needed.
+TEST(UnifiedGrpcCredentialsTest, WithExternalAccountCredentials) {
+  CompletionQueue cq;
+  ExternalAccountConfig const creds(std::string(kExternalAccountContents),
+                                    Options{});
+  std::shared_ptr<GrpcAuthenticationStrategy> auth =
+      CreateAuthenticationStrategy(creds, cq);
+  ASSERT_THAT(auth, NotNull());
+  EXPECT_FALSE(auth->RequiresConfigureContext());
+  grpc::ClientContext context;
+  EXPECT_THAT(auth->ConfigureContext(context), IsOk());
+  EXPECT_THAT(context.credentials(), IsNull());
+}
+
 /// @test Verify an external account file yields channel-level credentials.
 TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsTlsOnlyExternalAccount) {
   std::string const filename = WriteTempFile(kExternalAccountContents);
@@ -738,11 +769,22 @@ TEST(UnifiedGrpcCredentialsTest,
   EXPECT_THAT(auth->ConfigureContext(context), IsOk());
 }
 
+struct UnsupportedTypeTestCase {
+  std::string test_name;
+  std::string contents;
+  std::string expected_type;  // As printed in the error message.
+};
+
+class UnifiedGrpcCredentialsUnsupportedTypeTest
+    : public ::testing::TestWithParam<UnsupportedTypeTestCase> {};
+
 /// @test Verify a type that gRPC's Google Default credentials reject is
-/// reported with the same message as the REST credentials.
-TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsTlsOnlyUnsupportedType) {
-  std::string const filename =
-      WriteTempFile(R"""({"type": "external_account_authorized_user"})""");
+/// reported with the same message as the REST credentials: the `type` as
+/// found, `()` for an empty string, and `(no type given)` when the member is
+/// absent or not a string.
+TEST_P(UnifiedGrpcCredentialsUnsupportedTypeTest,
+       WithDefaultCredentialsTlsOnlyUnsupportedType) {
+  std::string const filename = WriteTempFile(GetParam().contents);
   AdcEnvironment adc(filename);
   CompletionQueue cq;
   std::shared_ptr<GrpcAuthenticationStrategy> auth =
@@ -753,9 +795,26 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsTlsOnlyUnsupportedType) {
   grpc::ClientContext context;
   EXPECT_THAT(auth->ConfigureContext(context),
               StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("Unsupported credential type "
-                                 "(external_account_authorized_user)")));
+                       HasSubstr("Unsupported credential type (" +
+                                 GetParam().expected_type + ")")));
 }
+
+INSTANTIATE_TEST_SUITE_P(
+    UnifiedGrpcCredentialsTest, UnifiedGrpcCredentialsUnsupportedTypeTest,
+    ::testing::Values(
+        UnsupportedTypeTestCase{
+            "ExternalAccountAuthorizedUser",
+            R"""({"type": "external_account_authorized_user"})""",
+            "external_account_authorized_user"},
+        UnsupportedTypeTestCase{"MissingType",
+                                R"""({"client_id": "test-client-id"})""",
+                                "no type given"},
+        UnsupportedTypeTestCase{"NonStringType", R"""({"type": 42})""",
+                                "no type given"},
+        UnsupportedTypeTestCase{"EmptyType", R"""({"type": ""})""", ""}),
+    [](::testing::TestParamInfo<UnsupportedTypeTestCase> const& info) {
+      return info.param.test_name;
+    });
 
 /// @test Verify a service account file with a supported `type` but no usable
 /// key is an error rather than a null credentials object handed to gRPC.

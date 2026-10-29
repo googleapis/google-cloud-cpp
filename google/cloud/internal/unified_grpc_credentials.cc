@@ -121,7 +121,7 @@ AdcLookup ClassifyAdcFile(std::string path, std::string contents) {
   lookup.path = std::move(path);
   lookup.contents = std::move(contents);
   nlohmann::json const json =
-      nlohmann::json::parse(lookup.contents, nullptr, false);
+      nlohmann::json::parse(*lookup.contents, nullptr, false);
   if (json.is_discarded() || !json.is_object()) {
     lookup.source = AdcSource::kNotJsonObject;
     return lookup;
@@ -162,12 +162,12 @@ std::shared_ptr<grpc::ChannelCredentials> MakeSslCredentials(
 std::shared_ptr<GrpcAuthenticationStrategy> TlsWithCallCredentials(
     Options const& options,
     std::shared_ptr<grpc::CallCredentials> const& call_creds,
-    std::string_view factory, std::string const& path) {
+    std::string_view factory, std::optional<std::string> const& path) {
   if (!call_creds) {
     return ErrorStrategy(InvalidArgumentError(
         absl::StrCat("Error creating ", factory,
                      " for Application Default Credentials",
-                     path.empty() ? "" : " from ", path),
+                     path ? absl::StrCat(" from ", *path) : ""),
         GCP_ERROR_INFO()));
   }
   return std::make_shared<GrpcChannelCredentialsAuthentication>(
@@ -191,21 +191,21 @@ std::shared_ptr<GrpcAuthenticationStrategy> MakeTlsGoogleDefaultStrategy(
           "grpc::GoogleComputeEngineCredentials", adc->path);
     case AdcSource::kServiceAccount:
       return TlsWithCallCredentials(
-          options, grpc::ServiceAccountJWTAccessCredentials(adc->contents),
+          options, grpc::ServiceAccountJWTAccessCredentials(*adc->contents),
           "grpc::ServiceAccountJWTAccessCredentials", adc->path);
     case AdcSource::kAuthorizedUser:
       return TlsWithCallCredentials(
-          options, grpc::GoogleRefreshTokenCredentials(adc->contents),
+          options, grpc::GoogleRefreshTokenCredentials(*adc->contents),
           "grpc::GoogleRefreshTokenCredentials", adc->path);
     case AdcSource::kExternalAccount:
       return TlsWithCallCredentials(
           options,
           GrpcExternalAccountCredentials(
-              ExternalAccountConfig(adc->contents, cfg.options())),
+              ExternalAccountConfig(*adc->contents, cfg.options())),
           "grpc::ExternalAccountCredentials", adc->path);
     case AdcSource::kNotJsonObject:
       return ErrorStrategy(InvalidArgumentError(
-          absl::StrCat("Cannot open credentials file ", adc->path,
+          absl::StrCat("Cannot open credentials file ", *adc->path,
                        ", it does not contain a JSON object."),
           GCP_ERROR_INFO()));
     case AdcSource::kUnsupportedType:
@@ -213,9 +213,9 @@ std::shared_ptr<GrpcAuthenticationStrategy> MakeTlsGoogleDefaultStrategy(
   }
   return ErrorStrategy(InvalidArgumentError(
       absl::StrCat("Unsupported credential type (",
-                   adc->type.empty() ? "no type given" : adc->type,
+                   adc->type.value_or("no type given"),
                    ") when reading Application Default Credentials file from ",
-                   adc->path, "."),
+                   *adc->path, "."),
       GCP_ERROR_INFO()));
 }
 
