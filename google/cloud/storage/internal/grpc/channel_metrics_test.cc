@@ -29,6 +29,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
+#include <opentelemetry/sdk/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <atomic>
@@ -81,6 +82,33 @@ class MockPushMetricExporter
   MOCK_METHOD(bool, Shutdown, (std::chrono::microseconds),
               (noexcept, override));
   // NOLINTEND(bugprone-exception-escape)
+};
+
+/// Shuts down a `MeterProvider` when the test ends, even after a failed
+/// `ASSERT_*`.
+///
+/// `EnableGrpcMetricsImpl()` stores the provider in process-wide singletons
+/// that are never destroyed. Calling `Shutdown()` joins the provider's
+/// periodic reader thread before the test exits, so a background collection
+/// cannot race with `exit()` destroying OpenTelemetry's static objects.
+class ScopedProviderShutdown {
+ public:
+  explicit ScopedProviderShutdown(
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
+      : provider_(std::move(provider)) {}
+  ~ScopedProviderShutdown() {
+    if (!provider_) return;
+    // The API `MeterProvider` interface has no `Shutdown()`, and
+    // `FindMeterProvider()` only returns `sdk::metrics::MeterProvider`
+    // instances created by `MakeGrpcMeterProvider()`.
+    static_cast<opentelemetry::sdk::metrics::MeterProvider*>(provider_.get())
+        ->Shutdown();
+  }
+  ScopedProviderShutdown(ScopedProviderShutdown const&) = delete;
+  ScopedProviderShutdown& operator=(ScopedProviderShutdown const&) = delete;
+
+ private:
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
 };
 
 auto constexpr kExportInterval = std::chrono::milliseconds(50);
@@ -271,7 +299,6 @@ TEST(ChannelMetrics, UnknownAuthorityYieldsEmptyCallback) {
 /// that sets `EnableGrpcMetricsOption(false)` must still record nothing,
 /// even though `FindMeterProvider()` would succeed.
 TEST(ChannelMetrics, RegisteredAuthorityHonorsOption) {
-  GTEST_SKIP() << "Skipping flaky test, see #16587";
   // The registry is process-wide, so use an authority unique to this test.
   std::string const authority = "test-only-registered.example.com";
   ScopedEnvironment const env("GOOGLE_CLOUD_PROJECT", std::nullopt);
@@ -286,6 +313,7 @@ TEST(ChannelMetrics, RegisteredAuthorityHonorsOption) {
       opentelemetry::sdk::resource::Resource::Create({}), base);
   ASSERT_TRUE(config.has_value());
   EnableGrpcMetricsImpl(*std::move(config));
+  ScopedProviderShutdown const provider_shutdown(FindMeterProvider(authority));
   ASSERT_TRUE(FindMeterProvider(authority));
 
   struct TestCase {
