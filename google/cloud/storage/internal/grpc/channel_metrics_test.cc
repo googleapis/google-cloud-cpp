@@ -313,8 +313,10 @@ TEST(ChannelMetrics, RegisteredAuthorityHonorsOption) {
       opentelemetry::sdk::resource::Resource::Create({}), base);
   ASSERT_TRUE(config.has_value());
   EnableGrpcMetricsImpl(*std::move(config));
-  ScopedProviderShutdown const provider_shutdown(FindMeterProvider(authority));
-  ASSERT_TRUE(FindMeterProvider(authority));
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> const provider =
+      FindMeterProvider(authority);
+  ScopedProviderShutdown const provider_shutdown(provider);
+  ASSERT_TRUE(provider);
 
   struct TestCase {
     bool enabled;
