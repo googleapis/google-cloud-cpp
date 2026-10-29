@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -27,6 +28,8 @@
 #include <opentelemetry/metrics/provider.h>
 #include <algorithm>
 #include <chrono>
+#include <cstddef>
+#include <cstdint>
 #include <fstream>
 #include <functional>
 #include <memory>
@@ -46,6 +49,9 @@ namespace {
 using ::google::cloud::Idempotency;
 using ::google::cloud::internal::MergeOptions;
 using ::google::cloud::rest_internal::RestRetryLoop;
+using ::google::cloud::storage_internal::AddFeaturesHeader;
+using ::google::cloud::storage_internal::FeatureBit;
+using ::google::cloud::storage_internal::TrackedFeature;
 
 // Returns an error if the response contains an unexpected (or invalid)
 // committed size.
@@ -407,9 +413,27 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
     ReadObjectRangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
 
+  bool const enable_hedging =
+      current->get<storage_experimental::EnableReadHedgingOption>();
+  auto const delay = current->get<storage_experimental::ReadHedgeDelayOption>();
+  int const max_hedges =
+      current->get<storage_experimental::MaxReadHedgesOption>();
+  std::size_t const max_buffer =
+      current->get<storage_experimental::MaximumHedgeBufferOption>();
+  bool const hedging_active =
+      enable_hedging && max_hedges > 0 && hedge_pool_ && read_pool_;
+
+  // Tell the service which client-side features shaped this read. Only the
+  // features actually in effect are reported; `kReadHedging` means hedging is
+  // in effect for this read, not that a hedge was dispatched.
+  std::uint32_t features = 0;
+  if (hedging_active) {
+    features |= FeatureBit(TrackedFeature::kReadHedging);
+  }
+
   auto self = shared_from_this();
   auto const* where = __func__;
-  auto factory = [self = shared_from_this(), current, where](
+  auto factory = [self = shared_from_this(), current, where, features](
                      ReadObjectRangeRequest const& request,
                      RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
     auto const idempotency =
@@ -427,10 +451,11 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
                                            request.object_name()));
     return RestRetryLoop(
         logging_retry_policy, backoff_policy, idempotency,
-        [self, token = self->MakeIdempotencyToken()](
+        [self, token = self->MakeIdempotencyToken(), features](
             rest_internal::RestContext& context, Options const& options,
             ReadObjectRangeRequest const& request) {
           context.AddHeader(kIdempotencyTokenHeader, token);
+          AddFeaturesHeader(context, features);
           return self->stub_->ReadObject(context, options, request);
         },
         *current, request, where);
@@ -479,15 +504,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
             std::move(retry_policy), std::move(backoff_policy)));
   };
 
-  auto const enable_hedging =
-      current->get<storage_experimental::EnableReadHedgingOption>();
-  auto const delay = current->get<storage_experimental::ReadHedgeDelayOption>();
-  auto const max_hedges =
-      current->get<storage_experimental::MaxReadHedgesOption>();
-  auto const max_buffer =
-      current->get<storage_experimental::MaximumHedgeBufferOption>();
-
-  if (!enable_hedging || max_hedges <= 0 || !hedge_pool_ || !read_pool_) {
+  if (!hedging_active) {
     return child_factory(position.offset, position.generation);
   }
 

@@ -13,14 +13,27 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/internal/url_encode.h"
+#include <array>
+#include <cstdint>
 #include <regex>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+
+// The `RestContext` headers forwarded to gRPC as metadata. Anything else on
+// the `RestContext` is specific to the REST transport.
+constexpr std::array<char const*, 2> kForwardedHeaders{kIdempotencyTokenHeader,
+                                                       kFeaturesHeader};
+
 void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
                              std::string const& bucket_name,
                              RoutingHeaderOptions const& options) {
@@ -32,23 +45,31 @@ void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
   }
   context.AddMetadata("x-goog-request-params", std::move(params));
 }
+
+// Copies every value of the @p name header from @p context into @p ctx.
+void CopyHeader(grpc::ClientContext& ctx,
+                rest_internal::RestContext const& context,
+                std::string const& name) {
+  auto const& headers = context.headers();
+  auto const l = headers.find(name);
+  if (l == headers.end()) return;
+  for (std::string const& v : l->second.values()) ctx.AddMetadata(name, v);
+}
+
 }  // namespace
 
-auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
-
-void AddIdempotencyToken(grpc::ClientContext& ctx,
-                         rest_internal::RestContext const& context) {
-  auto const& headers = context.headers();
-  auto const l = headers.find(kIdempotencyTokenHeader);
-  if (l != headers.end()) {
-    for (auto const& v : l->second.values()) {
-      ctx.AddMetadata(kIdempotencyTokenHeader, v);
-    }
-  }
+void ApplyRestContextHeaders(grpc::ClientContext& ctx,
+                             rest_internal::RestContext const& context) {
+  for (char const* name : kForwardedHeaders) CopyHeader(ctx, context, name);
 }
 
 void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token) {
   ctx.AddMetadata(kIdempotencyTokenHeader, token);
+}
+
+void AddFeaturesHeader(grpc::ClientContext& ctx, std::uint32_t mask) {
+  if (mask == 0) return;
+  ctx.AddMetadata(kFeaturesHeader, EncodeFeatureMask(mask));
 }
 
 void ApplyRoutingHeaders(

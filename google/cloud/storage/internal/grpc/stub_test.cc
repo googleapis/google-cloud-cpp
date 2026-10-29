@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
@@ -603,6 +604,47 @@ TEST_F(GrpcClientTest, ReadObject) {
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
+}
+
+// The connection layer records the client features in effect for a read on
+// the `RestContext`. The gRPC stub must forward them as metadata, the same
+// way it forwards the idempotency token.
+TEST_F(GrpcClientTest, ReadObjectForwardsFeaturesHeader) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([this](auto context, Options const&,
+                       v2::ReadObjectRequest const&) {
+        EXPECT_THAT(GetMetadata(*context),
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair(storage_internal::kFeaturesHeader, "AAAAAg==")));
+        return std::make_unique<storage::testing::MockObjectMediaStream>();
+      });
+  auto client = CreateTestClient(mock);
+  auto context =
+      TestContext().AddHeader(storage_internal::kFeaturesHeader, "AAAAAg==");
+  auto stream = client->ReadObject(
+      context, TestOptions(),
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
+}
+
+// Without the header on the `RestContext` there must be no metadata entry at
+// all, not an empty one.
+TEST_F(GrpcClientTest, ReadObjectWithoutFeaturesHeader) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce(
+          [this](auto context, Options const&, v2::ReadObjectRequest const&) {
+            EXPECT_THAT(GetMetadata(*context),
+                        UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234")));
+            return std::make_unique<storage::testing::MockObjectMediaStream>();
+          });
+  auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto stream = client->ReadObject(
+      context, TestOptions(),
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
 }
 
 TEST_F(GrpcClientTest, ListObjects) {

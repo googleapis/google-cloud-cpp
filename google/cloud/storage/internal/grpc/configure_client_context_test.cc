@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -45,22 +46,66 @@ class GrpcConfigureClientContext : public ::testing::Test {
   ValidateMetadataFixture validate_metadata_fixture_;
 };
 
-TEST_F(GrpcConfigureClientContext, AddIdempotencyToken) {
+TEST_F(GrpcConfigureClientContext, ApplyRestContextHeadersIdempotencyToken) {
   grpc::ClientContext ctx;
   auto const context = rest_internal::RestContext{}.AddHeader(
       "x-goog-gcs-idempotency-token", "token-123");
-  AddIdempotencyToken(ctx, context);
+  ApplyRestContextHeaders(ctx, context);
+  EXPECT_THAT(GetMetadata(ctx),
+              Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRestContextHeadersFeatures) {
+  grpc::ClientContext ctx;
+  auto const context =
+      rest_internal::RestContext{}
+          .AddHeader("x-goog-gcs-idempotency-token", "token-123")
+          .AddHeader(kFeaturesHeader, "AAAAAg==");
+  ApplyRestContextHeaders(ctx, context);
   auto metadata = GetMetadata(ctx);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+  EXPECT_THAT(metadata, Contains(Pair(kFeaturesHeader, "AAAAAg==")));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRestContextHeadersNoFeatures) {
+  grpc::ClientContext ctx;
+  auto const context = rest_internal::RestContext{}.AddHeader(
+      "x-goog-gcs-idempotency-token", "token-123");
+  ApplyRestContextHeaders(ctx, context);
+  EXPECT_THAT(GetMetadata(ctx), Not(Contains(Pair(kFeaturesHeader, _))));
+}
+
+// Only the allowlisted headers cross over; anything else on the `RestContext`
+// is specific to the REST transport.
+TEST_F(GrpcConfigureClientContext, ApplyRestContextHeadersIgnoresOthers) {
+  grpc::ClientContext ctx;
+  auto const context = rest_internal::RestContext{}
+                           .AddHeader("x-goog-gcs-idempotency-token", "t")
+                           .AddHeader("x-test-only-rest-header", "v");
+  ApplyRestContextHeaders(ctx, context);
+  EXPECT_THAT(GetMetadata(ctx),
+              Not(Contains(Pair("x-test-only-rest-header", _))));
 }
 
 TEST_F(GrpcConfigureClientContext, AddIdempotencyTokenString) {
   grpc::ClientContext ctx;
   AddIdempotencyToken(ctx, "token-123");
-  auto metadata = GetMetadata(ctx);
-  EXPECT_THAT(metadata,
+  EXPECT_THAT(GetMetadata(ctx),
               Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+}
+
+TEST_F(GrpcConfigureClientContext, AddFeaturesHeader) {
+  grpc::ClientContext ctx;
+  AddFeaturesHeader(ctx, FeatureBit(TrackedFeature::kMultistreamInMrd));
+  EXPECT_THAT(GetMetadata(ctx), Contains(Pair(kFeaturesHeader, "AAAAAQ==")));
+}
+
+// A zero mask means the header is omitted, not sent empty.
+TEST_F(GrpcConfigureClientContext, AddFeaturesHeaderZeroMask) {
+  grpc::ClientContext ctx;
+  AddFeaturesHeader(ctx, 0);
+  EXPECT_THAT(GetMetadata(ctx), Not(Contains(Pair(kFeaturesHeader, _))));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {

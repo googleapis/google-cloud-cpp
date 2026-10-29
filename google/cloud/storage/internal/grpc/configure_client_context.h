@@ -22,6 +22,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/storage/v2/storage.pb.h"
 #include <grpcpp/client_context.h>
+#include <cstdint>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -33,12 +35,28 @@ struct RoutingHeaderOptions {
   std::string routing_token;
 };
 
-/// Configures @p ctx using @p context.
-void AddIdempotencyToken(grpc::ClientContext& ctx,
-                         rest_internal::RestContext const& context);
+/**
+ * Copies the headers the connection layer sets on the `RestContext`
+ * (idempotency token, client feature mask) into the gRPC `ClientContext`.
+ *
+ * Only an explicit allowlist of headers is forwarded; the `RestContext` may
+ * carry headers that are meaningful to the REST transport alone.
+ */
+void ApplyRestContextHeaders(grpc::ClientContext& ctx,
+                             rest_internal::RestContext const& context);
 
 /// Configures @p ctx using @p token.
 void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token);
+
+/**
+ * Sets `storage_internal::kFeaturesHeader` on @p ctx to the encoding of
+ * @p mask.
+ *
+ * Does nothing when @p mask is zero: the header is omitted, not sent empty.
+ * This is the gRPC counterpart of the `RestContext` overload declared in
+ * `internal/tracked_features.h`.
+ */
+void AddFeaturesHeader(grpc::ClientContext& ctx, std::uint32_t mask);
 
 /**
  * Inject request query parameters into grpc::ClientContext.
