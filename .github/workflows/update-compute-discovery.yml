@@ -96,20 +96,25 @@ jobs:
               PR_CREATOR_TOKEN="${GH_TOKEN}"
             fi
 
+            REVISION=$(sed -En 's/  "revision": "([[:digit:]]+)",/\1/p' generator/discovery/compute_public_google_rest_v1.json)
+            PR_TITLE="feat(compute): update discovery doc revision ${REVISION} and generate new services"
+
             echo "Checking if a PR is already open..."
-            if ! gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
+            EXISTING_PR=$(gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number')
+            if [[ ! "${EXISTING_PR}" =~ ^[0-9]+$ ]]; then
               echo "Opening new PR..."
               BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
               PR_URL=$(GH_TOKEN="${PR_CREATOR_TOKEN}" gh pr create \
                 --repo "${GITHUB_REPOSITORY}" \
-                --title "feat(compute): update discovery doc and generate new services" \
+                --title "${PR_TITLE}" \
                 --body "$(printf '%b' "$BODY")" \
                 --base main \
                 --head "${HEAD_REF}")
               echo "Created PR: ${PR_URL}"
               gh pr edit "${PR_URL}" --repo "${GITHUB_REPOSITORY}" --add-label "api: compute"
             else
-              echo "Pull request already exists for automation/update-compute-discovery. Branch has been updated."
+              echo "Pull request #${EXISTING_PR} already exists for automation/update-compute-discovery. Updating title..."
+              gh pr edit "${EXISTING_PR}" --repo "${GITHUB_REPOSITORY}" --title "${PR_TITLE}"
             fi
           else
             echo "No changes committed. Nothing to push or create."
