@@ -32,6 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 
+namespace {
+constexpr char const kWarmUpSentinelObject[] =
+    "__gcs_sdk_warmup_nonexistent_object__";
+}  // namespace
+
 AsyncClient::AsyncClient(Options options) {
   options = storage_internal::DefaultOptionsAsync(std::move(options));
   background_ = MakeBackgroundThreadsFactory(options)();
@@ -105,6 +110,22 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
     opts.set<storage_internal::ReadRangesOption>(std::move(internal_ranges));
   }
   return Open(std::move(spec), std::move(opts));
+}
+
+future<Status> AsyncClient::WarmUp(BucketName const& bucket_name,
+                                   Options opts) {
+  google::storage::v2::BidiReadObjectSpec spec;
+  spec.set_bucket(bucket_name.FullName());
+  return WarmUp(std::move(spec), std::move(opts));
+}
+
+future<Status> AsyncClient::WarmUp(google::storage::v2::BidiReadObjectSpec spec,
+                                   Options opts) {
+  if (spec.object().empty()) spec.set_object(kWarmUpSentinelObject);
+  if (spec.generation() == 0) spec.set_generation(1);
+  return connection_->WarmUp(
+      {std::move(spec), google::cloud::internal::MergeOptions(
+                            std::move(opts), connection_->options())});
 }
 
 future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(

@@ -42,6 +42,7 @@ using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 using ::testing::Optional;
@@ -1503,6 +1504,120 @@ TEST(AsyncClient, ResumeRewrite2) {
   ASSERT_STATUS_OK(rt);
   EXPECT_FALSE(rt->second.valid());
   EXPECT_THAT(rt->first, MatchRewriteResponse());
+}
+
+TEST(AsyncClient, WarmUpBucketName) {
+  constexpr char const kExpectedRequest[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, WarmUp)
+      .WillOnce([&](AsyncConnection::WarmUpParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        google::storage::v2::BidiReadObjectSpec expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.read_spec, IsProtoEqual(expected));
+        return make_ready_future(Status{});
+      });
+
+  AsyncClient client(mock);
+  Status status = client
+                      .WarmUp(BucketName("test-bucket"),
+                              Options{}
+                                  .set<TestOption<1>>("O1-function")
+                                  .set<TestOption<2>>("O2-function"))
+                      .get();
+  EXPECT_STATUS_OK(status);
+}
+
+TEST(AsyncClient, WarmUpSpecDefaults) {
+  constexpr char const kExpectedRequest[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, WarmUp)
+      .WillOnce([&](AsyncConnection::WarmUpParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        google::storage::v2::BidiReadObjectSpec expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.read_spec, IsProtoEqual(expected));
+        return make_ready_future(Status{});
+      });
+
+  AsyncClient client(mock);
+  google::storage::v2::BidiReadObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket");
+  Status status =
+      client
+          .WarmUp(std::move(spec), Options{}
+                                       .set<TestOption<1>>("O1-function")
+                                       .set<TestOption<2>>("O2-function"))
+          .get();
+  EXPECT_STATUS_OK(status);
+}
+
+TEST(AsyncClient, WarmUpSpecCustomObjectAndGeneration) {
+  constexpr char const kExpectedRequest[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "custom-object"
+    generation: 42
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, WarmUp)
+      .WillOnce([&](AsyncConnection::WarmUpParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        google::storage::v2::BidiReadObjectSpec expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.read_spec, IsProtoEqual(expected));
+        return make_ready_future(Status{});
+      });
+
+  AsyncClient client(mock);
+  google::storage::v2::BidiReadObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket");
+  spec.set_object("custom-object");
+  spec.set_generation(42);
+  Status status =
+      client
+          .WarmUp(std::move(spec), Options{}
+                                       .set<TestOption<1>>("O1-function")
+                                       .set<TestOption<2>>("O2-function"))
+          .get();
+  EXPECT_STATUS_OK(status);
+}
+
+TEST(AsyncClient, WarmUpDefaultUnimplemented) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*mock, WarmUp).WillOnce([&](AsyncConnection::WarmUpParams p) {
+    return mock->AsyncConnection::WarmUp(std::move(p));
+  });
+
+  AsyncClient client(mock);
+  Status status = client.WarmUp(BucketName("test-bucket")).get();
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnimplemented));
 }
 
 }  // namespace
