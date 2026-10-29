@@ -99,11 +99,16 @@ void ApplyQuotaUserAndFieldMask(grpc::ClientContext&, Request const&,
                                 std::false_type) {}
 
 /**
- * Inject request query parameters into grpc::ClientContext.
+ * Configure a grpc::ClientContext for a storage request.
  *
- * The REST API has a number of "standard" query parameters that are not part of
- * the gRPC request body, instead they are sent via metadata headers in the gRPC
- * request.
+ * Inject the request query parameters into the context. The REST API has a
+ * number of "standard" query parameters that are not part of the gRPC request
+ * body, instead they are sent via metadata headers in the gRPC request.
+ *
+ * For non-streaming requests this also sets a per-attempt deadline from
+ * `storage::TransferStallTimeoutOption` (see `ApplyUnaryRpcDeadline()`).
+ * Finally, for all requests, it applies any `GrpcSetupOption`; this runs last
+ * so applications can override the deadline.
  *
  * @see https://cloud.google.com/apis/docs/system-parameters
  */

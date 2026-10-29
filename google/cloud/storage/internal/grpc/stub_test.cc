@@ -884,6 +884,22 @@ TEST_F(GrpcClientTest, UnaryRpcAppliesTransferStallTimeoutAndGrpcSetupOption) {
         return PermanentError();
       });
 
+  EXPECT_CALL(*mock, QueryWriteStatus)
+      .WillOnce([custom_deadline](grpc::ClientContext& context, Options const&,
+                                  v2::QueryWriteStatusRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
+
+  EXPECT_CALL(*mock, CancelResumableWrite)
+      .WillOnce([custom_deadline](grpc::ClientContext& context, Options const&,
+                                  v2::CancelResumableWriteRequest const&) {
+        EXPECT_LE(std::chrono::abs(context.deadline() - custom_deadline),
+                  std::chrono::milliseconds(5));
+        return PermanentError();
+      });
+
   auto mock_iam = std::make_shared<
       google::cloud::testing_util::MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock_iam, SignBlob)
@@ -914,6 +930,12 @@ TEST_F(GrpcClientTest, UnaryRpcAppliesTransferStallTimeoutAndGrpcSetupOption) {
   (void)client->CreateResumableUpload(
       context, options_with_setup,
       storage::internal::ResumableUploadRequest("test-bucket", "test-object"));
+  (void)client->QueryResumableUpload(
+      context, options_with_setup,
+      storage::internal::QueryResumableUploadRequest("test-upload-id"));
+  (void)client->DeleteResumableUpload(
+      context, options_with_setup,
+      storage::internal::DeleteResumableUploadRequest("test-upload-id"));
   (void)client->SignBlob(
       context, options_with_setup,
       storage::internal::SignBlobRequest("sa@example.com", "blob", {}));

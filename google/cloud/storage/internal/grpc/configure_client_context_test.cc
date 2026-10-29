@@ -188,6 +188,17 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadlineZero) {
   EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
 }
 
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadlineNegative) {
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
+      std::chrono::seconds(-1));
+
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options,
+                       storage::internal::GetObjectMetadataRequest(
+                           "test-bucket", "test-object"));
+  EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
+}
+
 TEST_F(GrpcConfigureClientContext,
        ApplyQueryParametersUnaryDeadlineRespectsExistingDeadline) {
   std::chrono::system_clock::time_point const existing_deadline =
