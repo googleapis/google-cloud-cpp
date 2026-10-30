@@ -240,6 +240,102 @@ TEST(JsonUtilsTest, RemoveEmptyObjects) {
   EXPECT_EQ(expected, json.dump());
 }
 
+TEST(JsonUtilsTest, PreserveJobLabelsWhenRemovingJobFields) {
+  auto constexpr kInput = R"({
+    "status": {"state": "DONE"},
+    "configuration": {
+      "labels": {
+        "team": "finance",
+        "status": "active",
+        "statistics": "enabled",
+        "clustering": "manual",
+        "location": "india",
+        "flag": ""
+      },
+      "query": {
+        "query": "SELECT 1",
+        "clustering": {"fields": ["id"]}
+      }
+    },
+    "statistics": {"creationTime": "123"}
+  })";
+  auto const actual = RemoveJsonKeysAndEmptyFields(
+      kInput, {"status", "statistics", "clustering", "location"});
+  auto const expected = nlohmann::json::parse(R"({
+    "configuration": {
+      "labels": {
+        "team": "finance",
+        "status": "active",
+        "statistics": "enabled",
+        "clustering": "manual",
+        "location": "india",
+        "flag": ""
+      },
+      "query": {"query": "SELECT 1"}
+    }
+  })");
+  EXPECT_EQ(actual, expected);
+}
+
+TEST(JsonUtilsTest, PreserveLabelsAtMultipleLevels) {
+  auto constexpr kInput = R"({
+    "labels": {"status": "root", "labels": "customer_value"},
+    "status": {"state": "DONE"},
+    "configuration": {
+      "labels": {"status": "nested"},
+      "query": {"query": "SELECT 1"}
+    }
+  })";
+  auto const actual = RemoveJsonKeysAndEmptyFields(kInput, {"status"});
+  auto const expected = nlohmann::json::parse(R"({
+    "labels": {"status": "root", "labels": "customer_value"},
+    "configuration": {
+      "labels": {"status": "nested"},
+      "query": {"query": "SELECT 1"}
+    }
+  })");
+  EXPECT_EQ(actual, expected);
+}
+
+TEST(JsonUtilsTest, RemoveEmptyLabelsObject) {
+  auto constexpr kInput = R"({
+    "labels": {},
+    "configuration": {
+      "labels": {},
+      "query": {"query": "SELECT 1"}
+    }
+  })";
+  auto const actual = RemoveJsonKeysAndEmptyFields(kInput);
+  auto const expected = nlohmann::json::parse(
+      R"({"configuration":{"query":{"query":"SELECT 1"}}})");
+  EXPECT_EQ(actual, expected);
+}
+
+TEST(JsonUtilsTest, FilterLabelsAndFollowingFields) {
+  auto constexpr kInput = R"({
+    "configuration": {
+      "labels": {},
+      "query": {
+        "query": "SELECT 1",
+        "rangePartitioning": {
+          "range": {"start": "", "end": "", "interval": ""}
+        }
+      }
+    }
+  })";
+
+  auto const actual = RemoveJsonKeysAndEmptyFields(
+      kInput, {"labels", "rangePartitioning"});
+
+  auto const expected = nlohmann::json::parse(R"({
+    "configuration": {
+      "query": {"query": "SELECT 1"}
+    }
+  })");
+
+  EXPECT_EQ(actual, expected);
+}
+
 TEST(JsonUtilsTest, SafeGetToNullValue) {
   auto const* const key = "project_id";
   auto constexpr kJsonText = R"({"project_id":null})";

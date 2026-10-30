@@ -96,9 +96,22 @@ void ToJson(std::chrono::system_clock::time_point const& field,
 nlohmann::json RemoveJsonKeysAndEmptyFields(
     std::string const& json_payload, std::vector<std::string> const& keys) {
   nlohmann::json::parser_callback_t remove_empty_call_back =
-      [keys](int depth, nlohmann::json::parse_event_t event,
-             nlohmann::json& parsed) {
-        (void)depth;
+      [keys, labels_depth = -1](int depth, nlohmann::json::parse_event_t event,
+                                nlohmann::json& parsed) mutable {
+        // Label names are customer data, not resource schema fields.
+        if (labels_depth >= 0) {
+          if (event == nlohmann::json::parse_event_t::object_end &&
+              depth == labels_depth) {
+            labels_depth = -1;
+          } else if (depth > labels_depth) {
+            return true;
+          }
+        }
+        if (event == nlohmann::json::parse_event_t::key &&
+          parsed == "labels" &&
+          std::find(keys.begin(), keys.end(), "labels") == keys.end()) {
+            labels_depth = depth;
+          }
 
         if (event == nlohmann::json::parse_event_t::key) {
           auto const discard = std::any_of(
