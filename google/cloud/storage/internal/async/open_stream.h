@@ -47,6 +47,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * until all pending operations complete, then calls `Finish()` and then deletes
  * the streaming RPC (and itself).
  *
+ * Note that the caller is still responsible for the logical constraints on
+ * `Read()`, `Write()`, and `Finish()`. For example, the specific streaming RPC
+ * this class supports, `google::storage::v2::BidiReadObject`, requires that if
+ * `Start()` returns true, then at least one `Write()` or `Cancel()` call must
+ * be made for `Finish()` to be guaranteed to complete. Similarly, all gRPC
+ * server-streaming operations require `Read()` to drain all responses before
+ * `Finish()` is guaranteed to complete.
+ *
  * One may wonder if this class should be a reusable feature in the common
  * libraries. That may be, but there are not enough use-cases to determine how
  * a generalized version would look like. And in other cases (e.g.

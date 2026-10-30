@@ -124,10 +124,11 @@ TEST(OpenImpl, Basic) {
                     Contains(Pair("x-goog-request-params",
                                   "bucket=projects/_/buckets/test-bucket")));
         auto stream = std::make_unique<MockStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-          return sequencer.PushBack("Start").then(
-              [](auto f) { return f.get(); });
-        });
+        EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+            .WillOnce([&sequencer]() {
+              return sequencer.PushBack("Start").then(
+                  [](auto f) { return f.get(); });
+            });
         EXPECT_CALL(*stream, Write)
             .WillOnce(
                 [&sequencer, request](
@@ -206,10 +207,11 @@ TEST(OpenImpl, BasicReadHandle) {
                                   "&routing_token=test-token")));
 
         auto stream = std::make_unique<MockStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-          return sequencer.PushBack("Start").then(
-              [](auto f) { return f.get(); });
-        });
+        EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+            .WillOnce([&sequencer]() {
+              return sequencer.PushBack("Start").then(
+                  [](auto f) { return f.get(); });
+            });
         EXPECT_CALL(*stream, Write)
             .WillOnce(
                 [&sequencer, expected_request = request](
@@ -256,9 +258,11 @@ TEST(OpenImpl, StartError) {
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
-    });
+    EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
     EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
       return sequencer.PushBack("Finish").then(
           [](auto) { return PermanentError(); });
@@ -288,9 +292,11 @@ TEST(OpenImpl, WriteError) {
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
-    });
+    EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
     EXPECT_CALL(*stream, Write).WillOnce([&sequencer]() {
       return sequencer.PushBack("Write").then([](auto f) { return f.get(); });
     });
@@ -326,9 +332,11 @@ TEST(OpenImpl, ReadError) {
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
-    });
+    EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
     EXPECT_CALL(*stream, Write).WillOnce([&sequencer]() {
       return sequencer.PushBack("Write").then([](auto f) { return f.get(); });
     });
@@ -372,9 +380,11 @@ TEST(OpenImpl, UnexpectedFinish) {
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
-    });
+    EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
     EXPECT_CALL(*stream, Write).WillOnce([&sequencer]() {
       return sequencer.PushBack("Write").then([](auto f) { return f.get(); });
     });
@@ -409,9 +419,11 @@ TEST(OpenImpl, TimeoutCancellation) {
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
-      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
-    });
+    EXPECT_CALL(*stream, StartWithCorkedInitialMetadata)
+        .WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
     EXPECT_CALL(*stream, Write).WillOnce([&sequencer]() {
       return sequencer.PushBack("Write").then([](auto f) { return f.get(); });
     });
