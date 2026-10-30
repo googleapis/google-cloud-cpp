@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
@@ -195,11 +196,22 @@ Options DefaultOptionsGrpc(
   // Set `AuthorityOption` explicitly here because `MergeOptions()` below would
   // otherwise default it to `storage.googleapis.com`.
   std::string const& endpoint = options.get<EndpointOption>();
-  if (!options.has<AuthorityOption>() && grpc_supports_force_xds &&
-      DetectTransportType(endpoint) == TransportType::kDirectPathInterconnect &&
+  bool const interconnect_endpoint =
+      grpc_supports_force_xds &&
+      DetectTransportType(endpoint) == TransportType::kDirectPathInterconnect;
+  if (!options.has<AuthorityOption>() && interconnect_endpoint &&
       TargetsDirectPathInterconnectHost(endpoint)) {
     options.set<AuthorityOption>(std::string(kDirectPathInterconnectHost));
   }
+
+  // Interconnect clients run outside Google Cloud, where ALTS is unavailable,
+  // yet `grpc::GoogleDefaultCredentials()` selects ALTS for the (non-CFE) xDS
+  // cluster behind a `force-xds` target. Have default credentials use TLS plus
+  // the Application Default Credentials there instead. Unlike the authority
+  // above this applies to any `force-xds` host: the choice of transport
+  // security does not depend on which host is dialed.
+  options.set<google::cloud::internal::GrpcGoogleDefaultTlsOnlyOption>(
+      interconnect_endpoint);
 
   options = google::cloud::internal::MergeOptions(
       std::move(options),

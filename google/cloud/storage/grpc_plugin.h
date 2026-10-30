@@ -158,6 +158,19 @@ struct GrpcMetricsExcludedLabelsOption {
  * Interconnect endpoint itself gets the Interconnect `:authority` by default
  * even when the variable is `"false"`.
  *
+ * @par Credentials
+ * Interconnect hosts are outside Google Cloud, so the ALTS transport security
+ * that `grpc::GoogleDefaultCredentials()` would select for DirectPath is not
+ * available. On Interconnect channels the default credentials
+ * (`MakeGoogleDefaultCredentials()`) therefore use TLS composed with the
+ * [Application Default Credentials] attached to the channel. Explicit
+ * credentials such as `MakeServiceAccountCredentials()` already use TLS and
+ * are unchanged. An application that supplies raw gRPC credentials through
+ * `GrpcCredentialOption` must not use ALTS-based credentials here. Application
+ * Default Credentials must be configured even when explicit credentials are
+ * used, because gRPC's `google-c2p` resolver uses them for its own connection
+ * to the control plane.
+ *
  * @par Example: Enable DirectPath over Interconnect
  * @code
  * namespace gcs_ex = google::cloud::storage_experimental;
@@ -166,6 +179,8 @@ struct GrpcMetricsExcludedLabelsOption {
  *         .set<gcs_ex::DirectPathXdsOverInterconnectOption>(true));
  * @endcode
  *
+ * [Application Default Credentials]:
+ * https://cloud.google.com/docs/authentication/application-default-credentials
  * [Cloud Interconnect]:
  * https://cloud.google.com/network-connectivity/docs/interconnect
  */
