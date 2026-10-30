@@ -85,6 +85,12 @@ bool HasQueryParameter(std::string_view uri, std::string_view key) {
       });
 }
 
+/// Returns @p authority without a trailing `:port`. A port does not change
+/// which host the authority names.
+std::string_view AuthorityHost(std::string_view authority) {
+  return authority.substr(0, authority.find(':'));
+}
+
 struct ChannelReadyOutcome {
   Status status;
   /// The channel's LB policy when the wait ended. Empty if the channel was
@@ -214,6 +220,20 @@ std::string_view ChannelReadyNote(TransportType requested_transport,
 
 }  // namespace
 
+bool IsDirectPathInterconnectHost(std::string_view host) {
+  return host == kDirectPathInterconnectHost ||
+         host == kDirectPathInterconnectPreprodHost;
+}
+
+std::string_view C2pTargetHost(std::string_view endpoint) {
+  for (std::string_view prefix : {kC2pPrefix, kC2pExperimentalPrefix}) {
+    if (!absl::StartsWith(endpoint, prefix)) continue;
+    std::string_view const host_and_query = endpoint.substr(prefix.size());
+    return host_and_query.substr(0, host_and_query.find_first_of("/?#:"));
+  }
+  return {};
+}
+
 std::string_view ToString(TransportType type) {
   switch (type) {
     case TransportType::kCloudPath:
@@ -290,6 +310,26 @@ void LogChannelConfiguration(Options const& options,
                      << "the feature. requested_transport_type="
                      << ToString(requested_transport)
                      << ", endpoint=" << endpoint;
+    return;
+  }
+  // `DefaultOptionsGrpc()` always sets `AuthorityOption`. The fallback covers
+  // callers that bypass it, and matches the host gRPC derives from the target.
+  std::string_view const effective_authority =
+      options.has<AuthorityOption>()
+          ? std::string_view{options.get<AuthorityOption>()}
+          : C2pTargetHost(endpoint);
+  if (requested_transport == TransportType::kDirectPathInterconnect &&
+      !IsDirectPathInterconnectHost(AuthorityHost(effective_authority))) {
+    GCP_LOG(WARNING) << "DirectPath over Interconnect is requested with "
+                     << "`force-xds`, but the `:authority` is not "
+                     << kDirectPathInterconnectHost << " or "
+                     << kDirectPathInterconnectPreprodHost
+                     << ", so the service routes these RPCs as regular "
+                     << "DirectPath. Target one of those hosts and leave "
+                     << "`AuthorityOption` unset. requested_transport_type="
+                     << ToString(requested_transport)
+                     << ", endpoint=" << endpoint
+                     << ", authority=" << effective_authority;
     return;
   }
   std::string_view const authority =

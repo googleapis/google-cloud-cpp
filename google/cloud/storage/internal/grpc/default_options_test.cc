@@ -336,10 +336,10 @@ TEST(DefaultOptionsGrpc,
 }
 
 /// @test Verify an application-supplied `force-xds` endpoint for any host other
-/// than `storage-direct.googleapis.com` keeps the standard `:authority`. The
-/// service recognizes the Interconnect authority only for that host. The
-/// credentials still switch to TLS, because ALTS is unavailable to Interconnect
-/// clients whatever host they dial.
+/// than `storage-direct.googleapis.com` or its preprod counterpart keeps the
+/// standard `:authority`. The service recognizes the Interconnect authority
+/// only for those hosts. The credentials still switch to TLS, because ALTS is
+/// unavailable to Interconnect clients whatever host they dial.
 TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpointOtherHost) {
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
                         {});
@@ -357,6 +357,115 @@ TEST(DefaultOptionsGrpc, DirectPathOverInterconnectExplicitEndpointOtherHost) {
   EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
 }
 
+struct InterconnectAuthorityTestCase {
+  std::string test_name;
+  std::string endpoint;
+  // The value of `GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT`.
+  std::optional<std::string> env_var;
+  // An application-supplied `AuthorityOption`.
+  std::optional<std::string> authority;
+  // An application-supplied `UniverseDomainOption`.
+  std::optional<std::string> universe_domain;
+  bool grpc_supports_force_xds;
+  std::string expected_authority;
+  bool expected_tls_only;
+};
+
+class DirectPathOverInterconnectAuthorityTest
+    : public ::testing::TestWithParam<InterconnectAuthorityTestCase> {};
+
+/// @test Verify the default `:authority` for application-supplied endpoints
+/// that target the production or preprod Interconnect host, or only resemble
+/// one. The service identifies Interconnect traffic by the authority, so an
+/// endpoint for either Interconnect host must default to that same host, while
+/// an application-supplied endpoint is never rewritten and an explicit
+/// `AuthorityOption` always wins.
+TEST_P(DirectPathOverInterconnectAuthorityTest, DefaultsAuthority) {
+  InterconnectAuthorityTestCase const& test_case = GetParam();
+  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+                        test_case.env_var);
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  auto input = Options{}.set<EndpointOption>(test_case.endpoint);
+  if (test_case.authority) input.set<AuthorityOption>(*test_case.authority);
+  if (test_case.universe_domain) {
+    input.set<internal::UniverseDomainOption>(*test_case.universe_domain);
+  }
+  Options const options = DefaultOptionsGrpc(std::move(input), mock_detector,
+                                             test_case.grpc_supports_force_xds);
+  EXPECT_EQ(options.get<EndpointOption>(), test_case.endpoint);
+  EXPECT_EQ(options.get<AuthorityOption>(), test_case.expected_authority);
+  EXPECT_EQ(options.get<GrpcGoogleDefaultTlsOnlyOption>(),
+            test_case.expected_tls_only);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    DefaultOptionsGrpc, DirectPathOverInterconnectAuthorityTest,
+    ::testing::Values(
+        InterconnectAuthorityTestCase{
+            "Preprod",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "?force-xds",
+            std::nullopt, std::nullopt, std::nullopt, true,
+            "storage-preprod-direct.sandbox.googleapis.com", true},
+        InterconnectAuthorityTestCase{
+            "PreprodExperimentalScheme",
+            "google-c2p-experimental:///"
+            "storage-preprod-direct.sandbox.googleapis.com?force-xds",
+            std::nullopt, std::nullopt, std::nullopt, true,
+            "storage-preprod-direct.sandbox.googleapis.com", true},
+        // The variable governs only the endpoint the library selects.
+        InterconnectAuthorityTestCase{
+            "PreprodEnvVarFalse",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "?force-xds",
+            "false", std::nullopt, std::nullopt, true,
+            "storage-preprod-direct.sandbox.googleapis.com", true},
+        InterconnectAuthorityTestCase{
+            "PreprodCustomAuthority",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "?force-xds",
+            std::nullopt, "custom-authority", std::nullopt, true,
+            "custom-authority", true},
+        // gRPC < 1.85 ignores `force-xds`, so the channel is not Interconnect.
+        InterconnectAuthorityTestCase{
+            "PreprodUnsupportedGrpc",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "?force-xds",
+            std::nullopt, std::nullopt, std::nullopt, false,
+            "storage.googleapis.com", false},
+        // Without `force-xds` this is a regular DirectPath target.
+        InterconnectAuthorityTestCase{
+            "PreprodWithoutForceXds",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com",
+            std::nullopt, std::nullopt, std::nullopt, true,
+            "storage.googleapis.com", false},
+        // The non-direct preprod host is not rewritten to the Interconnect
+        // host, matching how the production host is handled.
+        InterconnectAuthorityTestCase{
+            "PreprodNonDirectHost",
+            "google-c2p:///storage-preprod.sandbox.googleapis.com?force-xds",
+            std::nullopt, std::nullopt, std::nullopt, true,
+            "storage.googleapis.com", true},
+        // An explicit Interconnect endpoint takes its authority from the
+        // endpoint, not from the universe domain, for both hosts alike.
+        InterconnectAuthorityTestCase{
+            "UniverseDomain",
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+            std::nullopt, std::nullopt, "my-ud.net", true,
+            "storage-direct.googleapis.com", true},
+        InterconnectAuthorityTestCase{
+            "PreprodUniverseDomain",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "?force-xds",
+            std::nullopt, std::nullopt, "my-ud.net", true,
+            "storage-preprod-direct.sandbox.googleapis.com", true}),
+    [](::testing::TestParamInfo<InterconnectAuthorityTestCase> const& info) {
+      return info.param.test_name;
+    });
+
 struct InterconnectHostDelimiterTestCase {
   std::string test_name;
   std::string endpoint;
@@ -367,9 +476,9 @@ class DirectPathOverInterconnectHostDelimiterTest
     : public ::testing::TestWithParam<InterconnectHostDelimiterTestCase> {};
 
 /// @test Verify the host of an application-supplied `force-xds` endpoint is
-/// compared against `storage-direct.googleapis.com` up to the first delimiter
-/// (`:`, `/`, `?`, `#`), so a port, path or fragment does not hide a match,
-/// and a look-alike host that merely starts with it does not produce one.
+/// compared against the Interconnect hosts up to the first delimiter (`:`,
+/// `/`, `?`, `#`), so a port, path or fragment does not hide a match, and a
+/// look-alike host that merely starts with one of them does not match.
 TEST_P(DirectPathOverInterconnectHostDelimiterTest, DetectsExactHostOnly) {
   InterconnectHostDelimiterTestCase const& test_case = GetParam();
   ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
@@ -409,6 +518,32 @@ INSTANTIATE_TEST_SUITE_P(
         InterconnectHostDelimiterTestCase{
             "LookAlikeHost",
             "google-c2p:///storage-direct.googleapis.com.example.com?force-xds",
+            "storage.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "PreprodPort",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com:443"
+            "?force-xds",
+            "storage-preprod-direct.sandbox.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "PreprodPath",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com/"
+            "?force-xds",
+            "storage-preprod-direct.sandbox.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "PreprodFragmentAfterQuery",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "?force-xds#frag",
+            "storage-preprod-direct.sandbox.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "PreprodFragmentBeforeQuery",
+            "google-c2p:///storage-preprod-direct.sandbox.googleapis.com"
+            "#frag?force-xds",
+            "storage.googleapis.com"},
+        InterconnectHostDelimiterTestCase{
+            "PreprodLookAlikeHost",
+            "google-c2p:///"
+            "storage-preprod-direct.sandbox.googleapis.com.example.com"
+            "?force-xds",
             "storage.googleapis.com"}),
     [](::testing::TestParamInfo<InterconnectHostDelimiterTestCase> const&
            info) { return info.param.test_name; });
