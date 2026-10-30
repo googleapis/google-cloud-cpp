@@ -25,12 +25,14 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/sdk/metrics/meter_provider.h>
 #include <chrono>
 #include <future>
 #include <memory>
 #include <optional>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -63,6 +65,33 @@ auto TestOptions(Options opts = {}) {
           std::chrono::system_clock::now() + std::chrono::minutes(15)));
   return DefaultOptionsGrpc(std::move(opts));
 }
+
+/// Shuts down a `MeterProvider` when the test ends, even after a failed
+/// `ASSERT_*`.
+///
+/// `EnableGrpcMetricsImpl()` stores the provider in process-wide singletons
+/// that are never destroyed. Calling `Shutdown()` joins the provider's
+/// periodic reader thread before the test exits, so a background collection
+/// cannot race with `exit()` destroying OpenTelemetry's static objects.
+class ScopedProviderShutdown {
+ public:
+  explicit ScopedProviderShutdown(
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
+      : provider_(std::move(provider)) {}
+  ~ScopedProviderShutdown() {
+    if (!provider_) return;
+    // The API `MeterProvider` interface has no `Shutdown()`, and
+    // `FindMeterProvider()` only returns `sdk::metrics::MeterProvider`
+    // instances created by `MakeGrpcMeterProvider()`.
+    static_cast<opentelemetry::sdk::metrics::MeterProvider*>(provider_.get())
+        ->Shutdown();
+  }
+  ScopedProviderShutdown(ScopedProviderShutdown const&) = delete;
+  ScopedProviderShutdown& operator=(ScopedProviderShutdown const&) = delete;
+
+ private:
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
+};
 
 TEST(GrpcMetricsExporter, DisabledBecauseOption) {
   auto config = MakeMeterProviderConfig(
@@ -241,6 +270,7 @@ TEST(GrpcMetricsExporter, FindMeterProviderAfterEnable) {
   EnableGrpcMetricsImpl(*config);
   std::shared_ptr<opentelemetry::metrics::MeterProvider> const provider =
       FindMeterProvider(authority);
+  ScopedProviderShutdown const provider_shutdown(provider);
   EXPECT_THAT(provider, NotNull());
 
   EnableGrpcMetricsImpl(*config);
@@ -272,6 +302,7 @@ TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   }
   start_promise.set_value();
   for (auto& t : threads) t.join();
+  ScopedProviderShutdown const provider_shutdown(FindMeterProvider(authority));
 
   EXPECT_THAT(providers[0], NotNull());
   for (int i = 1; i != kThreadCount; ++i) {

@@ -160,6 +160,20 @@ class NetAppAuth : public NetAppStub {
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncStartSplit(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::StartSplitRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> StartSplit(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::StartSplitRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::SplitStatus> GetSplitStatus(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::GetSplitStatusRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncEstablishVolumePeering(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -670,6 +684,33 @@ class NetAppAuth : public NetAppStub {
   ExecuteOntapPatch(grpc::ClientContext& context, Options const& options,
                     google::cloud::netapp::v1::ExecuteOntapPatchRequest const&
                         request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreVolume(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::RestoreVolumeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreVolume(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::RestoreVolumeRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::ListBackupConfigsResponse>
+  ListBackupConfigs(grpc::ClientContext& context, Options const& options,
+                    google::cloud::netapp::v1::ListBackupConfigsRequest const&
+                        request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::UpdateBackupConfigRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackupConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::UpdateBackupConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

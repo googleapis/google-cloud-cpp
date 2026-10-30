@@ -277,6 +277,22 @@ class CertificateManagerConnectionImpl
   CreateCertificateIssuanceConfig(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  UpdateCertificateIssuanceConfig(
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateCertificateIssuanceConfig(
+      NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  UpdateCertificateIssuanceConfig(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(
       google::cloud::certificatemanager::v1::

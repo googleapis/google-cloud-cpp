@@ -33,10 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * The histogram is published as
  * `storage.googleapis.com/internal/client/channel_creation_latency`, in
- * seconds, labeled by `transport_type`. It shares the meter provider that
- * `EnableGrpcMetrics()` builds for gRPC's own metrics, so it inherits the
- * customer's `EnableGrpcMetricsOption` opt-out, their export period, and their
- * monitoring project without creating a second exporter.
+ * seconds, labeled by `transport_type` (the transport gRPC selected for the
+ * first channel). It shares the meter provider that `EnableGrpcMetrics()`
+ * builds for gRPC's own metrics, so it inherits the customer's
+ * `EnableGrpcMetricsOption` opt-out, their export period, and their monitoring
+ * project without creating a second exporter.
  *
  * `storage::internal::HedgedReadMetrics` records into the application's global
  * meter provider instead. That suits customer-facing metrics, but not this

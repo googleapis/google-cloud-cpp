@@ -349,6 +349,47 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::RevertVolume(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncStartSplit(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::StartSplitRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::StartSplitRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::StartSplitRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStartSplit(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::StartSplit(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::StartSplitRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartSplit(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::SplitStatus>
+DefaultNetAppStub::GetSplitStatus(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetSplitStatusRequest const& request) {
+  google::cloud::netapp::v1::SplitStatus response;
+  auto status = grpc_stub_->GetSplitStatus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncEstablishVolumePeering(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -1648,6 +1689,77 @@ DefaultNetAppStub::ExecuteOntapPatch(
     google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
   google::cloud::netapp::v1::ExecuteOntapPatchResponse response;
   auto status = grpc_stub_->ExecuteOntapPatch(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncRestoreVolume(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::RestoreVolumeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::RestoreVolumeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRestoreVolume(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::RestoreVolume(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ListBackupConfigsResponse>
+DefaultNetAppStub::ListBackupConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListBackupConfigsRequest const& request) {
+  google::cloud::netapp::v1::ListBackupConfigsResponse response;
+  auto status = grpc_stub_->ListBackupConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncUpdateBackupConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateBackupConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::netapp::v1::UpdateBackupConfigRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBackupConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateBackupConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackupConfig(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -102,6 +102,41 @@ CloudRedisClusterConnectionImpl::ListClusters(
       });
 }
 
+StreamRange<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterConnectionImpl::ListAclPolicies(
+    google::cloud::redis::cluster::v1::ListAclPoliciesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAclPolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::AclPolicy>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<redis_cluster_v1::CloudRedisClusterRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::redis::cluster::v1::ListAclPoliciesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::redis::cluster::v1::ListAclPoliciesRequest const&
+                    request) {
+              return stub->ListAclPolicies(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::redis::cluster::v1::ListAclPoliciesResponse r) {
+        std::vector<google::cloud::redis::cluster::v1::AclPolicy> result(
+            r.acl_policies().size());
+        auto& messages = *r.mutable_acl_policies();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterConnectionImpl::GetCluster(
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
@@ -113,6 +148,21 @@ CloudRedisClusterConnectionImpl::GetCluster(
           grpc::ClientContext& context, Options const& options,
           google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
         return stub_->GetCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterConnectionImpl::GetAclPolicy(
+    google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAclPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::GetAclPolicyRequest const&
+                 request) {
+        return stub_->GetAclPolicy(context, options, request);
       },
       *current, request, __func__);
 }
@@ -209,6 +259,100 @@ CloudRedisClusterConnectionImpl::UpdateCluster(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+CloudRedisClusterConnectionImpl::UpdateAclPolicy(
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAclPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::cluster::v1::AclPolicy>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const&
+              request) {
+        return stub->AsyncUpdateAclPolicy(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::cluster::v1::AclPolicy>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnectionImpl::UpdateAclPolicy(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAclPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const&
+                 request) {
+        return stub_->UpdateAclPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+CloudRedisClusterConnectionImpl::UpdateAclPolicy(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::cluster::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAclPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::cluster::v1::AclPolicy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::cluster::v1::AclPolicy>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterConnectionImpl::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
@@ -298,6 +442,152 @@ CloudRedisClusterConnectionImpl::DeleteCluster(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Any>,
       polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnectionImpl::DeleteAclPolicy(
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAclPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::cluster::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const&
+              request) {
+        return stub->AsyncDeleteAclPolicy(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::cluster::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnectionImpl::DeleteAclPolicy(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAclPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const&
+                 request) {
+        return stub_->DeleteAclPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnectionImpl::DeleteAclPolicy(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::cluster::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAclPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::cluster::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::cluster::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterConnectionImpl::GetAclPolicyRevision(
+    google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAclPolicyRevision(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+              request) {
+        return stub_->GetAclPolicyRevision(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterConnectionImpl::ListAclPolicyRevisions(
+    google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListAclPolicyRevisions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<redis_cluster_v1::CloudRedisClusterRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::redis::cluster::v1::
+                                      ListAclPolicyRevisionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::redis::cluster::v1::
+                       ListAclPolicyRevisionsRequest const& request) {
+              return stub->ListAclPolicyRevisions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::redis::cluster::v1::ListAclPolicyRevisionsResponse r) {
+        std::vector<google::cloud::redis::cluster::v1::AclPolicyRevision>
+            result(r.acl_policy_revisions().size());
+        auto& messages = *r.mutable_acl_policy_revisions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -390,6 +680,21 @@ CloudRedisClusterConnectionImpl::CreateCluster(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::cluster::v1::Cluster>,
       polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterConnectionImpl::CreateAclPolicy(
+    google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAclPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::CreateAclPolicyRequest const&
+                 request) {
+        return stub_->CreateAclPolicy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -892,6 +1197,485 @@ CloudRedisClusterConnectionImpl::BackupCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::cluster::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterConnectionImpl::ListTokenAuthUsers(
+    google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTokenAuthUsers(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<redis_cluster_v1::CloudRedisClusterRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::redis::cluster::v1::
+                       ListTokenAuthUsersRequest const& request) {
+              return stub->ListTokenAuthUsers(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::redis::cluster::v1::ListTokenAuthUsersResponse r) {
+        std::vector<google::cloud::redis::cluster::v1::TokenAuthUser> result(
+            r.token_auth_users().size());
+        auto& messages = *r.mutable_token_auth_users();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterConnectionImpl::GetTokenAuthUser(
+    google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTokenAuthUser(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const&
+                 request) {
+        return stub_->GetTokenAuthUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterConnectionImpl::ListAuthTokens(
+    google::cloud::redis::cluster::v1::ListAuthTokensRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAuthTokens(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::AuthToken>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<redis_cluster_v1::CloudRedisClusterRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::redis::cluster::v1::ListAuthTokensRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::redis::cluster::v1::ListAuthTokensRequest const&
+                    request) {
+              return stub->ListAuthTokens(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::redis::cluster::v1::ListAuthTokensResponse r) {
+        std::vector<google::cloud::redis::cluster::v1::AuthToken> result(
+            r.auth_tokens().size());
+        auto& messages = *r.mutable_auth_tokens();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterConnectionImpl::GetAuthToken(
+    google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAuthToken(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::GetAuthTokenRequest const&
+                 request) {
+        return stub_->GetAuthToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnectionImpl::AddTokenAuthUser(
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AddTokenAuthUser(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::cluster::v1::Cluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&
+              request) {
+        return stub->AsyncAddTokenAuthUser(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::cluster::v1::Cluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnectionImpl::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddTokenAuthUser(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&
+                 request) {
+        return stub_->AddTokenAuthUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnectionImpl::AddTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::cluster::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddTokenAuthUser",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::cluster::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::cluster::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnectionImpl::DeleteTokenAuthUser(
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTokenAuthUser(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::cluster::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+              request) {
+        return stub->AsyncDeleteTokenAuthUser(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::cluster::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnectionImpl::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTokenAuthUser(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+              request) {
+        return stub_->DeleteTokenAuthUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnectionImpl::DeleteTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::cluster::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTokenAuthUser",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::cluster::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::cluster::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+CloudRedisClusterConnectionImpl::AddAuthToken(
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AddAuthToken(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::cluster::v1::TokenAuthUser>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::redis::cluster::v1::AddAuthTokenRequest const&
+              request) {
+        return stub->AsyncAddAuthToken(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::cluster::v1::TokenAuthUser>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnectionImpl::AddAuthToken(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddAuthToken(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::AddAuthTokenRequest const&
+                 request) {
+        return stub_->AddAuthToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+CloudRedisClusterConnectionImpl::AddAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::cluster::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddAuthToken",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::cluster::v1::TokenAuthUser>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::cluster::v1::TokenAuthUser>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnectionImpl::DeleteAuthToken(
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAuthToken(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::cluster::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const&
+              request) {
+        return stub->AsyncDeleteAuthToken(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::cluster::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnectionImpl::DeleteAuthToken(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAuthToken(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const&
+                 request) {
+        return stub_->DeleteAuthToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnectionImpl::DeleteAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::cluster::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAuthToken",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::cluster::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::cluster::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

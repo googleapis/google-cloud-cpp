@@ -132,6 +132,14 @@ AppConnectorsServiceConnection::DeleteAppConnector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceConnection::ResolveInstanceConfig(
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {

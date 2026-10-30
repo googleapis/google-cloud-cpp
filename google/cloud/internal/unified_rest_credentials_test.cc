@@ -395,6 +395,52 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS exchange"));
 }
 
+TEST(UnifiedRestCredentialsTest, AdcIsExternalAccountAuthorizedUser) {
+  auto const sts_url = std::string{"https://sts.example.com/v1/oauthtoken"};
+  auto sts_client = [sts_url] {
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto expected_sts_request = AllOf(
+        Property(&RestRequest::path, sts_url),
+        Property(
+            &RestRequest::headers,
+            Contains(Pair(
+                "authorization",
+                Contains("Basic "
+                         "dGVzdC1jbGllbnQtaWQ6dGVzdC1jbGllbnQtc2VjcmV0")))));
+    auto expected_form_data = MatcherCast<FormDataType const&>(IsSupersetOf({
+        Pair("grant_type", "refresh_token"),
+        Pair("refresh_token", "test-refresh-token"),
+    }));
+    auto mock = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Post(_, expected_sts_request, expected_form_data))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - STS refresh"}));
+    return mock;
+  }();
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(sts_client))));
+
+  auto const json_external_account = nlohmann::json{
+      {"type", "external_account_authorized_user"},
+      {"client_id", "test-client-id"},
+      {"client_secret", "test-client-secret"},
+      {"refresh_token", "test-refresh-token"},
+      {"token_url", sts_url},
+  };
+  auto const filename = TempKeyFileName();
+  auto const env = SetUpAdcFile(filename, json_external_account.dump());
+  auto const config = internal::GoogleDefaultCredentialsConfig(Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+  (void)std::remove(filename.c_str());
+
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials->GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS refresh"));
+}
+
 TEST(UnifiedRestCredentialsTest, AccessToken) {
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::seconds(1800);
@@ -548,11 +594,69 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS exchange"));
 }
 
+TEST(UnifiedRestCredentialsTest, ExternalAccountAuthorizedUser) {
+  auto const sts_url = std::string{"https://sts.example.com/v1/oauthtoken"};
+  auto sts_client = [sts_url] {
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto expected_sts_request = AllOf(
+        Property(&RestRequest::path, sts_url),
+        Property(
+            &RestRequest::headers,
+            Contains(Pair(
+                "authorization",
+                Contains("Basic "
+                         "dGVzdC1jbGllbnQtaWQ6dGVzdC1jbGllbnQtc2VjcmV0")))));
+    auto expected_form_data = MatcherCast<FormDataType const&>(IsSupersetOf({
+        Pair("grant_type", "refresh_token"),
+        Pair("refresh_token", "test-refresh-token"),
+    }));
+    auto mock = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Post(_, expected_sts_request, expected_form_data))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - STS refresh"}));
+    return mock;
+  }();
+
+  auto const json_external_account = nlohmann::json{
+      {"type", "external_account_authorized_user"},
+      {"client_id", "test-client-id"},
+      {"client_secret", "test-client-secret"},
+      {"refresh_token", "test-refresh-token"},
+      {"token_url", sts_url},
+      {"universe_domain", "s3nsapis.fr"},
+  };
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(sts_client))));
+
+  auto const config =
+      internal::ExternalAccountConfig(json_external_account.dump(), Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+  EXPECT_THAT(credentials->universe_domain(Options{}),
+              IsOkAndHolds("s3nsapis.fr"));
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials->GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS refresh"));
+}
+
 TEST(UnifiedRestCredentialsTest, AuthorizedUserParseError) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
 
   auto const config = internal::AuthorizedUserConfig("invalid-json", Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+  auto access_token = credentials->GetToken(std::chrono::system_clock::now());
+  EXPECT_THAT(access_token, Not(IsOk()));
+}
+
+TEST(UnifiedRestCredentialsTest, ExternalAccountAuthorizedUserParseError) {
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+
+  auto const config = internal::ExternalAccountConfig(
+      R"({"type": "external_account_authorized_user"})", Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto access_token = credentials->GetToken(std::chrono::system_clock::now());
   EXPECT_THAT(access_token, Not(IsOk()));

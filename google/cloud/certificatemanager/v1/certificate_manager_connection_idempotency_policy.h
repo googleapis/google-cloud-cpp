@@ -130,6 +130,10 @@ class CertificateManagerConnectionIdempotencyPolicy {
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateCertificateIssuanceConfig(
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateIssuanceConfigRequest const& request);
+
   virtual google::cloud::Idempotency DeleteCertificateIssuanceConfig(
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request);

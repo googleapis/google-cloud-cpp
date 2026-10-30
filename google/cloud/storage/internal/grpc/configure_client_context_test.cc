@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -138,6 +139,131 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
   ApplyQueryParameters(
       ctx, options,
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadline) {
+  std::chrono::seconds const timeout(42);
+  Options const options =
+      Options{}.set<storage::TransferStallTimeoutOption>(timeout);
+
+  std::chrono::system_clock::time_point const before =
+      std::chrono::system_clock::now();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options,
+                       storage::internal::GetObjectMetadataRequest(
+                           "test-bucket", "test-object"));
+  std::chrono::system_clock::time_point const after =
+      std::chrono::system_clock::now();
+
+  EXPECT_GE(ctx.deadline(), before + timeout);
+  EXPECT_LE(ctx.deadline(), after + timeout);
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersSignBlobUnaryDeadline) {
+  std::chrono::seconds const timeout(15);
+  Options const options =
+      Options{}.set<storage::TransferStallTimeoutOption>(timeout);
+
+  std::chrono::system_clock::time_point const before =
+      std::chrono::system_clock::now();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(
+      ctx, options,
+      storage::internal::SignBlobRequest("test-sa", "dGVzdA==", {}));
+  std::chrono::system_clock::time_point const after =
+      std::chrono::system_clock::now();
+
+  EXPECT_GE(ctx.deadline(), before + timeout);
+  EXPECT_LE(ctx.deadline(), after + timeout);
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadlineZero) {
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
+      std::chrono::seconds(0));
+
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options,
+                       storage::internal::GetObjectMetadataRequest(
+                           "test-bucket", "test-object"));
+  EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersUnaryDeadlineNegative) {
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
+      std::chrono::seconds(-1));
+
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options,
+                       storage::internal::GetObjectMetadataRequest(
+                           "test-bucket", "test-object"));
+  EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
+}
+
+TEST_F(GrpcConfigureClientContext,
+       ApplyQueryParametersUnaryDeadlineRespectsExistingDeadline) {
+  std::chrono::system_clock::time_point const existing_deadline =
+      std::chrono::system_clock::now() + std::chrono::seconds(5);
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
+      std::chrono::seconds(120));
+
+  grpc::ClientContext ctx;
+  ctx.set_deadline(existing_deadline);
+  ApplyQueryParameters(ctx, options,
+                       storage::internal::GetObjectMetadataRequest(
+                           "test-bucket", "test-object"));
+  // gRPC converts system_clock::time_point to gpr_timespec (nanosecond
+  // resolution), allow 1ms tolerance for clock conversion.
+  EXPECT_LE(std::chrono::abs(ctx.deadline() - existing_deadline),
+            std::chrono::milliseconds(1));
+}
+
+TEST_F(GrpcConfigureClientContext,
+       ApplyQueryParametersUnaryDeadlineOverriddenByGrpcSetupOption) {
+  std::chrono::system_clock::time_point const custom_deadline =
+      std::chrono::system_clock::now() + std::chrono::seconds(7);
+  Options const options =
+      Options{}
+          .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(120))
+          .set<google::cloud::internal::GrpcSetupOption>(
+              [custom_deadline](grpc::ClientContext& c) {
+                c.set_deadline(custom_deadline);
+              });
+
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options,
+                       storage::internal::GetObjectMetadataRequest(
+                           "test-bucket", "test-object"));
+  EXPECT_LE(std::chrono::abs(ctx.deadline() - custom_deadline),
+            std::chrono::milliseconds(1));
+}
+
+TEST_F(GrpcConfigureClientContext,
+       ApplyQueryParametersStreamingRequestsExcludeWholeRpcDeadline) {
+  Options const options = Options{}.set<storage::TransferStallTimeoutOption>(
+      std::chrono::seconds(42));
+
+  {
+    grpc::ClientContext ctx;
+    ApplyQueryParameters(ctx, options,
+                         storage::internal::ReadObjectRangeRequest(
+                             "test-bucket", "test-object"));
+    EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
+  }
+  {
+    grpc::ClientContext ctx;
+    ApplyQueryParameters(ctx, options,
+                         storage::internal::InsertObjectMediaRequest(
+                             "test-bucket", "test-object", "content"));
+    EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
+  }
+  {
+    grpc::ClientContext ctx;
+    ApplyQueryParameters(ctx, options,
+                         storage::internal::UploadChunkRequest(
+                             "projects/_/buckets/test-bucket/upload-id", 0, {},
+                             CreateNullHashFunction()));
+    EXPECT_EQ(ctx.deadline(), std::chrono::system_clock::time_point::max());
+  }
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {

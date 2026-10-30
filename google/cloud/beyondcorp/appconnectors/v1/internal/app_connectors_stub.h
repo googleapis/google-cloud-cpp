@@ -90,6 +90,12 @@ class AppConnectorsServiceStub {
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                       ResolveInstanceConfigResponse>
+  ResolveInstanceConfig(grpc::ClientContext& context, Options const& options,
+                        google::cloud::beyondcorp::appconnectors::v1::
+                            ResolveInstanceConfigRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncReportStatus(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -215,6 +221,13 @@ class DefaultAppConnectorsServiceStub : public AppConnectorsServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request) override;
+
+  StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+               ResolveInstanceConfigResponse>
+  ResolveInstanceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::beyondcorp::appconnectors::v1::
+          ResolveInstanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReportStatus(
       google::cloud::CompletionQueue& cq,

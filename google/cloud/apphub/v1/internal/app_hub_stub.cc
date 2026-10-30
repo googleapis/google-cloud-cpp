@@ -567,6 +567,74 @@ StatusOr<google::longrunning::Operation> DefaultAppHubStub::DeleteApplication(
   return response;
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> DefaultAppHubStub::GetBoundary(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  google::cloud::apphub::v1::Boundary response;
+  auto status = grpc_stub_->GetBoundary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAppHubStub::AsyncUpdateBoundary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apphub::v1::UpdateBoundaryRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::apphub::v1::UpdateBoundaryRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBoundary(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::UpdateBoundary(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBoundary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+DefaultAppHubStub::GetExtendedMetadataSchema(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  google::cloud::apphub::v1::ExtendedMetadataSchema response;
+  auto status =
+      grpc_stub_->GetExtendedMetadataSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse>
+DefaultAppHubStub::ListExtendedMetadataSchemas(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+        request) {
+  google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse response;
+  auto status =
+      grpc_stub_->ListExtendedMetadataSchemas(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultAppHubStub::ListLocations(
     grpc::ClientContext& context, Options const&,

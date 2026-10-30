@@ -291,6 +291,18 @@ class NetAppConnection {
   virtual future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> StartSplit(
+      google::cloud::netapp::v1::StartSplitRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StartSplit(
+      NoAwaitTag, google::cloud::netapp::v1::StartSplitRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> StartSplit(
+      google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::netapp::v1::SplitStatus> GetSplitStatus(
+      google::cloud::netapp::v1::GetSplitStatusRequest const& request);
+
   virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
   EstablishVolumePeering(
       google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request);
@@ -750,6 +762,33 @@ class NetAppConnection {
   virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
   ExecuteOntapPatch(
       google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+  RestoreVolume(google::cloud::netapp::v1::RestoreVolumeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreVolume(
+      NoAwaitTag,
+      google::cloud::netapp::v1::RestoreVolumeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+  RestoreVolume(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>
+  ListBackupConfigs(
+      google::cloud::netapp::v1::ListBackupConfigsRequest request);
+
+  virtual future<
+      StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+  UpdateBackupConfig(
+      google::cloud::netapp::v1::UpdateBackupConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBackupConfig(
+      NoAwaitTag,
+      google::cloud::netapp::v1::UpdateBackupConfigRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+  UpdateBackupConfig(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

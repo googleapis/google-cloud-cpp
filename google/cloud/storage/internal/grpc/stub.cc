@@ -575,10 +575,6 @@ GrpcStub::CreateResumableUpload(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
-  }
   auto response = stub_->StartResumableWrite(ctx, options, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
@@ -593,10 +589,6 @@ GrpcStub::QueryResumableUpload(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
-  }
   auto response = stub_->QueryWriteStatus(ctx, options, ToProto(request));
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
@@ -608,10 +600,6 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteResumableUpload(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
-  if (timeout.count() != 0) {
-    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
-  }
   auto response = stub_->CancelResumableWrite(ctx, options, ToProto(request));
   if (!response) return std::move(response).status();
   return storage::internal::EmptyResponse{};
@@ -1040,12 +1028,11 @@ StatusOr<storage::HmacKeyMetadata> GrpcStub::UpdateHmacKey(
 }
 
 StatusOr<storage::internal::SignBlobResponse> GrpcStub::SignBlob(
-    rest_internal::RestContext& context, Options const&,
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::SignBlobRequest const& request) {
   auto proto = ToProto(request);
   grpc::ClientContext ctx;
-  // This request does not have any options that require using
-  //     ApplyQueryParameters(ctx, options, request);
+  ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
   auto response = iam_stub_->SignBlob(ctx, proto);
   if (!response) return std::move(response).status();

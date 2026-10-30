@@ -46,9 +46,23 @@ CloudRedisClusterConnection::ListClusters(
       StreamRange<google::cloud::redis::cluster::v1::Cluster>>();
 }
 
+StreamRange<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterConnection::ListAclPolicies(
+    google::cloud::redis::cluster::v1::
+        ListAclPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::AclPolicy>>();
+}
+
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterConnection::GetCluster(
     google::cloud::redis::cluster::v1::GetClusterRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterConnection::GetAclPolicy(
+    google::cloud::redis::cluster::v1::GetAclPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -76,6 +90,30 @@ CloudRedisClusterConnection::UpdateCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+CloudRedisClusterConnection::UpdateAclPolicy(
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::UpdateAclPolicy(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>
+CloudRedisClusterConnection::UpdateAclPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::AclPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterConnection::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const&) {
@@ -96,6 +134,44 @@ CloudRedisClusterConnection::DeleteCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Any>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnection::DeleteAclPolicy(
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::DeleteAclPolicy(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnection::DeleteAclPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterConnection::GetAclPolicyRevision(
+    google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterConnection::ListAclPolicyRevisions(
+    google::cloud::redis::cluster::v1::
+        ListAclPolicyRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::AclPolicyRevision>>();
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -120,6 +196,12 @@ CloudRedisClusterConnection::CreateCluster(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterConnection::CreateAclPolicy(
+    google::cloud::redis::cluster::v1::CreateAclPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -254,6 +336,129 @@ CloudRedisClusterConnection::BackupCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterConnection::ListTokenAuthUsers(
+    google::cloud::redis::cluster::v1::
+        ListTokenAuthUsersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::TokenAuthUser>>();
+}
+
+StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterConnection::GetTokenAuthUser(
+    google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterConnection::ListAuthTokens(
+    google::cloud::redis::cluster::v1::
+        ListAuthTokensRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::AuthToken>>();
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterConnection::GetAuthToken(
+    google::cloud::redis::cluster::v1::GetAuthTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnection::AddTokenAuthUser(
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnection::AddTokenAuthUser(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnection::DeleteTokenAuthUser(
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnection::DeleteTokenAuthUser(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+CloudRedisClusterConnection::AddAuthToken(
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::AddAuthToken(
+    NoAwaitTag, google::cloud::redis::cluster::v1::AddAuthTokenRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>
+CloudRedisClusterConnection::AddAuthToken(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnection::DeleteAuthToken(
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::DeleteAuthToken(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>
+CloudRedisClusterConnection::DeleteAuthToken(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 

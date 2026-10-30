@@ -417,6 +417,23 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceConnectionImpl::ResolveInstanceConfig(
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResolveInstanceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnectors::v1::
+                 ResolveInstanceConfigRequest const& request) {
+        return stub_->ResolveInstanceConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&

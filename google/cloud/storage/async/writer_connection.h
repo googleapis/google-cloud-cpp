@@ -143,11 +143,17 @@ class AsyncWriterConnection {
  *
  * Buffered uploads flow control the sender if the internal buffer exceeds the
  * HWM (High Watermark) value configured in this option.  The flow control is
- * only released once the internal buffer reaches the LWM (Low Watermark) value
- * configured via `BufferedUploadLwmOption`.
+ * released once the internal buffer drops below the LWM (Low Watermark) value
+ * configured via `BufferedUploadLwmOption`, or once all the buffered data has
+ * been sent to the service. The second condition matters because the service
+ * may acknowledge data without persisting it, e.g., regular buckets only
+ * persist 256KiB multiples until the upload is finalized. The library keeps
+ * such data buffered, in case the upload needs to be resumed, but does not
+ * hold the sender back for data that has already been sent.
  *
  * The library caps these values as follows (1) the LWM is always capped to the
- * [256KiB, std::numeric_limits<std::size_t>::max() / 4] range, and (2)
+ * [16MiB, 5TiB] range (the upper bound is
+ * `std::numeric_limits<std::size_t>::max() / 4` on 32-bit platforms), and (2)
  * the HWM is always at least two times the LWM.
  */
 struct BufferedUploadHwmOption {

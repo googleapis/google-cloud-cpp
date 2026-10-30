@@ -227,6 +227,29 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteApplication(google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::cloud::apphub::v1::Boundary> GetBoundary(
+      google::cloud::apphub::v1::GetBoundaryRequest const& request) override;
+
+  future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBoundary(
+      NoAwaitTag,
+      google::cloud::apphub::v1::UpdateBoundaryRequest const& request) override;
+
+  future<StatusOr<google::cloud::apphub::v1::Boundary>> UpdateBoundary(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  GetExtendedMetadataSchema(
+      google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+          request) override;
+
+  StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+  ListExtendedMetadataSchemas(
+      google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request)
+      override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

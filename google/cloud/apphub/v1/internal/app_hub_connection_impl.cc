@@ -1422,6 +1422,161 @@ AppHubConnectionImpl::DeleteApplication(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary> AppHubConnectionImpl::GetBoundary(
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBoundary(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+        return stub_->GetBoundary(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubConnectionImpl::UpdateBoundary(
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBoundary(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Boundary>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+        return stub->AsyncUpdateBoundary(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Boundary>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateBoundary(
+    NoAwaitTag,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBoundary(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+        return stub_->UpdateBoundary(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubConnectionImpl::UpdateBoundary(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Boundary>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBoundary",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Boundary>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Boundary>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubConnectionImpl::GetExtendedMetadataSchema(
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetExtendedMetadataSchema(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+                 request) {
+        return stub_->GetExtendedMetadataSchema(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubConnectionImpl::ListExtendedMetadataSchemas(
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListExtendedMetadataSchemas(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::apphub::v1::
+                       ListExtendedMetadataSchemasRequest const& request) {
+              return stub->ListExtendedMetadataSchemas(context, options,
+                                                       request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::apphub::v1::ListExtendedMetadataSchemasResponse r) {
+        std::vector<google::cloud::apphub::v1::ExtendedMetadataSchema> result(
+            r.extended_metadata_schemas().size());
+        auto& messages = *r.mutable_extended_metadata_schemas();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::cloud::location::Location>
 AppHubConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

@@ -312,6 +312,37 @@ NetAppTracingConnection::RevertVolume(
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppTracingConnection::StartSplit(
+    google::cloud::netapp::v1::StartSplitRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::StartSplit");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartSplit(request));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingConnection::StartSplit(
+    NoAwaitTag, google::cloud::netapp::v1::StartSplitRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::StartSplit");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->StartSplit(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppTracingConnection::StartSplit(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::StartSplit");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartSplit(operation));
+}
+
+StatusOr<google::cloud::netapp::v1::SplitStatus>
+NetAppTracingConnection::GetSplitStatus(
+    google::cloud::netapp::v1::GetSplitStatusRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::GetSplitStatus");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSplitStatus(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppTracingConnection::EstablishVolumePeering(
     google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
   auto span =
@@ -1535,6 +1566,73 @@ NetAppTracingConnection::ExecuteOntapPatch(
       internal::MakeSpan("netapp_v1::NetAppConnection::ExecuteOntapPatch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ExecuteOntapPatch(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppTracingConnection::RestoreVolume(
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::RestoreVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RestoreVolume(request));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingConnection::RestoreVolume(
+    NoAwaitTag,
+    google::cloud::netapp::v1::RestoreVolumeRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::RestoreVolume");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->RestoreVolume(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreVolumeResponse>>
+NetAppTracingConnection::RestoreVolume(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::RestoreVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RestoreVolume(operation));
+}
+
+StreamRange<google::cloud::netapp::v1::VolumeBackupConfig>
+NetAppTracingConnection::ListBackupConfigs(
+    google::cloud::netapp::v1::ListBackupConfigsRequest request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::ListBackupConfigs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::netapp::v1::VolumeBackupConfig>(std::move(span),
+                                                     std::move(sr));
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppTracingConnection::UpdateBackupConfig(
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackupConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::UpdateBackupConfig(
+    NoAwaitTag,
+    google::cloud::netapp::v1::UpdateBackupConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateBackupConfig(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::UpdateBackupConfigResponse>>
+NetAppTracingConnection::UpdateBackupConfig(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackupConfig(operation));
 }
 
 StreamRange<google::cloud::location::Location>

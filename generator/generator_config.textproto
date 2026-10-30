@@ -3451,6 +3451,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Observability
+service {
+  service_proto_path: "google/cloud/observability/v1/observability.proto"
+  product_path: "google/cloud/observability/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Optimization AI
 service {
   service_proto_path: "google/cloud/optimization/v1/fleet_routing.proto"

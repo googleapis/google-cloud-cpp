@@ -234,6 +234,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc" \
       "@googleapis//google/cloud/notebooks/v2:notebooks_cc_grpc"
   )"
+  ["observability"]="@googleapis//google/cloud/observability/v1:observability_cc_grpc"
   ["optimization"]="@googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
   ["oracledatabase"]="@googleapis//google/cloud/oracledatabase/v1:oracledatabase_cc_grpc"
   ["orgpolicy"]="@googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"

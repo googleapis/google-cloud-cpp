@@ -240,6 +240,11 @@ class AppConnectorsServiceConnection {
                               AppConnectorOperationMetadata>>
   DeleteAppConnector(google::longrunning::Operation const& operation);
 
+  virtual StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                       ResolveInstanceConfigResponse>
+  ResolveInstanceConfig(google::cloud::beyondcorp::appconnectors::v1::
+                            ResolveInstanceConfigRequest const& request);
+
   virtual future<
       StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(

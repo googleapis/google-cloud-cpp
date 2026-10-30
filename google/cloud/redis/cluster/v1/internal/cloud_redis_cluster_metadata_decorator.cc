@@ -57,6 +57,15 @@ CloudRedisClusterMetadata::ListClusters(
   return child_->ListClusters(context, options, request);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::ListAclPoliciesResponse>
+CloudRedisClusterMetadata::ListAclPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListAclPoliciesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAclPolicies(context, options, request);
+}
+
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterMetadata::GetCluster(
     grpc::ClientContext& context, Options const& options,
@@ -64,6 +73,15 @@ CloudRedisClusterMetadata::GetCluster(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCluster(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterMetadata::GetAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAclPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -90,6 +108,29 @@ CloudRedisClusterMetadata::UpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("acl_policy.name=",
+                           internal::UrlEncode(request.acl_policy().name())));
+  return child_->AsyncUpdateAclPolicy(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::UpdateAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::UpdateAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("acl_policy.name=",
+                           internal::UrlEncode(request.acl_policy().name())));
+  return child_->UpdateAclPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -111,6 +152,47 @@ CloudRedisClusterMetadata::DeleteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAclPolicy(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::DeleteAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAclPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicyRevision>
+CloudRedisClusterMetadata::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAclPolicyRevision(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListAclPolicyRevisionsResponse>
+CloudRedisClusterMetadata::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAclPolicyRevisions(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -129,6 +211,15 @@ CloudRedisClusterMetadata::CreateCluster(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCluster(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AclPolicy>
+CloudRedisClusterMetadata::CreateAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::CreateAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAclPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -274,6 +365,131 @@ CloudRedisClusterMetadata::BackupCluster(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->BackupCluster(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListTokenAuthUsersResponse>
+CloudRedisClusterMetadata::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListTokenAuthUsersRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTokenAuthUsers(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::TokenAuthUser>
+CloudRedisClusterMetadata::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetTokenAuthUserRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTokenAuthUser(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListAuthTokensResponse>
+CloudRedisClusterMetadata::ListAuthTokens(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListAuthTokensRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAuthTokens(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::AuthToken>
+CloudRedisClusterMetadata::GetAuthToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetAuthTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAuthToken(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("cluster=", internal::UrlEncode(request.cluster())));
+  return child_->AsyncAddTokenAuthUser(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::AddTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::AddTokenAuthUserRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster=", internal::UrlEncode(request.cluster())));
+  return child_->AddTokenAuthUser(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTokenAuthUser(cq, std::move(context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteTokenAuthUserRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTokenAuthUser(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("token_auth_user=",
+                           internal::UrlEncode(request.token_auth_user())));
+  return child_->AsyncAddAuthToken(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::AddAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::AddAuthTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("token_auth_user=",
+                           internal::UrlEncode(request.token_auth_user())));
+  return child_->AddAuthToken(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAuthToken(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::DeleteAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteAuthTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAuthToken(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

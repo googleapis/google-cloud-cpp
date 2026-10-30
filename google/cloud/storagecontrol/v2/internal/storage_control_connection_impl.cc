@@ -458,15 +458,19 @@ StatusOr<google::storage::control::v2::ManagedFolder>
 StorageControlConnectionImpl::UpdateManagedFolder(
     google::storage::control::v2::UpdateManagedFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateManagedFolder(request),
+      idempotency_policy(*current)->UpdateManagedFolder(request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::UpdateManagedFolderRequest const&
                  request) {
         return stub_->UpdateManagedFolder(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
@@ -779,6 +783,9 @@ StorageControlConnectionImpl::CreateRapidCache(
     google::storage::control::v2::CreateRapidCacheRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   auto const idempotent =
       idempotency_policy(*current)->CreateRapidCache(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
@@ -873,6 +880,9 @@ StorageControlConnectionImpl::UpdateRapidCache(
     google::storage::control::v2::UpdateRapidCacheRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   auto const idempotent =
       idempotency_policy(*current)->UpdateRapidCache(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
@@ -967,6 +977,9 @@ StorageControlConnectionImpl::DisableRapidCache(
     google::storage::control::v2::DisableRapidCacheRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   auto const idempotent =
       idempotency_policy(*current)->DisableRapidCache(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
@@ -1060,15 +1073,19 @@ StatusOr<google::storage::control::v2::RapidCache>
 StorageControlConnectionImpl::GetRapidCache(
     google::storage::control::v2::GetRapidCacheRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRapidCache(request),
+      idempotency_policy(*current)->GetRapidCache(request_copy),
       [this](
           grpc::ClientContext& context, Options const& options,
           google::storage::control::v2::GetRapidCacheRequest const& request) {
         return stub_->GetRapidCache(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StreamRange<google::storage::control::v2::RapidCache>
@@ -1126,16 +1143,21 @@ StorageControlConnectionImpl::UpdateProjectIntelligenceConfig(
     google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateProjectIntelligenceConfig(request),
+      idempotency_policy(*current)->UpdateProjectIntelligenceConfig(
+          request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::
                  UpdateProjectIntelligenceConfigRequest const& request) {
         return stub_->UpdateProjectIntelligenceConfig(context, options,
                                                       request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -1159,15 +1181,20 @@ StorageControlConnectionImpl::UpdateFolderIntelligenceConfig(
     google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFolderIntelligenceConfig(request),
+      idempotency_policy(*current)->UpdateFolderIntelligenceConfig(
+          request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::
                  UpdateFolderIntelligenceConfigRequest const& request) {
         return stub_->UpdateFolderIntelligenceConfig(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
@@ -1192,17 +1219,21 @@ StorageControlConnectionImpl::UpdateOrganizationIntelligenceConfig(
     google::storage::control::v2::
         UpdateOrganizationIntelligenceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateOrganizationIntelligenceConfig(
-          request),
+          request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::
                  UpdateOrganizationIntelligenceConfigRequest const& request) {
         return stub_->UpdateOrganizationIntelligenceConfig(context, options,
                                                            request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> StorageControlConnectionImpl::GetIamPolicy(

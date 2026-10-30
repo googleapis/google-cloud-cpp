@@ -613,6 +613,41 @@ DefaultCertificateManagerStub::CreateCertificateIssuanceConfig(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultCertificateManagerStub::AsyncUpdateCertificateIssuanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::certificatemanager::v1::
+                                        UpdateCertificateIssuanceConfigRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::certificatemanager::v1::
+                 UpdateCertificateIssuanceConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateCertificateIssuanceConfig(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::UpdateCertificateIssuanceConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateIssuanceConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateCertificateIssuanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

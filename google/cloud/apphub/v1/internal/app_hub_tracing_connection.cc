@@ -496,6 +496,62 @@ AppHubTracingConnection::DeleteApplication(
                            child_->DeleteApplication(operation));
 }
 
+StatusOr<google::cloud::apphub::v1::Boundary>
+AppHubTracingConnection::GetBoundary(
+    google::cloud::apphub::v1::GetBoundaryRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetBoundary");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBoundary(request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubTracingConnection::UpdateBoundary(
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateBoundary");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBoundary(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::UpdateBoundary(
+    NoAwaitTag,
+    google::cloud::apphub::v1::UpdateBoundaryRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateBoundary");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateBoundary(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Boundary>>
+AppHubTracingConnection::UpdateBoundary(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateBoundary");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBoundary(operation));
+}
+
+StatusOr<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubTracingConnection::GetExtendedMetadataSchema(
+    google::cloud::apphub::v1::GetExtendedMetadataSchemaRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::GetExtendedMetadataSchema");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExtendedMetadataSchema(request));
+}
+
+StreamRange<google::cloud::apphub::v1::ExtendedMetadataSchema>
+AppHubTracingConnection::ListExtendedMetadataSchemas(
+    google::cloud::apphub::v1::ListExtendedMetadataSchemasRequest request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::ListExtendedMetadataSchemas");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListExtendedMetadataSchemas(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::apphub::v1::ExtendedMetadataSchema>(std::move(span),
+                                                         std::move(sr));
+}
+
 StreamRange<google::cloud::location::Location>
 AppHubTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

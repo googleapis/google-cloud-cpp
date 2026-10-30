@@ -148,6 +148,17 @@ AppConnectorsServiceAuth::DeleteAppConnector(
   return child_->DeleteAppConnector(context, options, request);
 }
 
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ResolveInstanceConfigResponse>
+AppConnectorsServiceAuth::ResolveInstanceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ResolveInstanceConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResolveInstanceConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,

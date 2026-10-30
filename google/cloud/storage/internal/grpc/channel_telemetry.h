@@ -32,8 +32,17 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// The schemes of the C2P resolver, which is a prerequisite for DirectPath.
+constexpr std::string_view kC2pPrefix = "google-c2p:///";
+constexpr std::string_view kC2pExperimentalPrefix =
+    "google-c2p-experimental:///";
+
 /**
  * The transport used to reach the GCS service.
+ *
+ * This describes the channel, not individual RPCs: with DirectPath, the
+ * control plane may still route some RPCs through the Google Front End, and
+ * that per-RPC decision is not observable from the client library.
  */
 enum class TransportType {
   /// The default path, through the Google Front End.
@@ -48,22 +57,35 @@ enum class TransportType {
 std::string_view ToString(TransportType type);
 
 /**
- * Infers the transport from the effective @p endpoint.
+ * Infers the *requested* transport from the effective @p endpoint.
  *
- * Only the target string is available to the client library. The `google-c2p`
- * resolver may still fall back to CloudPath at runtime, and that decision is
- * not observable from here. Treat the result as the *requested* transport.
+ * Only the target string is available at this point. gRPC may select a
+ * different transport at runtime; see `SelectedTransportType()`.
  */
 TransportType DetectTransportType(std::string_view endpoint);
 
 /**
- * Logs the effective connectivity configuration.
+ * Determines the transport gRPC selected for a channel that became ready.
+ *
+ * @p requested_transport comes from `DetectTransportType()`,
+ * @p lb_policy_name from `grpc::Channel::GetLoadBalancingPolicyName()`, and
+ * @p grpc_supports_force_xds from `GrpcForceXdsIsSupported()`. Only a
+ * recognized DNS policy downgrades the result to `kCloudPath`; an unrecognized
+ * or empty @p lb_policy_name keeps @p requested_transport, adjusted for
+ * @p grpc_supports_force_xds.
+ */
+TransportType SelectedTransportType(TransportType requested_transport,
+                                    std::string_view lb_policy_name,
+                                    bool grpc_supports_force_xds);
+
+/**
+ * Logs the requested connectivity configuration.
  *
  * Emits a `WARNING` when the application asked for DirectPath over
  * Interconnect but the effective endpoint does not use it (for instance, when
  * `EndpointOption` or `UniverseDomainOption` is also set), or when `force-xds`
  * is requested on a gRPC version that ignores it. Otherwise emits an `INFO`
- * line describing the transport in use.
+ * line describing the requested transport.
  */
 void LogChannelConfiguration(Options const& options);
 
@@ -72,8 +94,15 @@ void LogChannelConfiguration(Options const& options);
 void LogChannelConfiguration(Options const& options,
                              bool grpc_supports_force_xds);
 
-/// Logs the outcome of waiting for the first channel to become ready.
-void LogChannelReady(TransportType transport,
+/**
+ * Logs the outcome of waiting for the first channel to become ready.
+ *
+ * @p selected_transport is only logged when @p status is OK; no transport is
+ * selected otherwise.
+ */
+void LogChannelReady(TransportType requested_transport,
+                     TransportType selected_transport,
+                     std::string_view lb_policy_name,
                      std::chrono::steady_clock::duration elapsed,
                      Status const& status);
 
@@ -88,10 +117,12 @@ void LogChannelReady(TransportType transport,
 auto constexpr kDefaultChannelReadyTimeout = std::chrono::seconds(30);
 
 /**
- * Invoked with the elapsed time once the first channel becomes ready.
+ * Invoked with the selected transport and the elapsed time once the first
+ * channel becomes ready.
  *
- * Only successful connections are reported. The callback may be empty, in
- * which case nothing is recorded. It runs on a completion queue thread.
+ * The transport is the result of `SelectedTransportType()`. Only successful
+ * connections are reported. The callback may be empty, in which case nothing
+ * is recorded. It runs on a completion queue thread.
  *
  * This is a seam: it keeps the OpenTelemetry dependency out of this header,
  * which is included from translation units compiled without
@@ -103,6 +134,9 @@ using ChannelReadyCallback =
 /**
  * Asynchronously reports how long the first channel takes to become ready.
  *
+ * @p requested_transport comes from `DetectTransportType()`. The ready log and
+ * @p on_ready report the transport gRPC selected, which may differ.
+ *
  * Production callers pass `kDefaultChannelReadyTimeout` as @p timeout. Returns
  * the future satisfied once the outcome has been reported; production callers
  * discard it, tests use it to avoid racing with the continuation.
@@ -110,7 +144,8 @@ using ChannelReadyCallback =
 future<void> StartChannelTelemetry(
     CompletionQueue cq,
     std::vector<std::shared_ptr<grpc::Channel>> const& channels,
-    TransportType transport, std::chrono::steady_clock::time_point start,
+    TransportType requested_transport,
+    std::chrono::steady_clock::time_point start,
     std::chrono::milliseconds timeout, ChannelReadyCallback on_ready);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

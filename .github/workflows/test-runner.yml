@@ -52,7 +52,8 @@ jobs:
       ${{
           (github.event_name != 'pull_request_target' && 'internal') ||
           (github.event.pull_request.head.repo.full_name == github.repository && 'internal') ||
-          (github.event.pull_request.head.repo.full_name == 'renovate-bot/google-cloud-cpp' && 'internal')
+          (github.event.pull_request.head.repo.full_name == 'renovate-bot/google-cloud-cpp' && 'internal') ||
+          (github.event.pull_request.head.repo.full_name == 'google-cloud-cpp-bot/google-cloud-cpp' && 'internal')
       }}
     name: Save PR ref
     runs-on: ubuntu-latest
@@ -92,7 +93,7 @@ jobs:
             esac
           elif [[ "${EVENT_NAME}" == "pull_request_target" ]]; then
             case "${USER_TO_CHECK}" in
-              renovate-bot|dependabot\[bot\]|release-please\[bot\]|gcf-merge-on-green\[bot\]|yoshi-code-bot|gcf-owl-bot\[bot\]|google-cloud-policy-bot\[bot\])
+              renovate-bot|google-cloud-cpp-bot|dependabot\[bot\]|release-please\[bot\]|gcf-merge-on-green\[bot\]|yoshi-code-bot|gcf-owl-bot\[bot\]|google-cloud-policy-bot\[bot\])
                 echo "Author '${USER_TO_CHECK}' is a trusted automation bot."
                 echo "is_trusted=true" >> "${GITHUB_OUTPUT}"
                 ;;
