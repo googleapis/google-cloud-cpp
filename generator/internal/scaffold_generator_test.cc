@@ -401,6 +401,7 @@ TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, HasSubstr("for (auto const& r : client.List"));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartCMake) {
