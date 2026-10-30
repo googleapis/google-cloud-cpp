@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       bms::BareMetalSolutionClient(bms::MakeBareMetalSolutionConnection());
 
-  for (auto i : client.ListInstances(location.FullName())) {
-    if (!i) throw std::move(i).status();
+  for (auto const& i : client.ListInstances(location.FullName())) {
+    if (!i) throw google::cloud::Status(i.status());
     std::cout << i->DebugString() << "\n";
   }
 

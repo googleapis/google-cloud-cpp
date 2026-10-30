@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = developerconnect::DeveloperConnectClient(
       developerconnect::MakeDeveloperConnectConnection());
 
-  for (auto c : client.ListConnections(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListConnections(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

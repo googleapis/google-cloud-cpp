@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = apigateway::ApiGatewayServiceClient(
       apigateway::MakeApiGatewayServiceConnection());
 
-  for (auto g : client.ListGateways(location.FullName())) {
-    if (!g) throw std::move(g).status();
+  for (auto const& g : client.ListGateways(location.FullName())) {
+    if (!g) throw google::cloud::Status(g.status());
     std::cout << g->DebugString() << "\n";
   }
 

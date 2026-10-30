@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = datamigration::DataMigrationServiceClient(
       datamigration::MakeDataMigrationServiceConnection());
 
-  for (auto mj : client.ListMigrationJobs(location.FullName())) {
-    if (!mj) throw std::move(mj).status();
+  for (auto const& mj : client.ListMigrationJobs(location.FullName())) {
+    if (!mj) throw google::cloud::Status(mj.status());
     std::cout << mj->DebugString() << "\n";
   }
 

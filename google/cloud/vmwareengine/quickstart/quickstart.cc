@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = vmwareengine::VmwareEngineClient(
       vmwareengine::MakeVmwareEngineConnection());
 
-  for (auto c : client.ListPrivateClouds(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListPrivateClouds(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

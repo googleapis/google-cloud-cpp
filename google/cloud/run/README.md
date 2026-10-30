@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) try {
   namespace run = ::google::cloud::run_v2;
   auto client = run::ServicesClient(run::MakeServicesConnection());
 
-  for (auto s : client.ListServices(location.FullName())) {
-    if (!s) throw std::move(s).status();
+  for (auto const& s : client.ListServices(location.FullName())) {
+    if (!s) throw google::cloud::Status(s.status());
     std::cout << s->DebugString() << "\n";
   }
 

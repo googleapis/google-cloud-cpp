@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = edgecontainer::EdgeContainerClient(
       edgecontainer::MakeEdgeContainerConnection());
 
-  for (auto c : client.ListClusters(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListClusters(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

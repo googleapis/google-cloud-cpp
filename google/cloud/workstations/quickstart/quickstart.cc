@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = workstations::WorkstationsClient(
       workstations::MakeWorkstationsConnection());
 
-  for (auto wc : client.ListWorkstationClusters(location.FullName())) {
-    if (!wc) throw std::move(wc).status();
+  for (auto const& wc : client.ListWorkstationClusters(location.FullName())) {
+    if (!wc) throw google::cloud::Status(wc.status());
     std::cout << wc->DebugString() << "\n";
   }
 

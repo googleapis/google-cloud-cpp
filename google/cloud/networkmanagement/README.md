@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) try {
   auto client = networkmanagement::ReachabilityServiceClient(
       networkmanagement::MakeReachabilityServiceConnection());
 
-  for (auto t : client.ListConnectivityTests(location.FullName())) {
-    if (!t) throw std::move(t).status();
+  for (auto const& t : client.ListConnectivityTests(location.FullName())) {
+    if (!t) throw google::cloud::Status(t.status());
     std::cout << t->DebugString() << "\n";
   }
 

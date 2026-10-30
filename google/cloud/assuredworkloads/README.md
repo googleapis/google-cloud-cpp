@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
   auto const parent =
       std::string("organizations/") + argv[1] + "/locations/" + argv[2];
 
-  for (auto w : client.ListWorkloads(parent)) {
-    if (!w) throw std::move(w).status();
+  for (auto const& w : client.ListWorkloads(parent)) {
+    if (!w) throw google::cloud::Status(w.status());
     std::cout << w->DebugString() << "\n";
   }
 

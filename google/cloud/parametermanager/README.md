@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
   auto client = parametermanager::ParameterManagerClient(
       parametermanager::MakeParameterManagerConnection());
 
-  for (auto r : client.ListParameters(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListParameters(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

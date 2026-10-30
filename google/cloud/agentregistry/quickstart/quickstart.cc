@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = agentregistry::AgentRegistryClient(
       agentregistry::MakeAgentRegistryConnection());
 
-  for (auto r : client.ListAgents(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListAgents(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

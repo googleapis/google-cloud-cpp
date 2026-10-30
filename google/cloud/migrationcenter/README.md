@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
   auto client = migrationcenter::MigrationCenterClient(
       migrationcenter::MakeMigrationCenterConnection());
 
-  for (auto a : client.ListAssets(location.FullName())) {
-    if (!a) throw std::move(a).status();
+  for (auto const& a : client.ListAssets(location.FullName())) {
+    if (!a) throw google::cloud::Status(a.status());
     std::cout << a->DebugString() << "\n";
   }
 

@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   auto const parent =
       location.FullName() +
       "/recommenders/google.compute.instance.MachineTypeRecommender";
-  for (auto r : client.ListRecommendations(parent)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListRecommendations(parent)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

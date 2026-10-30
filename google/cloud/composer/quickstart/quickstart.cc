@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       composer::EnvironmentsClient(composer::MakeEnvironmentsConnection());
 
-  for (auto e : client.ListEnvironments(location.FullName())) {
-    if (!e) throw std::move(e).status();
+  for (auto const& e : client.ListEnvironments(location.FullName())) {
+    if (!e) throw google::cloud::Status(e.status());
     std::cout << e->DebugString() << "\n";
   }
 

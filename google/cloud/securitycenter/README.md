@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
       securitycenter::MakeSecurityCenterConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto c : client.ListSources(project.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListSources(project.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

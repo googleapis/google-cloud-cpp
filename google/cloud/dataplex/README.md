@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
   auto client = dataplex::DataplexServiceClient(
       dataplex::MakeDataplexServiceConnection());
 
-  for (auto l : client.ListLakes(location.FullName())) {
-    if (!l) throw std::move(l).status();
+  for (auto const& l : client.ListLakes(location.FullName())) {
+    if (!l) throw google::cloud::Status(l.status());
     std::cout << l->DebugString() << "\n";
   }
 

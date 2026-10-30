@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
   namespace dataform = ::google::cloud::dataform_v1;
   auto client = dataform::DataformClient(dataform::MakeDataformConnection());
 
-  for (auto r : client.ListRepositories(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListRepositories(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

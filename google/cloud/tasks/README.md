@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
   namespace tasks = ::google::cloud::tasks_v2;
   auto client = tasks::CloudTasksClient(tasks::MakeCloudTasksConnection());
 
-  for (auto queue : client.ListQueues(location.FullName())) {
-    if (!queue) throw std::move(queue).status();
+  for (auto const& queue : client.ListQueues(location.FullName())) {
+    if (!queue) throw google::cloud::Status(queue.status());
     std::cout << queue->DebugString() << "\n";
   }
 

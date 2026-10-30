@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) try {
   auto client = artifactregistry::ArtifactRegistryClient(
       artifactregistry::MakeArtifactRegistryConnection());
 
-  for (auto r : client.ListRepositories(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListRepositories(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

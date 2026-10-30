@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace tpu = ::google::cloud::tpu_v2;
   auto client = tpu::TpuClient(tpu::MakeTpuConnection());
 
-  for (auto n : client.ListNodes(location.FullName())) {
-    if (!n) throw std::move(n).status();
+  for (auto const& n : client.ListNodes(location.FullName())) {
+    if (!n) throw google::cloud::Status(n.status());
     std::cout << n->DebugString() << "\n";
   }
 

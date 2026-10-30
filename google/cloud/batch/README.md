@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
   namespace batch = ::google::cloud::batch_v1;
   auto client = batch::BatchServiceClient(batch::MakeBatchServiceConnection());
 
-  for (auto j : client.ListJobs(location.FullName())) {
-    if (!j) throw std::move(j).status();
+  for (auto const& j : client.ListJobs(location.FullName())) {
+    if (!j) throw google::cloud::Status(j.status());
     std::cout << j->DebugString() << "\n";
   }
 

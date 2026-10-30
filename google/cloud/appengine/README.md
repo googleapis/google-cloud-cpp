@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
 
   ::google::appengine::v1::ListServicesRequest request;
   request.set_parent(std::string{"apps/"} + argv[1]);
-  for (auto r : client.ListServices(request)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListServices(request)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

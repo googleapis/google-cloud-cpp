@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
       osconfig::MakeOsConfigServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto p : client.ListPatchJobs(project.FullName())) {
-    if (!p) throw std::move(p).status();
+  for (auto const& p : client.ListPatchJobs(project.FullName())) {
+    if (!p) throw google::cloud::Status(p.status());
     std::cout << p->DebugString() << "\n";
   }
 

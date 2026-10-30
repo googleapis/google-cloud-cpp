@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = managedidentities::ManagedIdentitiesServiceClient(
       managedidentities::MakeManagedIdentitiesServiceConnection());
 
-  for (auto d : client.ListDomains(location.FullName())) {
-    if (!d) throw std::move(d).status();
+  for (auto const& d : client.ListDomains(location.FullName())) {
+    if (!d) throw google::cloud::Status(d.status());
     std::cout << d->DebugString() << "\n";
   }
 
