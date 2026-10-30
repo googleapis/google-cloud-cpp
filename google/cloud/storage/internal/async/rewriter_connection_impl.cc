@@ -54,6 +54,7 @@ RewriterConnectionImpl::Iterate() {
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::storage::v2::RewriteObjectRequest const& proto) {
+               ApplyUnaryRpcDeadline(*context, *options);
                AddIdempotencyToken(*context, id);
                return stub->AsyncRewriteObject(cq, std::move(context),
                                                std::move(options), proto);

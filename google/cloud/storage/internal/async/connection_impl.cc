@@ -241,6 +241,7 @@ future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::GetBucketRequest const& request) {
+    ApplyUnaryRpcDeadline(*context, *options);
     return stub->AsyncGetBucket(cq, std::move(context), std::move(options),
                                 request);
   };
@@ -623,6 +624,7 @@ AsyncConnectionImpl::ComposeObject(ComposeObjectParams p) {
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::ComposeObjectRequest const& request) {
+    ApplyUnaryRpcDeadline(*context, *options);
     AddIdempotencyToken(*context, id);
     return stub->AsyncComposeObject(cq, std::move(context), std::move(options),
                                     request);
@@ -646,6 +648,7 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::DeleteObjectRequest const& proto) {
+        ApplyUnaryRpcDeadline(*context, *options);
         AddIdempotencyToken(*context, id);
         return stub->AsyncDeleteObject(cq, std::move(context),
                                        std::move(options), proto);
@@ -756,6 +759,7 @@ AsyncConnectionImpl::StartResumableWrite(
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::StartResumableWriteRequest const& proto) {
+        ApplyUnaryRpcDeadline(*context, *options);
         internal::ConfigureContext(*context, *options);
         return stub->AsyncStartResumableWrite(cq, std::move(context),
                                               std::move(options), proto);
@@ -778,6 +782,7 @@ AsyncConnectionImpl::QueryWriteStatus(
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::QueryWriteStatusRequest const& proto) {
+        ApplyUnaryRpcDeadline(*context, *options);
         google::cloud::internal::ConfigurePollContext(*context, *options);
         return stub->AsyncQueryWriteStatus(cq, std::move(context),
                                            std::move(options), proto);
