@@ -22,7 +22,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -47,16 +46,16 @@ Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         DeleteOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "operations", request.operation());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"parent_id", request.parent_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "operations", "/",
-                   request.operation()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -66,16 +65,16 @@ DefaultGlobalOrganizationOperationsRestStub::GetOperation(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "operations", request.operation());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"parent_id", request.parent_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "operations", "/",
-                   request.operation()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -85,6 +84,10 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         ListGlobalOrganizationOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "operations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -95,10 +98,7 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "operations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 

@@ -571,10 +571,10 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Delete"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "simple"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "simple"))"""));
   EXPECT_THAT(
       vars.at("method_rest_path_async"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", "simple"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), "simple"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
@@ -592,10 +592,10 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.parent()), "databases"))"""));
   EXPECT_THAT(
       vars.at("method_rest_path_async"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.parent(), "/", "databases"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), rest_internal::PathPiece::MultiSegment(request.parent()), "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -616,10 +616,10 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "projects", request.project(), "instances", request.instance(), "databases"))"""));
   EXPECT_THAT(
       vars.at("method_rest_path_async"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), "projects", request.project(), "instances", request.instance(), "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -636,10 +636,53 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "projects", request.project(), "instances", request.instance(), "databases"))"""));
   EXPECT_THAT(
       vars.at("method_rest_path_async"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), "projects", request.project(), "instances", request.instance(), "databases"))"""));
+}
+
+TEST_F(HttpOptionUtilsTest,
+       SetHttpDerivedMethodVarsCustomVerbAndRecursiveVariable) {
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.foo.v1"
+    message_type {
+      name: "Bar"
+      field { name: "name" number: 1 type: TYPE_STRING }
+    }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "CancelBar"
+        input_type: "google.foo.v1.Bar"
+        output_type: "google.foo.v1.Empty"
+        options {
+          [google.api.http] { post: "/v1/{name=**}:cancel" body: "*" }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(0);
+  VarsDictionary vars;
+  SetHttpDerivedMethodVars(
+      ParseHttpExtension(method->options().GetExtension(google::api::http)),
+      *method, vars);
+  EXPECT_THAT(
+      vars.at("method_rest_path"),
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.name()), rest_internal::PathPiece::Verb("cancel")))"""));
+  EXPECT_THAT(
+      vars.at("method_rest_path_async"),
+      Eq(R"""(rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", *options), rest_internal::PathPiece::MultiSegment(request.name()), rest_internal::PathPiece::Verb("cancel")))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersNoParams) {

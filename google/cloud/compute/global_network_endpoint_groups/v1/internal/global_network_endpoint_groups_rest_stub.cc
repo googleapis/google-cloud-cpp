@@ -23,7 +23,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -60,6 +59,14 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "networkEndpointGroups",
+            request.network_endpoint_group(), "attachNetworkEndpoints");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -69,14 +76,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
             *service, *rest_context,
             request
                 .global_network_endpoint_groups_attach_endpoints_request_resource(),
-            false,
-            absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", "projects", "/", request.project(), "/", "global",
-                         "/", "networkEndpointGroups", "/",
-                         request.network_endpoint_group(), "/",
-                         "attachNetworkEndpoints"),
-            std::move(query_params)));
+            false, *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -95,6 +95,11 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups",
+      request.network_endpoint_group(), "attachNetworkEndpoints");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
@@ -103,13 +108,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
       *service_, rest_context,
       request
           .global_network_endpoint_groups_attach_endpoints_request_resource(),
-      false,
-      absl::StrCat(
-          "/", "compute", "/",
-          rest_internal::DetermineApiVersion("v1", options), "/", "projects",
-          "/", request.project(), "/", "global", "/", "networkEndpointGroups",
-          "/", request.network_endpoint_group(), "/", "attachNetworkEndpoints"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,18 +123,21 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "networkEndpointGroups",
+            request.network_endpoint_group());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "networkEndpointGroups", "/",
-                             request.network_endpoint_group()),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -155,17 +157,17 @@ DefaultGlobalNetworkEndpointGroupsRestStub::DeleteNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups",
+      request.network_endpoint_group());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "networkEndpointGroups", "/",
-                   request.network_endpoint_group()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -181,6 +183,14 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "networkEndpointGroups",
+            request.network_endpoint_group(), "detachNetworkEndpoints");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -190,14 +200,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
             *service, *rest_context,
             request
                 .global_network_endpoint_groups_detach_endpoints_request_resource(),
-            false,
-            absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", "projects", "/", request.project(), "/", "global",
-                         "/", "networkEndpointGroups", "/",
-                         request.network_endpoint_group(), "/",
-                         "detachNetworkEndpoints"),
-            std::move(query_params)));
+            false, *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -216,6 +219,11 @@ DefaultGlobalNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups",
+      request.network_endpoint_group(), "detachNetworkEndpoints");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
@@ -224,13 +232,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
       *service_, rest_context,
       request
           .global_network_endpoint_groups_detach_endpoints_request_resource(),
-      false,
-      absl::StrCat(
-          "/", "compute", "/",
-          rest_internal::DetermineApiVersion("v1", options), "/", "projects",
-          "/", request.project(), "/", "global", "/", "networkEndpointGroups",
-          "/", request.network_endpoint_group(), "/", "detachNetworkEndpoints"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -239,15 +241,15 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups",
+      request.network_endpoint_group());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "networkEndpointGroups", "/",
-                   request.network_endpoint_group()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -263,6 +265,13 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "networkEndpointGroups");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -271,11 +280,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.network_endpoint_group_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "networkEndpointGroups"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -294,17 +299,17 @@ DefaultGlobalNetworkEndpointGroupsRestStub::InsertNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.network_endpoint_group_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "networkEndpointGroups"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
@@ -313,6 +318,10 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         ListGlobalNetworkEndpointGroupsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -323,11 +332,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "networkEndpointGroups"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -338,15 +343,15 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "networkEndpointGroups",
+      request.network_endpoint_group(), "listNetworkEndpoints");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
-      *service_, rest_context, request, false,
-      absl::StrCat(
-          "/", "compute", "/",
-          rest_internal::DetermineApiVersion("v1", options), "/", "projects",
-          "/", request.project(), "/", "global", "/", "networkEndpointGroups",
-          "/", request.network_endpoint_group(), "/", "listNetworkEndpoints"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -363,13 +368,17 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(),
-                             "/global/operations/", request.operation())));
+                *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -393,12 +402,16 @@ future<Status> DefaultGlobalNetworkEndpointGroupsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "projects", request.project(), "global", "operations",
+            request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/projects/", request.project(), "/global/operations/",
-                         request.operation())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

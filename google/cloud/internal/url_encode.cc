@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/url_encode.h"
-#include <cctype>
 
 namespace google {
 namespace cloud {
@@ -22,36 +21,9 @@ namespace internal {
 
 namespace {
 
-bool ShouldEscape(unsigned char c) {
-  switch (c) {
-    case ' ':
-    case '\"':
-    case '#':
-    case '$':
-    case '%':
-    case '&':
-    case '+':
-    case ',':
-    case '/':
-    case ':':
-    case ';':
-    case '<':
-    case '=':
-    case '>':
-    case '?':
-    case '@':
-    case '[':
-    case '\\':
-    case ']':
-    case '^':
-    case '`':
-    case '{':
-    case '|':
-    case '}':
-      return true;
-    default:
-      return std::isprint(c) == 0;
-  }
+constexpr bool IsUnreservedChar(unsigned char c) {
+  return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+         (c >= '0' && c <= '9') || c == '-' || c == '.' || c == '_' || c == '~';
 }
 
 // Returns 0-15 if c is in [0-9A-Fa-f], and -1 otherwise.
@@ -66,14 +38,15 @@ int ParseHexDigit(char c) {
 
 std::string UrlEncode(absl::string_view value) {
   std::string s;
-  auto constexpr kDigits = "0123456789ABCDEF";
+  s.reserve(value.size());
+  char constexpr kDigits[] = "0123456789ABCDEF";
   for (unsigned char c : value) {
-    if (ShouldEscape(c)) {
+    if (IsUnreservedChar(c)) {
+      s.push_back(static_cast<char>(c));
+    } else {
       s.push_back('%');
       s.push_back(kDigits[(c >> 4) & 0xf]);
       s.push_back(kDigits[c & 0xf]);
-    } else {
-      s.push_back(c);
     }
   }
   return s;

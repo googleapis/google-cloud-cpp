@@ -22,7 +22,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -48,15 +47,15 @@ DefaultInterconnectRemoteLocationsRestStub::GetInterconnectRemoteLocation(
     Options const& options,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         GetInterconnectRemoteLocationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectRemoteLocations",
+      request.interconnect_remote_location());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectRemoteLocations", "/",
-                   request.interconnect_remote_location()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -66,6 +65,10 @@ DefaultInterconnectRemoteLocationsRestStub::ListInterconnectRemoteLocations(
     Options const& options,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         ListInterconnectRemoteLocationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "global", "interconnectRemoteLocations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -76,11 +79,7 @@ DefaultInterconnectRemoteLocationsRestStub::ListInterconnectRemoteLocations(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "interconnectRemoteLocations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
