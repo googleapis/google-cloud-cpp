@@ -22,12 +22,12 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/types/optional.h"
 #include "google/spanner/admin/database/v1/spanner_database_admin.pb.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <chrono>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -147,10 +147,10 @@ class QueueIntegrationTest
   static Database const& GetDatabase() { return *db_; }
 
  private:
-  static absl::optional<Database> db_;
+  static std::optional<Database> db_;
 };
 
-absl::optional<Database> QueueIntegrationTest::db_;
+std::optional<Database> QueueIntegrationTest::db_;
 
 TEST_F(QueueIntegrationTest, SendAndAckMutations) {
   Client client(MakeConnection(GetDatabase()));
