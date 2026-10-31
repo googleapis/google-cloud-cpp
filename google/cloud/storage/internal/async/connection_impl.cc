@@ -61,9 +61,12 @@
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
+#include <algorithm>
 #include <memory>
+#include <mutex>
 #include <set>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -212,7 +215,7 @@ OpenStreamFactory MakeOpenStreamFactory(
         std::unique_ptr<google::cloud::RetryPolicy> policy = retry->clone();
         if (logging == OpenLogging::kEnabled) {
           policy = std::make_unique<LoggingRetryPolicy>(
-              std::move(policy), "Open", std::move(resource));
+              std::move(policy), function_name, std::move(resource));
         }
         return google::cloud::internal::AsyncRetryLoop(
             std::move(policy), backoff->clone(), Idempotency::kIdempotent, cq,
@@ -361,6 +364,74 @@ AsyncConnectionImpl::Open(OpenParams p) {
     impl->Start(std::move(result->first_response));
     return ReturnType(impl);
   });
+}
+
+future<Status> AsyncConnectionImpl::WarmUp(WarmUpParams p) {
+  google::storage::v2::BidiReadObjectRequest initial_request;
+  *initial_request.mutable_read_object_spec() = std::move(p.read_spec);
+  internal::ImmutableOptions current =
+      internal::MakeImmutableOptions(std::move(p.options));
+  int const num_channels = (std::max)(1, current->get<GrpcNumChannelsOption>());
+  auto retry =
+      std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
+  auto backoff =
+      std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
+  OpenStreamFactory factory = MakeOpenStreamFactory(
+      stub_, cq_, std::move(retry), std::move(backoff), std::move(current),
+      __func__, OpenLogging::kEnabled);
+
+  struct SharedState {
+    std::mutex mu;
+    int remaining;
+    int successes = 0;
+    Status first_error;
+    std::vector<future<void>> pending;
+    promise<Status> done;
+    explicit SharedState(int n) : remaining(n) {}
+  };
+  auto state = std::make_shared<SharedState>(num_channels);
+  state->done = promise<Status>([weak = std::weak_ptr<SharedState>(state)] {
+    if (auto self = weak.lock()) {
+      std::vector<future<void>> pending;
+      {
+        std::unique_lock<std::mutex> lk(self->mu);
+        pending.swap(self->pending);
+      }
+      for (auto& f : pending) f.cancel();
+    }
+  });
+  future<Status> result_future = state->done.get_future();
+
+  for (int i = 0; i < num_channels; ++i) {
+    future<void> f =
+        factory(initial_request)
+            .then([state](future<StatusOr<OpenStreamResult>> g) {
+              StatusOr<OpenStreamResult> res = g.get();
+              Status s;
+              if (res.ok()) {
+                res->stream->Cancel();
+              } else if (res.status().code() != StatusCode::kNotFound) {
+                s = std::move(res).status();
+              }
+              std::unique_lock<std::mutex> lk(state->mu);
+              if (s.ok()) {
+                ++state->successes;
+              } else if (state->first_error.ok()) {
+                state->first_error = std::move(s);
+              }
+              if (--state->remaining != 0) return;
+              std::vector<future<void>> pending;
+              pending.swap(state->pending);
+              Status final_status = state->successes > 0
+                                        ? Status{}
+                                        : std::move(state->first_error);
+              lk.unlock();
+              state->done.set_value(std::move(final_status));
+            });
+    std::unique_lock<std::mutex> lk(state->mu);
+    if (state->remaining > 0) state->pending.push_back(std::move(f));
+  }
+  return result_future;
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>

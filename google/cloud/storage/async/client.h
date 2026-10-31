@@ -335,6 +335,63 @@ class AsyncClient {
       google::storage::v2::BidiReadObjectSpec spec, Options opts = {});
 
   /**
+   * Pre-warms credentials, the gRPC channel pool, and bucket routing metadata.
+   *
+   * The first requests issued by a newly created client incur one-time costs:
+   * obtaining OAuth2 access tokens, establishing the gRPC channels (including
+   * TLS handshakes), and resolving the routing information for @p bucket_name.
+   * This function performs that work ahead of time.
+   *
+   * The implementation opens, and immediately closes, `GrpcNumChannelsOption`
+   * concurrent probe streams (which the round-robin channel pool spreads across
+   * the configured gRPC channels), targeting a sentinel object with
+   * `generation=1`. A `kNotFound` response from the service is the expected
+   * outcome and is treated as success.
+   *
+   * @note This is a best-effort optimization. The returned status is `kOk` if
+   *     at least one channel was warmed successfully; otherwise it contains the
+   *     first error encountered.
+   * @note Success does not imply that @p bucket_name or the target object
+   *     exists (a nonexistent bucket also yields `kNotFound`).
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param bucket_name the name of the bucket to warm up.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<Status> WarmUp(BucketName const& bucket_name, Options opts = {});
+
+  /**
+   * Pre-warms credentials, the gRPC channel pool, and bucket routing metadata.
+   *
+   * Issues `GrpcNumChannelsOption` concurrent `BidiReadObject` probes (which
+   * the round-robin channel pool spreads across the configured gRPC channels)
+   * using @p spec so that OAuth2 access tokens, TLS handshakes, and bucket
+   * routing metadata are established ahead of time. If `spec.object()` is
+   * empty, a sentinel object name is used; if `spec.generation()` is 0,
+   * generation 1 is used, so the probe is expected to return `kNotFound` (which
+   * is treated as success).
+   *
+   * @note This is a best-effort optimization. The returned status is `kOk` if
+   *     at least one channel was warmed successfully; otherwise it contains the
+   *     first error encountered.
+   * @note Success does not imply that the target bucket or object exists (a
+   *     nonexistent bucket also yields `kNotFound`).
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param spec the `BidiReadObjectSpec` to use when warming up the
+   *     connection.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<Status> WarmUp(google::storage::v2::BidiReadObjectSpec spec,
+                        Options opts = {});
+
+  /**
    * A streaming download for the contents of an object.
    *
    * When satisfied, the returned future has a reader to asynchronously download

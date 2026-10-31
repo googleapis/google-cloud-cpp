@@ -681,6 +681,49 @@ TEST(ConnectionTracing, OpenSuccessWithInitialReadRanges) {
                        SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
 }
 
+TEST(ConnectionTracing, WarmUpSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<Status> p;
+
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
+  EXPECT_CALL(*mock, WarmUp).WillOnce(expect_context(p));
+  std::shared_ptr<storage::AsyncConnection> actual =
+      MakeTracingAsyncConnection(std::move(mock));
+  future<Status> result =
+      actual->WarmUp(AsyncConnection::WarmUpParams{}).then(expect_no_context);
+  p.set_value(Status{});
+  ASSERT_STATUS_OK(result.get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanNamed("storage::AsyncConnection::WarmUp"),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
+TEST(ConnectionTracing, WarmUpError) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<Status> p;
+
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
+  EXPECT_CALL(*mock, WarmUp).WillOnce(expect_context(p));
+  std::shared_ptr<storage::AsyncConnection> actual =
+      MakeTracingAsyncConnection(std::move(mock));
+  future<Status> result =
+      actual->WarmUp(AsyncConnection::WarmUpParams{}).then(expect_no_context);
+  p.set_value(PermanentError());
+  EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, ElementsAre(
+                 AllOf(SpanNamed("storage::AsyncConnection::WarmUp"),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+                       SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
 TEST(ConnectionTracing, StartAppendableObjectUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<

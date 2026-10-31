@@ -253,6 +253,24 @@ class AsyncConnection {
   /// Start an object rewrite.
   virtual std::shared_ptr<AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) = 0;
+
+  /**
+   * A thin wrapper around the `WarmUp()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct WarmUpParams {
+    google::storage::v2::BidiReadObjectSpec read_spec;
+    Options options;
+  };
+
+  /// Pre-warm credentials, gRPC channel pool, and bucket routing metadata.
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  virtual future<Status> WarmUp(WarmUpParams) {
+    return make_ready_future(
+        Status(StatusCode::kUnimplemented, "not implemented"));
+  }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
