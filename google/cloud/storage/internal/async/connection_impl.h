@@ -22,6 +22,8 @@
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/async/reader_connection_factory.h"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hedge_limiter.h"
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
@@ -149,6 +151,8 @@ class AsyncConnectionImpl
   std::shared_ptr<GrpcChannelRefresh> refresh_;
   std::shared_ptr<StorageStub> stub_;
   Options options_;
+  std::shared_ptr<storage::internal::HedgeLimiter> hedge_limiter_;
+  std::shared_ptr<storage::internal::HedgedReadMetrics> hedged_read_metrics_;
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 

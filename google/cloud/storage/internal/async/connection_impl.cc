@@ -59,11 +59,19 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/async_streaming_read_rpc_timeout.h"
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
+#include <opentelemetry/metrics/provider.h>
+#include <algorithm>
+#include <chrono>
+#include <cstddef>
+#include <cstdint>
 #include <memory>
+#include <mutex>
 #include <set>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -220,6 +228,302 @@ OpenStreamFactory MakeOpenStreamFactory(
       });
 }
 
+// Races the primary stream-open attempt against up to `max_hedges` delayed
+// speculative attempts for a single `AsyncConnectionImpl::Open()` call.
+class HedgedOpenOperation
+    : public std::enable_shared_from_this<HedgedOpenOperation> {
+ public:
+  HedgedOpenOperation(
+      CompletionQueue cq, OpenStreamFactory factory,
+      google::storage::v2::BidiReadObjectRequest initial_request,
+      std::shared_ptr<storage::AsyncRetryPolicy> retry_policy,
+      std::chrono::milliseconds hedge_delay, int max_hedges,
+      std::shared_ptr<storage::internal::HedgeLimiter> limiter,
+      std::shared_ptr<storage::internal::HedgedReadMetrics> metrics,
+      google::cloud::internal::ImmutableOptions options)
+      : cq_(std::move(cq)),
+        factory_(std::move(factory)),
+        initial_request_(std::move(initial_request)),
+        retry_policy_(std::move(retry_policy)),
+        hedge_delay_(
+            (std::max)(std::chrono::milliseconds::zero(), hedge_delay)),
+        max_hedges_((std::max)(0, max_hedges)),
+        limiter_(std::move(limiter)),
+        metrics_(std::move(metrics)),
+        call_context_(std::move(options)) {
+    attempts_.reserve(static_cast<std::size_t>(max_hedges_) + 1);
+  }
+
+  future<StatusOr<OpenStreamResult>> Start() {
+    std::weak_ptr<HedgedOpenOperation> weak = shared_from_this();
+    result_promise_ = promise<StatusOr<OpenStreamResult>>([weak] {
+      if (std::shared_ptr<HedgedOpenOperation> self = weak.lock()) {
+        google::cloud::internal::ScopedCallContext scope(self->call_context_);
+        self->OnCallerCancel();
+      }
+    });
+    future<StatusOr<OpenStreamResult>> result_future =
+        result_promise_.get_future();
+
+    std::uint64_t attempt_id = 0;
+    std::uint64_t timer_gen = 0;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      active_attempts_ = 1;
+      attempt_id = ++next_attempt_id_;
+      timer_gen = ++timer_generation_;
+    }
+
+    AttachAttempt(attempt_id, StartAttempt(attempt_id, /*is_primary=*/true));
+    ArmTimer(timer_gen, hedge_delay_);
+    return result_future;
+  }
+
+ private:
+  struct AttemptEntry {
+    std::uint64_t id;
+    future<void> pending;
+  };
+
+  struct Outstanding {
+    future<void> timer;
+    std::vector<AttemptEntry> attempts;
+  };
+
+  static void CancelIfValid(future<void>& f) {
+    if (f.valid()) f.cancel();
+  }
+
+  static void CancelOutstanding(Outstanding& outstanding) {
+    CancelIfValid(outstanding.timer);
+    for (AttemptEntry& entry : outstanding.attempts) {
+      CancelIfValid(entry.pending);
+    }
+  }
+
+  static Status CancelledOpenError() {
+    return google::cloud::internal::CancelledError("Open operation cancelled",
+                                                   GCP_ERROR_INFO());
+  }
+
+  Outstanding DrainOutstandingLocked() {
+    ++timer_generation_;
+    return Outstanding{std::move(timer_future_), std::move(attempts_)};
+  }
+
+  void Resolve(Outstanding& outstanding, StatusOr<OpenStreamResult> result) {
+    CancelOutstanding(outstanding);
+    result_promise_.set_value(std::move(result));
+  }
+
+  future<void> StartAttempt(std::uint64_t attempt_id, bool is_primary) {
+    std::shared_ptr<void> slot_guard;
+    if (!is_primary) {
+      slot_guard = std::shared_ptr<void>(
+          limiter_.get(), [l = limiter_](void*) { l->ReleaseHedgeSlot(); });
+    }
+    google::cloud::internal::ScopedCallContext scope(call_context_);
+    std::shared_ptr<HedgedOpenOperation> self = shared_from_this();
+    return factory_(initial_request_)
+        .then([self = std::move(self), slot_guard = std::move(slot_guard),
+               attempt_id,
+               is_primary](future<StatusOr<OpenStreamResult>> f) mutable {
+          slot_guard.reset();
+          self->OnAttemptDone(attempt_id, is_primary, f.get());
+        });
+  }
+
+  void AttachAttempt(std::uint64_t attempt_id, future<void> attempt) {
+    bool cancel_now = false;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      if (resolved_ || caller_cancelled_) {
+        cancel_now = true;
+      } else {
+        attempts_.push_back(AttemptEntry{attempt_id, std::move(attempt)});
+      }
+    }
+    if (cancel_now) CancelIfValid(attempt);
+  }
+
+  void RemoveAttemptLocked(std::uint64_t attempt_id) {
+    attempts_.erase(std::remove_if(attempts_.begin(), attempts_.end(),
+                                   [attempt_id](AttemptEntry const& e) {
+                                     return e.id == attempt_id;
+                                   }),
+                    attempts_.end());
+  }
+
+  void ArmTimer(std::uint64_t timer_gen, std::chrono::milliseconds delay) {
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      if (resolved_ || caller_cancelled_ || timer_gen != timer_generation_) {
+        return;
+      }
+    }
+    std::weak_ptr<HedgedOpenOperation> weak = shared_from_this();
+    future<void> timer = cq_.MakeRelativeTimer(delay).then(
+        [weak,
+         timer_gen](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+          if (std::shared_ptr<HedgedOpenOperation> self = weak.lock()) {
+            self->OnTimer(timer_gen, f.get().ok());
+          }
+        });
+    bool cancel_now = false;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      if (resolved_ || caller_cancelled_) {
+        cancel_now = true;
+      } else if (timer_gen == timer_generation_) {
+        timer_future_ = std::move(timer);
+      }
+    }
+    if (cancel_now) CancelIfValid(timer);
+  }
+
+  void OnTimer(std::uint64_t timer_gen, bool expired) {
+    if (!expired) return;
+    google::cloud::internal::ScopedCallContext scope(call_context_);
+
+    bool dispatch_hedge = false;
+    std::uint64_t attempt_id = 0;
+    bool arm_next_timer = false;
+    std::uint64_t next_timer_gen = 0;
+    std::chrono::milliseconds next_delay = hedge_delay_;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      if (resolved_ || caller_cancelled_ || timer_gen != timer_generation_ ||
+          hedges_dispatched_ >= max_hedges_) {
+        return;
+      }
+      bool const acquired = limiter_->TryAcquireHedgeToken();
+      if (acquired) {
+        dispatch_hedge = true;
+        ++active_attempts_;
+        ++hedges_dispatched_;
+        attempt_id = ++next_attempt_id_;
+      }
+      if (hedges_dispatched_ < max_hedges_ && !limiter_->IsTotalBudgetSpent()) {
+        arm_next_timer = true;
+        next_timer_gen = ++timer_generation_;
+        next_delay =
+            acquired ? hedge_delay_
+                     : (std::max)(hedge_delay_, std::chrono::milliseconds(10));
+      }
+    }
+
+    if (dispatch_hedge) {
+      metrics_->OnHedgeDispatched();
+      AttachAttempt(attempt_id, StartAttempt(attempt_id, /*is_primary=*/false));
+    }
+    if (arm_next_timer) ArmTimer(next_timer_gen, next_delay);
+  }
+
+  void OnAttemptDone(std::uint64_t attempt_id, bool is_primary,
+                     StatusOr<OpenStreamResult> result) {
+    google::cloud::internal::ScopedCallContext scope(call_context_);
+    if (result.ok()) {
+      OnAttemptSuccess(attempt_id, is_primary, *std::move(result));
+      return;
+    }
+    OnAttemptError(attempt_id, is_primary, std::move(result).status());
+  }
+
+  void OnAttemptSuccess(std::uint64_t attempt_id, bool is_primary,
+                        OpenStreamResult result) {
+    Outstanding outstanding;
+    bool won = false;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      if (!resolved_ && !caller_cancelled_) {
+        won = true;
+        --active_attempts_;
+        RemoveAttemptLocked(attempt_id);
+        resolved_ = true;
+        outstanding = DrainOutstandingLocked();
+      }
+    }
+    if (!won) {
+      if (result.stream) result.stream->Cancel();
+      OnAttemptError(attempt_id, is_primary, CancelledOpenError());
+      return;
+    }
+    if (!is_primary) metrics_->OnHedgeWon();
+    Resolve(outstanding, std::move(result));
+  }
+
+  bool ShouldResolveErrorLocked(bool permanent_primary_error) const {
+    if (caller_cancelled_) return active_attempts_ == 0;
+    return permanent_primary_error || active_attempts_ == 0;
+  }
+
+  Status SelectFinalErrorLocked() const {
+    if (caller_cancelled_ && primary_error_.code() != StatusCode::kCancelled) {
+      return CancelledOpenError();
+    }
+    return primary_error_;
+  }
+
+  void OnAttemptError(std::uint64_t attempt_id, bool is_primary,
+                      Status status) {
+    // Per-stream stall timeouts cancel the underlying RPC and surface as
+    // `kCancelled` on that attempt even when the caller did not cancel `Open`.
+    bool const permanent_primary_error =
+        is_primary && retry_policy_->IsPermanentFailure(status) &&
+        status.code() != StatusCode::kCancelled;
+    Outstanding outstanding;
+    Status final_error;
+    bool resolve_now = false;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      --active_attempts_;
+      RemoveAttemptLocked(attempt_id);
+      if (resolved_) return;
+      if (is_primary) primary_error_ = std::move(status);
+      if (ShouldResolveErrorLocked(permanent_primary_error)) {
+        resolve_now = true;
+        resolved_ = true;
+        final_error = SelectFinalErrorLocked();
+        outstanding = DrainOutstandingLocked();
+      }
+    }
+    if (resolve_now) Resolve(outstanding, std::move(final_error));
+  }
+
+  void OnCallerCancel() {
+    Outstanding outstanding;
+    {
+      std::lock_guard<std::mutex> lock(mu_);
+      if (resolved_ || caller_cancelled_) return;
+      caller_cancelled_ = true;
+      outstanding = DrainOutstandingLocked();
+    }
+    CancelOutstanding(outstanding);
+  }
+
+  CompletionQueue cq_;
+  OpenStreamFactory factory_;
+  google::storage::v2::BidiReadObjectRequest initial_request_;
+  std::shared_ptr<storage::AsyncRetryPolicy> retry_policy_;
+  std::chrono::milliseconds const hedge_delay_;
+  int const max_hedges_;
+  std::shared_ptr<storage::internal::HedgeLimiter> limiter_;
+  std::shared_ptr<storage::internal::HedgedReadMetrics> metrics_;
+  google::cloud::internal::CallContext call_context_;
+  promise<StatusOr<OpenStreamResult>> result_promise_;
+
+  std::mutex mu_;
+  bool resolved_ = false;
+  bool caller_cancelled_ = false;
+  int active_attempts_ = 0;
+  int hedges_dispatched_ = 0;
+  std::uint64_t next_attempt_id_ = 0;
+  std::uint64_t timer_generation_ = 0;
+  Status primary_error_;
+  future<void> timer_future_;
+  std::vector<AttemptEntry> attempts_;
+};
+
 }  // namespace
 
 AsyncConnectionImpl::AsyncConnectionImpl(
@@ -228,7 +532,22 @@ AsyncConnectionImpl::AsyncConnectionImpl(
     : cq_(std::move(cq)),
       refresh_(std::move(refresh)),
       stub_(std::move(stub)),
-      options_(std::move(options)) {}
+      options_(std::move(options)) {
+  if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
+    double const rate_limit =
+        options_.get<storage_experimental::ReadHedgeRateLimitOption>();
+    std::int64_t const max_concurrent =
+        options_.get<storage_experimental::MaxConcurrentHedgesOption>();
+    std::int64_t const max_total =
+        options_.get<storage_experimental::MaxTotalHedgesOption>();
+    // Allow bursts of up to one second worth of hedges.
+    hedge_limiter_ = std::make_shared<storage::internal::HedgeLimiter>(
+        rate_limit, rate_limit, max_concurrent, max_total);
+    hedged_read_metrics_ =
+        std::make_shared<storage::internal::HedgedReadMetrics>(
+            opentelemetry::metrics::Provider::GetMeterProvider());
+  }
+}
 
 future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
     GetBucketParams p) {
@@ -316,22 +635,40 @@ AsyncConnectionImpl::Open(OpenParams p) {
   // Get the policy factory and immediately create a policy.
   auto resume_policy = current->get<storage::ResumePolicyOption>()();
 
-  auto retry =
-      std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
-  auto backoff =
-      std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
-  auto const* function_name = __func__;
+  bool const enable_hedging =
+      current->get<storage_experimental::EnableReadHedgingOption>();
+  std::chrono::milliseconds const hedge_delay =
+      current->has<storage_experimental::ReadHedgeDelayOption>()
+          ? current->get<storage_experimental::ReadHedgeDelayOption>()
+          : std::chrono::milliseconds(500);
+  int const max_hedges =
+      current->has<storage_experimental::MaxReadHedgesOption>()
+          ? current->get<storage_experimental::MaxReadHedgesOption>()
+          : 2;
+
+  std::shared_ptr<storage::AsyncRetryPolicy> retry = retry_policy(*current);
+  std::shared_ptr<storage::BackoffPolicy> backoff = backoff_policy(*current);
+  char const* function_name = __func__;
   // The application is waiting on this open, so its retries are reported. So
   // are the descriptor's, with one exception below.
-  auto factory = MakeOpenStreamFactory(stub_, cq_, retry, backoff, current,
-                                       function_name, OpenLogging::kEnabled);
+  OpenStreamFactory factory =
+      MakeOpenStreamFactory(stub_, cq_, retry, backoff, current, function_name,
+                            OpenLogging::kEnabled);
   // Used only when the descriptor re-opens a stream that ended cleanly: see
   // `MakeOpenStreamFactory()` and `ObjectDescriptorImpl`.
-  auto clean_resume_factory = MakeOpenStreamFactory(
-      stub_, cq_, std::move(retry), std::move(backoff), std::move(current),
-      function_name, OpenLogging::kDisabled);
+  OpenStreamFactory clean_resume_factory =
+      MakeOpenStreamFactory(stub_, cq_, retry, std::move(backoff), current,
+                            function_name, OpenLogging::kDisabled);
 
-  auto pending = factory(std::move(initial_request));
+  future<StatusOr<OpenStreamResult>> pending =
+      enable_hedging && max_hedges > 0 && hedge_limiter_ &&
+              !hedge_limiter_->IsTotalBudgetSpent()
+          ? std::make_shared<HedgedOpenOperation>(
+                cq_, factory, std::move(initial_request), std::move(retry),
+                hedge_delay, max_hedges, hedge_limiter_, hedged_read_metrics_,
+                std::move(current))
+                ->Start()
+          : factory(std::move(initial_request));
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
   return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
                        qfa = std::move(clean_resume_factory),
