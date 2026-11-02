@@ -60,6 +60,12 @@ class RegionSslPoliciesRestMetadata : public RegionSslPoliciesRestStub {
       google::cloud::cpp::compute::region_ssl_policies::v1::
           GetSslPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          GetIamPolicyRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
@@ -102,6 +108,18 @@ class RegionSslPoliciesRestMetadata : public RegionSslPoliciesRestStub {
       Options const& options,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_ssl_policies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

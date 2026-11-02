@@ -39,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionHealthChecks resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks
 ///
-/// This client uses RegionHealthChecks version 2026-09-01.
+/// This client uses RegionHealthChecks version 2026-11-01.
 ///
 /// @par Equality
 ///

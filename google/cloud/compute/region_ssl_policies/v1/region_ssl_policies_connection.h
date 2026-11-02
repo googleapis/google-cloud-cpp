@@ -202,6 +202,10 @@ class RegionSslPoliciesConnection {
       google::cloud::cpp::compute::region_ssl_policies::v1::
           GetSslPolicyRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          GetIamPolicyRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
                       InsertSslPolicyRequest const& request);
@@ -232,6 +236,14 @@ class RegionSslPoliciesConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_ssl_policies::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
