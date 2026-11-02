@@ -118,3 +118,24 @@ to avoid typing an explicit type.
     `#include <google/protobuf/descriptor.pb.h>`,
     `#include <google/protobuf/descriptor.h>`) must continue to use angle
     brackets (`<...>`).
+
+## Standard Library (`std`) vs. Abseil (`absl`) Types (C++17)
+
+`google-cloud-cpp` requires C++17 or newer. Always use C++17 standard library
+vocabulary types, helper functions, and headers instead of their Abseil polyfill
+equivalents:
+
+| Do Not Use (`absl`)                                                                                       | Use Instead (`std`)                                                                                 | Header          |
+| :-------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- | :-------------- |
+| `absl::optional`, `absl::nullopt`, `absl::make_optional`                                                  | `std::optional`, `std::nullopt`, `std::make_optional`                                               | `<optional>`    |
+| `absl::variant`, `absl::monostate`, `absl::visit`, `absl::get`, `absl::get_if`, `absl::holds_alternative` | `std::variant`, `std::monostate`, `std::visit`, `std::get`, `std::get_if`, `std::holds_alternative` | `<variant>`     |
+| `absl::any`, `absl::any_cast`, `absl::make_any`                                                           | `std::any`, `std::any_cast`, `std::make_any`                                                        | `<any>`         |
+| `absl::string_view`                                                                                       | `std::string_view`                                                                                  | `<string_view>` |
+
+- **Include Standard Headers Directly:** Do not `#include`
+  `"absl/types/optional.h"`, `"absl/types/variant.h"`, `"absl/types/any.h"`, or
+  `"absl/strings/string_view.h"` unless directly required by a third-party or
+  Abseil API signature.
+- *Why:* In C++17 builds, these `absl` types are merely type aliases for the
+  `std` types. Using `std` directly avoids unnecessary Abseil header
+  dependencies and keeps interfaces consistent with the C++17 standard library.
