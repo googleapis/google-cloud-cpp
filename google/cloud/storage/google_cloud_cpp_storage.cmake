@@ -117,6 +117,7 @@ add_library(
     internal/hash_validator_impl.h
     internal/hash_values.cc
     internal/hash_values.h
+    internal/hedge_limiter.h
     internal/hedged_object_read_source.cc
     internal/hedged_object_read_source.h
     internal/hedged_read_metrics.cc

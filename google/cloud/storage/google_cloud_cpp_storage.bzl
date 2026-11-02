@@ -74,6 +74,7 @@ google_cloud_cpp_storage_hdrs = [
     "internal/hash_validator.h",
     "internal/hash_validator_impl.h",
     "internal/hash_values.h",
+    "internal/hedge_limiter.h",
     "internal/hedged_object_read_source.h",
     "internal/hedged_read_metrics.h",
     "internal/hedging_thread_pool.h",
