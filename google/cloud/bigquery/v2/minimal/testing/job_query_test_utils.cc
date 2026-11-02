@@ -136,6 +136,7 @@ void AssertEquals(QueryRequest const& lhs, QueryRequest const& rhs) {
   EXPECT_EQ(lhs.default_dataset().project_id, rhs.default_dataset().project_id);
   EXPECT_EQ(lhs.format_options().use_int64_timestamp,
             rhs.format_options().use_int64_timestamp);
+  EXPECT_EQ(lhs.job_creation_mode(), rhs.job_creation_mode());
   EXPECT_EQ(lhs.query_results_format(), rhs.query_results_format());
 }
 
