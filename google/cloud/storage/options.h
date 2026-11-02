@@ -35,21 +35,31 @@ namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Enable experimental request hedging for `ReadObject()` streams.
+ * Enable experimental request hedging for object downloads.
  *
- * When enabled, opening a download races the initial request against one or
- * more delayed, duplicate ("hedged") requests, and the first to respond wins.
- * A read that stalls mid-stream, that is, one that takes longer than
- * `ReadHedgeDelayOption`, is raced the same way against duplicate requests
- * resuming from the stream's current offset. This reduces tail latency at the
- * cost of additional requests.
+ * For `storage::Client::ReadObject()`, opening a download races the initial
+ * request against one or more delayed, duplicate ("hedged") requests, and the
+ * first to respond wins. A read that stalls mid-stream, that is, one that takes
+ * longer than `ReadHedgeDelayOption`, is raced the same way against duplicate
+ * requests resuming from the stream's current offset.
+ *
+ * For `storage::AsyncClient::Open()`, enabling this option at client creation
+ * time races the initial `BidiReadObject` stream-open handshake against up to
+ * `MaxReadHedgesOption` delayed attempts spaced by `ReadHedgeDelayOption`
+ * (bounded by `ReadHedgeRateLimitOption`, `MaxConcurrentHedgesOption`, and
+ * `MaxTotalHedgesOption`). Individual calls may opt out via
+ * `EnableReadHedgingOption(false)` or `MaxReadHedgesOption(0)`, or override
+ * `ReadHedgeDelayOption` and `MaxReadHedgesOption`; subsequent ranged reads and
+ * stream resumes are not hedged. This reduces tail latency at the cost of
+ * additional requests.
  *
  * The client records two OpenTelemetry counters through the global meter
  * provider in effect when the client is created:
  * `storage.read_hedging.hedges_dispatched`, the number of hedged requests
- * issued, and `storage.read_hedging.hedge_won`, the number of reads completed
- * by a hedged request instead of the original one. Nothing is recorded unless
- * the application installs a meter provider before creating the client.
+ * issued, and `storage.read_hedging.hedge_won`, the number of reads or stream
+ * opens completed by a hedged request instead of the original one. Nothing is
+ * recorded unless the application installs a meter provider before creating the
+ * client.
  *
  * @ingroup storage-options
  */
@@ -84,9 +94,10 @@ struct MaxConcurrentHedgesOption {
  * The maximum total number of hedged requests over the life of the connection.
  *
  * Once this many hedges have been sent, the connection stops hedging and serves
- * every later read with the primary request only. This bounds the extra load
- * hedging can add when a VM or the service is degraded, where most reads are
- * slow and hedging them only adds requests without making them faster.
+ * every later read or stream open with the primary request only. This bounds
+ * the extra load hedging can add when a VM or the service is degraded, where
+ * most requests are slow and hedging them only adds load without making them
+ * faster.
  *
  * The default is 0, meaning no limit.
  *
@@ -110,6 +121,8 @@ struct MaxTotalHedgesOption {
  * stalled read that is raced later, so a stream can hold up to
  * `MaxReadHedgesOption` + 1 buffers of this size at once.
  *
+ * @note Ignored by `storage::AsyncClient::Open()`.
+ *
  * The default is 64 MiB (64 * 1024 * 1024).
  *
  * @ingroup storage-options
@@ -121,8 +134,9 @@ struct MaximumHedgeBufferOption {
 /**
  * The delay before starting a hedged request.
  *
- * This is also the mid-stream stall threshold: a read that takes longer than
- * this marks the stream as stalled, and the next read is raced.
+ * For `storage::Client::ReadObject()`, this is also the mid-stream stall
+ * threshold: a read that takes longer than this marks the stream as stalled,
+ * and the next read is raced.
  *
  * The default is 500 milliseconds.
  *
@@ -133,14 +147,14 @@ struct ReadHedgeDelayOption {
 };
 
 /**
- * The maximum number of hedged requests per raced read.
+ * The maximum number of hedged requests per raced read or stream open.
  *
  * A read is raced when the stream is opened, and again whenever a read stalls
  * mid-stream, so this bounds a single race rather than the whole stream. The
  * total number of hedges a stream may issue is bounded at a small multiple of
  * this value, so a uniformly slow stream cannot keep racing indefinitely.
  *
- * The default is 2. Set to 0 to disable hedging for reads even when
+ * The default is 2. Set to 0 to disable hedging even when
  * `EnableReadHedgingOption` is set.
  *
  * @ingroup storage-options
@@ -156,6 +170,8 @@ struct MaxReadHedgesOption {
  * Set to 0 for automatic sizing (defaults to at least 64 threads or 4x hardware
  * concurrency).
  *
+ * @note Ignored by `storage::AsyncClient::Open()`.
+ *
  * @ingroup storage-options
  */
 struct ReadThreadPoolSizeOption {
@@ -168,6 +184,8 @@ struct ReadThreadPoolSizeOption {
  *
  * Set to 0 for automatic sizing (defaults to `MaxConcurrentHedgesOption` if
  * set, or at least 16 threads or 2x hardware concurrency).
+ *
+ * @note Ignored by `storage::AsyncClient::Open()`.
  *
  * @ingroup storage-options
  */

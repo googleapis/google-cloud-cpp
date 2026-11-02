@@ -285,6 +285,9 @@ class AsyncClient {
    * will resume any incomplete ranged reads if the connection(s) are
    * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
    *
+   * @see `storage_experimental::EnableReadHedgingOption` for speculative
+   *     stream-open hedging.
+   *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param opts options controlling the behavior of this RPC, for example
