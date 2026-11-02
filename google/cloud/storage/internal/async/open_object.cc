@@ -44,11 +44,14 @@ OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
       initial_request_(std::move(request)) {}
 
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
-  auto future = promise_.get_future();
-  rpc_->Start().then([w = WeakFromThis()](auto f) {
+  promise_ = promise<StatusOr<OpenStreamResult>>([w = WeakFromThis()] {
+    if (auto self = w.lock()) self->OnCancel();
+  });
+  auto result = promise_.get_future();
+  rpc_->Start().then([w = WeakFromThis()](future<bool> f) {
     if (auto self = w.lock()) self->OnStart(f.get());
   });
-  return future;
+  return result;
 }
 
 std::weak_ptr<OpenObject> OpenObject::WeakFromThis() {
@@ -77,31 +80,53 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
 
 void OpenObject::OnStart(bool ok) {
   if (!ok) return DoFinish();
-  rpc_->Write(initial_request_).then([w = WeakFromThis()](auto f) {
-    if (auto self = w.lock()) self->OnWrite(f.get());
+  rpc_->Write(initial_request_).then([w = WeakFromThis()](future<bool> f) {
+    if (std::shared_ptr<OpenObject> self = w.lock()) self->OnWrite(f.get());
   });
 }
 
 void OpenObject::OnWrite(bool ok) {
   if (!ok) return DoFinish();
-  rpc_->Read().then([w = WeakFromThis()](auto f) {
-    if (auto self = w.lock()) self->OnRead(f.get());
+  rpc_->Read().then([w = WeakFromThis()](future<OpenStream::ReadType> f) {
+    if (std::shared_ptr<OpenObject> self = w.lock()) self->OnRead(f.get());
   });
 }
 
 void OpenObject::OnRead(
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   if (!response) return DoFinish();
-  promise_.set_value(OpenStreamResult{std::move(rpc_), std::move(*response)});
+  auto expected = State::kOpening;
+  if (!state_.compare_exchange_strong(expected, State::kCommitted)) {
+    rpc_->Cancel();
+    return DoFinish();
+  }
+  promise_.set_value(OpenStreamResult{rpc_, std::move(*response)});
+}
+
+void OpenObject::OnCancel() {
+  auto expected = State::kOpening;
+  if (!state_.compare_exchange_strong(expected, State::kCancelled)) return;
+  rpc_->Cancel();
 }
 
 void OpenObject::DoFinish() {
-  rpc_->Finish().then([w = WeakFromThis()](auto f) {
-    if (auto self = w.lock()) self->OnFinish(f.get());
+  future<Status> pending = rpc_->Finish();
+  if (!pending.valid()) {
+    promise_.set_value(google::cloud::internal::CancelledError(
+        "Stream cancelled while opening", GCP_ERROR_INFO()));
+    return;
+  }
+  pending.then([w = WeakFromThis()](future<Status> f) {
+    if (std::shared_ptr<OpenObject> self = w.lock()) self->OnFinish(f.get());
   });
 }
 
 void OpenObject::OnFinish(Status status) {
+  if (rpc_->IsCancelled()) {
+    promise_.set_value(google::cloud::internal::CancelledError(
+        "Stream cancelled while opening", GCP_ERROR_INFO()));
+    return;
+  }
   if (!status.ok()) return promise_.set_value(std::move(status));
   // This should not happen, it indicates an EOF on the stream, but we
   // did not ask to close it.

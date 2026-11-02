@@ -119,6 +119,70 @@ TEST(OpenStream, CleanShutdown) {
   next.first.set_value(true);
 }
 
+TEST(OpenStream, CancelDuringStartDefersFinishUntilStartCompletes) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Start).WillOnce([&sequencer] {
+    return sequencer.PushBack("Start").then(
+        [](future<bool> f) { return f.get(); });
+  });
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {
+    return sequencer.PushBack("Finish").then([](future<bool>) {
+      return internal::CancelledError("test-only", GCP_ERROR_INFO());
+    });
+  });
+
+  auto actual = std::make_shared<OpenStream>(std::move(mock));
+  future<bool> start = actual->Start();
+  auto [pending_start, start_name] = sequencer.PopFrontWithName();
+  EXPECT_EQ(start_name, "Start");
+
+  // Cancelling twice while `Start()` is in flight must invoke `rpc_->Cancel()`
+  // only once and wait for `Start()` to complete before issuing `Finish()`.
+  actual->Cancel();
+  actual->Cancel();
+  EXPECT_TRUE(actual->IsCancelled());
+  actual.reset();
+
+  pending_start.set_value(true);
+  EXPECT_FALSE(start.get());
+
+  auto [pending_finish, finish_name] = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish_name, "Finish");
+  pending_finish.set_value(true);
+}
+
+TEST(OpenStream, CancelDuringReadDropsResponseAndFinishes) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read).WillOnce([&sequencer] {
+    return sequencer.PushBack("Read").then([](future<bool>) {
+      return ReadType(google::storage::v2::BidiReadObjectResponse{});
+    });
+  });
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {
+    return sequencer.PushBack("Finish").then(
+        [](future<bool>) { return Status{}; });
+  });
+
+  auto actual = std::make_shared<OpenStream>(std::move(mock));
+  future<ReadType> read = actual->Read();
+  auto [pending_read, read_name] = sequencer.PopFrontWithName();
+  EXPECT_EQ(read_name, "Read");
+
+  actual->Cancel();
+  actual.reset();
+
+  pending_read.set_value(true);
+  EXPECT_FALSE(read.get().has_value());
+
+  auto [pending_finish, finish_name] = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish_name, "Finish");
+  pending_finish.set_value(true);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

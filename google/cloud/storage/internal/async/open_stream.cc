@@ -24,45 +24,67 @@ OpenStream::OpenStream(std::unique_ptr<StreamingRpc> rpc)
     : rpc_(std::move(rpc)) {}
 
 void OpenStream::Cancel() {
-  cancel_.store(true);
+  if (cancel_.exchange(true)) return;
   rpc_->Cancel();
   MaybeFinish();
 }
 
 future<bool> OpenStream::Start() {
-  if (cancel_) return make_ready_future(false);
-  return rpc_->Start();
+  pending_start_.store(true);
+  if (cancel_.load()) {
+    OnStart();
+    return make_ready_future(false);
+  }
+  return rpc_->Start().then([s = shared_from_this()](future<bool> f) mutable {
+    bool const ok = f.get();
+    s->OnStart();
+    return !s->cancel_.load() && ok;
+  });
 }
 
 future<bool> OpenStream::Write(
     google::storage::v2::BidiReadObjectRequest const& request) {
-  if (cancel_) return make_ready_future(false);
   pending_write_.store(true);
+  if (cancel_.load()) {
+    OnWrite();
+    return make_ready_future(false);
+  }
   return rpc_->Write(request, grpc::WriteOptions{})
-      .then([s = shared_from_this()](auto f) mutable {
-        auto self = std::move(s);
-        self->OnWrite();
-        return f.get();
+      .then([s = shared_from_this()](future<bool> f) mutable {
+        bool const ok = f.get();
+        s->OnWrite();
+        return !s->cancel_.load() && ok;
       });
 }
 
 future<OpenStream::ReadType> OpenStream::Read() {
-  if (cancel_) return make_ready_future(ReadType(std::nullopt));
   pending_read_.store(true);
-  return rpc_->Read().then([s = shared_from_this()](auto f) mutable {
-    auto self = std::move(s);
-    self->OnRead();
-    return f.get();
-  });
+  if (cancel_.load()) {
+    OnRead();
+    return make_ready_future(ReadType(std::nullopt));
+  }
+  return rpc_->Read().then(
+      [s = shared_from_this()](future<ReadType> f) mutable {
+        ReadType result = f.get();
+        s->OnRead();
+        if (s->cancel_.load()) return ReadType(std::nullopt);
+        return result;
+      });
 }
 
 future<Status> OpenStream::Finish() {
   if (finish_issued_.exchange(true)) return {};
-  return rpc_->Finish().then([s = shared_from_this()](auto f) mutable {
-    auto result = f.get();
-    s.reset();
-    return result;
-  });
+  return rpc_->Finish().then(
+      [s = shared_from_this()](future<Status> f) mutable {
+        Status result = f.get();
+        s.reset();
+        return result;
+      });
+}
+
+void OpenStream::OnStart() {
+  pending_start_.store(false);
+  return MaybeFinish();
 }
 
 void OpenStream::OnWrite() {
@@ -76,9 +98,13 @@ void OpenStream::OnRead() {
 }
 
 void OpenStream::MaybeFinish() {
-  if (!cancel_) return;
-  // Once `cancel_` is true these can only become false.
-  if (pending_read_ || pending_write_) return;
+  if (!cancel_.load()) return;
+  // Once `cancel_` is true, every operation stores its `pending_*_` flag before
+  // checking `cancel_`, so any operation that touches `rpc_` has already set
+  // its flag before `MaybeFinish()` runs.
+  if (pending_start_.load() || pending_read_.load() || pending_write_.load()) {
+    return;
+  }
   Finish();
 }
 
