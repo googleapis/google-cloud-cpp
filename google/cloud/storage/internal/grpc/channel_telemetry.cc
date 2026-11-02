@@ -30,6 +30,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -83,6 +84,12 @@ bool HasQueryParameter(std::string_view uri, std::string_view key) {
             eq_pos == std::string_view::npos ? param : param.substr(0, eq_pos);
         return name == key;
       });
+}
+
+/// Returns @p authority without a trailing `:port`. A port does not change
+/// which host the authority names.
+std::string_view AuthorityHost(std::string_view authority) {
+  return authority.substr(0, authority.find(':'));
 }
 
 struct ChannelReadyOutcome {
@@ -214,6 +221,20 @@ std::string_view ChannelReadyNote(TransportType requested_transport,
 
 }  // namespace
 
+bool IsDirectPathInterconnectHost(std::string_view host) {
+  return host == kDirectPathInterconnectHost ||
+         host == kDirectPathInterconnectPreprodHost;
+}
+
+std::string_view C2pTargetHost(std::string_view endpoint) {
+  for (std::string_view prefix : {kC2pPrefix, kC2pExperimentalPrefix}) {
+    if (!absl::StartsWith(endpoint, prefix)) continue;
+    std::string_view const host_and_query = endpoint.substr(prefix.size());
+    return host_and_query.substr(0, host_and_query.find_first_of("/?#:"));
+  }
+  return {};
+}
+
 std::string_view ToString(TransportType type) {
   switch (type) {
     case TransportType::kCloudPath:
@@ -292,13 +313,33 @@ void LogChannelConfiguration(Options const& options,
                      << ", endpoint=" << endpoint;
     return;
   }
-  std::string_view const authority =
+  std::optional<std::string_view> const authority_option =
       options.has<AuthorityOption>()
-          ? std::string_view{options.get<AuthorityOption>()}
-          : std::string_view{"(default)"};
+          ? std::make_optional<std::string_view>(options.get<AuthorityOption>())
+          : std::nullopt;
+  if (requested_transport == TransportType::kDirectPathInterconnect) {
+    // `DefaultOptionsGrpc()` always sets `AuthorityOption`. The fallback
+    // covers callers that bypass it, and matches the host gRPC derives from
+    // the target.
+    std::string_view const effective_authority =
+        authority_option.value_or(C2pTargetHost(endpoint));
+    if (!IsDirectPathInterconnectHost(AuthorityHost(effective_authority))) {
+      GCP_LOG(WARNING) << "DirectPath over Interconnect is requested with "
+                       << "`force-xds`, but the `:authority` is not "
+                       << kDirectPathInterconnectHost << " or "
+                       << kDirectPathInterconnectPreprodHost
+                       << ", so the service routes these RPCs as regular "
+                       << "DirectPath. Target one of those hosts and leave "
+                       << "`AuthorityOption` unset. requested_transport_type="
+                       << ToString(requested_transport)
+                       << ", endpoint=" << endpoint
+                       << ", authority=" << effective_authority;
+      return;
+    }
+  }
   GCP_LOG(INFO) << "Configured gRPC transport. requested_transport_type="
                 << ToString(requested_transport) << ", endpoint=" << endpoint
-                << ", authority=" << authority
+                << ", authority=" << authority_option.value_or("(default)")
                 << ", grpc_version=" << grpc::Version();
 }
 

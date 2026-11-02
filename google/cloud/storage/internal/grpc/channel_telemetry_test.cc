@@ -17,7 +17,9 @@
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <grpcpp/generic/async_generic_service.h>
@@ -25,6 +27,7 @@
 #include <chrono>
 #include <future>
 #include <memory>
+#include <optional>
 #include <string>
 #include <thread>
 #include <vector>
@@ -38,6 +41,7 @@ namespace {
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Each;
+using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -45,6 +49,8 @@ auto constexpr kCloudPathEndpoint = "storage.googleapis.com";
 auto constexpr kDirectPathEndpoint = "google-c2p:///storage.googleapis.com";
 auto constexpr kInterconnectEndpoint =
     "google-c2p:///storage-direct.googleapis.com?force-xds";
+auto constexpr kPreprodInterconnectEndpoint =
+    "google-c2p:///storage-preprod-direct.sandbox.googleapis.com?force-xds";
 // Spelled out rather than shared with the implementation, so that a change to
 // the expected policy name fails this test.
 constexpr char const* kXdsLbPolicyName = "xds_cluster_manager_experimental";
@@ -106,6 +112,87 @@ INSTANTIATE_TEST_SUITE_P(
         DetectTransportTypeTestCase{
             "google-c2p:///storage-direct.googleapis.com#frag?force-xds",
             TransportType::kDirectPath}));
+
+struct IsDirectPathInterconnectHostTestCase {
+  std::string host;
+  bool expected;
+};
+
+class IsDirectPathInterconnectHostTest
+    : public ::testing::TestWithParam<IsDirectPathInterconnectHostTestCase> {};
+
+/// @test Verify only the exact production and preprod Interconnect hosts
+/// match. The comparison is exact and case-sensitive, as the service compares
+/// the `:authority` the same way, and a port or delimiter is the caller's job
+/// to strip.
+TEST_P(IsDirectPathInterconnectHostTest, MatchesExactHostsOnly) {
+  auto const& test_case = GetParam();
+  EXPECT_EQ(IsDirectPathInterconnectHost(test_case.host), test_case.expected)
+      << "host=" << test_case.host;
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ChannelTelemetry, IsDirectPathInterconnectHostTest,
+    ::testing::Values(
+        IsDirectPathInterconnectHostTestCase{"storage-direct.googleapis.com",
+                                             true},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-preprod-direct.sandbox.googleapis.com", true},
+        IsDirectPathInterconnectHostTestCase{"", false},
+        IsDirectPathInterconnectHostTestCase{"storage.googleapis.com", false},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-preprod.sandbox.googleapis.com", false},
+        IsDirectPathInterconnectHostTestCase{"Storage-Direct.googleapis.com",
+                                             false},
+        IsDirectPathInterconnectHostTestCase{"storage-direct.googleapis.com.",
+                                             false},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-direct.googleapis.com:443", false},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-direct.googleapis.com.example.com", false}));
+
+struct C2pTargetHostTestCase {
+  std::string endpoint;
+  std::string expected_host;
+};
+
+class C2pTargetHostTest
+    : public ::testing::TestWithParam<C2pTargetHostTestCase> {};
+
+/// @test Verify the host is taken from both `google-c2p` schemes, ends at the
+/// first `:`, `/`, `?` or `#`, and is empty for any other scheme.
+TEST_P(C2pTargetHostTest, ExtractsHost) {
+  auto const& test_case = GetParam();
+  EXPECT_EQ(C2pTargetHost(test_case.endpoint), test_case.expected_host)
+      << "endpoint=" << test_case.endpoint;
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ChannelTelemetry, C2pTargetHostTest,
+    ::testing::Values(
+        C2pTargetHostTestCase{kDirectPathEndpoint, "storage.googleapis.com"},
+        C2pTargetHostTestCase{kInterconnectEndpoint,
+                              "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{
+            "google-c2p-experimental:///storage-direct.googleapis.com"
+            "?force-xds",
+            "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{"google-c2p:///storage-direct.googleapis.com:443",
+                              "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{"google-c2p:///storage-direct.googleapis.com/",
+                              "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{
+            "google-c2p:///storage-direct.googleapis.com#frag?force-xds",
+            "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{"google-c2p:///", ""},
+        C2pTargetHostTestCase{"google-c2p:///?force-xds", ""},
+        // Non-C2P schemes have no C2P target host, whatever they contain.
+        C2pTargetHostTestCase{"", ""},
+        C2pTargetHostTestCase{kCloudPathEndpoint, ""},
+        C2pTargetHostTestCase{"https://storage-direct.googleapis.com", ""},
+        C2pTargetHostTestCase{"dns:///storage-direct.googleapis.com", ""},
+        C2pTargetHostTestCase{"google-c2p://storage-direct.googleapis.com",
+                              ""}));
 
 struct SelectedTransportTypeTestCase {
   TransportType requested_transport;
@@ -232,6 +319,182 @@ TEST(ChannelTelemetry, LogChannelConfigurationInterconnect) {
                                               "DirectPathInterconnect"),
                                     HasSubstr(kInterconnectEndpoint))));
   EXPECT_THAT(lines, Each(Not(HasSubstr("DirectPath over Interconnect is"))));
+}
+
+struct LogInterconnectAuthorityTestCase {
+  std::string test_name;
+  std::string endpoint;
+  // An application-supplied `AuthorityOption`. When unset, gRPC uses the
+  // host of the target as the authority.
+  std::optional<std::string> authority;
+  // The authority the log line reports.
+  std::string expected_logged_authority;
+  bool expect_warning;
+};
+
+class LogInterconnectAuthorityTest
+    : public ::testing::TestWithParam<LogInterconnectAuthorityTestCase> {};
+
+/// @test Verify a `force-xds` endpoint warns exactly when the effective
+/// `:authority` is not an Interconnect host. The service routes RPCs with any
+/// other authority as regular DirectPath, so the feature would otherwise be
+/// silently inactive. Only the authority matters: a non-Interconnect target
+/// with an Interconnect authority is a working configuration.
+TEST_P(LogInterconnectAuthorityTest, WarnsOnNonInterconnectAuthority) {
+  LogInterconnectAuthorityTestCase const& test_case = GetParam();
+  testing_util::ScopedLog log;
+  auto options = Options{}.set<EndpointOption>(test_case.endpoint);
+  if (test_case.authority) options.set<AuthorityOption>(*test_case.authority);
+  LogChannelConfiguration(options, /*grpc_supports_force_xds=*/true);
+  std::vector<std::string> const lines = log.ExtractLines();
+  if (test_case.expect_warning) {
+    EXPECT_THAT(
+        lines,
+        Contains(AllOf(
+            HasSubstr("but the `:authority` is not"),
+            HasSubstr("requested_transport_type=DirectPathInterconnect"),
+            HasSubstr("endpoint=" + test_case.endpoint),
+            EndsWith(", authority=" + test_case.expected_logged_authority))));
+    EXPECT_THAT(lines, Each(Not(HasSubstr("Configured gRPC transport"))));
+  } else {
+    EXPECT_THAT(
+        lines, Contains(AllOf(HasSubstr("Configured gRPC transport"),
+                              HasSubstr("authority=" +
+                                        test_case.expected_logged_authority))));
+    EXPECT_THAT(lines, Each(Not(HasSubstr("`:authority`"))));
+  }
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ChannelTelemetry, LogInterconnectAuthorityTest,
+    ::testing::Values(
+        LogInterconnectAuthorityTestCase{"InterconnectHostDefaultAuthority",
+                                         kInterconnectEndpoint, std::nullopt,
+                                         "(default)", false},
+        LogInterconnectAuthorityTestCase{
+            "InterconnectHost", kInterconnectEndpoint,
+            "storage-direct.googleapis.com", "storage-direct.googleapis.com",
+            false},
+        LogInterconnectAuthorityTestCase{
+            "PreprodHost", kPreprodInterconnectEndpoint,
+            "storage-preprod-direct.sandbox.googleapis.com",
+            "storage-preprod-direct.sandbox.googleapis.com", false},
+        LogInterconnectAuthorityTestCase{"PreprodHostDefaultAuthority",
+                                         kPreprodInterconnectEndpoint,
+                                         std::nullopt, "(default)", false},
+        // The service only looks at the authority, not the dialed host.
+        LogInterconnectAuthorityTestCase{
+            "OtherHostInterconnectAuthority",
+            "google-c2p:///storage.googleapis.com?force-xds",
+            "storage-direct.googleapis.com", "storage-direct.googleapis.com",
+            false},
+        LogInterconnectAuthorityTestCase{
+            "OtherHostExperimentalSchemeInterconnectAuthority",
+            "google-c2p-experimental:///storage.googleapis.com?force-xds",
+            "storage-direct.googleapis.com", "storage-direct.googleapis.com",
+            false},
+        // A port does not change which host the authority names.
+        LogInterconnectAuthorityTestCase{
+            "InterconnectAuthorityWithPort", kInterconnectEndpoint,
+            "storage-direct.googleapis.com:443",
+            "storage-direct.googleapis.com:443", false},
+        LogInterconnectAuthorityTestCase{
+            "PreprodAuthorityWithPort", kPreprodInterconnectEndpoint,
+            "storage-preprod-direct.sandbox.googleapis.com:443",
+            "storage-preprod-direct.sandbox.googleapis.com:443", false},
+        // Hosts are compared exactly, as `DefaultOptionsGrpc()` does when it
+        // picks the default authority.
+        LogInterconnectAuthorityTestCase{"UppercaseAuthority",
+                                         kInterconnectEndpoint,
+                                         "Storage-Direct.googleapis.com",
+                                         "Storage-Direct.googleapis.com", true},
+        LogInterconnectAuthorityTestCase{
+            "OtherHost", "google-c2p:///storage.googleapis.com?force-xds",
+            "storage.googleapis.com", "storage.googleapis.com", true},
+        LogInterconnectAuthorityTestCase{
+            "OtherHostDefaultAuthority",
+            "google-c2p:///storage.googleapis.com?force-xds", std::nullopt,
+            "storage.googleapis.com", true},
+        LogInterconnectAuthorityTestCase{
+            "OtherHostExperimentalScheme",
+            "google-c2p-experimental:///storage.googleapis.com?force-xds",
+            "storage.googleapis.com", "storage.googleapis.com", true},
+        LogInterconnectAuthorityTestCase{
+            "NonDirectPreprodHost",
+            "google-c2p:///storage-preprod.sandbox.googleapis.com?force-xds",
+            "storage.googleapis.com", "storage.googleapis.com", true},
+        LogInterconnectAuthorityTestCase{
+            "CustomAuthority", kInterconnectEndpoint, "custom-authority",
+            "custom-authority", true},
+        LogInterconnectAuthorityTestCase{"EmptyAuthority",
+                                         kInterconnectEndpoint, "", "", true},
+        // Only the part before the port is compared, so a look-alike host
+        // with a port is still rejected.
+        LogInterconnectAuthorityTestCase{
+            "LookAlikeAuthorityWithPort", kInterconnectEndpoint,
+            "storage-direct.googleapis.com.example.com:443",
+            "storage-direct.googleapis.com.example.com:443", true}),
+    [](::testing::TestParamInfo<LogInterconnectAuthorityTestCase> const& info) {
+      return info.param.test_name;
+    });
+
+/// @test Verify that on a gRPC version that ignores `force-xds` only the
+/// version warning is logged, not the `:authority` warning, because the channel
+/// does not use Interconnect at all then.
+TEST(ChannelTelemetry, LogChannelConfigurationUnsupportedGrpcOtherAuthority) {
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(
+      Options{}
+          .set<EndpointOption>("google-c2p:///storage.googleapis.com?force-xds")
+          .set<AuthorityOption>("storage.googleapis.com"),
+      /*grpc_supports_force_xds=*/false);
+  std::vector<std::string> const lines = log.ExtractLines();
+  EXPECT_THAT(
+      lines, Contains(HasSubstr("DirectPath over Interconnect requires gRPC")));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("`:authority`"))));
+}
+
+/// @test Verify the options `DefaultOptionsGrpc()` produces for an
+/// application-supplied preprod Interconnect endpoint are logged without a
+/// warning, so the default authority and the warning agree on which hosts are
+/// Interconnect hosts.
+TEST(ChannelTelemetry, LogChannelConfigurationPreprodDefaults) {
+  testing_util::ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(DefaultOptionsGrpc(Options{}.set<EndpointOption>(
+                                                 kPreprodInterconnectEndpoint),
+                                             internal::MakeGcpDetector(),
+                                             /*grpc_supports_force_xds=*/true),
+                          /*grpc_supports_force_xds=*/true);
+  std::vector<std::string> const lines = log.ExtractLines();
+  EXPECT_THAT(
+      lines,
+      Contains(AllOf(
+          HasSubstr("Configured gRPC transport"),
+          HasSubstr(
+              "authority=storage-preprod-direct.sandbox.googleapis.com"))));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("`:authority`"))));
+}
+
+/// @test Verify an application-supplied `force-xds` endpoint for the
+/// non-direct production host warns with the authority `DefaultOptionsGrpc()`
+/// actually assigns, as `DefaultOptionsGrpc()` always sets `AuthorityOption`.
+TEST(ChannelTelemetry, LogChannelConfigurationOtherHostDefaults) {
+  testing_util::ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  testing_util::ScopedLog log;
+  LogChannelConfiguration(
+      DefaultOptionsGrpc(Options{}.set<EndpointOption>(
+                             "google-c2p:///storage.googleapis.com?force-xds"),
+                         internal::MakeGcpDetector(),
+                         /*grpc_supports_force_xds=*/true),
+      /*grpc_supports_force_xds=*/true);
+  std::vector<std::string> const lines = log.ExtractLines();
+  EXPECT_THAT(lines,
+              Contains(AllOf(HasSubstr("but the `:authority` is not"),
+                             EndsWith(", authority=storage.googleapis.com"))));
+  EXPECT_THAT(lines, Each(Not(HasSubstr("Configured gRPC transport"))));
 }
 
 /// @test Verify a requested but inactive feature warns instead of claiming

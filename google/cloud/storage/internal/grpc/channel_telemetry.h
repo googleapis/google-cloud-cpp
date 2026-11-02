@@ -37,6 +37,26 @@ constexpr std::string_view kC2pPrefix = "google-c2p:///";
 constexpr std::string_view kC2pExperimentalPrefix =
     "google-c2p-experimental:///";
 
+/// The hosts Cloud Storage accepts as the `:authority` of DirectPath over
+/// Interconnect RPCs, in production and in preprod. The service routes RPCs
+/// with any other authority as regular DirectPath, even on a `force-xds`
+/// channel.
+constexpr std::string_view kDirectPathInterconnectHost =
+    "storage-direct.googleapis.com";
+constexpr std::string_view kDirectPathInterconnectPreprodHost =
+    "storage-preprod-direct.sandbox.googleapis.com";
+
+/// Returns true if @p host is one of the DirectPath over Interconnect hosts.
+bool IsDirectPathInterconnectHost(std::string_view host);
+
+/**
+ * Returns the host of a `google-c2p` or `google-c2p-experimental` @p endpoint.
+ *
+ * The host ends at the first `:`, `/`, `?` or `#`, so a port, path, query or
+ * fragment is not part of it. Returns an empty string for any other scheme.
+ */
+std::string_view C2pTargetHost(std::string_view endpoint);
+
 /**
  * The transport used to reach the GCS service.
  *
@@ -83,9 +103,11 @@ TransportType SelectedTransportType(TransportType requested_transport,
  *
  * Emits a `WARNING` when the application asked for DirectPath over
  * Interconnect but the effective endpoint does not use it (for instance, when
- * `EndpointOption` or `UniverseDomainOption` is also set), or when `force-xds`
- * is requested on a gRPC version that ignores it. Otherwise emits an `INFO`
- * line describing the requested transport.
+ * `EndpointOption` or `UniverseDomainOption` is also set), when `force-xds`
+ * is requested on a gRPC version that ignores it, or when a `force-xds`
+ * endpoint is used with an `:authority` that is not a DirectPath over
+ * Interconnect host. Otherwise emits an `INFO` line describing the requested
+ * transport.
  */
 void LogChannelConfiguration(Options const& options);
 
