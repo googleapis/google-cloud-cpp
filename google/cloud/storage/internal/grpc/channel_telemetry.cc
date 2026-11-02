@@ -30,6 +30,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -312,33 +313,33 @@ void LogChannelConfiguration(Options const& options,
                      << ", endpoint=" << endpoint;
     return;
   }
-  // `DefaultOptionsGrpc()` always sets `AuthorityOption`. The fallback covers
-  // callers that bypass it, and matches the host gRPC derives from the target.
-  std::string_view const effective_authority =
+  std::optional<std::string_view> const authority_option =
       options.has<AuthorityOption>()
-          ? std::string_view{options.get<AuthorityOption>()}
-          : C2pTargetHost(endpoint);
-  if (requested_transport == TransportType::kDirectPathInterconnect &&
-      !IsDirectPathInterconnectHost(AuthorityHost(effective_authority))) {
-    GCP_LOG(WARNING) << "DirectPath over Interconnect is requested with "
-                     << "`force-xds`, but the `:authority` is not "
-                     << kDirectPathInterconnectHost << " or "
-                     << kDirectPathInterconnectPreprodHost
-                     << ", so the service routes these RPCs as regular "
-                     << "DirectPath. Target one of those hosts and leave "
-                     << "`AuthorityOption` unset. requested_transport_type="
-                     << ToString(requested_transport)
-                     << ", endpoint=" << endpoint
-                     << ", authority=" << effective_authority;
-    return;
+          ? std::make_optional<std::string_view>(options.get<AuthorityOption>())
+          : std::nullopt;
+  if (requested_transport == TransportType::kDirectPathInterconnect) {
+    // `DefaultOptionsGrpc()` always sets `AuthorityOption`. The fallback
+    // covers callers that bypass it, and matches the host gRPC derives from
+    // the target.
+    std::string_view const effective_authority =
+        authority_option.value_or(C2pTargetHost(endpoint));
+    if (!IsDirectPathInterconnectHost(AuthorityHost(effective_authority))) {
+      GCP_LOG(WARNING) << "DirectPath over Interconnect is requested with "
+                       << "`force-xds`, but the `:authority` is not "
+                       << kDirectPathInterconnectHost << " or "
+                       << kDirectPathInterconnectPreprodHost
+                       << ", so the service routes these RPCs as regular "
+                       << "DirectPath. Target one of those hosts and leave "
+                       << "`AuthorityOption` unset. requested_transport_type="
+                       << ToString(requested_transport)
+                       << ", endpoint=" << endpoint
+                       << ", authority=" << effective_authority;
+      return;
+    }
   }
-  std::string_view const authority =
-      options.has<AuthorityOption>()
-          ? std::string_view{options.get<AuthorityOption>()}
-          : std::string_view{"(default)"};
   GCP_LOG(INFO) << "Configured gRPC transport. requested_transport_type="
                 << ToString(requested_transport) << ", endpoint=" << endpoint
-                << ", authority=" << authority
+                << ", authority=" << authority_option.value_or("(default)")
                 << ", grpc_version=" << grpc::Version();
 }
 

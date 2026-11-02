@@ -113,6 +113,87 @@ INSTANTIATE_TEST_SUITE_P(
             "google-c2p:///storage-direct.googleapis.com#frag?force-xds",
             TransportType::kDirectPath}));
 
+struct IsDirectPathInterconnectHostTestCase {
+  std::string host;
+  bool expected;
+};
+
+class IsDirectPathInterconnectHostTest
+    : public ::testing::TestWithParam<IsDirectPathInterconnectHostTestCase> {};
+
+/// @test Verify only the exact production and preprod Interconnect hosts
+/// match. The comparison is exact and case-sensitive, as the service compares
+/// the `:authority` the same way, and a port or delimiter is the caller's job
+/// to strip.
+TEST_P(IsDirectPathInterconnectHostTest, MatchesExactHostsOnly) {
+  auto const& test_case = GetParam();
+  EXPECT_EQ(IsDirectPathInterconnectHost(test_case.host), test_case.expected)
+      << "host=" << test_case.host;
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ChannelTelemetry, IsDirectPathInterconnectHostTest,
+    ::testing::Values(
+        IsDirectPathInterconnectHostTestCase{"storage-direct.googleapis.com",
+                                             true},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-preprod-direct.sandbox.googleapis.com", true},
+        IsDirectPathInterconnectHostTestCase{"", false},
+        IsDirectPathInterconnectHostTestCase{"storage.googleapis.com", false},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-preprod.sandbox.googleapis.com", false},
+        IsDirectPathInterconnectHostTestCase{"Storage-Direct.googleapis.com",
+                                             false},
+        IsDirectPathInterconnectHostTestCase{"storage-direct.googleapis.com.",
+                                             false},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-direct.googleapis.com:443", false},
+        IsDirectPathInterconnectHostTestCase{
+            "storage-direct.googleapis.com.example.com", false}));
+
+struct C2pTargetHostTestCase {
+  std::string endpoint;
+  std::string expected_host;
+};
+
+class C2pTargetHostTest
+    : public ::testing::TestWithParam<C2pTargetHostTestCase> {};
+
+/// @test Verify the host is taken from both `google-c2p` schemes, ends at the
+/// first `:`, `/`, `?` or `#`, and is empty for any other scheme.
+TEST_P(C2pTargetHostTest, ExtractsHost) {
+  auto const& test_case = GetParam();
+  EXPECT_EQ(C2pTargetHost(test_case.endpoint), test_case.expected_host)
+      << "endpoint=" << test_case.endpoint;
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ChannelTelemetry, C2pTargetHostTest,
+    ::testing::Values(
+        C2pTargetHostTestCase{kDirectPathEndpoint, "storage.googleapis.com"},
+        C2pTargetHostTestCase{kInterconnectEndpoint,
+                              "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{
+            "google-c2p-experimental:///storage-direct.googleapis.com"
+            "?force-xds",
+            "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{"google-c2p:///storage-direct.googleapis.com:443",
+                              "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{"google-c2p:///storage-direct.googleapis.com/",
+                              "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{
+            "google-c2p:///storage-direct.googleapis.com#frag?force-xds",
+            "storage-direct.googleapis.com"},
+        C2pTargetHostTestCase{"google-c2p:///", ""},
+        C2pTargetHostTestCase{"google-c2p:///?force-xds", ""},
+        // Non-C2P schemes have no C2P target host, whatever they contain.
+        C2pTargetHostTestCase{"", ""},
+        C2pTargetHostTestCase{kCloudPathEndpoint, ""},
+        C2pTargetHostTestCase{"https://storage-direct.googleapis.com", ""},
+        C2pTargetHostTestCase{"dns:///storage-direct.googleapis.com", ""},
+        C2pTargetHostTestCase{"google-c2p://storage-direct.googleapis.com",
+                              ""}));
+
 struct SelectedTransportTypeTestCase {
   TransportType requested_transport;
   std::string lb_policy_name;

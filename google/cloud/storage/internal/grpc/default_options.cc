@@ -169,8 +169,9 @@ Options DefaultOptionsGrpc(
   // ignores `force-xds` because the channel does not use Interconnect then.
   // This is deliberately narrower than `DetectTransportType()`, which treats a
   // `force-xds` target for any host as Interconnect; any other host keeps the
-  // standard default. The `*.googleapis.com` certificate covers the
-  // production host, so TLS verification needs no override for it. Set
+  // standard default. gRPC also uses the authority as the TLS target name;
+  // as it is the dialed host for both Interconnect hosts, TLS verifies the
+  // name actually dialed and neither host needs an override. Set
   // `AuthorityOption` explicitly here because `MergeOptions()` below would
   // otherwise default it to `storage.googleapis.com`.
   std::string const& endpoint = options.get<EndpointOption>();
