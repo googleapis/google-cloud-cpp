@@ -45,11 +45,11 @@ OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
 
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
   promise_ = promise<StatusOr<OpenStreamResult>>([w = WeakFromThis()] {
-    if (auto self = w.lock()) self->OnCancel();
+    if (std::shared_ptr<OpenObject> self = w.lock()) self->OnCancel();
   });
-  auto result = promise_.get_future();
+  future<StatusOr<OpenStreamResult>> result = promise_.get_future();
   rpc_->Start().then([w = WeakFromThis()](future<bool> f) {
-    if (auto self = w.lock()) self->OnStart(f.get());
+    if (std::shared_ptr<OpenObject> self = w.lock()) self->OnStart(f.get());
   });
   return result;
 }
@@ -95,7 +95,7 @@ void OpenObject::OnWrite(bool ok) {
 void OpenObject::OnRead(
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   if (!response) return DoFinish();
-  auto expected = State::kOpening;
+  State expected = State::kOpening;
   if (!state_.compare_exchange_strong(expected, State::kCommitted)) {
     rpc_->Cancel();
     return DoFinish();
@@ -104,7 +104,7 @@ void OpenObject::OnRead(
 }
 
 void OpenObject::OnCancel() {
-  auto expected = State::kOpening;
+  State expected = State::kOpening;
   if (!state_.compare_exchange_strong(expected, State::kCancelled)) return;
   rpc_->Cancel();
 }
@@ -122,7 +122,7 @@ void OpenObject::DoFinish() {
 }
 
 void OpenObject::OnFinish(Status status) {
-  if (rpc_->IsCancelled()) {
+  if (state_.load() == State::kCancelled || rpc_->IsCancelled()) {
     promise_.set_value(google::cloud::internal::CancelledError(
         "Stream cancelled while opening", GCP_ERROR_INFO()));
     return;

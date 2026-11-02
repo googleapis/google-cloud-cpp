@@ -84,24 +84,25 @@ future<Status> OpenStream::Finish() {
 
 void OpenStream::OnStart() {
   pending_start_.store(false);
-  return MaybeFinish();
+  MaybeFinish();
 }
 
 void OpenStream::OnWrite() {
   pending_write_.store(false);
-  return MaybeFinish();
+  MaybeFinish();
 }
 
 void OpenStream::OnRead() {
   pending_read_.store(false);
-  return MaybeFinish();
+  MaybeFinish();
 }
 
 void OpenStream::MaybeFinish() {
   if (!cancel_.load()) return;
-  // Once `cancel_` is true, every operation stores its `pending_*_` flag before
-  // checking `cancel_`, so any operation that touches `rpc_` has already set
-  // its flag before `MaybeFinish()` runs.
+  // Sequential consistency (`memory_order_seq_cst`) is required here: each
+  // operation stores `pending_*_ = true` before loading `cancel_`, while
+  // `Cancel()` stores `cancel_ = true` before `MaybeFinish()` loads
+  // `pending_*_` (Dekker's store-then-load pattern).
   if (pending_start_.load() || pending_read_.load() || pending_write_.load()) {
     return;
   }

@@ -63,11 +63,15 @@ class OpenStream : public std::enable_shared_from_this<OpenStream> {
 
   explicit OpenStream(std::unique_ptr<StreamingRpc> rpc);
 
+  // Cancels the stream and calls `Finish()` once all pending operations drain.
+  // Against real gRPC streams, `Start()` must have been initiated first.
   void Cancel();
   bool IsCancelled() const { return cancel_.load(); }
   future<bool> Start();
   future<bool> Write(google::storage::v2::BidiReadObjectRequest const& request);
   future<ReadType> Read();
+  // Issues `rpc_->Finish()` on the first call; subsequent calls return an
+  // invalid `future<Status>{}`.
   future<Status> Finish();
 
  private:

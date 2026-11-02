@@ -73,7 +73,8 @@ TEST(OpenStream, DuplicateFinish) {
 
   auto actual = std::make_shared<OpenStream>(std::move(mock));
 
-  auto f1 = actual->Finish();
+  future<Status> f1 = actual->Finish();
+  EXPECT_FALSE(actual->Finish().valid());
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);

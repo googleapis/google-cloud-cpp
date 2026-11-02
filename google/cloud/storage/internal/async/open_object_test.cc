@@ -518,30 +518,30 @@ TEST_P(OpenObjectCancelPhaseTest, CancelsCleanlyAtHandshakePhase) {
       mock, cq, std::make_shared<grpc::ClientContext>(),
       internal::MakeImmutableOptions({}),
       google::storage::v2::BidiReadObjectRequest{});
-  auto pending = coro->Call();
+  future<StatusOr<OpenStreamResult>> pending = coro->Call();
 
-  auto pop = [&sequencer](char const* expected) {
+  auto const pop = [&sequencer](char const* expected) {
     auto [p, name] = sequencer.PopFrontWithName();
     EXPECT_EQ(name, expected);
     return std::move(p);
   };
 
-  auto start = pop("Start");
+  promise<bool> start = pop("Start");
   if (phase == CancelPhase::kStart) pending.cancel();
   start.set_value(phase != CancelPhase::kFinish);
 
   if (phase == CancelPhase::kWrite || phase == CancelPhase::kRead) {
-    auto write = pop("Write");
+    promise<bool> write = pop("Write");
     if (phase == CancelPhase::kWrite) pending.cancel();
     write.set_value(true);
   }
   if (phase == CancelPhase::kRead) {
-    auto read = pop("Read");
+    promise<bool> read = pop("Read");
     pending.cancel();
     read.set_value(true);
   }
 
-  auto finish = pop("Finish");
+  promise<bool> finish = pop("Finish");
   if (phase == CancelPhase::kFinish) pending.cancel();
   finish.set_value(true);
 
@@ -563,7 +563,7 @@ TEST(OpenImpl, ConcurrentCancelAndReadCompletion) {
     std::atomic<int> cancel_calls{0};
     auto read_promise = std::make_shared<
         promise<std::optional<google::storage::v2::BidiReadObjectResponse>>>();
-    auto read_future = read_promise->get_future();
+    future<OpenStream::ReadType> read_future = read_promise->get_future();
 
     MockStorageStub mock;
     EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&] {
@@ -592,9 +592,9 @@ TEST(OpenImpl, ConcurrentCancelAndReadCompletion) {
         mock, cq, std::make_shared<grpc::ClientContext>(),
         internal::MakeImmutableOptions({}),
         google::storage::v2::BidiReadObjectRequest{});
-    auto pending = coro->Call();
+    future<StatusOr<OpenStreamResult>> pending = coro->Call();
 
-    auto wait_at_gate = [&] {
+    auto const wait_at_gate = [&] {
       std::unique_lock<std::mutex> lock(gate_mu);
       ++ready;
       gate_cv.notify_all();
@@ -619,7 +619,7 @@ TEST(OpenImpl, ConcurrentCancelAndReadCompletion) {
     reader.join();
     canceller.join();
 
-    auto result = pending.get();
+    StatusOr<OpenStreamResult> result = pending.get();
     if (result.ok()) {
       EXPECT_EQ(cancel_calls.load(), 0);
       EXPECT_FALSE(result->stream->IsCancelled());
