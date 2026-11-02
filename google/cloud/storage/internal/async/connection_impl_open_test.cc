@@ -38,6 +38,7 @@
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
+#include <cstddef>
 #include <cstdint>
 #include <functional>
 #include <memory>
@@ -804,11 +805,12 @@ std::unique_ptr<ScopedMeterProvider> InstallMockHedgeMetrics(
 future<StatusOr<std::chrono::system_clock::time_point>> MakeSequencedTimer(
     AsyncSequencer<bool>& sequencer, std::string const& name,
     std::atomic<int>& cancelled_timers) {
-  auto step = sequencer.PushBack(name);
+  future<bool> step = sequencer.PushBack(name);
   auto timer_promise = std::make_shared<
       promise<StatusOr<std::chrono::system_clock::time_point>>>(
       [&cancelled_timers] { ++cancelled_timers; });
-  auto timer_future = timer_promise->get_future();
+  future<StatusOr<std::chrono::system_clock::time_point>> timer_future =
+      timer_promise->get_future();
   step.then([timer_promise](future<bool> f) mutable {
     if (!f.get()) {
       timer_promise->set_value(
@@ -851,7 +853,7 @@ struct ParkedReadState {
 
 std::unique_ptr<BidiReadStream> MakeParkedStreamWithStart(
     std::function<future<bool>()> on_start, std::int64_t generation,
-    std::atomic<int>* cancel_count = nullptr) {
+    std::atomic<int>* cancel_count) {
   using Response = google::storage::v2::BidiReadObjectResponse;
   auto stream = std::make_unique<NiceMock<MockStream>>();
   auto parked = std::make_shared<ParkedReadState>();
@@ -884,6 +886,11 @@ std::unique_ptr<BidiReadStream> MakeParkedStreamWithStart(
   return std::unique_ptr<BidiReadStream>(std::move(stream));
 }
 
+std::unique_ptr<BidiReadStream> MakeImmediateStream(std::int64_t generation) {
+  return MakeParkedStreamWithStart([] { return make_ready_future(true); },
+                                   generation, nullptr);
+}
+
 google::storage::v2::BidiReadObjectSpec MakeTestReadSpec() {
   google::storage::v2::BidiReadObjectSpec spec;
   spec.set_bucket("projects/_/buckets/test-bucket");
@@ -894,6 +901,10 @@ google::storage::v2::BidiReadObjectSpec MakeTestReadSpec() {
 
 class OpenHedgingTest : public ::testing::Test {
  protected:
+  using OpenResult =
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>;
+  using OpenFuture = future<OpenResult>;
+
   void ExpectMetrics(int dispatched, int won) {
     metrics_ = InstallMockHedgeMetrics(dispatched, won);
   }
@@ -903,15 +914,15 @@ class OpenHedgingTest : public ::testing::Test {
       EXPECT_CALL(*mock_cq_, MakeRelativeTimer).Times(0);
       return;
     }
-    auto const count = static_cast<int>(names.size());
+    std::size_t const count = names.size();
     EXPECT_CALL(*mock_cq_, MakeRelativeTimer)
-        .Times(count)
+        .Times(static_cast<int>(count))
         .WillRepeatedly(
             [this, names = std::move(names)](std::chrono::nanoseconds d) {
-              auto const idx = timer_delays_.size();
+              std::size_t const idx = timer_delays_.size();
               timer_delays_.push_back(
                   std::chrono::duration_cast<std::chrono::milliseconds>(d));
-              auto const name =
+              std::string const name =
                   idx < names.size() ? names[idx] : std::string("ExtraTimer");
               return MakeSequencedTimer(sequencer_, name, cancelled_timers_);
             });
@@ -923,23 +934,20 @@ class OpenHedgingTest : public ::testing::Test {
     return std::move(p);
   }
 
-  std::unique_ptr<BidiReadStream> MakeImmediateStream(
-      std::int64_t generation, std::atomic<int>* cancel_count = nullptr) {
-    return MakeParkedStreamWithStart([] { return make_ready_future(true); },
-                                     generation, cancel_count);
-  }
-
-  std::unique_ptr<BidiReadStream> MakeSequencedStream(
-      std::string step, std::int64_t generation,
-      std::atomic<int>* cancel_count = nullptr) {
+  std::unique_ptr<BidiReadStream> MakeSequencedStream(std::string step,
+                                                      std::int64_t generation) {
     return MakeParkedStreamWithStart(
         [this, s = std::move(step)] { return sequencer_.PushBack(s); },
-        generation, cancel_count);
+        generation, nullptr);
+  }
+
+  std::unique_ptr<BidiReadStream> MakeStalledStream(std::string start_step) {
+    return MakeStalledStream(std::move(start_step), "", nullptr);
   }
 
   std::unique_ptr<BidiReadStream> MakeStalledStream(
-      std::string start_step, std::string finish_step = "",
-      std::atomic<int>* cancel_count = nullptr) {
+      std::string start_step, std::string finish_step,
+      std::atomic<int>* cancel_count) {
     auto stream = std::make_unique<NiceMock<MockStream>>();
     EXPECT_CALL(*stream, Start).WillOnce([this, s = std::move(start_step)] {
       return sequencer_.PushBack(s);
@@ -972,27 +980,26 @@ class OpenHedgingTest : public ::testing::Test {
     return std::unique_ptr<BidiReadStream>(std::move(stream));
   }
 
-  std::shared_ptr<AsyncConnectionImpl> MakeConnection(Options opts,
-                                                      bool disable_mso = true) {
-    if (disable_mso) {
-      opts = internal::MergeOptions(
-          std::move(opts),
-          Options{}.set<storage::EnableMultiStreamOptimizationOption>(false));
-    }
+  std::shared_ptr<AsyncConnectionImpl> MakeConnection(Options opts) {
+    opts = internal::MergeOptions(
+        std::move(opts),
+        Options{}.set<storage::EnableMultiStreamOptimizationOption>(false));
     return std::make_shared<AsyncConnectionImpl>(
         CompletionQueue(mock_cq_), std::shared_ptr<GrpcChannelRefresh>(),
         mock_stub_, TestOptions(std::move(opts)));
   }
 
-  static auto Open(std::shared_ptr<AsyncConnectionImpl> const& conn,
-                   Options opts) {
+  static OpenFuture Open(std::shared_ptr<AsyncConnectionImpl> const& conn,
+                         Options opts) {
     return conn->Open({MakeTestReadSpec(), std::move(opts)});
   }
 
-  static auto Open(std::shared_ptr<AsyncConnectionImpl> const& conn) {
+  static OpenFuture Open(std::shared_ptr<AsyncConnectionImpl> const& conn) {
     return Open(conn, conn->options());
   }
 
+  // Every step pushed onto `sequencer_` must be popped and resolved before
+  // teardown (un-drained futures terminate in `-fno-exceptions` builds).
   AsyncSequencer<bool> sequencer_;
   std::atomic<int> cancelled_timers_{0};
   std::vector<std::chrono::milliseconds> timer_delays_;
@@ -1004,38 +1011,39 @@ class OpenHedgingTest : public ::testing::Test {
 };
 
 TEST_F(OpenHedgingTest, GatingAndPerCallOverrides) {
-  EXPECT_CALL(*mock_stub_, AsyncBidiReadObject).Times(4).WillRepeatedly([this] {
+  EXPECT_CALL(*mock_stub_, AsyncBidiReadObject).Times(4).WillRepeatedly([] {
     return MakeImmediateStream(42);
   });
   ExpectHedgeTimers({});
 
   // 1. Disabled by default.
-  auto disabled_conn = MakeConnection(Options{});
-  auto res1 = Open(disabled_conn).get();
+  std::shared_ptr<AsyncConnectionImpl> disabled_conn =
+      MakeConnection(Options{});
+  OpenResult res1 = Open(disabled_conn).get();
   ASSERT_THAT(res1, IsOkAndHolds(NotNull()));
   res1->reset();
 
   // 2. Per-call `EnableReadHedgingOption(true)` without client-level opt-in is
   //    a no-op because `hedge_limiter_` is only allocated at client creation.
-  auto per_call_enable = disabled_conn->options();
+  Options per_call_enable = disabled_conn->options();
   per_call_enable.set<storage_experimental::EnableReadHedgingOption>(true);
-  auto res2 = Open(disabled_conn, std::move(per_call_enable)).get();
+  OpenResult res2 = Open(disabled_conn, std::move(per_call_enable)).get();
   ASSERT_THAT(res2, IsOkAndHolds(NotNull()));
   res2->reset();
 
   // 3 & 4. Client enabled, suppressed per-call via `EnableReadHedgingOption`
   //        or `MaxReadHedgesOption(0)`.
-  auto enabled_conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> enabled_conn = MakeConnection(
       Options{}.set<storage_experimental::EnableReadHedgingOption>(true));
-  auto disable_flag = enabled_conn->options();
+  Options disable_flag = enabled_conn->options();
   disable_flag.set<storage_experimental::EnableReadHedgingOption>(false);
-  auto res3 = Open(enabled_conn, std::move(disable_flag)).get();
+  OpenResult res3 = Open(enabled_conn, std::move(disable_flag)).get();
   ASSERT_THAT(res3, IsOkAndHolds(NotNull()));
   res3->reset();
 
-  auto disable_zero = enabled_conn->options();
+  Options disable_zero = enabled_conn->options();
   disable_zero.set<storage_experimental::MaxReadHedgesOption>(0);
-  auto res4 = Open(enabled_conn, std::move(disable_zero)).get();
+  OpenResult res4 = Open(enabled_conn, std::move(disable_zero)).get();
   ASSERT_THAT(res4, IsOkAndHolds(NotNull()));
   res4->reset();
 }
@@ -1046,25 +1054,24 @@ TEST_F(OpenHedgingTest, FastPrimaryCancelsTimer) {
   // stream does NOT arm a second hedge timer.
   EXPECT_CALL(*mock_stub_, AsyncBidiReadObject)
       .WillOnce([this] { return MakeSequencedStream("PrimaryStart", 101); })
-      .WillOnce([this] { return MakeImmediateStream(101); });
+      .WillOnce([] { return MakeImmediateStream(101); });
   ExpectHedgeTimers({"HedgeTimer1"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage::EnableMultiStreamOptimizationOption>(true)
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::ReadHedgeDelayOption>(
               std::chrono::milliseconds(250))
-          .set<storage_experimental::MaxReadHedgesOption>(2),
-      /*disable_mso=*/false);
+          .set<storage_experimental::MaxReadHedgesOption>(2));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
-  auto timer1 = PopStep("HedgeTimer1");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
+  promise<bool> timer1 = PopStep("HedgeTimer1");
   EXPECT_THAT(timer_delays_, ElementsAre(std::chrono::milliseconds(250)));
 
   primary_start.set_value(true);
-  auto result = pending.get();
+  OpenResult result = pending.get();
   ASSERT_THAT(result, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*result)->metadata()->generation(), 101);
   EXPECT_EQ(cancelled_timers_.load(), 1);
@@ -1092,9 +1099,9 @@ TEST_F(OpenHedgingTest, SlowPrimaryHedgeWinsAndResumeIsUnhedged) {
           return sequencer_.PushBack("HedgeStart");
         });
         ON_CALL(*stream, Write)
-            .WillByDefault([](auto const&, grpc::WriteOptions) {
-              return make_ready_future(true);
-            });
+            .WillByDefault(
+                [](google::storage::v2::BidiReadObjectRequest const&,
+                   grpc::WriteOptions) { return make_ready_future(true); });
         ON_CALL(*stream, Read)
             .WillByDefault(InvokeWithoutArgs([this, n = 0]() mutable {
               if (n++ == 0) {
@@ -1119,7 +1126,7 @@ TEST_F(OpenHedgingTest, SlowPrimaryHedgeWinsAndResumeIsUnhedged) {
   // Only 2 timers for `max_hedges = 2`; background resume must not arm any.
   ExpectHedgeTimers({"HedgeTimer1", "HedgeTimer2"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage::ResumePolicyOption>(
               storage::LimitedErrorCountResumePolicy(1))
@@ -1128,18 +1135,18 @@ TEST_F(OpenHedgingTest, SlowPrimaryHedgeWinsAndResumeIsUnhedged) {
               std::chrono::milliseconds(100))
           .set<storage_experimental::MaxReadHedgesOption>(2));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
-  auto timer1 = PopStep("HedgeTimer1");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
+  promise<bool> timer1 = PopStep("HedgeTimer1");
 
   timer1.set_value(true);
-  auto hedge_start = PopStep("HedgeStart");
-  auto timer2 = PopStep("HedgeTimer2");
+  promise<bool> hedge_start = PopStep("HedgeStart");
+  promise<bool> timer2 = PopStep("HedgeTimer2");
 
   hedge_start.set_value(true);
-  auto hedge_stream_end = PopStep("HedgeStreamEnd");
+  promise<bool> hedge_stream_end = PopStep("HedgeStreamEnd");
 
-  auto result = pending.get();
+  OpenResult result = pending.get();
   ASSERT_THAT(result, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*result)->metadata()->generation(), 202);
   EXPECT_EQ(primary_cancel_count.load(), 1);
@@ -1169,18 +1176,18 @@ TEST_F(OpenHedgingTest, PrimaryWinsAfterHedgeDispatched) {
       });
   ExpectHedgeTimers({"HedgeTimer1"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::MaxReadHedgesOption>(1));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
   PopStep("HedgeTimer1").set_value(true);
-  auto hedge_start = PopStep("HedgeStart");
+  promise<bool> hedge_start = PopStep("HedgeStart");
 
   primary_start.set_value(true);
-  auto result = pending.get();
+  OpenResult result = pending.get();
   ASSERT_THAT(result, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*result)->metadata()->generation(), 1);
   EXPECT_EQ(hedge_cancel_count.load(), 1);
@@ -1201,22 +1208,22 @@ TEST_P(OpenHedgingRescueTest, PrimaryTransientOrStallErrorRescuedByHedge) {
       .WillOnce([this] { return MakeSequencedStream("HedgeStart", 303); });
   ExpectHedgeTimers({"HedgeTimer1"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage::AsyncRetryPolicyOption>(
               storage::LimitedErrorCountAsyncRetryPolicy(0).clone())
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::MaxReadHedgesOption>(1));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
   PopStep("HedgeTimer1").set_value(true);
-  auto hedge_start = PopStep("HedgeStart");
+  promise<bool> hedge_start = PopStep("HedgeStart");
 
   primary_start.set_value(false);
   hedge_start.set_value(true);
 
-  auto result = pending.get();
+  OpenResult result = pending.get();
   ASSERT_THAT(result, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*result)->metadata()->generation(), 303);
   result->reset();
@@ -1241,16 +1248,16 @@ TEST_F(OpenHedgingTest, PrimaryPermanentFailureAbortsInFlightHedge) {
       });
   ExpectHedgeTimers({"HedgeTimer1", "HedgeTimer2"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::MaxReadHedgesOption>(2));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
   PopStep("HedgeTimer1").set_value(true);
-  auto hedge_start = PopStep("HedgeStart");
-  auto timer2 = PopStep("HedgeTimer2");
+  promise<bool> hedge_start = PopStep("HedgeStart");
+  promise<bool> timer2 = PopStep("HedgeTimer2");
 
   primary_start.set_value(false);
   EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
@@ -1277,17 +1284,17 @@ TEST_F(OpenHedgingTest, AllAttemptsFailReturnsPrimaryError) {
       });
   ExpectHedgeTimers({"HedgeTimer1"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage::AsyncRetryPolicyOption>(
               storage::LimitedErrorCountAsyncRetryPolicy(0).clone())
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::MaxReadHedgesOption>(1));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
   PopStep("HedgeTimer1").set_value(true);
-  auto hedge_start = PopStep("HedgeStart");
+  promise<bool> hedge_start = PopStep("HedgeStart");
 
   primary_start.set_value(false);
   hedge_start.set_value(false);
@@ -1308,16 +1315,16 @@ TEST_F(OpenHedgingTest, CallerCancelCancelsAllAttemptsAndTimer) {
       });
   ExpectHedgeTimers({"HedgeTimer1", "HedgeTimer2"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::MaxReadHedgesOption>(2));
 
-  auto pending = Open(conn);
-  auto primary_start = PopStep("PrimaryStart");
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
   PopStep("HedgeTimer1").set_value(true);
-  auto hedge_start = PopStep("HedgeStart");
-  auto timer2 = PopStep("HedgeTimer2");
+  promise<bool> hedge_start = PopStep("HedgeStart");
+  promise<bool> timer2 = PopStep("HedgeTimer2");
 
   pending.cancel();
   EXPECT_EQ(cancelled_timers_.load(), 1);
@@ -1326,8 +1333,8 @@ TEST_F(OpenHedgingTest, CallerCancelCancelsAllAttemptsAndTimer) {
   timer2.set_value(false);
   primary_start.set_value(true);
   hedge_start.set_value(true);
-  sequencer_.PopFrontWithName().first.set_value(true);
-  sequencer_.PopFrontWithName().first.set_value(true);
+  PopStep("PrimaryFinish").set_value(true);
+  PopStep("HedgeFinish").set_value(true);
 
   EXPECT_THAT(pending.get(), StatusIs(StatusCode::kCancelled));
 }
@@ -1339,15 +1346,15 @@ TEST_F(OpenHedgingTest, RespectsConcurrencyAndLifetimeLimits) {
       .WillOnce([this] { return MakeStalledStream("Call1Primary"); })
       .WillOnce([this] { return MakeStalledStream("Call2Primary"); })
       .WillOnce([this] { return MakeSequencedStream("Call1Hedge", 601); })
-      .WillOnce([this] { return MakeImmediateStream(602); })
-      .WillOnce([this] { return MakeImmediateStream(603); });
+      .WillOnce([] { return MakeImmediateStream(602); })
+      .WillOnce([] { return MakeImmediateStream(603); });
   // Call 1 arms Timer 1 and (once Hedge 1 starts) Timer 2; Call 2 arms Timer 1,
   // hits `MaxConcurrentHedgesOption(1)` -> re-arms at >= 10ms, then spends the
   // 2nd & final lifetime token so neither Call 2 nor Call 3 arms more timers.
   ExpectHedgeTimers(
       {"Call1Timer1", "Call2Timer1", "Call1Timer2", "Call2RetryTimer"});
 
-  auto conn = MakeConnection(
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
       Options{}
           .set<storage_experimental::EnableReadHedgingOption>(true)
           .set<storage_experimental::ReadHedgeDelayOption>(ms(1))
@@ -1355,27 +1362,27 @@ TEST_F(OpenHedgingTest, RespectsConcurrencyAndLifetimeLimits) {
           .set<storage_experimental::MaxConcurrentHedgesOption>(1)
           .set<storage_experimental::MaxTotalHedgesOption>(2));
 
-  auto call1 = Open(conn);
-  auto call2 = Open(conn);
-  auto c1_primary = PopStep("Call1Primary");
-  auto c1_timer1 = PopStep("Call1Timer1");
-  auto c2_primary = PopStep("Call2Primary");
-  auto c2_timer1 = PopStep("Call2Timer1");
+  OpenFuture call1 = Open(conn);
+  OpenFuture call2 = Open(conn);
+  promise<bool> c1_primary = PopStep("Call1Primary");
+  promise<bool> c1_timer1 = PopStep("Call1Timer1");
+  promise<bool> c2_primary = PopStep("Call2Primary");
+  promise<bool> c2_timer1 = PopStep("Call2Timer1");
 
   // Call 1 acquires the single concurrency slot (total 1/2) and arms Timer 2.
   c1_timer1.set_value(true);
-  auto c1_hedge = PopStep("Call1Hedge");
-  auto c1_timer2 = PopStep("Call1Timer2");
+  promise<bool> c1_hedge = PopStep("Call1Hedge");
+  promise<bool> c1_timer2 = PopStep("Call1Timer2");
 
   // Call 2 is denied by `MaxConcurrentHedgesOption(1)` and re-arms at 10ms.
   c2_timer1.set_value(true);
-  auto c2_retry = PopStep("Call2RetryTimer");
+  promise<bool> c2_retry = PopStep("Call2RetryTimer");
   EXPECT_THAT(timer_delays_, ElementsAre(ms(1), ms(1), ms(1), ms(10)));
 
   // Finishing Call 1's hedge releases the concurrency slot before
   // `call1.get()`.
   c1_hedge.set_value(true);
-  auto res1 = call1.get();
+  OpenResult res1 = call1.get();
   ASSERT_THAT(res1, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*res1)->metadata()->generation(), 601);
   c1_timer2.set_value(false);
@@ -1383,11 +1390,11 @@ TEST_F(OpenHedgingTest, RespectsConcurrencyAndLifetimeLimits) {
   // Call 2's retry timer acquires the freed slot and spends total budget (2/2),
   // so no further timer is armed on Call 2 or on subsequent Call 3.
   c2_retry.set_value(true);
-  auto res2 = call2.get();
+  OpenResult res2 = call2.get();
   ASSERT_THAT(res2, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*res2)->metadata()->generation(), 602);
 
-  auto res3 = Open(conn).get();
+  OpenResult res3 = Open(conn).get();
   ASSERT_THAT(res3, IsOkAndHolds(NotNull()));
   EXPECT_EQ((*res3)->metadata()->generation(), 603);
 
@@ -1399,6 +1406,8 @@ TEST_F(OpenHedgingTest, RespectsConcurrencyAndLifetimeLimits) {
 }
 
 TEST(AsyncConnectionImplTest, OpenHedgingConcurrentCompletionRace) {
+  using OpenResult =
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>;
   for (int iter = 0; iter != 25; ++iter) {
     std::mutex gate_mu;
     std::condition_variable gate_cv;
@@ -1408,7 +1417,7 @@ TEST(AsyncConnectionImplTest, OpenHedgingConcurrentCompletionRace) {
     std::vector<std::thread> workers;
     workers.reserve(2);
 
-    auto make_racing_stream = [&](std::int64_t generation) {
+    auto const make_racing_stream = [&](std::int64_t generation) {
       auto start_promise = std::make_shared<promise<bool>>();
       auto start_future =
           std::make_shared<future<bool>>(start_promise->get_future());
@@ -1448,16 +1457,17 @@ TEST(AsyncConnectionImplTest, OpenHedgingConcurrentCompletionRace) {
                 .set<storage_experimental::EnableReadHedgingOption>(true)
                 .set<storage_experimental::MaxReadHedgesOption>(1)));
 
-    auto pending = conn->Open({MakeTestReadSpec(), conn->options()});
+    future<OpenResult> pending =
+        conn->Open({MakeTestReadSpec(), conn->options()});
     {
       std::unique_lock<std::mutex> lock(gate_mu);
       gate_cv.wait(lock, [&] { return ready_workers == 2; });
       release_workers = true;
     }
     gate_cv.notify_all();
-    for (auto& w : workers) w.join();
+    for (std::thread& w : workers) w.join();
 
-    auto result = pending.get();
+    OpenResult result = pending.get();
     ASSERT_THAT(result, IsOkAndHolds(NotNull()));
     EXPECT_THAT((*result)->metadata()->generation(),
                 ::testing::AnyOf(::testing::Eq(1), ::testing::Eq(2)));

@@ -113,7 +113,8 @@ class HedgeLimiter {
   }
 
   void Refill() {
-    auto const now = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point const now =
+        std::chrono::steady_clock::now();
     double const elapsed =
         std::chrono::duration_cast<std::chrono::duration<double>>(now -
                                                                   last_refill_)

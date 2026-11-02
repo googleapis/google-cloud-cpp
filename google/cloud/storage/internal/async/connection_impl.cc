@@ -65,6 +65,7 @@
 #include <opentelemetry/metrics/provider.h>
 #include <algorithm>
 #include <chrono>
+#include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <mutex>
@@ -246,7 +247,7 @@ class HedgedOpenOperation
         retry_policy_(std::move(retry_policy)),
         hedge_delay_(
             (std::max)(std::chrono::milliseconds::zero(), hedge_delay)),
-        max_hedges_(max_hedges),
+        max_hedges_((std::max)(0, max_hedges)),
         limiter_(std::move(limiter)),
         metrics_(std::move(metrics)),
         call_context_(std::move(options)) {
@@ -256,12 +257,13 @@ class HedgedOpenOperation
   future<StatusOr<OpenStreamResult>> Start() {
     std::weak_ptr<HedgedOpenOperation> weak = shared_from_this();
     result_promise_ = promise<StatusOr<OpenStreamResult>>([weak] {
-      if (auto self = weak.lock()) {
+      if (std::shared_ptr<HedgedOpenOperation> self = weak.lock()) {
         google::cloud::internal::ScopedCallContext scope(self->call_context_);
         self->OnCallerCancel();
       }
     });
-    auto result_future = result_promise_.get_future();
+    future<StatusOr<OpenStreamResult>> result_future =
+        result_promise_.get_future();
 
     std::uint64_t attempt_id = 0;
     std::uint64_t timer_gen = 0;
@@ -321,7 +323,7 @@ class HedgedOpenOperation
           limiter_.get(), [l = limiter_](void*) { l->ReleaseHedgeSlot(); });
     }
     google::cloud::internal::ScopedCallContext scope(call_context_);
-    auto self = shared_from_this();
+    std::shared_ptr<HedgedOpenOperation> self = shared_from_this();
     return factory_(initial_request_)
         .then([self = std::move(self), slot_guard = std::move(slot_guard),
                attempt_id,
@@ -345,10 +347,11 @@ class HedgedOpenOperation
   }
 
   void RemoveAttemptLocked(std::uint64_t attempt_id) {
-    auto it = std::find_if(
-        attempts_.begin(), attempts_.end(),
-        [attempt_id](AttemptEntry const& e) { return e.id == attempt_id; });
-    if (it != attempts_.end()) attempts_.erase(it);
+    attempts_.erase(std::remove_if(attempts_.begin(), attempts_.end(),
+                                   [attempt_id](AttemptEntry const& e) {
+                                     return e.id == attempt_id;
+                                   }),
+                    attempts_.end());
   }
 
   void ArmTimer(std::uint64_t timer_gen, std::chrono::milliseconds delay) {
@@ -362,7 +365,7 @@ class HedgedOpenOperation
     future<void> timer = cq_.MakeRelativeTimer(delay).then(
         [weak,
          timer_gen](future<StatusOr<std::chrono::system_clock::time_point>> f) {
-          if (auto self = weak.lock()) {
+          if (std::shared_ptr<HedgedOpenOperation> self = weak.lock()) {
             self->OnTimer(timer_gen, f.get().ok());
           }
         });
