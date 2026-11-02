@@ -606,6 +606,126 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
 }
 
+/// @test Verify that streaming RPC errors during execution are surfaced
+/// rather than masked as uncommitted rows.
+TEST(PartialResultSetSourceTest, StreamErrorWithUncommittedRows) {
+  auto operation_context = std::make_shared<OperationContext>();
+
+  constexpr char const* kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+  constexpr char const* kProtoRowsText = R"pb(
+    values { string_value: "r1" }
+  )pb";
+  google::bigtable::v2::ProtoRows proto_rows;
+  ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  std::uint32_t const correct_checksum =
+      static_cast<std::uint32_t>(bigtable_internal::Crc32c(binary_batch_data));
+  std::string partial_result_set_text =
+      absl::Substitute(R"pb(
+                         proto_rows_batch: {
+                           batch_data: "$0",
+                         },
+                         reset: true,
+                         estimated_batch_size: 31,
+                         batch_checksum: $1
+                       )pb",
+                       binary_batch_data, correct_checksum);
+  google::bigtable::v2::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(partial_result_set_text, &response));
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](std::optional<std::string> const&,
+                            UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish())
+      .WillOnce(ResultMock(Status(StatusCode::kUnavailable, "try-again")));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
+      CreatePartialResultSetSource(metadata, std::move(operation_context),
+                                   std::move(grpc_reader));
+  ASSERT_THAT(reader, IsOk());
+  EXPECT_THAT((*reader)->NextRow(),
+              StatusIs(StatusCode::kUnavailable, "try-again"));
+}
+
+/// @test Verify that a stream cleanly ending with uncommitted rows produces an
+/// INTERNAL error.
+TEST(PartialResultSetSourceTest, UncommittedRowsAtCleanEndOfStream) {
+  auto operation_context = std::make_shared<OperationContext>();
+
+  constexpr char const* kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+  constexpr char const* kProtoRowsText = R"pb(
+    values { string_value: "r1" }
+  )pb";
+  google::bigtable::v2::ProtoRows proto_rows;
+  ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  std::uint32_t const correct_checksum =
+      static_cast<std::uint32_t>(bigtable_internal::Crc32c(binary_batch_data));
+  std::string partial_result_set_text =
+      absl::Substitute(R"pb(
+                         proto_rows_batch: {
+                           batch_data: "$0",
+                         },
+                         reset: true,
+                         estimated_batch_size: 31,
+                         batch_checksum: $1
+                       )pb",
+                       binary_batch_data, correct_checksum);
+  google::bigtable::v2::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(partial_result_set_text, &response));
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](std::optional<std::string> const&,
+                            UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
+      CreatePartialResultSetSource(metadata, std::move(operation_context),
+                                   std::move(grpc_reader));
+  ASSERT_THAT(reader, IsOk());
+  EXPECT_THAT(
+      (*reader)->NextRow(),
+      StatusIs(StatusCode::kInternal, "Stream ended with uncommitted rows."));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

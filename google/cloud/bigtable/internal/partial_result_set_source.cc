@@ -149,7 +149,8 @@ Status PartialResultSetSource::ReadFromStream() {
       return internal::InternalError(
           "Query plan expired during a retry attempt", GCP_ERROR_INFO());
     }
-  } else if (!buffered_rows_.empty() || !read_buffer_.empty()) {
+  } else if (last_status_.ok() &&
+             (!buffered_rows_.empty() || !read_buffer_.empty())) {
     // buffered_rows_ and read_buffer_ are expected to be empty because the last
     // successful read would have had a sentinel resume_token, causing
     // ProcessDataFromStream to commit them.

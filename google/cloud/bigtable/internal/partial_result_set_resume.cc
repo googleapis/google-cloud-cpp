@@ -27,7 +27,7 @@ bool PartialResultSetResume::Read(
     std::optional<std::string> const& resume_token,
     UnownedPartialResultSet& result) {
   bool resumption = false;
-  do {
+  for (;;) {
     if (reader_->Read(resume_token, result)) {
       // Let the caller know if we recreated the PartialResultSetReader using
       // the resume_token so that they might discard any previous results that
@@ -49,10 +49,11 @@ bool PartialResultSetResume::Read(
       return false;
     }
     std::this_thread::sleep_for(backoff_policy_->OnCompletion());
+    if (retry_policy_->IsExhausted()) break;
     resumption = true;
     last_status_.reset();
     reader_ = factory_(*resume_token);
-  } while (!retry_policy_->IsExhausted());
+  }
   if (last_status_) {
     last_status_ = internal::RetryLoopError(*last_status_, __func__,
                                             retry_policy_->IsExhausted());
