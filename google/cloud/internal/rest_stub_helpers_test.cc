@@ -22,6 +22,7 @@
 #include "google/protobuf/timestamp.pb.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <cstdint>
 #include <string>
 #include <utility>
 
@@ -573,6 +574,174 @@ TEST(DetermineApiVersion, TargetApiVersionOptionPresent) {
 TEST(DetermineApiVersion, TargetApiVersionOptionNotPresent) {
   Options options;
   EXPECT_THAT(DetermineApiVersion("v1", options), Eq("v1"));
+}
+
+TEST(EncodePath, EmptyArgumentsAndEmptySegments) {
+  EXPECT_THAT(EncodePath(), IsOkAndHolds(Eq("/")));
+  EXPECT_THAT(EncodePath(""), IsOkAndHolds(Eq("/")));
+  EXPECT_THAT(EncodePath("v1", "", "items"), IsOkAndHolds(Eq("/v1//items")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment("")),
+              IsOkAndHolds(Eq("/v1/")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment(""), "items"),
+              IsOkAndHolds(Eq("/v1//items")));
+}
+
+TEST(EncodePath, SingleSegmentPreservesUnescapedAndEncodesReservedChars) {
+  EXPECT_THAT(EncodePath("abcXYZ019-_.~"), IsOkAndHolds(Eq("/abcXYZ019-_.~")));
+  EXPECT_THAT(EncodePath("my.txt"), IsOkAndHolds(Eq("/my.txt")));
+  EXPECT_THAT(EncodePath("my..file.txt"), IsOkAndHolds(Eq("/my..file.txt")));
+  EXPECT_THAT(EncodePath(".hidden"), IsOkAndHolds(Eq("/.hidden")));
+  EXPECT_THAT(EncodePath("..hidden"), IsOkAndHolds(Eq("/..hidden")));
+  EXPECT_THAT(EncodePath("a:b"), IsOkAndHolds(Eq("/a%3Ab")));
+  EXPECT_THAT(EncodePath("my-instance?$httpMethod=DELETE"),
+              IsOkAndHolds(Eq("/my-instance%3F%24httpMethod%3DDELETE")));
+  EXPECT_THAT(EncodePath("my-session#fragment"),
+              IsOkAndHolds(Eq("/my-session%23fragment")));
+  EXPECT_THAT(EncodePath("doc with space"),
+              IsOkAndHolds(Eq("/doc%20with%20space")));
+  EXPECT_THAT(EncodePath("%2e%2e"), IsOkAndHolds(Eq("/%252e%252e")));
+  EXPECT_THAT(EncodePath("v1", "projects", "my-project", "backupRuns",
+                         std::int64_t{42}),
+              IsOkAndHolds(Eq("/v1/projects/my-project/backupRuns/42")));
+}
+
+TEST(EncodePath, SingleSegmentRejectsDotsAndSlashes) {
+  EXPECT_THAT(EncodePath("."), StatusIs(StatusCode::kInvalidArgument,
+                                        Eq("Invalid URI path segment \".\".")));
+  EXPECT_THAT(EncodePath(".."),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI path segment \"..\".")));
+  EXPECT_THAT(EncodePath("a/b"),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI path segment \"a/b\".")));
+  EXPECT_THAT(EncodePath("../other_disk_traversal"),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI path segment "
+                          "\"../other_disk_traversal\".")));
+  EXPECT_THAT(EncodePath("valid-instance/../target-instance"),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI path segment "
+                          "\"valid-instance/../target-instance\".")));
+}
+
+TEST(EncodePath, MultiSegmentPreservesSlashesAndEncodesReservedChars) {
+  EXPECT_THAT(
+      EncodePath(
+          "v1",
+          PathPiece::MultiSegment(
+              "projects/my-project/locations/us-central1?$httpMethod=DELETE"),
+          "logs"),
+      IsOkAndHolds(Eq("/v1/projects/my-project/locations/"
+                      "us-central1%3F%24httpMethod%3DDELETE/logs")));
+  EXPECT_THAT(
+      EncodePath("v1",
+                 PathPiece::MultiSegment(
+                     "projects/sys-prod-123/databases/default/documents/%2e%2e/"
+                     "escape-db")),
+      IsOkAndHolds(Eq("/v1/projects/sys-prod-123/databases/default/documents/"
+                      "%252e%252e/escape-db")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment(
+                                   "projects/my-project/items/a:b")),
+              IsOkAndHolds(Eq("/v1/projects/my-project/items/a%3Ab")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment("/a/b")),
+              IsOkAndHolds(Eq("/v1//a/b")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment("a/b/")),
+              IsOkAndHolds(Eq("/v1/a/b/")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment("a//b")),
+              IsOkAndHolds(Eq("/v1/a//b")));
+}
+
+TEST(EncodePath, MultiSegmentRejectsDotAndDoubleDotSegments) {
+  EXPECT_THAT(EncodePath(PathPiece::MultiSegment(".")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("URI path piece \".\" must not contain segments that "
+                          "are \".\" or \"..\".")));
+  EXPECT_THAT(EncodePath(PathPiece::MultiSegment("..")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("URI path piece \"..\" must not contain segments "
+                          "that are \".\" or \"..\".")));
+  EXPECT_THAT(EncodePath(PathPiece::MultiSegment("/..")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("URI path piece \"/..\" must not contain segments "
+                          "that are \".\" or \"..\".")));
+  EXPECT_THAT(EncodePath(PathPiece::MultiSegment("../")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("URI path piece \"../\" must not contain segments "
+                          "that are \".\" or \"..\".")));
+  EXPECT_THAT(EncodePath(PathPiece::MultiSegment("../other_disk_traversal")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("URI path piece \"../other_disk_traversal\" must not "
+                          "contain segments that are \".\" or \"..\".")));
+  EXPECT_THAT(
+      EncodePath(PathPiece::MultiSegment("valid-instance/../target-instance")),
+      StatusIs(StatusCode::kInvalidArgument,
+               Eq("URI path piece \"valid-instance/../target-instance\" must "
+                  "not contain segments that are \".\" or \"..\".")));
+  EXPECT_THAT(
+      EncodePath(PathPiece::MultiSegment("projects/my-project/locations/.")),
+      StatusIs(StatusCode::kInvalidArgument,
+               Eq("URI path piece \"projects/my-project/locations/.\" must not "
+                  "contain segments that are \".\" or \"..\".")));
+  EXPECT_THAT(
+      EncodePath(PathPiece::MultiSegment("projects/my-project/locations/..")),
+      StatusIs(StatusCode::kInvalidArgument,
+               Eq("URI path piece \"projects/my-project/locations/..\" must "
+                  "not contain segments that are \".\" or \"..\".")));
+  EXPECT_THAT(
+      EncodePath(PathPiece::MultiSegment("projects/./locations/us-central1")),
+      StatusIs(StatusCode::kInvalidArgument,
+               Eq("URI path piece \"projects/./locations/us-central1\" must "
+                  "not contain segments that are \".\" or \"..\".")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment("operations/.."),
+                         PathPiece::Verb("cancel")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("URI path piece \"operations/..\" must not contain "
+                          "segments that are \".\" or \"..\".")));
+}
+
+TEST(EncodePath, VerbPrependsColonAndRejectsInvalidVerbs) {
+  EXPECT_THAT(EncodePath("v1", PathPiece::MultiSegment("operations/op-123"),
+                         PathPiece::Verb("cancel")),
+              IsOkAndHolds(Eq("/v1/operations/op-123:cancel")));
+  EXPECT_THAT(EncodePath("v1", "items", PathPiece::Verb("cancel?foo=bar")),
+              IsOkAndHolds(Eq("/v1/items:cancel%3Ffoo%3Dbar")));
+  EXPECT_THAT(EncodePath(PathPiece::Verb("cancel")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI custom verb \"cancel\".")));
+  EXPECT_THAT(EncodePath("v1", PathPiece::Verb("cancel"), "extra"),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI custom verb \"cancel\".")));
+  EXPECT_THAT(EncodePath("v1", "items", PathPiece::Verb("")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI custom verb \"\".")));
+  EXPECT_THAT(EncodePath("v1", "items", PathPiece::Verb(".")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI custom verb \".\".")));
+  EXPECT_THAT(EncodePath("v1", "items", PathPiece::Verb("..")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI custom verb \"..\".")));
+  EXPECT_THAT(EncodePath("v1", "items", PathPiece::Verb("cancel/extra")),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI custom verb \"cancel/extra\".")));
+}
+
+TEST(EncodePath, ConcatenatesValidPiecesAndReturnsFirstError) {
+  EXPECT_THAT(EncodePath("v1", "projects", "my-project", "regions",
+                         "us-central1", "addresses"),
+              IsOkAndHolds(
+                  Eq("/v1/projects/my-project/regions/us-central1/addresses")));
+
+  EXPECT_THAT(
+      EncodePath("compute", "v1", "projects", "my-project", "zones",
+                 "us-central1-a", "operations", "op-123",
+                 PathPiece::Verb("cancel")),
+      IsOkAndHolds(
+          Eq("/compute/v1/projects/my-project/zones/us-central1-a/operations/"
+             "op-123:cancel")));
+
+  EXPECT_THAT(EncodePath("v1", "projects", ".", "regions", "..", "addresses"),
+              StatusIs(StatusCode::kInvalidArgument,
+                       Eq("Invalid URI path segment \".\".")));
 }
 
 }  // namespace

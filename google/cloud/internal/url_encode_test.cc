@@ -26,21 +26,21 @@ TEST(UrlEncode, Simple) {
 
   auto result = UrlEncode(unencoded_string);
 
-  auto const* encoded_string = "projects%2F*%2Fresource%2F*";
+  auto const* encoded_string = "projects%2F%2A%2Fresource%2F%2A";
   EXPECT_THAT(result, encoded_string);
 }
 
 TEST(UrlEncode, MultipleReplacements) {
-  auto const* unencoded_string = R"( "#$%&+,/:;<)"
+  auto const* unencoded_string = R"( !"#$%&'()*+,/:;<)"
                                  R"(=>?@[\]^`{|})"
-                                 "\177abcdABCD123";
+                                 "\177abcdABCD123-_.~";
 
   auto result = UrlEncode(unencoded_string);
 
   auto const* encoded_string =
-      "%20%22%23%24%25%26%2B%2C%2F%3A%3B%3C"
+      "%20%21%22%23%24%25%26%27%28%29%2A%2B%2C%2F%3A%3B%3C"
       "%3D%3E%3F%40%5B%5C%5D%5E%60%7B%7C%7D"
-      "%7FabcdABCD123";
+      "%7FabcdABCD123-_.~";
   EXPECT_THAT(result, encoded_string);
 }
 
@@ -53,8 +53,18 @@ TEST(UrlEncode, NotStdIsPrint) {
   EXPECT_THAT(result, encoded_string);
 }
 
+TEST(UrlEncode, HighBitBytes) {
+  absl::string_view constexpr kUnencodedString = "\x80\xC3\xA9\xFF";
+
+  std::string const result = UrlEncode(kUnencodedString);
+
+  absl::string_view constexpr kEncodedString = "%80%C3%A9%FF";
+  EXPECT_THAT(result, ::testing::Eq(kEncodedString));
+  EXPECT_THAT(UrlDecode(result), ::testing::Eq(kUnencodedString));
+}
+
 TEST(UrlDecode, Simple) {
-  auto const* encoded_string = "projects%2F*%2Fresource%2F*";
+  auto const* encoded_string = "projects%2F%2A%2Fresource%2F%2A";
 
   auto result = UrlDecode(encoded_string);
 
@@ -64,15 +74,15 @@ TEST(UrlDecode, Simple) {
 
 TEST(UrlDecode, MultipleReplacements) {
   auto const* encoded_string =
-      "%20%22%23%24%25%26%2B%2C%2F%3A%3B%3C"
+      "%20%21%22%23%24%25%26%27%28%29%2A%2B%2C%2F%3A%3B%3C"
       "%3D%3E%3F%40%5B%5C%5D%5E%60%7B%7C%7D"
-      "%7FabcdABCD123";
+      "%7FabcdABCD123-_.~";
 
   auto result = UrlDecode(encoded_string);
 
-  auto const* unencoded_string = R"( "#$%&+,/:;<)"
+  auto const* unencoded_string = R"( !"#$%&'()*+,/:;<)"
                                  R"(=>?@[\]^`{|})"
-                                 "\177abcdABCD123";
+                                 "\177abcdABCD123-_.~";
   EXPECT_THAT(result, unencoded_string);
 }
 

@@ -14,11 +14,61 @@
 
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/url_encode.h"
+#include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+bool IsInvalidSingleSegment(std::string_view value) {
+  return value == "." || value == ".." || absl::StrContains(value, '/');
+}
+
+}  // namespace
+
+StatusOr<std::string> EncodePathImpl(std::initializer_list<PathPiece> pieces) {
+  if (pieces.size() == 0) return std::string("/");
+  std::string result;
+  for (auto const* it = pieces.begin(); it != pieces.end(); ++it) {
+    PathPiece const& piece = *it;
+    switch (piece.kind()) {
+      case PathPiece::EncodingKind::kSingleSegment:
+        if (IsInvalidSingleSegment(piece.value())) {
+          return internal::InvalidArgumentError(
+              absl::StrCat("Invalid URI path segment \"", piece.value(), "\"."),
+              GCP_ERROR_INFO());
+        }
+        absl::StrAppend(&result, "/", internal::UrlEncode(piece.value()));
+        break;
+      case PathPiece::EncodingKind::kMultiSegment:
+        for (std::string_view segment : absl::StrSplit(piece.value(), '/')) {
+          if (segment == "." || segment == "..") {
+            return internal::InvalidArgumentError(
+                absl::StrCat("URI path piece \"", piece.value(),
+                             "\" must not contain segments that are \".\" or "
+                             "\"..\"."),
+                GCP_ERROR_INFO());
+          }
+          absl::StrAppend(&result, "/", internal::UrlEncode(segment));
+        }
+        break;
+      case PathPiece::EncodingKind::kVerb:
+        if (it == pieces.begin() || it + 1 != pieces.end() ||
+            piece.value().empty() || IsInvalidSingleSegment(piece.value())) {
+          return internal::InvalidArgumentError(
+              absl::StrCat("Invalid URI custom verb \"", piece.value(), "\"."),
+              GCP_ERROR_INFO());
+        }
+        absl::StrAppend(&result, ":", internal::UrlEncode(piece.value()));
+        break;
+    }
+  }
+  return result;
+}
 
 Status RestResponseToProto(google::protobuf::Message& destination,
                            RestResponse&& rest_response) {

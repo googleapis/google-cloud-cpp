@@ -20,7 +20,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include "google/longrunning/operations.pb.h"
 #include "google/spanner/admin/instance/v1/spanner_instance_admin.pb.h"
 #include <memory>
@@ -51,6 +50,11 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
     Options const& options,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "instanceConfigs");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -58,9 +62,7 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instanceConfigs"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -70,12 +72,14 @@ DefaultInstanceAdminRestStub::GetInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstanceConfig>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -90,12 +94,17 @@ DefaultInstanceAdminRestStub::AsyncCreateInstanceConfig(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "instanceConfigs");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "instanceConfigs"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -115,11 +124,14 @@ DefaultInstanceAdminRestStub::CreateInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "instanceConfigs");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instanceConfigs"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -134,12 +146,17 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstanceConfig(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(
+                request.instance_config().name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.instance_config().name()),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -159,11 +176,13 @@ DefaultInstanceAdminRestStub::UpdateInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.instance_config().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.instance_config().name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -172,6 +191,10 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"etag", request.etag()});
   query_params.push_back(
@@ -179,9 +202,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -192,6 +213,11 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
     Options const& options,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "instanceConfigOperations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -200,9 +226,7 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstanceConfigOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instanceConfigOperations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -211,6 +235,10 @@ DefaultInstanceAdminRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "instances");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -219,9 +247,7 @@ DefaultInstanceAdminRestStub::ListInstances(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancesResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instances"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -231,6 +257,11 @@ DefaultInstanceAdminRestStub::ListInstancePartitions(
     Options const& options,
     google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "instancePartitions");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -238,9 +269,7 @@ DefaultInstanceAdminRestStub::ListInstancePartitions(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancePartitionsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instancePartitions"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -249,11 +278,13 @@ DefaultInstanceAdminRestStub::GetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -268,12 +299,17 @@ DefaultInstanceAdminRestStub::AsyncCreateInstance(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "instances");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "instances"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -293,11 +329,13 @@ DefaultInstanceAdminRestStub::CreateInstance(
     Options const& options,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "instances");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instances"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -312,12 +350,16 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstance(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.instance().name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.instance().name()),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -337,11 +379,13 @@ DefaultInstanceAdminRestStub::UpdateInstance(
     Options const& options,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.instance().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.instance().name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -350,11 +394,13 @@ Status DefaultInstanceAdminRestStub::DeleteInstance(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -362,11 +408,14 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.resource()),
+      rest_internal::PathPiece::Verb("setIamPolicy"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::iam::v1::Policy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":setIamPolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -374,11 +423,14 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.resource()),
+      rest_internal::PathPiece::Verb("getIamPolicy"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::iam::v1::Policy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":getIamPolicy"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -387,11 +439,14 @@ DefaultInstanceAdminRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.resource()),
+      rest_internal::PathPiece::Verb("testIamPermissions"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":testIamPermissions"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -401,12 +456,14 @@ DefaultInstanceAdminRestStub::GetInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstancePartition>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -421,12 +478,17 @@ DefaultInstanceAdminRestStub::AsyncCreateInstancePartition(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.parent()),
+            "instancePartitions");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "instancePartitions"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -446,11 +508,14 @@ DefaultInstanceAdminRestStub::CreateInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "instancePartitions");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instancePartitions"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -459,14 +524,16 @@ Status DefaultInstanceAdminRestStub::DeleteInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"etag", request.etag()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -481,12 +548,17 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstancePartition(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(
+                request.instance_partition().name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.instance_partition().name()),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -506,11 +578,14 @@ DefaultInstanceAdminRestStub::UpdateInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
         request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(
+          request.instance_partition().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.instance_partition().name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -521,6 +596,11 @@ DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
     Options const& options,
     google::spanner::admin::instance::v1::
         ListInstancePartitionOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()),
+      "instancePartitionOperations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -529,9 +609,7 @@ DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstancePartitionOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instancePartitionOperations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -545,12 +623,17 @@ DefaultInstanceAdminRestStub::AsyncMoveInstance(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()),
+            rest_internal::PathPiece::Verb("move"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name(), ":move"),
+            *service, *rest_context, request, false, *std::move(path),
             std::move(query_params)));
       },
       std::move(p),
@@ -569,11 +652,14 @@ DefaultInstanceAdminRestStub::MoveInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("move"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":move"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -582,6 +668,10 @@ DefaultInstanceAdminRestStub::ListOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -589,9 +679,7 @@ DefaultInstanceAdminRestStub::ListOperations(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::longrunning::ListOperationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -600,11 +688,13 @@ DefaultInstanceAdminRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::GetOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::longrunning::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -612,11 +702,13 @@ Status DefaultInstanceAdminRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -624,11 +716,14 @@ Status DefaultInstanceAdminRestStub::CancelOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()),
+      rest_internal::PathPiece::Verb("cancel"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":cancel"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -643,11 +738,15 @@ DefaultInstanceAdminRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Get<google::longrunning::Operation>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -670,11 +769,16 @@ future<Status> DefaultInstanceAdminRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            rest_internal::DetermineApiVersion("v1", *options),
+            rest_internal::PathPiece::MultiSegment(request.name()),
+            rest_internal::PathPiece::Verb("cancel"));
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.name(), ":cancel")));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

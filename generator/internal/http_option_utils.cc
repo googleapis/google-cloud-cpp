@@ -55,6 +55,13 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
+bool IsMultiSegmentVariable(PathTemplate::Variable const& v) {
+  if (v.segments.empty()) return false;
+  if (v.segments.size() > 1) return true;
+  return std::holds_alternative<PathTemplate::MatchRecursive>(
+      v.segments.front()->value);
+}
+
 void RestPathVisitorHelper(std::optional<std::string> api_version,
                            PathTemplate::Segment const& s,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path);
@@ -79,11 +86,17 @@ struct RestPathVisitor {
         });
   }
   void operator()(PathTemplate::Variable const& v) {
+    bool const is_multi_segment = IsMultiSegmentVariable(v);
     path.emplace_back(
-        [piece = v.field_path](google::protobuf::MethodDescriptor const& method,
-                               bool) {
+        [field_name = v.field_path, is_multi_segment](
+            google::protobuf::MethodDescriptor const& method, bool) {
+          if (is_multi_segment) {
+            return absl::StrFormat(
+                "rest_internal::PathPiece::MultiSegment(request.%s())",
+                FormatFieldAccessorCall(method, field_name));
+          }
           return absl::StrFormat("request.%s()",
-                                 FormatFieldAccessorCall(method, piece));
+                                 FormatFieldAccessorCall(method, field_name));
         });
   }
   void operator()(PathTemplate::Segment const& s) {
@@ -171,21 +184,21 @@ void SetHttpDerivedMethodVars(HttpExtensionInfo const& info,
   // method_rest_path is only used for REST transport.
   auto trailer = [&info] {
     if (info.rest_path_verb.empty()) return std::string(")");
-    return absl::StrFormat(R"""(, ":%s"))""", info.rest_path_verb);
+    return absl::StrFormat(R"""(, rest_internal::PathPiece::Verb("%s")))""",
+                           info.rest_path_verb);
   };
   auto path_expression = [&info, method = &method](bool is_async) {
-    return absl::StrCat(
-        ", ", absl::StrJoin(info.rest_path, R"""(, "/", )""",
-                            [method, is_async](
-                                std::string* out,
-                                HttpExtensionInfo::RestPathPiece const& p) {
-                              out->append(p(*method, is_async));
-                            }));
+    return absl::StrJoin(
+        info.rest_path, ", ",
+        [method, is_async](std::string* out,
+                           HttpExtensionInfo::RestPathPiece const& p) {
+          out->append(p(*method, is_async));
+        });
   };
   method_vars["method_rest_path"] = absl::StrCat(
-      R"""(absl::StrCat("/")""", path_expression(false), trailer());
-  method_vars["method_rest_path_async"] =
-      absl::StrCat(R"""(absl::StrCat("/")""", path_expression(true), trailer());
+      "rest_internal::EncodePath(", path_expression(false), trailer());
+  method_vars["method_rest_path_async"] = absl::StrCat(
+      "rest_internal::EncodePath(", path_expression(true), trailer());
 }
 
 std::optional<QueryParameterInfo> DetermineQueryParameterInfo(

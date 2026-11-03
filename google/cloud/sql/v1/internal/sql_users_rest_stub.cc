@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,6 +43,10 @@ DefaultSqlUsersServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "users");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"host", request.host()});
   query_params.push_back({"name", request.name()});
@@ -51,10 +54,7 @@ DefaultSqlUsersServiceRestStub::Delete(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -62,16 +62,18 @@ StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "users",
+      request.name());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"host", request.host()});
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::User>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users", "/", request.name()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -80,15 +82,16 @@ DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "users");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -97,15 +100,16 @@ DefaultSqlUsersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "users");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"location", request.location()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -114,6 +118,10 @@ DefaultSqlUsersServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "users");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"host", request.host()});
   query_params.push_back({"name", request.name()});
@@ -126,10 +134,7 @@ DefaultSqlUsersServiceRestStub::Update(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
