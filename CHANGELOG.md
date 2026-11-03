@@ -7,7 +7,7 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.13.0 - TBD
+## v3.13.0 - 2026-11
 
 ### New Libraries
 
@@ -15,6 +15,24 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Observability API](/google/cloud/observability/README.md)
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): use the preprod Interconnect authority and warn on other authorities ([#16605](https://github.com/googleapis/google-cloud-cpp/pull/16605))
+- fix(storage): use TLS for default credentials with DirectPath over Interconnect ([#16599](https://github.com/googleapis/google-cloud-cpp/pull/16599))
+- fix(storage): apply TransferStallTimeoutOption deadline to unary gRPC calls ([#16600](https://github.com/googleapis/google-cloud-cpp/pull/16600))
+- fix(storage): gate async flush completion on sent offset instead of persisted_size ([#16596](https://github.com/googleapis/google-cloud-cpp/pull/16596))
+- fix(storage): use storage-direct.googleapis.com authority for DirectPath over Interconnect ([#16584](https://github.com/googleapis/google-cloud-cpp/pull/16584))
+- fix(storage): do not report DirectPath when gRPC falls back to DNS ([#16568](https://github.com/googleapis/google-cloud-cpp/pull/16568))
+- feat(storage): add absl::Cord accessor to ReadPayload ([#16539](https://github.com/googleapis/google-cloud-cpp/pull/16539))
+- fix(storage): require gRPC >= 1.85 for DirectPath over Interconnect ([#16556](https://github.com/googleapis/google-cloud-cpp/pull/16556))
+- fix(storage): avoid use-after-free when callback destroys async writer ([#16555](https://github.com/googleapis/google-cloud-cpp/pull/16555))
+- feat(storage): expose Object.finalize_time on ObjectMetadata ([#16558](https://github.com/googleapis/google-cloud-cpp/pull/16558))
+
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-10-20T22:25:08-07:00](https://github.com/googleapis/googleapis/tree/14a161a98ef045be80c12ab69d924504a756f109)
 
 ## v3.12.0 - 2026-10
 
