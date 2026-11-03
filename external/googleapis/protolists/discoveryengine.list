@@ -1,9 +1,14 @@
+@googleapis//google/cloud/discoveryengine/v1:acl_config.proto
+@googleapis//google/cloud/discoveryengine/v1:acl_config_service.proto
+@googleapis//google/cloud/discoveryengine/v1:agent_gateway_setting.proto
 @googleapis//google/cloud/discoveryengine/v1:answer.proto
 @googleapis//google/cloud/discoveryengine/v1:assist_answer.proto
 @googleapis//google/cloud/discoveryengine/v1:assistant.proto
 @googleapis//google/cloud/discoveryengine/v1:assistant_service.proto
 @googleapis//google/cloud/discoveryengine/v1:chunk.proto
 @googleapis//google/cloud/discoveryengine/v1:cmek_config_service.proto
+@googleapis//google/cloud/discoveryengine/v1:collection.proto
+@googleapis//google/cloud/discoveryengine/v1:collection_service.proto
 @googleapis//google/cloud/discoveryengine/v1:common.proto
 @googleapis//google/cloud/discoveryengine/v1:completion.proto
 @googleapis//google/cloud/discoveryengine/v1:completion_service.proto
@@ -12,6 +17,8 @@
 @googleapis//google/cloud/discoveryengine/v1:conversation.proto
 @googleapis//google/cloud/discoveryengine/v1:conversational_search_service.proto
 @googleapis//google/cloud/discoveryengine/v1:custom_tuning_model.proto
+@googleapis//google/cloud/discoveryengine/v1:data_connector.proto
+@googleapis//google/cloud/discoveryengine/v1:data_connector_service.proto
 @googleapis//google/cloud/discoveryengine/v1:data_store.proto
 @googleapis//google/cloud/discoveryengine/v1:data_store_service.proto
 @googleapis//google/cloud/discoveryengine/v1:document.proto
@@ -19,11 +26,15 @@
 @googleapis//google/cloud/discoveryengine/v1:document_service.proto
 @googleapis//google/cloud/discoveryengine/v1:engine.proto
 @googleapis//google/cloud/discoveryengine/v1:engine_service.proto
+@googleapis//google/cloud/discoveryengine/v1:feedback.proto
 @googleapis//google/cloud/discoveryengine/v1:grounded_generation_service.proto
 @googleapis//google/cloud/discoveryengine/v1:grounding.proto
 @googleapis//google/cloud/discoveryengine/v1:identity_mapping_store.proto
 @googleapis//google/cloud/discoveryengine/v1:identity_mapping_store_service.proto
 @googleapis//google/cloud/discoveryengine/v1:import_config.proto
+@googleapis//google/cloud/discoveryengine/v1:license_config.proto
+@googleapis//google/cloud/discoveryengine/v1:license_config_service.proto
+@googleapis//google/cloud/discoveryengine/v1:logging.proto
 @googleapis//google/cloud/discoveryengine/v1:project.proto
 @googleapis//google/cloud/discoveryengine/v1:project_service.proto
 @googleapis//google/cloud/discoveryengine/v1:purge_config.proto
@@ -44,3 +55,7 @@
 @googleapis//google/cloud/discoveryengine/v1:user_event_service.proto
 @googleapis//google/cloud/discoveryengine/v1:user_license.proto
 @googleapis//google/cloud/discoveryengine/v1:user_license_service.proto
+@googleapis//google/cloud/discoveryengine/v1:user_store.proto
+@googleapis//google/cloud/discoveryengine/v1:user_store_service.proto
+@googleapis//google/cloud/discoveryengine/v1:widget_config.proto
+@googleapis//google/cloud/discoveryengine/v1:widget_config_service.proto
