@@ -33,6 +33,18 @@ MemorystoreTracingStub::MemorystoreTracingStub(
     std::shared_ptr<MemorystoreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
+StatusOr<google::cloud::memorystore::v1::ListAclPoliciesResponse>
+MemorystoreTracingStub::ListAclPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListAclPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAclPolicies(context, options, request));
+}
+
 StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
 MemorystoreTracingStub::ListInstances(
     grpc::ClientContext& context, Options const& options,
@@ -45,6 +57,18 @@ MemorystoreTracingStub::ListInstances(
                            child_->ListInstances(context, options, request));
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreTracingStub::GetAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetAclPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAclPolicy(context, options, request));
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance>
 MemorystoreTracingStub::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -55,6 +79,18 @@ MemorystoreTracingStub::GetInstance(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetInstance(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreTracingStub::CreateAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "CreateAclPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAclPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -84,6 +120,33 @@ StatusOr<google::longrunning::Operation> MemorystoreTracingStub::CreateInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "UpdateAclPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateAclPolicy(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingStub::UpdateAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "UpdateAclPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateAclPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -107,6 +170,60 @@ StatusOr<google::longrunning::Operation> MemorystoreTracingStub::UpdateInstance(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateInstance(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteAclPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteAclPolicy(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingStub::DeleteAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteAclPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAclPolicy(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreTracingStub::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetAclPolicyRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetAclPolicyRevision(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse>
+MemorystoreTracingStub::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListAclPolicyRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAclPolicyRevisions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

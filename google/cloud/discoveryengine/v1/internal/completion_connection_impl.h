@@ -56,6 +56,11 @@ class CompletionServiceConnectionImpl
   CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 
+  StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+  AdvancedCompleteQuery(
+      google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::
                       ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(

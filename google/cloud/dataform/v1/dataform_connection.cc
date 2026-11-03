@@ -463,6 +463,30 @@ DataformConnection::CreateCompilationResult(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformConnection::CreateCompilationResultLongRunning(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::CompilationResult>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformConnection::CreateCompilationResultLongRunning(
+    NoAwaitTag,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformConnection::CreateCompilationResultLongRunning(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::CompilationResult>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::dataform::v1::CompilationResultAction>
 DataformConnection::QueryCompilationResultActions(
     google::cloud::dataform::v1::

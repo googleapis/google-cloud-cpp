@@ -211,6 +211,10 @@ class DataformConnectionIdempotencyPolicy {
       google::cloud::dataform::v1::CreateCompilationResultRequest const&
           request);
 
+  virtual google::cloud::Idempotency CreateCompilationResultLongRunning(
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request);
+
   virtual google::cloud::Idempotency QueryCompilationResultActions(
       google::cloud::dataform::v1::QueryCompilationResultActionsRequest
           request);

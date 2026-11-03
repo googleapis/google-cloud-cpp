@@ -118,6 +118,24 @@ DataStoreServiceMetadata::UpdateDataStore(
   return child_->UpdateDataStore(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> DataStoreServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->SetIamPolicy(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataStoreServiceMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,

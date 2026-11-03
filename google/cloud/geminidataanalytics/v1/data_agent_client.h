@@ -117,7 +117,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.ListDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L188}
+  /// [google.cloud.geminidataanalytics.v1.ListDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L187}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::DataAgent> ListDataAgents(
@@ -156,7 +156,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.ListDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L188}
+  /// [google.cloud.geminidataanalytics.v1.ListDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L187}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::DataAgent> ListDataAgents(
@@ -192,7 +192,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.ListAccessibleDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L239}
+  /// [google.cloud.geminidataanalytics.v1.ListAccessibleDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L238}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::DataAgent>
@@ -232,7 +232,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.ListAccessibleDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L239}
+  /// [google.cloud.geminidataanalytics.v1.ListAccessibleDataAgentsRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L238}
   ///
   // clang-format on
   StreamRange<google::cloud::geminidataanalytics::v1::DataAgent>
@@ -260,7 +260,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.GetDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L304}
+  /// [google.cloud.geminidataanalytics.v1.GetDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L303}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::DataAgent> GetDataAgent(
@@ -290,7 +290,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.GetDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L304}
+  /// [google.cloud.geminidataanalytics.v1.GetDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L303}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::DataAgent> GetDataAgent(
@@ -327,7 +327,7 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L315}
+  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L314}
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
   ///
   // clang-format on
@@ -383,7 +383,7 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L315}
+  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L314}
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
   ///
   // clang-format on
@@ -445,7 +445,7 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L315}
+  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L314}
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
   ///
   // clang-format on
@@ -478,7 +478,7 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L315}
+  /// [google.cloud.geminidataanalytics.v1.CreateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L314}
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
   ///
   // clang-format on
@@ -521,7 +521,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L352}
+  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L351}
   ///
   // clang-format on
   future<StatusOr<google::cloud::geminidataanalytics::v1::DataAgent>>
@@ -576,7 +576,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L352}
+  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L351}
   ///
   // clang-format on
   future<StatusOr<google::cloud::geminidataanalytics::v1::DataAgent>>
@@ -641,7 +641,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L352}
+  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L351}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::DataAgent>
@@ -673,7 +673,7 @@ class DataAgentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.geminidataanalytics.v1.DataAgent]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent.proto#L34}
-  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L352}
+  /// [google.cloud.geminidataanalytics.v1.UpdateDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L351}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::DataAgent>
@@ -707,8 +707,8 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L386}
-  /// [google.cloud.geminidataanalytics.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L415}
+  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L385}
+  /// [google.cloud.geminidataanalytics.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L414}
   ///
   // clang-format on
   future<StatusOr<google::cloud::geminidataanalytics::v1::OperationMetadata>>
@@ -758,8 +758,8 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L386}
-  /// [google.cloud.geminidataanalytics.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L415}
+  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L385}
+  /// [google.cloud.geminidataanalytics.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L414}
   ///
   // clang-format on
   future<StatusOr<google::cloud::geminidataanalytics::v1::OperationMetadata>>
@@ -814,7 +814,7 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L386}
+  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L385}
   ///
   // clang-format on
   Status DeleteDataAgentSync(std::string const& name, Options opts = {});
@@ -840,7 +840,7 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L386}
+  /// [google.cloud.geminidataanalytics.v1.DeleteDataAgentRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L385}
   ///
   // clang-format on
   Status DeleteDataAgentSync(
@@ -963,8 +963,7 @@ class DataAgentServiceClient {
   // clang-format off
   ///
   /// Enables/Disables required GCP services and configures AgentOps
-  /// observability settings calling the Admin Settings executable node to
-  /// update the AgentOps Observability feature.
+  /// observability settings.
   ///
   /// @param parent  Required. Parent value for SetAgentOpsObservabilityRequest.
   ///  Format: projects/{project}/locations/{location}
@@ -993,8 +992,8 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L445}
-  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L495}
+  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L444}
+  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L494}
   ///
   // clang-format on
   future<StatusOr<
@@ -1021,8 +1020,7 @@ class DataAgentServiceClient {
   // clang-format off
   ///
   /// Enables/Disables required GCP services and configures AgentOps
-  /// observability settings calling the Admin Settings executable node to
-  /// update the AgentOps Observability feature.
+  /// observability settings.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1050,8 +1048,8 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L445}
-  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L495}
+  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L444}
+  /// [google.cloud.geminidataanalytics.v1.SetAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L494}
   ///
   // clang-format on
   future<StatusOr<
@@ -1112,8 +1110,8 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L501}
-  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L517}
+  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L500}
+  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L516}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::
@@ -1145,8 +1143,8 @@ class DataAgentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L501}
-  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L517}
+  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityRequest]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L500}
+  /// [google.cloud.geminidataanalytics.v1.RetrieveAgentOpsObservabilityResponse]: @googleapis_reference_link{google/cloud/geminidataanalytics/v1/data_agent_service.proto#L516}
   ///
   // clang-format on
   StatusOr<google::cloud::geminidataanalytics::v1::

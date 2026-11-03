@@ -102,6 +102,16 @@ EngineServiceConnection::ListEngines(
       StreamRange<google::cloud::discoveryengine::v1::Engine>>();
 }
 
+StatusOr<google::iam::v1::Policy> EngineServiceConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> EngineServiceConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::longrunning::Operation>
 EngineServiceConnection::ListOperations(
     google::longrunning::

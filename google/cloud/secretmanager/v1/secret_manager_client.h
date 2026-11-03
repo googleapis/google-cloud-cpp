@@ -335,7 +335,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L451}
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L437}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   ///
   // clang-format on
@@ -365,7 +365,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L451}
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L437}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   ///
   // clang-format on
@@ -395,7 +395,7 @@ class SecretManagerServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L536}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L522}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
@@ -427,7 +427,7 @@ class SecretManagerServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L536}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L522}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
@@ -452,7 +452,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L583}
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L569}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   ///
   // clang-format on
@@ -479,7 +479,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L583}
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L569}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   ///
   // clang-format on
@@ -518,7 +518,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L465}
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L451}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
@@ -559,7 +559,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L465}
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L451}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
   // clang-format on
@@ -598,7 +598,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L516}
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L502}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
   // clang-format on
@@ -632,7 +632,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L516}
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L502}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
   // clang-format on
@@ -670,8 +670,8 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L548}
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L568}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L534}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L554}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
   // clang-format on
@@ -705,8 +705,8 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L548}
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L568}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L534}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L554}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
   // clang-format on
@@ -741,7 +741,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L602}
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L588}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L247}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L279}
@@ -777,7 +777,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L602}
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L588}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L247}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L279}
@@ -814,7 +814,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L623}
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L609}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L240}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L279}
@@ -850,7 +850,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L623}
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L609}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L240}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L279}
@@ -887,7 +887,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L644}
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L630}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L252}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L279}
@@ -924,7 +924,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L644}
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L630}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L252}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L279}
@@ -1076,9 +1076,8 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   EnableManagedRotation(
       std::string const& parent,
-      google::cloud::secretmanager::v1::EnableManagedRotationRequest::
-          CloudSQLSingleUserCredentials const&
-              cloud_sql_single_user_credentials,
+      google::cloud::secretmanager::v1::CloudSqlSingleUserCredentials const&
+          cloud_sql_single_user_credentials,
       Options opts = {});
 
   // clang-format off
@@ -1142,7 +1141,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.RotateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L436}
+  /// [google.cloud.secretmanager.v1.RotateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L422}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///
@@ -1175,7 +1174,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.RotateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L436}
+  /// [google.cloud.secretmanager.v1.RotateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L422}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L41}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L222}
   ///

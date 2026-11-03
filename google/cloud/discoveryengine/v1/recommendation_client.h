@@ -112,8 +112,8 @@ class RecommendationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.RecommendRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/recommendation_service.proto#L60}
-  /// [google.cloud.discoveryengine.v1.RecommendResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/recommendation_service.proto#L191}
+  /// [google.cloud.discoveryengine.v1.RecommendRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/recommendation_service.proto#L62}
+  /// [google.cloud.discoveryengine.v1.RecommendResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/recommendation_service.proto#L193}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::RecommendResponse> Recommend(

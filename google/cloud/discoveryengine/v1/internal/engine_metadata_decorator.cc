@@ -116,6 +116,24 @@ EngineServiceMetadata::ListEngines(
   return child_->ListEngines(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> EngineServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> EngineServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->SetIamPolicy(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 EngineServiceMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,

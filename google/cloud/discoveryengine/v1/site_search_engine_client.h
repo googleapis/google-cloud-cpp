@@ -116,7 +116,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L274}
+  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L276}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
   ///
   // clang-format on
@@ -147,7 +147,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L274}
+  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L276}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
   ///
   // clang-format on
@@ -186,7 +186,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L294}
+  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L296}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -242,7 +242,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L294}
+  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L296}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -313,8 +313,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L326}
-  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L493}
+  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L328}
+  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L495}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -383,7 +383,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L347}
+  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L349}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -413,7 +413,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L347}
+  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L349}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -453,7 +453,7 @@ class SiteSearchEngineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
-  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L369}
+  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L371}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
@@ -508,7 +508,7 @@ class SiteSearchEngineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
-  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L369}
+  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L371}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
@@ -581,8 +581,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L419}
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L396}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L421}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L398}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -633,8 +633,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L419}
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L396}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L421}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L398}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -707,7 +707,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L431}
+  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L433}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -746,7 +746,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L431}
+  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L433}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -782,7 +782,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L501}
+  /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L503}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
   /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
@@ -838,7 +838,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L501}
+  /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L503}
   /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
@@ -908,8 +908,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L593}
-  /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L519}
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L595}
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L521}
   /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
@@ -960,8 +960,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L593}
-  /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L519}
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L595}
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L521}
   /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
@@ -1020,8 +1020,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L541}
-  /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L605}
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L543}
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L607}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
   /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
@@ -1053,8 +1053,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L541}
-  /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L605}
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L543}
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L607}
   /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
@@ -1093,8 +1093,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L620}
-  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L636}
+  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L622}
+  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L638}
   ///
   // clang-format on
   future<StatusOr<
@@ -1165,8 +1165,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L654}
-  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L670}
+  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L656}
+  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L672}
   ///
   // clang-format on
   future<StatusOr<
@@ -1236,8 +1236,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.RecrawlUrisRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L688}
-  /// [google.cloud.discoveryengine.v1.RecrawlUrisResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L712}
+  /// [google.cloud.discoveryengine.v1.RecrawlUrisRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L690}
+  /// [google.cloud.discoveryengine.v1.RecrawlUrisResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L714}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
@@ -1306,8 +1306,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L802}
-  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L816}
+  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L804}
+  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L818}
   ///
   // clang-format on
   future<StatusOr<
@@ -1382,7 +1382,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.FetchDomainVerificationStatusRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L834}
+  /// [google.cloud.discoveryengine.v1.FetchDomainVerificationStatusRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L836}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on

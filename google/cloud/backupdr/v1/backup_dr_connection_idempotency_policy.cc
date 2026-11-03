@@ -224,6 +224,70 @@ Idempotency BackupDRConnectionIdempotencyPolicy::InitializeService(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BackupDRConnectionIdempotencyPolicy::CreateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::ListAutoProtectionPolicies(
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::GetAutoProtectionPolicy(
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::UpdateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteAutoProtectionPolicy(
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+BackupDRConnectionIdempotencyPolicy::CreateAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::
+        CreateAutoProtectionPolicyBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::GetAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BackupDRConnectionIdempotencyPolicy::ListAutoProtectionPolicyBindings(
+    google::cloud::backupdr::v1::
+        ListAutoProtectionPolicyBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BackupDRConnectionIdempotencyPolicy::ListAppliedAutoProtectionPolicies(
+    google::cloud::backupdr::v1::
+        ListAppliedAutoProtectionPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BackupDRConnectionIdempotencyPolicy::InitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::ListBindingMatchingResources(
+    google::cloud::backupdr::v1::
+        ListBindingMatchingResourcesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackupDRConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

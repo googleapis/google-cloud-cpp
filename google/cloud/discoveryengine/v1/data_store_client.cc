@@ -17,7 +17,9 @@
 // source: google/cloud/discoveryengine/v1/data_store_service.proto
 
 #include "google/cloud/discoveryengine/v1/data_store_client.h"
+#include "google/cloud/discoveryengine/v1/data_store_options.h"
 #include <memory>
+#include <thread>
 #include <utility>
 
 namespace google {
@@ -173,6 +175,71 @@ DataStoreServiceClient::UpdateDataStore(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataStore(request);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(resource);
+  *request.mutable_policy() = policy;
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options opts) {
+  internal::CheckExpectedOptions<DataStoreServiceBackoffPolicyOption>(opts,
+                                                                      __func__);
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::GetIamPolicyRequest get_request;
+  get_request.set_resource(resource);
+  google::iam::v1::SetIamPolicyRequest set_request;
+  set_request.set_resource(resource);
+  auto backoff_policy =
+      internal::CurrentOptions().get<DataStoreServiceBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
+  for (;;) {
+    auto recent = connection_->GetIamPolicy(get_request);
+    if (!recent) {
+      return recent.status();
+    }
+    auto policy = updater(*std::move(recent));
+    if (!policy) {
+      return internal::CancelledError(
+          "updater did not yield a policy",
+          GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
+    }
+    *set_request.mutable_policy() = *std::move(policy);
+    auto result = connection_->SetIamPolicy(set_request);
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
+      return result;
+    }
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+  }
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
 }
 
 StreamRange<google::longrunning::Operation>

@@ -43,6 +43,16 @@ CompletionServiceAuth::CompleteQuery(
   return child_->CompleteQuery(context, options, request);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceAuth::AdvancedCompleteQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AdvancedCompleteQuery(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceAuth::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
