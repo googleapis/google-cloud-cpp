@@ -149,7 +149,7 @@ class SimpleUpload : public ThroughputExperiment {
     // truncate the object to the right size.
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    auto data = absl::string_view{*random_data_}.substr(
+    auto data = std::string_view{*random_data_}.substr(
         0, static_cast<std::size_t>(config.object_size));
     auto object_metadata =
         client_.InsertObject(bucket_name, object_name, data,
@@ -479,3 +479,4 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
 }  // namespace cloud
 }  // namespace google
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

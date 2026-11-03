@@ -25,7 +25,7 @@ absl::Cord MakeCord(std::string p) {
   // small buffers (and allocates a container for each). We want to avoid copies
   // and allocations.
   auto holder = std::make_shared<std::string>(std::move(p));
-  auto contents = absl::string_view(holder->data(), holder->size());
+  auto contents = std::string_view(holder->data(), holder->size());
   return absl::MakeCordFromExternal(contents,
                                     [b = std::move(holder)]() mutable {});
 }

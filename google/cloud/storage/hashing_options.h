@@ -20,7 +20,6 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <string>
 
 namespace google {
@@ -62,15 +61,15 @@ struct GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
 /**
  * Compute the MD5 Hash of a buffer in the format preferred by GCS.
  */
-std::string ComputeMD5Hash(absl::string_view payload);
+std::string ComputeMD5Hash(std::string_view payload);
 
-/// @copydoc ComputeMD5Hash(absl::string_view)
+/// @copydoc ComputeMD5Hash(std::string_view)
 std::string ComputeMD5Hash(std::string const& payload);
 
-/// @copydoc ComputeMD5Hash(absl::string_view)
+/// @copydoc ComputeMD5Hash(std::string_view)
 inline std::string ComputeMD5Hash(char const* payload) {
-  return ComputeMD5Hash(payload == nullptr ? absl::string_view{}
-                                           : absl::string_view{payload});
+  return ComputeMD5Hash(payload == nullptr ? std::string_view{}
+                                           : std::string_view{payload});
 }
 
 /**
@@ -132,15 +131,15 @@ struct GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
 /**
  * Compute the CRC32C checksum of a buffer in the format preferred by GCS.
  */
-std::string ComputeCrc32cChecksum(absl::string_view payload);
+std::string ComputeCrc32cChecksum(std::string_view payload);
 
-/// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
+/// @copydoc ComputeCrc32cChecksum(std::string_view payload)
 std::string ComputeCrc32cChecksum(std::string const& payload);
 
-/// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
+/// @copydoc ComputeCrc32cChecksum(std::string_view payload)
 inline std::string ComputeCrc32cChecksum(char const* payload) {
-  return ComputeCrc32cChecksum(payload == nullptr ? absl::string_view{}
-                                                  : absl::string_view{payload});
+  return ComputeCrc32cChecksum(payload == nullptr ? std::string_view{}
+                                                  : std::string_view{payload});
 }
 
 /**
@@ -176,4 +175,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HASHING_OPTIONS_H

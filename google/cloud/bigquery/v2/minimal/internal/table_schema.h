@@ -18,10 +18,10 @@
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ using namespace nlohmann::literals;  // NOLINT
 struct CategoryList {
   std::vector<std::string> names;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -44,7 +44,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(CategoryList, names);
 struct PolicyTagList {
   std::vector<std::string> names;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -53,7 +53,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(PolicyTagList, names);
 struct FieldElementType {
   std::string type;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -79,7 +79,7 @@ struct TableFieldSchema {
   RoundingMode rounding_mode;
   FieldElementType range_element_type;
 
-  std::string DebugString(absl::string_view fname,
+  std::string DebugString(std::string_view fname,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -94,7 +94,7 @@ void from_json(nlohmann::json const& j,
 struct TableSchema {
   std::vector<TableFieldSchema> fields;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

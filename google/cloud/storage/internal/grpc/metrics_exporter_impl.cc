@@ -27,7 +27,6 @@
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
-#include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include <grpcpp/ext/otel_plugin.h>
 #include <grpcpp/grpcpp.h>
@@ -37,6 +36,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -135,21 +135,21 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
     auto provider = MakeGrpcMeterProvider(std::move(exporter),
                                           std::move(config.reader_options));
 
-    auto const metrics = std::vector<absl::string_view>{
-        absl::string_view{"grpc.lb.wrr.rr_fallback"},
-        absl::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
-        absl::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
-        absl::string_view{"grpc.lb.wrr.endpoint_weights"},
-        absl::string_view{"grpc.xds_client.connected"},
-        absl::string_view{"grpc.xds_client.server_failure"},
-        absl::string_view{"grpc.xds_client.resource_updates_valid"},
-        absl::string_view{"grpc.xds_client.resource_updates_invalid"},
-        absl::string_view{"grpc.xds_client.resources"},
-        absl::string_view{"grpc.lb.rls.cache_size"},
-        absl::string_view{"grpc.lb.rls.cache_entries"},
-        absl::string_view{"grpc.lb.rls.default_target_picks"},
-        absl::string_view{"grpc.lb.rls.target_picks"},
-        absl::string_view{"grpc.lb.rls.failed_picks"},
+    auto const metrics = std::vector<std::string_view>{
+        std::string_view{"grpc.lb.wrr.rr_fallback"},
+        std::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
+        std::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
+        std::string_view{"grpc.lb.wrr.endpoint_weights"},
+        std::string_view{"grpc.xds_client.connected"},
+        std::string_view{"grpc.xds_client.server_failure"},
+        std::string_view{"grpc.xds_client.resource_updates_valid"},
+        std::string_view{"grpc.xds_client.resource_updates_invalid"},
+        std::string_view{"grpc.xds_client.resources"},
+        std::string_view{"grpc.lb.rls.cache_size"},
+        std::string_view{"grpc.lb.rls.cache_entries"},
+        std::string_view{"grpc.lb.rls.default_target_picks"},
+        std::string_view{"grpc.lb.rls.target_picks"},
+        std::string_view{"grpc.lb.rls.failed_picks"},
     };
     auto scope_filter =
         [authority = std::move(config.authority)](
@@ -160,8 +160,8 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
         grpc::OpenTelemetryPluginBuilder()
             .SetMeterProvider(provider)
             .EnableMetrics(metrics)
-            .AddOptionalLabel(absl::string_view("grpc.lb.locality"))
-            .SetGenericMethodAttributeFilter([](absl::string_view target) {
+            .AddOptionalLabel(std::string_view("grpc.lb.locality"))
+            .SetGenericMethodAttributeFilter([](std::string_view target) {
               return absl::StartsWith(target, "google.storage.v2");
             })
             .SetChannelScopeFilter(std::move(scope_filter))

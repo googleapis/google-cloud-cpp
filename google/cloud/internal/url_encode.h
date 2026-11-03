@@ -16,17 +16,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_URL_ENCODE_H
 
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::string UrlEncode(absl::string_view value);
+std::string UrlEncode(std::string_view value);
 
-std::string UrlDecode(absl::string_view value);
+std::string UrlDecode(std::string_view value);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

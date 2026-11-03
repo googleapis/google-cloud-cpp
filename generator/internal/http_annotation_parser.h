@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_HTTP_ANNOTATION_PARSER_H
 
 #include "google/cloud/status_or.h"
-#include "absl/strings/string_view.h"
 #include <memory>
+#include <string_view>
 #include <variant>
 #include <vector>
 
@@ -95,7 +95,7 @@ struct PathTemplate {
 };
 
 /// Parses a google.api.http path template.
-StatusOr<PathTemplate> ParsePathTemplate(absl::string_view input);
+StatusOr<PathTemplate> ParsePathTemplate(std::string_view input);
 
 /// Streaming operator, used in testing and debugging.
 std::ostream& operator<<(std::ostream& os, PathTemplate::Segment const& rhs);

@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <limits>
 #include <memory>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -51,7 +52,7 @@ enum class InitialReadRangesCacheStatus {
   kEvicted,
 };
 
-absl::string_view CacheStatusToString(InitialReadRangesCacheStatus status) {
+std::string_view CacheStatusToString(InitialReadRangesCacheStatus status) {
   switch (status) {
     case InitialReadRangesCacheStatus::kHit:
       return "HIT";

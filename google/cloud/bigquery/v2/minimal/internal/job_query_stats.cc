@@ -439,7 +439,7 @@ bool operator==(RowAccessPolicyReference const& lhs,
          lhs.table_id == rhs.table_id && lhs.policy_id == rhs.policy_id;
 }
 
-std::string ExplainQueryStep::DebugString(absl::string_view name,
+std::string ExplainQueryStep::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -448,7 +448,7 @@ std::string ExplainQueryStep::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ComputeMode::DebugString(absl::string_view name,
+std::string ComputeMode::DebugString(std::string_view name,
                                      TracingOptions const& options,
                                      int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -456,7 +456,7 @@ std::string ComputeMode::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ExplainQueryStage::DebugString(absl::string_view eq_name,
+std::string ExplainQueryStage::DebugString(std::string_view eq_name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(eq_name, options, indent)
@@ -493,7 +493,7 @@ std::string ExplainQueryStage::DebugString(absl::string_view eq_name,
       .Build();
 }
 
-std::string QueryTimelineSample::DebugString(absl::string_view name,
+std::string QueryTimelineSample::DebugString(std::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -506,7 +506,7 @@ std::string QueryTimelineSample::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string DmlStats::DebugString(absl::string_view name,
+std::string DmlStats::DebugString(std::string_view name,
                                   TracingOptions const& options,
                                   int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -516,7 +516,7 @@ std::string DmlStats::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RowAccessPolicyReference::DebugString(absl::string_view name,
+std::string RowAccessPolicyReference::DebugString(std::string_view name,
                                                   TracingOptions const& options,
                                                   int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -527,7 +527,7 @@ std::string RowAccessPolicyReference::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string IndexUsageMode::DebugString(absl::string_view name,
+std::string IndexUsageMode::DebugString(std::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -535,7 +535,7 @@ std::string IndexUsageMode::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string IndexedUnusedReasonCode::DebugString(absl::string_view name,
+std::string IndexedUnusedReasonCode::DebugString(std::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -543,7 +543,7 @@ std::string IndexedUnusedReasonCode::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string IndexUnusedReason::DebugString(absl::string_view name,
+std::string IndexUnusedReason::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -554,7 +554,7 @@ std::string IndexUnusedReason::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string SearchStatistics::DebugString(absl::string_view name,
+std::string SearchStatistics::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -563,7 +563,7 @@ std::string SearchStatistics::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string InputDataChange::DebugString(absl::string_view name,
+std::string InputDataChange::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -573,7 +573,7 @@ std::string InputDataChange::DebugString(absl::string_view name,
 }
 
 std::string StagePerformanceChangeInsight::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
+    std::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .Field("stage_id", stage_id)
       .SubMessage("input_data_change", input_data_change)
@@ -581,7 +581,7 @@ std::string StagePerformanceChangeInsight::DebugString(
 }
 
 std::string StagePerformanceStandaloneInsight::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
+    std::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .Field("stage_id", stage_id)
       .Field("slot_contention", slot_contention)
@@ -589,7 +589,7 @@ std::string StagePerformanceStandaloneInsight::DebugString(
       .Build();
 }
 
-std::string PerformanceInsights::DebugString(absl::string_view name,
+std::string PerformanceInsights::DebugString(std::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -601,7 +601,7 @@ std::string PerformanceInsights::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RejectedReason::DebugString(absl::string_view name,
+std::string RejectedReason::DebugString(std::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -609,7 +609,7 @@ std::string RejectedReason::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string MaterializedView::DebugString(absl::string_view name,
+std::string MaterializedView::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -621,20 +621,20 @@ std::string MaterializedView::DebugString(absl::string_view name,
 }
 
 std::string MaterializedViewStatistics::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
+    std::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .Field("materialized_view", materialized_view)
       .Build();
 }
 
 std::string MetadataCacheUnusedReason::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
+    std::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("value", value)
       .Build();
 }
 
-std::string TableMetadataCacheUsage::DebugString(absl::string_view name,
+std::string TableMetadataCacheUsage::DebugString(std::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -644,7 +644,7 @@ std::string TableMetadataCacheUsage::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string MetadataCacheStatistics::DebugString(absl::string_view name,
+std::string MetadataCacheStatistics::DebugString(std::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -652,7 +652,7 @@ std::string MetadataCacheStatistics::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string JobQueryStatistics::DebugString(absl::string_view name,
+std::string JobQueryStatistics::DebugString(std::string_view name,
                                             TracingOptions const& options,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)

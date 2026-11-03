@@ -475,7 +475,7 @@ Status ServiceCodeGenerator::Generate() {
   return GenerateCc();
 }
 
-void ServiceCodeGenerator::SetVars(absl::string_view header_path) {
+void ServiceCodeGenerator::SetVars(std::string_view header_path) {
   service_vars_["header_include_guard"] = FormatHeaderIncludeGuard(header_path);
 }
 

@@ -19,10 +19,10 @@
 #include "google/cloud/bigquery/v2/minimal/internal/table_partition.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct PrimaryKey {
   std::vector<std::string> columns;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -42,7 +42,7 @@ struct ColumnReference {
   std::string referencing_column;
   std::string referenced_column;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -54,7 +54,7 @@ struct ForeignKey {
   TableReference referenced_table;
   std::vector<ColumnReference> column_references;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -65,7 +65,7 @@ struct TableConstraints {
   PrimaryKey primary_key;
   std::vector<ForeignKey> foreign_keys;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

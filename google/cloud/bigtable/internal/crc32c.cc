@@ -21,7 +21,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data) {
+std::uint32_t ExtendCrc32c(std::uint32_t crc, std::string_view data) {
   return static_cast<std::uint32_t>(
       absl::ExtendCrc32c(absl::crc32c_t{crc}, data));
 }
@@ -29,7 +29,7 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data) {
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
                            bigtable_internal::ConstBufferSequence const& data) {
   for (auto const& b : data) {
-    crc = ExtendCrc32c(crc, absl::string_view{b.data(), b.size()});
+    crc = ExtendCrc32c(crc, std::string_view{b.data(), b.size()});
   }
   return crc;
 }
@@ -41,7 +41,7 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data) {
   return crc;
 }
 
-std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
+std::uint32_t ExtendCrc32c(std::uint32_t crc, std::string_view data,
                            std::uint32_t data_crc) {
   return static_cast<std::uint32_t>(absl::ConcatCrc32c(
       absl::crc32c_t{crc}, absl::crc32c_t{data_crc}, data.size()));

@@ -24,6 +24,7 @@
 #include <deque>
 #include <memory>
 #include <mutex>
+#include <string_view>
 #include <variant>
 #include <vector>
 
@@ -33,7 +34,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-Status MakeRewindError(absl::string_view upload_id, std::int64_t resend_offset,
+Status MakeRewindError(std::string_view upload_id, std::int64_t resend_offset,
                        std::int64_t persisted_size,
                        internal::ErrorInfoBuilder eib) {
   auto const previous = std::to_string(resend_offset);
@@ -47,7 +48,7 @@ Status MakeRewindError(absl::string_view upload_id, std::int64_t resend_offset,
           .WithMetadata("gcloud-cpp.storage.persisted_size", returned));
 }
 
-Status MakeFastForwardError(absl::string_view upload_id,
+Status MakeFastForwardError(std::string_view upload_id,
                             std::int64_t resend_offset,
                             std::int64_t persisted_size,
                             internal::ErrorInfoBuilder eib) {

@@ -17,9 +17,9 @@
 
 #include "generator/internal/printer.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/string_view.h"
 #include <map>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -29,19 +29,19 @@ namespace generator_internal {
 /**
  * Wraps header include in "" and returns complete include line.
  */
-std::string LocalInclude(absl::string_view header);
+std::string LocalInclude(std::string_view header);
 
 /**
  * Wraps header include in <> and returns complete include line.
  */
-std::string SystemInclude(absl::string_view header);
+std::string SystemInclude(std::string_view header);
 
 /**
  * Convert a CamelCase string from a protoc descriptor to snake_case.
  *
  * This function assumes inputs are correctly formatted CamelCase.
  */
-std::string CamelCaseToSnakeCase(absl::string_view input);
+std::string CamelCaseToSnakeCase(std::string_view input);
 
 /**
  * Convert a service name to a file path.
@@ -53,7 +53,7 @@ std::string CamelCaseToSnakeCase(absl::string_view input);
  *
  * Example: "google.LibraryService" -> "google/library"
  */
-std::string ServiceNameToFilePath(absl::string_view service_name);
+std::string ServiceNameToFilePath(std::string_view service_name);
 
 /**
  * Convert a protobuf name to a fully qualified C++ name.
@@ -61,7 +61,7 @@ std::string ServiceNameToFilePath(absl::string_view service_name);
  * proto_name should be a "." separated name, which we convert to a
  * "::" separated C++ fully qualified name.
  */
-std::string ProtoNameToCppName(absl::string_view proto_name);
+std::string ProtoNameToCppName(std::string_view proto_name);
 
 enum class NamespaceType { kNormal, kInternal, kMocks };
 
@@ -97,8 +97,8 @@ ProcessCommandLineArgs(std::string const& parameters);
  * The primary use case is to replace/restore commas in the values used by
  * ProcessCommandLineArgs(), where comma is a metacharacter (see above).
  */
-std::string SafeReplaceAll(absl::string_view s, absl::string_view from,
-                           absl::string_view to);
+std::string SafeReplaceAll(std::string_view s, std::string_view from,
+                           std::string_view to);
 
 /**
  * Standard legal boilerplate file header.
@@ -128,7 +128,7 @@ std::string FormatCommentKeyValueList(
     std::size_t line_length = 80);
 
 // Formats a header include guard per the provided header_path.
-std::string FormatHeaderIncludeGuard(absl::string_view header_path);
+std::string FormatHeaderIncludeGuard(std::string_view header_path);
 
 /// Create a directory. The parent must exist.
 void MakeDirectory(std::string const& path);

@@ -14,6 +14,7 @@
 
 #ifdef _WIN32
 #include "google/cloud/storage/internal/hash_function_impl.h"
+#include <string_view>
 #include <type_traits>
 #include <Windows.h>
 #include <wincrypt.h>
@@ -41,7 +42,7 @@ class BCryptMD5HashFunction : public MD5HashFunction {
  public:
   BCryptMD5HashFunction() : impl_(CreateMD5HashCtx()) {}
 
-  void Update(absl::string_view buffer) override {
+  void Update(std::string_view buffer) override {
     BCryptHashData(impl_.get(),
                    reinterpret_cast<PUCHAR>(const_cast<char*>(buffer.data())),
                    static_cast<ULONG>(buffer.size()), 0);

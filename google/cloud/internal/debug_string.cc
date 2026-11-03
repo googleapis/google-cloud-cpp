@@ -21,22 +21,21 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-DebugFormatter::DebugFormatter(absl::string_view name, TracingOptions options,
+DebugFormatter::DebugFormatter(std::string_view name, TracingOptions options,
                                int indent)
     : options_(std::move(options)), indent_(indent) {
   absl::StrAppend(&str_, indent_ ? Sep() : "", name, " {");
   ++indent_;
 }
 
-DebugFormatter& DebugFormatter::Field(absl::string_view field_name,
-                                      bool value) {
+DebugFormatter& DebugFormatter::Field(std::string_view field_name, bool value) {
   // Mirror the behavior of std::boolalpha.
   absl::StrAppend(&str_, Sep(), field_name, ": ", value ? "true" : "false");
   return *this;
 }
 
 DebugFormatter& DebugFormatter::Field(
-    absl::string_view field_name, std::chrono::system_clock::time_point value) {
+    std::string_view field_name, std::chrono::system_clock::time_point value) {
   // Mirror the behavior of TimestampMessagePrinter.
   absl::StrAppend(&str_, Sep(), field_name, " {");
   ++indent_;
@@ -47,12 +46,12 @@ DebugFormatter& DebugFormatter::Field(
 }
 
 DebugFormatter& DebugFormatter::Field(
-    absl::string_view field_name,
+    std::string_view field_name,
     std::optional<std::chrono::system_clock::time_point> value) {
   return value ? Field(field_name, *value) : *this;
 }
 
-DebugFormatter& DebugFormatter::Field(absl::string_view field_name,
+DebugFormatter& DebugFormatter::Field(std::string_view field_name,
                                       std::vector<std::string> const& value) {
   for (auto const& s : value) {
     absl::StrAppend(&str_, Sep(), field_name, ": ", "\"",
@@ -62,7 +61,7 @@ DebugFormatter& DebugFormatter::Field(absl::string_view field_name,
 }
 
 DebugFormatter& DebugFormatter::Field(
-    absl::string_view field_name,
+    std::string_view field_name,
     std::map<std::string, std::string> const& value) {
   for (auto const& e : value) {
     absl::StrAppend(&str_, Sep(), field_name, " {");
@@ -77,7 +76,7 @@ DebugFormatter& DebugFormatter::Field(
 }
 
 DebugFormatter& DebugFormatter::Field(
-    absl::string_view field_name,
+    std::string_view field_name,
     std::multimap<std::string, std::string> const& value) {
   for (auto const& e : value) {
     absl::StrAppend(&str_, Sep(), field_name, " {");
@@ -91,7 +90,7 @@ DebugFormatter& DebugFormatter::Field(
   return *this;
 }
 
-DebugFormatter& DebugFormatter::StringField(absl::string_view field_name,
+DebugFormatter& DebugFormatter::StringField(std::string_view field_name,
                                             std::string value) {
   absl::StrAppend(&str_, Sep(), field_name, ": ", "\"",
                   DebugString(std::move(value), options_), "\"");

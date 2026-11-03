@@ -19,11 +19,11 @@
 #include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <optional>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -42,7 +42,7 @@ struct ExplainQueryStep {
   std::string kind;
   std::vector<std::string> sub_steps;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -61,7 +61,7 @@ struct ComputeMode {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -114,7 +114,7 @@ struct ExplainQueryStage {
   std::vector<ExplainQueryStep> steps;
   ComputeMode compute_mode;
 
-  std::string DebugString(absl::string_view eq_name,
+  std::string DebugString(std::string_view eq_name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -136,7 +136,7 @@ struct QueryTimelineSample {
   std::int64_t active_units = 0;
   std::int64_t estimated_runnable_units = 0;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -154,7 +154,7 @@ struct DmlStats {
   std::int64_t deleted_row_count = 0;
   std::int64_t updated_row_count = 0;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -173,7 +173,7 @@ struct RowAccessPolicyReference {
   std::string table_id;
   std::string policy_id;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -194,7 +194,7 @@ struct IndexUsageMode {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -230,7 +230,7 @@ struct IndexedUnusedReasonCode {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -252,7 +252,7 @@ struct IndexUnusedReason {
   TableReference base_table;
   IndexedUnusedReasonCode code;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -269,7 +269,7 @@ struct SearchStatistics {
   IndexUsageMode index_usage_mode;
   std::vector<IndexUnusedReason> index_unused_reasons;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -284,7 +284,7 @@ bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs);
 struct InputDataChange {
   std::float_t records_read_diff_percentage = 0;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -300,7 +300,7 @@ struct StagePerformanceChangeInsight {
   std::int64_t stage_id = 0;
   InputDataChange input_data_change;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -316,7 +316,7 @@ struct StagePerformanceStandaloneInsight {
   bool slot_contention = false;
   bool insufficient_shuffle_quota = false;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -334,7 +334,7 @@ struct PerformanceInsights {
   StagePerformanceStandaloneInsight stage_performance_standalone_insights;
   StagePerformanceChangeInsight stage_performance_change_insights;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -360,7 +360,7 @@ struct RejectedReason {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -377,7 +377,7 @@ struct MaterializedView {
   RejectedReason rejected_reason;
   TableReference table_reference;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -392,7 +392,7 @@ bool operator==(MaterializedView const& lhs, MaterializedView const& rhs);
 struct MaterializedViewStatistics {
   std::vector<MaterializedView> materialized_view;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -410,7 +410,7 @@ struct MetadataCacheUnusedReason {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -428,7 +428,7 @@ struct TableMetadataCacheUsage {
   TableReference table_reference;
   MetadataCacheUnusedReason unused_reason;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -444,7 +444,7 @@ bool operator==(TableMetadataCacheUsage const& lhs,
 struct MetadataCacheStatistics {
   std::vector<TableMetadataCacheUsage> table_metadata_cache_usage;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -493,7 +493,7 @@ struct JobQueryStatistics {
   MaterializedViewStatistics materialized_view_statistics;
   MetadataCacheStatistics metadata_cache_statistics;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

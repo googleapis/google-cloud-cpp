@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
 #include <optional>
@@ -50,8 +49,8 @@ auto MakeTestObject() {
 
 TEST(ReadPayload, Basic) {
   auto const actual = ReadPayloadImpl::Make(absl::Cord(kQuick));
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
-  EXPECT_THAT(actual.size(), absl::string_view(kQuick).size());
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
+  EXPECT_THAT(actual.size(), std::string_view(kQuick).size());
   EXPECT_FALSE(actual.metadata().has_value());
   EXPECT_THAT(actual.headers(), IsEmpty());
   EXPECT_EQ(actual.offset(), 0);
@@ -59,8 +58,8 @@ TEST(ReadPayload, Basic) {
 
 TEST(ReadPayload, FromString) {
   auto const actual = ReadPayloadImpl::Make(std::string(kQuick));
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
-  EXPECT_THAT(actual.size(), absl::string_view(kQuick).size());
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
+  EXPECT_THAT(actual.size(), std::string_view(kQuick).size());
   EXPECT_FALSE(actual.metadata().has_value());
   EXPECT_THAT(actual.headers(), IsEmpty());
   EXPECT_EQ(actual.offset(), 0);
@@ -69,8 +68,8 @@ TEST(ReadPayload, FromString) {
 TEST(ReadPayload, FromVector) {
   auto const actual = storage::ReadPayload(
       std::vector<std::string>({std::string(kQuick), std::string(kQuick)}));
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick),
-                                             absl::string_view(kQuick)));
+  EXPECT_THAT(actual.contents(),
+              ElementsAre(std::string_view(kQuick), std::string_view(kQuick)));
 }
 
 TEST(ReadPayload, Modifiers) {
@@ -79,8 +78,8 @@ TEST(ReadPayload, Modifiers) {
                           .set_metadata(resource)
                           .set_headers({{"k1", "v1"}, {"k2", "v2"}})
                           .set_offset(12345);
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
-  EXPECT_THAT(actual.size(), absl::string_view(kQuick).size());
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
+  EXPECT_THAT(actual.size(), std::string_view(kQuick).size());
   EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
   EXPECT_THAT(actual.headers(),
               UnorderedElementsAre(Pair("k1", "v1"), Pair("k2", "v2")));
@@ -93,8 +92,8 @@ TEST(ReadPayload, Reset) {
                           .reset_metadata()
                           .set_headers({{"k1", "v1"}, {"k2", "v2"}})
                           .clear_headers();
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
-  EXPECT_THAT(actual.size(), absl::string_view(kQuick).size());
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
+  EXPECT_THAT(actual.size(), std::string_view(kQuick).size());
   EXPECT_FALSE(actual.metadata().has_value());
   EXPECT_THAT(actual.headers(), IsEmpty());
 }
@@ -105,7 +104,7 @@ TEST(ReadPayload, AccumulateIntoDefault) {
   ReadPayloadImpl::Accumulate(actual, ReadPayloadImpl::Make(absl::Cord(kQuick))
                                           .set_metadata(resource)
                                           .set_offset(1024));
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
   EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
   EXPECT_EQ(actual.offset(), 1024);
 }
@@ -117,8 +116,8 @@ TEST(ReadPayload, AccumulateAppendsData) {
                                     .set_offset(1024);
   ReadPayloadImpl::Accumulate(
       actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(2048));
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick),
-                                             absl::string_view(kQuick)));
+  EXPECT_THAT(actual.contents(),
+              ElementsAre(std::string_view(kQuick), std::string_view(kQuick)));
   EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
   EXPECT_EQ(actual.offset(), 1024);
 }
@@ -145,7 +144,7 @@ TEST(ReadPayload, AccumulateEmptyWithMetadataThenData) {
       actual, storage::internal::HashValues{"test-crc32c", "test-md5"});
   ReadPayloadImpl::Accumulate(
       actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(1024));
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
   EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
   EXPECT_EQ(actual.offset(), 1024);
   EXPECT_THAT(ReadPayloadImpl::GetObjectHashes(actual),
@@ -165,7 +164,7 @@ TEST(ReadPayload, AccumulateEmptyWithoutMetadataKeepsOtherFields) {
   ReadPayloadImpl::Accumulate(
       actual, ReadPayloadImpl::Make(absl::Cord(kQuick)).set_offset(1024));
   ReadPayloadImpl::Accumulate(actual, storage::ReadPayload{});
-  EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
+  EXPECT_THAT(actual.contents(), ElementsAre(std::string_view(kQuick)));
   EXPECT_FALSE(actual.metadata().has_value());
   EXPECT_THAT(actual.headers(), UnorderedElementsAre(Pair("k1", "v1")));
   EXPECT_EQ(actual.offset(), 1024);

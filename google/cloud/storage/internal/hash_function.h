@@ -21,7 +21,6 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include <memory>
 #include <string>
 
@@ -73,9 +72,9 @@ class HashFunction {
   virtual std::string Name() const = 0;
 
   /// Update the computed hash value with some portion of the data.
-  virtual void Update(absl::string_view buffer) = 0;
-  virtual Status Update(std::int64_t offset, absl::string_view buffer) = 0;
-  virtual Status Update(std::int64_t offset, absl::string_view buffer,
+  virtual void Update(std::string_view buffer) = 0;
+  virtual Status Update(std::int64_t offset, std::string_view buffer) = 0;
+  virtual Status Update(std::int64_t offset, std::string_view buffer,
                         std::uint32_t buffer_crc) = 0;
   virtual Status Update(std::int64_t offset, absl::Cord const& buffer,
                         std::uint32_t buffer_crc) = 0;
@@ -110,4 +109,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HASH_FUNCTION_H

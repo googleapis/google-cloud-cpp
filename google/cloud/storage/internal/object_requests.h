@@ -31,7 +31,6 @@
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
-#include "absl/strings/string_view.h"
 #include "absl/types/span.h"
 #include <map>
 #include <memory>
@@ -124,10 +123,10 @@ class InsertObjectMediaRequest
  public:
   InsertObjectMediaRequest();
   InsertObjectMediaRequest(std::string bucket_name, std::string object_name,
-                           absl::string_view payload);
+                           std::string_view payload);
 
-  absl::string_view payload() const { return payload_; }
-  void set_payload(absl::string_view payload);
+  std::string_view payload() const { return payload_; }
+  void set_payload(std::string_view payload);
 
   ///@{
   /**
@@ -145,7 +144,7 @@ class InsertObjectMediaRequest
   ///@}
 
  private:
-  absl::string_view payload_;
+  std::string_view payload_;
   mutable std::string contents_;
   mutable bool dirty_ = true;
 };
@@ -633,4 +632,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H

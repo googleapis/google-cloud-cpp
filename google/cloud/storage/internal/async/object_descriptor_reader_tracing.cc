@@ -33,7 +33,7 @@ namespace sc = ::opentelemetry::semconv;
 class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
  public:
   explicit ObjectDescriptorReaderTracing(
-      std::shared_ptr<ReadRange> impl, absl::string_view cache_status,
+      std::shared_ptr<ReadRange> impl, std::string_view cache_status,
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span)
       : ObjectDescriptorReader(std::move(impl)),
         cache_status_(cache_status),
@@ -81,7 +81,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   }
 
  private:
-  absl::string_view cache_status_;
+  std::string_view cache_status_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span_;
 };
 
@@ -89,7 +89,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
 
 std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(
-    std::shared_ptr<ReadRange> impl, absl::string_view cache_status,
+    std::shared_ptr<ReadRange> impl, std::string_view cache_status,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span) {
   return std::make_unique<ObjectDescriptorReaderTracing>(
       std::move(impl), cache_status, std::move(parent_span));

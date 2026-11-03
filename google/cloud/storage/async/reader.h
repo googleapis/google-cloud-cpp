@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -80,7 +81,7 @@ class AsyncReader {
    *     // Wait for next chunk and throw on error.
    *     auto [payload, t_] = (co_await reader.Read(std::move(token))).value();
    *     token = std::move(t_);
-   *     for (absl::string_view c : payload.contents()) {
+   *     for (std::string_view c : payload.contents()) {
    *       result += std::count_if(c.begin(), c.end(), '\n');
    *     }
    *   }

@@ -18,11 +18,11 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/string_view.h"
 #include <chrono>
 #include <cstdint>
 #include <iosfwd>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -97,12 +97,12 @@ class Interval {
            std::chrono::nanoseconds offset)
       : months_(months), days_(days), offset_(offset) {}
 
-  static StatusOr<Interval> ParseISO8601Interval(absl::string_view str);
-  static StatusOr<Interval> ParsePostgreSqlInterval(absl::string_view str);
+  static StatusOr<Interval> ParseISO8601Interval(std::string_view str);
+  static StatusOr<Interval> ParsePostgreSqlInterval(std::string_view str);
 
   friend Interval JustifyDays(Interval);
   friend Interval JustifyHours(Interval);
-  friend StatusOr<Interval> MakeInterval(absl::string_view);
+  friend StatusOr<Interval> MakeInterval(std::string_view);
   friend class IntervalTest;
 
   // Beware: Fractional multiplication similarly assumes 30-days months
@@ -126,7 +126,7 @@ class Interval {
  * Construct an `Interval` from a string. At least handles the format
  * produced by `Interval::operator std::string()`.
  */
-StatusOr<Interval> MakeInterval(absl::string_view);
+StatusOr<Interval> MakeInterval(std::string_view);
 
 /**
  * Adjust the interval so that 30-day periods are represented as months.
