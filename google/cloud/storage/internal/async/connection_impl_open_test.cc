@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_resume_policy.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
@@ -29,10 +31,13 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -49,18 +54,24 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::Contains;
+using ::testing::Each;
 using ::testing::ElementsAre;
+using ::testing::Ge;
 using ::testing::HasSubstr;
 using ::testing::InvokeWithoutArgs;
 using ::testing::IsEmpty;
+using ::testing::Key;
 using ::testing::NiceMock;
 using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Optional;
+using ::testing::Pair;
+using ::testing::SizeIs;
 
 using BidiReadStream = google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
@@ -394,6 +405,167 @@ TEST(AsyncConnectionImplTest, StopOnPermanentError) {
 
   // A permanent error is never retried, so there is nothing to report.
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("[gcs-retry]"))));
+}
+
+// Opens a stream with @p options and returns the metadata the connection set
+// on the `grpc::ClientContext`. The stream fails with a permanent error, so a
+// single `AsyncBidiReadObject()` call is all the test needs to observe.
+std::multimap<std::string, std::string> OpenAndCaptureMetadata(
+    Options options) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+  )pb";
+
+  ValidateMetadataFixture fixture;
+  std::multimap<std::string, std::string> metadata;
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const&) {
+        metadata = fixture.GetMetadata(*context);
+        return MakeErrorStream(sequencer, PermanentError());
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions(std::move(options)));
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending = connection->Open({std::move(request), connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value();
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value();
+
+  EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
+  return metadata;
+}
+
+TEST(AsyncConnectionImplTest, OpenFeatureHeaderWithMultiStream) {
+  std::string const expected =
+      EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
+  EXPECT_THAT(
+      OpenAndCaptureMetadata(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(true)),
+      Contains(Pair(kFeaturesHeader, expected)));
+}
+
+TEST(AsyncConnectionImplTest, OpenFeatureHeaderWithoutMultiStream) {
+  EXPECT_THAT(
+      OpenAndCaptureMetadata(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(false)),
+      Not(Contains(Key(kFeaturesHeader))));
+}
+
+// The header is not something only the first stream carries. With the
+// multi-stream optimization on, the descriptor opens an extra stream in the
+// background as soon as the first one is up, and later re-opens streams on
+// resume. All of them go through the same factory, so this test opens a
+// descriptor and checks every `AsyncBidiReadObject()` call it triggers.
+TEST(AsyncConnectionImplTest, OpenFeatureHeaderOnEveryDescriptorStream) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+  )pb";
+  std::string const expected =
+      EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
+
+  ValidateMetadataFixture fixture;
+  std::vector<std::multimap<std::string, std::string>> metadata;
+  AsyncSequencer<bool> sequencer;
+
+  // The stream the caller opens on. It serves one response and then stays
+  // open, as in a healthy session, until the test releases the parked read.
+  auto parked_stream = [&sequencer] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(true);
+    }));
+    ON_CALL(*stream, Write).WillByDefault([](auto const&, auto) {
+      return make_ready_future(true);
+    });
+    ON_CALL(*stream, Read)
+        .WillByDefault(InvokeWithoutArgs([&sequencer, n = 0]() mutable {
+          using Response = google::storage::v2::BidiReadObjectResponse;
+          if (n++ == 0) {
+            return make_ready_future(std::optional<Response>(Response{}));
+          }
+          return sequencer.PushBack("Read").then(
+              [](auto) { return std::optional<Response>(); });
+        }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(Status{});
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  // The streams the descriptor opens in the background. They never start, so
+  // the open retries and eventually gives up. That is fine: only the metadata
+  // each attempt was sent with matters here.
+  auto failing_stream = [] {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(false);
+    }));
+    ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+      return make_ready_future(TransientError());
+    }));
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      // `AtLeast(2)` matters: with a single stream the test would pass
+      // without exercising the descriptor's own opens at all.
+      .Times(AtLeast(2))
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const&) {
+        metadata.push_back(fixture.GetMetadata(*context));
+        return parked_stream();
+      })
+      .WillRepeatedly([&](CompletionQueue const&,
+                          std::shared_ptr<grpc::ClientContext> const& context,
+                          google::cloud::internal::ImmutableOptions const&) {
+        metadata.push_back(fixture.GetMetadata(*context));
+        return failing_stream();
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            StatusOr<std::chrono::system_clock::time_point>(
+                std::chrono::system_clock::now()));
+      });
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(true)));
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto p = connection->Open({std::move(request), connection->options()}).get();
+  ASSERT_THAT(p, IsOkAndHolds(NotNull()));
+  auto descriptor = *std::move(p);
+  descriptor.reset();
+
+  // Release the parked read so the stream can wind down.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(false);
+
+  ASSERT_THAT(metadata, SizeIs(Ge(2)));
+  EXPECT_THAT(metadata, Each(Contains(Pair(kFeaturesHeader, expected))));
 }
 
 TEST(AsyncConnectionImplTest, TooManyTransientErrors) {
