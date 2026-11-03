@@ -136,20 +136,20 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
                                           std::move(config.reader_options));
 
     auto const metrics = std::vector<std::string_view>{
-        std::string_view{"grpc.lb.wrr.rr_fallback"},
-        std::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
-        std::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
-        std::string_view{"grpc.lb.wrr.endpoint_weights"},
-        std::string_view{"grpc.xds_client.connected"},
-        std::string_view{"grpc.xds_client.server_failure"},
-        std::string_view{"grpc.xds_client.resource_updates_valid"},
-        std::string_view{"grpc.xds_client.resource_updates_invalid"},
-        std::string_view{"grpc.xds_client.resources"},
-        std::string_view{"grpc.lb.rls.cache_size"},
-        std::string_view{"grpc.lb.rls.cache_entries"},
-        std::string_view{"grpc.lb.rls.default_target_picks"},
-        std::string_view{"grpc.lb.rls.target_picks"},
-        std::string_view{"grpc.lb.rls.failed_picks"},
+        "grpc.lb.wrr.rr_fallback",
+        "grpc.lb.wrr.endpoint_weight_not_yet_usable",
+        "grpc.lb.wrr.endpoint_weight_stale",
+        "grpc.lb.wrr.endpoint_weights",
+        "grpc.xds_client.connected",
+        "grpc.xds_client.server_failure",
+        "grpc.xds_client.resource_updates_valid",
+        "grpc.xds_client.resource_updates_invalid",
+        "grpc.xds_client.resources",
+        "grpc.lb.rls.cache_size",
+        "grpc.lb.rls.cache_entries",
+        "grpc.lb.rls.default_target_picks",
+        "grpc.lb.rls.target_picks",
+        "grpc.lb.rls.failed_picks",
     };
     auto scope_filter =
         [authority = std::move(config.authority)](
@@ -160,7 +160,7 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
         grpc::OpenTelemetryPluginBuilder()
             .SetMeterProvider(provider)
             .EnableMetrics(metrics)
-            .AddOptionalLabel(std::string_view("grpc.lb.locality"))
+            .AddOptionalLabel("grpc.lb.locality")
             .SetGenericMethodAttributeFilter([](std::string_view target) {
               return absl::StartsWith(target, "google.storage.v2");
             })
