@@ -246,26 +246,6 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
 
 std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     ReadParams p) {
-  // Full-object checksum validation (both CRC32C and MD5) is only supported for
-  // full-object reads (starting at offset 0 and reading the entire object) of
-  // finalized objects.
-  //
-  // For unfinalized objects, full-object checksum validation is bypassed
-  // because the object size and checksums can dynamically change as data is
-  // appended, while chunk-level CRC32C validation continues to protect data on
-  // the wire.
-  //
-  // Note that MD5 validation is not supported for partial/ranged reads because
-  // GCS does not compute or send chunk-level MD5 checksums (unlike CRC32C,
-  // which is validated per-chunk on the gRPC layer).
-  bool const is_finalized =
-      metadata_.has_value() && metadata_->has_finalize_time();
-  bool const is_full_read = is_finalized && (p.start == 0) &&
-                            (p.length == 0 || p.length >= metadata_->size());
-
-  auto hash_function = CreateHashFunction(is_full_read);
-  auto hash_validator = CreateHashValidator(is_full_read);
-
   // Calculate the download limit (number of bytes to read) based on GCS range
   // read options:
   // 1. If `p.start < 0`, this is a tail read (ReadLast). The limit is the
@@ -285,10 +265,6 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   } else if (p.length > 0) {
     limit = p.length;
   }
-
-  auto range = std::make_shared<ReadRange>(
-      p.start, limit, hash_function, std::move(hash_validator),
-      read_object_spec_.bucket(), read_object_spec_.object());
 
   std::unique_lock<std::mutex> lk(mu_);
   // Check if this range matches a pre-warmed range.
@@ -323,6 +299,30 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   if (evicted_ranges_.erase(cache_key) != 0) {
     cache_status = InitialReadRangesCacheStatus::kEvicted;
   }
+
+  // Full-object checksum validation (both CRC32C and MD5) is only supported for
+  // full-object reads (starting at offset 0 and reading the entire object) of
+  // finalized objects.
+  //
+  // For unfinalized objects, full-object checksum validation is bypassed
+  // because the object size and checksums can dynamically change as data is
+  // appended, while chunk-level CRC32C validation continues to protect data on
+  // the wire.
+  //
+  // Note that MD5 validation is not supported for partial/ranged reads because
+  // GCS does not compute or send chunk-level MD5 checksums (unlike CRC32C,
+  // which is validated per-chunk on the gRPC layer).
+  bool const is_finalized =
+      metadata_.has_value() && metadata_->has_finalize_time();
+  bool const is_full_read = is_finalized && (p.start == 0) &&
+                            (p.length == 0 || p.length >= metadata_->size());
+
+  auto hash_function = CreateHashFunction(is_full_read);
+  auto hash_validator = CreateHashValidator(is_full_read, lk);
+
+  auto range = std::make_shared<ReadRange>(
+      p.start, limit, std::move(hash_function), std::move(hash_validator),
+      read_object_spec_.bucket(), read_object_spec_.object());
 
   if (stream_manager_->Empty()) {
     lk.unlock();
@@ -396,7 +396,8 @@ ObjectDescriptorImpl::CreateHashFunction(bool is_full_read) const {
 }
 
 std::unique_ptr<storage::internal::HashValidator>
-ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
+ObjectDescriptorImpl::CreateHashValidator(
+    bool is_full_read, std::unique_lock<std::mutex> const&) const {
   if (!is_full_read) {
     return storage::internal::CreateNullHashValidator();
   }
@@ -420,7 +421,7 @@ ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
 
   // Process the expected hashes from metadata
   storage::internal::HashValues hashes;
-  if (metadata_->has_checksums()) {
+  if (metadata_.has_value() && metadata_->has_checksums()) {
     auto const& checksums = metadata_->checksums();
     if (checksums.has_crc32c()) {
       hashes =
@@ -827,6 +828,7 @@ ObjectDescriptorImpl::ResumeKind ObjectDescriptorImpl::ClassifyFinish(
 }
 
 std::size_t ObjectDescriptorImpl::StreamSize() const {
+  std::scoped_lock<std::mutex> lk(mu_);
   return stream_manager_->Size();
 }
 
