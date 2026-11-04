@@ -4302,7 +4302,7 @@ TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
   std::vector<std::thread> readers;
   readers.reserve(kReaderThreads);
   for (int t = 0; t < kReaderThreads; ++t) {
-    readers.emplace_back([&tested, t] {
+    readers.emplace_back([&, t] {
       for (int i = 0; i < kReadsPerThread; ++i) {
         auto params =
             (i % 2 == 0)
@@ -4429,7 +4429,7 @@ TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
   std::vector<std::thread> workers;
   workers.reserve(kWorkerThreads);
   for (int t = 0; t < kWorkerThreads; ++t) {
-    workers.emplace_back([&tested, t] {
+    workers.emplace_back([&, t] {
       for (int i = 0; i < kOpsPerThread; ++i) {
         if ((i + t) % 4 == 0) {
           tested->MakeSubsequentStream();
