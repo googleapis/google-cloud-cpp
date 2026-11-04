@@ -552,6 +552,39 @@ class OracleDatabaseConnection {
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
   DeleteOdbSubnet(google::longrunning::Operation const& operation);
 
+  virtual StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>
+  ListOdbDnsZones(
+      google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request);
+
+  virtual StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone> GetOdbDnsZone(
+      google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request);
+
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+  CreateOdbDnsZone(
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateOdbDnsZone(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+  CreateOdbDnsZone(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbDnsZone(
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteOdbDnsZone(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbDnsZone(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
   ListExadbVmClusters(
       google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request);

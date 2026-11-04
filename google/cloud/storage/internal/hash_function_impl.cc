@@ -41,15 +41,15 @@ bool AlreadyHashed(std::int64_t offset, Buffer const& buffer,
 
 std::string NullHashFunction::Name() const { return "null"; }
 
-void NullHashFunction::Update(absl::string_view) {}
+void NullHashFunction::Update(std::string_view) {}
 
 Status NullHashFunction::Update(std::int64_t /*offset*/,
-                                absl::string_view /*buffer*/) {
+                                std::string_view /*buffer*/) {
   return {};
 }
 
 Status NullHashFunction::Update(std::int64_t /*offset*/,
-                                absl::string_view /*buffer*/,
+                                std::string_view /*buffer*/,
                                 std::uint32_t /*buffer_crc*/) {
   return {};
 }
@@ -66,19 +66,18 @@ std::string CompositeFunction::Name() const {
   return "composite(" + a_->Name() + "," + b_->Name() + ")";
 }
 
-void CompositeFunction::Update(absl::string_view buffer) {
+void CompositeFunction::Update(std::string_view buffer) {
   a_->Update(buffer);
   b_->Update(buffer);
 }
 
-Status CompositeFunction::Update(std::int64_t offset,
-                                 absl::string_view buffer) {
+Status CompositeFunction::Update(std::int64_t offset, std::string_view buffer) {
   auto status = a_->Update(offset, buffer);
   if (!status.ok()) return status;
   return b_->Update(offset, buffer);
 }
 
-Status CompositeFunction::Update(std::int64_t offset, absl::string_view buffer,
+Status CompositeFunction::Update(std::int64_t offset, std::string_view buffer,
                                  std::uint32_t buffer_crc) {
   auto status = a_->Update(offset, buffer, buffer_crc);
   if (!status.ok()) return status;
@@ -96,7 +95,7 @@ HashValues CompositeFunction::Finish() {
   return Merge(a_->Finish(), b_->Finish());
 }
 
-Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer) {
+Status MD5HashFunction::Update(std::int64_t offset, std::string_view buffer) {
   if (offset == minimum_offset_ || minimum_offset_ == 0) {
     Update(buffer);
     minimum_offset_ = offset + buffer.size();
@@ -106,7 +105,7 @@ Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer) {
   return InvalidArgumentError("mismatched offset", GCP_ERROR_INFO());
 }
 
-Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer,
+Status MD5HashFunction::Update(std::int64_t offset, std::string_view buffer,
                                std::uint32_t /*buffer_crc*/) {
   return Update(offset, buffer);
 }
@@ -131,12 +130,12 @@ HashValues MD5HashFunction::Finish() {
   return *hashes_;
 }
 
-void Crc32cHashFunction::Update(absl::string_view buffer) {
+void Crc32cHashFunction::Update(std::string_view buffer) {
   current_ = ExtendCrc32c(current_, buffer);
 }
 
 Status Crc32cHashFunction::Update(std::int64_t offset,
-                                  absl::string_view buffer) {
+                                  std::string_view buffer) {
   if (offset == minimum_offset_ || minimum_offset_ == 0) {
     Update(buffer);
     minimum_offset_ = offset + buffer.size();
@@ -146,7 +145,7 @@ Status Crc32cHashFunction::Update(std::int64_t offset,
   return InvalidArgumentError("mismatched offset", GCP_ERROR_INFO());
 }
 
-Status Crc32cHashFunction::Update(std::int64_t offset, absl::string_view buffer,
+Status Crc32cHashFunction::Update(std::int64_t offset, std::string_view buffer,
                                   std::uint32_t buffer_crc) {
   if (offset == minimum_offset_ || minimum_offset_ == 0) {
     current_ = ExtendCrc32c(current_, buffer, buffer_crc);
@@ -177,15 +176,15 @@ std::string PrecomputedHashFunction::Name() const {
   return "precomputed(" + Format(precomputed_hash_) + ")";
 }
 
-void PrecomputedHashFunction::Update(absl::string_view /*buffer*/) {}
+void PrecomputedHashFunction::Update(std::string_view /*buffer*/) {}
 
 Status PrecomputedHashFunction::Update(std::int64_t /*offset*/,
-                                       absl::string_view /*buffer*/) {
+                                       std::string_view /*buffer*/) {
   return Status{};
 }
 
 Status PrecomputedHashFunction::Update(std::int64_t /*offset*/,
-                                       absl::string_view /*buffer*/,
+                                       std::string_view /*buffer*/,
                                        std::uint32_t /*buffer_crc*/) {
   return Status{};
 }
@@ -202,17 +201,17 @@ std::string Crc32cMessageHashFunction::Name() const {
   return "crc32c-message(" + child_->Name() + ")";
 }
 
-void Crc32cMessageHashFunction::Update(absl::string_view buffer) {
+void Crc32cMessageHashFunction::Update(std::string_view buffer) {
   return child_->Update(buffer);
 }
 
 Status Crc32cMessageHashFunction::Update(std::int64_t offset,
-                                         absl::string_view buffer) {
+                                         std::string_view buffer) {
   return child_->Update(offset, buffer);
 }
 
 Status Crc32cMessageHashFunction::Update(std::int64_t offset,
-                                         absl::string_view buffer,
+                                         std::string_view buffer,
                                          std::uint32_t buffer_crc) {
   if (Crc32c(buffer) != buffer_crc) {
     // No need to update the child, this is an error that should stop any

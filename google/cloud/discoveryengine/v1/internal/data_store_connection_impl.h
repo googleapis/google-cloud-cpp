@@ -90,6 +90,12 @@ class DataStoreServiceConnectionImpl
       google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request)
       override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 

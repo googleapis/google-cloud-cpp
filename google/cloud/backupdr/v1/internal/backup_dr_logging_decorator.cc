@@ -845,6 +845,274 @@ StatusOr<google::longrunning::Operation> BackupDRLogging::InitializeService(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRLogging::AsyncCreateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+              request) {
+        return child_->AsyncCreateAutoProtectionPolicy(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::CreateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+              request) {
+        return child_->CreateAutoProtectionPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPoliciesResponse>
+BackupDRLogging::ListAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest const&
+              request) {
+        return child_->ListAutoProtectionPolicies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRLogging::GetAutoProtectionPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+                 request) {
+        return child_->GetAutoProtectionPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRLogging::AsyncUpdateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+              request) {
+        return child_->AsyncUpdateAutoProtectionPolicy(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::UpdateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+              request) {
+        return child_->UpdateAutoProtectionPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRLogging::AsyncDeleteAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+              request) {
+        return child_->AsyncDeleteAutoProtectionPolicy(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::DeleteAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+              request) {
+        return child_->DeleteAutoProtectionPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRLogging::AsyncCreateAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::backupdr::v1::
+                 CreateAutoProtectionPolicyBindingRequest const& request) {
+        return child_->AsyncCreateAutoProtectionPolicyBinding(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::CreateAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::
+                 CreateAutoProtectionPolicyBindingRequest const& request) {
+        return child_->CreateAutoProtectionPolicyBinding(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRLogging::GetAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::
+                 GetAutoProtectionPolicyBindingRequest const& request) {
+        return child_->GetAutoProtectionPolicyBinding(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsResponse>
+BackupDRLogging::ListAutoProtectionPolicyBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::
+                 ListAutoProtectionPolicyBindingsRequest const& request) {
+        return child_->ListAutoProtectionPolicyBindings(context, options,
+                                                        request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesResponse>
+BackupDRLogging::ListAppliedAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::
+                 ListAppliedAutoProtectionPoliciesRequest const& request) {
+        return child_->ListAppliedAutoProtectionPolicies(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRLogging::AsyncInitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::backupdr::v1::
+              InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+        return child_->AsyncInitiateDeleteAutoProtectionPolicyBinding(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::InitiateDeleteAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::
+              InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+        return child_->InitiateDeleteAutoProtectionPolicyBinding(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBindingMatchingResourcesResponse>
+BackupDRLogging::ListBindingMatchingResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::
+                 ListBindingMatchingResourcesRequest const& request) {
+        return child_->ListBindingMatchingResources(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

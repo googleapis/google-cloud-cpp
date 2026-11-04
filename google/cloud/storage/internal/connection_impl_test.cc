@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/tracing_connection.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -57,6 +58,7 @@ using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
@@ -823,6 +825,126 @@ ReadSourceResult MakeReadResult(std::string const& payload, char* buf) {
   std::copy(payload.begin(), payload.end(), buf);
   return ReadSourceResult{payload.size(),
                           HttpResponse{HttpStatusCode::kOk, {}, {}}};
+}
+
+// The feature tracking header reports read hedging to the service, and only
+// when hedging is in effect. The primary attempt is opened lazily by the read
+// pool, so the header is observed on the first `Read()`.
+//
+// The connection is created with @p connection_options, which decides whether
+// the hedging thread pools exist. The read runs with @p call_options layered
+// on top, which decides whether hedging is requested for this call.
+std::vector<std::string> FeatureHeaderForReadObject(Options connection_options,
+                                                    Options call_options) {
+  auto captured = std::make_shared<std::vector<std::string>>();
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).Times(AtLeast(0));
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([captured](rest_internal::RestContext& context, Options const&,
+                           ReadObjectRangeRequest const&) {
+        *captured =
+            context.GetHeader(storage_internal::kFeaturesHeader).values();
+        auto source = std::make_unique<testing::MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce([](char* buf, std::size_t) {
+          return MakeReadResult("payload", buf);
+        });
+        return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(source));
+      });
+  auto client = StorageConnectionImpl::Create(std::move(mock),
+                                              std::move(connection_options));
+  std::vector<char> buffer(100);
+  google::cloud::internal::OptionsSpan const span(
+      google::cloud::internal::MergeOptions(std::move(call_options),
+                                            client->options()));
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
+  EXPECT_THAT(source, IsOk());
+  if (!source) return *captured;
+  EXPECT_THAT((*source)->Read(buffer.data(), buffer.size()), IsOk());
+  return *captured;
+}
+
+Options HedgingConnectionOptions() {
+  return BasicTestPolicies()
+      .set<storage_experimental::EnableReadHedgingOption>(true)
+      .set<storage_experimental::MaxReadHedgesOption>(1)
+      .set<storage_experimental::ReadThreadPoolSizeOption>(1);
+}
+
+// A hedge delay long enough that the primary always wins, so the mock sees
+// exactly one `ReadObject()` call.
+Options HedgingCallOptions() {
+  return Options{}.set<storage_experimental::ReadHedgeDelayOption>(
+      std::chrono::seconds(30));
+}
+
+TEST(RetryClientTest, ReadObjectFeatureHeaderWithHedging) {
+  // "AAAAAg==" is `FeatureBit(TrackedFeature::kReadHedging)`; the encoding
+  // itself is pinned in `tracked_features_test.cc`.
+  EXPECT_THAT(FeatureHeaderForReadObject(HedgingConnectionOptions(),
+                                         HedgingCallOptions()),
+              ElementsAre("AAAAAg=="));
+}
+
+TEST(RetryClientTest, ReadObjectFeatureHeaderWithoutHedging) {
+  EXPECT_THAT(FeatureHeaderForReadObject(BasicTestPolicies(), Options{}),
+              IsEmpty());
+}
+
+// Hedging is enabled but can never dispatch a hedge: the feature is not in
+// effect, so it must not be reported.
+TEST(RetryClientTest, ReadObjectFeatureHeaderWithZeroMaxHedges) {
+  EXPECT_THAT(
+      FeatureHeaderForReadObject(
+          HedgingConnectionOptions(),
+          HedgingCallOptions().set<storage_experimental::MaxReadHedgesOption>(
+              0)),
+      IsEmpty());
+}
+
+// Hedging requested per-call, but the connection was created without it and
+// so has no hedging thread pools. The read falls back to a plain read, and
+// the header must say so by being absent.
+TEST(RetryClientTest, ReadObjectFeatureHeaderWithoutHedgingPools) {
+  EXPECT_THAT(FeatureHeaderForReadObject(
+                  BasicTestPolicies(),
+                  HedgingCallOptions()
+                      .set<storage_experimental::EnableReadHedgingOption>(true)
+                      .set<storage_experimental::MaxReadHedgesOption>(1)),
+              IsEmpty());
+}
+
+// Read hedging only applies to `ReadObject()`. A connection with hedging in
+// effect must not report it on any other RPC.
+TEST(RetryClientTest, FeatureHeaderNotSentOnOtherRpcs) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).Times(AtLeast(0));
+  EXPECT_CALL(*mock, GetObjectMetadata)
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
+                   GetObjectMetadataRequest const&) {
+        EXPECT_THAT(context.GetHeader(storage_internal::kFeaturesHeader),
+                    IsEmpty());
+        return StatusOr<ObjectMetadata>(PermanentError());
+      });
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
+                   DeleteObjectRequest const&) {
+        EXPECT_THAT(context.GetHeader(storage_internal::kFeaturesHeader),
+                    IsEmpty());
+        return StatusOr<EmptyResponse>(PermanentError());
+      });
+  auto client = StorageConnectionImpl::Create(std::move(mock),
+                                              HedgingConnectionOptions());
+  google::cloud::internal::OptionsSpan const span(
+      google::cloud::internal::MergeOptions(HedgingCallOptions(),
+                                            client->options()));
+
+  EXPECT_THAT(client->GetObjectMetadata(
+                  GetObjectMetadataRequest("test-bucket", "test-object")),
+              StatusIs(PermanentError().code()));
+  EXPECT_THAT(
+      client->DeleteObject(DeleteObjectRequest("test-bucket", "test-object")),
+      StatusIs(PermanentError().code()));
 }
 
 TEST(RetryClientTest, HedgedReadRecordsMetricsOnGlobalMeterProvider) {

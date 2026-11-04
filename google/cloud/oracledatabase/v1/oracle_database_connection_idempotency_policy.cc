@@ -264,6 +264,26 @@ Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteOdbSubnet(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListOdbDnsZones(
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetOdbDnsZone(
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::CreateOdbDnsZone(
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteOdbDnsZone(
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListExadbVmClusters(
     google::cloud::oracledatabase::v1::ListExadbVmClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;

@@ -80,7 +80,7 @@ StatusOr<ListProjectsResponse> ListProjectsResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string ListProjectsResponse::DebugString(absl::string_view name,
+std::string ListProjectsResponse::DebugString(std::string_view name,
                                               TracingOptions const& options,
                                               int indent) const {
   return internal::DebugFormatter(name, options, indent)

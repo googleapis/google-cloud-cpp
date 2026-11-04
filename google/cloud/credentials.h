@@ -19,10 +19,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/ssl_certificate.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <chrono>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -63,7 +63,7 @@ struct ClientSslCertificateOption {
  * @note Not supported on Windows.
  */
 struct CAInMemoryOption {
-  using Type = std::vector<absl::string_view>;
+  using Type = std::vector<std::string_view>;
 };
 
 }  // namespace experimental

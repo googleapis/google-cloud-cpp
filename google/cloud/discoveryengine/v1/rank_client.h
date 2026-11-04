@@ -109,8 +109,8 @@ class RankServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.RankRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/rank_service.proto#L76}
-  /// [google.cloud.discoveryengine.v1.RankResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/rank_service.proto#L130}
+  /// [google.cloud.discoveryengine.v1.RankRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/rank_service.proto#L78}
+  /// [google.cloud.discoveryengine.v1.RankResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/rank_service.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::RankResponse> Rank(

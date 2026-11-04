@@ -61,7 +61,7 @@ absl::Cord SplitObjectWriteData<absl::Cord>::Next() {
       auto buffer = std::unique_ptr<char[]>(new char[n]);
       std::copy_n(b.begin(), n, buffer.get());
       // Get `buffer.get()` before we std::move-from.
-      auto contents = absl::string_view{buffer.get(), n};
+      auto contents = std::string_view{buffer.get(), n};
       result.Append(absl::MakeCordFromExternal(
           contents, [b = std::move(buffer)]() mutable {}));
     }

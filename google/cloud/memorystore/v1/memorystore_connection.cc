@@ -38,6 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MemorystoreConnection::~MemorystoreConnection() = default;
 
+StreamRange<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreConnection::ListAclPolicies(
+    google::cloud::memorystore::v1::
+        ListAclPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::memorystore::v1::AclPolicy>>();
+}
+
 StreamRange<google::cloud::memorystore::v1::Instance>
 MemorystoreConnection::ListInstances(
     google::cloud::memorystore::v1::
@@ -46,9 +54,21 @@ MemorystoreConnection::ListInstances(
       StreamRange<google::cloud::memorystore::v1::Instance>>();
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreConnection::GetAclPolicy(
+    google::cloud::memorystore::v1::GetAclPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance>
 MemorystoreConnection::GetInstance(
     google::cloud::memorystore::v1::GetInstanceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreConnection::CreateAclPolicy(
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -73,6 +93,27 @@ MemorystoreConnection::CreateInstance(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+MemorystoreConnection::UpdateAclPolicy(
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::AclPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreConnection::UpdateAclPolicy(
+    NoAwaitTag, google::cloud::memorystore::v1::UpdateAclPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+MemorystoreConnection::UpdateAclPolicy(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::AclPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::UpdateInstance(
     google::cloud::memorystore::v1::UpdateInstanceRequest const&) {
@@ -92,6 +133,41 @@ MemorystoreConnection::UpdateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::memorystore::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnection::DeleteAclPolicy(
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreConnection::DeleteAclPolicy(
+    NoAwaitTag, google::cloud::memorystore::v1::DeleteAclPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnection::DeleteAclPolicy(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreConnection::GetAclPolicyRevision(
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreConnection::ListAclPolicyRevisions(
+    google::cloud::memorystore::v1::
+        ListAclPolicyRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>>();
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>

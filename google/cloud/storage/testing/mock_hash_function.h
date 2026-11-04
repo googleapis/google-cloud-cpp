@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include <gmock/gmock.h>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -27,9 +28,9 @@ namespace testing {
 class MockHashFunction : public storage::internal::HashFunction {
  public:
   MOCK_METHOD(std::string, Name, (), (const, override));
-  MOCK_METHOD(void, Update, (absl::string_view), (override));
-  MOCK_METHOD(Status, Update, (std::int64_t, absl::string_view), (override));
-  MOCK_METHOD(Status, Update, (std::int64_t, absl::string_view, std::uint32_t),
+  MOCK_METHOD(void, Update, (std::string_view), (override));
+  MOCK_METHOD(Status, Update, (std::int64_t, std::string_view), (override));
+  MOCK_METHOD(Status, Update, (std::int64_t, std::string_view, std::uint32_t),
               (override));
   MOCK_METHOD(Status, Update, (std::int64_t, absl::Cord const&, std::uint32_t),
               (override));

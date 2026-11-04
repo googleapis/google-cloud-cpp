@@ -25,6 +25,7 @@
 #include <fstream>
 #include <iterator>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -58,7 +59,7 @@ struct MtlsObjectBasicCRUDIntegrationTest
   static Client MakeMtlsClient(std::string const& test_key_file_contents,
                                std::string const& ssl_cert_blob,
                                std::string const& ssl_key_blob,
-                               std::vector<absl::string_view> const& ca_certs) {
+                               std::vector<std::string_view> const& ca_certs) {
     auto options = Options{}
                        .set<RetryPolicyOption>(TestRetryPolicy())
                        .set<BackoffPolicyOption>(TestBackoffPolicy());
@@ -213,7 +214,7 @@ TEST_F(MtlsObjectBasicCRUDIntegrationTest, CAInMemoryBasicCRUD) {
   ASSERT_STATUS_OK(ca_certs_text);
 
   // Create vector of CA certs in-memory.
-  std::vector<absl::string_view> ca_certs;
+  std::vector<std::string_view> ca_certs;
   std::string begin_cert = "-----BEGIN CERTIFICATE-----";
   std::string end_cert = "-----END CERTIFICATE-----";
   size_t current = 0;

@@ -53,6 +53,14 @@ class MockCompletionServiceConnection
       (google::cloud::discoveryengine::v1::CompleteQueryRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>,
+      AdvancedCompleteQuery,
+      (google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+           request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

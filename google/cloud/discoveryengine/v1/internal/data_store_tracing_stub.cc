@@ -123,6 +123,28 @@ DataStoreServiceTracingStub::UpdateDataStore(
                            child_->UpdateDataStore(context, options, request));
 }
 
+StatusOr<google::iam::v1::Policy> DataStoreServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DataStoreService", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DataStoreService", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataStoreServiceTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,

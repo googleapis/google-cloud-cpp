@@ -20,12 +20,12 @@
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <map>
 #include <optional>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -52,7 +52,7 @@ class ReadPayload {
 
   /// The payload contents. These buffers are invalidated if this object is
   /// modified.
-  std::vector<absl::string_view> contents() const {
+  std::vector<std::string_view> contents() const {
     return {impl_.chunk_begin(), impl_.chunk_end()};
   }
 

@@ -48,6 +48,12 @@ class CompletionServiceMetadata : public CompletionServiceStub {
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 
+  StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+  AdvancedCompleteQuery(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncImportSuggestionDenyListEntries(
       google::cloud::CompletionQueue& cq,

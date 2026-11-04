@@ -819,6 +819,80 @@ StatusOr<google::longrunning::Operation> OracleDatabaseAuth::DeleteOdbSubnet(
   return child_->DeleteOdbSubnet(context, options, request);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse>
+OracleDatabaseAuth::ListOdbDnsZones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOdbDnsZones(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseAuth::GetOdbDnsZone(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOdbDnsZone(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncCreateOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateOdbDnsZone(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseAuth::CreateOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateOdbDnsZone(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncDeleteOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteOdbDnsZone(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseAuth::DeleteOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOdbDnsZone(context, options, request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
 OracleDatabaseAuth::ListExadbVmClusters(
     grpc::ClientContext& context, Options const& options,

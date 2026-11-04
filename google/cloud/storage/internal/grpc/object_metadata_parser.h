@@ -18,8 +18,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
-#include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ std::string Crc32cFromProto(std::uint32_t);
 StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
 std::string MD5FromProto(std::string const&);
 StatusOr<std::string> MD5ToProto(std::string const&);
-std::string ComputeMD5Hash(absl::string_view payload);
+std::string ComputeMD5Hash(std::string_view payload);
 
 storage::ObjectMetadata FromProto(google::storage::v2::Object object,
                                   Options const& options);

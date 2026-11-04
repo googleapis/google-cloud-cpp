@@ -16,11 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_TESTING_FAKE_SOURCE_TREE_H
 
 #include "google/cloud/internal/type_traits.h"
-#include "absl/strings/string_view.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <map>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -34,8 +34,8 @@ struct SourceTreeOpenArgType {
 template <typename T>
 struct SourceTreeOpenArgType<
     T, google::cloud::internal::void_t<decltype(std::declval<T&>().Open(
-           absl::string_view{}))>> {
-  using type = absl::string_view;
+           std::string_view{}))>> {
+  using type = std::string_view;
 };
 
 class FakeSourceTree : public google::protobuf::compiler::SourceTree {

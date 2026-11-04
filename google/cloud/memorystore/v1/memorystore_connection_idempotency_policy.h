@@ -38,17 +38,39 @@ class MemorystoreConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<MemorystoreConnectionIdempotencyPolicy> clone() const;
 
+  virtual google::cloud::Idempotency ListAclPolicies(
+      google::cloud::memorystore::v1::ListAclPoliciesRequest request);
+
   virtual google::cloud::Idempotency ListInstances(
       google::cloud::memorystore::v1::ListInstancesRequest request);
+
+  virtual google::cloud::Idempotency GetAclPolicy(
+      google::cloud::memorystore::v1::GetAclPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetInstance(
       google::cloud::memorystore::v1::GetInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency CreateAclPolicy(
+      google::cloud::memorystore::v1::CreateAclPolicyRequest const& request);
+
   virtual google::cloud::Idempotency CreateInstance(
       google::cloud::memorystore::v1::CreateInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateAclPolicy(
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request);
+
   virtual google::cloud::Idempotency UpdateInstance(
       google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAclPolicy(
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetAclPolicyRevision(
+      google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAclPolicyRevisions(
+      google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest request);
 
   virtual google::cloud::Idempotency DeleteInstance(
       google::cloud::memorystore::v1::DeleteInstanceRequest const& request);

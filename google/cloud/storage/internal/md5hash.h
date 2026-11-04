@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_MD5HASH_H
 
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <cstdint>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -26,11 +26,11 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Compute the MD5 hash of @p payload
-std::vector<std::uint8_t> MD5Hash(absl::string_view payload);
+std::vector<std::uint8_t> MD5Hash(std::string_view payload);
 
 inline std::vector<std::uint8_t> MD5Hash(char const* payload) {
-  return MD5Hash(payload == nullptr ? absl::string_view{}
-                                    : absl::string_view(payload));
+  return MD5Hash(payload == nullptr ? std::string_view{}
+                                    : std::string_view(payload));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

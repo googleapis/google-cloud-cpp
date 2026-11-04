@@ -746,6 +746,242 @@ StatusOr<google::longrunning::Operation> BackupDRTracingStub::InitializeService(
       context, *span, child_->InitializeService(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncCreateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateAutoProtectionPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAutoProtectionPolicy(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::CreateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateAutoProtectionPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateAutoProtectionPolicy(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPoliciesResponse>
+BackupDRTracingStub::ListAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListAutoProtectionPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAutoProtectionPolicies(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRTracingStub::GetAutoProtectionPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetAutoProtectionPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetAutoProtectionPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncUpdateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateAutoProtectionPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAutoProtectionPolicy(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::UpdateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateAutoProtectionPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateAutoProtectionPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncDeleteAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteAutoProtectionPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteAutoProtectionPolicy(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::DeleteAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteAutoProtectionPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteAutoProtectionPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncCreateAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateAutoProtectionPolicyBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAutoProtectionPolicyBinding(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::CreateAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateAutoProtectionPolicyBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateAutoProtectionPolicyBinding(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRTracingStub::GetAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetAutoProtectionPolicyBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetAutoProtectionPolicyBinding(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsResponse>
+BackupDRTracingStub::ListAutoProtectionPolicyBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListAutoProtectionPolicyBindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAutoProtectionPolicyBindings(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesResponse>
+BackupDRTracingStub::ListAppliedAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListAppliedAutoProtectionPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAppliedAutoProtectionPolicies(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncInitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                             "InitiateDeleteAutoProtectionPolicyBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncInitiateDeleteAutoProtectionPolicyBinding(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::InitiateDeleteAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                             "InitiateDeleteAutoProtectionPolicyBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->InitiateDeleteAutoProtectionPolicyBinding(
+                               context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBindingMatchingResourcesResponse>
+BackupDRTracingStub::ListBindingMatchingResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListBindingMatchingResources");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListBindingMatchingResources(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

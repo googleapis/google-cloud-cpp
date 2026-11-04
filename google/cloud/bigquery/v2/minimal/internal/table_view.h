@@ -19,10 +19,10 @@
 #include "google/cloud/bigquery/v2/minimal/internal/table_partition.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -37,7 +37,7 @@ struct UserDefinedFunctionResource {
   std::string resource_uri;
   std::string inline_code;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -51,7 +51,7 @@ struct ViewDefinition {
 
   std::vector<UserDefinedFunctionResource> user_defined_function_resources;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -66,7 +66,7 @@ struct MaterializedViewDefinition {
       std::chrono::milliseconds(0);
   std::chrono::system_clock::time_point last_refresh_time;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -77,7 +77,7 @@ struct MaterializedViewStatus {
   std::chrono::system_clock::time_point refresh_watermark;
   ErrorProto last_refresh_status;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -92,7 +92,7 @@ struct TableMetadataView {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

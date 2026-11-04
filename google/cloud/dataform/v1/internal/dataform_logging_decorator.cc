@@ -820,6 +820,41 @@ DataformLogging::CreateCompilationResult(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataformLogging::AsyncCreateCompilationResultLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataform::v1::CreateCompilationResultRequest const&
+                 request) {
+        return child_->AsyncCreateCompilationResultLongRunning(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformLogging::CreateCompilationResultLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateCompilationResultRequest const&
+                 request) {
+        return child_->CreateCompilationResultLongRunning(context, options,
+                                                          request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
 DataformLogging::QueryCompilationResultActions(
     grpc::ClientContext& context, Options const& options,

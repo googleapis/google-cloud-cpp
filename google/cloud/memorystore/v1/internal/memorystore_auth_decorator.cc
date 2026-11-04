@@ -34,6 +34,15 @@ MemorystoreAuth::MemorystoreAuth(
     std::shared_ptr<MemorystoreStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+StatusOr<google::cloud::memorystore::v1::ListAclPoliciesResponse>
+MemorystoreAuth::ListAclPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAclPolicies(context, options, request);
+}
+
 StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
 MemorystoreAuth::ListInstances(
     grpc::ClientContext& context, Options const& options,
@@ -43,12 +52,30 @@ MemorystoreAuth::ListInstances(
   return child_->ListInstances(context, options, request);
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreAuth::GetAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAclPolicy(context, options, request);
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance> MemorystoreAuth::GetInstance(
     grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInstance(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreAuth::CreateAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAclPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -80,6 +107,34 @@ StatusOr<google::longrunning::Operation> MemorystoreAuth::CreateInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateAclPolicy(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::UpdateAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAclPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -105,6 +160,54 @@ StatusOr<google::longrunning::Operation> MemorystoreAuth::UpdateInstance(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInstance(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreAuth::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAclPolicy(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreAuth::DeleteAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAclPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreAuth::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAclPolicyRevision(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse>
+MemorystoreAuth::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAclPolicyRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

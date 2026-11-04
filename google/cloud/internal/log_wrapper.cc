@@ -19,20 +19,20 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-void LogRequest(absl::string_view where, absl::string_view args,
-                absl::string_view message) {
+void LogRequest(std::string_view where, std::string_view args,
+                std::string_view message) {
   GCP_LOG(DEBUG) << where << '(' << args << ')' << " << " << message;
 }
 
-Status LogResponse(Status response, absl::string_view where,
-                   absl::string_view args, TracingOptions const& options) {
+Status LogResponse(Status response, std::string_view where,
+                   std::string_view args, TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << '(' << args << ')'
                  << " >> status=" << DebugString(response, options);
   return response;
 }
 
-void LogResponseFuture(std::future_status status, absl::string_view where,
-                       absl::string_view args,
+void LogResponseFuture(std::future_status status, std::string_view where,
+                       std::string_view args,
                        TracingOptions const& /*options*/) {
   GCP_LOG(DEBUG) << where << '(' << args << ')'
                  << " >> future_status=" << DebugFutureStatus(status);
@@ -48,8 +48,8 @@ future<Status> LogResponse(future<Status> response, std::string where,
   });
 }
 
-void LogResponsePtr(bool not_null, absl::string_view where,
-                    absl::string_view args, TracingOptions const& /*options*/) {
+void LogResponsePtr(bool not_null, std::string_view where,
+                    std::string_view args, TracingOptions const& /*options*/) {
   GCP_LOG(DEBUG) << where << '(' << args << ')' << " >> "
                  << (not_null ? "not " : "") << "null";
 }

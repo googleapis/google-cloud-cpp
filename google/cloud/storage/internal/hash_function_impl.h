@@ -21,6 +21,7 @@
 #include <memory>
 #include <optional>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -37,9 +38,9 @@ class NullHashFunction : public HashFunction {
   NullHashFunction() = default;
 
   std::string Name() const override;
-  void Update(absl::string_view) override;
-  Status Update(std::int64_t offset, absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer,
+  void Update(std::string_view) override;
+  Status Update(std::int64_t offset, std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer,
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
@@ -56,9 +57,9 @@ class CompositeFunction : public HashFunction {
       : a_(std::move(a)), b_(std::move(b)) {}
 
   std::string Name() const override;
-  void Update(absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer,
+  void Update(std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer,
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
@@ -82,9 +83,9 @@ class MD5HashFunction : public HashFunction {
   static std::unique_ptr<MD5HashFunction> Create();
 
   std::string Name() const override { return "md5"; }
-  void Update(absl::string_view buffer) override = 0;
-  Status Update(std::int64_t offset, absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer,
+  void Update(std::string_view buffer) override = 0;
+  Status Update(std::int64_t offset, std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer,
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
@@ -111,9 +112,9 @@ class Crc32cHashFunction : public HashFunction {
   Crc32cHashFunction& operator=(Crc32cHashFunction const&) = delete;
 
   std::string Name() const override { return "crc32c"; }
-  void Update(absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer,
+  void Update(std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer,
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
@@ -136,9 +137,9 @@ class PrecomputedHashFunction : public HashFunction {
   PrecomputedHashFunction& operator=(PrecomputedHashFunction const&) = delete;
 
   std::string Name() const override;
-  void Update(absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer,
+  void Update(std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer,
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
@@ -178,9 +179,9 @@ class Crc32cMessageHashFunction : public HashFunction {
       delete;
 
   std::string Name() const override;
-  void Update(absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer) override;
-  Status Update(std::int64_t offset, absl::string_view buffer,
+  void Update(std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer) override;
+  Status Update(std::int64_t offset, std::string_view buffer,
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;

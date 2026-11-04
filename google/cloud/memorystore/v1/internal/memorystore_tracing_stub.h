@@ -39,14 +39,29 @@ class MemorystoreTracingStub : public MemorystoreStub {
 
   explicit MemorystoreTracingStub(std::shared_ptr<MemorystoreStub> child);
 
+  StatusOr<google::cloud::memorystore::v1::ListAclPoliciesResponse>
+  ListAclPolicies(grpc::ClientContext& context, Options const& options,
+                  google::cloud::memorystore::v1::ListAclPoliciesRequest const&
+                      request) override;
+
   StatusOr<google::cloud::memorystore::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context, Options const& options,
       google::cloud::memorystore::v1::ListInstancesRequest const& request)
       override;
 
+  StatusOr<google::cloud::memorystore::v1::AclPolicy> GetAclPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::GetAclPolicyRequest const& request)
+      override;
+
   StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
       grpc::ClientContext& context, Options const& options,
       google::cloud::memorystore::v1::GetInstanceRequest const& request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::AclPolicy> CreateAclPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::CreateAclPolicyRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -61,6 +76,18 @@ class MemorystoreTracingStub : public MemorystoreStub {
       google::cloud::memorystore::v1::CreateInstanceRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAclPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAclPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -72,6 +99,30 @@ class MemorystoreTracingStub : public MemorystoreStub {
       grpc::ClientContext& context, Options options,
       google::cloud::memorystore::v1::UpdateInstanceRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAclPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAclPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+  GetAclPolicyRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse>
+  ListAclPolicyRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,

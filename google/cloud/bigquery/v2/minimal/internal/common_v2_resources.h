@@ -17,10 +17,10 @@
 
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <string_view>
 #include <variant>
 
 namespace google {
@@ -38,7 +38,7 @@ struct ErrorProto {
   std::string location;
   std::string message;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -51,7 +51,7 @@ struct TableReference {
   std::string dataset_id;
   std::string table_id;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -63,7 +63,7 @@ struct DatasetReference {
   std::string dataset_id;
   std::string project_id;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -76,7 +76,7 @@ struct RoutineReference {
   std::string dataset_id;
   std::string routine_id;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -91,7 +91,7 @@ struct RoundingMode {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -106,7 +106,7 @@ struct ConnectionProperty {
   std::string key;
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -120,7 +120,7 @@ bool operator==(ConnectionProperty const& lhs, ConnectionProperty const& rhs);
 struct EncryptionConfiguration {
   std::string kms_key_name;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -138,7 +138,7 @@ struct KeyResultStatementKind {
   static KeyResultStatementKind Last();
   static KeyResultStatementKind FirstSelect();
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -157,7 +157,7 @@ struct ScriptOptions {
 
   KeyResultStatementKind key_result_statement;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -193,7 +193,7 @@ struct TypeKind {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -216,7 +216,7 @@ struct StandardSqlField {
   std::string name;
   std::shared_ptr<StandardSqlDataType> type;
 
-  std::string DebugString(absl::string_view field_name,
+  std::string DebugString(std::string_view field_name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -233,7 +233,7 @@ bool operator==(StandardSqlField const& lhs, StandardSqlField const& rhs);
 struct StandardSqlStructType {
   std::vector<StandardSqlField> fields;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -261,7 +261,7 @@ struct StandardSqlDataType {
 
   ValueType sub_type;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -290,7 +290,7 @@ struct Value {
                                 std::shared_ptr<Struct>, std::vector<Value>>;
   KindType value_kind;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -306,7 +306,7 @@ bool operator==(Value const& lhs, Value const& rhs);
 struct Struct {
   std::map<std::string, Value> fields;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -318,7 +318,7 @@ struct ColumnData {
   std::string value;
   // TODO(#14387): Use std::optional instead.
   bool is_null{false};
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -329,7 +329,7 @@ bool operator==(ColumnData const& lhs, ColumnData const& rhs);
 struct RowData {
   std::vector<ColumnData> columns;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -351,7 +351,7 @@ struct SystemVariables {
   //  Value for each system variable.
   Struct values;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -365,7 +365,7 @@ struct QueryParameterStructType {
   std::shared_ptr<QueryParameterType> type;
   std::string description;
 
-  std::string DebugString(absl::string_view qp_name,
+  std::string DebugString(std::string_view qp_name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -376,7 +376,7 @@ struct QueryParameterType {
   std::shared_ptr<QueryParameterType> array_type;
   std::vector<QueryParameterStructType> struct_types;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -388,7 +388,7 @@ struct QueryParameterValue {
   std::vector<QueryParameterValue> array_values;
   std::map<std::string, QueryParameterValue> struct_values;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -400,7 +400,7 @@ struct QueryParameter {
   QueryParameterType parameter_type;
   QueryParameterValue parameter_value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

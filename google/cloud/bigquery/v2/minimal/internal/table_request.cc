@@ -27,7 +27,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string GetTableRequest::DebugString(absl::string_view name,
+std::string GetTableRequest::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -39,7 +39,7 @@ std::string GetTableRequest::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ListTablesRequest::DebugString(absl::string_view name,
+std::string ListTablesRequest::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)

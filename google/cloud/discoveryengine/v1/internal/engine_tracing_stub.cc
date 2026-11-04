@@ -119,6 +119,28 @@ EngineServiceTracingStub::ListEngines(
                            child_->ListEngines(context, options, request));
 }
 
+StatusOr<google::iam::v1::Policy> EngineServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.EngineService", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> EngineServiceTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.EngineService", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 EngineServiceTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,

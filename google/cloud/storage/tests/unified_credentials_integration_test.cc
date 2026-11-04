@@ -29,6 +29,7 @@
 #endif
 #include <fstream>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -166,7 +167,7 @@ class UnifiedCredentialsIntegrationTest
   }
 
   static Options InvalidInMemoryTrustStoreOptions() {
-    std::vector<absl::string_view> bogus_certs;
+    std::vector<std::string_view> bogus_certs;
     bogus_certs.emplace_back(kCACertificate);
 
     return TestOptions()
@@ -266,7 +267,7 @@ class UnifiedCredentialsIntegrationTest
   std::string service_account_;
   std::string roots_pem_;
   std::string ca_certs_text_;
-  std::vector<absl::string_view> ca_certs_;
+  std::vector<std::string_view> ca_certs_;
   TempFile invalid_pem_{kCACertificate};
   TempFile empty_file_{std::string{}};
 };

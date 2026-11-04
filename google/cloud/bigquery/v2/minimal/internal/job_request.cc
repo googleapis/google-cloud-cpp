@@ -70,7 +70,7 @@ StateFilter StateFilter::Done() {
   return state_filter;
 }
 
-std::string GetJobRequest::DebugString(absl::string_view name,
+std::string GetJobRequest::DebugString(std::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -80,7 +80,7 @@ std::string GetJobRequest::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ListJobsRequest::DebugString(absl::string_view name,
+std::string ListJobsRequest::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -96,7 +96,7 @@ std::string ListJobsRequest::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string InsertJobRequest::DebugString(absl::string_view name,
+std::string InsertJobRequest::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -105,7 +105,7 @@ std::string InsertJobRequest::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string JobCreationMode::DebugString(absl::string_view name,
+std::string JobCreationMode::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -113,7 +113,7 @@ std::string JobCreationMode::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Projection::DebugString(absl::string_view name,
+std::string Projection::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -121,7 +121,7 @@ std::string Projection::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string StateFilter::DebugString(absl::string_view name,
+std::string StateFilter::DebugString(std::string_view name,
                                      TracingOptions const& options,
                                      int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -246,7 +246,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   return request;
 }
 
-std::string CancelJobRequest::DebugString(absl::string_view name,
+std::string CancelJobRequest::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -335,7 +335,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   return request;
 }
 
-std::string PostQueryRequest::DebugString(absl::string_view name,
+std::string PostQueryRequest::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -344,7 +344,7 @@ std::string PostQueryRequest::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string DataFormatOptions::DebugString(absl::string_view name,
+std::string DataFormatOptions::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -353,7 +353,7 @@ std::string DataFormatOptions::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string QueryRequest::DebugString(absl::string_view name,
+std::string QueryRequest::DebugString(std::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -433,7 +433,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   return request;
 }
 
-std::string GetQueryResultsRequest::DebugString(absl::string_view name,
+std::string GetQueryResultsRequest::DebugString(std::string_view name,
                                                 TracingOptions const& options,
                                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
