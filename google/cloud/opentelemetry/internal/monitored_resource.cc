@@ -234,7 +234,7 @@ MonitoredResourceProvider MakeProvider(
 
 std::string AsString(
     opentelemetry::sdk::common::OwnedAttributeValue const& attribute) {
-  return std::visit(AsStringVisitor{}, attribute);
+  return opentelemetry::nostd::visit(AsStringVisitor{}, attribute);
 }
 
 MonitoredResource ToMonitoredResource(

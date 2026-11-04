@@ -37,7 +37,7 @@ auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
             std::string const& name, std::string default_value) {
   auto const l = attributes.find(name);
   if (l == attributes.end()) return default_value;
-  return std::get<std::string>(l->second);
+  return opentelemetry::nostd::get<std::string>(l->second);
 }
 
 }  // namespace
