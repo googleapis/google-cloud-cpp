@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the instanceSettings resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceSettings
 ///
-/// This client uses InstanceSettings version 2026-09-01.
+/// This client uses InstanceSettings version 2026-11-01.
 ///
 /// @par Equality
 ///

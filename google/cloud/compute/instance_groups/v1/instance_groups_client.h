@@ -39,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the instanceGroups resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups
 ///
-/// This client uses InstanceGroups version 2026-09-01.
+/// This client uses InstanceGroups version 2026-11-01.
 ///
 /// @par Equality
 ///
