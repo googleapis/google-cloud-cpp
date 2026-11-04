@@ -17,6 +17,7 @@
 #include "absl/strings/str_split.h"
 #include <optional>
 #include <regex>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -37,7 +38,7 @@ std::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
 std::optional<std::pair<std::string, ProtoDefinitionLocation>>
 FindByAlternativeEnumValueName(google::protobuf::DescriptorPool const& pool,
                                std::string const& name) {
-  std::vector<absl::string_view> components = absl::StrSplit(name, '.');
+  std::vector<std::string_view> components = absl::StrSplit(name, '.');
   if (components.size() < 2) return std::nullopt;
   components.erase(std::next(components.begin(), components.size() - 2));
   auto alternative = absl::StrJoin(components, ".");

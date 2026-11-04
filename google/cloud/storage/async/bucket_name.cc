@@ -45,7 +45,7 @@ std::ostream& operator<<(std::ostream& os, BucketName const& p) {
   return os << p.FullName();
 }
 
-StatusOr<BucketName> MakeBucketName(absl::string_view full_name) {
+StatusOr<BucketName> MakeBucketName(std::string_view full_name) {
   if (!absl::ConsumePrefix(&full_name, kPrefix)) {
     return internal::InvalidArgumentError(
         absl::StrCat("missing prefix (", kPrefix,

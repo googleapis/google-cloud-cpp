@@ -26,6 +26,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <functional>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -45,14 +46,14 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   }
 
   using Validator =
-      std::function<Status(absl::string_view name, nlohmann::json::iterator)>;
+      std::function<Status(std::string_view name, nlohmann::json::iterator)>;
   using Store = std::function<void(ServiceAccountCredentialsInfo&,
                                    nlohmann::json::iterator const&)>;
 
-  auto optional_field = [](absl::string_view, nlohmann::json::iterator const&) {
+  auto optional_field = [](std::string_view, nlohmann::json::iterator const&) {
     return Status{};
   };
-  auto non_empty_field = [&](absl::string_view name,
+  auto non_empty_field = [&](std::string_view name,
                              nlohmann::json::iterator const& l) {
     if (l == credentials.end()) return Status{};
     if (!l->get<std::string>().empty()) return Status{};
@@ -60,7 +61,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
         absl::StrCat("Invalid ServiceAccountCredentials, the ", name,
                      " field is empty on data loaded from ", source));
   };
-  auto required_field = [&](absl::string_view name,
+  auto required_field = [&](std::string_view name,
                             nlohmann::json::iterator const& l) {
     if (l == credentials.end()) {
       return internal::InvalidArgumentError(

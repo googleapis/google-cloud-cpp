@@ -27,13 +27,13 @@
 #include "absl/base/attributes.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/match.h"
-#include "absl/strings/string_view.h"
 #include <chrono>
 #include <iostream>
 #include <limits>
 #include <numeric>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace {
@@ -350,12 +350,12 @@ int main(int argc, char* argv[]) {
 namespace {
 
 ABSL_ATTRIBUTE_UNUSED
-bool StartsWith(absl::Cord const& text, absl::string_view prefix) {
+bool StartsWith(absl::Cord const& text, std::string_view prefix) {
   return text.StartsWith(prefix);
 }
 
 ABSL_ATTRIBUTE_UNUSED
-bool StartsWith(absl::string_view text, absl::string_view prefix) {
+bool StartsWith(std::string_view text, std::string_view prefix) {
   return absl::StartsWith(text, prefix);
 }
 

@@ -29,6 +29,7 @@
 #include <csignal>
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <thread>
 #include <vector>
 
@@ -187,17 +188,17 @@ std::string CleanupDebugData(char const* data, std::size_t size) {
   return text;
 }
 
-std::string DebugCensored(absl::string_view msg, absl::string_view payload) {
+std::string DebugCensored(std::string_view msg, std::string_view payload) {
   // We want to truncate the portion of the payload following this ": Bearer" to
   // at most 32 characters, skipping everything else until any newline.
-  auto const bearer = absl::string_view{": Bearer "};
+  auto const bearer = std::string_view{": Bearer "};
   auto const limit = bearer.size() + 32;
   auto const bearer_pos = payload.find(bearer);
   if (bearer_pos == std::string::npos) return absl::StrCat(msg, payload);
 
   auto const nl_pos = payload.find('\n', bearer_pos);
   auto const prefix = payload.substr(0, bearer_pos);
-  auto trailer = absl::string_view{};
+  auto trailer = std::string_view{};
   auto body = payload.substr(bearer_pos);
   if (nl_pos != std::string::npos) {
     trailer = payload.substr(nl_pos);
@@ -272,9 +273,9 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
   }
   // Split on the ':' (if any), ignore the trailing '\r\n'. Then cleanup the
   // header name and value.
-  std::vector<absl::string_view> s = absl::StrSplit(
-      absl::string_view{data, size - 2}, absl::MaxSplits(':', 1));
-  auto value = s.size() == 2 ? s[1] : absl::string_view{};
+  std::vector<std::string_view> s =
+      absl::StrSplit(std::string_view{data, size - 2}, absl::MaxSplits(':', 1));
+  auto value = s.size() == 2 ? s[1] : std::string_view{};
   received_headers.emplace(
       absl::AsciiStrToLower(s[0]),
       std::string(absl::StripLeadingAsciiWhitespace(value)));
@@ -282,16 +283,16 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
 }
 
 std::string DebugInfo(char const* data, std::size_t size) {
-  return DebugCensored("== curl(Info): ", absl::string_view{data, size});
+  return DebugCensored("== curl(Info): ", std::string_view{data, size});
 }
 
 std::string DebugRecvHeader(char const* data, std::size_t size) {
-  return absl::StrCat("<< curl(Recv Header): ", absl::string_view{data, size});
+  return absl::StrCat("<< curl(Recv Header): ", std::string_view{data, size});
 }
 
 std::string DebugSendHeader(char const* data, std::size_t size) {
   // libcurl delivers multiple headers in a single payload, separated by '\n'.
-  return DebugCensored(">> curl(Send Header): ", absl::string_view{data, size});
+  return DebugCensored(">> curl(Send Header): ", std::string_view{data, size});
 }
 
 std::string DebugInData(char const* data, std::size_t size) {

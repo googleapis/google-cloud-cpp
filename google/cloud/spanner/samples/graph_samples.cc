@@ -393,9 +393,9 @@ google::cloud::spanner::Client MakeSampleClient(
       google::cloud::spanner::Database(project_id, instance_id, database_id)));
 }
 
-std::string Basename(absl::string_view name) {
+std::string Basename(std::string_view name) {
   auto last_sep = name.find_last_of("/\\");
-  if (last_sep != absl::string_view::npos) name.remove_prefix(last_sep + 1);
+  if (last_sep != std::string_view::npos) name.remove_prefix(last_sep + 1);
   return std::string(name);
 }
 
@@ -608,3 +608,4 @@ int main(int ac, char* av[]) try {
   return 1;
 }
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

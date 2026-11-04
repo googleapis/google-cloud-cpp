@@ -22,6 +22,7 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -42,7 +43,7 @@ GrpcObjectReadSource::TimerSource MakeSimpleTimerSource() {
 }
 
 void SetContent(storage_proto::ReadObjectResponse& response,
-                absl::string_view value) {
+                std::string_view value) {
   SetMutableContent(*response.mutable_checksummed_data(), ContentType(value));
 }
 

@@ -22,8 +22,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -38,7 +38,7 @@ class GetJobResponse {
   static StatusOr<GetJobResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -54,7 +54,7 @@ class ListJobsResponse {
   static StatusOr<ListJobsResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -72,7 +72,7 @@ class InsertJobResponse {
   static StatusOr<InsertJobResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -86,7 +86,7 @@ class CancelJobResponse {
   static StatusOr<CancelJobResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -99,7 +99,7 @@ class CancelJobResponse {
 struct ArrowSchema {
   std::string serialized_schema;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -113,7 +113,7 @@ struct ArrowRecordBatch {
   std::string serialized_record_batch;
   std::int64_t row_count = 0;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -126,7 +126,7 @@ inline bool operator==(ArrowRecordBatch const& lhs,
 }
 
 struct PostQueryResults {
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -160,7 +160,7 @@ class QueryResponse {
   static StatusOr<QueryResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -190,7 +190,7 @@ struct GetQueryResults {
   ArrowRecordBatch arrow_record_batch;
   std::int64_t page_row_count = 0;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -203,7 +203,7 @@ class GetQueryResultsResponse {
   static StatusOr<GetQueryResultsResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 

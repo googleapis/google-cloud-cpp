@@ -14,8 +14,8 @@
 
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/curl_options.h"
-#include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -173,7 +173,7 @@ TEST(CurlWrappers, CurlInitializeOptions) {
 }
 
 TEST(CurlWrappers, AppendHeaderData) {
-  absl::string_view inputs[] = {
+  std::string_view inputs[] = {
       "HTTP/1.1 200 OK\r\n",
       "X-Test1: value1\r\n",
       "X-Test1: value2\r\n",

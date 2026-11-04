@@ -47,7 +47,7 @@ void BM_Crc32cExtendStringView(benchmark::State& state) {
   for (auto _ : state) {
     for (std::size_t offset = 0; offset < kUploadSize; offset += kWriteSize) {
       for (std::size_t m = 0; m < kWriteSize; m += kMessage) {
-        auto w = absl::string_view{buffer}.substr(m, kMessage);
+        auto w = std::string_view{buffer}.substr(m, kMessage);
         benchmark::DoNotOptimize(absl::ComputeCrc32c(w));
       }
       crc = absl::ExtendCrc32c(crc, buffer);
@@ -63,7 +63,7 @@ void BM_Crc32cDuplicate(benchmark::State& state) {
   for (auto _ : state) {
     for (std::size_t offset = 0; offset < kUploadSize; offset += kWriteSize) {
       for (std::size_t m = 0; m < kWriteSize; m += kMessage) {
-        auto w = absl::string_view{buffer}.substr(m, kMessage);
+        auto w = std::string_view{buffer}.substr(m, kMessage);
         benchmark::DoNotOptimize(Crc32c(w));
       }
       crc = ExtendCrc32c(crc, buffer);
@@ -79,7 +79,7 @@ void BM_Crc32cConcat(benchmark::State& state) {
   for (auto _ : state) {
     for (std::size_t offset = 0; offset < kUploadSize; offset += kWriteSize) {
       for (std::size_t m = 0; m < kWriteSize; m += kMessage) {
-        auto w = absl::string_view{buffer}.substr(m, kMessage);
+        auto w = std::string_view{buffer}.substr(m, kMessage);
         auto c = Crc32c(w);
         crc = ExtendCrc32c(crc, w, c);
       }

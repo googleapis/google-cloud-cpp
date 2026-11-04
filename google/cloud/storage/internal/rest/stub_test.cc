@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -49,12 +50,12 @@ using ::testing::Return;
 class NoOpHashFunction : public HashFunction {
  public:
   std::string Name() const override { return "NoOp"; }
-  void Update(absl::string_view b) override { Cormorant(b); }
-  Status Update(std::int64_t o, absl::string_view b) override {
+  void Update(std::string_view b) override { Cormorant(b); }
+  Status Update(std::int64_t o, std::string_view b) override {
     Cormorant(o, b);
     return Status{};
   }
-  Status Update(std::int64_t o, absl::string_view b, std::uint32_t c) override {
+  Status Update(std::int64_t o, std::string_view b, std::uint32_t c) override {
     Cormorant(o, b, c);
     return Status{};
   }

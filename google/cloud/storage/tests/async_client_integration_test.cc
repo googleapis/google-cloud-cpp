@@ -331,13 +331,13 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
     for (auto v : payload.contents()) actual += std::string(v);
   }
   EXPECT_EQ(actual.size(), expected_size);
-  auto view = absl::string_view(actual);
+  auto view = std::string_view(actual);
   for (auto const& expected : insert_data) {
     ASSERT_GE(view.size(), expected.size());
     ASSERT_EQ(expected, view.substr(0, expected.size()));
     view.remove_prefix(expected.size());
   }
-  EXPECT_EQ(view, absl::string_view{});
+  EXPECT_EQ(view, std::string_view{});
 }
 
 TEST_F(AsyncClientIntegrationTest, StreamingReadRange) {
@@ -382,8 +382,8 @@ TEST_F(AsyncClientIntegrationTest, StreamingReadRange) {
     for (auto v : payload.contents()) actual += std::string(v);
   }
 
-  EXPECT_EQ(absl::string_view(actual),
-            absl::string_view(contents).substr(kReadOffset));
+  EXPECT_EQ(std::string_view(actual),
+            std::string_view(contents).substr(kReadOffset));
 }
 
 TEST_F(AsyncClientIntegrationTest, StreamingReadCordContents) {

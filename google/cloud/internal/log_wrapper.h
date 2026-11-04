@@ -28,11 +28,11 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <google/protobuf/message.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <utility>
 
@@ -61,15 +61,15 @@ struct IsFutureStatus : public std::false_type {};
 template <>
 struct IsFutureStatus<future<Status>> : public std::true_type {};
 
-void LogRequest(absl::string_view where, absl::string_view args,
-                absl::string_view message);
+void LogRequest(std::string_view where, std::string_view args,
+                std::string_view message);
 
-Status LogResponse(Status response, absl::string_view where,
-                   absl::string_view args, TracingOptions const& options);
+Status LogResponse(Status response, std::string_view where,
+                   std::string_view args, TracingOptions const& options);
 
 template <typename T>
-StatusOr<T> LogResponse(StatusOr<T> response, absl::string_view where,
-                        absl::string_view args, TracingOptions const& options) {
+StatusOr<T> LogResponse(StatusOr<T> response, std::string_view where,
+                        std::string_view args, TracingOptions const& options) {
   if (!response) {
     return LogResponse(std::move(response).status(), where, args, options);
   }
@@ -78,8 +78,8 @@ StatusOr<T> LogResponse(StatusOr<T> response, absl::string_view where,
   return response;
 }
 
-void LogResponseFuture(std::future_status status, absl::string_view where,
-                       absl::string_view args, TracingOptions const& options);
+void LogResponseFuture(std::future_status status, std::string_view where,
+                       std::string_view args, TracingOptions const& options);
 
 future<Status> LogResponse(future<Status> response, std::string where,
                            std::string args, TracingOptions const& options);
@@ -95,12 +95,12 @@ future<StatusOr<T>> LogResponse(future<StatusOr<T>> response, std::string where,
   });
 }
 
-void LogResponsePtr(bool not_null, absl::string_view where,
-                    absl::string_view args, TracingOptions const& options);
+void LogResponsePtr(bool not_null, std::string_view where,
+                    std::string_view args, TracingOptions const& options);
 
 template <typename T>
 std::unique_ptr<T> LogResponse(std::unique_ptr<T> response,
-                               absl::string_view where, absl::string_view args,
+                               std::string_view where, std::string_view args,
                                TracingOptions const& options) {
   LogResponsePtr(!!response, where, args, options);
   return response;

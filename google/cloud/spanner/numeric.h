@@ -19,7 +19,6 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/numeric/int128.h"
-#include "absl/strings/string_view.h"
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
