@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string CategoryList::DebugString(absl::string_view name,
+std::string CategoryList::DebugString(std::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -30,7 +30,7 @@ std::string CategoryList::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string PolicyTagList::DebugString(absl::string_view name,
+std::string PolicyTagList::DebugString(std::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -38,7 +38,7 @@ std::string PolicyTagList::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string FieldElementType::DebugString(absl::string_view name,
+std::string FieldElementType::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -46,7 +46,7 @@ std::string FieldElementType::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string TableFieldSchema::DebugString(absl::string_view fname,
+std::string TableFieldSchema::DebugString(std::string_view fname,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(fname, options, indent)
@@ -66,7 +66,7 @@ std::string TableFieldSchema::DebugString(absl::string_view fname,
       .Build();
 }
 
-std::string TableSchema::DebugString(absl::string_view name,
+std::string TableSchema::DebugString(std::string_view name,
                                      TracingOptions const& options,
                                      int indent) const {
   return internal::DebugFormatter(name, options, indent)

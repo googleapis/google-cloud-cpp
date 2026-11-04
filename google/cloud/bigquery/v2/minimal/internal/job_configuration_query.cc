@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string JobConfigurationQuery::DebugString(absl::string_view name,
+std::string JobConfigurationQuery::DebugString(std::string_view name,
                                                TracingOptions const& options,
                                                int indent) const {
   return internal::DebugFormatter(name, options, indent)

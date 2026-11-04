@@ -31,7 +31,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
-#include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -584,7 +583,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
   // success.
@@ -722,7 +721,7 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
   // success.
@@ -850,7 +849,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   auto s1r2 = s1->Read();
@@ -866,7 +865,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   // Since the `range_end()` flag is set, we expect the stream to finish with
@@ -1161,7 +1160,7 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   auto expected_r1 = VariantWith<storage::ReadPayload>(ResultOf(
       "contents are",
       [](storage::ReadPayload const& p) { return p.contents(); },
-      ElementsAre(absl::string_view{"0123456789"})));
+      ElementsAre(std::string_view{"0123456789"})));
 
   EXPECT_THAT(s1r1.get(), expected_r1);
   EXPECT_THAT(s2r1.get(), expected_r1);
@@ -1200,7 +1199,7 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
                              HasSubstr("test-only-invalid/test-object"))));
 }
 
-Status RedirectError(absl::string_view handle, absl::string_view token) {
+Status RedirectError(std::string_view handle, std::string_view token) {
   auto details = [&] {
     auto redirected = google::storage::v2::BidiReadObjectRedirectedError{};
     redirected.mutable_read_handle()->set_handle(std::string(handle));
@@ -2289,7 +2288,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationSuccess) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
@@ -2397,7 +2396,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchCrc32c) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(),
@@ -2506,7 +2505,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchMd5) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(),
@@ -2614,7 +2613,7 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
@@ -4225,3 +4224,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

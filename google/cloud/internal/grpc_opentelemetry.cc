@@ -27,6 +27,7 @@
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -114,8 +115,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
   // `rpc.service` is deprecated in favor of it.
   // https://opentelemetry.io/docs/specs/semconv/rpc/rpc-spans/
   std::string const fully_qualified_method =
-      absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
-                   absl::string_view{method.data(), method.size()});
+      absl::StrCat(std::string_view{service.data(), service.size()}, "/",
+                   std::string_view{method.data(), method.size()});
   return internal::MakeSpan(
       fully_qualified_method,
       {{sc::rpc::kRpcSystemName, sc::rpc::RpcSystemNameValues::kGrpc},

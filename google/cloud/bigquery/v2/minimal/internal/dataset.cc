@@ -96,7 +96,7 @@ void from_json(nlohmann::json const& j, Dataset& d) {
   FromJson(d.max_time_travel, j, "maxTimeTravelHours");
 }
 
-std::string LinkedDatasetSource::DebugString(absl::string_view name,
+std::string LinkedDatasetSource::DebugString(std::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -104,7 +104,7 @@ std::string LinkedDatasetSource::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string TargetType::DebugString(absl::string_view name,
+std::string TargetType::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -112,7 +112,7 @@ std::string TargetType::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string StorageBillingModel::DebugString(absl::string_view name,
+std::string StorageBillingModel::DebugString(std::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -120,7 +120,7 @@ std::string StorageBillingModel::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string DatasetAccessEntry::DebugString(absl::string_view name,
+std::string DatasetAccessEntry::DebugString(std::string_view name,
                                             TracingOptions const& options,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -129,7 +129,7 @@ std::string DatasetAccessEntry::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Access::DebugString(absl::string_view name,
+std::string Access::DebugString(std::string_view name,
                                 TracingOptions const& options,
                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -145,7 +145,7 @@ std::string Access::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string GcpTag::DebugString(absl::string_view name,
+std::string GcpTag::DebugString(std::string_view name,
                                 TracingOptions const& options,
                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -154,7 +154,7 @@ std::string GcpTag::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Dataset::DebugString(absl::string_view name,
+std::string Dataset::DebugString(std::string_view name,
                                  TracingOptions const& options,
                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -184,7 +184,7 @@ std::string Dataset::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ListFormatDataset::DebugString(absl::string_view name,
+std::string ListFormatDataset::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)

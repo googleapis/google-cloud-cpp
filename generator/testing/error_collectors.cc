@@ -21,24 +21,24 @@ namespace generator_testing {
 
 using ::testing::IsEmpty;
 
-void ErrorCollector::RecordError(absl::string_view filename,
-                                 absl::string_view element_name,
+void ErrorCollector::RecordError(std::string_view filename,
+                                 std::string_view element_name,
                                  google::protobuf::Message const*,
-                                 ErrorLocation, absl::string_view message) {
+                                 ErrorLocation, std::string_view message) {
   EXPECT_THAT(message, IsEmpty())
       << "filename=" << filename << ", element_name=" << element_name;
 }
 
-void MultiFileErrorCollector::RecordError(absl::string_view filename, int line,
+void MultiFileErrorCollector::RecordError(std::string_view filename, int line,
                                           int column,
-                                          absl::string_view message) {
+                                          std::string_view message) {
   EXPECT_THAT(message, IsEmpty())
       << "filename=" << filename << ", line=" << line << ", column=" << column;
 }
 
-void MultiFileErrorCollector::RecordWarning(absl::string_view filename,
-                                            int line, int column,
-                                            absl::string_view message) {
+void MultiFileErrorCollector::RecordWarning(std::string_view filename, int line,
+                                            int column,
+                                            std::string_view message) {
   EXPECT_THAT(message, IsEmpty())
       << "filename=" << filename << ", line=" << line << ", column=" << column;
 }

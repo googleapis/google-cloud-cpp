@@ -19,10 +19,10 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_stats.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <optional>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -34,7 +34,7 @@ struct JobStatus {
   std::vector<ErrorProto> errors;
   std::string state;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -46,7 +46,7 @@ struct JobReference {
   std::string job_id;
   std::string location;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -65,7 +65,7 @@ struct Job {
   JobConfiguration configuration;
   JobStatistics statistics;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -86,7 +86,7 @@ struct ListFormatJob {
 
   ErrorProto error_result;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

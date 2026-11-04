@@ -36,7 +36,7 @@ TEST(MD5Hash, Empty) {
       MD5Hash({}),
       MD5Hash(nullptr),
       MD5Hash(""),
-      MD5Hash(absl::string_view{}),
+      MD5Hash(std::string_view{}),
   };
 
   for (auto const& actual : values) {

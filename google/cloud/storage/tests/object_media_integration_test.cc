@@ -25,6 +25,7 @@
 #include <iterator>
 #include <random>
 #include <string>
+#include <string_view>
 #include <thread>
 #include <vector>
 
@@ -629,8 +630,8 @@ TEST_F(ObjectMediaIntegrationTest, StringView) {
 
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> meta =
-      client.InsertObject(bucket_name_, object_name,
-                          absl::string_view(contents), IfGenerationMatch(0));
+      client.InsertObject(bucket_name_, object_name, std::string_view(contents),
+                          IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());

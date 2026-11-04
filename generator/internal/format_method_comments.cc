@@ -23,11 +23,11 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
-#include "absl/strings/string_view.h"
 #include "google/longrunning/operations.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <cstddef>
 #include <iterator>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -166,8 +166,8 @@ std::map<std::string, ProtoDefinitionLocation> Merge(
 // RPC methods. This is mostly for the benefit of Doxygen, but is also
 // to fix mismatched quotes, etc.
 struct MethodCommentSubstitution {
-  absl::string_view before;
-  absl::string_view after;
+  std::string_view before;
+  std::string_view after;
   std::size_t uses = 0;
 };
 

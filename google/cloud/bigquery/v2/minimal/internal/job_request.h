@@ -22,12 +22,12 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <optional>
 #include <ostream>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -73,7 +73,7 @@ class GetJobRequest {
     return std::move(set_location(std::move(location)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -89,7 +89,7 @@ struct Projection {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -101,7 +101,7 @@ struct StateFilter {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -203,7 +203,7 @@ class ListJobsRequest {
     return std::move(set_parent_job_id(std::move(parent_job_id)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -255,7 +255,7 @@ class InsertJobRequest {
     return std::move(set_json_filter_keys(std::move(keys)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -299,7 +299,7 @@ class CancelJobRequest {
     return std::move(set_location(std::move(location)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -315,7 +315,7 @@ struct DataFormatOptions {
   bool use_int64_timestamp = false;
   std::string timestamp_output_format = "TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED";
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -334,7 +334,7 @@ struct JobCreationMode {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -549,7 +549,7 @@ class QueryRequest {
     return std::move(set_query_results_format(std::move(query_results_format)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -620,7 +620,7 @@ class PostQueryRequest {
     return std::move(set_json_filter_keys(std::move(keys)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -704,7 +704,7 @@ class GetQueryResultsRequest {
     return std::move(set_timeout(std::move(timeout)));
   }
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 

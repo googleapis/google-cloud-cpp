@@ -24,12 +24,12 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <type_traits>
 
 namespace google {
@@ -57,7 +57,7 @@ using ::testing::VariantWith;
 
 using HashUpdateType =
     std::conditional_t<std::is_same<absl::Cord, ContentType>::value,
-                       absl::Cord const&, absl::string_view>;
+                       absl::Cord const&, std::string_view>;
 
 TEST(ReadRange, BasicLifecycle) {
   ReadRange actual(10000, 40);

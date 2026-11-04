@@ -29,6 +29,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/strip.h"
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -71,7 +72,7 @@ Status MakeRequestWithPayload(
   return impl.MakeRequest(http_method, context, payload);
 }
 
-std::string FormatHostHeaderValue(absl::string_view hostname) {
+std::string FormatHostHeaderValue(std::string_view hostname) {
   if (!absl::ConsumePrefix(&hostname, "https://")) {
     absl::ConsumePrefix(&hostname, "http://");
   }

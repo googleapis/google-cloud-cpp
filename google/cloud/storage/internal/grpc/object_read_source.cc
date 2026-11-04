@@ -17,7 +17,6 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/type_traits.h"
-#include "absl/strings/string_view.h"
 #include <algorithm>
 #include <limits>
 

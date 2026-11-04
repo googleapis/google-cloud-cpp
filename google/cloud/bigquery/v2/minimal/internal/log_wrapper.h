@@ -21,7 +21,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_join.h"
-#include "absl/strings/string_view.h"
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -33,8 +33,7 @@ template <typename Functor, typename Request,
               Functor, rest_internal::RestContext&, Request const&>>
 Result LogWrapper(Functor&& functor, rest_internal::RestContext& context,
                   Request const& request, char const* where,
-                  absl::string_view request_name,
-                  absl::string_view response_name,
+                  std::string_view request_name, std::string_view response_name,
                   TracingOptions const& options) {
   auto formatter = [options](std::string* out, auto const& header) {
     auto const* delim = options.single_line_mode() ? "&" : "\n";

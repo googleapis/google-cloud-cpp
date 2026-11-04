@@ -196,17 +196,17 @@ std::string CurrentCopyrightYear() {
   return kCurrentCopyrightYear;
 }
 
-std::string LocalInclude(absl::string_view header) {
+std::string LocalInclude(std::string_view header) {
   if (header.empty()) return {};
   return absl::StrCat("#include \"", header, "\"\n");
 }
 
-std::string SystemInclude(absl::string_view header) {
+std::string SystemInclude(std::string_view header) {
   if (header.empty()) return {};
   return absl::StrCat("#include <", header, ">\n");
 }
 
-std::string CamelCaseToSnakeCase(absl::string_view input) {
+std::string CamelCaseToSnakeCase(std::string_view input) {
   std::string output;
   for (auto i = 0U; i < input.size(); ++i) {
     auto const uc = static_cast<unsigned char>(input[i]);
@@ -235,16 +235,16 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
   return output;
 }
 
-std::string ServiceNameToFilePath(absl::string_view service_name) {
-  std::vector<absl::string_view> components = absl::StrSplit(service_name, '.');
+std::string ServiceNameToFilePath(std::string_view service_name) {
+  std::vector<std::string_view> components = absl::StrSplit(service_name, '.');
   absl::ConsumeSuffix(&components.back(), "Service");
-  auto formatter = [](std::string* s, absl::string_view sv) {
+  auto formatter = [](std::string* s, std::string_view sv) {
     *s += CamelCaseToSnakeCase(sv);
   };
   return absl::StrJoin(components, "/", formatter);
 }
 
-std::string ProtoNameToCppName(absl::string_view proto_name) {
+std::string ProtoNameToCppName(std::string_view proto_name) {
   return absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
@@ -287,8 +287,8 @@ ProcessCommandLineArgs(std::string const& parameters) {
   return command_line_args;
 }
 
-std::string SafeReplaceAll(absl::string_view s, absl::string_view from,
-                           absl::string_view to) {
+std::string SafeReplaceAll(std::string_view s, std::string_view from,
+                           std::string_view to) {
   if (absl::StrContains(s, to)) {
     GCP_LOG(FATAL) << "SafeReplaceAll() found \"" << to << "\" in \"" << s
                    << "\"";
@@ -399,7 +399,7 @@ std::string FormatCommentKeyValueList(
   return absl::StrCat(absl::StrJoin(comment, "\n", formatter));
 }
 
-std::string FormatHeaderIncludeGuard(absl::string_view header_path) {
+std::string FormatHeaderIncludeGuard(std::string_view header_path) {
   return absl::AsciiStrToUpper(
       absl::StrReplaceAll(absl::StrCat("GOOGLE_CLOUD_CPP_", header_path),
                           {{"/", "_"}, {".", "_"}}));
