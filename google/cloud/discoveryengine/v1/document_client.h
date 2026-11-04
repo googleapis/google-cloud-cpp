@@ -119,7 +119,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L179}
+  /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L181}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
@@ -149,7 +149,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L179}
+  /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L181}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
@@ -192,7 +192,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L201}
+  /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L203}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
@@ -231,7 +231,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L201}
+  /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L203}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
@@ -276,10 +276,10 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L255}
-  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest.parent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L258}
+  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L257}
+  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest.parent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L260}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L200}
+  /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L202}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
@@ -310,7 +310,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L255}
+  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L257}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
@@ -348,8 +348,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L292}
-  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest.allow_missing]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L308}
+  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L294}
+  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest.allow_missing]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L310}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
@@ -380,7 +380,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L292}
+  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L294}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
@@ -412,7 +412,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L318}
+  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L320}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
@@ -439,7 +439,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L318}
+  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L320}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
@@ -484,8 +484,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L505}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L655}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L506}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L658}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
@@ -568,8 +568,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
-  /// [google.cloud.discoveryengine.v1.DocumentService.GetDocument]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L48}
-  /// [google.cloud.discoveryengine.v1.DocumentService.ListDocuments]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L59}
+  /// [google.cloud.discoveryengine.v1.DocumentService.GetDocument]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L50}
+  /// [google.cloud.discoveryengine.v1.DocumentService.ListDocuments]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L61}
   /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L126}
   /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest.force]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L174}
   /// [google.cloud.discoveryengine.v1.PurgeDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L181}
@@ -630,8 +630,8 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L340}
-  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L392}
+  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L342}
+  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L394}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
@@ -664,8 +664,8 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L340}
-  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L392}
+  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L342}
+  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L394}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on

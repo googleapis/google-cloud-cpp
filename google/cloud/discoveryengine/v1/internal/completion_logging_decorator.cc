@@ -51,6 +51,20 @@ CompletionServiceLogging::CompleteQuery(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceLogging::AdvancedCompleteQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 AdvancedCompleteQueryRequest const& request) {
+        return child_->AdvancedCompleteQuery(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,

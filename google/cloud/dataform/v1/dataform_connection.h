@@ -425,6 +425,21 @@ class DataformConnection {
       google::cloud::dataform::v1::CreateCompilationResultRequest const&
           request);
 
+  virtual future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+  CreateCompilationResultLongRunning(
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCompilationResultLongRunning(
+      NoAwaitTag,
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+  CreateCompilationResultLongRunning(
+      google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::dataform::v1::CompilationResultAction>
   QueryCompilationResultActions(
       google::cloud::dataform::v1::QueryCompilationResultActionsRequest

@@ -278,6 +278,20 @@ DefaultDeveloperConnectStub::FetchReadToken(
   return response;
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DefaultDeveloperConnectStub::OpenGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request) {
+  google::cloud::developerconnect::v1::PullRequest response;
+  auto status = grpc_stub_->OpenGitRepositoryLinkPullRequest(&context, request,
+                                                             &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<
     google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
 DefaultDeveloperConnectStub::FetchLinkableGitRepositories(
@@ -315,6 +329,142 @@ DefaultDeveloperConnectStub::FetchGitRefs(
     google::cloud::developerconnect::v1::FetchGitRefsRequest const& request) {
   google::cloud::developerconnect::v1::FetchGitRefsResponse response;
   auto status = grpc_stub_->FetchGitRefs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DefaultDeveloperConnectStub::DiffGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request) {
+  google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse
+      response;
+  auto status =
+      grpc_stub_->DiffGitRepositoryLinkCommit(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DefaultDeveloperConnectStub::FetchGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request) {
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse
+      response;
+  auto status =
+      grpc_stub_->FetchGitRepositoryLinkCommit(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkCommitListResponse>
+DefaultDeveloperConnectStub::FetchGitRepositoryLinkCommitList(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitListRequest const& request) {
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitListResponse
+      response;
+  auto status = grpc_stub_->FetchGitRepositoryLinkCommitList(&context, request,
+                                                             &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DefaultDeveloperConnectStub::FetchGitRepositoryLinkFileBlame(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request) {
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkFileBlameResponse
+      response;
+  auto status =
+      grpc_stub_->FetchGitRepositoryLinkFileBlame(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DefaultDeveloperConnectStub::FetchGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request) {
+  google::cloud::developerconnect::v1::PullRequest response;
+  auto status = grpc_stub_->FetchGitRepositoryLinkPullRequest(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DefaultDeveloperConnectStub::AddGitRepositoryLinkPullRequestComment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+  google::cloud::developerconnect::v1::PullRequestComment response;
+  auto status = grpc_stub_->AddGitRepositoryLinkPullRequestComment(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DefaultDeveloperConnectStub::AddGitRepositoryLinkPullRequestReviewComment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request) {
+  google::cloud::developerconnect::v1::PullRequestReviewComment response;
+  auto status = grpc_stub_->AddGitRepositoryLinkPullRequestReviewComment(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DefaultDeveloperConnectStub::ModifyGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request) {
+  google::cloud::developerconnect::v1::PullRequest response;
+  auto status = grpc_stub_->ModifyGitRepositoryLinkPullRequest(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkPullRequestListResponse>
+DefaultDeveloperConnectStub::FetchGitRepositoryLinkPullRequestList(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest const& request) {
+  google::cloud::developerconnect::v1::
+      FetchGitRepositoryLinkPullRequestListResponse response;
+  auto status = grpc_stub_->FetchGitRepositoryLinkPullRequestList(
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

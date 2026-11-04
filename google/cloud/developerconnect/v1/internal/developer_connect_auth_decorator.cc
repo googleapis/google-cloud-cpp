@@ -244,6 +244,16 @@ DeveloperConnectAuth::FetchReadToken(
   return child_->FetchReadToken(context, options, request);
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectAuth::OpenGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->OpenGitRepositoryLinkPullRequest(context, options, request);
+}
+
 StatusOr<
     google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
 DeveloperConnectAuth::FetchLinkableGitRepositories(
@@ -272,6 +282,104 @@ DeveloperConnectAuth::FetchGitRefs(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchGitRefs(context, options, request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectAuth::DiffGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DiffGitRepositoryLinkCommit(context, options, request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectAuth::FetchGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchGitRepositoryLinkCommit(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkCommitListResponse>
+DeveloperConnectAuth::FetchGitRepositoryLinkCommitList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchGitRepositoryLinkCommitList(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectAuth::FetchGitRepositoryLinkFileBlame(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchGitRepositoryLinkFileBlame(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectAuth::FetchGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchGitRepositoryLinkPullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectAuth::AddGitRepositoryLinkPullRequestComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddGitRepositoryLinkPullRequestComment(context, options,
+                                                        request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectAuth::AddGitRepositoryLinkPullRequestReviewComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddGitRepositoryLinkPullRequestReviewComment(context, options,
+                                                              request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectAuth::ModifyGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ModifyGitRepositoryLinkPullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkPullRequestListResponse>
+DeveloperConnectAuth::FetchGitRepositoryLinkPullRequestList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchGitRepositoryLinkPullRequestList(context, options,
+                                                       request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>

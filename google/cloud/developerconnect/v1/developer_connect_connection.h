@@ -287,6 +287,11 @@ class DeveloperConnectConnection {
       google::cloud::developerconnect::v1::FetchReadTokenRequest const&
           request);
 
+  virtual StatusOr<google::cloud::developerconnect::v1::PullRequest>
+  OpenGitRepositoryLinkPullRequest(
+      google::cloud::developerconnect::v1::
+          OpenGitRepositoryLinkPullRequestRequest const& request);
+
   virtual StreamRange<
       google::cloud::developerconnect::v1::LinkableGitRepository>
   FetchLinkableGitRepositories(
@@ -300,6 +305,55 @@ class DeveloperConnectConnection {
 
   virtual StreamRange<std::string> FetchGitRefs(
       google::cloud::developerconnect::v1::FetchGitRefsRequest request);
+
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+  DiffGitRepositoryLinkCommit(
+      google::cloud::developerconnect::v1::
+          DiffGitRepositoryLinkCommitRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+  FetchGitRepositoryLinkCommit(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkCommitRequest const& request);
+
+  virtual StreamRange<google::cloud::developerconnect::v1::SCMCommit>
+  FetchGitRepositoryLinkCommitList(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkCommitListRequest request);
+
+  virtual StatusOr<google::cloud::developerconnect::v1::
+                       FetchGitRepositoryLinkFileBlameResponse>
+  FetchGitRepositoryLinkFileBlame(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkFileBlameRequest const& request);
+
+  virtual StatusOr<google::cloud::developerconnect::v1::PullRequest>
+  FetchGitRepositoryLinkPullRequest(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkPullRequestRequest const& request);
+
+  virtual StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+  AddGitRepositoryLinkPullRequestComment(
+      google::cloud::developerconnect::v1::
+          AddGitRepositoryLinkPullRequestCommentRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::PullRequestReviewComment>
+  AddGitRepositoryLinkPullRequestReviewComment(
+      google::cloud::developerconnect::v1::
+          AddGitRepositoryLinkPullRequestReviewCommentRequest const& request);
+
+  virtual StatusOr<google::cloud::developerconnect::v1::PullRequest>
+  ModifyGitRepositoryLinkPullRequest(
+      google::cloud::developerconnect::v1::
+          ModifyGitRepositoryLinkPullRequestRequest const& request);
+
+  virtual StreamRange<google::cloud::developerconnect::v1::PullRequest>
+  FetchGitRepositoryLinkPullRequestList(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkPullRequestListRequest request);
 
   virtual StreamRange<google::cloud::developerconnect::v1::AccountConnector>
   ListAccountConnectors(

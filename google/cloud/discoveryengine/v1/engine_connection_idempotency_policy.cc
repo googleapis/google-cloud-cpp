@@ -59,6 +59,17 @@ Idempotency EngineServiceConnectionIdempotencyPolicy::ListEngines(
   return Idempotency::kIdempotent;
 }
 
+Idempotency EngineServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EngineServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
 Idempotency EngineServiceConnectionIdempotencyPolicy::ListOperations(
     google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

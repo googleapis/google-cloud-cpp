@@ -87,6 +87,12 @@ class EngineServiceConnectionImpl
   StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
       google::cloud::discoveryengine::v1::ListEnginesRequest request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 

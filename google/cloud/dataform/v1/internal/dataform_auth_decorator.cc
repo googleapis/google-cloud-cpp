@@ -605,6 +605,37 @@ DataformAuth::CreateCompilationResult(
   return child_->CreateCompilationResult(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataformAuth::AsyncCreateCompilationResultLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateCompilationResultLongRunning(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+DataformAuth::CreateCompilationResultLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCompilationResultLongRunning(context, options, request);
+}
+
 StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
 DataformAuth::QueryCompilationResultActions(
     grpc::ClientContext& context, Options const& options,

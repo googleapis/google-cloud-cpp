@@ -191,6 +191,12 @@ class CompletionServiceConnection {
   CompleteQuery(
       google::cloud::discoveryengine::v1::CompleteQueryRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+  AdvancedCompleteQuery(
+      google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+          request);
+
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(

@@ -315,6 +315,20 @@ class DataformConnectionImpl : public dataform_v1::DataformConnection {
       google::cloud::dataform::v1::CreateCompilationResultRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+  CreateCompilationResultLongRunning(
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateCompilationResultLongRunning(
+      NoAwaitTag,
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+  CreateCompilationResultLongRunning(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::dataform::v1::CompilationResultAction>
   QueryCompilationResultActions(
       google::cloud::dataform::v1::QueryCompilationResultActionsRequest request)

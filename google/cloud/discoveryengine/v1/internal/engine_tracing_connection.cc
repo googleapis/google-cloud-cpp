@@ -117,6 +117,22 @@ EngineServiceTracingConnection::ListEngines(
                                                   std::move(sr));
 }
 
+StatusOr<google::iam::v1::Policy> EngineServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy> EngineServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
 StreamRange<google::longrunning::Operation>
 EngineServiceTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {

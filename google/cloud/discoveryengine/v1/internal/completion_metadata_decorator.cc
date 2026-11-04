@@ -58,6 +58,17 @@ CompletionServiceMetadata::CompleteQuery(
   return child_->CompleteQuery(context, options, request);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceMetadata::AdvancedCompleteQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("completion_config=",
+                           internal::UrlEncode(request.completion_config())));
+  return child_->AdvancedCompleteQuery(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceMetadata::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,

@@ -117,6 +117,22 @@ EngineServiceAuth::ListEngines(
   return child_->ListEngines(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> EngineServiceAuth::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> EngineServiceAuth::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 EngineServiceAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,

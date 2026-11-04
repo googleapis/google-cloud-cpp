@@ -118,8 +118,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L636}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L516}
+  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L770}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L650}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
@@ -157,8 +157,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L636}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L516}
+  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L770}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L650}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
@@ -185,8 +185,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L684}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L516}
+  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L818}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L650}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
@@ -215,8 +215,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L684}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L516}
+  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L818}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L650}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
@@ -254,8 +254,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L696}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L516}
+  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L830}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L650}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
@@ -310,8 +310,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L696}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L516}
+  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L830}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L650}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
@@ -373,8 +373,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L733}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L867}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -424,8 +424,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L733}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L867}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -492,7 +492,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L727}
+  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L738}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
@@ -547,7 +547,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L727}
+  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L738}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
@@ -615,7 +615,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L768}
+  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L779}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
@@ -654,7 +654,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L768}
+  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L779}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
@@ -696,7 +696,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L820}
+  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L831}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
@@ -737,7 +737,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L820}
+  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L831}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
@@ -764,7 +764,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L924}
+  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L935}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
@@ -794,7 +794,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L924}
+  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L935}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
@@ -832,7 +832,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L940}
+  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L951}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
@@ -885,7 +885,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L940}
+  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L951}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
@@ -945,8 +945,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L985}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L996}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -996,8 +996,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L985}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L996}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -1067,7 +1067,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
-  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1036}
+  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1047}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
@@ -1106,7 +1106,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
-  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1036}
+  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1047}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
@@ -1133,7 +1133,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
-  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1084}
+  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1095}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
@@ -1163,7 +1163,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
-  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1084}
+  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1095}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
@@ -1201,7 +1201,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
-  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1096}
+  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1107}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
@@ -1254,7 +1254,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
-  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1096}
+  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1107}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
@@ -1321,8 +1321,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1131}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1142}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
@@ -1360,8 +1360,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1131}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1142}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
@@ -1399,8 +1399,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L868}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L879}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> FetchBackupsForResourceType(
@@ -1439,8 +1439,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L868}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L879}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> FetchBackupsForResourceType(
@@ -1466,8 +1466,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1183}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1194}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
@@ -1496,8 +1496,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1183}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1194}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
@@ -1534,8 +1534,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1197}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1208}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
@@ -1587,8 +1587,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1197}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1208}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
@@ -1648,8 +1648,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1229}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
@@ -1700,8 +1700,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
-  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1229}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L542}
+  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
@@ -1762,8 +1762,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1256}
-  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1320}
+  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1267}
+  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1331}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
@@ -1813,8 +1813,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1256}
-  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1320}
+  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1267}
+  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1331}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
@@ -2260,7 +2260,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L439}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -2311,7 +2311,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L439}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -2517,7 +2517,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L190}
+  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2575,7 +2575,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L190}
+  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2647,7 +2647,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L377}
+  /// [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L399}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2704,7 +2704,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L377}
+  /// [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L399}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2763,7 +2763,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L335}
+  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L345}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2793,7 +2793,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L335}
+  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L345}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2835,7 +2835,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L230}
+  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L240}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2874,7 +2874,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L230}
+  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L240}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2913,7 +2913,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L275}
+  /// [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L285}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2954,7 +2954,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L275}
+  /// [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L285}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2989,8 +2989,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L347}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L357}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -3040,8 +3040,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L347}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
+  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L357}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -3108,7 +3108,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L412}
+  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L434}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -3161,7 +3161,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L38}
-  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L412}
+  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L434}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -3444,8 +3444,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.InitializeServiceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L759}
-  /// [google.cloud.backupdr.v1.InitializeServiceResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L798}
+  /// [google.cloud.backupdr.v1.InitializeServiceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L893}
+  /// [google.cloud.backupdr.v1.InitializeServiceResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L932}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
@@ -3481,6 +3481,1068 @@ class BackupDRClient {
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
   InitializeService(google::longrunning::Operation const& operation,
                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AutoProtectionPolicy in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource where this policy will be created.
+  ///  Format: projects/{project}/locations/{location}
+  /// @param auto_protection_policy  Required. The AutoProtectionPolicy resource to create.
+  /// @param auto_protection_policy_id  Required. The ID to use for the policy.
+  ///  This will become the final component of the policy's resource name.
+  ///  @n
+  ///  This value must start with a lowercase letter followed by up to 62
+  ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.CreateAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L187}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  CreateAutoProtectionPolicy(
+      std::string const& parent,
+      google::cloud::backupdr::v1::AutoProtectionPolicy const&
+          auto_protection_policy,
+      std::string const& auto_protection_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAutoProtectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAutoProtectionPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::backupdr::v1::AutoProtectionPolicy const&
+          auto_protection_policy,
+      std::string const& auto_protection_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AutoProtectionPolicy in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.CreateAutoProtectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.CreateAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L187}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  CreateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAutoProtectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAutoProtectionPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  CreateAutoProtectionPolicy(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AutoProtectionPolicies for a given project and location.
+  ///
+  /// @param parent  Required. The project and location for which to retrieve the list of
+  ///  policies. Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.ListAutoProtectionPoliciesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L292}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>
+  ListAutoProtectionPolicies(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AutoProtectionPolicies for a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.ListAutoProtectionPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.ListAutoProtectionPoliciesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L292}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>
+  ListAutoProtectionPolicies(
+      google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AutoProtectionPolicy.
+  ///
+  /// @param name  Required. The name of the policy to retrieve.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.AutoProtectionPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.GetAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L222}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+  GetAutoProtectionPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AutoProtectionPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.GetAutoProtectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.AutoProtectionPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.GetAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L222}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+  GetAutoProtectionPolicy(
+      google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AutoProtectionPolicy.
+  ///
+  /// @param auto_protection_policy  Required. The policy to update.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  AutoProtectionPolicy resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.UpdateAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L235}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  UpdateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::AutoProtectionPolicy const&
+          auto_protection_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAutoProtectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::AutoProtectionPolicy const&
+          auto_protection_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AutoProtectionPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.UpdateAutoProtectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L37}
+  /// [google.cloud.backupdr.v1.UpdateAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L235}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  UpdateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAutoProtectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAutoProtectionPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  UpdateAutoProtectionPolicy(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AutoProtectionPolicy.
+  ///
+  /// @param name  Required. The name of the policy to delete.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.DeleteAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L262}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteAutoProtectionPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAutoProtectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAutoProtectionPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AutoProtectionPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.DeleteAutoProtectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.DeleteAutoProtectionPolicyRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicy.proto#L262}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L945}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteAutoProtectionPolicy(
+      google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAutoProtectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAutoProtectionPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteAutoProtectionPolicy(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AutoProtectionPolicyBinding in a given project and
+  /// location.
+  ///
+  /// @param parent  Required. The parent resource where this binding will be created.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}
+  /// @param auto_protection_policy_binding  Required. The AutoProtectionPolicyBinding resource to create.
+  /// @param auto_protection_policy_binding_id  Required. The ID to use for the binding.
+  ///  This will become the final component of the binding's resource name.
+  ///  @n
+  ///  This value must start with a lowercase letter followed by up to 62
+  ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicyBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.CreateAutoProtectionPolicyBindingRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L117}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  CreateAutoProtectionPolicyBinding(
+      std::string const& parent,
+      google::cloud::backupdr::v1::AutoProtectionPolicyBinding const&
+          auto_protection_policy_binding,
+      std::string const& auto_protection_policy_binding_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAutoProtectionPolicyBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAutoProtectionPolicyBinding(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::backupdr::v1::AutoProtectionPolicyBinding const&
+          auto_protection_policy_binding,
+      std::string const& auto_protection_policy_binding_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AutoProtectionPolicyBinding in a given project and
+  /// location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.CreateAutoProtectionPolicyBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicyBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.CreateAutoProtectionPolicyBindingRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L117}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  CreateAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::
+          CreateAutoProtectionPolicyBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAutoProtectionPolicyBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAutoProtectionPolicyBinding(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::
+          CreateAutoProtectionPolicyBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAutoProtectionPolicyBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  CreateAutoProtectionPolicyBinding(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the auto protection policy binding read from the CCFE tables.
+  ///
+  /// @param name  Required. The name of the binding to retrieve.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}/bindings/{binding}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.AutoProtectionPolicyBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.GetAutoProtectionPolicyBindingRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L154}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+  GetAutoProtectionPolicyBinding(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the auto protection policy binding read from the CCFE tables.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.GetAutoProtectionPolicyBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.AutoProtectionPolicyBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.GetAutoProtectionPolicyBindingRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L154}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+  GetAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the auto protection policy bindings read from the CCFE tables.
+  ///
+  /// @param parent  Required. The project and location for which to retrieve the list of
+  ///  policies. Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicyBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.ListAutoProtectionPolicyBindingsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L167}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+  ListAutoProtectionPolicyBindings(std::string const& parent,
+                                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the auto protection policy bindings read from the CCFE tables.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.ListAutoProtectionPolicyBindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicyBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.ListAutoProtectionPolicyBindingsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L167}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+  ListAutoProtectionPolicyBindings(
+      google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AppliedAutoProtectionPolicies in a given project and location.
+  ///
+  /// @param parent  Required. The project and location for which to retrieve the list of
+  ///  applied policies. Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.AppliedAutoProtectionPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AppliedAutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/appliedautoprotectionpolicy.proto#L36}
+  /// [google.cloud.backupdr.v1.ListAppliedAutoProtectionPoliciesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/appliedautoprotectionpolicy.proto#L102}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>
+  ListAppliedAutoProtectionPolicies(std::string const& parent,
+                                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AppliedAutoProtectionPolicies in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.ListAppliedAutoProtectionPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.AppliedAutoProtectionPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AppliedAutoProtectionPolicy]: @googleapis_reference_link{google/cloud/backupdr/v1/appliedautoprotectionpolicy.proto#L36}
+  /// [google.cloud.backupdr.v1.ListAppliedAutoProtectionPoliciesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/appliedautoprotectionpolicy.proto#L102}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>
+  ListAppliedAutoProtectionPolicies(
+      google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// InitiateDeleteAutoProtectionPolicyBinding initiates delete for
+  /// AutoProtectionPolicy Binding
+  ///
+  /// @param name  Required. The name of the binding to delete.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}/bindings/{binding}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicyBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.InitiateDeleteAutoProtectionPolicyBindingRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L210}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  InitiateDeleteAutoProtectionPolicyBinding(std::string const& name,
+                                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief InitiateDeleteAutoProtectionPolicyBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation>
+  InitiateDeleteAutoProtectionPolicyBinding(NoAwaitTag, std::string const& name,
+                                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// InitiateDeleteAutoProtectionPolicyBinding initiates delete for
+  /// AutoProtectionPolicy Binding
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.InitiateDeleteAutoProtectionPolicyBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.AutoProtectionPolicyBinding] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.AutoProtectionPolicyBinding]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L35}
+  /// [google.cloud.backupdr.v1.InitiateDeleteAutoProtectionPolicyBindingRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/autoprotectionpolicybinding.proto#L210}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  InitiateDeleteAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::
+          InitiateDeleteAutoProtectionPolicyBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief InitiateDeleteAutoProtectionPolicyBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation>
+  InitiateDeleteAutoProtectionPolicyBinding(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::
+          InitiateDeleteAutoProtectionPolicyBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief InitiateDeleteAutoProtectionPolicyBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  InitiateDeleteAutoProtectionPolicyBinding(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Binding Matching Resources for a given AutoProtectionPolicyBinding.
+  ///
+  /// @param parent  Required. The project, location, auto protection policy and binding for
+  ///  which to retrieve `BindingMatchingResources` information. Format:
+  ///  `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}/bindings/{binding}`.
+  ///  In Google Cloud Backup and DR, locations map to Google Cloud regions, for
+  ///  example **us-central1**.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.BindingMatchingResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BindingMatchingResource]: @googleapis_reference_link{google/cloud/backupdr/v1/bindingmatchingresource.proto#L85}
+  /// [google.cloud.backupdr.v1.ListBindingMatchingResourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/bindingmatchingresource.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>
+  ListBindingMatchingResources(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Binding Matching Resources for a given AutoProtectionPolicyBinding.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.ListBindingMatchingResourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.BindingMatchingResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BindingMatchingResource]: @googleapis_reference_link{google/cloud/backupdr/v1/bindingmatchingresource.proto#L85}
+  /// [google.cloud.backupdr.v1.ListBindingMatchingResourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/bindingmatchingresource.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>
+  ListBindingMatchingResources(
+      google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///

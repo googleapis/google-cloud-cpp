@@ -38,11 +38,22 @@ class MemorystoreTracingConnection
 
   Options options() override { return child_->options(); }
 
+  StreamRange<google::cloud::memorystore::v1::AclPolicy> ListAclPolicies(
+      google::cloud::memorystore::v1::ListAclPoliciesRequest request) override;
+
   StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
       google::cloud::memorystore::v1::ListInstancesRequest request) override;
 
+  StatusOr<google::cloud::memorystore::v1::AclPolicy> GetAclPolicy(
+      google::cloud::memorystore::v1::GetAclPolicyRequest const& request)
+      override;
+
   StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
       google::cloud::memorystore::v1::GetInstanceRequest const& request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::AclPolicy> CreateAclPolicy(
+      google::cloud::memorystore::v1::CreateAclPolicyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
@@ -57,6 +68,18 @@ class MemorystoreTracingConnection
   future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::memorystore::v1::AclPolicy>> UpdateAclPolicy(
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAclPolicy(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::AclPolicy>> UpdateAclPolicy(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
       google::cloud::memorystore::v1::UpdateInstanceRequest const& request)
       override;
@@ -68,6 +91,28 @@ class MemorystoreTracingConnection
 
   future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAclPolicy(google::cloud::memorystore::v1::DeleteAclPolicyRequest const&
+                      request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAclPolicy(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAclPolicy(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+  GetAclPolicyRevision(
+      google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+          request) override;
+
+  StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>
+  ListAclPolicyRevisions(
+      google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest request)
+      override;
 
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
   DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const&

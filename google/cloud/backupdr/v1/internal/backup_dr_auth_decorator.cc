@@ -707,6 +707,222 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::InitializeService(
   return child_->InitializeService(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRAuth::AsyncCreateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAutoProtectionPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::CreateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAutoProtectionPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPoliciesResponse>
+BackupDRAuth::ListAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAutoProtectionPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRAuth::GetAutoProtectionPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAutoProtectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRAuth::AsyncUpdateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateAutoProtectionPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::UpdateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAutoProtectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRAuth::AsyncDeleteAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAutoProtectionPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::DeleteAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAutoProtectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRAuth::AsyncCreateAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAutoProtectionPolicyBinding(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::CreateAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAutoProtectionPolicyBinding(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRAuth::GetAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAutoProtectionPolicyBinding(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsResponse>
+BackupDRAuth::ListAutoProtectionPolicyBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAutoProtectionPolicyBindings(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesResponse>
+BackupDRAuth::ListAppliedAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAppliedAutoProtectionPolicies(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRAuth::AsyncInitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncInitiateDeleteAutoProtectionPolicyBinding(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::InitiateDeleteAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InitiateDeleteAutoProtectionPolicyBinding(context, options,
+                                                           request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBindingMatchingResourcesResponse>
+BackupDRAuth::ListBindingMatchingResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBindingMatchingResources(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

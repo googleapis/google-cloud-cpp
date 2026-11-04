@@ -358,6 +358,19 @@ class DataformLogging : public DataformStub {
       google::cloud::dataform::v1::CreateCompilationResultRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateCompilationResultLongRunning(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateCompilationResultLongRunning(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request) override;
+
   StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
   QueryCompilationResultActions(
       grpc::ClientContext& context, Options const& options,

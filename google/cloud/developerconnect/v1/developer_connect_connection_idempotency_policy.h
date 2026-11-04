@@ -81,6 +81,10 @@ class DeveloperConnectConnectionIdempotencyPolicy {
       google::cloud::developerconnect::v1::FetchReadTokenRequest const&
           request);
 
+  virtual google::cloud::Idempotency OpenGitRepositoryLinkPullRequest(
+      google::cloud::developerconnect::v1::
+          OpenGitRepositoryLinkPullRequestRequest const& request);
+
   virtual google::cloud::Idempotency FetchLinkableGitRepositories(
       google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
           request);
@@ -91,6 +95,43 @@ class DeveloperConnectConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FetchGitRefs(
       google::cloud::developerconnect::v1::FetchGitRefsRequest request);
+
+  virtual google::cloud::Idempotency DiffGitRepositoryLinkCommit(
+      google::cloud::developerconnect::v1::
+          DiffGitRepositoryLinkCommitRequest const& request);
+
+  virtual google::cloud::Idempotency FetchGitRepositoryLinkCommit(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkCommitRequest const& request);
+
+  virtual google::cloud::Idempotency FetchGitRepositoryLinkCommitList(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkCommitListRequest request);
+
+  virtual google::cloud::Idempotency FetchGitRepositoryLinkFileBlame(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkFileBlameRequest const& request);
+
+  virtual google::cloud::Idempotency FetchGitRepositoryLinkPullRequest(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkPullRequestRequest const& request);
+
+  virtual google::cloud::Idempotency AddGitRepositoryLinkPullRequestComment(
+      google::cloud::developerconnect::v1::
+          AddGitRepositoryLinkPullRequestCommentRequest const& request);
+
+  virtual google::cloud::Idempotency
+  AddGitRepositoryLinkPullRequestReviewComment(
+      google::cloud::developerconnect::v1::
+          AddGitRepositoryLinkPullRequestReviewCommentRequest const& request);
+
+  virtual google::cloud::Idempotency ModifyGitRepositoryLinkPullRequest(
+      google::cloud::developerconnect::v1::
+          ModifyGitRepositoryLinkPullRequestRequest const& request);
+
+  virtual google::cloud::Idempotency FetchGitRepositoryLinkPullRequestList(
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkPullRequestListRequest request);
 
   virtual google::cloud::Idempotency ListAccountConnectors(
       google::cloud::developerconnect::v1::ListAccountConnectorsRequest

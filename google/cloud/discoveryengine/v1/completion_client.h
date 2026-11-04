@@ -111,13 +111,46 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L132}
-  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L192}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L156}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
   CompleteQuery(
       google::cloud::discoveryengine::v1::CompleteQueryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Completes the user input with advanced keyword suggestions.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.AdvancedCompleteQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.AdvancedCompleteQueryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.AdvancedCompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L244}
+  /// [google.cloud.discoveryengine.v1.AdvancedCompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L404}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+  AdvancedCompleteQuery(
+      google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -152,8 +185,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L666}
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L703}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L669}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L706}
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
@@ -303,8 +336,8 @@ class CompletionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CompletionSuggestion]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L55}
-  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L729}
-  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L769}
+  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L732}
+  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L772}
   ///
   // clang-format on
   future<StatusOr<
@@ -379,7 +412,7 @@ class CompletionServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CompletionSuggestion]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L55}
   /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L253}
-  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L268}
+  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L269}
   ///
   // clang-format on
   future<StatusOr<

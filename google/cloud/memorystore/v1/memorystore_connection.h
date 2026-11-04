@@ -185,11 +185,21 @@ class MemorystoreConnection {
 
   virtual Options options() { return Options{}; }
 
+  virtual StreamRange<google::cloud::memorystore::v1::AclPolicy>
+  ListAclPolicies(
+      google::cloud::memorystore::v1::ListAclPoliciesRequest request);
+
   virtual StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
       google::cloud::memorystore::v1::ListInstancesRequest request);
 
+  virtual StatusOr<google::cloud::memorystore::v1::AclPolicy> GetAclPolicy(
+      google::cloud::memorystore::v1::GetAclPolicyRequest const& request);
+
   virtual StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
       google::cloud::memorystore::v1::GetInstanceRequest const& request);
+
+  virtual StatusOr<google::cloud::memorystore::v1::AclPolicy> CreateAclPolicy(
+      google::cloud::memorystore::v1::CreateAclPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
   CreateInstance(
@@ -202,6 +212,17 @@ class MemorystoreConnection {
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
   CreateInstance(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+  UpdateAclPolicy(
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAclPolicy(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+  UpdateAclPolicy(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
   UpdateInstance(
       google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
@@ -212,6 +233,26 @@ class MemorystoreConnection {
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
   UpdateInstance(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAclPolicy(
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAclPolicy(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAclPolicy(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+  GetAclPolicyRevision(
+      google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>
+  ListAclPolicyRevisions(
+      google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
   DeleteInstance(

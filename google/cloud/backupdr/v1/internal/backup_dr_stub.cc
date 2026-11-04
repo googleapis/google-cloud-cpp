@@ -822,6 +822,272 @@ StatusOr<google::longrunning::Operation> DefaultBackupDRStub::InitializeService(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncCreateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAutoProtectionPolicy(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::CreateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateAutoProtectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPoliciesResponse>
+DefaultBackupDRStub::ListAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListAutoProtectionPoliciesResponse response;
+  auto status =
+      grpc_stub_->ListAutoProtectionPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+DefaultBackupDRStub::GetAutoProtectionPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+        request) {
+  google::cloud::backupdr::v1::AutoProtectionPolicy response;
+  auto status =
+      grpc_stub_->GetAutoProtectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncUpdateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAutoProtectionPolicy(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::UpdateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateAutoProtectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncDeleteAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAutoProtectionPolicy(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::DeleteAutoProtectionPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteAutoProtectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncCreateAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::backupdr::v1::
+                 CreateAutoProtectionPolicyBindingRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAutoProtectionPolicyBinding(context,
+                                                                  request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::CreateAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAutoProtectionPolicyBinding(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+DefaultBackupDRStub::GetAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+        request) {
+  google::cloud::backupdr::v1::AutoProtectionPolicyBinding response;
+  auto status =
+      grpc_stub_->GetAutoProtectionPolicyBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsResponse>
+DefaultBackupDRStub::ListAutoProtectionPolicyBindings(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsResponse
+      response;
+  auto status = grpc_stub_->ListAutoProtectionPolicyBindings(&context, request,
+                                                             &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesResponse>
+DefaultBackupDRStub::ListAppliedAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesResponse
+      response;
+  auto status = grpc_stub_->ListAppliedAutoProtectionPolicies(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncInitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::
+          InitiateDeleteAutoProtectionPolicyBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::backupdr::v1::
+              InitiateDeleteAutoProtectionPolicyBindingRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncInitiateDeleteAutoProtectionPolicyBinding(
+            context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::InitiateDeleteAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->InitiateDeleteAutoProtectionPolicyBinding(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBindingMatchingResourcesResponse>
+DefaultBackupDRStub::ListBindingMatchingResources(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListBindingMatchingResourcesResponse response;
+  auto status =
+      grpc_stub_->ListBindingMatchingResources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultBackupDRStub::ListLocations(
     grpc::ClientContext& context, Options const&,

@@ -979,6 +979,96 @@ StatusOr<google::longrunning::Operation> OracleDatabaseLogging::DeleteOdbSubnet(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse>
+OracleDatabaseLogging::ListOdbDnsZones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const&
+                 request) {
+        return child_->ListOdbDnsZones(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseLogging::GetOdbDnsZone(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const&
+                 request) {
+        return child_->GetOdbDnsZone(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+                 request) {
+        return child_->AsyncCreateOdbDnsZone(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+                 request) {
+        return child_->CreateOdbDnsZone(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+                 request) {
+        return child_->AsyncDeleteOdbDnsZone(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+                 request) {
+        return child_->DeleteOdbDnsZone(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
 OracleDatabaseLogging::ListExadbVmClusters(
     grpc::ClientContext& context, Options const& options,
