@@ -1153,6 +1153,13 @@
 ./include/google/cloud/run/v2
 ./include/google/cloud/run/v2/internal
 ./include/google/cloud/run/v2/mocks
+./include/google/cloud/saasplatform
+./include/google/cloud/saasplatform/saasservicemgmt
+./include/google/cloud/saasplatform/saasservicemgmt/v1
+./include/google/cloud/saasservicemgmt
+./include/google/cloud/saasservicemgmt/v1
+./include/google/cloud/saasservicemgmt/v1/internal
+./include/google/cloud/saasservicemgmt/v1/mocks
 ./include/google/cloud/scheduler
 ./include/google/cloud/scheduler/v1
 ./include/google/cloud/scheduler/v1/internal
@@ -1648,6 +1655,8 @@
 ./lib64/cmake/google_cloud_cpp_retail_mocks
 ./lib64/cmake/google_cloud_cpp_run
 ./lib64/cmake/google_cloud_cpp_run_mocks
+./lib64/cmake/google_cloud_cpp_saasservicemgmt
+./lib64/cmake/google_cloud_cpp_saasservicemgmt_mocks
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_scheduler_mocks
 ./lib64/cmake/google_cloud_cpp_secretmanager

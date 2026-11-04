@@ -1,0 +1,35 @@
+/*!
+@page saasservicemgmt-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `saasservicemgmt_v1::SaasDeploymentsClient`:
+
+@snippet saas_deployments_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c saasservicemgmt_v1::SaasDeploymentsClient](@ref saasservicemgmt_v1::SaasDeploymentsClient-universe-domain-snippet)
+- [\c saasservicemgmt_v1::SaasRolloutsClient](@ref saasservicemgmt_v1::SaasRolloutsClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page saasservicemgmt_v1::SaasDeploymentsClient-universe-domain-snippet Override saasservicemgmt_v1::SaasDeploymentsClient Universe Domain
+
+@snippet google/cloud/saasservicemgmt/v1/samples/saas_deployments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page saasservicemgmt_v1::SaasRolloutsClient-universe-domain-snippet Override saasservicemgmt_v1::SaasRolloutsClient Universe Domain
+
+@snippet google/cloud/saasservicemgmt/v1/samples/saas_rollouts_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

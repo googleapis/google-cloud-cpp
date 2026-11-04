@@ -222,6 +222,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "resourcemanager",
     "retail",
     "run",
+    "saasservicemgmt",
     "scheduler",
     "secretmanager",
     "securesourcemanager",
