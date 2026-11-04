@@ -51,9 +51,8 @@ cleanup() {
     io::log_h2 "Cloud Run Job logs for ${JOB_NAME}:"
     gcloud logging read "resource.type=cloud_run_job AND resource.labels.job_name=${JOB_NAME}" \
       --project="${PROJECT_ID}" \
-      --order=asc \
       --limit=100 \
-      --format="value(textPayload)" 2>/dev/null || true
+      --format="value(textPayload)" 2>/dev/null | tac || true
 
     io::log_h2 "Cleaning up ephemeral Cloud Run Job: ${JOB_NAME}"
     gcloud run jobs delete "${JOB_NAME}" \
