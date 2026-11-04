@@ -317,8 +317,10 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   bool const is_full_read = is_finalized && (p.start == 0) &&
                             (p.length == 0 || p.length >= metadata_->size());
 
-  auto hash_function = CreateHashFunction(is_full_read);
-  auto hash_validator = CreateHashValidator(is_full_read, lk);
+  std::shared_ptr<storage::internal::HashFunction> hash_function =
+      CreateHashFunction(is_full_read);
+  std::unique_ptr<storage::internal::HashValidator> hash_validator =
+      CreateHashValidator(is_full_read, lk);
 
   auto range = std::make_shared<ReadRange>(
       p.start, limit, std::move(hash_function), std::move(hash_validator),

@@ -4308,7 +4308,8 @@ TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
             (i % 2 == 0)
                 ? storage::ObjectDescriptorConnection::ReadParams{0, 43}
                 : storage::ObjectDescriptorConnection::ReadParams{10, 10};
-        auto reader = tested->Read(params);
+        std::unique_ptr<storage::AsyncReaderConnection> reader =
+            tested->Read(params);
         EXPECT_THAT(reader, NotNull());
         if ((i + t) % 8 == 0) {
           (void)tested->metadata();
@@ -4377,7 +4378,8 @@ TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
   EXPECT_CALL(factory, Call)
       .WillRepeatedly([&](Request const&)
                           -> future<StatusOr<OpenStreamResult>> {
-        auto const idx = next_stream.fetch_add(1, std::memory_order_relaxed);
+        std::size_t const idx =
+            next_stream.fetch_add(1, std::memory_order_relaxed);
         if (idx >= extra_streams.size()) {
           return make_ready_future(
               StatusOr<OpenStreamResult>(PermanentError()));
@@ -4432,7 +4434,8 @@ TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
         if ((i + t) % 4 == 0) {
           tested->MakeSubsequentStream();
         }
-        auto reader = tested->Read({0, 43});
+        std::unique_ptr<storage::AsyncReaderConnection> reader =
+            tested->Read({0, 43});
         EXPECT_THAT(reader, NotNull());
         EXPECT_GE(tested->StreamSize(), std::size_t{1});
         EXPECT_TRUE(tested->metadata().has_value());
