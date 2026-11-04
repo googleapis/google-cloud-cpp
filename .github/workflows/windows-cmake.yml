@@ -3,10 +3,6 @@ name: Windows-Builds
 on:
   workflow_call:
     inputs:
-      checkout-ref:
-        required: true
-        description: "The ref we want to compile"
-        type: string
       full-matrix:
         required: true
         description: "Build the full matrix"
@@ -67,7 +63,6 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
-        ref: ${{ inputs.checkout-ref }}
         persist-credentials: false
     - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
       if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
@@ -309,17 +304,17 @@ jobs:
         arch: ${{ matrix.arch }}
     - name: Build google-cloud-cpp
       shell: bash
+      env:
+        STEPS_PY311_OUTPUTS_PYTHON_PATH: ${{ steps.py311.outputs.python-path }}
+        STEPS_DYNAMIC_OUTPUTS_FEATURES: ${{ steps.dynamic.outputs.features }}
+        EXECUTE_INTEGRATION_TESTS: ${{ inputs.execute-integration-tests }}
       run: |
         export VCPKG_ROOT="${TEMP}/.build/vcpkg"
         export CLOUDSDK_PYTHON="${STEPS_PY311_OUTPUTS_PYTHON_PATH}"
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
-        export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${STEPS_DYNAMIC_OUTPUTS_FEATURES}
-      env:
-        STEPS_PY311_OUTPUTS_PYTHON_PATH: ${{ steps.py311.outputs.python-path }}
-        STEPS_DYNAMIC_OUTPUTS_FEATURES: ${{ steps.dynamic.outputs.features }}
     - name: Post Build Disk Space
       shell: bash
       run: df -m

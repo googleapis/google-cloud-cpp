@@ -32,7 +32,6 @@ jobs:
     name: macOS-Bazel
     uses: ./.github/workflows/macos-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ github.sha }}
       bazel-cache-mode: >-
         ${{
           (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'READ_WRITE' || 'READ_ONLY'
@@ -45,7 +44,6 @@ jobs:
     name: Windows-Bazel
     uses: ./.github/workflows/windows-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ github.sha }}
       bazel-cache-mode: >-
         ${{
           (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'READ_WRITE' || 'READ_ONLY'
@@ -58,7 +56,6 @@ jobs:
     name: macOS-CMake
     uses: ./.github/workflows/macos-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ github.sha }}
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
@@ -82,7 +79,6 @@ jobs:
     name: Windows-CMake
     uses: ./.github/workflows/windows-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
-      checkout-ref: ${{ github.sha }}
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.

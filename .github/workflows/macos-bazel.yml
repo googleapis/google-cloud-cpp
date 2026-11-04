@@ -3,10 +3,6 @@ name: macOS-Bazel-Builds
 on:
   workflow_call:
     inputs:
-      checkout-ref:
-        required: true
-        description: "The ref we want to compile"
-        type: string
       bazel-cache-mode:
         required: true
         description: "READ_WRITE or READ_ONLY"
@@ -39,7 +35,6 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
-        ref: ${{ inputs.checkout-ref }}
         persist-credentials: false
     - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
       if: ${{ inputs.bazel-cache-mode == 'READ_WRITE' }}
@@ -49,13 +44,12 @@ jobs:
     - name: Install bash >= 5.x
       run: brew install bash
     - name: Pre Tests Disk Space
-      # zizmor: ignore[template-injection]
       run: df -m
     - name: Build google-cloud-cpp
-      # zizmor: ignore[template-injection]
+      env:
+        BAZEL_REMOTE_CACHE_RW_MODE: ${{ inputs.bazel-cache-mode }}
+        EXECUTE_INTEGRATION_TESTS: ${{ inputs.execute-integration-tests }}
       run: |
-        export BAZEL_REMOTE_CACHE_RW_MODE=${{ inputs.bazel-cache-mode }}
-        export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/macos-bazel.sh ${{ join(matrix.targets, ' ') }}
     - name: Post Tests Disk Space
       run: df -m
