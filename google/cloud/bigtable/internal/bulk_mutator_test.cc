@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/grpc_options.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
@@ -22,6 +23,7 @@
 #endif
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
+#include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -36,6 +38,7 @@ namespace {
 namespace v2 = ::google::bigtable::v2;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::bigtable::testing::MockDataRetryPolicy;
 using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::testing_util::StatusIs;
@@ -241,6 +244,91 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
   }
   auto failures = std::move(mutator).OnRetryDone();
   EXPECT_TRUE(failures.empty());
+}
+
+TEST_F(BulkMutatorTest, RetryPolicyMakesMutationFailurePermanent) {
+  // UNAVAILABLE is worth retrying by default, but the application configured a
+  // policy that disagrees, and the mutation failure should be reported instead
+  // of retried.
+  BulkMutation mut(IdempotentMutation("r0"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        EXPECT_THAT(request, HasCorrectResourceNames());
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}});
+              return std::nullopt;
+            })
+            .WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto retry_policy = std::make_shared<MockDataRetryPolicy>();
+  EXPECT_CALL(*retry_policy, IsPermanentFailure)
+      .WillRepeatedly(Return(true));
+  auto policy = DefaultIdempotentMutationPolicy();
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
+
+  EXPECT_TRUE(mutator.HasPendingMutations());
+  bigtable_internal::NoopMutateRowsLimiter limiter;
+  auto status = mutator.MakeOneRequest(
+      *mock, limiter, Options{}.set<DataRetryPolicyOption>(retry_policy));
+  EXPECT_STATUS_OK(status);
+  EXPECT_FALSE(mutator.HasPendingMutations());
+  auto failures = std::move(mutator).OnRetryDone();
+  ASSERT_EQ(1UL, failures.size());
+  EXPECT_EQ(0, failures[0].original_index());
+  EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(BulkMutatorTest, RetryPolicyMakesMutationFailureRetryable) {
+  // The mirror image of the previous test: PERMISSION_DENIED is permanent by
+  // default, but the policy configured by the application says otherwise, so
+  // the mutation stays pending for the next attempt.
+  BulkMutation mut(IdempotentMutation("r0"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        EXPECT_THAT(request, HasCorrectResourceNames());
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeResponse({{0, grpc::StatusCode::PERMISSION_DENIED}});
+              return std::nullopt;
+            })
+            .WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto retry_policy = std::make_shared<MockDataRetryPolicy>();
+  EXPECT_CALL(*retry_policy, IsPermanentFailure)
+      .WillRepeatedly(Return(false));
+  auto policy = DefaultIdempotentMutationPolicy();
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
+
+  EXPECT_TRUE(mutator.HasPendingMutations());
+  bigtable_internal::NoopMutateRowsLimiter limiter;
+  auto status = mutator.MakeOneRequest(
+      *mock, limiter, Options{}.set<DataRetryPolicyOption>(retry_policy));
+  EXPECT_STATUS_OK(status);
+  EXPECT_TRUE(mutator.HasPendingMutations());
+  auto failures = std::move(mutator).OnRetryDone();
+  ASSERT_EQ(1UL, failures.size());
+  EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(BulkMutatorTest, PermanentFailure) {
