@@ -138,6 +138,10 @@ Status PartialResultSetSource::ReadFromStream() {
   // The resume_token_ member holds the token from the previous
   // PartialResultSet. It's empty on the first call.
   if (reader_->Read(resume_token_, result_set)) {
+    if (result_set.resumption) {
+      read_buffer_.clear();
+      buffered_rows_.clear();
+    }
     return ProcessDataFromStream(result_set.result);
   }
 
