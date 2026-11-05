@@ -25,6 +25,7 @@
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -51,7 +52,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       google::storage::v2::Object metadata, bool first_request = true);
   ~AsyncWriterConnectionImpl() override;
 
-  void Cancel() override { return impl_->Cancel(); }
+  void Cancel() override;
 
   std::string UploadId() const override;
   std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
@@ -81,7 +82,10 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       PersistedStateType persisted_state, std::int64_t offset,
       bool first_request = true);
 
-  google::storage::v2::BidiWriteObjectRequest MakeRequest();
+  std::optional<google::storage::v2::BidiWriteObjectRequest> MakeRequest();
+  std::shared_ptr<StreamingRpc> GetImpl() const;
+  bool UpdateFromResponse(
+      google::storage::v2::BidiWriteObjectResponse response);
 
   future<Status> OnPartialUpload(std::size_t upload_size,
                                  StatusOr<bool> success);
