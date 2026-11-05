@@ -23,6 +23,11 @@
 #include "google/bigtable/v2/types.pb.h"
 #include "timestamp.h"
 #include <cmath>
+#include <optional>
+#include <string>
+#include <tuple>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -632,13 +637,13 @@ class Value {
           GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 1);
       using KeyProto = decltype(key_proto);
       using ValueProto = decltype(value_proto);
-      auto const& key = GetValue(K{}, std::forward<KeyProto>(key_proto),
+      StatusOr<K> key = GetValue(K{}, std::forward<KeyProto>(key_proto),
                                  pt.map_type().key_type());
-      auto const& value = GetValue(V{}, std::forward<ValueProto>(value_proto),
+      StatusOr<V> value = GetValue(V{}, std::forward<ValueProto>(value_proto),
                                    pt.map_type().value_type());
       if (!key) return std::move(key).status();
       if (!value) return std::move(value).status();
-      m.insert(std::make_pair(*std::move(key), *std::move(value)));
+      m.insert_or_assign(*std::move(key), *std::move(value));
     }
     return m;
   }
@@ -705,17 +710,13 @@ class Value {
   struct PrivateConstructor {};
   template <typename T>
   Value(PrivateConstructor, T&& t)
-      : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {
-    if (type_.has_map_type() && value_.has_array_value() &&
-        !value_.array_value().values().empty()) {
-      DedupProtoMap();
-    }
-  }
+      : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
 
   Value(google::bigtable::v2::Type t, google::bigtable::v2::Value v)
       : type_(std::move(t)), value_(std::move(v)) {
-    if (type_.has_map_type() && value_.has_array_value() &&
-        !value_.array_value().values().empty()) {
+    if ((type_.has_map_type() || type_.has_array_type() ||
+         type_.has_struct_type()) &&
+        value_.has_array_value() && !value_.array_value().values().empty()) {
       DedupProtoMap();
     }
   }
