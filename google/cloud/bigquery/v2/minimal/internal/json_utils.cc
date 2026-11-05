@@ -107,11 +107,10 @@ nlohmann::json RemoveJsonKeysAndEmptyFields(
             return true;
           }
         }
-        if (event == nlohmann::json::parse_event_t::key &&
-          parsed == "labels" &&
-          std::find(keys.begin(), keys.end(), "labels") == keys.end()) {
-            labels_depth = depth;
-          }
+        if (event == nlohmann::json::parse_event_t::key && parsed == "labels" &&
+            std::find(keys.begin(), keys.end(), "labels") == keys.end()) {
+          labels_depth = depth;
+        }
 
         if (event == nlohmann::json::parse_event_t::key) {
           auto const discard = std::any_of(

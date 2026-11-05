@@ -324,8 +324,8 @@ TEST(JsonUtilsTest, FilterLabelsAndFollowingFields) {
     }
   })";
 
-  auto const actual = RemoveJsonKeysAndEmptyFields(
-      kInput, {"labels", "rangePartitioning"});
+  auto const actual =
+      RemoveJsonKeysAndEmptyFields(kInput, {"labels", "rangePartitioning"});
 
   auto const expected = nlohmann::json::parse(R"({
     "configuration": {
