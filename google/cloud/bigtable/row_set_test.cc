@@ -124,6 +124,25 @@ TEST(RowSetTest, IntersectWithDisjointIsEmpty) {
       RowSet("a", R::Range("a", "b")).Intersect(R::Range("c", "d")).IsEmpty());
 }
 
+TEST(RowSetTest, IntersectEndingAtEmpty) {
+  using R = RowRange;
+  RowSet row_set("a", R::Closed("b", "z"));
+  RowSet const intersected = row_set.Intersect(R::EndingAt(""));
+  EXPECT_FALSE(intersected.IsEmpty());
+  EXPECT_EQ(row_set, intersected);
+
+  google::bigtable::v2::RowSet const& proto = intersected.as_proto();
+  ASSERT_EQ(1, proto.row_keys_size());
+  EXPECT_EQ("a", proto.row_keys(0));
+  ASSERT_EQ(1, proto.row_ranges_size());
+  EXPECT_EQ(R::Closed("b", "z"), R(proto.row_ranges(0)));
+
+  RowSet const narrowed = RowSet(R::EndingAt("")).Intersect(R::Open("a", ""));
+  EXPECT_FALSE(narrowed.IsEmpty());
+  ASSERT_EQ(1, narrowed.as_proto().row_ranges_size());
+  EXPECT_EQ(R::Open("a", ""), R(narrowed.as_proto().row_ranges(0)));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

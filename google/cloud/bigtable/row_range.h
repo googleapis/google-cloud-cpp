@@ -60,7 +60,9 @@ class RowRange {
   template <typename T>
   static RowRange EndingAt(T&& end) {
     RowRange result;
-    result.row_range_.set_end_key_closed(std::forward<T>(end));
+    if (!internal::IsEmptyRowKey(end)) {
+      result.row_range_.set_end_key_closed(std::forward<T>(end));
+    }
     return result;
   }
 
