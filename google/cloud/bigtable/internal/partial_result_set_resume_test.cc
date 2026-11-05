@@ -526,7 +526,7 @@ TEST(PartialResultSetResume, ResumptionDiscardsUncommittedBufferedRows) {
   };
   std::unique_ptr<PartialResultSetReader> grpc_reader =
       MakeTestResume(factory, Idempotency::kIdempotent);
-  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
       PartialResultSetSource::Create(metadata,
                                      std::make_shared<OperationContext>(),
                                      std::move(grpc_reader));
@@ -599,7 +599,7 @@ TEST(PartialResultSetResume, ResumptionDiscardsPartialReadBuffer) {
   };
   std::unique_ptr<PartialResultSetReader> grpc_reader =
       MakeTestResume(factory, Idempotency::kIdempotent);
-  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
       PartialResultSetSource::Create(metadata,
                                      std::make_shared<OperationContext>(),
                                      std::move(grpc_reader));

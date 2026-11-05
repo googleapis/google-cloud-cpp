@@ -698,7 +698,7 @@ TEST(PartialResultSetSourceTest, ResumptionDiscardsUncommittedBufferedRows) {
       .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
       CreatePartialResultSetSource(metadata, std::move(operation_context),
                                    std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
@@ -787,7 +787,7 @@ TEST(PartialResultSetSourceTest, ResumptionDiscardsPartialReadBuffer) {
       .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
       CreatePartialResultSetSource(metadata, std::move(operation_context),
                                    std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
