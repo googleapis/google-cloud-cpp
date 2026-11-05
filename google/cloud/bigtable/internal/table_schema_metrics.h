@@ -29,6 +29,7 @@
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/metrics/sync_instruments.h>
+#include <cstdint>
 #include <memory>
 #include <optional>
 #include <set>
@@ -273,11 +274,9 @@ class ConnectivityErrorCount : public TableSchemaMetric {
       std::string const& instrumentation_scope,
       opentelemetry::nostd::shared_ptr<
           opentelemetry::metrics::MeterProvider> const& provider);
-  void PostCall(opentelemetry::context::Context const&,
+  void PostCall(opentelemetry::context::Context const& context,
                 grpc::ClientContext const& client_context,
                 PostCallParams const& p) override;
-  void OnDone(opentelemetry::context::Context const& context,
-              OnDoneParams const&) override;
   std::unique_ptr<TableSchemaMetric> clone(
       TableResourceLabels const& resource_labels,
       TableDataLabels const& data_labels) const override;
@@ -285,7 +284,6 @@ class ConnectivityErrorCount : public TableSchemaMetric {
  private:
   TableResourceLabels resource_labels_;
   TableDataLabels data_labels_;
-  std::uint64_t num_errors_ = 0;
   opentelemetry::nostd::shared_ptr<
       opentelemetry::metrics::Counter<std::uint64_t>>
       connectivity_error_count_;
