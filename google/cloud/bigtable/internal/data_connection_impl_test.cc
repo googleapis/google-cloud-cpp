@@ -17,10 +17,10 @@
 #include "google/cloud/bigtable/internal/crc32c.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
+#include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
-#include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
@@ -462,6 +462,8 @@ class FakeOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<OperationContext::Clock> clock_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 class MockOperationContextFactory : public OperationContextFactory {
  public:
   MOCK_METHOD(std::shared_ptr<OperationContext>, ReadRow,
@@ -483,8 +485,6 @@ class MockOperationContextFactory : public OperationContextFactory {
   MOCK_METHOD(std::shared_ptr<OperationContext>, ExecuteQuery,
               (std::string const&, std::string const&), (override));
 };
-
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 class DataConnectionTest : public ::testing::Test {
  protected:
@@ -2750,6 +2750,152 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
           .set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(DataConnectionTest,
+       ReadModifyWriteRowAppProfileIdOptionOverridesRequest) {
+  auto factory = std::make_unique<MockOperationContextFactory>();
+  EXPECT_CALL(*factory, ReadModifyWriteRow(kTableName, "override-profile"))
+      .WillOnce(Return(std::make_shared<OperationContext>()))
+      .WillOnce(Return(std::make_shared<OperationContext>()));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
+                         v2::ReadModifyWriteRowRequest const& request,
+                         bigtable_internal::OperationContext&) {
+        EXPECT_EQ("override-profile", request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return PermanentError();
+      });
+
+  std::shared_ptr<DataConnectionImpl> conn =
+      TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(
+      CallOptions().set<AppProfileIdOption>("override-profile"));
+
+  v2::ReadModifyWriteRowRequest req_with_stale_profile;
+  req_with_stale_profile.set_app_profile_id("stale-profile");
+  req_with_stale_profile.set_table_name(kTableName);
+  req_with_stale_profile.set_row_key("row");
+  EXPECT_THAT(conn->ReadModifyWriteRow(req_with_stale_profile),
+              StatusIs(StatusCode::kPermissionDenied));
+
+  v2::ReadModifyWriteRowRequest req_without_profile;
+  req_without_profile.set_table_name(kTableName);
+  req_without_profile.set_row_key("row");
+  EXPECT_THAT(conn->ReadModifyWriteRow(req_without_profile),
+              StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest,
+       ReadModifyWriteRowPreservesRequestAppProfileIdWhenOptionUnset) {
+  auto factory = std::make_unique<MockOperationContextFactory>();
+  EXPECT_CALL(*factory, ReadModifyWriteRow(kTableName, "proto-profile"))
+      .WillOnce(Return(std::make_shared<OperationContext>()));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::ReadModifyWriteRowRequest const& request,
+                   bigtable_internal::OperationContext&) {
+        EXPECT_EQ("proto-profile", request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return PermanentError();
+      });
+
+  v2::ReadModifyWriteRowRequest req;
+  req.set_app_profile_id("proto-profile");
+  req.set_table_name(kTableName);
+  req.set_row_key("row");
+
+  Options options = CallOptions();
+  options.unset<AppProfileIdOption>();
+  std::shared_ptr<DataConnectionImpl> conn =
+      TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(std::move(options));
+  EXPECT_THAT(conn->ReadModifyWriteRow(req),
+              StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest,
+       AsyncReadModifyWriteRowAppProfileIdOptionOverridesRequest) {
+  auto factory = std::make_unique<MockOperationContextFactory>();
+  EXPECT_CALL(*factory, ReadModifyWriteRow(kTableName, "override-profile"))
+      .WillOnce(Return(std::make_shared<OperationContext>()))
+      .WillOnce(Return(std::make_shared<OperationContext>()));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .Times(2)
+      .WillRepeatedly(
+          [](google::cloud::CompletionQueue&,
+             std::shared_ptr<grpc::ClientContext> const&,
+             internal::ImmutableOptions const&,
+             v2::ReadModifyWriteRowRequest const& request,
+             std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ("override-profile", request.app_profile_id());
+            EXPECT_EQ(kTableName, request.table_name());
+            EXPECT_EQ("row", request.row_key());
+            return make_ready_future<StatusOr<v2::ReadModifyWriteRowResponse>>(
+                PermanentError());
+          });
+
+  std::shared_ptr<DataConnectionImpl> conn =
+      TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(
+      CallOptions().set<AppProfileIdOption>("override-profile"));
+
+  v2::ReadModifyWriteRowRequest req_with_stale_profile;
+  req_with_stale_profile.set_app_profile_id("stale-profile");
+  req_with_stale_profile.set_table_name(kTableName);
+  req_with_stale_profile.set_row_key("row");
+  EXPECT_THAT(conn->AsyncReadModifyWriteRow(req_with_stale_profile).get(),
+              StatusIs(StatusCode::kPermissionDenied));
+
+  v2::ReadModifyWriteRowRequest req_without_profile;
+  req_without_profile.set_table_name(kTableName);
+  req_without_profile.set_row_key("row");
+  EXPECT_THAT(conn->AsyncReadModifyWriteRow(req_without_profile).get(),
+              StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest,
+       AsyncReadModifyWriteRowPreservesRequestAppProfileIdWhenOptionUnset) {
+  auto factory = std::make_unique<MockOperationContextFactory>();
+  EXPECT_CALL(*factory, ReadModifyWriteRow(kTableName, "proto-profile"))
+      .WillOnce(Return(std::make_shared<OperationContext>()));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .WillOnce(
+          [](google::cloud::CompletionQueue&,
+             std::shared_ptr<grpc::ClientContext> const&,
+             internal::ImmutableOptions const&,
+             v2::ReadModifyWriteRowRequest const& request,
+             std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ("proto-profile", request.app_profile_id());
+            EXPECT_EQ(kTableName, request.table_name());
+            EXPECT_EQ("row", request.row_key());
+            return make_ready_future<StatusOr<v2::ReadModifyWriteRowResponse>>(
+                PermanentError());
+          });
+
+  v2::ReadModifyWriteRowRequest req;
+  req.set_app_profile_id("proto-profile");
+  req.set_table_name(kTableName);
+  req.set_row_key("row");
+
+  Options options = CallOptions();
+  options.unset<AppProfileIdOption>();
+  std::shared_ptr<DataConnectionImpl> conn =
+      TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(std::move(options));
+  EXPECT_THAT(conn->AsyncReadModifyWriteRow(req).get(),
+              StatusIs(StatusCode::kPermissionDenied));
 }
 
 // The `AsyncRowReader` is tested extensively in `async_row_reader_test.cc`.
