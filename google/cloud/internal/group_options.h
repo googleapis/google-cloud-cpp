@@ -53,7 +53,7 @@ Options GroupOptions(Head&&, Tail&&... t);
 template <typename... Tail>
 Options GroupOptions(Options& bundle, Tail&&... t) {
   return google::cloud::internal::MergeOptions(
-      GroupOptions(std::forward<Tail>(t)...), std::move(bundle));
+      GroupOptions(std::forward<Tail>(t)...), bundle);
 }
 
 template <typename... Tail>
