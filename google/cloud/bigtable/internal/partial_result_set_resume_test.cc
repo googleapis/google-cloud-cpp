@@ -524,18 +524,21 @@ TEST(PartialResultSetResume, ResumptionDiscardsUncommittedBufferedRows) {
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
   };
-  auto grpc_reader = MakeTestResume(factory, Idempotency::kIdempotent);
-  auto reader = PartialResultSetSource::Create(
-      metadata, std::make_shared<OperationContext>(), std::move(grpc_reader));
+  std::unique_ptr<PartialResultSetReader> grpc_reader =
+      MakeTestResume(factory, Idempotency::kIdempotent);
+  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+      PartialResultSetSource::Create(metadata,
+                                     std::make_shared<OperationContext>(),
+                                     std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
-  for (auto const* s : {"value-1", "value-2", "value-3", "value-4"}) {
-    auto row = (*reader)->NextRow();
+  for (char const* s : {"value-1", "value-2", "value-3", "value-4"}) {
+    StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
     EXPECT_THAT(row, IsValidAndEquals(bigtable_mocks::MakeQueryRow(
                          {{"TestColumn", bigtable::Value(s)}})));
   }
 
-  auto row = (*reader)->NextRow();
+  StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
   EXPECT_THAT(row, IsValidAndEquals(bigtable::QueryRow{}));
 }
 
@@ -594,18 +597,21 @@ TEST(PartialResultSetResume, ResumptionDiscardsPartialReadBuffer) {
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
   };
-  auto grpc_reader = MakeTestResume(factory, Idempotency::kIdempotent);
-  auto reader = PartialResultSetSource::Create(
-      metadata, std::make_shared<OperationContext>(), std::move(grpc_reader));
+  std::unique_ptr<PartialResultSetReader> grpc_reader =
+      MakeTestResume(factory, Idempotency::kIdempotent);
+  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+      PartialResultSetSource::Create(metadata,
+                                     std::make_shared<OperationContext>(),
+                                     std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
-  for (auto const* s : {"value-1", "value-2", "value-3", "value-4"}) {
-    auto row = (*reader)->NextRow();
+  for (char const* s : {"value-1", "value-2", "value-3", "value-4"}) {
+    StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
     EXPECT_THAT(row, IsValidAndEquals(bigtable_mocks::MakeQueryRow(
                          {{"TestColumn", bigtable::Value(s)}})));
   }
 
-  auto row = (*reader)->NextRow();
+  StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
   EXPECT_THAT(row, IsValidAndEquals(bigtable::QueryRow{}));
 }
 

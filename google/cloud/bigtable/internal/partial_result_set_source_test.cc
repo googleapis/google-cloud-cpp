@@ -626,7 +626,7 @@ TEST(PartialResultSetSourceTest, ResumptionDiscardsUncommittedBufferedRows) {
   auto operation_context = std::make_shared<OperationContext>();
 #endif
 
-  auto constexpr kResultMetadataText = R"pb(
+  char constexpr kResultMetadataText[] = R"pb(
     proto_schema {
       columns {
         name: "user_id"
@@ -698,8 +698,9 @@ TEST(PartialResultSetSourceTest, ResumptionDiscardsUncommittedBufferedRows) {
       .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(
-      metadata, std::move(operation_context), std::move(grpc_reader));
+  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+      CreatePartialResultSetSource(metadata, std::move(operation_context),
+                                   std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
   EXPECT_THAT((*reader)->NextRow(),
@@ -728,7 +729,7 @@ TEST(PartialResultSetSourceTest, ResumptionDiscardsPartialReadBuffer) {
   auto operation_context = std::make_shared<OperationContext>();
 #endif
 
-  auto constexpr kResultMetadataText = R"pb(
+  char constexpr kResultMetadataText[] = R"pb(
     proto_schema {
       columns {
         name: "user_id"
@@ -786,8 +787,9 @@ TEST(PartialResultSetSourceTest, ResumptionDiscardsPartialReadBuffer) {
       .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(
-      metadata, std::move(operation_context), std::move(grpc_reader));
+  StatusOr<std::unique_ptr<PartialResultSetSource>> reader =
+      CreatePartialResultSetSource(metadata, std::move(operation_context),
+                                   std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
   EXPECT_THAT((*reader)->NextRow(),
