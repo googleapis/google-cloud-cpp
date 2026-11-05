@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
-#include <algorithm>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -22,19 +22,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::string PrefixRangeEnd(std::string const& key) {
-  auto pos = key.find_last_not_of('\xFF');
+  std::string::size_type const pos = key.find_last_not_of('\xFF');
   if (pos == std::string::npos) {
-    // If key is all \xFF then any sequence higher than key starts with the
-    // same number of \xFF.  So the end of the range is +infinity, which is
+    // If key is empty or all \xFF bytes then any sequence higher than key
+    // starts with key.  So the end of the range is +infinity, which is
     // represented by the empty string.
     return std::string();
   }
-  // Generally just take the last byte and increment by 1, but if there are
-  // trailing \xFF byte we need to turn those into zeroes and increment the last
-  // byte that is not a \xFF.
-  std::string result = key;
-  std::fill(std::begin(result) + pos + 1, std::end(result), '\0');
-  result[pos]++;
+  // Truncate any trailing \xFF bytes and increment the last byte that is not
+  // \xFF, yielding the smallest byte sequence strictly greater than all keys
+  // starting with `key`.
+  std::string result = key.substr(0, pos + 1);
+  result[pos] = static_cast<char>(static_cast<unsigned char>(result[pos]) + 1);
   return result;
 }
 
