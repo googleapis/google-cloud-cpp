@@ -20,7 +20,16 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <cstddef>
+#include <cstdint>
+#include <functional>
+#include <memory>
+#include <mutex>
+#include <string>
 #include <thread>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -89,6 +98,16 @@ class DynamicChannelPoolTestWrapper {
     return pool_->draining_channels_;
   }
 
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>>& channels(
+      std::scoped_lock<std::mutex> const&) {
+    return pool_->channels_;
+  }
+
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> const&
+  draining_channels(std::scoped_lock<std::mutex> const&) const {
+    return pool_->draining_channels_;
+  }
+
   std::size_t num_pending_channels() const {
     return pool_->num_pending_channels_;
   }
@@ -108,9 +127,14 @@ using ::google::cloud::bigtable::experimental::DynamicChannelPoolSizingPolicy;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::testing::Each;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::MockFunction;
+using ::testing::NotNull;
+using ::testing::SizeIs;
+using ::testing::UnorderedElementsAre;
 
 class DynamicChannelPoolTest : public ::testing::Test {
  public:
@@ -775,31 +799,32 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   channels.push_back(
       std::make_shared<ChannelUsage<BigtableStub>>(mock_stub, 1));
 
-  DynamicChannelPoolTestWrapper::ChannelSelectionData data;
-  for (auto iter = channels.begin(); iter != channels.end(); ++iter) {
-    data.iterators.push_back(iter);
-  }
-  data.shuffle_iter = data.iterators.begin();
-  data.channel_1_iter = *data.shuffle_iter;
-  data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
-  ++data.shuffle_iter;
-  data.channel_2_iter = *data.shuffle_iter;
-  data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
-
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
       stub_factory_fn.AsStdFunction(), sizing_policy,
       TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
-  auto draining_channels = wrapper.SetDrainingChannels({});
+  auto const& draining_channels = wrapper.SetDrainingChannels({});
 
   SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
+    auto& pool_channels = wrapper.channels(lock);
+    DynamicChannelPoolTestWrapper::ChannelSelectionData data;
+    for (auto iter = pool_channels.begin(); iter != pool_channels.end();
+         ++iter) {
+      data.iterators.push_back(iter);
+    }
+    data.shuffle_iter = data.iterators.begin();
+    data.channel_1_iter = *data.shuffle_iter;
+    data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
+    ++data.shuffle_iter;
+    data.channel_2_iter = *data.shuffle_iter;
+    data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
     selected_stub = wrapper.HandleBadChannels(lock, data);
   }
-  EXPECT_THAT(draining_channels, IsEmpty());
+  EXPECT_THAT(draining_channels, ElementsAre(channels[0]));
 
   grpc::ClientContext context;
   OperationContext default_oc;
@@ -859,31 +884,32 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
       std::make_shared<MockBigtableStub>(), 0,
       internal::InternalError("bad channel")));
 
-  DynamicChannelPoolTestWrapper::ChannelSelectionData data;
-  for (auto iter = channels.begin(); iter != channels.end(); ++iter) {
-    data.iterators.push_back(iter);
-  }
-  data.shuffle_iter = data.iterators.begin();
-  data.channel_1_iter = *data.shuffle_iter;
-  data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
-  ++data.shuffle_iter;
-  data.channel_2_iter = *data.shuffle_iter;
-  data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
-
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
       stub_factory_fn.AsStdFunction(), sizing_policy,
       TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
-  auto draining_channels = wrapper.SetDrainingChannels({});
+  auto const& draining_channels = wrapper.SetDrainingChannels({});
 
   SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
+    auto& pool_channels = wrapper.channels(lock);
+    DynamicChannelPoolTestWrapper::ChannelSelectionData data;
+    for (auto iter = pool_channels.begin(); iter != pool_channels.end();
+         ++iter) {
+      data.iterators.push_back(iter);
+    }
+    data.shuffle_iter = data.iterators.begin();
+    data.channel_1_iter = *data.shuffle_iter;
+    data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
+    ++data.shuffle_iter;
+    data.channel_2_iter = *data.shuffle_iter;
+    data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
     selected_stub = wrapper.HandleBadChannels(lock, data);
   }
-  EXPECT_THAT(draining_channels, IsEmpty());
+  EXPECT_THAT(draining_channels, ElementsAre(channels[1]));
 
   grpc::ClientContext context;
   OperationContext default_oc;
@@ -949,31 +975,32 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   channels.push_back(
       std::make_shared<ChannelUsage<BigtableStub>>(mock_stub_1, 2));
 
-  DynamicChannelPoolTestWrapper::ChannelSelectionData data;
-  for (auto iter = channels.begin(); iter != channels.end(); ++iter) {
-    data.iterators.push_back(iter);
-  }
-  data.shuffle_iter = data.iterators.begin();
-  data.channel_1_iter = *data.shuffle_iter;
-  data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
-  ++data.shuffle_iter;
-  data.channel_2_iter = *data.shuffle_iter;
-  data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
-
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
       stub_factory_fn.AsStdFunction(), sizing_policy,
       TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
-  auto draining_channels = wrapper.SetDrainingChannels({});
+  auto const& draining_channels = wrapper.SetDrainingChannels({});
 
   SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
+    auto& pool_channels = wrapper.channels(lock);
+    DynamicChannelPoolTestWrapper::ChannelSelectionData data;
+    for (auto iter = pool_channels.begin(); iter != pool_channels.end();
+         ++iter) {
+      data.iterators.push_back(iter);
+    }
+    data.shuffle_iter = data.iterators.begin();
+    data.channel_1_iter = *data.shuffle_iter;
+    data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
+    ++data.shuffle_iter;
+    data.channel_2_iter = *data.shuffle_iter;
+    data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
     selected_stub = wrapper.HandleBadChannels(lock, data);
   }
-  EXPECT_THAT(draining_channels, IsEmpty());
+  EXPECT_THAT(draining_channels, ElementsAre(channels[1]));
 
   grpc::ClientContext context;
   OperationContext default_oc;
@@ -1049,31 +1076,34 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
       std::make_shared<MockBigtableStub>(), 0,
       internal::InternalError("bad channel 3")));
 
-  DynamicChannelPoolTestWrapper::ChannelSelectionData data;
-  for (auto iter = channels.begin(); iter != channels.end(); ++iter) {
-    data.iterators.push_back(iter);
-  }
-  data.shuffle_iter = data.iterators.begin();
-  data.channel_1_iter = *data.shuffle_iter;
-  data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
-  ++data.shuffle_iter;
-  data.channel_2_iter = *data.shuffle_iter;
-  data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
-
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
       stub_factory_fn.AsStdFunction(), sizing_policy,
       TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
-  auto draining_channels = wrapper.SetDrainingChannels({});
+  auto const& draining_channels = wrapper.SetDrainingChannels({});
 
   SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
+    auto& pool_channels = wrapper.channels(lock);
+    DynamicChannelPoolTestWrapper::ChannelSelectionData data;
+    for (auto iter = pool_channels.begin(); iter != pool_channels.end();
+         ++iter) {
+      data.iterators.push_back(iter);
+    }
+    data.shuffle_iter = data.iterators.begin();
+    data.channel_1_iter = *data.shuffle_iter;
+    data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
+    ++data.shuffle_iter;
+    data.channel_2_iter = *data.shuffle_iter;
+    data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
     selected_stub = wrapper.HandleBadChannels(lock, data);
   }
-  EXPECT_THAT(draining_channels, IsEmpty());
+  EXPECT_THAT(
+      draining_channels,
+      UnorderedElementsAre(channels[0], channels[1], channels[2], channels[3]));
 
   grpc::ClientContext context;
   OperationContext default_oc;
@@ -1082,6 +1112,332 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));
+
+  fake_cq_impl_->SimulateCompletion(false);
+}
+
+TEST_F(DynamicChannelPoolTest,
+       EvictBackChannelInFourChannelPoolAndSubsequentAcquireStub) {
+  std::string const instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  DynamicChannelPoolSizingPolicy sizing_policy;
+  sizing_policy.minimum_channel_pool_size = 4;
+  sizing_policy.maximum_channel_pool_size = 8;
+
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+  EXPECT_CALL(stub_factory_fn, Call).Times(0);
+
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      })
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.remove_channel_polling_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      });
+
+  int rpc_calls = 0;
+  auto make_healthy_channel = [&](int initial_rpcs) {
+    auto stub = std::make_shared<MockBigtableStub>();
+    EXPECT_CALL(*stub, CheckAndMutateRow)
+        .WillRepeatedly(
+            [&rpc_calls](grpc::ClientContext&, Options const&,
+                         google::bigtable::v2::CheckAndMutateRowRequest const&,
+                         OperationContext&) {
+              ++rpc_calls;
+              google::bigtable::v2::CheckAndMutateRowResponse response;
+              response.set_predicate_matched(true);
+              return response;
+            });
+    return std::make_shared<ChannelUsage<BigtableStub>>(std::move(stub),
+                                                        initial_rpcs);
+  };
+
+  std::shared_ptr<ChannelUsage<BigtableStub>> ch0 = make_healthy_channel(3);
+  std::shared_ptr<ChannelUsage<BigtableStub>> ch1 = make_healthy_channel(3);
+  std::shared_ptr<ChannelUsage<BigtableStub>> ch2 = make_healthy_channel(1);
+  auto bad_back_stub = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*bad_back_stub, CheckAndMutateRow).Times(0);
+  auto ch3_bad = std::make_shared<ChannelUsage<BigtableStub>>(
+      std::move(bad_back_stub), 2,
+      internal::UnavailableError("transient refresh failure"));
+
+  channels = {ch0, ch1, ch2, ch3_bad};
+  std::shared_ptr<DynamicChannelPool<BigtableStub>> pool =
+      DynamicChannelPool<BigtableStub>::Create(
+          instance_name, CompletionQueue(mock_cq_impl_), std::move(channels),
+          refresh_state, stub_factory_fn.AsStdFunction(), sizing_policy,
+          TransportType::kCloudPath);
+  DynamicChannelPoolTestWrapper wrapper(pool);
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> const&
+      draining_channels = wrapper.SetDrainingChannels({});
+
+  SelectedChannel<BigtableStub> selected_1;
+  {
+    std::scoped_lock<std::mutex> lock = wrapper.CreateLock();
+    std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>>& pool_channels =
+        wrapper.channels(lock);
+    DynamicChannelPoolTestWrapper::ChannelSelectionData data;
+    data.iterators = {pool_channels.begin() + 3, pool_channels.begin() + 2,
+                      pool_channels.begin() + 0, pool_channels.begin() + 1};
+    data.shuffle_iter = data.iterators.begin();
+    data.channel_1_iter = *data.shuffle_iter;
+    data.channel_1_rpcs = (*data.channel_1_iter)->instant_outstanding_rpcs();
+    ++data.shuffle_iter;
+    data.channel_2_iter = *data.shuffle_iter;
+    data.channel_2_rpcs = (*data.channel_2_iter)->instant_outstanding_rpcs();
+    selected_1 = wrapper.HandleBadChannels(lock, data);
+    EXPECT_THAT(pool_channels, Each(NotNull()));
+    EXPECT_THAT(pool_channels, ElementsAre(ch0, ch1, ch2));
+  }
+
+  ASSERT_THAT(selected_1.channel, Eq(ch2));
+  EXPECT_THAT(draining_channels, ElementsAre(ch3_bad));
+  EXPECT_THAT(pool->size(), Eq(3));
+
+  grpc::ClientContext context_1;
+  OperationContext oc_1;
+  StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> response_1 =
+      selected_1.channel->AcquireStub()->CheckAndMutateRow(context_1, {}, {},
+                                                           oc_1);
+  ASSERT_STATUS_OK(response_1);
+  EXPECT_TRUE(response_1->predicate_matched());
+
+  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
+  SelectedChannel<BigtableStub> selected_2 =
+      pool->GetChannelRandomTwoLeastUsed();
+  ASSERT_THAT(selected_2.channel, NotNull());
+  grpc::ClientContext context_2;
+  OperationContext oc_2;
+  StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> response_2 =
+      selected_2.channel->AcquireStub()->CheckAndMutateRow(context_2, {}, {},
+                                                           oc_2);
+  ASSERT_STATUS_OK(response_2);
+  EXPECT_TRUE(response_2->predicate_matched());
+  EXPECT_THAT(rpc_calls, Eq(2));
+
+  fake_cq_impl_->SimulateCompletion(false);
+}
+
+TEST_F(DynamicChannelPoolTest,
+       GetChannelOneChannelPoolBadChannelEvictedAndReplaced) {
+  std::string const instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  DynamicChannelPoolSizingPolicy sizing_policy;
+  sizing_policy.minimum_channel_pool_size = 1;
+  sizing_policy.maximum_channel_pool_size = 2;
+
+  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(0);
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      })
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.remove_channel_polling_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      });
+
+  auto bad_initial_stub = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*bad_initial_stub, CheckAndMutateRow).Times(0);
+  auto ch0 = std::make_shared<ChannelUsage<BigtableStub>>(
+      std::move(bad_initial_stub), 0);
+
+  auto replacement_stub = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*replacement_stub, CheckAndMutateRow)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
+                         google::bigtable::v2::CheckAndMutateRowRequest const&,
+                         OperationContext&) {
+        google::bigtable::v2::CheckAndMutateRowResponse response;
+        response.set_predicate_matched(true);
+        return response;
+      });
+  auto replacement_ch =
+      std::make_shared<ChannelUsage<BigtableStub>>(replacement_stub, 0);
+
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+  EXPECT_CALL(stub_factory_fn, Call)
+      .WillOnce(
+          [&](std::uint32_t id, std::string const&, StubManager::Priming p) {
+            EXPECT_THAT(id, Eq(1));
+            EXPECT_THAT(p, Eq(StubManager::Priming::kNoPriming));
+            return replacement_ch;
+          });
+
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels = {ch0};
+  std::shared_ptr<DynamicChannelPool<BigtableStub>> pool =
+      DynamicChannelPool<BigtableStub>::Create(
+          instance_name, CompletionQueue(mock_cq_impl_), std::move(channels),
+          refresh_state, stub_factory_fn.AsStdFunction(), sizing_policy,
+          TransportType::kCloudPath);
+  DynamicChannelPoolTestWrapper wrapper(pool);
+
+  ch0->set_last_refresh_status(
+      internal::UnavailableError("sole channel refresh failed"));
+
+  SelectedChannel<BigtableStub> selected_1 =
+      pool->GetChannelRandomTwoLeastUsed();
+  ASSERT_THAT(selected_1.channel, Eq(replacement_ch));
+  EXPECT_THAT(pool->size(), Eq(1));
+  {
+    std::scoped_lock<std::mutex> lock = wrapper.CreateLock();
+    EXPECT_THAT(wrapper.draining_channels(lock), ElementsAre(ch0));
+    EXPECT_THAT(wrapper.channels(lock), ElementsAre(replacement_ch));
+  }
+
+  grpc::ClientContext context_1;
+  OperationContext oc_1;
+  StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> response_1 =
+      selected_1.channel->AcquireStub()->CheckAndMutateRow(context_1, {}, {},
+                                                           oc_1);
+  ASSERT_STATUS_OK(response_1);
+  EXPECT_TRUE(response_1->predicate_matched());
+
+  SelectedChannel<BigtableStub> selected_2 =
+      pool->GetChannelRandomTwoLeastUsed();
+  ASSERT_THAT(selected_2.channel, Eq(replacement_ch));
+  grpc::ClientContext context_2;
+  OperationContext oc_2;
+  StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> response_2 =
+      selected_2.channel->AcquireStub()->CheckAndMutateRow(context_2, {}, {},
+                                                           oc_2);
+  ASSERT_STATUS_OK(response_2);
+  EXPECT_TRUE(response_2->predicate_matched());
+
+  fake_cq_impl_->SimulateCompletion(false);
+}
+
+TEST_F(DynamicChannelPoolTest,
+       GetChannelAllChannelsBadDrainsAllAndSubsequentGetChannelSucceeds) {
+  std::string const instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  DynamicChannelPoolSizingPolicy sizing_policy;
+  sizing_policy.minimum_channel_pool_size = 4;
+  sizing_policy.maximum_channel_pool_size = 8;
+
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      })
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.remove_channel_polling_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      });
+
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  std::vector<std::weak_ptr<ChannelUsage<BigtableStub>>> weak_bad_channels;
+  for (int i = 0; i < 4; ++i) {
+    auto ch = std::make_shared<ChannelUsage<BigtableStub>>(
+        std::make_shared<MockBigtableStub>(), 3,
+        internal::UnavailableError("all channels unhealthy"));
+    weak_bad_channels.push_back(ch);
+    channels.push_back(std::move(ch));
+  }
+
+  auto replacement_stub = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*replacement_stub, CheckAndMutateRow)
+      .Times(2)
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
+                         google::bigtable::v2::CheckAndMutateRowRequest const&,
+                         OperationContext&) {
+        google::bigtable::v2::CheckAndMutateRowResponse response;
+        response.set_predicate_matched(true);
+        return response;
+      });
+  auto replacement_ch =
+      std::make_shared<ChannelUsage<BigtableStub>>(replacement_stub, 0);
+
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+  EXPECT_CALL(stub_factory_fn, Call)
+      .WillOnce(
+          [&](std::uint32_t id, std::string const&, StubManager::Priming p) {
+            EXPECT_THAT(id, Eq(4));
+            EXPECT_THAT(p, Eq(StubManager::Priming::kNoPriming));
+            return replacement_ch;
+          });
+
+  std::shared_ptr<DynamicChannelPool<BigtableStub>> pool =
+      DynamicChannelPool<BigtableStub>::Create(
+          instance_name, CompletionQueue(mock_cq_impl_), std::move(channels),
+          refresh_state, stub_factory_fn.AsStdFunction(), sizing_policy,
+          TransportType::kCloudPath);
+  DynamicChannelPoolTestWrapper wrapper(pool);
+
+  SelectedChannel<BigtableStub> selected_1 =
+      pool->GetChannelRandomTwoLeastUsed();
+  ASSERT_THAT(selected_1.channel, Eq(replacement_ch));
+  EXPECT_THAT(pool->size(), Eq(1));
+  {
+    std::scoped_lock<std::mutex> lock = wrapper.CreateLock();
+    EXPECT_THAT(wrapper.draining_channels(lock), SizeIs(4));
+    EXPECT_THAT(wrapper.draining_channels(lock), Each(NotNull()));
+    EXPECT_THAT(wrapper.channels(lock), ElementsAre(replacement_ch));
+  }
+  for (std::weak_ptr<ChannelUsage<BigtableStub>> const& weak_ch :
+       weak_bad_channels) {
+    EXPECT_FALSE(weak_ch.expired());
+  }
+
+  grpc::ClientContext context_1;
+  OperationContext oc_1;
+  StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> response_1 =
+      selected_1.channel->AcquireStub()->CheckAndMutateRow(context_1, {}, {},
+                                                           oc_1);
+  ASSERT_STATUS_OK(response_1);
+  EXPECT_TRUE(response_1->predicate_matched());
+
+  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
+  SelectedChannel<BigtableStub> selected_2 =
+      pool->GetChannelRandomTwoLeastUsed();
+  ASSERT_THAT(selected_2.channel, Eq(replacement_ch));
+  EXPECT_THAT(wrapper.num_pending_channels(), Eq(3));
+  grpc::ClientContext context_2;
+  OperationContext oc_2;
+  StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> response_2 =
+      selected_2.channel->AcquireStub()->CheckAndMutateRow(context_2, {}, {},
+                                                           oc_2);
+  ASSERT_STATUS_OK(response_2);
+  EXPECT_TRUE(response_2->predicate_matched());
 
   fake_cq_impl_->SimulateCompletion(false);
 }
