@@ -219,6 +219,13 @@ Status PartialResultSetSource::BufferProtoRows() {
     auto const& proto_schema = metadata_->proto_schema();
     auto const columns_size = proto_schema.columns_size();
     auto const& proto_values = proto_rows_.values();
+    if (columns_size == 0) {
+      if (proto_values.empty()) return Status{};
+      state_ = State::kFinished;
+      return internal::InternalError(
+          "ResultSetMetadata has no columns, but ProtoRows contains values",
+          GCP_ERROR_INFO());
+    }
 
     if (proto_values.size() % columns_size != 0) {
       state_ = State::kFinished;

@@ -25,6 +25,7 @@
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
 #include "google/cloud/bigtable/bound_query.h"
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/prepared_query.h"
@@ -4301,6 +4302,594 @@ TEST_F(DataConnectionTest,
         conn->AsyncApply(kTableName, IdempotentMutation("row"));
     ASSERT_STATUS_OK(apply_status.get());
   }
+}
+
+TEST_F(DataConnectionTest, PrepareQueryFailsOnEmptyColumns) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  v2::PrepareQueryResponse pq_response;
+  pq_response.set_prepared_query("test-pq-id-empty");
+  *pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(3600));
+
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce(
+          [&](grpc::ClientContext&, Options const&,
+              v2::PrepareQueryRequest const&,
+              bigtable_internal::OperationContext&) { return pq_response; });
+
+  std::shared_ptr<bigtable::DataConnection> conn =
+      TestConnection(std::move(mock_bg), std::move(mock),
+                     std::make_unique<SimpleOperationContextFactory>());
+  internal::OptionsSpan span(CallOptions());
+  bigtable::PrepareQueryParams params{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  StatusOr<bigtable::PreparedQuery> prepared_query = conn->PrepareQuery(params);
+  EXPECT_THAT(prepared_query,
+              StatusIs(StatusCode::kInternal,
+                       "ResultSetMetadata columns cannot be empty"));
+}
+
+TEST_F(DataConnectionTest, AsyncPrepareQueryFailsOnEmptyColumns) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  v2::PrepareQueryResponse pq_response;
+  pq_response.set_prepared_query("test-pq-id-empty");
+  *pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(3600));
+
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(pq_response));
+          });
+
+  std::shared_ptr<bigtable::DataConnection> conn =
+      TestConnection(std::move(mock_bg), std::move(mock),
+                     std::make_unique<SimpleOperationContextFactory>());
+  internal::OptionsSpan span(CallOptions());
+  bigtable::PrepareQueryParams params{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  StatusOr<bigtable::PreparedQuery> prepared_query =
+      conn->AsyncPrepareQuery(params).get();
+  EXPECT_THAT(prepared_query,
+              StatusIs(StatusCode::kInternal,
+                       "ResultSetMetadata columns cannot be empty"));
+}
+
+TEST_F(DataConnectionTest,
+       AsyncPrepareQueryBackgroundTimerRefreshWithoutActiveOptionsSpan) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  char constexpr kValidMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse initial_pq_response;
+  initial_pq_response.set_prepared_query("test-pq-id-initial");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kValidMetadataText, initial_pq_response.mutable_metadata()));
+  *initial_pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(10));
+
+  v2::PrepareQueryResponse refresh_pq_response_1 = initial_pq_response;
+  refresh_pq_response_1.set_prepared_query("test-pq-id-refresh-1");
+  v2::PrepareQueryResponse refresh_pq_response_2 = initial_pq_response;
+  refresh_pq_response_2.set_prepared_query("test-pq-id-refresh-2");
+
+  promise<StatusOr<v2::PrepareQueryResponse>> initial_promise;
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            EXPECT_EQ("projects/the-project/instances/the-instance",
+                      request.instance_name());
+            EXPECT_EQ("SELECT * FROM the-table", request.query());
+            return initial_promise.get_future();
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            EXPECT_EQ("projects/the-project/instances/the-instance",
+                      request.instance_name());
+            EXPECT_EQ("SELECT * FROM the-table", request.query());
+            return make_ready_future(make_status_or(refresh_pq_response_1));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future(make_status_or(refresh_pq_response_2));
+          });
+
+  std::shared_ptr<bigtable::DataConnection> conn =
+      TestConnection(std::move(mock_bg), std::move(mock),
+                     std::make_unique<SimpleOperationContextFactory>());
+  bigtable::PrepareQueryParams params{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+
+  future<StatusOr<bigtable::PreparedQuery>> pq_future = [&] {
+    internal::OptionsSpan span(CallOptions());
+    return conn->AsyncPrepareQuery(params);
+  }();
+
+  // Verify the caller's OptionsSpan has been destroyed before the async
+  // continuation and background refresh timers run.
+  ASSERT_FALSE(internal::CurrentOptions().has<AppProfileIdOption>());
+  ASSERT_FALSE(internal::CurrentOptions()
+                   .has<bigtable::experimental::
+                            QueryPlanRefreshFunctionRetryPolicyOption>());
+
+  initial_promise.set_value(initial_pq_response);
+  StatusOr<bigtable::PreparedQuery> prepared_query = pq_future.get();
+  ASSERT_STATUS_OK(prepared_query);
+  ASSERT_STATUS_OK(prepared_query->response());
+  EXPECT_EQ(prepared_query->response()->prepared_query(), "test-pq-id-initial");
+
+  // Trigger two consecutive background timer refreshes without an active
+  // OptionsSpan to ensure captured options remain valid across refreshes.
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  ASSERT_STATUS_OK(prepared_query->response());
+  EXPECT_EQ(prepared_query->response()->prepared_query(),
+            "test-pq-id-refresh-1");
+
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  ASSERT_STATUS_OK(prepared_query->response());
+  EXPECT_EQ(prepared_query->response()->prepared_query(),
+            "test-pq-id-refresh-2");
+
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST_F(DataConnectionTest,
+       PrepareQueryResponseRefreshWithoutActiveOptionsSpan) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  char constexpr kValidMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse initial_pq_response;
+  initial_pq_response.set_prepared_query("test-pq-id-initial");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kValidMetadataText, initial_pq_response.mutable_metadata()));
+  *initial_pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(10));
+
+  v2::PrepareQueryResponse refresh_pq_response_1 = initial_pq_response;
+  refresh_pq_response_1.set_prepared_query("test-pq-id-refresh-1");
+  v2::PrepareQueryResponse refresh_pq_response_2 = initial_pq_response;
+  refresh_pq_response_2.set_prepared_query("test-pq-id-refresh-2");
+
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::PrepareQueryRequest const& request,
+                    bigtable_internal::OperationContext&) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        return initial_pq_response;
+      });
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future<StatusOr<v2::PrepareQueryResponse>>(
+                PermanentError());
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future(make_status_or(refresh_pq_response_1));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future<StatusOr<v2::PrepareQueryResponse>>(
+                PermanentError());
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future(make_status_or(refresh_pq_response_2));
+          });
+
+  std::shared_ptr<bigtable::DataConnection> conn =
+      TestConnection(std::move(mock_bg), std::move(mock),
+                     std::make_unique<SimpleOperationContextFactory>());
+  bigtable::PrepareQueryParams params{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+
+  StatusOr<bigtable::PreparedQuery> prepared_query = [&] {
+    internal::OptionsSpan span(CallOptions());
+    return conn->PrepareQuery(params);
+  }();
+  ASSERT_STATUS_OK(prepared_query);
+  ASSERT_FALSE(internal::CurrentOptions().has<AppProfileIdOption>());
+
+  // Simulate failed background timer refresh so QueryPlan enters kBegin.
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(fake_cq_impl->size(), 0);
+
+  // PreparedQuery::response() triggers refresh without an active OptionsSpan
+  // on the caller thread.
+  StatusOr<v2::PrepareQueryResponse> pq_resp = prepared_query->response();
+  ASSERT_STATUS_OK(pq_resp);
+  EXPECT_EQ(pq_resp->prepared_query(), "test-pq-id-refresh-1");
+
+  // Repeat for BoundQuery::response() without an active OptionsSpan.
+  bigtable::BoundQuery bound_query = prepared_query->BindParameters({});
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(fake_cq_impl->size(), 0);
+
+  StatusOr<v2::PrepareQueryResponse> bq_resp = bound_query.response();
+  ASSERT_STATUS_OK(bq_resp);
+  EXPECT_EQ(bq_resp->prepared_query(), "test-pq-id-refresh-2");
+
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST_F(DataConnectionTest, ClientAsyncPrepareQueryAndResponseRefreshEndToEnd) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  char constexpr kValidMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse initial_pq_response;
+  initial_pq_response.set_prepared_query("client-pq-initial");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kValidMetadataText, initial_pq_response.mutable_metadata()));
+  *initial_pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(10));
+
+  v2::PrepareQueryResponse timer_refreshed_response = initial_pq_response;
+  timer_refreshed_response.set_prepared_query("client-pq-timer-refresh");
+  v2::PrepareQueryResponse manual_refreshed_response = initial_pq_response;
+  manual_refreshed_response.set_prepared_query("client-pq-response-refresh");
+
+  promise<StatusOr<v2::PrepareQueryResponse>> initial_promise;
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return initial_promise.get_future();
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future(make_status_or(timer_refreshed_response));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future<StatusOr<v2::PrepareQueryResponse>>(
+                PermanentError());
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const& request,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            EXPECT_EQ(kAppProfile, request.app_profile_id());
+            return make_ready_future(make_status_or(manual_refreshed_response));
+          });
+
+  auto conn = std::make_shared<DataConnectionImpl>(
+      std::move(mock_bg), std::move(mock),
+      std::make_unique<SimpleOperationContextFactory>(),
+      std::make_shared<NoopMutateRowsLimiter>(), CallOptions());
+  bigtable::Client client(std::move(conn));
+
+  bigtable::InstanceResource instance(google::cloud::Project("the-project"),
+                                      "the-instance");
+  bigtable::SqlStatement statement("SELECT * FROM the-table");
+
+  // Client::AsyncPrepareQuery destroys its stack-local OptionsSpan before
+  // returning pq_future.
+  future<StatusOr<bigtable::PreparedQuery>> pq_future =
+      client.AsyncPrepareQuery(instance, statement);
+  initial_promise.set_value(initial_pq_response);
+  StatusOr<bigtable::PreparedQuery> prepared_query = pq_future.get();
+  ASSERT_STATUS_OK(prepared_query);
+
+  // Fire background refresh timer (~9s after PrepareQuery in production).
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  ASSERT_STATUS_OK(prepared_query->response());
+  EXPECT_EQ(prepared_query->response()->prepared_query(),
+            "client-pq-timer-refresh");
+
+  // Fail next background refresh and verify BoundQuery::response() refreshes.
+  bigtable::BoundQuery bound_query = prepared_query->BindParameters({});
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  StatusOr<v2::PrepareQueryResponse> bq_resp = bound_query.response();
+  ASSERT_STATUS_OK(bq_resp);
+  EXPECT_EQ(bq_resp->prepared_query(), "client-pq-response-refresh");
+
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST_F(DataConnectionTest, PrepareQueryRefreshFailsOnInvalidMetadata) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  char constexpr kValidMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse initial_pq_response;
+  initial_pq_response.set_prepared_query("test-pq-id-initial");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kValidMetadataText, initial_pq_response.mutable_metadata()));
+  *initial_pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(10));
+
+  v2::PrepareQueryResponse empty_columns_response;
+  empty_columns_response.set_prepared_query("test-pq-id-empty-cols");
+
+  v2::PrepareQueryResponse empty_type_response;
+  empty_type_response.set_prepared_query("test-pq-id-empty-type");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        proto_schema {
+          columns {
+            name: "invalid"
+            type {}
+          }
+        }
+      )pb",
+      empty_type_response.mutable_metadata()));
+
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::PrepareQueryRequest const&,
+                    bigtable_internal::OperationContext&) {
+        return initial_pq_response;
+      });
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(empty_columns_response));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(empty_columns_response));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(empty_type_response));
+          });
+
+  std::shared_ptr<bigtable::DataConnection> conn =
+      TestConnection(std::move(mock_bg), std::move(mock),
+                     std::make_unique<SimpleOperationContextFactory>());
+  bigtable::PrepareQueryParams params{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+
+  StatusOr<bigtable::PreparedQuery> prepared_query = [&] {
+    internal::OptionsSpan span(CallOptions());
+    return conn->PrepareQuery(params);
+  }();
+  ASSERT_STATUS_OK(prepared_query);
+
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  EXPECT_THAT(prepared_query->response(),
+              StatusIs(StatusCode::kInternal,
+                       "ResultSetMetadata columns cannot be empty"));
+  EXPECT_THAT(prepared_query->response(),
+              StatusIs(StatusCode::kInternal, "Column type cannot be empty"));
+}
+
+TEST_F(DataConnectionTest, AsyncPrepareQueryRefreshFailsOnInvalidMetadata) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  char constexpr kValidMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse initial_pq_response;
+  initial_pq_response.set_prepared_query("test-pq-id-initial");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kValidMetadataText, initial_pq_response.mutable_metadata()));
+  *initial_pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(10));
+
+  v2::PrepareQueryResponse empty_columns_response;
+  empty_columns_response.set_prepared_query("test-pq-id-empty-cols");
+
+  v2::PrepareQueryResponse empty_type_response;
+  empty_type_response.set_prepared_query("test-pq-id-empty-type");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        proto_schema {
+          columns {
+            name: "invalid"
+            type {}
+          }
+        }
+      )pb",
+      empty_type_response.mutable_metadata()));
+
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(initial_pq_response));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(empty_columns_response));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(empty_columns_response));
+          })
+      .WillOnce(
+          [&](CompletionQueue const&,
+              std::shared_ptr<grpc::ClientContext> const&,
+              google::cloud::internal::ImmutableOptions const&,
+              v2::PrepareQueryRequest const&,
+              std::shared_ptr<bigtable_internal::OperationContext> const&) {
+            return make_ready_future(make_status_or(empty_type_response));
+          });
+
+  std::shared_ptr<bigtable::DataConnection> conn =
+      TestConnection(std::move(mock_bg), std::move(mock),
+                     std::make_unique<SimpleOperationContextFactory>());
+  bigtable::PrepareQueryParams params{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+
+  StatusOr<bigtable::PreparedQuery> prepared_query = [&] {
+    internal::OptionsSpan span(CallOptions());
+    return conn->AsyncPrepareQuery(params).get();
+  }();
+  ASSERT_STATUS_OK(prepared_query);
+
+  ASSERT_EQ(fake_cq_impl->size(), 1);
+  fake_cq_impl->SimulateCompletion(true);
+  EXPECT_THAT(prepared_query->response(),
+              StatusIs(StatusCode::kInternal,
+                       "ResultSetMetadata columns cannot be empty"));
+  EXPECT_THAT(prepared_query->response(),
+              StatusIs(StatusCode::kInternal, "Column type cannot be empty"));
 }
 
 }  // namespace
