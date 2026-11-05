@@ -31,6 +31,9 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <atomic>
+#include <optional>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -47,6 +50,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
+using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -1510,6 +1514,230 @@ TEST(AsyncWriterConnectionTest, ConsecutiveFlushesEachReadOneResponse) {
   next = sequencer.PopFrontWithName();
   ASSERT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+auto SequencedRead(AsyncSequencer<bool>& sequencer, char const* step,
+                   std::optional<Response> resp) {
+  return sequencer.PushBack(step).then(
+      [r = std::move(resp)](future<bool> f) mutable {
+        return f.get() ? std::move(r) : std::optional<Response>();
+      });
+}
+
+auto SequencedFinish(AsyncSequencer<bool>& sequencer) {
+  return sequencer.PushBack("Finish").then(
+      [](future<bool> f) { return f.get() ? Status{} : PermanentError(); });
+}
+
+/// @test Verify that `Close()` records `write_handle` and `persisted_size`
+/// returned across multiple intermediate responses before EOF.
+TEST(AsyncWriterConnectionTest, CloseUpdatesWriteHandleAndPersistedState) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_EQ(request.write_offset(), 1024);
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write");
+      });
+  Response handle_resp;
+  handle_resp.mutable_write_handle()->set_handle("close-handle-1");
+  Response size_resp;
+  size_resp.set_persisted_size(4096);
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] { return SequencedRead(sequencer, "Read1", handle_resp); })
+      .WillOnce([&] { return SequencedRead(sequencer, "Read2", size_resp); })
+      .WillOnce(
+          [&] { return SequencedRead(sequencer, "Read3", std::nullopt); });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return SequencedFinish(sequencer);
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  future<Status> close = tested->Close(WritePayload(std::string(3072, 'A')));
+  for (char const* step : {"Write", "Read1", "Read2", "Read3", "Finish"}) {
+    std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+    ASSERT_THAT(next.second, step);
+    next.first.set_value(true);
+  }
+  EXPECT_THAT(close.get(), IsOk());
+  EXPECT_THAT(tested->PersistedState(), VariantWith<std::int64_t>(4096));
+  EXPECT_THAT(tested->Query().get(), IsOkAndHolds(4096));
+  EXPECT_THAT(tested->WriteHandle(),
+              Optional(IsProtoEqual(handle_resp.write_handle())));
+  tested.reset();
+}
+
+/// @test Verify that `Close()` records `resource` metadata when the service
+/// returns a finalized object resource before EOF.
+TEST(AsyncWriterConnectionTest, CloseUpdatesResourceState) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
+    return sequencer.PushBack("Write");
+  });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce(
+          [&] { return SequencedRead(sequencer, "Read1", MakeTestResponse()); })
+      .WillOnce(
+          [&] { return SequencedRead(sequencer, "Read2", std::nullopt); });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return SequencedFinish(sequencer);
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  future<Status> close = tested->Close(WritePayload(std::string(1024, 'A')));
+  for (char const* step : {"Write", "Read1", "Read2", "Finish"}) {
+    std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+    ASSERT_THAT(next.second, step);
+    next.first.set_value(true);
+  }
+  EXPECT_THAT(close.get(), IsOk());
+  EXPECT_THAT(
+      tested->PersistedState(),
+      VariantWith<google::storage::v2::Object>(IsProtoEqual(MakeTestObject())));
+  EXPECT_THAT(tested->Query().get(), IsOkAndHolds(2048));
+  tested.reset();
+}
+
+/// @test Verify that concurrent state inspections (`PersistedState`, `Query`,
+/// `WriteHandle`, `Cancel`) do not data-race with completion-queue callbacks
+/// for serialized `Write()`, `Flush()`, and `Finalize()` operations, and that
+/// post-`Finalize()` mutating calls fail with `kCancelled` without touching
+/// the stream or overwriting `PersistedState()`.
+TEST(AsyncWriterConnectionTest,
+     ConcurrentFlushFinalizeAndStateQueriesAreRaceFree) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(::testing::AtLeast(1));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}}, {{"tk0", "v0"}}}));
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_EQ(request.write_offset(), 0);
+        EXPECT_EQ(request.append_object_spec().write_handle().handle(),
+                  "initial-handle");
+        EXPECT_FALSE(request.flush());
+        EXPECT_FALSE(request.state_lookup());
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write1");
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_EQ(request.write_offset(), 1024);
+        EXPECT_FALSE(request.has_append_object_spec());
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write2");
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_EQ(request.write_offset(), 2048);
+        EXPECT_FALSE(request.has_append_object_spec());
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write3");
+      });
+  Response handle_resp;
+  handle_resp.mutable_write_handle()->set_handle("refreshed-handle");
+  Response size_resp;
+  size_resp.set_persisted_size(2048);
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] { return SequencedRead(sequencer, "Read1", handle_resp); })
+      .WillOnce([&] { return SequencedRead(sequencer, "Read2", size_resp); })
+      .WillOnce(
+          [&] { return SequencedRead(sequencer, "Read3", MakeTestResponse()); })
+      .WillOnce(
+          [&] { return SequencedRead(sequencer, "Read4", std::nullopt); });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return SequencedFinish(sequencer);
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(3);
+  EXPECT_CALL(*hash, Finish).Times(0);
+  Request req = MakeRequest();
+  req.mutable_append_object_spec()->set_bucket(
+      "projects/_/buckets/test-bucket");
+  req.mutable_append_object_spec()->set_object("test-object");
+  req.mutable_append_object_spec()->mutable_write_handle()->set_handle(
+      "initial-handle");
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), std::move(req), std::move(mock), hash, 0);
+
+  std::thread cq_worker([&] {
+    for (char const* step : {"Write1", "Write2", "Read1", "Read2", "Write3",
+                             "Read3", "Read4", "Finish"}) {
+      std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+      EXPECT_EQ(next.second, step);
+      next.first.set_value(true);
+    }
+  });
+
+  std::atomic<bool> stop{false};
+  promise<void> reader_started;
+  bool signaled_start = false;
+  std::thread reader([&] {
+    while (!stop.load(std::memory_order_acquire)) {
+      (void)tested->PersistedState();
+      (void)tested->Query().get();
+      (void)tested->WriteHandle();
+      // `MockStream::Cancel` is a no-op stub here, used to probe `GetImpl()`
+      // synchronization concurrently with completion-queue callbacks.
+      tested->Cancel();
+      if (!signaled_start) {
+        signaled_start = true;
+        reader_started.set_value();
+      }
+      std::this_thread::yield();
+    }
+  });
+
+  reader_started.get_future().get();
+
+  EXPECT_THAT(tested->Write(WritePayload(std::string(1024, 'A'))).get(),
+              IsOk());
+  EXPECT_THAT(tested->Flush(WritePayload(std::string(1024, 'B'))).get(),
+              IsOk());
+  EXPECT_THAT(tested->Query().get(), IsOkAndHolds(2048));
+  EXPECT_THAT(tested->WriteHandle(),
+              Optional(IsProtoEqual(handle_resp.write_handle())));
+
+  future<StatusOr<google::storage::v2::Object>> finalized =
+      tested->Finalize(WritePayload{});
+  EXPECT_THAT(finalized.get(), IsOkAndHolds(IsProtoEqual(MakeTestObject())));
+
+  WritePayload const post_payload(std::string(1024, 'C'));
+  EXPECT_THAT(tested->Write(post_payload).get(),
+              StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(tested->Flush(post_payload).get(),
+              StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(tested->Close(post_payload).get(),
+              StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(tested->Finalize(post_payload).get(),
+              StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(
+      tested->PersistedState(),
+      VariantWith<google::storage::v2::Object>(IsProtoEqual(MakeTestObject())));
+
+  RpcMetadata const metadata = tested->GetRequestMetadata();
+  EXPECT_THAT(metadata.headers, UnorderedElementsAre(Pair("hk0", "v0")));
+  EXPECT_THAT(metadata.trailers, UnorderedElementsAre(Pair("tk0", "v0")));
+
+  stop.store(true, std::memory_order_release);
+  reader.join();
+  cq_worker.join();
+  tested.reset();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
