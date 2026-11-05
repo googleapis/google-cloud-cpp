@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace config = ::google::cloud::config_v1;
   auto client = config::ConfigClient(config::MakeConfigConnection());
 
-  for (auto d : client.ListDeployments(location.FullName())) {
-    if (!d) throw std::move(d).status();
+  for (auto const& d : client.ListDeployments(location.FullName())) {
+    if (!d) throw google::cloud::Status(d.status());
     std::cout << d->DebugString() << "\n";
   }
 

@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) try {
 
   auto const parent = location.FullName() +
                       "/dataStores/default_data_store/branches/default_branch";
-  for (auto d : client.ListDocuments(parent)) {
-    if (!d) throw std::move(d).status();
+  for (auto const& d : client.ListDocuments(parent)) {
+    if (!d) throw google::cloud::Status(d.status());
     std::cout << d->DebugString() << "\n";
   }
 

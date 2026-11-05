@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = networkservices::NetworkServicesClient(
       networkservices::MakeNetworkServicesConnection());
 
-  for (auto ep : client.ListEndpointPolicies(location.FullName())) {
-    if (!ep) throw std::move(ep).status();
+  for (auto const& ep : client.ListEndpointPolicies(location.FullName())) {
+    if (!ep) throw google::cloud::Status(ep.status());
     std::cout << ep->DebugString() << "\n";
   }
 

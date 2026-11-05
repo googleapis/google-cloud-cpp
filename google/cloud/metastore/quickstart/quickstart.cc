@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) try {
   auto client = metastore::DataprocMetastoreClient(
       metastore::MakeDataprocMetastoreConnection());
 
-  for (auto s : client.ListServices(location.FullName())) {
-    if (!s) throw std::move(s).status();
+  for (auto const& s : client.ListServices(location.FullName())) {
+    if (!s) throw google::cloud::Status(s.status());
     std::cout << s->DebugString() << "\n";
   }
 

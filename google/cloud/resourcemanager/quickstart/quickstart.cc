@@ -26,8 +26,8 @@ int main(int argc, char* argv[]) try {
   auto client = resourcemanager::ProjectsClient(
       resourcemanager::MakeProjectsConnection());
 
-  for (auto p : client.ListProjects("folders/" + std::string(argv[1]))) {
-    if (!p) throw std::move(p).status();
+  for (auto const& p : client.ListProjects("folders/" + std::string(argv[1]))) {
+    if (!p) throw google::cloud::Status(p.status());
     std::cout << p->DebugString() << "\n";
   }
 

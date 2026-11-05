@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       workflows::WorkflowsClient(workflows::MakeWorkflowsConnection());
 
-  for (auto w : client.ListWorkflows(location.FullName())) {
-    if (!w) throw std::move(w).status();
+  for (auto const& w : client.ListWorkflows(location.FullName())) {
+    if (!w) throw google::cloud::Status(w.status());
     std::cout << w->DebugString() << "\n";
   }
 

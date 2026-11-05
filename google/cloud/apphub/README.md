@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) try {
   namespace apphub = ::google::cloud::apphub_v1;
   auto client = apphub::AppHubClient(apphub::MakeAppHubConnection());
 
-  for (auto a : client.ListApplications(location.FullName())) {
-    if (!a) throw std::move(a).status();
+  for (auto const& a : client.ListApplications(location.FullName())) {
+    if (!a) throw google::cloud::Status(a.status());
     std::cout << a->DebugString() << "\n";
   }
 

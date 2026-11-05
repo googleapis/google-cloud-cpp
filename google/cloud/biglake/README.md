@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) try {
   auto client = biglake::HiveMetastoreServiceClient(
       biglake::MakeHiveMetastoreServiceConnection());
 
-  for (auto r : client.ListHiveCatalogs(project.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListHiveCatalogs(project.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

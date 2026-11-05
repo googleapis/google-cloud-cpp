@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
       advisorynotifications::MakeAdvisoryNotificationsServiceConnection());
   auto const parent =
       std::string{"organizations/"} + argv[1] + "/locations/" + argv[2];
-  for (auto n : client.ListNotifications(parent)) {
-    if (!n) throw std::move(n).status();
+  for (auto const& n : client.ListNotifications(parent)) {
+    if (!n) throw google::cloud::Status(n.status());
     std::cout << n->DebugString() << "\n";
   }
 

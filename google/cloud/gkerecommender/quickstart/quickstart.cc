@@ -25,8 +25,8 @@ int main(int argc, char* argv[]) try {
   namespace gkerecommender = ::google::cloud::gkerecommender_v1;
   auto client = gkerecommender::GkeInferenceQuickstartClient(
       gkerecommender::MakeGkeInferenceQuickstartConnection());
-  for (auto r : client.FetchModels({})) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.FetchModels({})) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << *r << "\n";
   }
 

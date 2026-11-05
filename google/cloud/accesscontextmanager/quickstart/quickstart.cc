@@ -27,8 +27,8 @@ int main(int argc, char* argv[]) try {
       accesscontextmanager::MakeAccessContextManagerConnection());
 
   auto const parent = std::string("accessPolicies/") + argv[1];
-  for (auto r : client.ListAccessLevels(parent)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListAccessLevels(parent)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

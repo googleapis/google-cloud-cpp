@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace deploy = ::google::cloud::deploy_v1;
   auto client = deploy::CloudDeployClient(deploy::MakeCloudDeployConnection());
 
-  for (auto dp : client.ListDeliveryPipelines(location.FullName())) {
-    if (!dp) throw std::move(dp).status();
+  for (auto const& dp : client.ListDeliveryPipelines(location.FullName())) {
+    if (!dp) throw google::cloud::Status(dp.status());
     std::cout << dp->DebugString() << "\n";
   }
 

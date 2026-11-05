@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
   auto client = contentwarehouse::DocumentServiceClient(
       contentwarehouse::MakeDocumentServiceConnection());
 
-  for (auto md : client.SearchDocuments(location.FullName())) {
-    if (!md) throw std::move(md).status();
+  for (auto const& md : client.SearchDocuments(location.FullName())) {
+    if (!md) throw google::cloud::Status(md.status());
     std::cout << md->DebugString() << "\n";
   }
 

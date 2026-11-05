@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace gkehub = ::google::cloud::gkehub_v1;
   auto client = gkehub::GkeHubClient(gkehub::MakeGkeHubConnection());
 
-  for (auto m : client.ListMemberships(location.FullName())) {
-    if (!m) throw std::move(m).status();
+  for (auto const& m : client.ListMemberships(location.FullName())) {
+    if (!m) throw google::cloud::Status(m.status());
     std::cout << m->DebugString() << "\n";
   }
 

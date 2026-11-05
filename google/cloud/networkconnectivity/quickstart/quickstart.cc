@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = networkconnectivity::HubServiceClient(
       networkconnectivity::MakeHubServiceConnection());
 
-  for (auto h : client.ListHubs(location.FullName())) {
-    if (!h) throw std::move(h).status();
+  for (auto const& h : client.ListHubs(location.FullName())) {
+    if (!h) throw google::cloud::Status(h.status());
     std::cout << h->DebugString() << "\n";
   }
 

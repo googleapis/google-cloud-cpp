@@ -32,8 +32,8 @@ int main(int argc, char* argv[]) try {
   auto client = apiregistry::CloudApiRegistryClient(
       apiregistry::MakeCloudApiRegistryConnection());
 
-  for (auto r : client.ListMcpServers(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListMcpServers(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

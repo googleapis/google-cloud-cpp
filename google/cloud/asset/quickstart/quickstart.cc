@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) try {
   google::cloud::asset::v1::ListAssetsRequest request;
   request.set_parent(project.FullName());
   request.add_asset_types("storage.googleapis.com/Bucket");
-  for (auto a : client.ListAssets(request)) {
-    if (!a) throw std::move(a).status();
+  for (auto const& a : client.ListAssets(request)) {
+    if (!a) throw google::cloud::Status(a.status());
     std::cout << a->DebugString() << "\n";
   }
 

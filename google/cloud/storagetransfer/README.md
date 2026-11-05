@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
 
   ::google::storagetransfer::v1::ListTransferJobsRequest request;
   request.set_filter(R"""({"projectId": ")""" + std::string{argv[1]} + "\"}");
-  for (auto r : client.ListTransferJobs(request)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListTransferJobs(request)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

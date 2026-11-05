@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) try {
   // Fill in this request as needed.
   auto request = google::cloud::channel::v1::ListProductsRequest{};
   request.set_account(std::string("accounts/") + argv[1]);
-  for (auto r : client.ListProducts(std::move(request))) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListProducts(std::move(request))) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

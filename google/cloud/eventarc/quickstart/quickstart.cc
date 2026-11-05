@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace eventarc = ::google::cloud::eventarc_v1;
   auto client = eventarc::EventarcClient(eventarc::MakeEventarcConnection());
 
-  for (auto t : client.ListTriggers(location.FullName())) {
-    if (!t) throw std::move(t).status();
+  for (auto const& t : client.ListTriggers(location.FullName())) {
+    if (!t) throw google::cloud::Status(t.status());
     std::cout << t->DebugString() << "\n";
   }
 

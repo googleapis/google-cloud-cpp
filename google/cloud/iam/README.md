@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
   auto const project = google::cloud::Project(argv[1]);
   std::cout << "Service Accounts for project: " << project.project_id() << "\n";
   int count = 0;
-  for (auto sa : client.ListServiceAccounts(project.FullName())) {
-    if (!sa) throw std::move(sa).status();
+  for (auto const& sa : client.ListServiceAccounts(project.FullName())) {
+    if (!sa) throw google::cloud::Status(sa.status());
     std::cout << sa->name() << "\n";
     ++count;
   }
