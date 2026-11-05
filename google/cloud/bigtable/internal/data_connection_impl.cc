@@ -535,10 +535,10 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   auto stub = stub_manager_->GetStub(InstanceNameFromTableName(table_name));
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
-    internal::ConfigureContext(*context, internal::CurrentOptions());
+    internal::ConfigureContext(*context, *current);
     operation_context->PreCall(*context);
     auto stream =
-        stub->SampleRowKeys(context, Options{}, request, operation_context);
+        stub->SampleRowKeys(context, *current, request, operation_context);
 
     std::optional<Status> status;
     while (true) {
