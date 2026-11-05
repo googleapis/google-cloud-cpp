@@ -4219,27 +4219,29 @@ TEST(ObjectDescriptorImpl, ResumeBudgetIsNotResetByASuccessfulReconnect) {
   while (!sequencer.empty()) sequencer.PopFront().set_value(false);
 }
 
+// Builds a response whose string fields (bucket, object name, 16-byte raw MD5
+// digest, and read_handle) exceed SSO capacity on libstdc++/libc++, exercising
+// heap allocation and deallocation when `metadata_` and `read_object_spec_` are
+// updated in `OnRead()`.
+Response MakeMetadataUpdateResponse(int seq) {
+  Response response;
+  google::storage::v2::Object* metadata = response.mutable_metadata();
+  metadata->set_bucket("projects/_/buckets/test-bucket-long-non-sso-name");
+  metadata->set_name("test-object-with-long-non-sso-allocated-name");
+  metadata->set_generation(42);
+  metadata->set_size(43);
+  metadata->mutable_finalize_time()->set_seconds(1234567890 + seq);
+  metadata->mutable_checksums()->set_crc32c(576848900);
+  metadata->mutable_checksums()->set_md5_hash(
+      std::string(16, static_cast<char>('a' + (seq % 26))));
+  response.mutable_read_handle()->set_handle(
+      "handle-with-long-non-sso-payload-" + std::to_string(seq));
+  return response;
+}
+
 /// @test Verify concurrent Read() calls do not race with OnRead() updating
 /// metadata_ and read_object_spec_.
 TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
-  auto make_response = [](int seq) {
-    Response response;
-    auto* metadata = response.mutable_metadata();
-    metadata->set_bucket("projects/_/buckets/test-bucket-long-non-sso-name");
-    metadata->set_name("test-object-with-long-non-sso-allocated-name");
-    metadata->set_generation(42);
-    metadata->set_size(43);
-    metadata->mutable_finalize_time()->set_seconds(1234567890 + seq);
-    metadata->mutable_checksums()->set_crc32c(576848900);
-    // 16-byte raw MD5 digest exceeds SSO capacity on libstdc++, exercising
-    // heap allocation/deallocation when metadata_ is move-assigned in OnRead().
-    metadata->mutable_checksums()->set_md5_hash(
-        std::string(16, static_cast<char>('a' + (seq % 26))));
-    response.mutable_read_handle()->set_handle(
-        "handle-with-long-non-sso-payload-" + std::to_string(seq));
-    return response;
-  };
-
   AsyncSequencer<bool> cq;
   std::atomic<int> seq{0};
   auto stream = std::make_unique<MockStream>();
@@ -4247,12 +4249,11 @@ TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
       .WillRepeatedly([&cq](Request const&, grpc::WriteOptions) {
         return cq.PushBack("Write").then([](auto f) { return f.get(); });
       });
-  EXPECT_CALL(*stream, Read).WillRepeatedly([&cq, &seq, &make_response]() {
-    return cq.PushBack("Read").then(
-        [&seq, &make_response](auto f) -> std::optional<Response> {
-          if (!f.get()) return std::nullopt;
-          return make_response(++seq);
-        });
+  EXPECT_CALL(*stream, Read).WillRepeatedly([&cq, &seq]() {
+    return cq.PushBack("Read").then([&seq](auto f) -> std::optional<Response> {
+      if (!f.get()) return std::nullopt;
+      return MakeMetadataUpdateResponse(++seq);
+    });
   });
   EXPECT_CALL(*stream, Finish).WillOnce([&cq]() {
     return cq.PushBack("Finish").then([](auto) { return PermanentError(); });
@@ -4279,7 +4280,7 @@ TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
       NoResume(), factory.AsStdFunction(), std::move(spec),
       std::make_shared<OpenStream>(std::move(stream)), options);
 
-  tested->Start(make_response(0));
+  tested->Start(MakeMetadataUpdateResponse(0));
 
   std::atomic<bool> stop{false};
   std::thread cq_thread([&] {
@@ -4330,22 +4331,6 @@ TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
 /// @test Verify concurrent MakeSubsequentStream(), Read(), metadata(), and
 /// StreamSize() calls do not race when new streams deliver metadata updates.
 TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
-  auto make_response = [](int seq) {
-    Response response;
-    auto* metadata = response.mutable_metadata();
-    metadata->set_bucket("projects/_/buckets/test-bucket-long-non-sso-name");
-    metadata->set_name("test-object-with-long-non-sso-allocated-name");
-    metadata->set_generation(42);
-    metadata->set_size(43);
-    metadata->mutable_finalize_time()->set_seconds(1234567890 + seq);
-    metadata->mutable_checksums()->set_crc32c(576848900);
-    metadata->mutable_checksums()->set_md5_hash(
-        std::string(16, static_cast<char>('a' + (seq % 26))));
-    response.mutable_read_handle()->set_handle(
-        "handle-with-long-non-sso-payload-" + std::to_string(seq));
-    return response;
-  };
-
   AsyncSequencer<bool> sequencer;
   auto configure_stream = [&sequencer](MockStream& s) {
     EXPECT_CALL(s, Write).WillRepeatedly(
@@ -4389,7 +4374,7 @@ TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
               if (!f.get()) return PermanentError();
               return OpenStreamResult{
                   std::make_shared<OpenStream>(std::move(extra_streams[idx])),
-                  make_response(static_cast<int>(idx + 1))};
+                  MakeMetadataUpdateResponse(static_cast<int>(idx + 1))};
             });
       });
 
@@ -4406,7 +4391,7 @@ TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
       NoResume(), factory.AsStdFunction(), std::move(spec),
       std::make_shared<OpenStream>(std::move(initial_stream)), options);
 
-  tested->Start(make_response(0));
+  tested->Start(MakeMetadataUpdateResponse(0));
 
   std::vector<promise<bool>> held_reads;
   std::thread cq_thread([&] {
