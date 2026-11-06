@@ -16,18 +16,18 @@
 #include "google/cloud/storagecontrol/v2/storage_control_options.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/no_await_tag.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "google/storage/control/v2/storage_control.pb.h"
 #include <chrono>
+#include <exception>
 #include <functional>
 #include <iostream>
 #include <optional>
 #include <stdexcept>
 #include <string>
-#include <thread>
 #include <utility>
 #include <vector>
 
@@ -43,13 +43,15 @@ void CreateRapidCache(
     // The zone must be in the same region as the bucket. Rapid Cache Ultra
     // requires a bucket with hierarchical namespace enabled.
     auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
-    google::storage::control::v2::RapidCache cache;
     // The Rapid Cache ID must be equal to the zone name.
-    cache.set_name(parent + "/rapidCaches/" + zone_name);
+    std::string const cache_id = zone_name;
+    // This example only sets the name, zone, and cache type. The service uses
+    // default values for other fields, such as the TTL. Use UpdateRapidCache()
+    // to change them.
+    google::storage::control::v2::RapidCache cache;
+    cache.set_name(parent + "/rapidCaches/" + cache_id);
     cache.set_zone(zone_name);
     cache.set_cache_type("rapid-cache-ultra");
-    // Keep cache entries for 24 hours (86400 seconds).
-    cache.mutable_ttl()->set_seconds(86400);
 
     // Creating a Rapid Cache is a long-running operation. This example blocks
     // until it completes. Real applications may want to set up a callback, wait
@@ -141,9 +143,12 @@ void DisableRapidCache(
      std::string const& bucket_name, std::string const& cache_id) {
     auto const name = std::string{"projects/_/buckets/"} + bucket_name +
                       "/rapidCaches/" + cache_id;
-    // Disabling a Rapid Cache is a long-running operation. This example blocks
-    // until it completes. Real applications may want to set up a callback, wait
-    // on a coroutine, or poll until it completes.
+    // Disabling a Rapid Cache is a long-running operation. The cache is in the
+    // "disabled" state within seconds, but the operation only completes once
+    // the cache is removed, which can take 30+ minutes. The default polling
+    // policy may expire before that. Configure
+    // `StorageControlPollingPolicyOption` to wait longer, or use
+    // GetRapidCache() to check the state.
     google::cloud::StatusOr<google::storage::control::v2::RapidCache>
         rapid_cache = client.DisableRapidCache(name).get();
     if (!rapid_cache) throw std::move(rapid_cache).status();
@@ -189,9 +194,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const parent = std::string{"projects/_/buckets/"} + *bucket_name;
   auto const name = parent + "/rapidCaches/" + cache_id;
 
+  // If this fails there is no cache to clean up. A cache created by an
+  // operation that fails or times out must be disabled manually.
   std::cout << "\nRunning CreateRapidCache() example" << std::endl;
   CreateRapidCache(client, {*bucket_name, *zone_name});
 
+  // Run the remaining examples. Save any error, so the teardown below always
+  // disables the Rapid Cache created above.
+  std::exception_ptr error;
   try {
     std::cout << "\nRunning GetRapidCache() example" << std::endl;
     GetRapidCache(client, {*bucket_name, cache_id});
@@ -205,13 +215,14 @@ void AutoRun(std::vector<std::string> const& argv) {
 
     std::cout << "\nRunning ListRapidCaches() example" << std::endl;
     ListRapidCaches(client, {*bucket_name});
-    bool found = false;
+    bool cache_listed = false;
     for (google::cloud::StatusOr<google::storage::control::v2::RapidCache> c :
          client.ListRapidCaches(parent)) {
       if (!c) throw std::move(c).status();
-      found = found || c->name() == name;
+      cache_listed = cache_listed || c->name() == name;
     }
-    check(found, "Rapid Cache " + name + " not found in ListRapidCaches()");
+    check(cache_listed,
+          "Rapid Cache " + name + " not found in ListRapidCaches()");
 
     std::cout << "\nRunning UpdateRapidCache() example" << std::endl;
     UpdateRapidCache(client, {*bucket_name, cache_id});
@@ -221,14 +232,13 @@ void AutoRun(std::vector<std::string> const& argv) {
           "Unexpected Rapid Cache TTL: " +
               std::to_string(cache->ttl().seconds()));
   } catch (...) {
-    // Best-effort cleanup, the original error is more interesting.
-    (void)client.DisableRapidCache(google::cloud::NoAwaitTag{}, name);
-    throw;
+    error = std::current_exception();
   }
 
-  // The disable operation can take a long time to complete, even though the
-  // cache is in the "disabled" state within seconds. Bound the wait so the
-  // test does not hang.
+  // Teardown: disable the Rapid Cache. The cache is in the "disabled" state
+  // within seconds, but the operation only completes once the cache is
+  // removed, which can take 30+ minutes. Use a polling policy to bound the
+  // wait, so the test does not hang.
   auto bounded_client = storagecontrol::StorageControlClient(
       storagecontrol::MakeStorageControlConnection(
           google::cloud::Options{}
@@ -237,35 +247,38 @@ void AutoRun(std::vector<std::string> const& argv) {
                       storagecontrol::StorageControlRetryPolicyOption::Type,
                       storagecontrol::StorageControlBackoffPolicyOption::Type>(
                       storagecontrol::StorageControlLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(10))
+                          /*maximum_duration=*/std::chrono::minutes(2))
                           .clone(),
                       google::cloud::ExponentialBackoffPolicy(
                           /*initial_delay=*/std::chrono::seconds(10),
-                          /*maximum_delay=*/std::chrono::minutes(1),
+                          /*maximum_delay=*/std::chrono::seconds(30),
                           /*scaling=*/2.0)
                           .clone())
                       .clone())));
-
   std::cout << "\nRunning DisableRapidCache() example" << std::endl;
+  bool disable_completed = false;
   try {
     DisableRapidCache(bounded_client, {*bucket_name, cache_id});
-    return;
+    disable_completed = true;
   } catch (google::cloud::Status const& status) {
+    // The bounded wait is expected to expire. Report any other error, unless
+    // an earlier error is more interesting.
+    if (status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
+        !error) {
+      throw;
+    }
     std::cout << "DisableRapidCache() did not complete: " << status << "\n";
   }
+  if (error) std::rethrow_exception(error);
+  // A completed operation means the cache is already removed.
+  if (disable_completed) return;
 
-  // The operation did not complete in time. Verify the cache is disabled.
-  for (int i = 0; i != 12; ++i) {
-    google::cloud::StatusOr<google::storage::control::v2::RapidCache> cache =
-        client.GetRapidCache(name);
-    if (!cache) throw std::move(cache).status();
-    if (cache->state() == "disabled") {
-      std::cout << "Rapid Cache " << name << " is disabled\n";
-      return;
-    }
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-  }
-  throw std::runtime_error("Rapid Cache " + name + " was not disabled");
+  // The operation did not complete in time, but the cache must be disabled.
+  google::cloud::StatusOr<google::storage::control::v2::RapidCache> cache =
+      client.GetRapidCache(name);
+  if (!cache) throw std::move(cache).status();
+  check(cache->state() == "disabled",
+        "Unexpected Rapid Cache state after disable: " + cache->state());
 }
 
 }  // namespace
