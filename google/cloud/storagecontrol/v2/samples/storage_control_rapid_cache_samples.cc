@@ -44,7 +44,7 @@ void CreateRapidCache(
     // requires a bucket with hierarchical namespace enabled.
     auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
     // The Rapid Cache ID must be equal to the zone name.
-    std::string const cache_id = zone_name;
+    std::string const& cache_id = zone_name;
     // This example only sets the name, zone, and cache type. The service uses
     // default values for other fields, such as the TTL. Use UpdateRapidCache()
     // to change them.
