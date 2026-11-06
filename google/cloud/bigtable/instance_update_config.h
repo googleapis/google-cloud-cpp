@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_UPDATE_CONFIG_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_UPDATE_CONFIG_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/algorithm.h"
@@ -22,8 +23,6 @@
 #include "google/bigtable/admin/v2/common.pb.h"
 #include <map>
 #include <string>
-
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
