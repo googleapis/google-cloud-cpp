@@ -1091,6 +1091,365 @@ BackupDRClient::InitializeService(
   return connection_->InitializeService(operation);
 }
 
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRClient::CreateAutoProtectionPolicy(
+    std::string const& parent,
+    google::cloud::backupdr::v1::AutoProtectionPolicy const&
+        auto_protection_policy,
+    std::string const& auto_protection_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_auto_protection_policy() = auto_protection_policy;
+  request.set_auto_protection_policy_id(auto_protection_policy_id);
+  return connection_->CreateAutoProtectionPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::CreateAutoProtectionPolicy(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::backupdr::v1::AutoProtectionPolicy const&
+        auto_protection_policy,
+    std::string const& auto_protection_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_auto_protection_policy() = auto_protection_policy;
+  request.set_auto_protection_policy_id(auto_protection_policy_id);
+  return connection_->CreateAutoProtectionPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRClient::CreateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutoProtectionPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::CreateAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutoProtectionPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRClient::CreateAutoProtectionPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutoProtectionPolicy(operation);
+}
+
+StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRClient::ListAutoProtectionPolicies(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListAutoProtectionPolicies(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRClient::ListAutoProtectionPolicies(
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAutoProtectionPolicies(std::move(request));
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRClient::GetAutoProtectionPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetAutoProtectionPolicy(request);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRClient::GetAutoProtectionPolicy(
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutoProtectionPolicy(request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRClient::UpdateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::AutoProtectionPolicy const&
+        auto_protection_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest request;
+  *request.mutable_auto_protection_policy() = auto_protection_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutoProtectionPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::UpdateAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::AutoProtectionPolicy const&
+        auto_protection_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest request;
+  *request.mutable_auto_protection_policy() = auto_protection_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutoProtectionPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRClient::UpdateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoProtectionPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::UpdateAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoProtectionPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRClient::UpdateAutoProtectionPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoProtectionPolicy(operation);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRClient::DeleteAutoProtectionPolicy(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteAutoProtectionPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::DeleteAutoProtectionPolicy(NoAwaitTag, std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteAutoProtectionPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRClient::DeleteAutoProtectionPolicy(
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAutoProtectionPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::DeleteAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAutoProtectionPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRClient::DeleteAutoProtectionPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAutoProtectionPolicy(operation);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRClient::CreateAutoProtectionPolicyBinding(
+    std::string const& parent,
+    google::cloud::backupdr::v1::AutoProtectionPolicyBinding const&
+        auto_protection_policy_binding,
+    std::string const& auto_protection_policy_binding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_auto_protection_policy_binding() =
+      auto_protection_policy_binding;
+  request.set_auto_protection_policy_binding_id(
+      auto_protection_policy_binding_id);
+  return connection_->CreateAutoProtectionPolicyBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::CreateAutoProtectionPolicyBinding(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::backupdr::v1::AutoProtectionPolicyBinding const&
+        auto_protection_policy_binding,
+    std::string const& auto_protection_policy_binding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_auto_protection_policy_binding() =
+      auto_protection_policy_binding;
+  request.set_auto_protection_policy_binding_id(
+      auto_protection_policy_binding_id);
+  return connection_->CreateAutoProtectionPolicyBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRClient::CreateAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutoProtectionPolicyBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::CreateAutoProtectionPolicyBinding(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutoProtectionPolicyBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRClient::CreateAutoProtectionPolicyBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAutoProtectionPolicyBinding(operation);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRClient::GetAutoProtectionPolicyBinding(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest request;
+  request.set_name(name);
+  return connection_->GetAutoProtectionPolicyBinding(request);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRClient::GetAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutoProtectionPolicyBinding(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRClient::ListAutoProtectionPolicyBindings(std::string const& parent,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAutoProtectionPolicyBindings(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRClient::ListAutoProtectionPolicyBindings(
+    google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAutoProtectionPolicyBindings(std::move(request));
+}
+
+StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>
+BackupDRClient::ListAppliedAutoProtectionPolicies(std::string const& parent,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListAppliedAutoProtectionPolicies(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>
+BackupDRClient::ListAppliedAutoProtectionPolicies(
+    google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAppliedAutoProtectionPolicies(std::move(request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRClient::InitiateDeleteAutoProtectionPolicyBinding(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::InitiateDeleteAutoProtectionPolicyBindingRequest
+      request;
+  request.set_name(name);
+  return connection_->InitiateDeleteAutoProtectionPolicyBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::InitiateDeleteAutoProtectionPolicyBinding(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::InitiateDeleteAutoProtectionPolicyBindingRequest
+      request;
+  request.set_name(name);
+  return connection_->InitiateDeleteAutoProtectionPolicyBinding(NoAwaitTag{},
+                                                                request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRClient::InitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitiateDeleteAutoProtectionPolicyBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::InitiateDeleteAutoProtectionPolicyBinding(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitiateDeleteAutoProtectionPolicyBinding(NoAwaitTag{},
+                                                                request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRClient::InitiateDeleteAutoProtectionPolicyBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitiateDeleteAutoProtectionPolicyBinding(operation);
+}
+
+StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>
+BackupDRClient::ListBindingMatchingResources(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest request;
+  request.set_parent(parent);
+  return connection_->ListBindingMatchingResources(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>
+BackupDRClient::ListBindingMatchingResources(
+    google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBindingMatchingResources(std::move(request));
+}
+
 StreamRange<google::cloud::location::Location> BackupDRClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

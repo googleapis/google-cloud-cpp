@@ -87,7 +87,7 @@ TEST(HashFunctionImplTest, Crc32cQuickSimple) {
 
 TEST(HashFunctionImplTest, Crc32cStringView) {
   Crc32cHashFunction function;
-  auto payload = absl::string_view{kQuickFox};
+  auto payload = std::string_view{kQuickFox};
   for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
     auto message = payload.substr(pos, 5);
     EXPECT_STATUS_OK(function.Update(pos, message));
@@ -106,7 +106,7 @@ TEST(HashFunctionImplTest, Crc32cStringView) {
 
 TEST(HashFunctionImplTest, Crc32cStringViewOffsetJumps) {
   Crc32cHashFunction function;
-  auto payload = absl::string_view{kQuickFox};
+  auto payload = std::string_view{kQuickFox};
   EXPECT_STATUS_OK(function.Update(1024, payload));
   EXPECT_STATUS_OK(function.Update(1024 + payload.size(), payload));
   EXPECT_THAT(function.Update(2048, payload),
@@ -117,7 +117,7 @@ TEST(HashFunctionImplTest, Crc32cStringViewOffsetJumps) {
 
 TEST(HashFunctionImplTest, Crc32cStringViewOffsetRewinds) {
   Crc32cHashFunction function;
-  auto payload = absl::string_view{kQuickFox};
+  auto payload = std::string_view{kQuickFox};
   EXPECT_STATUS_OK(function.Update(2048, payload));
   EXPECT_STATUS_OK(function.Update(1024, payload));
   EXPECT_STATUS_OK(
@@ -128,7 +128,7 @@ TEST(HashFunctionImplTest, Crc32cStringViewWithCrc) {
   for (auto const offset : {0, 1024, 10240}) {
     SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
     Crc32cHashFunction function;
-    auto payload = absl::string_view{kQuickFox};
+    auto payload = std::string_view{kQuickFox};
     for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
       auto message = payload.substr(pos, 5);
       auto const message_crc = storage_internal::Crc32c(message);
@@ -151,7 +151,7 @@ TEST(HashFunctionImplTest, Crc32cCord) {
   for (auto const offset : {0, 1024, 10240}) {
     SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
     Crc32cHashFunction function;
-    auto payload = absl::Cord(absl::string_view{kQuickFox});
+    auto payload = absl::Cord(std::string_view{kQuickFox});
     for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
       auto message = payload.Subcord(pos, 5);
       auto const message_crc = storage_internal::Crc32c(message);
@@ -172,7 +172,7 @@ TEST(HashFunctionImplTest, Crc32cCord) {
 
 TEST(HashFunctionImplTest, Crc32cCordOffsetJumps) {
   Crc32cHashFunction function;
-  auto payload = absl::Cord(absl::string_view{kQuickFox});
+  auto payload = absl::Cord(std::string_view{kQuickFox});
   auto const crc = storage_internal::Crc32c(payload);
   EXPECT_STATUS_OK(function.Update(1024, payload, crc));
   EXPECT_STATUS_OK(function.Update(1024 + payload.size(), payload, crc));
@@ -182,7 +182,7 @@ TEST(HashFunctionImplTest, Crc32cCordOffsetJumps) {
 
 TEST(HashFunctionImplTest, Crc32cCordOffsetRewinds) {
   Crc32cHashFunction function;
-  auto payload = absl::Cord(absl::string_view{kQuickFox});
+  auto payload = absl::Cord(std::string_view{kQuickFox});
   auto const crc = storage_internal::Crc32c(payload);
   EXPECT_STATUS_OK(function.Update(2048, payload, crc));
   EXPECT_STATUS_OK(function.Update(1024, payload, crc));
@@ -207,7 +207,7 @@ TEST(HashFunctionImplTest, MD5Quick) {
 
 TEST(HashFunctionImplTest, MD5StringView) {
   auto function = MD5HashFunction::Create();
-  auto payload = absl::string_view{kQuickFox};
+  auto payload = std::string_view{kQuickFox};
   for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
     auto message = payload.substr(pos, 5);
     EXPECT_STATUS_OK(function->Update(pos, message));
@@ -228,7 +228,7 @@ TEST(HashFunctionImplTest, MD5StringViewWithCrc) {
   for (auto const offset : {0, 1024, 10240}) {
     SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
     auto function = MD5HashFunction::Create();
-    auto payload = absl::string_view{kQuickFox};
+    auto payload = std::string_view{kQuickFox};
     for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
       auto message = payload.substr(pos, 5);
       auto const unused = std::uint32_t{0};
@@ -251,7 +251,7 @@ TEST(HashFunctionImplTest, MD5Cord) {
   for (auto const offset : {0, 1024, 10240}) {
     SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
     auto function = MD5HashFunction::Create();
-    auto payload = absl::Cord(absl::string_view{kQuickFox});
+    auto payload = absl::Cord(std::string_view{kQuickFox});
     for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
       auto message = payload.Subcord(pos, 5);
       auto const unused = std::uint32_t{0};
@@ -272,7 +272,7 @@ TEST(HashFunctionImplTest, MD5Cord) {
 
 TEST(HashFunctionImplTest, MD5CordViewOffsetJumps) {
   auto function = MD5HashFunction::Create();
-  auto payload = absl::Cord(absl::string_view{kQuickFox});
+  auto payload = absl::Cord(std::string_view{kQuickFox});
   auto const crc = storage_internal::Crc32c(payload);
   EXPECT_STATUS_OK(function->Update(1024, payload, crc));
   EXPECT_STATUS_OK(function->Update(1024 + payload.size(), payload, crc));
@@ -282,7 +282,7 @@ TEST(HashFunctionImplTest, MD5CordViewOffsetJumps) {
 
 TEST(HashFunctionImplTest, MD5CordOffsetRewinds) {
   auto function = MD5HashFunction::Create();
-  auto payload = absl::Cord(absl::string_view{kQuickFox});
+  auto payload = absl::Cord(std::string_view{kQuickFox});
   auto const crc = storage_internal::Crc32c(payload);
   EXPECT_STATUS_OK(function->Update(2048, payload, crc));
   EXPECT_STATUS_OK(function->Update(1024, payload, crc));
@@ -329,11 +329,11 @@ TEST(HashFunctionImplTest, Crc32cMessageDelegation) {
 
   auto mock = std::make_unique<MockHashFunction>();
   EXPECT_CALL(*mock, Name).WillOnce(Return("mock"));
-  EXPECT_CALL(*mock, Update(An<absl::string_view>())).Times(1);
-  EXPECT_CALL(*mock, Update(_, An<absl::string_view>()))
-      .WillOnce(Return(expected_status("Update(_, absl::string_view)")));
-  EXPECT_CALL(*mock, Update(_, An<absl::string_view>(), _))
-      .WillOnce(Return(expected_status("Update(_, absl::string_view, _)")));
+  EXPECT_CALL(*mock, Update(An<std::string_view>())).Times(1);
+  EXPECT_CALL(*mock, Update(_, An<std::string_view>()))
+      .WillOnce(Return(expected_status("Update(_, std::string_view)")));
+  EXPECT_CALL(*mock, Update(_, An<std::string_view>(), _))
+      .WillOnce(Return(expected_status("Update(_, std::string_view, _)")));
   EXPECT_CALL(*mock, Update(_, An<absl::Cord const&>(), _))
       .WillOnce(Return(expected_status("Update(_, absl::Cord const&, _)")));
   EXPECT_CALL(*mock, Finish)
@@ -341,12 +341,11 @@ TEST(HashFunctionImplTest, Crc32cMessageDelegation) {
 
   Crc32cMessageHashFunction function(std::move(mock));
   EXPECT_EQ(function.Name(), "crc32c-message(mock)");
-  EXPECT_NO_FATAL_FAILURE(function.Update(absl::string_view("unused")));
-  EXPECT_THAT(function.Update(0, absl::string_view("")),
-              StatusIs(StatusCode::kUnknown, "Update(_, absl::string_view)"));
-  EXPECT_THAT(
-      function.Update(0, absl::string_view(""), 0),
-      StatusIs(StatusCode::kUnknown, "Update(_, absl::string_view, _)"));
+  EXPECT_NO_FATAL_FAILURE(function.Update(std::string_view("unused")));
+  EXPECT_THAT(function.Update(0, std::string_view("")),
+              StatusIs(StatusCode::kUnknown, "Update(_, std::string_view)"));
+  EXPECT_THAT(function.Update(0, std::string_view(""), 0),
+              StatusIs(StatusCode::kUnknown, "Update(_, std::string_view, _)"));
   EXPECT_THAT(
       function.Update(0, absl::Cord(), 0),
       StatusIs(StatusCode::kUnknown, "Update(_, absl::Cord const&, _)"));
@@ -357,7 +356,7 @@ TEST(HashFunctionImplTest, Crc32cMessageDelegation) {
 
 TEST(HashFunctionImplTest, Crc32cMessageValidate) {
   auto const message =
-      absl::string_view{"The quick brown fox jumps over the lazy dog"};
+      std::string_view{"The quick brown fox jumps over the lazy dog"};
   auto const expected_crc32c = storage_internal::Crc32c(message);
   auto mock = std::make_unique<MockHashFunction>();
   EXPECT_CALL(*mock, Update(_, message, expected_crc32c))

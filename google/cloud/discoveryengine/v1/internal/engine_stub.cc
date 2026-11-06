@@ -130,6 +130,28 @@ DefaultEngineServiceStub::ListEngines(
   return response;
 }
 
+StatusOr<google::iam::v1::Policy> DefaultEngineServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultEngineServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultEngineServiceStub::ListOperations(
     grpc::ClientContext& context, Options const&,

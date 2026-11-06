@@ -225,6 +225,16 @@ DeveloperConnectMetadata::FetchReadToken(
   return child_->FetchReadToken(context, options, request);
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectMetadata::OpenGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->OpenGitRepositoryLinkPullRequest(context, options, request);
+}
+
 StatusOr<
     google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
 DeveloperConnectMetadata::FetchLinkableGitRepositories(
@@ -256,6 +266,104 @@ DeveloperConnectMetadata::FetchGitRefs(
               absl::StrCat("git_repository_link=",
                            internal::UrlEncode(request.git_repository_link())));
   return child_->FetchGitRefs(context, options, request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectMetadata::DiffGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DiffGitRepositoryLinkCommit(context, options, request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectMetadata::FetchGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchGitRepositoryLinkCommit(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkCommitListResponse>
+DeveloperConnectMetadata::FetchGitRepositoryLinkCommitList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitListRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchGitRepositoryLinkCommitList(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectMetadata::FetchGitRepositoryLinkFileBlame(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchGitRepositoryLinkFileBlame(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectMetadata::FetchGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchGitRepositoryLinkPullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectMetadata::AddGitRepositoryLinkPullRequestComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AddGitRepositoryLinkPullRequestComment(context, options,
+                                                        request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectMetadata::AddGitRepositoryLinkPullRequestReviewComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AddGitRepositoryLinkPullRequestReviewComment(context, options,
+                                                              request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectMetadata::ModifyGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ModifyGitRepositoryLinkPullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkPullRequestListResponse>
+DeveloperConnectMetadata::FetchGitRepositoryLinkPullRequestList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchGitRepositoryLinkPullRequestList(context, options,
+                                                       request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>

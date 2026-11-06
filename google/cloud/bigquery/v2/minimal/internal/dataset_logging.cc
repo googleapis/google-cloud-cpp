@@ -19,7 +19,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_join.h"
-#include "absl/strings/string_view.h"
 
 namespace google {
 namespace cloud {

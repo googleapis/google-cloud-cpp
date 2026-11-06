@@ -18,12 +18,12 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <numeric>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -52,7 +52,7 @@ template <typename T, std::enable_if_t<IsPayloadType<T>::value, int> = 0>
 absl::Cord MakeCord(std::vector<T> p) {
   static_assert(IsPayloadType<T>::value, "unexpected value type");
   auto holder = std::make_shared<std::vector<T>>(std::move(p));
-  auto contents = absl::string_view(
+  auto contents = std::string_view(
       reinterpret_cast<char const*>(holder->data()), holder->size());
   return absl::MakeCordFromExternal(contents,
                                     [b = std::move(holder)]() mutable {});

@@ -23,6 +23,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -119,7 +120,7 @@ TEST(PartialUpload, FinalizeEmpty) {
 TEST(PartialUpload, FinalizeChunkAligned) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();
@@ -174,7 +175,7 @@ TEST(PartialUpload, FinalizeChunkAligned) {
 TEST(PartialUpload, FinalizeChunkPartial) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
   auto const v0 = view.substr(0, kExpectedChunkSize);
   auto const v1 = view.substr(kExpectedChunkSize, kExpectedChunkSize);
   auto const v2 = view.substr(2 * kExpectedChunkSize);
@@ -279,7 +280,7 @@ TEST(PartialUpload, FlushChunkEmpty) {
 TEST(PartialUpload, FlushChunkAligned) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, kExpectedChunkSize);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();
@@ -318,7 +319,7 @@ TEST(PartialUpload, FlushChunkAligned) {
 TEST(PartialUpload, FlushChunkPartial) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
   auto const v0 = view.substr(0, kExpectedChunkSize);
   auto const v1 = view.substr(kExpectedChunkSize, kExpectedChunkSize);
   auto const v2 = view.substr(2 * kExpectedChunkSize);
@@ -392,7 +393,7 @@ TEST(PartialUpload, FlushChunkPartial) {
 TEST(PartialUpload, NotFinalizeChunkPartial) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();

@@ -20,7 +20,6 @@
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_replace.h"
-#include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include "absl/time/time.h"
 #include <algorithm>
@@ -32,6 +31,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -146,27 +146,27 @@ std::string SerializeInterval(std::int32_t months, std::int32_t days,
   return std::move(ss).str();
 }
 
-void ConsumeSpaces(absl::string_view& s) {
+void ConsumeSpaces(std::string_view& s) {
   while (!s.empty() && absl::ascii_isspace(s.front())) s.remove_prefix(1);
 }
 
-void ConsumeInteger(absl::string_view& s) {
+void ConsumeInteger(std::string_view& s) {
   while (!s.empty() && absl::ascii_isdigit(s.front())) s.remove_prefix(1);
 }
 
-absl::string_view ConsumeSign(absl::string_view& s) {
+std::string_view ConsumeSign(std::string_view& s) {
   auto t = s;
   if (!absl::ConsumePrefix(&s, "-")) absl::ConsumePrefix(&s, "+");
   return t.substr(0, t.size() - s.size());
 }
 
-absl::string_view ConsumeWord(absl::string_view& s) {
+std::string_view ConsumeWord(std::string_view& s) {
   auto t = s;
   while (!s.empty() && absl::ascii_isalpha(s.front())) s.remove_prefix(1);
   return t.substr(0, t.size() - s.size());
 }
 
-bool ParseDouble(absl::string_view& s, double& d, bool allow_sign,
+bool ParseDouble(std::string_view& s, double& d, bool allow_sign,
                  bool allow_comma) {
   auto t = s;
   if (allow_sign) ConsumeSign(t);
@@ -186,7 +186,7 @@ bool ParseDouble(absl::string_view& s, double& d, bool allow_sign,
 }
 
 template <typename T>
-bool ParseInteger(absl::string_view& s, T& n, bool allow_sign) {
+bool ParseInteger(std::string_view& s, T& n, bool allow_sign) {
   auto t = s;
   if (allow_sign) ConsumeSign(t);
   ConsumeInteger(t);
@@ -196,7 +196,7 @@ bool ParseInteger(absl::string_view& s, T& n, bool allow_sign) {
   return true;
 }
 
-Status SyntaxError(absl::string_view str, absl::string_view suf,
+Status SyntaxError(std::string_view str, std::string_view suf,
                    internal::ErrorInfoBuilder eib) {
   return internal::InvalidArgumentError(
       absl::StrFormat(R"("%s": Syntax error at "%s" (position %d))",  //
@@ -266,7 +266,7 @@ auto NameIs(char name) {
 
 // Interval factories for PostgreSql quantity units.
 struct {
-  absl::string_view name;  // de-pluralized forms
+  std::string_view name;  // de-pluralized forms
   std::function<Interval(std::int32_t)> factory;
 } const kPostgreSqlUnitFactories[] = {
     // "day" is first so that it is chosen when unit is empty.
@@ -289,7 +289,7 @@ struct {
     {"millennia", [](auto n) { return Interval(n * 1000, 0, 0); }},
 };
 
-bool ParseYearMonth(absl::string_view& s, Interval& intvl) {
+bool ParseYearMonth(std::string_view& s, Interval& intvl) {
   auto t = s;
   std::int32_t year;
   if (!ParseInteger(t, year, true)) return false;
@@ -301,7 +301,7 @@ bool ParseYearMonth(absl::string_view& s, Interval& intvl) {
   return true;
 }
 
-bool ParseHourMinuteSecond(absl::string_view& s, Interval& intvl) {
+bool ParseHourMinuteSecond(std::string_view& s, Interval& intvl) {
   auto t = s;
   auto d = nanoseconds::zero();
   auto sign = ConsumeSign(t);
@@ -326,7 +326,7 @@ bool ParseHourMinuteSecond(absl::string_view& s, Interval& intvl) {
   return true;
 }
 
-Interval PostgreSqlUnit(absl::string_view& s, std::int32_t n) {
+Interval PostgreSqlUnit(std::string_view& s, std::int32_t n) {
   auto t = s;
   auto unit = ConsumeWord(t);
   if (unit.size() > 1) absl::ConsumeSuffix(&unit, "s");  // de-pluralize
@@ -341,9 +341,9 @@ Interval PostgreSqlUnit(absl::string_view& s, std::int32_t n) {
 
 }  // namespace
 
-StatusOr<Interval> Interval::ParseISO8601Interval(absl::string_view str) {
+StatusOr<Interval> Interval::ParseISO8601Interval(std::string_view str) {
   Interval intvl;
-  absl::string_view s = str;
+  std::string_view s = str;
 
   bool negated = !absl::ConsumePrefix(&s, "+") && absl::ConsumePrefix(&s, "-");
   if (!absl::ConsumePrefix(&s, "P")) {
@@ -391,9 +391,9 @@ StatusOr<Interval> Interval::ParseISO8601Interval(absl::string_view str) {
   return negated ? -intvl : intvl;
 }
 
-StatusOr<Interval> Interval::ParsePostgreSqlInterval(absl::string_view str) {
+StatusOr<Interval> Interval::ParsePostgreSqlInterval(std::string_view str) {
   Interval intvl;
-  absl::string_view s = str;
+  std::string_view s = str;
 
   ConsumeSpaces(s);
   if (absl::ConsumePrefix(&s, "@")) {
@@ -481,7 +481,7 @@ Interval::operator std::string() const {
   return SerializeInterval(months_, days_, offset_);
 }
 
-StatusOr<Interval> MakeInterval(absl::string_view s) {
+StatusOr<Interval> MakeInterval(std::string_view s) {
   auto interval = Interval::ParseISO8601Interval(s);
   if (interval.ok()) return interval;
 

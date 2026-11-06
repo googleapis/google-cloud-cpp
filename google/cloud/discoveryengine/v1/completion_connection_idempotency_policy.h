@@ -41,6 +41,10 @@ class CompletionServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CompleteQuery(
       google::cloud::discoveryengine::v1::CompleteQueryRequest const& request);
 
+  virtual google::cloud::Idempotency AdvancedCompleteQuery(
+      google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+          request);
+
   virtual google::cloud::Idempotency ImportSuggestionDenyListEntries(
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request);

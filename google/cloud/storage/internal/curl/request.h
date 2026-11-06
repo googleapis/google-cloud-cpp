@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H
 
 #include "google/cloud/storage/version.h"
-#include "absl/strings/string_view.h"
 #include <string>
 
 namespace google {

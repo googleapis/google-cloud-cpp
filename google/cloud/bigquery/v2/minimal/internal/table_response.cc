@@ -107,7 +107,7 @@ StatusOr<ListTablesResponse> ListTablesResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string GetTableResponse::DebugString(absl::string_view name,
+std::string GetTableResponse::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -116,7 +116,7 @@ std::string GetTableResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ListTablesResponse::DebugString(absl::string_view name,
+std::string ListTablesResponse::DebugString(std::string_view name,
                                             TracingOptions const& options,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)

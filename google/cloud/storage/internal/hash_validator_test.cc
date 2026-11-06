@@ -49,7 +49,7 @@ HashValues HashEmpty(std::unique_ptr<HashFunction> function) {
 
 HashValues HashQuick(std::unique_ptr<HashFunction> function) {
   function->Update(
-      absl::string_view{"The quick brown fox jumps over the lazy dog"});
+      std::string_view{"The quick brown fox jumps over the lazy dog"});
   return std::move(*function).Finish();
 }
 
@@ -247,3 +247,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

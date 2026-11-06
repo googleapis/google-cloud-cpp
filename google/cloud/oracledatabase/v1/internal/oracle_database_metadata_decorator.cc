@@ -689,6 +689,66 @@ OracleDatabaseMetadata::DeleteOdbSubnet(
   return child_->DeleteOdbSubnet(context, options, request);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse>
+OracleDatabaseMetadata::ListOdbDnsZones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListOdbDnsZones(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseMetadata::GetOdbDnsZone(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOdbDnsZone(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncCreateOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateOdbDnsZone(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::CreateOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateOdbDnsZone(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncDeleteOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteOdbDnsZone(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::DeleteOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOdbDnsZone(context, options, request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
 OracleDatabaseMetadata::ListExadbVmClusters(
     grpc::ClientContext& context, Options const& options,

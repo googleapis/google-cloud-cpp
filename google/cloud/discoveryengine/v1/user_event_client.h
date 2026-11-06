@@ -112,8 +112,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.UserEvent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event.proto#L36}
-  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L126}
+  /// [google.cloud.discoveryengine.v1.UserEvent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event.proto#L37}
+  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
@@ -148,7 +148,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
-  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L153}
+  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L156}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> CollectUserEvent(

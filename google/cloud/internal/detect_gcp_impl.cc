@@ -18,7 +18,6 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/ascii.h"
-#include "absl/strings/string_view.h"
 #include <algorithm>
 #include <fstream>
 #include <iostream>

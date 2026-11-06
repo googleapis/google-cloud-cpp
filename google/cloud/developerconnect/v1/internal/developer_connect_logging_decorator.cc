@@ -291,6 +291,21 @@ DeveloperConnectLogging::FetchReadToken(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectLogging::OpenGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 OpenGitRepositoryLinkPullRequestRequest const& request) {
+        return child_->OpenGitRepositoryLinkPullRequest(context, options,
+                                                        request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<
     google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
 DeveloperConnectLogging::FetchLinkableGitRepositories(
@@ -329,6 +344,145 @@ DeveloperConnectLogging::FetchGitRefs(
              google::cloud::developerconnect::v1::FetchGitRefsRequest const&
                  request) {
         return child_->FetchGitRefs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectLogging::DiffGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 DiffGitRepositoryLinkCommitRequest const& request) {
+        return child_->DiffGitRepositoryLinkCommit(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectLogging::FetchGitRepositoryLinkCommit(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkCommitRequest const& request) {
+        return child_->FetchGitRepositoryLinkCommit(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkCommitListResponse>
+DeveloperConnectLogging::FetchGitRepositoryLinkCommitList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitListRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkCommitListRequest const& request) {
+        return child_->FetchGitRepositoryLinkCommitList(context, options,
+                                                        request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectLogging::FetchGitRepositoryLinkFileBlame(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkFileBlameRequest const& request) {
+        return child_->FetchGitRepositoryLinkFileBlame(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectLogging::FetchGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkPullRequestRequest const& request) {
+        return child_->FetchGitRepositoryLinkPullRequest(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectLogging::AddGitRepositoryLinkPullRequestComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+        return child_->AddGitRepositoryLinkPullRequestComment(context, options,
+                                                              request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectLogging::AddGitRepositoryLinkPullRequestReviewComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 AddGitRepositoryLinkPullRequestReviewCommentRequest const&
+                     request) {
+        return child_->AddGitRepositoryLinkPullRequestReviewComment(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectLogging::ModifyGitRepositoryLinkPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 ModifyGitRepositoryLinkPullRequestRequest const& request) {
+        return child_->ModifyGitRepositoryLinkPullRequest(context, options,
+                                                          request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkPullRequestListResponse>
+DeveloperConnectLogging::FetchGitRepositoryLinkPullRequestList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkPullRequestListRequest const& request) {
+        return child_->FetchGitRepositoryLinkPullRequestList(context, options,
+                                                             request);
       },
       context, options, request, __func__, tracing_options_);
 }

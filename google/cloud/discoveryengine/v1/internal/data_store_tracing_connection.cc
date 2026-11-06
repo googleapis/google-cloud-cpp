@@ -119,6 +119,24 @@ DataStoreServiceTracingConnection::UpdateDataStore(
   return internal::EndSpan(*span, child_->UpdateDataStore(request));
 }
 
+StatusOr<google::iam::v1::Policy>
+DataStoreServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy>
+DataStoreServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
 StreamRange<google::longrunning::Operation>
 DataStoreServiceTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {

@@ -19,11 +19,11 @@
 #include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <memory>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -41,7 +41,7 @@ struct StorageBillingModel {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -54,7 +54,7 @@ struct TargetType {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -63,7 +63,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TargetType, value);
 struct LinkedDatasetSource {
   DatasetReference source_dataset;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -74,7 +74,7 @@ struct DatasetAccessEntry {
   DatasetReference dataset;
   std::vector<std::string> target_types;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -93,7 +93,7 @@ struct Access {
   RoutineReference routine;
   DatasetAccessEntry dataset;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -104,7 +104,7 @@ struct GcpTag {
   std::string tag_key;
   std::string tag_value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -143,7 +143,7 @@ struct Dataset {
 
   StorageBillingModel storage_billing_model;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -160,7 +160,7 @@ struct ListFormatDataset {
   DatasetReference dataset_reference;
   std::map<std::string, std::string> labels;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

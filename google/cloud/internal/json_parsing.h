@@ -18,9 +18,9 @@
 #include "google/cloud/internal/error_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -30,45 +30,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Returns the string value for `json[name]` (which must exist) or a
 /// descriptive error.
 StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
-                                          absl::string_view name,
-                                          absl::string_view object_name,
+                                          std::string_view name,
+                                          std::string_view object_name,
                                           internal::ErrorContext const& ec);
 
 /// Returns the string value for `json[name]`, a default value if it does not
 /// exist, or a descriptive error if it exists but it is not a string.
 StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
-                                          absl::string_view name,
-                                          absl::string_view object_name,
-                                          absl::string_view default_value,
+                                          std::string_view name,
+                                          std::string_view object_name,
+                                          std::string_view default_value,
                                           internal::ErrorContext const& ec);
 
 /// Returns the std::int32_t value for `json[name]` (which must exist) or a
 /// descriptive error.
 StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
-                                        absl::string_view name,
-                                        absl::string_view object_name,
+                                        std::string_view name,
+                                        std::string_view object_name,
                                         internal::ErrorContext const& ec);
 
 /// Returns the std::int32_t value for `json[name]`, a default value if it does
 /// not exist, or a descriptive error if it exists but it is not an integer.
 StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
-                                        absl::string_view name,
-                                        absl::string_view object_name,
+                                        std::string_view name,
+                                        std::string_view object_name,
                                         std::int32_t default_value,
                                         internal::ErrorContext const& ec);
 
 /// Returns the string values for `json[name]` (which must exist) or a
 /// descriptive error.
 StatusOr<std::vector<std::string>> ValidateStringArrayField(
-    nlohmann::json const& json, absl::string_view name,
-    absl::string_view object_name, internal::ErrorContext const& ec);
+    nlohmann::json const& json, std::string_view name,
+    std::string_view object_name, internal::ErrorContext const& ec);
 
 /// Use when a JSON field cannot be found but is required.
-Status MissingFieldError(absl::string_view name, absl::string_view object_name,
+Status MissingFieldError(std::string_view name, std::string_view object_name,
                          internal::ErrorContext const& ec);
 
 /// Use when a JSON field type does not match the expected type.
-Status InvalidTypeError(absl::string_view name, absl::string_view object_name,
+Status InvalidTypeError(std::string_view name, std::string_view object_name,
                         internal::ErrorContext const& ec);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

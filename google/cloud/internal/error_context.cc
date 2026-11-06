@@ -21,7 +21,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::string Format(absl::string_view message, ErrorContext const& context) {
+std::string Format(std::string_view message, ErrorContext const& context) {
   if (context.empty()) return std::string{message};
   return absl::StrCat(message, ", ",
                       absl::StrJoin(context, ", ", absl::PairFormatter("=")));

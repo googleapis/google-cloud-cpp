@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/internal/debug_string.h"
-#include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <map>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -28,7 +28,7 @@ namespace {
 struct SubMessage {
   double sub_field;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const {
     return DebugFormatter(name, options, indent)

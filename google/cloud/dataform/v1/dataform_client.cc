@@ -872,6 +872,54 @@ DataformClient::CreateCompilationResult(
   return connection_->CreateCompilationResult(request);
 }
 
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformClient::CreateCompilationResultLongRunning(
+    std::string const& parent,
+    google::cloud::dataform::v1::CompilationResult const& compilation_result,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::CreateCompilationResultRequest request;
+  request.set_parent(parent);
+  *request.mutable_compilation_result() = compilation_result;
+  return connection_->CreateCompilationResultLongRunning(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformClient::CreateCompilationResultLongRunning(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataform::v1::CompilationResult const& compilation_result,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::CreateCompilationResultRequest request;
+  request.set_parent(parent);
+  *request.mutable_compilation_result() = compilation_result;
+  return connection_->CreateCompilationResultLongRunning(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformClient::CreateCompilationResultLongRunning(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCompilationResultLongRunning(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformClient::CreateCompilationResultLongRunning(
+    NoAwaitTag,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCompilationResultLongRunning(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformClient::CreateCompilationResultLongRunning(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCompilationResultLongRunning(operation);
+}
+
 StreamRange<google::cloud::dataform::v1::CompilationResultAction>
 DataformClient::QueryCompilationResultActions(
     google::cloud::dataform::v1::QueryCompilationResultActionsRequest request,

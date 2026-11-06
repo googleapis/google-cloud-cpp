@@ -18,12 +18,12 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/str_cat.h"
-#include "absl/strings/string_view.h"
 #include "absl/time/time.h"
 #include <chrono>
 #include <map>
 #include <optional>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -40,37 +40,36 @@ namespace internal {
  */
 class DebugFormatter {
  public:
-  DebugFormatter(absl::string_view name, TracingOptions options,
-                 int indent = 0);
+  DebugFormatter(std::string_view name, TracingOptions options, int indent = 0);
 
   template <typename T>
-  DebugFormatter& SubMessage(absl::string_view name, T const& message) {
+  DebugFormatter& SubMessage(std::string_view name, T const& message) {
     absl::StrAppend(&str_, message.DebugString(name, options_, indent_));
     return *this;
   }
 
   // Specialized support for types without their own DebugString().
-  DebugFormatter& Field(absl::string_view field_name, bool value);
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name, bool value);
+  DebugFormatter& Field(std::string_view field_name,
                         std::chrono::system_clock::time_point value);
   DebugFormatter& Field(
-      absl::string_view field_name,
+      std::string_view field_name,
       std::optional<std::chrono::system_clock::time_point> value);
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::vector<std::string> const& value);
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::map<std::string, std::string> const& value);
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::multimap<std::string, std::string> const& value);
 
   template <typename T>
-  DebugFormatter& Field(absl::string_view field_name, T const& value) {
+  DebugFormatter& Field(std::string_view field_name, T const& value) {
     absl::StrAppend(&str_, Sep(), field_name, ": ", value);
     return *this;
   }
 
   template <class Rep, class Period = std::ratio<1>>
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::chrono::duration<Rep, Period> value) {
     absl::StrAppend(&str_, Sep(), field_name, " {");
     ++indent_;
@@ -82,7 +81,7 @@ class DebugFormatter {
   }
 
   template <typename T>
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::optional<T> const& value) {
     if (value) {
       absl::StrAppend(&str_, value->DebugString(field_name, options_, indent_));
@@ -91,7 +90,7 @@ class DebugFormatter {
   }
 
   template <typename T>
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::vector<T> const& value) {
     for (auto const& e : value) {
       absl::StrAppend(&str_, e.DebugString(field_name, options_, indent_));
@@ -100,7 +99,7 @@ class DebugFormatter {
   }
 
   template <typename T>
-  DebugFormatter& Field(absl::string_view field_name,
+  DebugFormatter& Field(std::string_view field_name,
                         std::map<std::string, T> const& value) {
     for (auto const& e : value) {
       absl::StrAppend(&str_, Sep(), field_name, " {");
@@ -113,7 +112,7 @@ class DebugFormatter {
     return *this;
   }
 
-  DebugFormatter& StringField(absl::string_view field_name, std::string value);
+  DebugFormatter& StringField(std::string_view field_name, std::string value);
 
   std::string Build();
 

@@ -16,11 +16,11 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #include <vector>
 #ifdef _WIN32
+#include <string_view>
 #include <winreg.h>
 #include <wtypes.h>
 #endif
@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-class MultiValidValuesTest
-    : public ::testing::TestWithParam<absl::string_view> {};
+class MultiValidValuesTest : public ::testing::TestWithParam<std::string_view> {
+};
 class MultiInvalidValuesTest
-    : public ::testing::TestWithParam<absl::string_view> {};
+    : public ::testing::TestWithParam<std::string_view> {};
 INSTANTIATE_TEST_SUITE_P(DetectGcpPlatform, MultiValidValuesTest,
                          testing::Values("Google", "Google Compute Engine",
                                          "  Google  ",

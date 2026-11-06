@@ -45,7 +45,7 @@ TableResourceLabels TableResourceLabelsFromTableName(
     std::string const& table_name) {
   // split table_name into component pieces
   // projects/<project>/instances/<instance>/tables/<table>
-  std::vector<absl::string_view> name_parts = absl::StrSplit(table_name, '/');
+  std::vector<std::string_view> name_parts = absl::StrSplit(table_name, '/');
   if (name_parts.size() < 6) return {};
   TableResourceLabels resource_labels = {
       std::string(name_parts[1]), std::string(name_parts[3]),
@@ -57,8 +57,7 @@ TableResourceLabels TableResourceLabelsFromInstanceName(
     std::string const& instance_name) {
   // split instance_name into component pieces
   // projects/<project>/instances/<instance>
-  std::vector<absl::string_view> name_parts =
-      absl::StrSplit(instance_name, '/');
+  std::vector<std::string_view> name_parts = absl::StrSplit(instance_name, '/');
   if (name_parts.size() < 4) return {};
   TableResourceLabels resource_labels = {std::string(name_parts[1]),
                                          std::string(name_parts[3]), "",

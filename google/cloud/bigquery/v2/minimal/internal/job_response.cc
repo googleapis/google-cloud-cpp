@@ -75,7 +75,7 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string GetJobResponse::DebugString(absl::string_view name,
+std::string GetJobResponse::DebugString(std::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -121,7 +121,7 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string ListJobsResponse::DebugString(absl::string_view name,
+std::string ListJobsResponse::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -174,7 +174,7 @@ StatusOr<CancelJobResponse> CancelJobResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string InsertJobResponse::DebugString(absl::string_view name,
+std::string InsertJobResponse::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -183,7 +183,7 @@ std::string InsertJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string CancelJobResponse::DebugString(absl::string_view name,
+std::string CancelJobResponse::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -193,7 +193,7 @@ std::string CancelJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ArrowSchema::DebugString(absl::string_view name,
+std::string ArrowSchema::DebugString(std::string_view name,
                                      TracingOptions const& options,
                                      int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -201,7 +201,7 @@ std::string ArrowSchema::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ArrowRecordBatch::DebugString(absl::string_view name,
+std::string ArrowRecordBatch::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -247,7 +247,7 @@ void from_json(nlohmann::json const& j, ArrowRecordBatch& a) {
   }
 }
 
-std::string PostQueryResults::DebugString(absl::string_view name,
+std::string PostQueryResults::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -271,7 +271,7 @@ std::string PostQueryResults::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string QueryResponse::DebugString(absl::string_view name,
+std::string QueryResponse::DebugString(std::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -335,7 +335,7 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
   return response;
 }
 
-std::string SessionInfo::DebugString(absl::string_view name,
+std::string SessionInfo::DebugString(std::string_view name,
                                      TracingOptions const& options,
                                      int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -441,7 +441,7 @@ void from_json(nlohmann::json const& j, GetQueryResults& q) {
   }
 }
 
-std::string GetQueryResults::DebugString(absl::string_view name,
+std::string GetQueryResults::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -463,7 +463,7 @@ std::string GetQueryResults::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string GetQueryResultsResponse::DebugString(absl::string_view name,
+std::string GetQueryResultsResponse::DebugString(std::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)

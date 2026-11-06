@@ -132,6 +132,28 @@ DefaultDataStoreServiceStub::UpdateDataStore(
   return response;
 }
 
+StatusOr<google::iam::v1::Policy> DefaultDataStoreServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultDataStoreServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataStoreServiceStub::ListOperations(
     grpc::ClientContext& context, Options const&,

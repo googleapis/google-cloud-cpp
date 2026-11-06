@@ -34,8 +34,18 @@ MemorystoreConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MemorystoreConnectionIdempotencyPolicy>(*this);
 }
 
+Idempotency MemorystoreConnectionIdempotencyPolicy::ListAclPolicies(
+    google::cloud::memorystore::v1::ListAclPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency MemorystoreConnectionIdempotencyPolicy::ListInstances(
     google::cloud::memorystore::v1::ListInstancesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::GetAclPolicy(
+    google::cloud::memorystore::v1::GetAclPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -44,14 +54,39 @@ Idempotency MemorystoreConnectionIdempotencyPolicy::GetInstance(
   return Idempotency::kIdempotent;
 }
 
+Idempotency MemorystoreConnectionIdempotencyPolicy::CreateAclPolicy(
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency MemorystoreConnectionIdempotencyPolicy::CreateInstance(
     google::cloud::memorystore::v1::CreateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::UpdateAclPolicy(
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency MemorystoreConnectionIdempotencyPolicy::UpdateInstance(
     google::cloud::memorystore::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::DeleteAclPolicy(
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::GetAclPolicyRevision(
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::ListAclPolicyRevisions(
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency MemorystoreConnectionIdempotencyPolicy::DeleteInstance(

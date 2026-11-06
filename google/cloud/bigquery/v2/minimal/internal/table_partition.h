@@ -18,10 +18,10 @@
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -37,7 +37,7 @@ struct TimePartitioning {
   std::chrono::milliseconds expiration_time = std::chrono::milliseconds(0);
   std::string field;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -49,7 +49,7 @@ struct Range {
   std::string end;
   std::string interval;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -59,7 +59,7 @@ struct RangePartitioning {
   std::string field;
   Range range;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -69,7 +69,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RangePartitioning, field,
 struct Clustering {
   std::vector<std::string> fields;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

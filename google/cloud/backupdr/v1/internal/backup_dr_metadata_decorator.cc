@@ -602,6 +602,186 @@ StatusOr<google::longrunning::Operation> BackupDRMetadata::InitializeService(
   return child_->InitializeService(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncCreateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAutoProtectionPolicy(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::CreateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAutoProtectionPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPoliciesResponse>
+BackupDRMetadata::ListAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAutoProtectionPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRMetadata::GetAutoProtectionPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAutoProtectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncUpdateAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("auto_protection_policy.name=",
+                           internal::UrlEncode(
+                               request.auto_protection_policy().name())));
+  return child_->AsyncUpdateAutoProtectionPolicy(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::UpdateAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("auto_protection_policy.name=",
+                           internal::UrlEncode(
+                               request.auto_protection_policy().name())));
+  return child_->UpdateAutoProtectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncDeleteAutoProtectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAutoProtectionPolicy(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::DeleteAutoProtectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAutoProtectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncCreateAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAutoProtectionPolicyBinding(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::CreateAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAutoProtectionPolicyBinding(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRMetadata::GetAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAutoProtectionPolicyBinding(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsResponse>
+BackupDRMetadata::ListAutoProtectionPolicyBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAutoProtectionPolicyBindings(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesResponse>
+BackupDRMetadata::ListAppliedAutoProtectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAppliedAutoProtectionPolicies(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncInitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncInitiateDeleteAutoProtectionPolicyBinding(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::InitiateDeleteAutoProtectionPolicyBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->InitiateDeleteAutoProtectionPolicyBinding(context, options,
+                                                           request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBindingMatchingResourcesResponse>
+BackupDRMetadata::ListBindingMatchingResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBindingMatchingResources(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

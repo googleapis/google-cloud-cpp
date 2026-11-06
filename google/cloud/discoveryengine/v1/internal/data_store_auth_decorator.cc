@@ -117,6 +117,22 @@ DataStoreServiceAuth::UpdateDataStore(
   return child_->UpdateDataStore(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> DataStoreServiceAuth::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceAuth::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataStoreServiceAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,

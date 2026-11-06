@@ -19,10 +19,10 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration_query.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -37,7 +37,7 @@ struct JobConfiguration {
 
   JobConfigurationQuery query;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

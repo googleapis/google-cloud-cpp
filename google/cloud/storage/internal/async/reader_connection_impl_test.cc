@@ -24,6 +24,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string_view>
 #include <type_traits>
 
 namespace google {
@@ -65,7 +66,7 @@ google::cloud::internal::ImmutableOptions TestOptions() {
 
 using HashUpdateType =
     std::conditional_t<std::is_same<absl::Cord, ContentType>::value,
-                       absl::Cord const&, absl::string_view>;
+                       absl::Cord const&, std::string_view>;
 
 TEST(ReaderConnectionImpl, CleanFinish) {
   auto constexpr kExpectedObject = R"pb(

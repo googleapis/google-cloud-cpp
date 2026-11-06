@@ -263,6 +263,18 @@ DeveloperConnectTracingConnection::FetchReadToken(
   return internal::EndSpan(*span, child_->FetchReadToken(request));
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectTracingConnection::OpenGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "OpenGitRepositoryLinkPullRequest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->OpenGitRepositoryLinkPullRequest(request));
+}
+
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
 DeveloperConnectTracingConnection::FetchLinkableGitRepositories(
     google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
@@ -296,6 +308,120 @@ StreamRange<std::string> DeveloperConnectTracingConnection::FetchGitRefs(
   auto sr = child_->FetchGitRefs(std::move(request));
   return internal::MakeTracedStreamRange<std::string>(std::move(span),
                                                       std::move(sr));
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectTracingConnection::DiffGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "DiffGitRepositoryLinkCommit");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DiffGitRepositoryLinkCommit(request));
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectTracingConnection::FetchGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "FetchGitRepositoryLinkCommit");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->FetchGitRepositoryLinkCommit(request));
+}
+
+StreamRange<google::cloud::developerconnect::v1::SCMCommit>
+DeveloperConnectTracingConnection::FetchGitRepositoryLinkCommitList(
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitListRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "FetchGitRepositoryLinkCommitList");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchGitRepositoryLinkCommitList(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::developerconnect::v1::SCMCommit>(std::move(span),
+                                                      std::move(sr));
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectTracingConnection::FetchGitRepositoryLinkFileBlame(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "FetchGitRepositoryLinkFileBlame");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->FetchGitRepositoryLinkFileBlame(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectTracingConnection::FetchGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "FetchGitRepositoryLinkPullRequest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->FetchGitRepositoryLinkPullRequest(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectTracingConnection::AddGitRepositoryLinkPullRequestComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "AddGitRepositoryLinkPullRequestComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->AddGitRepositoryLinkPullRequestComment(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectTracingConnection::AddGitRepositoryLinkPullRequestReviewComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "AddGitRepositoryLinkPullRequestReviewComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->AddGitRepositoryLinkPullRequestReviewComment(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectTracingConnection::ModifyGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "ModifyGitRepositoryLinkPullRequest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->ModifyGitRepositoryLinkPullRequest(request));
+}
+
+StreamRange<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectTracingConnection::FetchGitRepositoryLinkPullRequestList(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::"
+      "FetchGitRepositoryLinkPullRequestList");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchGitRepositoryLinkPullRequestList(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::developerconnect::v1::PullRequest>(std::move(span),
+                                                        std::move(sr));
 }
 
 StreamRange<google::cloud::developerconnect::v1::AccountConnector>

@@ -39,8 +39,8 @@ ParseSuccess<T> MakeParseSuccess(T value, std::size_t end) {
 template <typename T>
 using ParseResult = StatusOr<ParseSuccess<T>>;
 
-Status MakeParseError(absl::string_view input, std::size_t offset,
-                      absl::string_view expected,
+Status MakeParseError(std::string_view input, std::size_t offset,
+                      std::string_view expected,
                       internal::ErrorInfoBuilder builder) {
   return internal::InvalidArgumentError(
       absl::StrCat("error parsing path template, expected", expected,
@@ -50,10 +50,10 @@ Status MakeParseError(absl::string_view input, std::size_t offset,
 }
 
 using SegmentParser = std::function<ParseResult<PathTemplate::Segment>(
-    absl::string_view, std::size_t)>;
+    std::string_view, std::size_t)>;
 
 ParseResult<PathTemplate::Segments> ParseSegmentsImpl(
-    absl::string_view input, std::size_t offset, SegmentParser const& parser,
+    std::string_view input, std::size_t offset, SegmentParser const& parser,
     internal::ErrorInfoBuilder error_info) {
   PathTemplate::Segments segments;
   while (offset != input.size()) {
@@ -71,32 +71,32 @@ ParseResult<PathTemplate::Segments> ParseSegmentsImpl(
   return MakeParseSuccess(std::move(segments), offset);
 }
 
-ParseResult<PathTemplate::Segments> ParseSegments(absl::string_view input,
+ParseResult<PathTemplate::Segments> ParseSegments(std::string_view input,
                                                   std::size_t offset);
 
-ParseResult<PathTemplate::Segments> ParsePlainSegments(absl::string_view input,
+ParseResult<PathTemplate::Segments> ParsePlainSegments(std::string_view input,
                                                        std::size_t offset);
 
-ParseResult<PathTemplate::Segment> ParsePlainSegment(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParsePlainSegment(std::string_view input,
                                                      std::size_t offset);
 
-ParseResult<PathTemplate::Segment> ParseSegment(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParseSegment(std::string_view input,
                                                 std::size_t offset);
 
-ParseResult<PathTemplate::Segment> ParseVariable(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParseVariable(std::string_view input,
                                                  std::size_t offset);
 
-ParseResult<PathTemplate::Segments> ParsePlainSegments(absl::string_view input,
+ParseResult<PathTemplate::Segments> ParsePlainSegments(std::string_view input,
                                                        std::size_t offset) {
   return ParseSegmentsImpl(input, offset, ParsePlainSegment, GCP_ERROR_INFO());
 }
 
-ParseResult<PathTemplate::Segments> ParseSegments(absl::string_view input,
+ParseResult<PathTemplate::Segments> ParseSegments(std::string_view input,
                                                   std::size_t offset) {
   return ParseSegmentsImpl(input, offset, ParseSegment, GCP_ERROR_INFO());
 }
 
-ParseResult<PathTemplate::Segment> ParseLiteral(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParseLiteral(std::string_view input,
                                                 std::size_t offset) {
   auto constexpr kValidChars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -107,7 +107,7 @@ ParseResult<PathTemplate::Segment> ParseLiteral(absl::string_view input,
       "!$&'()*+,;=";
   auto candidate = input.substr(offset);
   auto pos = candidate.find_first_not_of(kValidChars);
-  auto const end = pos == absl::string_view::npos ? input.size() : offset + pos;
+  auto const end = pos == std::string_view::npos ? input.size() : offset + pos;
   if (end == offset) {
     return MakeParseError(input, offset, " non-empty literal",
                           GCP_ERROR_INFO());
@@ -116,7 +116,7 @@ ParseResult<PathTemplate::Segment> ParseLiteral(absl::string_view input,
   return MakeParseSuccess(PathTemplate::Segment{std::string(literal)}, end);
 }
 
-ParseResult<PathTemplate::Segment> ParseSegment(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParseSegment(std::string_view input,
                                                 std::size_t offset) {
   auto candidate = input.substr(offset);
   if (absl::StartsWith(candidate, "**")) {
@@ -131,7 +131,7 @@ ParseResult<PathTemplate::Segment> ParseSegment(absl::string_view input,
   return ParseLiteral(input, offset);
 }
 
-ParseResult<PathTemplate::Segment> ParsePlainSegment(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParsePlainSegment(std::string_view input,
                                                      std::size_t offset) {
   auto candidate = input.substr(offset);
   if (absl::StartsWith(candidate, "**")) {
@@ -148,7 +148,7 @@ ParseResult<PathTemplate::Segment> ParsePlainSegment(absl::string_view input,
   return ParseLiteral(input, offset);
 }
 
-ParseResult<std::string> ParseIdent(absl::string_view input,
+ParseResult<std::string> ParseIdent(std::string_view input,
                                     std::size_t offset) {
   auto candidate = input.substr(offset);
   auto constexpr kValidStartChars =
@@ -165,11 +165,11 @@ ParseResult<std::string> ParseIdent(absl::string_view input,
       "_";
   auto pos = candidate.find_first_not_of(kValidChars);
   auto ident = candidate.substr(0, pos);
-  auto const end = pos == absl::string_view::npos ? input.size() : offset + pos;
+  auto const end = pos == std::string_view::npos ? input.size() : offset + pos;
   return MakeParseSuccess(std::string(ident), end);
 }
 
-ParseResult<std::string> ParseFieldPath(absl::string_view input,
+ParseResult<std::string> ParseFieldPath(std::string_view input,
                                         std::size_t offset) {
   std::string field_path;
   char const* sep = "";
@@ -189,7 +189,7 @@ ParseResult<std::string> ParseFieldPath(absl::string_view input,
   return MakeParseSuccess(std::move(field_path), offset);
 }
 
-ParseResult<PathTemplate::Segment> ParseVariable(absl::string_view input,
+ParseResult<PathTemplate::Segment> ParseVariable(std::string_view input,
                                                  std::size_t offset) {
   assert(offset != input.size() && input[offset] == '{');
   auto fp = ParseFieldPath(input, offset + 1);
@@ -228,7 +228,7 @@ void StreamSegments(std::ostream& os, PathTemplate::Segments const& segments) {
 
 }  // namespace
 
-StatusOr<PathTemplate> ParsePathTemplate(absl::string_view input) {
+StatusOr<PathTemplate> ParsePathTemplate(std::string_view input) {
   if (input.empty() || input[0] != '/') {
     return MakeParseError(input, 0, " '/'", GCP_ERROR_INFO());
   }

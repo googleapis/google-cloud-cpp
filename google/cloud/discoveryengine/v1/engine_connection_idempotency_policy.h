@@ -53,6 +53,12 @@ class EngineServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListEngines(
       google::cloud::discoveryengine::v1::ListEnginesRequest request);
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);
 

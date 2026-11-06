@@ -18,6 +18,7 @@
 #include "google/cloud/internal/win32/win32_helpers.h"
 #include "absl/types/span.h"
 #include <fstream>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 #include <Windows.h>
@@ -307,7 +308,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
       std::move(service_account_id),
       P12PrivateKeyIdMarker(),
       absl::StrCat("-----BEGIN PRIVATE KEY-----\n",
-                   absl::string_view(private_key->data(), private_key->size()),
+                   std::string_view(private_key->data(), private_key->size()),
                    "-----END PRIVATE KEY-----\n"),
       GoogleOAuthRefreshEndpoint(),
       /*scopes=*/{},

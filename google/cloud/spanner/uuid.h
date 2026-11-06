@@ -18,10 +18,10 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/numeric/int128.h"
-#include "absl/strings/string_view.h"
 #include <cstdint>
 #include <ostream>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -108,7 +108,7 @@ class Uuid {
  *  - 7Bf8-A7b8-1917-1919-2625-F208-c582-4254
  *  - {DECAFBAD-DEAD-FADE-CAFE-FEEDFACEBEEF}
  */
-StatusOr<Uuid> MakeUuid(absl::string_view s);
+StatusOr<Uuid> MakeUuid(std::string_view s);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

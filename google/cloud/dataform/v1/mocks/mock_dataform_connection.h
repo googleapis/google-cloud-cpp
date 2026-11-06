@@ -492,6 +492,49 @@ class MockDataformConnection : public dataform_v1::DataformConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCompilationResultLongRunning(Matcher<google::cloud::dataform::v1::CreateCompilationResultRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::CompilationResult>>,
+      CreateCompilationResultLongRunning,
+      (google::cloud::dataform::v1::CreateCompilationResultRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCompilationResultLongRunning(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      CreateCompilationResultLongRunning,
+      (NoAwaitTag,
+       google::cloud::dataform::v1::CreateCompilationResultRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCompilationResultLongRunning(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataform::v1::CompilationResult>>,
+              CreateCompilationResultLongRunning,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::dataform::v1::CompilationResultAction>),
       QueryCompilationResultActions,

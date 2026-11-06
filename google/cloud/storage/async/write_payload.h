@@ -21,6 +21,7 @@
 #include "absl/strings/cord.h"
 #include <cstdint>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -73,7 +74,7 @@ class WritePayload {
    * Note that changing `*this` in any way (assignment, destruction, etc.)
    * invalidates all the returned buffers.
    */
-  std::vector<absl::string_view> payload() const {
+  std::vector<std::string_view> payload() const {
     return {impl_.chunk_begin(), impl_.chunk_end()};
   }
 

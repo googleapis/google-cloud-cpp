@@ -1450,7 +1450,7 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeUploadChunkRequest) {
 
     auto request = storage::internal::UploadChunkRequest(
         "test-upload-id", /*offset=*/0,
-        /*payload=*/{absl::string_view{kAlt}}, test.make_hash_function(),
+        /*payload=*/{std::string_view{kAlt}}, test.make_hash_function(),
         test.hashes);
     request.hash_function().Update(0, kAlt);
     storage_proto::WriteObjectRequest write_request;
@@ -1470,3 +1470,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

@@ -33,6 +33,7 @@
 #include <fstream>
 #include <future>
 #include <map>
+#include <string_view>
 #include <thread>
 #include <utility>
 
@@ -584,7 +585,7 @@ AssignResourcesAndTypesToFiles(
 StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json) {
   std::string root_url = json.value("rootUrl", "");
   if (root_url.empty()) return root_url;
-  absl::string_view host = root_url;
+  std::string_view host = root_url;
   if (!absl::ConsumePrefix(&host, "https://")) {
     return internal::InvalidArgumentError(
         absl::StrCat("rootUrl field in unexpected format: ", host));

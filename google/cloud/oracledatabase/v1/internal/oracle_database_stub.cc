@@ -957,6 +957,92 @@ DefaultOracleDatabaseStub::DeleteOdbSubnet(
   return response;
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse>
+DefaultOracleDatabaseStub::ListOdbDnsZones(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& request) {
+  google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse response;
+  auto status = grpc_stub_->ListOdbDnsZones(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+DefaultOracleDatabaseStub::GetOdbDnsZone(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  google::cloud::oracledatabase::v1::OdbDnsZone response;
+  auto status = grpc_stub_->GetOdbDnsZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateOdbDnsZone(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateOdbDnsZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateOdbDnsZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteOdbDnsZone(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteOdbDnsZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteOdbDnsZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
 DefaultOracleDatabaseStub::ListExadbVmClusters(
     grpc::ClientContext& context, Options const&,
