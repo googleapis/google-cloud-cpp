@@ -26,8 +26,14 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The response for an asynchronous request listing all the instances.
+ *
+ * @deprecated Use `google::bigtable::admin::v2::ListInstancesResponse` with
+ *     `google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.
  */
-struct InstanceList {
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use `google::bigtable::admin::v2::ListInstancesResponse` with "
+    "`google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.")
+    InstanceList {
   /// The list of instances received from Cloud Bigtable.
   std::vector<google::bigtable::admin::v2::Instance> instances;
 
