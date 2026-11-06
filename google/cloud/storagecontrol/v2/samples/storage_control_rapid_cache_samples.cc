@@ -18,11 +18,13 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "google/storage/control/v2/storage_control.pb.h"
 #include <chrono>
 #include <functional>
 #include <iostream>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <thread>
@@ -52,7 +54,8 @@ void CreateRapidCache(
     // Creating a Rapid Cache is a long-running operation. This example blocks
     // until it completes. Real applications may want to set up a callback, wait
     // on a coroutine, or poll until it completes.
-    auto rapid_cache = client.CreateRapidCache(parent, cache).get();
+    google::cloud::StatusOr<google::storage::control::v2::RapidCache>
+        rapid_cache = client.CreateRapidCache(parent, cache).get();
     if (!rapid_cache) throw std::move(rapid_cache).status();
     std::cout << "Created Rapid Cache: " << rapid_cache->name() << "\n"
               << "State: " << rapid_cache->state() << "\n";
@@ -70,7 +73,8 @@ void GetRapidCache(
      std::string const& bucket_name, std::string const& cache_id) {
     auto const name = std::string{"projects/_/buckets/"} + bucket_name +
                       "/rapidCaches/" + cache_id;
-    auto rapid_cache = client.GetRapidCache(name);
+    google::cloud::StatusOr<google::storage::control::v2::RapidCache>
+        rapid_cache = client.GetRapidCache(name);
     if (!rapid_cache) throw std::move(rapid_cache).status();
     std::cout << "Got Rapid Cache: " << rapid_cache->name() << "\n"
               << "Zone: " << rapid_cache->zone() << "\n"
@@ -90,7 +94,8 @@ void ListRapidCaches(
      std::string const& bucket_name) {
     auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
     // The returned range fetches additional pages as needed.
-    for (auto rapid_cache : client.ListRapidCaches(parent)) {
+    for (google::cloud::StatusOr<google::storage::control::v2::RapidCache>
+             rapid_cache : client.ListRapidCaches(parent)) {
       if (!rapid_cache) throw std::move(rapid_cache).status();
       std::cout << rapid_cache->name() << "\n";
     }
@@ -117,7 +122,8 @@ void UpdateRapidCache(
     // Updating a Rapid Cache is a long-running operation. This example blocks
     // until it completes. Real applications may want to set up a callback, wait
     // on a coroutine, or poll until it completes.
-    auto rapid_cache = client.UpdateRapidCache(cache, field_mask).get();
+    google::cloud::StatusOr<google::storage::control::v2::RapidCache>
+        rapid_cache = client.UpdateRapidCache(cache, field_mask).get();
     if (!rapid_cache) throw std::move(rapid_cache).status();
     std::cout << "Updated Rapid Cache: " << rapid_cache->name() << "\n"
               << "TTL: " << rapid_cache->ttl().seconds() << " seconds\n";
@@ -138,7 +144,8 @@ void DisableRapidCache(
     // Disabling a Rapid Cache is a long-running operation. This example blocks
     // until it completes. Real applications may want to set up a callback, wait
     // on a coroutine, or poll until it completes.
-    auto rapid_cache = client.DisableRapidCache(name).get();
+    google::cloud::StatusOr<google::storage::control::v2::RapidCache>
+        rapid_cache = client.DisableRapidCache(name).get();
     if (!rapid_cache) throw std::move(rapid_cache).status();
     std::cout << "Disabled Rapid Cache: " << rapid_cache->name() << "\n"
               << "State: " << rapid_cache->state() << "\n";
@@ -156,15 +163,16 @@ void AutoRun(std::vector<std::string> const& argv) {
   // not meet these requirements, so the examples only run when a suitable
   // bucket is configured. A disabled Rapid Cache takes 30+ minutes to be
   // removed, so back-to-back runs need to wait, or use a different zone.
-  auto const bucket_name = google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_STORAGE_TEST_RAPID_CACHE_BUCKET_NAME");
+  std::optional<std::string> const bucket_name =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_RAPID_CACHE_BUCKET_NAME");
   if (!bucket_name.has_value() || bucket_name->empty()) {
     std::cout << "Skipping Rapid Cache examples: "
               << "GOOGLE_CLOUD_CPP_STORAGE_TEST_RAPID_CACHE_BUCKET_NAME is "
               << "not set\n";
     return;
   }
-  auto zone_name = google::cloud::internal::GetEnv(
+  std::optional<std::string> zone_name = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_RAPID_CACHE_ZONE");
   if (!zone_name) {
     zone_name = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE")
@@ -177,7 +185,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     if (!condition) throw std::runtime_error(message);
   };
   // The Rapid Cache ID is always the zone name.
-  auto const cache_id = *zone_name;
+  std::string const cache_id = *zone_name;
   auto const parent = std::string{"projects/_/buckets/"} + *bucket_name;
   auto const name = parent + "/rapidCaches/" + cache_id;
 
@@ -187,7 +195,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   try {
     std::cout << "\nRunning GetRapidCache() example" << std::endl;
     GetRapidCache(client, {*bucket_name, cache_id});
-    auto cache = client.GetRapidCache(name);
+    google::cloud::StatusOr<google::storage::control::v2::RapidCache> cache =
+        client.GetRapidCache(name);
     if (!cache) throw std::move(cache).status();
     check(cache->state() == "running",
           "Unexpected Rapid Cache state: " + cache->state());
@@ -196,8 +205,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
     std::cout << "\nRunning ListRapidCaches() example" << std::endl;
     ListRapidCaches(client, {*bucket_name});
-    auto found = false;
-    for (auto c : client.ListRapidCaches(parent)) {
+    bool found = false;
+    for (google::cloud::StatusOr<google::storage::control::v2::RapidCache> c :
+         client.ListRapidCaches(parent)) {
       if (!c) throw std::move(c).status();
       found = found || c->name() == name;
     }
@@ -246,7 +256,8 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   // The operation did not complete in time. Verify the cache is disabled.
   for (int i = 0; i != 12; ++i) {
-    auto cache = client.GetRapidCache(name);
+    google::cloud::StatusOr<google::storage::control::v2::RapidCache> cache =
+        client.GetRapidCache(name);
     if (!cache) throw std::move(cache).status();
     if (cache->state() == "disabled") {
       std::cout << "Rapid Cache " << name << " is disabled\n";
