@@ -160,3 +160,27 @@ set_tests_properties(
     ${target} PROPERTIES LABELS "integration-test;managed-workload-only"
                          DISABLED TRUE)
 google_cloud_cpp_add_common_options(${target})
+
+# The Rapid Cache test also uses the Storage Control client, so it is not part
+# of the lists above. It only runs against production, and creates its own
+# buckets and caches.
+if (storagecontrol IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    google_cloud_cpp_add_executable(target "storage"
+                                    "rapid_cache_integration_test.cc")
+    target_link_libraries(
+        ${target}
+        PRIVATE storage_client_testing
+                google_cloud_cpp_testing
+                google-cloud-cpp::storage
+                google-cloud-cpp::storagecontrol
+                google-cloud-cpp::common
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                absl::strings)
+    add_test(NAME ${target} COMMAND ${target})
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-test;integration-test-production")
+    google_cloud_cpp_add_common_options(${target})
+endif ()
