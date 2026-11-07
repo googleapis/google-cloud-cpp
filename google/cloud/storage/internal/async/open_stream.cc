@@ -31,7 +31,7 @@ void OpenStream::Cancel() {
 
 future<bool> OpenStream::Start() {
   if (cancel_) return make_ready_future(false);
-  return rpc_->Start();
+  return rpc_->StartWithCorkedInitialMetadata();
 }
 
 future<bool> OpenStream::Write(
