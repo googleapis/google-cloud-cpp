@@ -18,7 +18,7 @@ when placing or modifying files:
 1. **`google_cloud_cpp_common`** (`google/cloud/google_cloud_cpp_common.cmake`
    -> `google_cloud_cpp_common.bzl`, Bazel `//:common`):
    - **Zero gRPC or `libcurl` dependencies** (depends only on Abseil,
-     OpenSSL/Win32 crypto, and header-only `opentelemetry-cpp//api`).
+     OpenSSL/Win32 crypto, and header-only `@opentelemetry-cpp//api`).
    - Owns `Status`, `StatusOr<T>`, `Options`, `Credentials`, `future<T>` /
      `promise<T>`, `StreamRange<T>`, `RetryPolicy`, `BackoffPolicy`,
      `PollingPolicy`, `Idempotency`, `TracingOptions`, `version.h`,
@@ -49,8 +49,9 @@ when placing or modifying files:
 1. **`google_cloud_cpp_universe_domain`**
    (`google/cloud/google_cloud_cpp_universe_domain.cmake` -> `.bzl`, Bazel
    `//:universe_domain`) and **`google/cloud/opentelemetry/`** (Bazel
-   `//:opentelemetry`, which links `//:trace`, `//:monitoring`, and
-   `opentelemetry-cpp//sdk`).
+   `//:opentelemetry`, which links `//:trace`, `//:monitoring`,
+   `@opentelemetry-cpp//sdk/src/metrics`, and
+   `@opentelemetry-cpp//sdk/src/trace`).
 1. **`google_cloud_cpp_mocks`** (`google/cloud/mocks/`): Header-only public
    mock helpers (`mocks::MakeStreamRange<T>`, `current_options.h`,
    `mock_async_streaming_read_write_rpc.h`).
