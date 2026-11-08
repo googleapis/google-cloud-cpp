@@ -28,6 +28,7 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include <cstddef>
 
 namespace google {
 namespace cloud {
@@ -270,8 +271,7 @@ TEST_F(BulkMutatorTest, RetryPolicyMakesMutationFailurePermanent) {
       });
 
   auto retry_policy = std::make_shared<MockDataRetryPolicy>();
-  EXPECT_CALL(*retry_policy, IsPermanentFailure)
-      .WillRepeatedly(Return(true));
+  EXPECT_CALL(*retry_policy, IsPermanentFailure).WillRepeatedly(Return(true));
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(
       kAppProfile, kTableName, *policy, std::move(mut),
@@ -284,7 +284,7 @@ TEST_F(BulkMutatorTest, RetryPolicyMakesMutationFailurePermanent) {
   EXPECT_STATUS_OK(status);
   EXPECT_FALSE(mutator.HasPendingMutations());
   auto failures = std::move(mutator).OnRetryDone();
-  ASSERT_EQ(1UL, failures.size());
+  ASSERT_EQ(std::size_t{1}, failures.size());
   EXPECT_EQ(0, failures[0].original_index());
   EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kUnavailable));
 }
@@ -313,8 +313,7 @@ TEST_F(BulkMutatorTest, RetryPolicyMakesMutationFailureRetryable) {
       });
 
   auto retry_policy = std::make_shared<MockDataRetryPolicy>();
-  EXPECT_CALL(*retry_policy, IsPermanentFailure)
-      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*retry_policy, IsPermanentFailure).WillRepeatedly(Return(false));
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(
       kAppProfile, kTableName, *policy, std::move(mut),
@@ -327,7 +326,7 @@ TEST_F(BulkMutatorTest, RetryPolicyMakesMutationFailureRetryable) {
   EXPECT_STATUS_OK(status);
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto failures = std::move(mutator).OnRetryDone();
-  ASSERT_EQ(1UL, failures.size());
+  ASSERT_EQ(std::size_t{1}, failures.size());
   EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kPermissionDenied));
 }
 

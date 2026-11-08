@@ -80,9 +80,8 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
   return mutations_;
 }
 
-void BulkMutatorState::OnRead(
-    google::bigtable::v2::MutateRowsResponse response,
-    Options const& options) {
+void BulkMutatorState::OnRead(google::bigtable::v2::MutateRowsResponse response,
+                              Options const& options) {
   // Use the retry policy configured by the application to decide if a failed
   // mutation is worth retrying, like we do for the stream failures. The policy
   // is only asked to classify the error, it should not count it: this is not a
