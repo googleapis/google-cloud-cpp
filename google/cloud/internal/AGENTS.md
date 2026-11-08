@@ -52,8 +52,8 @@ when placing or modifying files:
    `//:opentelemetry`, which links `//:trace`, `//:monitoring`,
    `@opentelemetry-cpp//sdk/src/metrics`, and
    `@opentelemetry-cpp//sdk/src/trace`).
-1. **`google_cloud_cpp_mocks`** (`google/cloud/mocks/`): Header-only public
-   mock helpers (`mocks::MakeStreamRange<T>`, `current_options.h`,
+1. **`google_cloud_cpp_mocks`** (`google/cloud/mocks/`): Header-only public mock
+   helpers (`mocks::MakeStreamRange<T>`, `current_options.h`,
    `mock_async_streaming_read_write_rpc.h`).
 
 ## `testing_util` Target Split
@@ -94,7 +94,7 @@ non-REST unit tests avoid extra link dependencies:
   unwrapping semantics, and C++20 coroutine `co_await` compatibility
   (`GOOGLE_CLOUD_CPP_HAVE_COROUTINES`).
 - **Verification:** Run core unit tests with:
-  `bazelisk test //google/cloud/... --test_tag_filters=-integration-test`
-  *(or target core specifically via `//google/cloud:all` +
+  `bazelisk test //google/cloud/... --test_tag_filters=-integration-test` *(or
+  target core specifically via `//google/cloud:all` +
   `//google/cloud/testing_util/...` + `//google/cloud/mocks/...` +
   `//google/cloud/opentelemetry/...` + `//google/cloud/universe_domain/...`).*

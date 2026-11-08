@@ -148,9 +148,9 @@ makes code clearer or safer, not merely to avoid spelling a type.
 
 ### Header Include Conventions
 
-- **Local-to-Global Order (`.clang-format`):** Matching `.h` first, then
-  project headers (`"google/cloud/..."`), external library headers, and C++/C
-  standard headers last. Run `clang-format` rather than hand-sorting.
+- **Local-to-Global Order (`.clang-format`):** Matching `.h` first, then project
+  headers (`"google/cloud/..."`), external library headers, and C++/C standard
+  headers last. Run `clang-format` rather than hand-sorting.
 - **`googleapis` vs. `protobuf` Generated Headers:**
   - Always use **double quotes** (`"..."`) for `.pb.h` and `.grpc.pb.h` headers
     from `googleapis/googleapis` (e.g., `"google/api/client.pb.h"`,

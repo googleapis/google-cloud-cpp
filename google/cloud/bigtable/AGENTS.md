@@ -28,9 +28,9 @@ clients and low-level gRPC stubs.
 
 - **Three Veneers Over `bigtable::DataConnection`:**
   1. **`bigtable::Table` (`table.h`):** Row-oriented operations (`Apply`,
-     `AsyncApply`, `BulkApply`, `AsyncBulkApply`, `ReadRow`,
-     `ReadRows` -> `RowReader`, `CheckAndMutateRow`, `ReadModifyWriteRow`,
-     `SampleRows`) bound to a table resource and optional `app_profile_id`.
+     `AsyncApply`, `BulkApply`, `AsyncBulkApply`, `ReadRow`, `ReadRows` ->
+     `RowReader`, `CheckAndMutateRow`, `ReadModifyWriteRow`, `SampleRows`) bound
+     to a table resource and optional `app_profile_id`.
   1. **`bigtable::Client` (`client.h`):** SQL query execution (`PrepareQuery`,
      `AsyncPrepareQuery`, `ExecuteQuery(BoundQuery&&)` -> `RowStream` of
      `QueryRow`), backed by `internal::QueryPlan` for automatic expired-plan
@@ -43,8 +43,8 @@ clients and low-level gRPC stubs.
 - **Channel Pools & Metrics:** `DataConnection` supports both static channel
   pools (`bigtable_channel_refresh`, `bigtable_random_two_least_used_decorator`)
   and multi-instance `DynamicChannelPool` + DirectPath probing. Client-side OTel
-  metrics are controlled by `GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS`
-  (Bazel flag `--//google/cloud/bigtable:enable_metrics=True`).
+  metrics are controlled by `GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS` (Bazel
+  flag `--//google/cloud/bigtable:enable_metrics=True`).
 
 ## Testing, Mocking, and Build Quirks
 

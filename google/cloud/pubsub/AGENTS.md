@@ -14,10 +14,10 @@ clients, and low-level gRPC stubs.
      `schema_connection*.{h,cc}`, `schema_options.h`,
      `mocks/mock_schema_connection.h`, and `internal/schema_*` in
      `namespace google::cloud::pubsub` / `pubsub_mocks`.
-  1. **Data-plane gRPC stubs in `internal/`:** The 12 files for
-     `publisher_*` and `subscriber_*` (`stub`, `auth_decorator`,
-     `logging_decorator`, `metadata_decorator`, `round_robin_decorator`, and
-     `tracing_stub` `.{h,cc}`).
+  1. **Data-plane gRPC stubs in `internal/`:** The 12 files for `publisher_*`
+     and `subscriber_*` (`stub`, `auth_decorator`, `logging_decorator`,
+     `metadata_decorator`, `round_robin_decorator`, and `tracing_stub`
+     `.{h,cc}`).
 - **Hand-Crafted:** `Publisher`, `BlockingPublisher`, `Subscriber`, `Message`,
   `AckHandler`, `ExactlyOnceAckHandler`, and all batching, flow-control,
   ordering-key, lease-management, and message-tracing classes in `pubsub/`,
