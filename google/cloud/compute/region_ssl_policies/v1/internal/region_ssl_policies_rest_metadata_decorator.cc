@@ -69,6 +69,15 @@ RegionSslPoliciesRestMetadata::GetSslPolicy(
   return child_->GetSslPolicy(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestMetadata::AsyncInsertSslPolicy(
     CompletionQueue& cq,
@@ -130,6 +139,24 @@ RegionSslPoliciesRestMetadata::PatchSslPolicy(
   return child_->PatchSslPolicy(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesRestMetadata::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        SetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionSslPoliciesRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -156,7 +183,7 @@ future<Status> RegionSslPoliciesRestMetadata::AsyncCancelOperation(
 void RegionSslPoliciesRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
-  rest_context.AddHeader("x-goog-api-version", "2026-09-01");
+  rest_context.AddHeader("x-goog-api-version", "2026-11-01");
   google::cloud::rest_internal::SetMetadata(rest_context, options, params,
                                             api_client_header_);
 }

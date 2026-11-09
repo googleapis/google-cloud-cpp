@@ -39,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the interconnectGroups resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectGroups
 ///
-/// This client uses InterconnectGroups version 2026-09-01.
+/// This client uses InterconnectGroups version 2026-11-01.
 ///
 /// @par Equality
 ///

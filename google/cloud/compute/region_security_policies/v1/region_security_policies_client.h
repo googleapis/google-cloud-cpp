@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionSecurityPolicies resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies
 ///
-/// This client uses RegionSecurityPolicies version 2026-09-01.
+/// This client uses RegionSecurityPolicies version 2026-11-01.
 ///
 /// @par Equality
 ///

@@ -45,6 +45,10 @@ class RegionSslPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_ssl_policies::v1::
           GetSslPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          GetIamPolicyRequest const& request);
+
   virtual google::cloud::Idempotency InsertSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
           InsertSslPolicyRequest const& request);
@@ -60,6 +64,14 @@ class RegionSslPoliciesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PatchSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
           PatchSslPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<RegionSslPoliciesConnectionIdempotencyPolicy>
