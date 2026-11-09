@@ -286,9 +286,9 @@ TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
                                               "test-only-description", "s");
   auto size = meter->CreateDoubleHistogram(
       "gcp.storage.client.request.body.size", "test-only-description", "By");
+  latency->Record(1.0, opentelemetry::context::Context{});
+  size->Record(1024.0, opentelemetry::context::Context{});
   for (int i = 0; i != 50 && export_count.load() == 0; ++i) {
-    latency->Record(1.0, opentelemetry::context::Context{});
-    size->Record(1024.0, opentelemetry::context::Context{});
     std::this_thread::sleep_for(kExportInterval);
   }
 }
