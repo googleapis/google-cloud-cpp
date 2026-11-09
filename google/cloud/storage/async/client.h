@@ -334,6 +334,82 @@ class AsyncClient {
   future<StatusOr<ObjectDescriptor>> Open(
       google::storage::v2::BidiReadObjectSpec spec, Options opts = {});
 
+  /*
+  [warmup-common]
+  The first requests issued by a newly created client incur one-time costs:
+  obtaining OAuth2 access tokens and establishing gRPC connections (including
+  TLS or ALTS handshakes) to the service backends for @p bucket_name. This
+  function performs that work ahead of time by issuing best-effort read
+  requests against @p bucket_name. Call this once per bucket at client startup
+  rather than before individual reads.
+
+  @note The specific RPC, target object, and number of probes issued are
+      implementation details and may change from one version of the library to
+      the next without notice, as we find more (or different) opportunities for
+      optimization.
+  @note Because this function sends network read RPCs to the service, those
+      requests appear in Cloud Audit Logs when Data Access audit logging is
+      enabled, and incur Class B operation charges only if the probed object
+      happens to exist (`kNotFound` responses are generally not billed).
+  @note By default, this function uses a 10-second
+      `LimitedTimeAsyncRetryPolicy` instead of the client-level retry policy so
+      that startup probes fail fast during transient outages. Pass
+      `AsyncRetryPolicyOption` in @p opts to override this retry budget. Other
+      options, such as `DownloadStallTimeoutOption`, are inherited from the
+      client unless overridden in @p opts.
+  @note Success does not imply that @p bucket_name or any object in it exists
+      (a nonexistent bucket or object yields `kNotFound`, which is treated as
+      success).
+
+  @par Example
+  @snippet storage_async_samples.cc warmup
+
+  @par Idempotency
+  This is a read-only operation and is always idempotent.
+  [warmup-common]
+  */
+
+  /**
+   * Pre-warms credentials and gRPC connections for @p bucket_name.
+   *
+   * @snippet{doc} async/client.h warmup-common
+   *
+   * @note The caller must have `storage.objects.get` permission on
+   *     @p bucket_name; otherwise probes fail with `kPermissionDenied` even
+   *     though credentials and transport connections were still established.
+   *     Callers whose `storage.objects.get` permission is restricted to an
+   *     object prefix via IAM Conditions should use the `object_prefix`
+   *     overload instead.
+   *
+   * @param bucket_name the name of the bucket to warm up.
+   * @param opts options controlling the behavior of this operation, for example
+   *     the application may override `AsyncRetryPolicyOption` or
+   *     `DownloadStallTimeoutOption`.
+   */
+  future<Status> WarmUp(BucketName const& bucket_name, Options opts = {});
+
+  /**
+   * Pre-warms credentials and gRPC connections for @p bucket_name using an
+   * object prefix.
+   *
+   * @snippet{doc} async/client.h warmup-common
+   *
+   * @note The caller must have `storage.objects.get` permission on objects
+   *     under @p object_prefix in @p bucket_name; otherwise probes fail with
+   *     `kPermissionDenied` even though credentials and transport connections
+   *     were still established.
+   *
+   * @param bucket_name the name of the bucket to warm up.
+   * @param object_prefix a prefix prepended verbatim to probe object names (for
+   *     example, `"my-prefix/"`), useful when the caller's
+   *     `storage.objects.get` permission is scoped to an object prefix.
+   * @param opts options controlling the behavior of this operation, for example
+   *     the application may override `AsyncRetryPolicyOption` or
+   *     `DownloadStallTimeoutOption`.
+   */
+  future<Status> WarmUp(BucketName const& bucket_name,
+                        std::string object_prefix, Options opts = {});
+
   /**
    * A streaming download for the contents of an object.
    *

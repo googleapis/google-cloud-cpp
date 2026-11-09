@@ -13,12 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/grpc_options.h"
+#include <chrono>
 #include <memory>
 #include <string>
 #include <utility>
@@ -31,6 +33,10 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
+
+namespace {
+constexpr std::chrono::seconds kWarmUpRetryBudget(10);
+}  // namespace
 
 AsyncClient::AsyncClient(Options options) {
   options = storage_internal::DefaultOptionsAsync(std::move(options));
@@ -105,6 +111,22 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
     opts.set<storage_internal::ReadRangesOption>(std::move(internal_ranges));
   }
   return Open(std::move(spec), std::move(opts));
+}
+
+future<Status> AsyncClient::WarmUp(BucketName const& bucket_name,
+                                   Options opts) {
+  return WarmUp(bucket_name, std::string{}, std::move(opts));
+}
+
+future<Status> AsyncClient::WarmUp(BucketName const& bucket_name,
+                                   std::string object_prefix, Options opts) {
+  if (!opts.has<AsyncRetryPolicyOption>()) {
+    opts.set<AsyncRetryPolicyOption>(
+        LimitedTimeAsyncRetryPolicy(kWarmUpRetryBudget).clone());
+  }
+  return connection_->WarmUp({bucket_name, std::move(object_prefix),
+                              google::cloud::internal::MergeOptions(
+                                  std::move(opts), connection_->options())});
 }
 
 future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(

@@ -13,16 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <chrono>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -42,8 +45,11 @@ using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -1503,6 +1509,121 @@ TEST(AsyncClient, ResumeRewrite2) {
   ASSERT_STATUS_OK(rt);
   EXPECT_FALSE(rt->second.valid());
   EXPECT_THAT(rt->first, MatchRewriteResponse());
+}
+
+TEST(AsyncClient, WarmUpBucketName) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(Return(
+          Options{}
+              .set<TestOption<0>>("O0")
+              .set<TestOption<1>>("O1")
+              .set<AsyncRetryPolicyOption>(
+                  LimitedTimeAsyncRetryPolicy(std::chrono::minutes(15)).clone())
+              .set<DownloadStallTimeoutOption>(std::chrono::seconds(120))));
+
+  EXPECT_CALL(*mock, WarmUp)
+      .WillOnce([&](AsyncConnection::WarmUpParams const& p) {
+        EXPECT_EQ(p.bucket_name, BucketName("test-bucket"));
+        EXPECT_THAT(p.object_prefix, IsEmpty());
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        EXPECT_EQ(p.options.get<DownloadStallTimeoutOption>(),
+                  std::chrono::seconds(120));
+        auto const* policy = dynamic_cast<LimitedTimeAsyncRetryPolicy const*>(
+            p.options.get<AsyncRetryPolicyOption>().get());
+        EXPECT_THAT(policy, NotNull());
+        if (policy != nullptr) {
+          EXPECT_EQ(policy->maximum_duration(), std::chrono::seconds(10));
+        }
+        return make_ready_future(Status{});
+      });
+
+  AsyncClient client(mock);
+  Status status = client
+                      .WarmUp(BucketName("test-bucket"),
+                              Options{}
+                                  .set<TestOption<1>>("O1-function")
+                                  .set<TestOption<2>>("O2-function"))
+                      .get();
+  EXPECT_THAT(status, IsOk());
+}
+
+TEST(AsyncClient, WarmUpObjectPrefix) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, WarmUp)
+      .WillOnce([&](AsyncConnection::WarmUpParams const& p) {
+        EXPECT_EQ(p.bucket_name, BucketName("test-bucket"));
+        EXPECT_EQ(p.object_prefix, "tenant-a/");
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto const* policy = dynamic_cast<LimitedTimeAsyncRetryPolicy const*>(
+            p.options.get<AsyncRetryPolicyOption>().get());
+        EXPECT_THAT(policy, NotNull());
+        if (policy != nullptr) {
+          EXPECT_EQ(policy->maximum_duration(), std::chrono::seconds(10));
+        }
+        return make_ready_future(Status{});
+      });
+
+  AsyncClient client(mock);
+  Status status = client
+                      .WarmUp(BucketName("test-bucket"), "tenant-a/",
+                              Options{}
+                                  .set<TestOption<1>>("O1-function")
+                                  .set<TestOption<2>>("O2-function"))
+                      .get();
+  EXPECT_THAT(status, IsOk());
+}
+
+TEST(AsyncClient, WarmUpCustomRetryBudget) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+
+  EXPECT_CALL(*mock, WarmUp)
+      .WillOnce([&](AsyncConnection::WarmUpParams const& p) {
+        EXPECT_EQ(p.bucket_name, BucketName("test-bucket"));
+        EXPECT_EQ(p.options.get<DownloadStallTimeoutOption>(),
+                  std::chrono::seconds(20));
+        auto const* policy =
+            dynamic_cast<LimitedErrorCountAsyncRetryPolicy const*>(
+                p.options.get<AsyncRetryPolicyOption>().get());
+        EXPECT_THAT(policy, NotNull());
+        if (policy != nullptr) {
+          EXPECT_EQ(policy->maximum_failures(), 3);
+        }
+        return make_ready_future(Status{});
+      });
+
+  AsyncClient client(mock);
+  Status status =
+      client
+          .WarmUp(
+              BucketName("test-bucket"),
+              Options{}
+                  .set<AsyncRetryPolicyOption>(
+                      LimitedErrorCountAsyncRetryPolicy(3).clone())
+                  .set<DownloadStallTimeoutOption>(std::chrono::seconds(20)))
+          .get();
+  EXPECT_THAT(status, IsOk());
+}
+
+TEST(AsyncClient, WarmUpDefaultUnimplemented) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*mock, WarmUp).WillOnce([&](AsyncConnection::WarmUpParams p) {
+    return mock->AsyncConnection::WarmUp(std::move(p));
+  });
+
+  AsyncClient client(mock);
+  Status status = client.WarmUp(BucketName("test-bucket")).get();
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnimplemented));
 }
 
 }  // namespace
