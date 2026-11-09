@@ -26,8 +26,14 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The response for an asynchronous request listing all the clusters.
+ *
+ * @deprecated Use `google::bigtable::admin::v2::ListClustersResponse` with
+ *     `google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.
  */
-struct ClusterList {
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use `google::bigtable::admin::v2::ListClustersResponse` with "
+    "`google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.")
+    ClusterList {
   /// The list of clusters received from Cloud Bigtable.
   std::vector<google::bigtable::admin::v2::Cluster> clusters;
 
