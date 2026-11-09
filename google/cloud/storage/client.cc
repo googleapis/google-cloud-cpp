@@ -702,6 +702,31 @@ Options DefaultOptions(Options opts) {
     o.set<OpenTelemetryTracingOption>(true);
   }
 
+  if (!o.has<storage_experimental::EnableOTelMetricsOption>()) {
+    o.set<storage_experimental::EnableOTelMetricsOption>(false);
+  }
+  auto const otel_metrics_env = GetEnv("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS");
+  if (otel_metrics_env.has_value()) {
+    if (*otel_metrics_env == "true") {
+      o.set<storage_experimental::EnableOTelMetricsOption>(true);
+    } else if (*otel_metrics_env == "false") {
+      o.set<storage_experimental::EnableOTelMetricsOption>(false);
+    }
+  }
+
+  if (!o.has<storage_experimental::EnableOTelDebugMetricsOption>()) {
+    o.set<storage_experimental::EnableOTelDebugMetricsOption>(false);
+  }
+  auto const otel_debug_metrics_env =
+      GetEnv("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS");
+  if (otel_debug_metrics_env.has_value()) {
+    if (*otel_debug_metrics_env == "true") {
+      o.set<storage_experimental::EnableOTelDebugMetricsOption>(true);
+    } else if (*otel_debug_metrics_env == "false") {
+      o.set<storage_experimental::EnableOTelDebugMetricsOption>(false);
+    }
+  }
+
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
   if (project_id.has_value()) {
     o.set<ProjectIdOption>(std::move(*project_id));
