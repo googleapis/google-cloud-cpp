@@ -251,6 +251,48 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
   }
 }
 
+TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
+  std::atomic<int> export_count{0};
+  auto mock = std::make_unique<MockPushMetricExporter>();
+  EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
+  EXPECT_CALL(*mock, GetAggregationTemporality)
+      .WillRepeatedly(Return(
+          opentelemetry::sdk::metrics::AggregationTemporality::kCumulative));
+  EXPECT_CALL(*mock, Export(MetricDataEmpty()))
+      .WillRepeatedly(
+          Return(opentelemetry::sdk::common::ExportResult::kSuccess));
+  EXPECT_CALL(*mock, Export(MetricDataNotEmpty()))
+      .Times(AtLeast(1))
+      .WillRepeatedly([&export_count](
+                          opentelemetry::sdk::metrics::ResourceMetrics const&
+                              data) {
+        EXPECT_THAT(
+            data.scope_metric_data_,
+            Contains(WithMetricsData(AllOf(
+                Contains(AllOf(
+                    MatchesInstrumentName("gcp.client.request.duration"),
+                    WithPointData(ElementsAre(ExpectedLatencyHistogram())))),
+                Contains(AllOf(
+                    MatchesInstrumentName(
+                        "gcp.storage.client.request.body.size"),
+                    WithPointData(ElementsAre(ExpectedSizeHistogram()))))))));
+        ++export_count;
+        return opentelemetry::sdk::common::ExportResult::kSuccess;
+      });
+
+  auto provider = MakeGrpcMeterProvider(std::move(mock), TestReaderOptions());
+  auto meter = provider->GetMeter(kStorageMeterName, version_string());
+  auto latency = meter->CreateDoubleHistogram("gcp.client.request.duration",
+                                              "test-only-description", "s");
+  auto size = meter->CreateDoubleHistogram(
+      "gcp.storage.client.request.body.size", "test-only-description", "By");
+  for (int i = 0; i != 50 && export_count.load() == 0; ++i) {
+    latency->Record(1.0, opentelemetry::context::Context{});
+    size->Record(1024.0, opentelemetry::context::Context{});
+    std::this_thread::sleep_for(kExportInterval);
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
