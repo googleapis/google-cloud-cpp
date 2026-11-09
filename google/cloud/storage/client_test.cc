@@ -472,7 +472,7 @@ TEST_F(ClientTest, OTelMetricsEnvVarOverridesOption) {
 }
 
 TEST_F(ClientTest, OTelMetricsInvalidEnvVarIgnored) {
-  for (std::string const val : {"1", "0", "TRUE", "False", "ON", "yes", ""}) {
+  for (auto const* val : {"1", "0", "TRUE", "False", "ON", "yes", ""}) {
     ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", val);
     ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
                                 val);
