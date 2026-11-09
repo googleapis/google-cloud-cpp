@@ -50,6 +50,7 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
@@ -906,6 +907,391 @@ TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+TEST(AsyncConnectionImplTest, WarmUpNotFound) {
+  ScopedLog log;
+  constexpr char const kExpectedRequest[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+  )pb";
+
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const& options) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
+
+        auto stream = std::make_unique<MockStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&] {
+          return sequencer.PushBack("Start").then([](auto) { return true; });
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce([&](google::storage::v2::BidiReadObjectRequest const& r,
+                          grpc::WriteOptions) {
+              google::storage::v2::BidiReadObjectSpec expected;
+              EXPECT_TRUE(
+                  TextFormat::ParseFromString(kExpectedRequest, &expected));
+              EXPECT_THAT(r.read_object_spec(), IsProtoEqual(expected));
+              return sequencer.PushBack("Write").then(
+                  [](auto) { return true; });
+            });
+        EXPECT_CALL(*stream, Read).WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return std::optional<google::storage::v2::BidiReadObjectResponse>();
+          });
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&] {
+          return sequencer.PushBack("Finish").then(
+              [](auto) { return Status(StatusCode::kNotFound, "not found"); });
+        });
+        EXPECT_CALL(*stream, Cancel).WillRepeatedly([] {});
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions());
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  for (char const* step : {"Start", "Write", "Read", "Finish"}) {
+    std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, step);
+    next.first.set_value();
+  }
+
+  EXPECT_THAT(pending.get(), IsOk());
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+TEST(AsyncConnectionImplTest, WarmUpObjectPrefixAndSingleProbe) {
+  ScopedLog log;
+  constexpr char const kExpectedRequest[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "tenant-a/__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+  )pb";
+
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .Times(1)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const&) {
+        auto stream = std::make_unique<MockStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&] {
+          return sequencer.PushBack("Start").then([](auto) { return true; });
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce([&](google::storage::v2::BidiReadObjectRequest const& r,
+                          grpc::WriteOptions) {
+              google::storage::v2::BidiReadObjectSpec expected;
+              EXPECT_TRUE(
+                  TextFormat::ParseFromString(kExpectedRequest, &expected));
+              EXPECT_THAT(r.read_object_spec(), IsProtoEqual(expected));
+              return sequencer.PushBack("Write").then(
+                  [](auto) { return true; });
+            });
+        EXPECT_CALL(*stream, Read).WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return std::optional<google::storage::v2::BidiReadObjectResponse>();
+          });
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&] {
+          return sequencer.PushBack("Finish").then(
+              [](auto) { return Status(StatusCode::kNotFound, "not found"); });
+        });
+        EXPECT_CALL(*stream, Cancel).WillRepeatedly([] {});
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions(Options{}.set<GrpcNumChannelsOption>(4)));
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "tenant-a/", connection->options()});
+
+  for (char const* step : {"Start", "Write", "Read", "Finish"}) {
+    std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, step);
+    next.first.set_value();
+  }
+
+  EXPECT_THAT(pending.get(), IsOk());
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+TEST(AsyncConnectionImplTest, WarmUpOkCancelsStream) {
+  ScopedLog log;
+  constexpr char const kExpectedRequest[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+  )pb";
+
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const&) {
+        auto stream = std::make_unique<MockStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&] {
+          return sequencer.PushBack("Start").then([](auto) { return true; });
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce([&](google::storage::v2::BidiReadObjectRequest const& r,
+                          grpc::WriteOptions) {
+              google::storage::v2::BidiReadObjectSpec expected;
+              EXPECT_TRUE(
+                  TextFormat::ParseFromString(kExpectedRequest, &expected));
+              EXPECT_THAT(r.read_object_spec(), IsProtoEqual(expected));
+              return sequencer.PushBack("Write").then(
+                  [](auto) { return true; });
+            });
+        EXPECT_CALL(*stream, Read).WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return std::make_optional(
+                google::storage::v2::BidiReadObjectResponse{});
+          });
+        });
+        EXPECT_CALL(*stream, Cancel).WillOnce([&] {
+          (void)sequencer.PushBack("Cancel");
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&] {
+          return sequencer.PushBack("Finish").then(
+              [](auto) { return Status(StatusCode::kCancelled, "cancelled"); });
+        });
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions());
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  for (char const* step : {"Start", "Write", "Read", "Cancel", "Finish"}) {
+    std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, step);
+    next.first.set_value();
+  }
+
+  EXPECT_THAT(pending.get(), IsOk());
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+TEST(AsyncConnectionImplTest, WarmUpRedirectAndRetry) {
+  ScopedLog log;
+  constexpr char const kExpectedRequest0[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+  )pb";
+  constexpr char const kExpectedRequest1[] = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "__gcs_sdk_warmup_nonexistent_object__"
+    generation: 1
+    read_handle { handle: "test-read-handle" }
+    routing_token: "test-routing-token"
+  )pb";
+
+  AsyncSequencer<void> sequencer;
+  auto make_stream = [&sequencer](char const* expected_text, Status finish_st) {
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer] {
+      return sequencer.PushBack("Start").then([](auto) { return true; });
+    });
+    EXPECT_CALL(*stream, Write)
+        .WillOnce([&sequencer, expected_text](
+                      google::storage::v2::BidiReadObjectRequest const& r,
+                      grpc::WriteOptions) {
+          google::storage::v2::BidiReadObjectSpec expected;
+          EXPECT_TRUE(TextFormat::ParseFromString(expected_text, &expected));
+          EXPECT_THAT(r.read_object_spec(), IsProtoEqual(expected));
+          return sequencer.PushBack("Write").then([](auto) { return true; });
+        });
+    EXPECT_CALL(*stream, Read).WillOnce([&sequencer] {
+      return sequencer.PushBack("Read").then([](auto) {
+        return std::optional<google::storage::v2::BidiReadObjectResponse>();
+      });
+    });
+    EXPECT_CALL(*stream, Finish)
+        .WillOnce([&sequencer, st = std::move(finish_st)] {
+          return sequencer.PushBack("Finish").then([st](auto) { return st; });
+        });
+    EXPECT_CALL(*stream, Cancel).WillRepeatedly([] {});
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&] {
+        return make_stream(
+            kExpectedRequest0,
+            RedirectError("test-read-handle", "test-routing-token"));
+      })
+      .WillOnce([&] {
+        return make_stream(kExpectedRequest1,
+                           Status(StatusCode::kNotFound, "not found"));
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      pool.cq(), std::shared_ptr<GrpcChannelRefresh>(), mock, TestOptions());
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  for (int attempt = 0; attempt < 2; ++attempt) {
+    for (char const* step : {"Start", "Write", "Read", "Finish"}) {
+      std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+      EXPECT_EQ(next.second, step);
+      next.first.set_value();
+    }
+  }
+
+  EXPECT_THAT(pending.get(), IsOk());
+  EXPECT_THAT(RetryRecords(log),
+              ElementsAre(AllOf(HasSubstr("[gcs-retry]"), HasSubstr("WarmUp"),
+                                HasSubstr("attempt 1"))));
+}
+
+TEST(AsyncConnectionImplTest, WarmUpPermanentError) {
+  ScopedLog log;
+  Status const perm_error(StatusCode::kPermissionDenied, "uh-oh");
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject).WillOnce([&] {
+    return MakeErrorStream(sequencer, perm_error);
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions());
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  for (char const* step : {"Start", "Finish"}) {
+    std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, step);
+    next.first.set_value();
+  }
+
+  EXPECT_THAT(pending.get(), StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
+}
+
+TEST(AsyncConnectionImplTest, WarmUpTooManyTransients) {
+  ScopedLog log;
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .Times(kRetryAttempts + 1)
+      .WillRepeatedly(
+          [&] { return MakeErrorStream(sequencer, TransientError()); });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      pool.cq(), std::shared_ptr<GrpcChannelRefresh>(), mock, TestOptions());
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  for (int i = 0; i != kRetryAttempts + 1; ++i) {
+    for (char const* step : {"Start", "Finish"}) {
+      std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+      EXPECT_EQ(next.second, step);
+      next.first.set_value();
+    }
+  }
+
+  EXPECT_THAT(pending.get(), StatusIs(TransientError().code()));
+  auto const matches = [](int attempt) {
+    return AllOf(HasSubstr("[gcs-retry]"), HasSubstr("WarmUp"),
+                 HasSubstr("attempt " + std::to_string(attempt)));
+  };
+  EXPECT_THAT(RetryRecords(log), ElementsAre(matches(1), matches(2)));
+}
+
+TEST(AsyncConnectionImplTest, WarmUpCancel) {
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject).WillOnce([&] {
+    return MakeErrorStream(sequencer, TransientError());
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions());
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value();
+
+  EXPECT_TRUE(pending.cancel());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value();
+
+  EXPECT_THAT(pending.get(), StatusIs(TransientError().code(),
+                                      HasSubstr("Retry loop cancelled")));
+}
+
+// The multi-stream optimization only applies to object descriptors. `WarmUp()`
+// opens and discards a single probe stream without creating an object
+// descriptor, so it must not report `kMultistreamInMrd` even when the option is
+// enabled.
+TEST(AsyncConnectionImplTest, WarmUpDoesNotSendFeaturesHeader) {
+  ValidateMetadataFixture fixture;
+  std::multimap<std::string, std::string> metadata;
+  AsyncSequencer<void> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const& options) {
+        EXPECT_TRUE(
+            options->get<storage::EnableMultiStreamOptimizationOption>());
+        metadata = fixture.GetMetadata(*context);
+        return MakeErrorStream(sequencer, PermanentError());
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
+      TestOptions(
+          Options{}.set<storage::EnableMultiStreamOptimizationOption>(true)));
+
+  future<Status> pending = connection->WarmUp(
+      {storage::BucketName("test-bucket"), "", connection->options()});
+
+  for (char const* step : {"Start", "Finish"}) {
+    std::pair<promise<void>, std::string> next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, step);
+    next.first.set_value();
+  }
+
+  EXPECT_THAT(pending.get(), IsOk());
+  EXPECT_THAT(metadata, Not(Contains(Key(kFeaturesHeader))));
 }
 
 }  // namespace
