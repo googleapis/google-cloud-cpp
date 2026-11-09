@@ -281,6 +281,10 @@ void to_json(nlohmann::json& j, QueryRequest const& q) {
       {"formatOptions", q.format_options()},
       {"labels", q.labels()}};
 
+  if (!q.job_creation_mode().value.empty()) {
+    j["jobCreationMode"] = q.job_creation_mode().value;
+  }
+
   if (!q.query_results_format().empty()) {
     j["queryResultsFormat"] = q.query_results_format();
   }
@@ -315,6 +319,10 @@ void from_json(nlohmann::json const& j, QueryRequest& q) {
   SafeGetTo(j, "labels", &QueryRequest::set_labels, q);
   SafeGetTo(j, "queryResultsFormat", &QueryRequest::set_query_results_format,
             q);
+  std::string job_creation_mode;
+  if (SafeGetTo(job_creation_mode, j, "jobCreationMode")) {
+    q.set_job_creation_mode(JobCreationMode{std::move(job_creation_mode)});
+  }
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");

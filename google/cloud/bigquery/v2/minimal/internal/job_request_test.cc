@@ -32,6 +32,11 @@ using ::google::cloud::bigquery_v2_minimal_testing::
     MakeFullGetQueryResultsRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
+using ::testing::Eq;
+using ::testing::IsEmpty;
+using ::testing::IsFalse;
+using ::testing::IsTrue;
 
 auto static const kMinCreationTimeMs = 1111111111111;
 auto static const kMaxCreationTimeMs = 1111111111211;
@@ -1113,6 +1118,54 @@ TEST(PostQueryRequestTest, DebugString) {
     query_results_format: "ARROW"
   }
 })");
+}
+
+TEST(QueryRequestTest, ToJsonWithJobCreationMode) {
+  QueryRequest request = MakeQueryRequest();
+  request.set_job_creation_mode(JobCreationMode::Optional());
+
+  nlohmann::json j;
+  to_json(j, request);
+
+  EXPECT_THAT(j.contains("jobCreationMode"), IsTrue());
+  EXPECT_THAT(j["jobCreationMode"].get<std::string>(),
+              Eq("JOB_CREATION_OPTIONAL"));
+}
+
+TEST(QueryRequestTest, ToJsonWithoutJobCreationMode) {
+  QueryRequest request("SELECT 1");
+
+  nlohmann::json j;
+  to_json(j, request);
+
+  EXPECT_THAT(j.contains("jobCreationMode"), IsFalse());
+}
+
+TEST(QueryRequestTest, FromJsonRoundTripWithJobCreationMode) {
+  QueryRequest expected = MakeQueryRequest();
+  expected.set_job_creation_mode(JobCreationMode::Optional());
+
+  nlohmann::json j;
+  to_json(j, expected);
+
+  QueryRequest actual;
+  from_json(j, actual);
+
+  bigquery_v2_minimal_testing::AssertEquals(expected, actual);
+  EXPECT_THAT(actual.job_creation_mode().value, Eq("JOB_CREATION_OPTIONAL"));
+}
+
+TEST(QueryRequestTest, FromJsonWithoutOrNullJobCreationMode) {
+  nlohmann::json j_missing = nlohmann::json{{"query", "SELECT 1"}};
+  QueryRequest actual_missing;
+  from_json(j_missing, actual_missing);
+  EXPECT_THAT(actual_missing.job_creation_mode().value, IsEmpty());
+
+  nlohmann::json j_null =
+      nlohmann::json{{"query", "SELECT 1"}, {"jobCreationMode", nullptr}};
+  QueryRequest actual_null;
+  from_json(j_null, actual_null);
+  EXPECT_THAT(actual_null.job_creation_mode().value, IsEmpty());
 }
 
 TEST(GetQueryResultsRequestTest, SuccessWithDifferentEndpoints) {
