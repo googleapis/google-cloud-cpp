@@ -430,7 +430,7 @@ TEST_F(ClientTest, OTelMetricsDefaultAndOption) {
   ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
   ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
                               std::nullopt);
-  auto options = internal::DefaultOptions();
+  Options options = internal::DefaultOptions();
   EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
   EXPECT_FALSE(
       options.get<storage_experimental::EnableOTelDebugMetricsOption>());
@@ -449,7 +449,7 @@ TEST_F(ClientTest, OTelMetricsEnvVarOverridesOption) {
     ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "true");
     ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
                                 "true");
-    auto const options = internal::DefaultOptions(
+    Options const options = internal::DefaultOptions(
         Options{}
             .set<storage_experimental::EnableOTelMetricsOption>(false)
             .set<storage_experimental::EnableOTelDebugMetricsOption>(false));
@@ -461,7 +461,7 @@ TEST_F(ClientTest, OTelMetricsEnvVarOverridesOption) {
     ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "false");
     ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
                                 "false");
-    auto const options = internal::DefaultOptions(
+    Options const options = internal::DefaultOptions(
         Options{}
             .set<storage_experimental::EnableOTelMetricsOption>(true)
             .set<storage_experimental::EnableOTelDebugMetricsOption>(true));
@@ -472,12 +472,12 @@ TEST_F(ClientTest, OTelMetricsEnvVarOverridesOption) {
 }
 
 TEST_F(ClientTest, OTelMetricsInvalidEnvVarIgnored) {
-  for (auto const* val : {"1", "0", "TRUE", "False", "ON", "yes", ""}) {
+  for (char const* val : {"1", "0", "TRUE", "False", "ON", "yes", ""}) {
     ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", val);
     ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
                                 val);
     for (bool const configured : {false, true}) {
-      auto const options = internal::DefaultOptions(
+      Options const options = internal::DefaultOptions(
           Options{}
               .set<storage_experimental::EnableOTelMetricsOption>(configured)
               .set<storage_experimental::EnableOTelDebugMetricsOption>(
