@@ -226,6 +226,40 @@ struct HttpConnectTimeoutOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * Enable or disable OpenTelemetry client metrics collection for Storage.
+ *
+ * The default is `false`. The `GCP_STORAGE_CPP_ENABLE_OTEL_METRICS`
+ * environment variable overrides this option: set it to `"true"` to enable
+ * metrics collection, or to `"false"` to disable it even when this option is
+ * set. Only these exact values are recognized, and the comparison is
+ * case-sensitive; any other value, for example `"1"` or `"TRUE"`, is treated
+ * as if the variable were not set. This lets a deployment turn the feature on
+ * or off without rebuilding the application.
+ *
+ * @ingroup storage-options
+ */
+struct EnableOTelMetricsOption {
+  using Type = bool;
+};
+
+/**
+ * Enable or disable OpenTelemetry debug client metrics collection for Storage.
+ *
+ * The default is `false`. The `GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS`
+ * environment variable overrides this option: set it to `"true"` to enable
+ * debug metrics collection, or to `"false"` to disable it even when this
+ * option is set. Only these exact values are recognized, and the comparison is
+ * case-sensitive; any other value, for example `"1"` or `"TRUE"`, is treated
+ * as if the variable were not set. This lets a deployment turn the feature on
+ * or off without rebuilding the application.
+ *
+ * @ingroup storage-options
+ */
+struct EnableOTelDebugMetricsOption {
+  using Type = bool;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -567,7 +601,9 @@ using ClientOptionList = ::google::cloud::OptionList<
     storage_experimental::MaxReadHedgesOption,
     storage_experimental::ReadThreadPoolSizeOption,
     storage_experimental::HedgingThreadPoolSizeOption,
-    storage_experimental::OTelSpanEnrichmentOption>;
+    storage_experimental::OTelSpanEnrichmentOption,
+    storage_experimental::EnableOTelMetricsOption,
+    storage_experimental::EnableOTelDebugMetricsOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
