@@ -705,7 +705,8 @@ Options DefaultOptions(Options opts) {
   if (!o.has<storage_experimental::EnableOTelMetricsOption>()) {
     o.set<storage_experimental::EnableOTelMetricsOption>(false);
   }
-  auto const otel_metrics_env = GetEnv("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS");
+  std::optional<std::string> const otel_metrics_env =
+      GetEnv("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS");
   if (otel_metrics_env.has_value()) {
     if (*otel_metrics_env == "true") {
       o.set<storage_experimental::EnableOTelMetricsOption>(true);
@@ -717,7 +718,7 @@ Options DefaultOptions(Options opts) {
   if (!o.has<storage_experimental::EnableOTelDebugMetricsOption>()) {
     o.set<storage_experimental::EnableOTelDebugMetricsOption>(false);
   }
-  auto const otel_debug_metrics_env =
+  std::optional<std::string> const otel_debug_metrics_env =
       GetEnv("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS");
   if (otel_debug_metrics_env.has_value()) {
     if (*otel_debug_metrics_env == "true") {
