@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_stub.h"
-#include "absl/strings/str_cat.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
@@ -46,10 +45,12 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.name()), rest_internal::PathPiece::Verb("generateAccessToken"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), ":generateAccessToken"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
@@ -57,10 +58,12 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "token", rest_internal::PathPiece::Verb("generate"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -68,10 +71,12 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "entries", rest_internal::PathPiece::Verb("write"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
@@ -79,13 +84,15 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListLogsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.parent()), "logs");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
   query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "logs"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
@@ -93,40 +100,48 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.name()), "keys");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "keys"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::protobuf::Empty const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "doNothing");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "doNothing"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.table_name()), rest_internal::PathPiece::Verb("explicitRouting1"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.table_name()), rest_internal::PathPiece::Verb("explicitRouting2"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::location::Location>
@@ -134,10 +149,12 @@ DefaultGoldenKitchenSinkRestStub::GetLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::location::GetLocationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::location::Location>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name()), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -145,10 +162,12 @@ DefaultGoldenKitchenSinkRestStub::GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.resource()), rest_internal::PathPiece::Verb("getIamPolicy"));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.resource(), ":getIamPolicy"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
@@ -156,6 +175,8 @@ DefaultGoldenKitchenSinkRestStub::ListOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::longrunning::ListOperationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), rest_internal::PathPiece::MultiSegment(request.name()), "operations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
@@ -163,7 +184,7 @@ DefaultGoldenKitchenSinkRestStub::ListOperations(
   query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::longrunning::ListOperationsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "operations"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
