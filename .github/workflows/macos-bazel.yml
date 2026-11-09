@@ -25,7 +25,7 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
-        os: [ macos-14 ]
+        os: [ macos-26 ]
         shard:
         - Storage
         include:
