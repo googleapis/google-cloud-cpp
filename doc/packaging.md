@@ -272,7 +272,7 @@ default, pkgconf does not search in these directories. We need to explicitly set
 the search path.
 
 ```bash
-export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig
 ```
 
 #### curl
@@ -298,6 +298,22 @@ curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.
         -DBUILD_TESTING=OFF \
         -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--version-script=$(pwd)/libcurl.vers" \
         -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+```
+
+#### Abseil
+
+```bash
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -GNinja -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
 ```

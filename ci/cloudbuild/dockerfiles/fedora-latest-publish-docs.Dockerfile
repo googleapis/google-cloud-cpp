@@ -89,6 +89,18 @@ RUN curl -fsSL https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_11
         -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install
 
+WORKDIR /var/tmp/build
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
