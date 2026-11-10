@@ -23,7 +23,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -60,6 +59,14 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncAddAssociation(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "addAssociation");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back(
             {"replace_existing_association",
@@ -71,12 +78,7 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncAddAssociation(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_association_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "addAssociation"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -95,6 +97,11 @@ DefaultOrganizationSecurityPoliciesRestStub::AddAssociation(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         AddAssociationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(),
+      "addAssociation");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"replace_existing_association",
@@ -104,12 +111,7 @@ DefaultOrganizationSecurityPoliciesRestStub::AddAssociation(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_association_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "addAssociation"),
-      std::move(query_params));
+      false, *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,6 +126,14 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncAddRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "addRule");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -132,12 +142,7 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncAddRule(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_rule_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "addRule"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -156,17 +161,17 @@ DefaultOrganizationSecurityPoliciesRestStub::AddRule(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         AddRuleRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(), "addRule");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_rule_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "addRule"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -181,15 +186,18 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncCopyRules(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "copyRules");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "copyRules"),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -209,13 +217,13 @@ DefaultOrganizationSecurityPoliciesRestStub::CopyRules(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         CopyRulesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(), "copyRules");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "copyRules"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -231,18 +239,21 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/",
-                             request.security_policy()),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -262,16 +273,16 @@ DefaultOrganizationSecurityPoliciesRestStub::DeleteSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         DeleteSecurityPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -281,13 +292,13 @@ DefaultOrganizationSecurityPoliciesRestStub::GetSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         GetSecurityPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy()),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -297,17 +308,18 @@ DefaultOrganizationSecurityPoliciesRestStub::GetAssociation(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         GetAssociationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(),
+      "getAssociation");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"name", request.name()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyAssociation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "getAssociation"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -317,17 +329,17 @@ DefaultOrganizationSecurityPoliciesRestStub::GetRule(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         GetRuleRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(), "getRule");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"priority", std::to_string(request.priority())});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyRule>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "getRule"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -343,6 +355,13 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"parent_id", request.parent_id()});
         query_params.push_back({"request_id", request.request_id()});
@@ -351,12 +370,7 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
-                false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies"),
-                std::move(query_params)));
+                false, *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -375,6 +389,10 @@ DefaultOrganizationSecurityPoliciesRestStub::InsertSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         InsertSecurityPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"parent_id", request.parent_id()});
   query_params.push_back({"request_id", request.request_id()});
@@ -382,10 +400,7 @@ DefaultOrganizationSecurityPoliciesRestStub::InsertSecurityPolicy(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
@@ -394,6 +409,10 @@ DefaultOrganizationSecurityPoliciesRestStub::ListOrganizationSecurityPolicies(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         ListOrganizationSecurityPoliciesRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -405,10 +424,7 @@ DefaultOrganizationSecurityPoliciesRestStub::ListOrganizationSecurityPolicies(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -419,6 +435,10 @@ DefaultOrganizationSecurityPoliciesRestStub::ListAssociations(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         ListAssociationsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", "listAssociations");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"target_resource", request.target_resource()});
   query_params =
@@ -426,11 +446,7 @@ DefaultOrganizationSecurityPoliciesRestStub::ListAssociations(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::
           OrganizationSecurityPoliciesListAssociationsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   "listAssociations"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -441,6 +457,10 @@ DefaultOrganizationSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         ListPreconfiguredExpressionSetsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", "listPreconfiguredExpressionSets");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
   query_params.push_back(
@@ -453,11 +473,7 @@ DefaultOrganizationSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::
           SecurityPoliciesListPreconfiguredExpressionSetsResponse>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   "listPreconfiguredExpressionSets"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -473,15 +489,18 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncMove(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "move");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "move"),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -501,13 +520,13 @@ DefaultOrganizationSecurityPoliciesRestStub::Move(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         MoveRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(), "move");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "move"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -523,6 +542,14 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back({"request_id", request.request_id()});
         query_params =
@@ -530,13 +557,7 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
-                false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/",
-                             request.security_policy()),
-                std::move(query_params)));
+                false, *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -555,17 +576,17 @@ DefaultOrganizationSecurityPoliciesRestStub::PatchSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         PatchSecurityPolicyRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy()),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -580,6 +601,14 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncPatchRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "patchRule");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         query_params.push_back(
             {"priority", std::to_string(request.priority())});
@@ -590,12 +619,7 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncPatchRule(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_rule_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "patchRule"),
-                std::move(query_params)));
+                *std::move(path), std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -614,6 +638,10 @@ DefaultOrganizationSecurityPoliciesRestStub::PatchRule(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         PatchRuleRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(), "patchRule");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"priority", std::to_string(request.priority())});
   query_params.push_back({"request_id", request.request_id()});
@@ -621,11 +649,7 @@ DefaultOrganizationSecurityPoliciesRestStub::PatchRule(
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_rule_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "patchRule"),
-      std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -640,15 +664,18 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncRemoveAssociation(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "removeAssociation");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "removeAssociation"),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -668,13 +695,14 @@ DefaultOrganizationSecurityPoliciesRestStub::RemoveAssociation(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         RemoveAssociationRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(),
+      "removeAssociation");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "removeAssociation"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -690,15 +718,18 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncRemoveRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "securityPolicies",
+            request.security_policy(), "removeRule");
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "locations", "/", "global", "/",
-                             "securityPolicies", "/", request.security_policy(),
-                             "/", "removeRule"),
+                *service, *rest_context, request, false, *std::move(path),
                 std::move(query_params)));
       },
       std::move(p),
@@ -718,13 +749,13 @@ DefaultOrganizationSecurityPoliciesRestStub::RemoveRule(
     Options const& options,
     google::cloud::cpp::compute::organization_security_policies::v1::
         RemoveRuleRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      "compute", rest_internal::DetermineApiVersion("v1", options), "locations",
+      "global", "securityPolicies", request.security_policy(), "removeRule");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "locations", "/", "global", "/", "securityPolicies", "/",
-                   request.security_policy(), "/", "removeRule"),
+      *service_, rest_context, request, false, *std::move(path),
       std::move(query_params));
 }
 
@@ -741,13 +772,16 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncGetOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "operations", request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/locations/global/operations/",
-                             request.operation())));
+                *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,
@@ -772,11 +806,15 @@ DefaultOrganizationSecurityPoliciesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context,
          auto options) {
+        StatusOr<std::string> path = rest_internal::EncodePath(
+            "compute", rest_internal::DetermineApiVersion("v1", *options),
+            "locations", "global", "operations", request.operation());
+        if (!path) {
+          p.set_value(std::move(path).status());
+          return;
+        }
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
-                "/locations/global/operations/", request.operation())));
+            *operations, *rest_context, request, false, *std::move(path)));
       },
       std::move(p),
       operations_,

@@ -47,7 +47,7 @@ service ReservationSubBlocks {
       GetReservationSubBlocksGetResponseRequest)
       returns (google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSubBlocks/{reservation_sub_block}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSubBlocks/{reservation_sub_block}"
     };
     option (google.api.method_signature) =
         "project,zone,parent_name,reservation_sub_block";
@@ -59,7 +59,7 @@ service ReservationSubBlocks {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_resource}/reservationSubBlocks/{resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_resource=**}/reservationSubBlocks/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) =
         "project,zone,parent_resource,resource";
@@ -70,7 +70,7 @@ service ReservationSubBlocks {
   rpc GetVersion(GetVersionRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSubBlocks/{reservation_sub_block}/getVersion"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSubBlocks/{reservation_sub_block}/getVersion"
       body: "reservation_sub_blocks_get_version_request_resource"
     };
     option (google.api.method_signature) =
@@ -83,7 +83,7 @@ service ReservationSubBlocks {
   rpc ListReservationSubBlocks(ListReservationSubBlocksRequest)
       returns (google.cloud.cpp.compute.v1.ReservationSubBlocksListResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSubBlocks"
+      get: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSubBlocks"
     };
     option (google.api.method_signature) = "project,zone,parent_name";
   }
@@ -93,7 +93,7 @@ service ReservationSubBlocks {
   rpc PerformMaintenance(PerformMaintenanceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSubBlocks/{reservation_sub_block}/performMaintenance"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSubBlocks/{reservation_sub_block}/performMaintenance"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -106,7 +106,7 @@ service ReservationSubBlocks {
   rpc ReportFaulty(ReportFaultyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name}/reservationSubBlocks/{reservation_sub_block}/reportFaulty"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_name=**}/reservationSubBlocks/{reservation_sub_block}/reportFaulty"
       body: "reservation_sub_blocks_report_faulty_request_resource"
     };
     option (google.api.method_signature) =
@@ -120,7 +120,7 @@ service ReservationSubBlocks {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_resource}/reservationSubBlocks/{resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_resource=**}/reservationSubBlocks/{resource}/setIamPolicy"
       body: "zone_set_nested_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -132,7 +132,7 @@ service ReservationSubBlocks {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_resource}/reservationSubBlocks/{resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/zones/{zone}/{parent_resource=**}/reservationSubBlocks/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

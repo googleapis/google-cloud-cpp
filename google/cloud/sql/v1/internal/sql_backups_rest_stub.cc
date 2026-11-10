@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,11 +44,13 @@ DefaultSqlBackupsServiceRestStub::CreateBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::CreateBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "backups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.backup(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backups"),
+      *service_, rest_context, request.backup(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -58,11 +59,13 @@ DefaultSqlBackupsServiceRestStub::GetBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::GetBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::Backup>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -71,6 +74,10 @@ DefaultSqlBackupsServiceRestStub::ListBackups(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::ListBackupsRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.parent()), "backups");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
@@ -78,9 +85,7 @@ DefaultSqlBackupsServiceRestStub::ListBackups(
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::ListBackupsResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backups"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -89,11 +94,13 @@ DefaultSqlBackupsServiceRestStub::UpdateBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::UpdateBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.backup().name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.backup(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.backup().name()),
+      *service_, rest_context, request.backup(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -102,11 +109,13 @@ DefaultSqlBackupsServiceRestStub::DeleteBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::DeleteBackupRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options),
+      rest_internal::PathPiece::MultiSegment(request.name()));
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
