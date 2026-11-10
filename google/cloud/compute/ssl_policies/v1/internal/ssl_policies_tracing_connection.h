@@ -59,6 +59,10 @@ class SslPoliciesTracingConnection
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::GetIamPolicyRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request) override;
@@ -90,6 +94,14 @@ class SslPoliciesTracingConnection
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::SetIamPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::ssl_policies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_ssl_policies_v1::SslPoliciesConnection> child_;

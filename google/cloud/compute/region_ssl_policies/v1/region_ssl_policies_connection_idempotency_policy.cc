@@ -46,6 +46,12 @@ Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::GetSslPolicy(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
         InsertSslPolicyRequest const&) {
@@ -67,6 +73,18 @@ Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::ListAvailableFeatures(
 Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::PatchSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
         PatchSslPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        SetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

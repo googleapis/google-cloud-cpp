@@ -94,6 +94,11 @@ class MockRegionSslPoliciesConnection
                    GetSslPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code
@@ -188,6 +193,18 @@ class MockRegionSslPoliciesConnection
               PatchSslPolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::region_ssl_policies::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

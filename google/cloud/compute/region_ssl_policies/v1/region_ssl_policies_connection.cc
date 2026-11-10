@@ -68,6 +68,13 @@ RegionSslPoliciesConnection::GetSslPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesConnection::GetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesConnection::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -132,6 +139,20 @@ RegionSslPoliciesConnection::PatchSslPolicy(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesConnection::SetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionSslPoliciesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
