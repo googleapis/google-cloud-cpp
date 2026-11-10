@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_UPDATE_CONFIG_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_UPDATE_CONFIG_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/algorithm.h"
@@ -29,8 +30,17 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using Instance = ::google::bigtable::admin::v2::Instance;
 
-/// Specify the initial configuration for updating an instance.
-class InstanceUpdateConfig {
+/**
+ * Specify the initial configuration for updating an instance.
+ *
+ * @deprecated Use `google::bigtable::admin::v2::PartialUpdateInstanceRequest`
+ *     with `google::cloud::bigtable_admin::BigtableInstanceAdminClient`
+ *     instead.
+ */
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use `google::bigtable::admin::v2::PartialUpdateInstanceRequest` with "
+    "`google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.")
+    InstanceUpdateConfig {
  public:
   // NOLINTNEXTLINE(google-explicit-constructor)
   InstanceUpdateConfig(Instance instance) {
@@ -131,5 +141,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_UPDATE_CONFIG_H

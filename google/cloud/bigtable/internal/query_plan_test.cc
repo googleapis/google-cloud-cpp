@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/query_plan.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/fake_clock.h"
@@ -25,6 +26,18 @@
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <algorithm>
+#include <array>
+#include <atomic>
+#include <chrono>
+#include <cstdint>
+#include <future>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <thread>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -490,6 +503,203 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanAfterFailedRefresh) {
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
 }
+
+TEST(QueryPlanTest, ExpiredRefreshDoesNotDeadlockSingleThreadCompletionQueue) {
+  internal::AutomaticallyCreatedBackgroundThreads background(1);
+  CompletionQueue cq = background.cq();
+
+  std::promise<void> refresh_completed;
+  std::future<void> refresh_completed_future = refresh_completed.get_future();
+  std::atomic<int> refresh_calls{0};
+
+  google::bigtable::v2::PrepareQueryResponse refresh_response;
+  refresh_response.set_prepared_query("refreshed-query-plan");
+  *refresh_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::hours(1));
+
+  auto refresh_fn = [&cq, &refresh_calls, &refresh_completed,
+                     refresh_response]() {
+    int const call_num = ++refresh_calls;
+    auto p = std::make_shared<
+        promise<StatusOr<google::bigtable::v2::PrepareQueryResponse>>>();
+    future<StatusOr<google::bigtable::v2::PrepareQueryResponse>> f =
+        p->get_future();
+    // Resolve the refresh RPC on the exact same 1-thread CompletionQueue that
+    // runs the deadline timer callback. Blocking inline on future::get() inside
+    // the timer callback would permanently self-deadlock this CQ thread.
+    cq.RunAsync([p, refresh_response, call_num, &refresh_completed]() mutable {
+      p->set_value(std::move(refresh_response));
+      if (call_num == 1) refresh_completed.set_value();
+    });
+    return f;
+  };
+
+  google::bigtable::v2::PrepareQueryResponse initial_response;
+  initial_response.set_prepared_query("original-query-plan");
+  *initial_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::milliseconds(500));
+
+  {
+    std::shared_ptr<QueryPlan> query_plan =
+        QueryPlan::Create(cq, initial_response, refresh_fn);
+    ASSERT_EQ(refresh_completed_future.wait_for(std::chrono::seconds(5)),
+              std::future_status::ready);
+    EXPECT_EQ(refresh_calls.load(), 1);
+
+    StatusOr<google::bigtable::v2::PrepareQueryResponse> data =
+        query_plan->response();
+    ASSERT_STATUS_OK(data);
+    EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+  }
+
+  background.Shutdown();
+}
+
+TEST(QueryPlanTest, StaleInvalidationIgnoredAfterMultipleRefreshes) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  int refresh_count = 0;
+  auto refresh_fn = [&refresh_count]() {
+    ++refresh_count;
+    google::bigtable::v2::PrepareQueryResponse refreshed;
+    refreshed.set_prepared_query("plan-" + std::to_string(refresh_count));
+    return make_ready_future(make_status_or(std::move(refreshed)));
+  };
+
+  google::bigtable::v2::PrepareQueryResponse initial;
+  initial.set_prepared_query("plan-0");
+  std::shared_ptr<QueryPlan> query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), initial, refresh_fn);
+
+  // Refresh #1: plan-0 -> plan-1
+  fake_cq_impl->SimulateCompletion(true);
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> data =
+      query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "plan-1");
+
+  // Refresh #2: plan-1 -> plan-2
+  fake_cq_impl->SimulateCompletion(true);
+  data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "plan-2");
+  EXPECT_EQ(refresh_count, 2);
+
+  // Late invalidation referencing plan-0 must not invalidate plan-2.
+  query_plan->Invalidate(internal::FailedPreconditionError("expired"),
+                         "plan-0");
+  data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "plan-2");
+  EXPECT_EQ(refresh_count, 2);
+
+  // Invalidation matching active plan-2 triggers Refresh #3 -> plan-3.
+  query_plan->Invalidate(internal::FailedPreconditionError("expired"),
+                         "plan-2");
+  data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "plan-3");
+  EXPECT_EQ(refresh_count, 3);
+
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST(QueryPlanTest, InvalidateDuringPendingProactiveRefreshWaitsForRefresh) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  promise<StatusOr<google::bigtable::v2::PrepareQueryResponse>> refresh_promise;
+  std::atomic<int> refresh_calls{0};
+  auto refresh_fn = [&]() {
+    ++refresh_calls;
+    return refresh_promise.get_future();
+  };
+
+  google::bigtable::v2::PrepareQueryResponse initial;
+  initial.set_prepared_query("plan-0");
+  std::shared_ptr<QueryPlan> query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), initial, refresh_fn);
+
+  // Fire timer so proactive refresh starts (state == kPending), while refresh
+  // RPC is still in flight.
+  fake_cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(refresh_calls.load(), 1);
+
+  // Invalidate plan-0 while the proactive refresh is in flight.
+  query_plan->Invalidate(internal::FailedPreconditionError("expired"),
+                         "plan-0");
+
+  std::promise<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+      caller_result;
+  std::future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+      caller_future = caller_result.get_future();
+  std::thread caller([query_plan, &caller_result] {
+    caller_result.set_value(query_plan->response());
+  });
+
+  // Caller must wait for the in-flight refresh rather than returning plan-0 or
+  // starting a duplicate refresh RPC.
+  EXPECT_EQ(caller_future.wait_for(std::chrono::milliseconds(20)),
+            std::future_status::timeout);
+  EXPECT_EQ(refresh_calls.load(), 1);
+
+  google::bigtable::v2::PrepareQueryResponse refreshed;
+  refreshed.set_prepared_query("plan-1");
+  refresh_promise.set_value(refreshed);
+
+  ASSERT_EQ(caller_future.wait_for(std::chrono::seconds(5)),
+            std::future_status::ready);
+  caller.join();
+
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> data =
+      caller_future.get();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "plan-1");
+  EXPECT_EQ(refresh_calls.load(), 1);
+
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+TEST(QueryPlanTest, DeprecatedAccessors) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("deprecated-accessor-plan");
+  char constexpr kResultMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "col1"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kResultMetadataText,
+                                                            &metadata));
+  *response.mutable_metadata() = metadata;
+
+  std::shared_ptr<QueryPlan> plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), response, [] {
+        return make_ready_future<
+            StatusOr<google::bigtable::v2::PrepareQueryResponse>>(
+            internal::InternalError("refresh failed"));
+      });
+
+  StatusOr<std::string> pq = plan->prepared_query();
+  ASSERT_STATUS_OK(pq);
+  EXPECT_EQ(*pq, "deprecated-accessor-plan");
+
+  StatusOr<google::bigtable::v2::ResultSetMetadata> md = plan->metadata();
+  ASSERT_STATUS_OK(md);
+  EXPECT_THAT(*md, IsProtoEqual(metadata));
+
+  plan->Invalidate(internal::FailedPreconditionError("expired"),
+                   "deprecated-accessor-plan");
+  EXPECT_THAT(plan->prepared_query(),
+              StatusIs(StatusCode::kInternal, "refresh failed"));
+  EXPECT_THAT(plan->metadata(),
+              StatusIs(StatusCode::kInternal, "refresh failed"));
+
+  fake_cq_impl->SimulateCompletion(false);
+}
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
