@@ -406,6 +406,41 @@ class OracleDatabaseTracingStub : public OracleDatabaseStub {
       google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request)
       override;
 
+  StatusOr<google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse>
+  ListOdbDnsZones(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone> GetOdbDnsZone(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateOdbDnsZone(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateOdbDnsZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteOdbDnsZone(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteOdbDnsZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request)
+      override;
+
   StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
   ListExadbVmClusters(
       grpc::ClientContext& context, Options const& options,

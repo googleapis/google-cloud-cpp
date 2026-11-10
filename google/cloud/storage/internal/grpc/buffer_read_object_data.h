@@ -18,6 +18,7 @@
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * excess data until the application requests more.
  *
  * It may be possible to further optimize this class by using `std::string` and
- * `absl::string_view` if `g.c.s.v2.ChecksummedData` does not use `absl::Cord`.
+ * `std::string_view` if `g.c.s.v2.ChecksummedData` does not use `absl::Cord`.
  * We expect that case to be rare in the near future, and while it would save
  * some allocations, it will not save any data copies. The data copies are
  * shown to be more expensive in our experiments.

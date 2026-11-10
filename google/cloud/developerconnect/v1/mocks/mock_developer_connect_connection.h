@@ -294,6 +294,12 @@ class MockDeveloperConnectConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::developerconnect::v1::PullRequest>,
+              OpenGitRepositoryLinkPullRequest,
+              (google::cloud::developerconnect::v1::
+                   OpenGitRepositoryLinkPullRequestRequest const& request),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>),
       FetchLinkableGitRepositories,
@@ -312,6 +318,65 @@ class MockDeveloperConnectConnection
       (StreamRange<std::string>), FetchGitRefs,
       (google::cloud::developerconnect::v1::FetchGitRefsRequest request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::developerconnect::v1::
+                           DiffGitRepositoryLinkCommitResponse>,
+              DiffGitRepositoryLinkCommit,
+              (google::cloud::developerconnect::v1::
+                   DiffGitRepositoryLinkCommitRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::developerconnect::v1::
+                           FetchGitRepositoryLinkCommitResponse>,
+              FetchGitRepositoryLinkCommit,
+              (google::cloud::developerconnect::v1::
+                   FetchGitRepositoryLinkCommitRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::developerconnect::v1::SCMCommit>),
+              FetchGitRepositoryLinkCommitList,
+              (google::cloud::developerconnect::v1::
+                   FetchGitRepositoryLinkCommitListRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::developerconnect::v1::
+                           FetchGitRepositoryLinkFileBlameResponse>,
+              FetchGitRepositoryLinkFileBlame,
+              (google::cloud::developerconnect::v1::
+                   FetchGitRepositoryLinkFileBlameRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::developerconnect::v1::PullRequest>,
+              FetchGitRepositoryLinkPullRequest,
+              (google::cloud::developerconnect::v1::
+                   FetchGitRepositoryLinkPullRequestRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::PullRequestComment>,
+      AddGitRepositoryLinkPullRequestComment,
+      (google::cloud::developerconnect::v1::
+           AddGitRepositoryLinkPullRequestCommentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>,
+      AddGitRepositoryLinkPullRequestReviewComment,
+      (google::cloud::developerconnect::v1::
+           AddGitRepositoryLinkPullRequestReviewCommentRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::developerconnect::v1::PullRequest>,
+              ModifyGitRepositoryLinkPullRequest,
+              (google::cloud::developerconnect::v1::
+                   ModifyGitRepositoryLinkPullRequestRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::developerconnect::v1::PullRequest>),
+              FetchGitRepositoryLinkPullRequestList,
+              (google::cloud::developerconnect::v1::
+                   FetchGitRepositoryLinkPullRequestListRequest request),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::developerconnect::v1::AccountConnector>),

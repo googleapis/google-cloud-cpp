@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -29,8 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 template <typename ReturnType>
 class SplitObjectWriteData {
  public:
-  explicit SplitObjectWriteData(absl::string_view buffer)
-      : buffers_({buffer}) {}
+  explicit SplitObjectWriteData(std::string_view buffer) : buffers_({buffer}) {}
 
   explicit SplitObjectWriteData(
       google::cloud::storage::internal::ConstBufferSequence buffers)

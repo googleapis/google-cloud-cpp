@@ -15,6 +15,7 @@
 #ifndef _WIN32
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include <openssl/evp.h>
+#include <string_view>
 #include <type_traits>
 
 namespace google {
@@ -53,7 +54,7 @@ class OpenSslMD5HashFunction : public MD5HashFunction {
     EVP_DigestInit_ex(impl_.get(), EVP_md5(), nullptr);
   }
 
-  void Update(absl::string_view buffer) override {
+  void Update(std::string_view buffer) override {
     EVP_DigestUpdate(impl_.get(), buffer.data(), buffer.size());
   }
 

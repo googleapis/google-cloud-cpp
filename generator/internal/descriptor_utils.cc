@@ -43,6 +43,7 @@
 #include <regex>
 #include <set>
 #include <string>
+#include <string_view>
 #include <vector>
 
 using ::google::protobuf::FieldDescriptor;
@@ -184,8 +185,8 @@ std::string EscapePrinterDelimiter(std::string const& text) {
 // method_signature parameters. This is mostly for the benefit of Doxygen,
 // but is also to fix mismatched quotes, etc.
 struct ParameterCommentSubstitution {
-  absl::string_view before;
-  absl::string_view after;
+  std::string_view before;
+  std::string_view after;
   std::size_t uses = 0;
 };
 
@@ -355,7 +356,7 @@ std::string FormattedCommentsForParameter(
   // documentation and skip the details.
   auto constexpr kTooManyLines = 20;
   if (std::count(comment.begin(), comment.end(), '\n') > kTooManyLines) {
-    std::vector<absl::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
+    std::vector<std::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
     auto brief = std::string{paragraphs.front()};
     for (auto const& suffix : bad_suffixes) {
       brief = std::string{absl::StripSuffix(brief, suffix)};
@@ -427,7 +428,7 @@ std::string TransientErrorsComment(VarsDictionary const& vars) {
   std::string comment = R"""(
  * In this class the following status codes are treated as transient errors:)""";
 
-  auto format = [](absl::string_view code) {
+  auto format = [](std::string_view code) {
     auto constexpr kCodeFormat = R"""(
  * - [`%s`](@ref google::cloud::StatusCode))""";
     return absl::StrFormat(kCodeFormat, code);
@@ -477,12 +478,12 @@ std::string FormatMixinPbHeaderPaths(
 // Parses a command line argument in the form:
 // {"service_name_mappings": "service_a=new_service_a,service=new_service"}.
 std::string GetEffectiveServiceName(VarsDictionary const& vars,
-                                    absl::string_view name) {
+                                    std::string_view name) {
   auto service_name_mappings = vars.find("service_name_mappings");
   if (service_name_mappings != vars.end()) {
-    for (absl::string_view arg :
+    for (std::string_view arg :
          absl::StrSplit(service_name_mappings->second, ',')) {
-      std::pair<absl::string_view, absl::string_view> p =
+      std::pair<std::string_view, std::string_view> p =
           absl::StrSplit(arg, absl::MaxSplits('=', 1));
       if (p.first == name) return std::string(p.second.data(), p.second.size());
     }
@@ -495,14 +496,14 @@ std::string GetEffectiveServiceName(VarsDictionary const& vars,
 // Parses a command line argument in the form:
 // {"service_name_to_comments": "service_a=comment_a,service_b=comment_b"}.
 std::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
-                                                 absl::string_view name) {
+                                                 std::string_view name) {
   auto service_name_to_comments = vars.find("service_name_to_comments");
   if (service_name_to_comments == vars.end()) {
     return std::nullopt;
   }
-  for (absl::string_view arg :
+  for (std::string_view arg :
        absl::StrSplit(service_name_to_comments->second, ',')) {
-    std::pair<absl::string_view, absl::string_view> p =
+    std::pair<std::string_view, std::string_view> p =
         absl::StrSplit(arg, absl::MaxSplits('=', 1));
     if (p.first == name) return std::string(p.second.data(), p.second.size());
   }
@@ -788,7 +789,7 @@ VarsDictionary CreateServiceVars(
         absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
         "_ENDPOINT");
   }
-  absl::string_view service_endpoint_env_var_prefix = service_endpoint_env_var;
+  std::string_view service_endpoint_env_var_prefix = service_endpoint_env_var;
   if (!absl::ConsumeSuffix(&service_endpoint_env_var_prefix, "_ENDPOINT")) {
     // Until we have a need for a service_endpoint_env_var that does not end
     // with "_ENDPOINT", this allows us to generate service_authority_env_var,

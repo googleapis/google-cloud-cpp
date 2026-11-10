@@ -23,6 +23,7 @@
 #include <locale>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -53,8 +54,8 @@ bool IsNaN(std::string const& rep) {
 }
 
 // Do the pieces form a canonical, in-range value, with no rounding required?
-bool IsCanonical(absl::string_view sign_part, absl::string_view int_part,
-                 absl::string_view frac_part, std::size_t int_prec,
+bool IsCanonical(std::string_view sign_part, std::string_view int_part,
+                 std::string_view frac_part, std::size_t int_prec,
                  std::size_t frac_prec) {
   if (int_part.empty()) return false;
   if (int_part.size() > int_prec) return false;
@@ -144,22 +145,22 @@ StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
   char const* e = p + s.size();
 
   // Consume any sign part.
-  auto sign_part = absl::string_view{};
+  auto sign_part = std::string_view{};
   if (p != e && (*p == '+' || *p == '-')) {
-    sign_part = absl::string_view(p++, 1);
+    sign_part = std::string_view(p++, 1);
   }
 
   // Consume any integral part.
   char const* ip = p;
   for (; p != e && IsDigit(*p); ++p) continue;
-  auto int_part = absl::string_view(ip, p - ip);
+  auto int_part = std::string_view(ip, p - ip);
 
   // Consume any fractional part.
-  auto frac_part = absl::string_view{};
+  auto frac_part = std::string_view{};
   if (p != e && *p == '.') {
     char const* fp = p++;
     for (; p != e && IsDigit(*p); ++p) continue;
-    frac_part = absl::string_view(fp, p - fp);
+    frac_part = std::string_view(fp, p - fp);
   }
 
   if (p == e) {

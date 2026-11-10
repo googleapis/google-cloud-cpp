@@ -553,6 +553,172 @@ BackupDRConnection::InitializeService(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRConnection::CreateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::CreateAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRConnection::CreateAutoProtectionPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRConnection::ListAutoProtectionPolicies(
+    google::cloud::backupdr::v1::
+        ListAutoProtectionPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>>();
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+BackupDRConnection::GetAutoProtectionPolicy(
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRConnection::UpdateAutoProtectionPolicy(
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::UpdateAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+BackupDRConnection::UpdateAutoProtectionPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRConnection::DeleteAutoProtectionPolicy(
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::DeleteAutoProtectionPolicy(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRConnection::DeleteAutoProtectionPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRConnection::CreateAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::
+        CreateAutoProtectionPolicyBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::CreateAutoProtectionPolicyBinding(
+    NoAwaitTag, google::cloud::backupdr::v1::
+                    CreateAutoProtectionPolicyBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRConnection::CreateAutoProtectionPolicyBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRConnection::GetAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+BackupDRConnection::ListAutoProtectionPolicyBindings(
+    google::cloud::backupdr::v1::
+        ListAutoProtectionPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>();
+}
+
+StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>
+BackupDRConnection::ListAppliedAutoProtectionPolicies(
+    google::cloud::backupdr::v1::
+        ListAppliedAutoProtectionPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>>();
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRConnection::InitiateDeleteAutoProtectionPolicyBinding(
+    google::cloud::backupdr::v1::
+        InitiateDeleteAutoProtectionPolicyBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::InitiateDeleteAutoProtectionPolicyBinding(
+    NoAwaitTag, google::cloud::backupdr::v1::
+                    InitiateDeleteAutoProtectionPolicyBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+BackupDRConnection::InitiateDeleteAutoProtectionPolicyBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>
+BackupDRConnection::ListBindingMatchingResources(
+    google::cloud::backupdr::v1::
+        ListBindingMatchingResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>>();
+}
+
 StreamRange<google::cloud::location::Location>
 BackupDRConnection::ListLocations(
     google::cloud::location::

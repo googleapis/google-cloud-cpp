@@ -44,7 +44,7 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
   return response;
 }
 
-std::string BigQueryHttpResponse::DebugString(absl::string_view name,
+std::string BigQueryHttpResponse::DebugString(std::string_view name,
                                               TracingOptions const& options,
                                               int indent) const {
   // Payload is not logged as it might contain user sensitive data like

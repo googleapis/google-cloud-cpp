@@ -22,11 +22,11 @@
 #include "google/cloud/bigquery/v2/minimal/internal/table_view.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <optional>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -37,7 +37,7 @@ struct CloneDefinition {
   TableReference base_table_reference;
   std::chrono::system_clock::time_point clone_time;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -91,7 +91,7 @@ struct Table {
   MaterializedViewDefinition materialized_view;
   MaterializedViewStatus materialized_view_status;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -101,7 +101,7 @@ void from_json(nlohmann::json const& j, Table& t);
 struct ListFormatView {
   bool use_legacy_sql = false;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -116,7 +116,7 @@ struct HivePartitioningOptions {
 
   std::vector<std::string> fields;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -140,7 +140,7 @@ struct ListFormatTable {
   std::chrono::milliseconds creation_time = std::chrono::milliseconds(0);
   std::chrono::milliseconds expiration_time = std::chrono::milliseconds(0);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

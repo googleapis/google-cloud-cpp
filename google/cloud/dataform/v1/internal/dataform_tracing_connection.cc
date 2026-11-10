@@ -646,6 +646,39 @@ DataformTracingConnection::CreateCompilationResult(
   return internal::EndSpan(*span, child_->CreateCompilationResult(request));
 }
 
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformTracingConnection::CreateCompilationResultLongRunning(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::CreateCompilationResultLongRunning");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCompilationResultLongRunning(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformTracingConnection::CreateCompilationResultLongRunning(
+    NoAwaitTag,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::CreateCompilationResultLongRunning");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCompilationResultLongRunning(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformTracingConnection::CreateCompilationResultLongRunning(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::CreateCompilationResultLongRunning");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateCompilationResultLongRunning(operation));
+}
+
 StreamRange<google::cloud::dataform::v1::CompilationResultAction>
 DataformTracingConnection::QueryCompilationResultActions(
     google::cloud::dataform::v1::QueryCompilationResultActionsRequest request) {

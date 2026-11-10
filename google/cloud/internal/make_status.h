@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -61,7 +62,7 @@ Status DataLossError(std::string msg, ErrorInfo info = {});
  *
  * @code
  * StatusOr<std::string> GetString(
- *     nlohmann::json const& json, absl::string_view key,
+ *     nlohmann::json const& json, std::string_view key,
  *     ErrorContext const& ec) {
  *   auto i = json.find(key);
  *   if (i = json.end()) {
@@ -88,13 +89,13 @@ class ErrorInfoBuilder {
   }
 
   /// Add a metadata pair, existing values are not replaced.
-  ErrorInfoBuilder& WithMetadata(absl::string_view key,
-                                 absl::string_view value) & {
+  ErrorInfoBuilder& WithMetadata(std::string_view key,
+                                 std::string_view value) & {
     metadata_.emplace(key, value);
     return *this;
   }
-  ErrorInfoBuilder&& WithMetadata(absl::string_view key,
-                                  absl::string_view value) && {
+  ErrorInfoBuilder&& WithMetadata(std::string_view key,
+                                  std::string_view value) && {
     return std::move(WithMetadata(std::move(key), std::move(value)));
   }
 

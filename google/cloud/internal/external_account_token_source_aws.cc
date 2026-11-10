@@ -26,9 +26,9 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/string_view.h"
 #include <algorithm>
 #include <chrono>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -143,12 +143,12 @@ StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
                           "credentials-source", std::string{}, ec);
   if (!imdsv2) return std::move(imdsv2).status();
 
-  auto invalid_url = [](absl::string_view name, absl::string_view value) {
+  auto invalid_url = [](std::string_view name, std::string_view value) {
     return absl::StrCat(
         "the `", name,
         "` field should refer to the AWS metadata service, got=<", value, ">");
   };
-  auto targets_metadata = [](absl::string_view url) {
+  auto targets_metadata = [](std::string_view url) {
     // We probably need a full URL parser to verify the host part is either
     // `169.254.169.254` or `fd00:ec2::254`.  We just assume there is no
     // `userinfo` component. The AWS documentation makes no reference to it, and
@@ -253,7 +253,7 @@ StatusOr<ExternalAccountTokenSourceAwsSecrets> FetchSecrets(
             .WithMetadata("aws.role", *role)
             .WithMetadata("aws.metadata.path", path));
   }
-  auto name = absl::string_view{"aws-security-credentials-response"};
+  auto name = std::string_view{"aws-security-credentials-response"};
   auto access_key_id = ValidateStringField(json, "AccessKeyId", name, ec);
   if (!access_key_id) return std::move(access_key_id).status();
   auto secret_access_key =
@@ -304,7 +304,7 @@ nlohmann::json ComputeSubjectToken(
       info.regional_cred_verification_url, {{"{region}", region}});
 
   // We need to split the URL into the query and the base.
-  std::vector<absl::string_view> verification =
+  std::vector<std::string_view> verification =
       absl::StrSplit(verification_url, absl::MaxSplits('?', 1));
   auto const canonical_query_string =
       verification.size() == 2

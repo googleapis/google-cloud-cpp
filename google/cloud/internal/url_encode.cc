@@ -64,7 +64,7 @@ int ParseHexDigit(char c) {
 
 }  // namespace
 
-std::string UrlEncode(absl::string_view value) {
+std::string UrlEncode(std::string_view value) {
   std::string s;
   auto constexpr kDigits = "0123456789ABCDEF";
   for (unsigned char c : value) {
@@ -79,7 +79,7 @@ std::string UrlEncode(absl::string_view value) {
   return s;
 }
 
-std::string UrlDecode(absl::string_view value) {
+std::string UrlDecode(std::string_view value) {
   std::string s;
   for (std::size_t i = 0; i < value.size(); ++i) {
     if (value[i] == '%' && value.size() - i > 2) {

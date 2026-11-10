@@ -86,6 +86,22 @@ CompletionServiceConnectionImpl::CompleteQuery(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceConnectionImpl::AdvancedCompleteQuery(
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AdvancedCompleteQuery(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 AdvancedCompleteQueryRequest const& request) {
+        return stub_->AdvancedCompleteQuery(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(

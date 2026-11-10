@@ -28,6 +28,18 @@ printf "%10s %s\n" "ninja:" "$(ninja --version || echo not available)"
 printf "%10s %s\n" "sccache:" "$(sccache --version || echo not available)"
 
 if command -v sccache >/dev/null 2>&1; then
+  if [[ "${SCCACHE_GCS_RW_MODE:-}" == "READ_ONLY" && -n "${SCCACHE_GCS_BUCKET:-}" ]]; then
+    # sccache's GCS backend does not support anonymous access, so use its
+    # S3-compatible backend against https://storage.googleapis.com for read-only
+    # cache access without credentials.
+    export SCCACHE_BUCKET="${SCCACHE_GCS_BUCKET}"
+    export SCCACHE_ENDPOINT="https://storage.googleapis.com"
+    export SCCACHE_REGION="auto"
+    export SCCACHE_S3_KEY_PREFIX="${SCCACHE_GCS_KEY_PREFIX:-}"
+    export SCCACHE_S3_NO_CREDENTIALS="true"
+    unset SCCACHE_GCS_BUCKET SCCACHE_GCS_KEY_PREFIX SCCACHE_GCS_RW_MODE
+    unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+  fi
   io::log "Clearing sccache stats"
   sccache --zero-stats
   function show_stats_handler() {

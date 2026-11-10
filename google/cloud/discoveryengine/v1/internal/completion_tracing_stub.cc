@@ -45,6 +45,20 @@ CompletionServiceTracingStub::CompleteQuery(
                            child_->CompleteQuery(context, options, request));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceTracingStub::AdvancedCompleteQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "AdvancedCompleteQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->AdvancedCompleteQuery(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceTracingStub::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,

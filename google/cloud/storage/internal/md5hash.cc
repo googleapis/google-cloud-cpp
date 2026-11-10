@@ -28,7 +28,7 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
+std::vector<std::uint8_t> MD5Hash(std::string_view payload) {
 #ifdef _WIN32
   std::vector<unsigned char> digest(16);
   BCryptHash(BCRYPT_MD5_ALG_HANDLE, nullptr, 0,

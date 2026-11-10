@@ -143,6 +143,14 @@ class MockEngineServiceConnection
               (google::cloud::discoveryengine::v1::ListEnginesRequest request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
               (google::longrunning::ListOperationsRequest request), (override));
 

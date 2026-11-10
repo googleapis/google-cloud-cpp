@@ -22,8 +22,8 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
-                                          absl::string_view name,
-                                          absl::string_view object_name,
+                                          std::string_view name,
+                                          std::string_view object_name,
                                           internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
   if (it == json.end()) return MissingFieldError(name, object_name, ec);
@@ -32,9 +32,9 @@ StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
 }
 
 StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
-                                          absl::string_view name,
-                                          absl::string_view object_name,
-                                          absl::string_view default_value,
+                                          std::string_view name,
+                                          std::string_view object_name,
+                                          std::string_view default_value,
                                           internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
   if (it == json.end()) return std::string{default_value};
@@ -43,8 +43,8 @@ StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
 }
 
 StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
-                                        absl::string_view name,
-                                        absl::string_view object_name,
+                                        std::string_view name,
+                                        std::string_view object_name,
                                         internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
   if (it == json.end()) return MissingFieldError(name, object_name, ec);
@@ -53,8 +53,8 @@ StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
 }
 
 StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
-                                        absl::string_view name,
-                                        absl::string_view object_name,
+                                        std::string_view name,
+                                        std::string_view object_name,
                                         std::int32_t default_value,
                                         internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
@@ -64,8 +64,8 @@ StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
 }
 
 StatusOr<std::vector<std::string>> ValidateStringArrayField(
-    nlohmann::json const& json, absl::string_view name,
-    absl::string_view object_name, internal::ErrorContext const& ec) {
+    nlohmann::json const& json, std::string_view name,
+    std::string_view object_name, internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
   if (it == json.end()) return MissingFieldError(name, object_name, ec);
   if (!it->is_array()) return InvalidTypeError(name, object_name, ec);
@@ -76,14 +76,14 @@ StatusOr<std::vector<std::string>> ValidateStringArrayField(
   return it->get<std::vector<std::string>>();
 }
 
-Status MissingFieldError(absl::string_view name, absl::string_view object_name,
+Status MissingFieldError(std::string_view name, std::string_view object_name,
                          internal::ErrorContext const& ec) {
   return InvalidArgumentError(
       absl::StrCat("cannot find `", name, "` field in `", object_name, "`"),
       GCP_ERROR_INFO().WithContext(ec));
 }
 
-Status InvalidTypeError(absl::string_view name, absl::string_view object_name,
+Status InvalidTypeError(std::string_view name, std::string_view object_name,
                         internal::ErrorContext const& ec) {
   return InvalidArgumentError(absl::StrCat("invalid type for `", name,
                                            "` field in `", object_name, "`"),

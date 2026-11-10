@@ -1,2 +1,3 @@
 @googleapis//google/iam/admin/v1:audit_data.proto
 @googleapis//google/iam/admin/v1:iam.proto
+@googleapis//google/iam/admin/v1:workforce_pool_platform_logs.proto

@@ -41,9 +41,9 @@ TEST(MakeCord, FromString) {
 TEST(MakeCord, FromStringLong) {
   auto const input = std::string(4 * 1024 * 1024, '\0');
   auto actual = MakeCord(input);
-  std::vector<absl::string_view> chunks{actual.chunk_begin(),
-                                        actual.chunk_end()};
-  EXPECT_THAT(chunks, ElementsAre(absl::string_view(input)));
+  std::vector<std::string_view> chunks{actual.chunk_begin(),
+                                       actual.chunk_end()};
+  EXPECT_THAT(chunks, ElementsAre(std::string_view(input)));
 }
 
 TEST(MakeCord, FromStringVector) {
@@ -51,10 +51,10 @@ TEST(MakeCord, FromStringVector) {
   auto const b = std::string(2048, 'b');
   auto const c = std::string(4096, 'c');
   auto actual = MakeCord(std::vector<std::string>{a, b, c});
-  std::vector<absl::string_view> chunks{actual.chunk_begin(),
-                                        actual.chunk_end()};
-  EXPECT_THAT(chunks, ElementsAre(absl::string_view(a), absl::string_view(b),
-                                  absl::string_view(c)));
+  std::vector<std::string_view> chunks{actual.chunk_begin(),
+                                       actual.chunk_end()};
+  EXPECT_THAT(chunks, ElementsAre(std::string_view(a), std::string_view(b),
+                                  std::string_view(c)));
 }
 
 template <typename T>
@@ -78,12 +78,12 @@ TYPED_TEST(MakeCordFromVector, MakeCord) {
   auto constexpr kTestDataSize = 8 * 1024 * 1024L;
   auto const buffer =
       internal::RandomData<Collection>(generator, kTestDataSize);
-  auto const view = absl::string_view(
+  auto const view = std::string_view(
       reinterpret_cast<char const*>(buffer.data()), buffer.size());
 
   auto const actual = MakeCord(buffer);
-  std::vector<absl::string_view> chunks{actual.chunk_begin(),
-                                        actual.chunk_end()};
+  std::vector<std::string_view> chunks{actual.chunk_begin(),
+                                       actual.chunk_end()};
   EXPECT_THAT(chunks, ElementsAre(view));
 }
 

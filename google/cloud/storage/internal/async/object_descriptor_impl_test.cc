@@ -31,11 +31,11 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
-#include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
+#include <atomic>
 #include <string>
 #include <thread>
 #include <vector>
@@ -584,7 +584,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
   // success.
@@ -722,7 +722,7 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
   // success.
@@ -850,7 +850,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   auto s1r2 = s1->Read();
@@ -866,7 +866,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   // Since the `range_end()` flag is set, we expect the stream to finish with
@@ -1161,7 +1161,7 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   auto expected_r1 = VariantWith<storage::ReadPayload>(ResultOf(
       "contents are",
       [](storage::ReadPayload const& p) { return p.contents(); },
-      ElementsAre(absl::string_view{"0123456789"})));
+      ElementsAre(std::string_view{"0123456789"})));
 
   EXPECT_THAT(s1r1.get(), expected_r1);
   EXPECT_THAT(s2r1.get(), expected_r1);
@@ -1200,7 +1200,7 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
                              HasSubstr("test-only-invalid/test-object"))));
 }
 
-Status RedirectError(absl::string_view handle, absl::string_view token) {
+Status RedirectError(std::string_view handle, std::string_view token) {
   auto details = [&] {
     auto redirected = google::storage::v2::BidiReadObjectRedirectedError{};
     redirected.mutable_read_handle()->set_handle(std::string(handle));
@@ -2289,7 +2289,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationSuccess) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
@@ -2397,7 +2397,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchCrc32c) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(),
@@ -2506,7 +2506,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchMd5) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(),
@@ -2614,7 +2614,7 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{
+                  ElementsAre(std::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
@@ -4219,9 +4219,230 @@ TEST(ObjectDescriptorImpl, ResumeBudgetIsNotResetByASuccessfulReconnect) {
   while (!sequencer.empty()) sequencer.PopFront().set_value(false);
 }
 
+// Builds a response whose string fields (bucket, object name, 16-byte raw MD5
+// digest, and read_handle) exceed SSO capacity on libstdc++/libc++, exercising
+// heap allocation and deallocation when `metadata_` and `read_object_spec_` are
+// updated in `OnRead()`.
+Response MakeMetadataUpdateResponse(int seq) {
+  Response response;
+  google::storage::v2::Object* metadata = response.mutable_metadata();
+  metadata->set_bucket("projects/_/buckets/test-bucket-long-non-sso-name");
+  metadata->set_name("test-object-with-long-non-sso-allocated-name");
+  metadata->set_generation(42);
+  metadata->set_size(43);
+  metadata->mutable_finalize_time()->set_seconds(1234567890 + seq);
+  metadata->mutable_checksums()->set_crc32c(576848900);
+  metadata->mutable_checksums()->set_md5_hash(
+      std::string(16, static_cast<char>('a' + (seq % 26))));
+  response.mutable_read_handle()->set_handle(
+      "handle-with-long-non-sso-payload-" + std::to_string(seq));
+  return response;
+}
+
+/// @test Verify concurrent Read() calls do not race with OnRead() updating
+/// metadata_ and read_object_spec_.
+TEST(ObjectDescriptorImpl, ConcurrentReadAndMetadataUpdate) {
+  AsyncSequencer<bool> cq;
+  std::atomic<int> seq{0};
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillRepeatedly([&cq](Request const&, grpc::WriteOptions) {
+        return cq.PushBack("Write").then([](auto f) { return f.get(); });
+      });
+  EXPECT_CALL(*stream, Read).WillRepeatedly([&cq, &seq]() {
+    return cq.PushBack("Read").then([&seq](auto f) -> std::optional<Response> {
+      if (!f.get()) return std::nullopt;
+      return MakeMetadataUpdateResponse(++seq);
+    });
+  });
+  EXPECT_CALL(*stream, Finish).WillOnce([&cq]() {
+    return cq.PushBack("Finish").then([](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .Times(AtMost(1))
+      .WillRepeatedly([](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+      });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
+  options.set<storage::EnableCrc32cValidationOption>(true);
+  options.set<storage::EnableMD5ValidationOption>(true);
+
+  google::storage::v2::BidiReadObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket-long-non-sso-name");
+  spec.set_object("test-object-with-long-non-sso-allocated-name");
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(), std::move(spec),
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  tested->Start(MakeMetadataUpdateResponse(0));
+
+  std::atomic<bool> stop{false};
+  std::thread cq_thread([&] {
+    while (true) {
+      auto [p, name] = cq.PopFrontWithName();
+      if (name == "Finish") {
+        p.set_value(true);
+        break;
+      }
+      if (name == "Read" && stop.load(std::memory_order_relaxed)) {
+        p.set_value(false);
+        continue;
+      }
+      p.set_value(true);
+    }
+  });
+
+  constexpr int kReaderThreads = 4;
+  constexpr int kReadsPerThread = 200;
+  std::vector<std::thread> readers;
+  readers.reserve(kReaderThreads);
+  for (int t = 0; t < kReaderThreads; ++t) {
+    readers.emplace_back([&, t] {
+      for (int i = 0; i < kReadsPerThread; ++i) {
+        auto params =
+            (i % 2 == 0)
+                ? storage::ObjectDescriptorConnection::ReadParams{0, 43}
+                : storage::ObjectDescriptorConnection::ReadParams{10, 10};
+        std::unique_ptr<storage::AsyncReaderConnection> reader =
+            tested->Read(params);
+        EXPECT_THAT(reader, NotNull());
+        if ((i + t) % 8 == 0) {
+          (void)tested->metadata();
+          (void)tested->StreamSize();
+        }
+      }
+    });
+  }
+
+  for (auto& r : readers) r.join();
+  stop.store(true, std::memory_order_relaxed);
+  cq_thread.join();
+
+  tested.reset();
+  while (!cq.empty()) cq.PopFront().set_value(false);
+}
+
+/// @test Verify concurrent MakeSubsequentStream(), Read(), metadata(), and
+/// StreamSize() calls do not race when new streams deliver metadata updates.
+TEST(ObjectDescriptorImpl, ConcurrentMultiStreamReadAndStreamSize) {
+  AsyncSequencer<bool> sequencer;
+  auto configure_stream = [&sequencer](MockStream& s) {
+    EXPECT_CALL(s, Write).WillRepeatedly(
+        [](Request const&, grpc::WriteOptions) {
+          return make_ready_future(true);
+        });
+    EXPECT_CALL(s, Read).WillRepeatedly([&sequencer] {
+      return sequencer.PushBack("Read").then(
+          [](auto) { return std::optional<Response>{}; });
+    });
+    EXPECT_CALL(s, Finish).Times(AtMost(1)).WillRepeatedly(
+        [] { return make_ready_future(PermanentError()); });
+    EXPECT_CALL(s, Cancel).Times(AtMost(1));
+  };
+
+  auto initial_stream = std::make_unique<MockStream>();
+  configure_stream(*initial_stream);
+
+  constexpr std::size_t kExtraStreams = 8;
+  std::vector<std::unique_ptr<MockStream>> extra_streams;
+  extra_streams.reserve(kExtraStreams);
+  for (std::size_t i = 0; i < kExtraStreams; ++i) {
+    auto s = std::make_unique<MockStream>();
+    configure_stream(*s);
+    extra_streams.push_back(std::move(s));
+  }
+
+  std::atomic<std::size_t> next_stream{0};
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly([&](Request const&)
+                          -> future<StatusOr<OpenStreamResult>> {
+        std::size_t const idx =
+            next_stream.fetch_add(1, std::memory_order_relaxed);
+        if (idx >= extra_streams.size()) {
+          return make_ready_future(
+              StatusOr<OpenStreamResult>(PermanentError()));
+        }
+        return sequencer.PushBack("Open").then(
+            [&, idx](auto f) -> StatusOr<OpenStreamResult> {
+              if (!f.get()) return PermanentError();
+              return OpenStreamResult{
+                  std::make_shared<OpenStream>(std::move(extra_streams[idx])),
+                  MakeMetadataUpdateResponse(static_cast<int>(idx + 1))};
+            });
+      });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(true);
+  options.set<storage::EnableCrc32cValidationOption>(true);
+  options.set<storage::EnableMD5ValidationOption>(true);
+
+  google::storage::v2::BidiReadObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket-long-non-sso-name");
+  spec.set_object("test-object-with-long-non-sso-allocated-name");
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(), std::move(spec),
+      std::make_shared<OpenStream>(std::move(initial_stream)), options);
+
+  tested->Start(MakeMetadataUpdateResponse(0));
+
+  std::vector<promise<bool>> held_reads;
+  std::thread cq_thread([&] {
+    while (true) {
+      auto [p, name] = sequencer.PopFrontWithName();
+      if (name == "Stop") {
+        p.set_value(false);
+        break;
+      }
+      if (name == "Open") {
+        p.set_value(true);
+        continue;
+      }
+      held_reads.push_back(std::move(p));
+    }
+  });
+
+  constexpr int kWorkerThreads = 4;
+  constexpr int kOpsPerThread = 100;
+  std::vector<std::thread> workers;
+  workers.reserve(kWorkerThreads);
+  for (int t = 0; t < kWorkerThreads; ++t) {
+    workers.emplace_back([&, t] {
+      for (int i = 0; i < kOpsPerThread; ++i) {
+        if ((i + t) % 4 == 0) {
+          tested->MakeSubsequentStream();
+        }
+        std::unique_ptr<storage::AsyncReaderConnection> reader =
+            tested->Read({0, 43});
+        EXPECT_THAT(reader, NotNull());
+        EXPECT_GE(tested->StreamSize(), std::size_t{1});
+        EXPECT_TRUE(tested->metadata().has_value());
+      }
+    });
+  }
+
+  for (auto& w : workers) w.join();
+  (void)sequencer.PushBack("Stop");
+  cq_thread.join();
+
+  EXPECT_GE(tested->StreamSize(), std::size_t{2});
+  tested->Cancel();
+  tested.reset();
+  for (auto& p : held_reads) p.set_value(false);
+  while (!sequencer.empty()) sequencer.PopFront().set_value(false);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

@@ -22,6 +22,7 @@
 #include <cstring>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -293,7 +294,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   // number of bytes.
   if (!read) return run_validator_if_closed(std::move(read).status());
 
-  hash_function_->Update(absl::string_view{s + offset, read->bytes_received});
+  hash_function_->Update(std::string_view{s + offset, read->bytes_received});
   hash_validator_->ProcessHashValues(read->hashes);
   offset += static_cast<std::streamsize>(read->bytes_received);
   for (auto const& kv : read->response.headers) {

@@ -1449,6 +1449,105 @@ DataformConnectionImpl::CreateCompilationResult(
       *current, request, __func__);
 }
 
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformConnectionImpl::CreateCompilationResultLongRunning(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCompilationResultLongRunning(
+          request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataform::v1::CompilationResult>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::CreateCompilationResultRequest const&
+              request) {
+        return stub->AsyncCreateCompilationResultLongRunning(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataform::v1::CompilationResult>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformConnectionImpl::CreateCompilationResultLongRunning(
+    NoAwaitTag,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCompilationResultLongRunning(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateCompilationResultRequest const&
+                 request) {
+        return stub_->CreateCompilationResultLongRunning(context, options,
+                                                         request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::CompilationResult>>
+DataformConnectionImpl::CreateCompilationResultLongRunning(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataform::v1::
+                   CreateCompilationResultMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataform::v1::CompilationResult>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to "
+            "CreateCompilationResultLongRunning",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataform::v1::CompilationResult>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataform::v1::CompilationResult>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::dataform::v1::CompilationResultAction>
 DataformConnectionImpl::QueryCompilationResultActions(
     google::cloud::dataform::v1::QueryCompilationResultActionsRequest request) {

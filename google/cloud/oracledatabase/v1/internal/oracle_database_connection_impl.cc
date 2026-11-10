@@ -2504,6 +2504,244 @@ OracleDatabaseConnectionImpl::DeleteOdbSubnet(
       polling_policy(*current), __func__);
 }
 
+StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseConnectionImpl::ListOdbDnsZones(
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListOdbDnsZones(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const&
+                    request) {
+              return stub->ListOdbDnsZones(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::OdbDnsZone> result(
+            r.odb_dns_zones().size());
+        auto& messages = *r.mutable_odb_dns_zones();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseConnectionImpl::GetOdbDnsZone(
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetOdbDnsZone(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const&
+                 request) {
+        return stub_->GetOdbDnsZone(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseConnectionImpl::CreateOdbDnsZone(
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateOdbDnsZone(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OdbDnsZone>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+              request) {
+        return stub->AsyncCreateOdbDnsZone(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::OdbDnsZone>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::CreateOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateOdbDnsZone(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+                 request) {
+        return stub_->CreateOdbDnsZone(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseConnectionImpl::CreateOdbDnsZone(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateOdbDnsZone",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OdbDnsZone>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::OdbDnsZone>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteOdbDnsZone(
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteOdbDnsZone(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+              request) {
+        return stub->AsyncDeleteOdbDnsZone(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::DeleteOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteOdbDnsZone(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+                 request) {
+        return stub_->DeleteOdbDnsZone(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteOdbDnsZone(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteOdbDnsZone",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
 OracleDatabaseConnectionImpl::ListExadbVmClusters(
     google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request) {

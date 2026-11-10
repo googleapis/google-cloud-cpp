@@ -22,9 +22,9 @@
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/string_view.h"
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ enum ContextType { kPointer, kReference };
 
 std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
                             ContextType context_type,
-                            absl::string_view options) {
+                            std::string_view options) {
   std::string const context = context_type == kPointer ? "*context" : "context";
 
   auto info = ParseExplicitRoutingHeader(method);

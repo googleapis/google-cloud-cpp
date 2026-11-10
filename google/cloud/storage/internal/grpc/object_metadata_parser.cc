@@ -69,7 +69,7 @@ StatusOr<std::string> MD5ToProto(std::string const& v) {
   return std::string{binary->begin(), binary->end()};
 }
 
-std::string ComputeMD5Hash(absl::string_view payload) {
+std::string ComputeMD5Hash(std::string_view payload) {
   auto b = MD5Hash(payload);
   return std::string{b.begin(), b.end()};
 }

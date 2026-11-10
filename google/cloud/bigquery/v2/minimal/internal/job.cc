@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string JobReference::DebugString(absl::string_view name,
+std::string JobReference::DebugString(std::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -32,7 +32,7 @@ std::string JobReference::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Job::DebugString(absl::string_view name,
+std::string Job::DebugString(std::string_view name,
                              TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("etag", etag)
@@ -46,7 +46,7 @@ std::string Job::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ListFormatJob::DebugString(absl::string_view name,
+std::string ListFormatJob::DebugString(std::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -61,7 +61,7 @@ std::string ListFormatJob::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string JobStatus::DebugString(absl::string_view name,
+std::string JobStatus::DebugString(std::string_view name,
                                    TracingOptions const& options,
                                    int indent) const {
   return internal::DebugFormatter(name, options, indent)

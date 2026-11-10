@@ -39,7 +39,7 @@ struct ProductPath {
 };
 
 ProductPath ParseProductPath(std::string const& product_path) {
-  std::vector<absl::string_view> v =
+  std::vector<std::string_view> v =
       absl::StrSplit(product_path, '/', absl::SkipEmpty());
   if (v.empty()) return {};
   auto make_result = [&v](auto it) -> ProductPath {
@@ -970,6 +970,7 @@ void GenerateQuickstartSkeleton(
 #include "google/cloud/$library$/$service_subdirectory$ EDIT HERE _client.h"
 #include "google/cloud/location.h"
 #include <iostream>
+#include <string_view>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {

@@ -46,6 +46,19 @@ DefaultCompletionServiceStub::CompleteQuery(
   return response;
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+DefaultCompletionServiceStub::AdvancedCompleteQuery(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse response;
+  auto status = grpc_stub_->AdvancedCompleteQuery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,

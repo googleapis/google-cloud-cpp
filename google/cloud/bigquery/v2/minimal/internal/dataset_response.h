@@ -20,7 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class GetDatasetResponse {
   static StatusOr<GetDatasetResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
@@ -51,7 +51,7 @@ class ListDatasetsResponse {
   static StatusOr<ListDatasetsResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 

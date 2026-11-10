@@ -40,6 +40,15 @@ CompletionServiceClient::CompleteQuery(
   return connection_->CompleteQuery(request);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceClient::AdvancedCompleteQuery(
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AdvancedCompleteQuery(request);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceClient::ImportSuggestionDenyListEntries(

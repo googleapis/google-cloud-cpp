@@ -318,6 +318,12 @@ Idempotency DataformConnectionIdempotencyPolicy::CreateCompilationResult(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+DataformConnectionIdempotencyPolicy::CreateCompilationResultLongRunning(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DataformConnectionIdempotencyPolicy::QueryCompilationResultActions(
     google::cloud::dataform::v1::
         QueryCompilationResultActionsRequest) {  // NOLINT

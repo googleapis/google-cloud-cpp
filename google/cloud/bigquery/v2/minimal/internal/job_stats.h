@@ -19,11 +19,11 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_query_stats.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <optional>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -45,7 +45,7 @@ struct EvaluationKind {
 
   std::string value;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -66,7 +66,7 @@ struct ScriptStackFrame {
   std::string procedure_id;
   std::string text;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -83,7 +83,7 @@ struct ScriptStatistics {
   EvaluationKind evaluation_kind;
   std::vector<ScriptStackFrame> stack_frames;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -112,7 +112,7 @@ void from_json(nlohmann::json const& j, RowLevelSecurityStatistics& r);
 struct SessionInfo {
   std::string session_id;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
@@ -150,7 +150,7 @@ struct JobStatistics {
   ScriptStatistics script_statistics;
   JobQueryStatistics job_query_stats;
 
-  std::string DebugString(absl::string_view name,
+  std::string DebugString(std::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };

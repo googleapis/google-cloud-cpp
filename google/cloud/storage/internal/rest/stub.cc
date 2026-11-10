@@ -799,7 +799,7 @@ StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
   if (hash_function) {
     auto offset = request.offset();
     for (auto const& b : request.payload()) {
-      hash_function->Update(offset, absl::string_view{b.data(), b.size()});
+      hash_function->Update(offset, std::string_view{b.data(), b.size()});
       offset += b.size();
     }
   }
@@ -1289,3 +1289,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include "google/cloud/internal/diagnostics_pop.inc"
+#include <string_view>

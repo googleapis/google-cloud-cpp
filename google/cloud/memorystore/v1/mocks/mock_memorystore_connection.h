@@ -46,14 +46,29 @@ class MockMemorystoreConnection : public memorystore_v1::MemorystoreConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::memorystore::v1::AclPolicy>),
+              ListAclPolicies,
+              (google::cloud::memorystore::v1::ListAclPoliciesRequest request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::memorystore::v1::Instance>),
               ListInstances,
               (google::cloud::memorystore::v1::ListInstancesRequest request),
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::memorystore::v1::AclPolicy>, GetAclPolicy,
+      (google::cloud::memorystore::v1::GetAclPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::memorystore::v1::Instance>, GetInstance,
       (google::cloud::memorystore::v1::GetInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::memorystore::v1::AclPolicy>, CreateAclPolicy,
+      (google::cloud::memorystore::v1::CreateAclPolicyRequest const& request),
       (override));
 
   /// To disambiguate calls, use:
@@ -101,6 +116,45 @@ class MockMemorystoreConnection : public memorystore_v1::MemorystoreConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// UpdateAclPolicy(Matcher<google::cloud::memorystore::v1::UpdateAclPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>,
+      UpdateAclPolicy,
+      (google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAclPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAclPolicy,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateAclPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>,
+              UpdateAclPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// UpdateInstance(Matcher<google::cloud::memorystore::v1::UpdateInstanceRequest
   /// const&>(_)))
   /// @endcode
@@ -133,6 +187,59 @@ class MockMemorystoreConnection : public memorystore_v1::MemorystoreConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::memorystore::v1::Instance>>,
               UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAclPolicy(Matcher<google::cloud::memorystore::v1::DeleteAclPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>,
+      DeleteAclPolicy,
+      (google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAclPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAclPolicy,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteAclPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>,
+      DeleteAclPolicy, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>,
+      GetAclPolicyRevision,
+      (google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>),
+      ListAclPolicyRevisions,
+      (google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///

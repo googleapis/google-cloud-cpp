@@ -19,8 +19,8 @@
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/strings/str_cat.h"
-#include "absl/strings/string_view.h"
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::string FormatWin32ErrorsImpl(
-    absl::FunctionRef<std::string(absl::string_view, unsigned long)>);
+    absl::FunctionRef<std::string(std::string_view, unsigned long)>);
 
 /**
  * Formats the last Win32 error into a human-readable string.
@@ -38,7 +38,7 @@ std::string FormatWin32ErrorsImpl(
  */
 template <typename... AV>
 std::string FormatWin32Errors(AV&&... prefixes) {
-  return FormatWin32ErrorsImpl([&](absl::string_view msg, unsigned long ec) {
+  return FormatWin32ErrorsImpl([&](std::string_view msg, unsigned long ec) {
     return absl::StrCat(std::forward<AV>(prefixes)..., msg, " (error code ", ec,
                         ")");
   });

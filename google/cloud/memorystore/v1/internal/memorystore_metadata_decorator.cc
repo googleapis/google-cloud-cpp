@@ -48,6 +48,15 @@ MemorystoreMetadata::MemorystoreMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
+StatusOr<google::cloud::memorystore::v1::ListAclPoliciesResponse>
+MemorystoreMetadata::ListAclPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPoliciesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAclPolicies(context, options, request);
+}
+
 StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
 MemorystoreMetadata::ListInstances(
     grpc::ClientContext& context, Options const& options,
@@ -57,6 +66,15 @@ MemorystoreMetadata::ListInstances(
   return child_->ListInstances(context, options, request);
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreMetadata::GetAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAclPolicy(context, options, request);
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance>
 MemorystoreMetadata::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -64,6 +82,15 @@ MemorystoreMetadata::GetInstance(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreMetadata::CreateAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAclPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -87,6 +114,28 @@ StatusOr<google::longrunning::Operation> MemorystoreMetadata::CreateInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("acl_policy.name=",
+                           internal::UrlEncode(request.acl_policy().name())));
+  return child_->AsyncUpdateAclPolicy(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::UpdateAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("acl_policy.name=",
+                           internal::UrlEncode(request.acl_policy().name())));
+  return child_->UpdateAclPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 MemorystoreMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -106,6 +155,46 @@ StatusOr<google::longrunning::Operation> MemorystoreMetadata::UpdateInstance(
               absl::StrCat("instance.name=",
                            internal::UrlEncode(request.instance().name())));
   return child_->UpdateInstance(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreMetadata::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAclPolicy(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreMetadata::DeleteAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAclPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreMetadata::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAclPolicyRevision(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse>
+MemorystoreMetadata::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAclPolicyRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

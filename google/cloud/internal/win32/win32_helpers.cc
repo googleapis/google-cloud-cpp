@@ -26,7 +26,7 @@ static_assert(std::is_same_v<DWORD, unsigned long>,
               "DWORD is not unsigned long");
 
 std::string FormatWin32ErrorsImpl(
-    absl::FunctionRef<std::string(absl::string_view, unsigned long)> f) {
+    absl::FunctionRef<std::string(std::string_view, unsigned long)> f) {
   auto last_error = GetLastError();
   LPSTR message_buffer_raw = nullptr;
   auto size = FormatMessageA(
@@ -36,7 +36,7 @@ std::string FormatWin32ErrorsImpl(
       (LPSTR)&message_buffer_raw, 0, nullptr);
   std::unique_ptr<char, decltype(&LocalFree)> message_buffer(message_buffer_raw,
                                                              &LocalFree);
-  return f(absl::string_view(message_buffer.get(), size), last_error);
+  return f(std::string_view(message_buffer.get(), size), last_error);
 }
 
 }  // namespace internal

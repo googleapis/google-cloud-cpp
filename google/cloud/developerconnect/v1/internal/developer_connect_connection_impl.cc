@@ -686,6 +686,23 @@ DeveloperConnectConnectionImpl::FetchReadToken(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnectionImpl::OpenGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->OpenGitRepositoryLinkPullRequest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 OpenGitRepositoryLinkPullRequestRequest const& request) {
+        return stub_->OpenGitRepositoryLinkPullRequest(context, options,
+                                                       request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
 DeveloperConnectConnectionImpl::FetchLinkableGitRepositories(
     google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
@@ -770,6 +787,211 @@ StreamRange<std::string> DeveloperConnectConnectionImpl::FetchGitRefs(
       [](google::cloud::developerconnect::v1::FetchGitRefsResponse r) {
         std::vector<std::string> result(r.ref_names().size());
         auto& messages = *r.mutable_ref_names();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectConnectionImpl::DiffGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DiffGitRepositoryLinkCommit(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 DiffGitRepositoryLinkCommitRequest const& request) {
+        return stub_->DiffGitRepositoryLinkCommit(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectConnectionImpl::FetchGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchGitRepositoryLinkCommit(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkCommitRequest const& request) {
+        return stub_->FetchGitRepositoryLinkCommit(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::developerconnect::v1::SCMCommit>
+DeveloperConnectConnectionImpl::FetchGitRepositoryLinkCommitList(
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitListRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->FetchGitRepositoryLinkCommitList(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::developerconnect::v1::SCMCommit>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::developerconnect::v1::
+              FetchGitRepositoryLinkCommitListRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::developerconnect::v1::
+                       FetchGitRepositoryLinkCommitListRequest const& request) {
+              return stub->FetchGitRepositoryLinkCommitList(context, options,
+                                                            request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkCommitListResponse r) {
+        std::vector<google::cloud::developerconnect::v1::SCMCommit> result(
+            r.commits().size());
+        auto& messages = *r.mutable_commits();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectConnectionImpl::FetchGitRepositoryLinkFileBlame(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchGitRepositoryLinkFileBlame(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkFileBlameRequest const& request) {
+        return stub_->FetchGitRepositoryLinkFileBlame(context, options,
+                                                      request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnectionImpl::FetchGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchGitRepositoryLinkPullRequest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 FetchGitRepositoryLinkPullRequestRequest const& request) {
+        return stub_->FetchGitRepositoryLinkPullRequest(context, options,
+                                                        request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectConnectionImpl::AddGitRepositoryLinkPullRequestComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddGitRepositoryLinkPullRequestComment(
+          request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 AddGitRepositoryLinkPullRequestCommentRequest const& request) {
+        return stub_->AddGitRepositoryLinkPullRequestComment(context, options,
+                                                             request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectConnectionImpl::AddGitRepositoryLinkPullRequestReviewComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)
+          ->AddGitRepositoryLinkPullRequestReviewComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 AddGitRepositoryLinkPullRequestReviewCommentRequest const&
+                     request) {
+        return stub_->AddGitRepositoryLinkPullRequestReviewComment(
+            context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnectionImpl::ModifyGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ModifyGitRepositoryLinkPullRequest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 ModifyGitRepositoryLinkPullRequestRequest const& request) {
+        return stub_->ModifyGitRepositoryLinkPullRequest(context, options,
+                                                         request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnectionImpl::FetchGitRepositoryLinkPullRequestList(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->FetchGitRepositoryLinkPullRequestList(
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::developerconnect::v1::PullRequest>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::developerconnect::v1::
+              FetchGitRepositoryLinkPullRequestListRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::developerconnect::v1::
+                       FetchGitRepositoryLinkPullRequestListRequest const&
+                           request) {
+              return stub->FetchGitRepositoryLinkPullRequestList(
+                  context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkPullRequestListResponse r) {
+        std::vector<google::cloud::developerconnect::v1::PullRequest> result(
+            r.pull_requests().size());
+        auto& messages = *r.mutable_pull_requests();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });

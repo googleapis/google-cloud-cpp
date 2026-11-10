@@ -227,6 +227,12 @@ class DataStoreServiceConnection {
       google::cloud::discoveryengine::v1::UpdateDataStoreRequest const&
           request);
 
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);
 

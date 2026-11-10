@@ -21,6 +21,7 @@
 #include "absl/time/time.h"
 #include <grpcpp/grpcpp.h>
 #include <iterator>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -325,9 +326,9 @@ void Recordable::SetIdentityImpl(
   span_context.span_id().ToLowerBase16(span);
 
   span_.set_name(absl::StrCat(project_.FullName(), "/traces/",
-                              absl::string_view{trace.data(), trace.size()},
+                              std::string_view{trace.data(), trace.size()},
                               "/spans/",
-                              absl::string_view{span.data(), span.size()}));
+                              std::string_view{span.data(), span.size()}));
   span_.set_span_id({span.data(), span.size()});
 
   if (parent_span_id.IsValid()) {

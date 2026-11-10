@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -26,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(
-    std::shared_ptr<ReadRange> impl, absl::string_view cache_status,
+    std::shared_ptr<ReadRange> impl, std::string_view cache_status,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span =
         opentelemetry::trace::Tracer::GetCurrentSpan());
 

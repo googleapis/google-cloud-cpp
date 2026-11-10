@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_APP_PROFILE_CONFIG_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_APP_PROFILE_CONFIG_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/version.h"
 #include "google/bigtable/admin/v2/bigtable_instance_admin.pb.h"
 #include <string>
@@ -23,8 +24,16 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-/// Specify the initial configuration for an application profile.
-class AppProfileConfig {
+/**
+ * Specify the initial configuration for an application profile.
+ *
+ * @deprecated Use `google::bigtable::admin::v2::CreateAppProfileRequest` with
+ *     `google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.
+ */
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use `google::bigtable::admin::v2::CreateAppProfileRequest` with "
+    "`google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.")
+    AppProfileConfig {
  public:
   explicit AppProfileConfig(
       google::bigtable::admin::v2::CreateAppProfileRequest proto)
@@ -95,8 +104,16 @@ class AppProfileConfig {
   google::bigtable::admin::v2::CreateAppProfileRequest proto_;
 };
 
-/// Build a proto to update an Application Profile configuration.
-class AppProfileUpdateConfig {
+/**
+ * Build a proto to update an Application Profile configuration.
+ *
+ * @deprecated Use `google::bigtable::admin::v2::UpdateAppProfileRequest` with
+ *     `google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.
+ */
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use `google::bigtable::admin::v2::UpdateAppProfileRequest` with "
+    "`google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.")
+    AppProfileUpdateConfig {
  public:
   AppProfileUpdateConfig() = default;
 
@@ -158,5 +175,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_APP_PROFILE_CONFIG_H
