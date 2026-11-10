@@ -42,8 +42,8 @@ excluded_rules=(
   "-//google/cloud/storage/examples:storage_service_account_samples"
   # This sample can be very long running due to creation time of AnywhereCache
   "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
-  # This sample requires a pre-provisioned regional HNS bucket and a disabled
-  # Rapid Cache takes a long time (30+ minutes) to be removed.
+  # This sample requires a pre-provisioned regional HNS bucket, and a disabled
+  # Rapid Cache can take over an hour to be fully removed.
   "-//google/cloud/storagecontrol:v2_samples_storage_control_rapid_cache_samples"
 )
 
