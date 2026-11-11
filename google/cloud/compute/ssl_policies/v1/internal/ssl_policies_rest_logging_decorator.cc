@@ -97,6 +97,20 @@ SslPoliciesRestLogging::GetSslPolicy(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+SslPoliciesRestLogging::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::GetIamPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::ssl_policies::v1::
+                 GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesRestLogging::AsyncInsertSslPolicy(
     CompletionQueue& cq,
@@ -190,6 +204,34 @@ SslPoliciesRestLogging::PatchSslPolicy(
              google::cloud::cpp::compute::ssl_policies::v1::
                  PatchSslPolicyRequest const& request) {
         return child_->PatchSslPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+SslPoliciesRestLogging::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::SetIamPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::ssl_policies::v1::
+                 SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+SslPoliciesRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::ssl_policies::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

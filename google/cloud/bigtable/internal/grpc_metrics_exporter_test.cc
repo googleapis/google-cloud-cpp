@@ -167,13 +167,13 @@ class DummyEndpointConfig
     : public grpc_event_engine::experimental::EndpointConfig {
  public:
   ~DummyEndpointConfig() override = default;
-  std::optional<int> GetInt(absl::string_view) const override {
+  std::optional<int> GetInt(std::string_view) const override {
     return std::nullopt;
   }
-  std::optional<absl::string_view> GetString(absl::string_view) const override {
+  std::optional<std::string_view> GetString(std::string_view) const override {
     return std::nullopt;
   }
-  void* GetVoidPointer(absl::string_view) const override { return nullptr; }
+  void* GetVoidPointer(std::string_view) const override { return nullptr; }
 };
 
 class DummyMetricServiceConnection

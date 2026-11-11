@@ -40,6 +40,16 @@ CompletionServiceTracingConnection::CompleteQuery(
   return internal::EndSpan(*span, child_->CompleteQuery(request));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceTracingConnection::AdvancedCompleteQuery(
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::CompletionServiceConnection::AdvancedCompleteQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AdvancedCompleteQuery(request));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceTracingConnection::ImportSuggestionDenyListEntries(

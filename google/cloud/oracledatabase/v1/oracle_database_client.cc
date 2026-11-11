@@ -1306,6 +1306,125 @@ OracleDatabaseClient::DeleteOdbSubnet(
   return connection_->DeleteOdbSubnet(operation);
 }
 
+StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseClient::ListOdbDnsZones(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request;
+  request.set_parent(parent);
+  return connection_->ListOdbDnsZones(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseClient::ListOdbDnsZones(
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListOdbDnsZones(std::move(request));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseClient::GetOdbDnsZone(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest request;
+  request.set_name(name);
+  return connection_->GetOdbDnsZone(request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseClient::GetOdbDnsZone(
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOdbDnsZone(request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseClient::CreateOdbDnsZone(
+    std::string const& parent,
+    google::cloud::oracledatabase::v1::OdbDnsZone const& odb_dns_zone,
+    std::string const& odb_dns_zone_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest request;
+  request.set_parent(parent);
+  *request.mutable_odb_dns_zone() = odb_dns_zone;
+  request.set_odb_dns_zone_id(odb_dns_zone_id);
+  return connection_->CreateOdbDnsZone(request);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseClient::CreateOdbDnsZone(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::oracledatabase::v1::OdbDnsZone const& odb_dns_zone,
+    std::string const& odb_dns_zone_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest request;
+  request.set_parent(parent);
+  *request.mutable_odb_dns_zone() = odb_dns_zone;
+  request.set_odb_dns_zone_id(odb_dns_zone_id);
+  return connection_->CreateOdbDnsZone(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseClient::CreateOdbDnsZone(
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateOdbDnsZone(request);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseClient::CreateOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateOdbDnsZone(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseClient::CreateOdbDnsZone(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateOdbDnsZone(operation);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteOdbDnsZone(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest request;
+  request.set_name(name);
+  return connection_->DeleteOdbDnsZone(request);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseClient::DeleteOdbDnsZone(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest request;
+  request.set_name(name);
+  return connection_->DeleteOdbDnsZone(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteOdbDnsZone(
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteOdbDnsZone(request);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseClient::DeleteOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteOdbDnsZone(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteOdbDnsZone(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteOdbDnsZone(operation);
+}
+
 StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
 OracleDatabaseClient::ListExadbVmClusters(std::string const& parent,
                                           Options opts) {

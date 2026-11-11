@@ -40,7 +40,7 @@ jobs:
             # Exclude .github directory from automated commit to prevent workflow permission errors
             git add -A -- ':!.github'
             if ! git diff --cached --quiet; then
-              git commit -m "chore: apply formatting from checkers"
+              git commit -m "chore(compute): apply formatting from checkers"
             fi
           elif [[ ${status} -ne 0 ]]; then
             echo "Checkers failed with unexpected exit code ${status}."
@@ -97,7 +97,7 @@ jobs:
             fi
 
             REVISION=$(sed -En 's/  "revision": "([[:digit:]]+)",/\1/p' generator/discovery/compute_public_google_rest_v1.json)
-            PR_TITLE="feat(compute): update discovery doc revision ${REVISION} and generate new services"
+            PR_TITLE="chore(compute): update discovery doc revision ${REVISION} and generate new services"
 
             echo "Checking if a PR is already open..."
             EXISTING_PR=$(gh pr list --repo "${GITHUB_REPOSITORY}" --head "automation/update-compute-discovery" --json number -q '.[0].number')

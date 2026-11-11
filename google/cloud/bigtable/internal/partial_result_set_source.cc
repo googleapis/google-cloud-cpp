@@ -138,6 +138,10 @@ Status PartialResultSetSource::ReadFromStream() {
   // The resume_token_ member holds the token from the previous
   // PartialResultSet. It's empty on the first call.
   if (reader_->Read(resume_token_, result_set)) {
+    if (result_set.resumption) {
+      read_buffer_.clear();
+      buffered_rows_.clear();
+    }
     return ProcessDataFromStream(result_set.result);
   }
 
@@ -215,6 +219,13 @@ Status PartialResultSetSource::BufferProtoRows() {
     auto const& proto_schema = metadata_->proto_schema();
     auto const columns_size = proto_schema.columns_size();
     auto const& proto_values = proto_rows_.values();
+    if (columns_size == 0) {
+      if (proto_values.empty()) return Status{};
+      state_ = State::kFinished;
+      return internal::InternalError(
+          "ResultSetMetadata has no columns, but ProtoRows contains values",
+          GCP_ERROR_INFO());
+    }
 
     if (proto_values.size() % columns_size != 0) {
       state_ = State::kFinished;

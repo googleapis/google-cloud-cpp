@@ -37,6 +37,7 @@
 #include <gmock/gmock.h>
 #include <map>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -125,7 +126,7 @@ std::unique_ptr<BidiReadStream> MakeErrorStream(AsyncSequencer<void>& sequencer,
   return std::unique_ptr<BidiReadStream>(std::move(stream));
 }
 
-Status RedirectError(absl::string_view handle, absl::string_view token) {
+Status RedirectError(std::string_view handle, std::string_view token) {
   auto make_details = [&] {
     auto redirected = google::storage::v2::BidiReadObjectRedirectedError{};
     redirected.mutable_read_handle()->set_handle(std::string(handle));

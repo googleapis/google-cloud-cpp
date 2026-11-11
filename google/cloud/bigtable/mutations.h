@@ -19,7 +19,9 @@
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/bigtable/v2/bigtable.pb.h"
@@ -398,12 +400,15 @@ class SingleRowMutation {
 };
 
 /**
- * A SingleRowMutation that failed.
+ * Report the status and original batch index of a `SingleRowMutation` that
+ * failed in a multi-row mutation.
  *
- * A multi-row mutation returns the list of operations that failed,
- * this class encapsulates both the failure and the original
- * mutation.  The application can then choose to resend the mutation,
- * or log it, or save it for processing via some other means.
+ * A multi-row mutation returns the list of operations that failed. Each
+ * `FailedMutation` records the failure `status()` and the `original_index()`
+ * of the entry in the input `BulkMutation`; it does **not** retain the
+ * original `SingleRowMutation` payload. Applications that want to resend or
+ * inspect failed mutations should retain the original `SingleRowMutation`
+ * values alongside the batch and index into them via `original_index()`.
  */
 class FailedMutation {
  public:
@@ -458,13 +463,13 @@ class PermanentMutationFailure : public std::runtime_error {
   /**
    * The details of each mutation failure.
    *
-   * Because BulkApply() and Apply() take ownership of the data in the mutations
-   * the failures are returned with their full contents, in case the application
-   * wants to take further action with them.  Any successful mutations are
-   * discarded.
+   * Each `FailedMutation` reports the failure `status()` and the
+   * `original_index()` of the entry in the `BulkMutation` (it does **not**
+   * retain the original mutation payload). Any successful mutations are
+   * omitted.
    *
    * Any mutations that fail with an unknown state are included with a
-   * `grpc::StatusCode::OK`.
+   * `StatusCode::kOk` status.
    */
   std::vector<FailedMutation> const& failures() const { return failures_; }
 
@@ -539,8 +544,18 @@ class BulkMutation {
     return *this;
   }
 
-  // Add a failed mutation to the batch.
+  /// @deprecated `FailedMutation` does not retain the original mutation
+  /// payload; calling `emplace_back(FailedMutation)` is a no-op and does not
+  /// add an entry to the batch. Use `FailedMutation::original_index()` to look
+  /// up and re-add the original `SingleRowMutation`.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "FailedMutation does not retain the original mutation; use "
+      "FailedMutation::original_index() to resend the original "
+      "SingleRowMutation instead.")
   BulkMutation& emplace_back(FailedMutation fm) {
+    GCP_LOG(ERROR) << "BulkMutation::emplace_back(FailedMutation) is a no-op "
+                      "and drops the mutation (original_index="
+                   << fm.original_index() << ")";
     fm.status_ = google::cloud::Status();
     return *this;
   }

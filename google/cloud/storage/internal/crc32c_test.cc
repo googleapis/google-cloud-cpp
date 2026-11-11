@@ -29,7 +29,7 @@ using ::google::cloud::storage::internal::ConstBufferSequence;
 
 TEST(Crc32c, Empty) {
   auto const expected = std::uint32_t{0};
-  EXPECT_EQ(expected, Crc32c(absl::string_view{}));
+  EXPECT_EQ(expected, Crc32c(std::string_view{}));
   EXPECT_EQ(expected, Crc32c(absl::Cord{}));
   EXPECT_EQ(expected, Crc32c(ConstBufferSequence{}));
   EXPECT_EQ(expected,
@@ -39,7 +39,7 @@ TEST(Crc32c, Empty) {
 TEST(Crc32c, Quick) {
   auto const expected = std::uint32_t{0x22620404};
   auto const input = std::string("The quick brown fox jumps over the lazy dog");
-  EXPECT_EQ(expected, Crc32c(absl::string_view(input)));
+  EXPECT_EQ(expected, Crc32c(std::string_view(input)));
   EXPECT_EQ(expected, Crc32c(absl::Cord(input)));
   EXPECT_EQ(expected, Crc32c(ConstBufferSequence{ConstBuffer(input)}));
 }
@@ -101,7 +101,7 @@ TEST(Crc32c, ExtendPrecomputedStringView) {
   auto crc = std::uint32_t{0};
   for (auto const& input : inputs) {
     auto const input_crc = Crc32c(input);
-    crc = ExtendCrc32c(crc, absl::string_view{input}, input_crc);
+    crc = ExtendCrc32c(crc, std::string_view{input}, input_crc);
   }
   EXPECT_EQ(expected, crc);
 }

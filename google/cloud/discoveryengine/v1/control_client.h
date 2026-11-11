@@ -121,7 +121,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.CreateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L136}
+  /// [google.cloud.discoveryengine.v1.CreateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L138}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
@@ -158,7 +158,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.CreateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L136}
+  /// [google.cloud.discoveryengine.v1.CreateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L138}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
@@ -186,7 +186,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.DeleteControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L177}
+  /// [google.cloud.discoveryengine.v1.DeleteControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L179}
   ///
   // clang-format on
   Status DeleteControl(std::string const& name, Options opts = {});
@@ -216,7 +216,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.DeleteControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L177}
+  /// [google.cloud.discoveryengine.v1.DeleteControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L179}
   ///
   // clang-format on
   Status DeleteControl(
@@ -254,9 +254,9 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.Control.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L296}
-  /// [google.cloud.discoveryengine.v1.Control.solution_type]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L314}
-  /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L160}
+  /// [google.cloud.discoveryengine.v1.Control.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L293}
+  /// [google.cloud.discoveryengine.v1.Control.solution_type]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L311}
+  /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L162}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
@@ -291,7 +291,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L160}
+  /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L162}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
@@ -318,7 +318,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.GetControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L189}
+  /// [google.cloud.discoveryengine.v1.GetControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
@@ -348,7 +348,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.GetControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L189}
+  /// [google.cloud.discoveryengine.v1.GetControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
@@ -387,7 +387,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L201}
+  /// [google.cloud.discoveryengine.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L203}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Control> ListControls(
@@ -427,7 +427,7 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L201}
+  /// [google.cloud.discoveryengine.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L203}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Control> ListControls(

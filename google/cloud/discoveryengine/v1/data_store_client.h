@@ -21,6 +21,8 @@
 
 #include "google/cloud/discoveryengine/v1/data_store_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -134,7 +136,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L125}
+  /// [google.cloud.discoveryengine.v1.CreateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L170}
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
   ///
   // clang-format on
@@ -196,7 +198,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L125}
+  /// [google.cloud.discoveryengine.v1.CreateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L170}
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
   ///
   // clang-format on
@@ -262,7 +264,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L184}
+  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L229}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
@@ -292,7 +294,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L184}
+  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L229}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
@@ -334,7 +336,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L219}
+  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L264}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::DataStore> ListDataStores(
@@ -374,7 +376,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L219}
+  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L264}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::DataStore> ListDataStores(
@@ -416,8 +418,8 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L321}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L275}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L366}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
@@ -468,8 +470,8 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L321}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L275}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L366}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
@@ -538,7 +540,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L297}
+  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L342}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> UpdateDataStore(
@@ -569,12 +571,187 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
-  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L297}
+  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L342}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> UpdateDataStore(
       google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the IAM access control policy for a
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore]. A `NOT_FOUND` error
+  /// is returned if the resource does not exist. An empty policy is returned if
+  /// the resource exists but does not have a policy set on it.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the IAM access control policy for a
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore]. A `NOT_FOUND` error
+  /// is returned if the resource does not exist. An empty policy is returned if
+  /// the resource exists but does not have a policy set on it.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the IAM access control policy for a
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore]. A `NOT_FOUND` error
+  /// is returned if the resource does not exist.
+  ///
+  /// **Important:** When setting a policy directly on a DataStore resource,
+  /// the only recommended roles in the bindings are:
+  /// `roles/discoveryengine.admin`
+  /// `roles/discoveryengine.agentspaceAdmin`
+  /// `roles/discoveryengine.viewer`
+  /// `roles/discoveryengine.agentspaceViewer`
+  /// `roles/discoveryengine.user`
+  /// `roles/discoveryengine.agentspaceUser`
+  /// Attempting to grant any other role will result in a warning in logging.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
+  ///  the policy is limited to a few 10s of KB. An empty policy is a
+  ///  valid policy but certain Cloud Platform services (such as Projects)
+  ///  might reject them.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
+
+  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param opts  Optional. Override the class-level options, such as retry and
+   *    backoff policies.
+   * @return google::iam::v1::Policy
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the IAM access control policy for a
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore]. A `NOT_FOUND` error
+  /// is returned if the resource does not exist.
+  ///
+  /// **Important:** When setting a policy directly on a DataStore resource,
+  /// the only recommended roles in the bindings are:
+  /// `roles/discoveryengine.admin`
+  /// `roles/discoveryengine.agentspaceAdmin`
+  /// `roles/discoveryengine.viewer`
+  /// `roles/discoveryengine.agentspaceViewer`
+  /// `roles/discoveryengine.user`
+  /// `roles/discoveryengine.agentspaceUser`
+  /// Attempting to grant any other role will result in a warning in logging.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L37}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///

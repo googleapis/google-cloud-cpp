@@ -26,6 +26,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -188,7 +189,7 @@ TEST(InsertObject, SuccessEmpty) {
 TEST(InsertObject, SuccessChunkAligned) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();
@@ -258,7 +259,7 @@ TEST(InsertObject, SuccessChunkAligned) {
 TEST(InsertObject, SuccessChunkPartial) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
+  auto const view = std::string_view(buffer.data(), buffer.size());
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();

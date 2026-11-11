@@ -29,6 +29,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string_view>
 #include <variant>
 
 namespace google {
@@ -122,8 +123,8 @@ std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
 
 std::unique_ptr<AsyncBidiWriteObjectStream> MakeRedirectAppendStream(
     AsyncSequencer<bool>& sequencer, std::int64_t persisted_size,
-    absl::string_view expected_handle, std::int64_t expected_generation,
-    absl::string_view expected_routing_token) {
+    std::string_view expected_handle, std::int64_t expected_generation,
+    std::string_view expected_routing_token) {
   auto stream = MakeCommonAppendStream(sequencer, persisted_size);
   // The first write is a "state lookup" write. It should not contain a payload.
   // The server responds with the current persisted size of the object.
@@ -161,7 +162,7 @@ std::unique_ptr<AsyncBidiWriteObjectStream> MakeRedirectAppendStream(
 
 std::unique_ptr<AsyncBidiWriteObjectStream> MakeRedirectAppendStreamNoHandle(
     AsyncSequencer<bool>& sequencer, std::int64_t persisted_size,
-    absl::string_view expected_bucket, absl::string_view expected_object_name) {
+    std::string_view expected_bucket, std::string_view expected_object_name) {
   auto stream = MakeCommonAppendStream(sequencer, persisted_size);
   // The first write is a "state lookup" write. It should not contain a payload.
   // The server responds with the current persisted size of the object.

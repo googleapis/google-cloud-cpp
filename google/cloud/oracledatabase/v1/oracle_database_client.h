@@ -117,7 +117,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
-  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L991}
+  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1037}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -156,7 +156,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
-  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L991}
+  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1037}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -186,7 +186,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
-  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1030}
+  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1076}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -216,7 +216,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
-  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1030}
+  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1076}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -257,7 +257,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
-  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1043}
+  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1089}
   ///
   // clang-format on
   future<
@@ -316,7 +316,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
-  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1043}
+  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1089}
   ///
   // clang-format on
   future<
@@ -384,8 +384,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1079}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1125}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -435,8 +435,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1079}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1125}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -631,7 +631,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1110}
+  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1156}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
@@ -670,7 +670,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1110}
+  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1156}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
@@ -698,7 +698,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1146}
+  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1192}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
@@ -728,7 +728,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1146}
+  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1192}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
@@ -768,7 +768,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1158}
+  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
@@ -824,7 +824,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1158}
+  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
@@ -889,8 +889,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1192}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1238}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -940,8 +940,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1192}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1238}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1009,7 +1009,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Entitlement]: @googleapis_reference_link{google/cloud/oracledatabase/v1/entitlement.proto#L31}
-  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1222}
+  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1268}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
@@ -1048,7 +1048,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Entitlement]: @googleapis_reference_link{google/cloud/oracledatabase/v1/entitlement.proto#L31}
-  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1222}
+  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1268}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
@@ -1084,7 +1084,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbServer]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_server.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1251}
+  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1297}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
@@ -1123,7 +1123,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbServer]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_server.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1251}
+  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1297}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
@@ -1159,7 +1159,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1280}
+  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1326}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
@@ -1198,7 +1198,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1280}
+  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1326}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
@@ -1235,7 +1235,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.GiVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/gi_version.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1310}
+  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1356}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
@@ -1275,7 +1275,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.GiVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/gi_version.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1310}
+  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1356}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
@@ -1389,7 +1389,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystemShape]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_shape.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1345}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1391}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
@@ -1428,7 +1428,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystemShape]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_shape.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1345}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1391}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
@@ -1465,7 +1465,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1415}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1461}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1504,7 +1504,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1415}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1461}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1532,7 +1532,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1454}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1500}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1562,7 +1562,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1454}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1500}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1603,7 +1603,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1466}
+  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1512}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1661,7 +1661,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1466}
+  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1512}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1731,7 +1731,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1501}
+  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1547}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1788,7 +1788,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1501}
+  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1547}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1853,8 +1853,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1529}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1575}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1904,8 +1904,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1529}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1575}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1972,7 +1972,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1554}
+  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1600}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2026,7 +2026,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1554}
+  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1600}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2090,8 +2090,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1687}
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1711}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1733}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1757}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::
@@ -2124,8 +2124,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1687}
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1711}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1733}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1757}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::
@@ -2165,7 +2165,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_version.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1717}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1763}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
@@ -2205,7 +2205,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_version.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1717}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1763}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
@@ -2243,7 +2243,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database_character_set.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1746}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1792}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
@@ -2283,7 +2283,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database_character_set.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1746}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1792}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
@@ -2321,7 +2321,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseBackup]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_backup.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1782}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1828}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
@@ -2360,7 +2360,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseBackup]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_backup.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1782}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1828}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
@@ -2396,7 +2396,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1570}
+  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1616}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2447,7 +2447,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1570}
+  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1616}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2513,7 +2513,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1582}
+  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1628}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2564,7 +2564,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1582}
+  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1628}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2630,7 +2630,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1594}
+  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2681,7 +2681,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1594}
+  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2750,7 +2750,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1606}
+  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1652}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2805,7 +2805,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1606}
+  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1652}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2874,7 +2874,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1627}
+  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1673}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2929,7 +2929,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1627}
+  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1673}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2999,7 +2999,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RefreshAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1668}
+  /// [google.cloud.oracledatabase.v1.RefreshAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1714}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -3055,7 +3055,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RefreshAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1668}
+  /// [google.cloud.oracledatabase.v1.RefreshAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1714}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -3114,8 +3114,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.AutonomousDatabaseRefreshableClones]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1661}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRefreshableClonesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1648}
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabaseRefreshableClones]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1707}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRefreshableClonesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1694}
   ///
   // clang-format on
   StatusOr<
@@ -3146,8 +3146,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.AutonomousDatabaseRefreshableClones]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1661}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRefreshableClonesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1648}
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabaseRefreshableClones]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1707}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRefreshableClonesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1694}
   ///
   // clang-format on
   StatusOr<
@@ -3441,7 +3441,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L125}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3492,7 +3492,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L125}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3813,7 +3813,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L127}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3864,7 +3864,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L127}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3903,6 +3903,378 @@ class OracleDatabaseClient {
 
   // clang-format off
   ///
+  /// Lists all the ODB DNS Zones in a given ODB Network.
+  ///
+  /// @param parent  Required. The parent value for the OdbDnsZone in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.OdbDnsZone], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListOdbDnsZonesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L144}
+  /// [google.cloud.oracledatabase.v1.OdbDnsZone]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone> ListOdbDnsZones(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the ODB DNS Zones in a given ODB Network.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListOdbDnsZonesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.OdbDnsZone], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListOdbDnsZonesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L144}
+  /// [google.cloud.oracledatabase.v1.OdbDnsZone]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone> ListOdbDnsZones(
+      google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ODB DNS Zone.
+  ///
+  /// @param name  Required. The name of the OdbDnsZone in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.OdbDnsZone])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetOdbDnsZoneRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L183}
+  /// [google.cloud.oracledatabase.v1.OdbDnsZone]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone> GetOdbDnsZone(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ODB DNS Zone.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetOdbDnsZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.OdbDnsZone])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetOdbDnsZoneRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L183}
+  /// [google.cloud.oracledatabase.v1.OdbDnsZone]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone> GetOdbDnsZone(
+      google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ODB DNS Zone in a given ODB Network.
+  ///
+  /// @param parent  Required. The parent value for the OdbDnsZone in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+  /// @param odb_dns_zone  Required. Details of the OdbDnsZone instance to create.
+  /// @param odb_dns_zone_id  Required. The ID of the OdbDnsZone to create. This value is restricted
+  ///  to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63
+  ///  characters in length. The value must start with a letter and end with
+  ///  a letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OdbDnsZone] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateOdbDnsZoneRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L85}
+  /// [google.cloud.oracledatabase.v1.OdbDnsZone]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+  CreateOdbDnsZone(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::OdbDnsZone const& odb_dns_zone,
+      std::string const& odb_dns_zone_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbDnsZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateOdbDnsZone(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::OdbDnsZone const& odb_dns_zone,
+      std::string const& odb_dns_zone_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ODB DNS Zone in a given ODB Network.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateOdbDnsZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OdbDnsZone] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateOdbDnsZoneRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L85}
+  /// [google.cloud.oracledatabase.v1.OdbDnsZone]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+  CreateOdbDnsZone(
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbDnsZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateOdbDnsZone(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbDnsZone
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+  CreateOdbDnsZone(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ODB DNS Zone.
+  ///
+  /// @param name  Required. The name of the resource in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteOdbDnsZoneRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L119}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbDnsZone(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbDnsZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteOdbDnsZone(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ODB DNS Zone.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteOdbDnsZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteOdbDnsZoneRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_dns_zone.proto#L119}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbDnsZone(
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbDnsZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteOdbDnsZone(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbDnsZone
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbDnsZone(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists all the Exadb (Exascale) VM Clusters for the given project and
   /// location.
   ///
@@ -3931,7 +4303,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1896}
+  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1942}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
@@ -3971,7 +4343,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1896}
+  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1942}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
@@ -3999,7 +4371,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1884}
+  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1930}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
@@ -4029,7 +4401,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1884}
+  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1930}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
@@ -4068,7 +4440,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1820}
+  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1866}
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
   ///
   // clang-format on
@@ -4124,7 +4496,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1820}
+  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1866}
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
   ///
   // clang-format on
@@ -4190,8 +4562,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1859}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1905}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -4241,8 +4613,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1859}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1905}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -4311,7 +4683,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1937}
+  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1983}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4367,7 +4739,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1937}
+  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1983}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4435,7 +4807,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1962}
+  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L2008}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4489,7 +4861,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1962}
+  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L2008}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4822,7 +5194,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L279}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -4873,7 +5245,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L279}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -5542,7 +5914,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L337}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -5593,7 +5965,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L337}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -5922,7 +6294,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L663}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -5973,7 +6345,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L663}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -6538,7 +6910,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2274}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -6589,7 +6961,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2274}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -7392,7 +7764,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L289}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -7444,7 +7816,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L289}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1381}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1427}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>

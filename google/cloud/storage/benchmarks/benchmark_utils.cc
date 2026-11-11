@@ -34,6 +34,7 @@
 #include <iterator>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -274,7 +275,7 @@ std::optional<std::string> GetMetadata(RestClient& metadata_server,
   if (!contents) return std::nullopt;
   // A lot of metadata attributes have the full resource name (e.e.,
   // projects/.../zones/..), we just want the last portion.
-  std::vector<absl::string_view> split = absl::StrSplit(*contents, '/');
+  std::vector<std::string_view> split = absl::StrSplit(*contents, '/');
   return std::string{split.back()};
 }
 

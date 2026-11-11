@@ -21,7 +21,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string PrimaryKey::DebugString(absl::string_view name,
+std::string PrimaryKey::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -29,7 +29,7 @@ std::string PrimaryKey::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ColumnReference::DebugString(absl::string_view name,
+std::string ColumnReference::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -38,7 +38,7 @@ std::string ColumnReference::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ForeignKey::DebugString(absl::string_view name,
+std::string ForeignKey::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -48,7 +48,7 @@ std::string ForeignKey::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string TableConstraints::DebugString(absl::string_view name,
+std::string TableConstraints::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)

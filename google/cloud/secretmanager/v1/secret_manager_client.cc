@@ -265,8 +265,8 @@ SecretManagerServiceClient::TestIamPermissions(
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceClient::EnableManagedRotation(
     std::string const& parent,
-    google::cloud::secretmanager::v1::EnableManagedRotationRequest::
-        CloudSQLSingleUserCredentials const& cloud_sql_single_user_credentials,
+    google::cloud::secretmanager::v1::CloudSqlSingleUserCredentials const&
+        cloud_sql_single_user_credentials,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::secretmanager::v1::EnableManagedRotationRequest request;

@@ -900,6 +900,84 @@ OracleDatabaseTracingStub::DeleteOdbSubnet(
                            child_->DeleteOdbSubnet(context, options, request));
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListOdbDnsZonesResponse>
+OracleDatabaseTracingStub::ListOdbDnsZones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.oracledatabase.v1.OracleDatabase", "ListOdbDnsZones");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListOdbDnsZones(context, options, request));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseTracingStub::GetOdbDnsZone(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.oracledatabase.v1.OracleDatabase", "GetOdbDnsZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOdbDnsZone(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseTracingStub::AsyncCreateOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.oracledatabase.v1.OracleDatabase", "CreateOdbDnsZone");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateOdbDnsZone(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingStub::CreateOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.oracledatabase.v1.OracleDatabase", "CreateOdbDnsZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateOdbDnsZone(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseTracingStub::AsyncDeleteOdbDnsZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.oracledatabase.v1.OracleDatabase", "DeleteOdbDnsZone");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteOdbDnsZone(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingStub::DeleteOdbDnsZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.oracledatabase.v1.OracleDatabase", "DeleteOdbDnsZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteOdbDnsZone(context, options, request));
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
 OracleDatabaseTracingStub::ListExadbVmClusters(
     grpc::ClientContext& context, Options const& options,

@@ -3,17 +3,13 @@ name: macOS-CMake-Builds
 on:
   workflow_call:
     inputs:
-      checkout-ref:
-        required: true
-        description: "The ref we want to compile"
-        type: string
       full-matrix:
         required: true
         description: "Build the full matrix"
         type: boolean
       sccache-mode:
         required: true
-        description: "READ_WRITE or DISABLED"
+        description: "READ_WRITE, READ_ONLY, or DISABLED"
         type: string
       vcpkg-cache-mode:
         required: true
@@ -38,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         exclude-from-full-trick: [ true ]
-        os: [ macos-14 ]
+        os: [ macos-26 ]
         shard: [ Core2 ]
         exclude:
         # Only full builds include shards with generated code.
@@ -61,9 +57,7 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
-        ref: ${{ inputs.checkout-ref }}
         persist-credentials: false
-        allow-unsafe-pr-checkout: true
     - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
       if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
@@ -256,36 +250,11 @@ jobs:
       run: brew install bash ninja
     - name: Pre Tests Disk Space
       run: df -m
-    - name: Install CMake==3.27.2
-      working-directory: "${{runner.temp}}"
-      run: |
-        # Remove the older CMake version
-        brew unlink cmake
-
-        # Create a temporary local tap
-        cd "${{runner.temp}}"
-        mkdir -p user/homebrew-tap/Formula
-        cd user/homebrew-tap
-        git init
-
-        # Download the Homebrew formula for CMake==3.27.2
-        curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-        mv cmake.rb ./Formula/
-
-        git add .
-        git commit -m "Add CMake formula"
-
-        # Tap the local repository
-        brew tap user/homebrew-tap "${{runner.temp}}/user/homebrew-tap"
-
-        # Uninstall existing CMake and install CMake from the local tap
-        brew uninstall cmake
-        brew install --build-from-source user/homebrew-tap/cmake
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
       run: |
-        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.9.1/sccache-v0.9.1-x86_64-apple-darwin.tar.gz | \
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.9.1/sccache-v0.9.1-aarch64-apple-darwin.tar.gz | \
           tar -zxf - --strip-components=1 && \
         chmod +x sccache && \
         mv sccache /Users/runner/.cargo/bin/sccache
@@ -301,9 +270,9 @@ jobs:
     - name: Build google-cloud-cpp
       env:
         FEATURES: ${{ steps.dynamic.outputs.features }}
+        VCPKG_ROOT: ${{ runner.temp }}/vcpkg
+        EXECUTE_INTEGRATION_TESTS: ${{ inputs.execute-integration-tests }}
       run: |
-        export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
-        export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${FEATURES}
     - name: Post Tests Disk Space
       run: df -m

@@ -19,11 +19,11 @@
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <deque>
 #include <mutex>
 #include <optional>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -57,7 +57,7 @@ class CurlHandleFactory {
   // class is in `internal::`.
   virtual std::optional<std::string> cainfo() const = 0;
   virtual std::optional<std::string> capath() const = 0;
-  virtual std::vector<absl::string_view> const& ca_certs() const = 0;
+  virtual std::vector<std::string_view> const& ca_certs() const = 0;
   virtual experimental::SslCtxCallback ssl_ctx_callback() const = 0;
 
  protected:
@@ -95,7 +95,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
 
   std::optional<std::string> cainfo() const override { return cainfo_; }
   std::optional<std::string> capath() const override { return capath_; }
-  std::vector<absl::string_view> const& ca_certs() const override {
+  std::vector<std::string_view> const& ca_certs() const override {
     return ca_certs_;
   }
   experimental::SslCtxCallback ssl_ctx_callback() const override {
@@ -109,7 +109,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   std::string last_client_ip_address_;
   std::optional<std::string> cainfo_;
   std::optional<std::string> capath_;
-  std::vector<absl::string_view> ca_certs_;
+  std::vector<std::string_view> ca_certs_;
   experimental::SslCtxCallback ssl_ctx_callback_;
 };
 
@@ -150,7 +150,7 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
 
   std::optional<std::string> cainfo() const override { return cainfo_; }
   std::optional<std::string> capath() const override { return capath_; }
-  std::vector<absl::string_view> const& ca_certs() const override {
+  std::vector<std::string_view> const& ca_certs() const override {
     return ca_certs_;
   }
   experimental::SslCtxCallback ssl_ctx_callback() const override {
@@ -164,7 +164,7 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
 
   std::optional<std::string> cainfo_;
   std::optional<std::string> capath_;
-  std::vector<absl::string_view> ca_certs_;
+  std::vector<std::string_view> ca_certs_;
   experimental::SslCtxCallback ssl_ctx_callback_;
 
   mutable std::mutex handles_mu_;

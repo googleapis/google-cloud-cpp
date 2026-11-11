@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ERROR_CONTEXT_H
 
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -120,7 +120,7 @@ class ErrorContext {
   Container metadata_;
 };
 
-std::string Format(absl::string_view message, ErrorContext const& context);
+std::string Format(std::string_view message, ErrorContext const& context);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

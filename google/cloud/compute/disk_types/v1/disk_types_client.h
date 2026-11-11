@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the diskTypes resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes
 ///
-/// This client uses DiskTypes version 2026-09-01.
+/// This client uses DiskTypes version 2026-11-01.
 ///
 /// @par Equality
 ///

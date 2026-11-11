@@ -187,6 +187,20 @@ class OracleDatabaseConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteOdbSubnet(
       google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request);
 
+  virtual google::cloud::Idempotency ListOdbDnsZones(
+      google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request);
+
+  virtual google::cloud::Idempotency GetOdbDnsZone(
+      google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request);
+
+  virtual google::cloud::Idempotency CreateOdbDnsZone(
+      google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteOdbDnsZone(
+      google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListExadbVmClusters(
       google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request);
 

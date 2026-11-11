@@ -197,6 +197,25 @@ std::string_view InstanceNameFromTableName(std::string_view table_name) {
   if (pos == std::string_view::npos) return {};
   return table_name.substr(0, pos);
 }
+
+Status ValidateResultSetMetadata(
+    google::bigtable::v2::ResultSetMetadata const& metadata) {
+  google::bigtable::v2::ProtoSchema const& proto_schema =
+      metadata.proto_schema();
+  if (proto_schema.columns_size() == 0) {
+    return internal::InternalError("ResultSetMetadata columns cannot be empty",
+                                   GCP_ERROR_INFO());
+  }
+  for (google::bigtable::v2::ColumnMetadata const& column :
+       proto_schema.columns()) {
+    if (!column.has_type() ||
+        column.type().kind_case() == google::bigtable::v2::Type::KIND_NOT_SET) {
+      return internal::InternalError("Column type cannot be empty",
+                                     GCP_ERROR_INFO());
+    }
+  }
+  return Status{};
+}
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -774,58 +793,67 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   if (!response) {
     return std::move(response).status();
   }
-  auto const& proto_schema = response->metadata().proto_schema();
-  auto const columns_size = proto_schema.columns_size();
-  if (columns_size == 0) {
-    return internal::InternalError("ResultSetMetadata columns cannot be empty",
-                                   GCP_ERROR_INFO());
+  if (Status metadata_status = ValidateResultSetMetadata(response->metadata());
+      !metadata_status.ok()) {
+    return metadata_status;
   }
-  for (auto const& column : proto_schema.columns()) {
-    if (!column.has_type() ||
-        column.type().kind_case() == google::bigtable::v2::Type::KIND_NOT_SET) {
-      return internal::InternalError("Column type cannot be empty",
-                                     GCP_ERROR_INFO());
-    }
-  }
-  auto const* func = __func__;
-  auto refresh_fn = [this, request, func]() mutable {
-    auto current = google::cloud::internal::SaveCurrentOptions();
-    auto retry = query_plan_refresh_function_retry_policy(*current);
-    auto backoff = backoff_policy(*current);
-    auto operation_context = operation_context_factory_->PrepareQuery(
-        request.instance_name(), app_profile_id(*current));
-    auto stub = stub_manager_->GetStub(request.instance_name());
+  char const* func = __func__;
+  auto refresh_fn = [this, request = std::move(request), current, func]() {
+    google::cloud::internal::OptionsSpan refresh_span(current);
+    std::unique_ptr<bigtable::DataRetryPolicy> retry =
+        query_plan_refresh_function_retry_policy(*current);
+    std::unique_ptr<BackoffPolicy> backoff = backoff_policy(*current);
+    std::shared_ptr<OperationContext> refresh_op_context =
+        operation_context_factory_->PrepareQuery(request.instance_name(),
+                                                 app_profile_id(*current));
+    std::shared_ptr<BigtableStub> refresh_stub =
+        stub_manager_->GetStub(request.instance_name());
     return google::cloud::internal::AsyncRetryLoop(
                std::move(retry), std::move(backoff), Idempotency::kIdempotent,
                background_->cq(),
-               [stub, operation_context](
+               [refresh_stub, refresh_op_context](
                    CompletionQueue& cq,
                    std::shared_ptr<grpc::ClientContext> context,
                    google::cloud::internal::ImmutableOptions options,
                    google::bigtable::v2::PrepareQueryRequest const& request) {
-                 operation_context->PreCall(*context);
-                 auto f =
-                     stub->AsyncPrepareQuery(cq, context, std::move(options),
-                                             request, operation_context);
+                 refresh_op_context->PreCall(*context);
+                 future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+                     f = refresh_stub->AsyncPrepareQuery(
+                         cq, context, std::move(options), request,
+                         refresh_op_context);
                  return f.then(
-                     [operation_context, context = std::move(context)](auto f) {
-                       auto s = f.get();
-                       operation_context->PostCall(*context, s.status());
+                     [refresh_op_context, context = std::move(context)](
+                         future<StatusOr<
+                             google::bigtable::v2::PrepareQueryResponse>>
+                             f) {
+                       StatusOr<google::bigtable::v2::PrepareQueryResponse> s =
+                           f.get();
+                       refresh_op_context->PostCall(*context, s.status());
                        return s;
                      });
                },
-               std::move(current), request, func)
-        .then([operation_context](auto f) mutable {
-          StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
-              f.get();
-          operation_context->OnDone(response.status());
-          return response;
+               current, request, func)
+        .then([refresh_op_context](
+                  future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+                      refresh_future)
+                  -> StatusOr<google::bigtable::v2::PrepareQueryResponse> {
+          StatusOr<google::bigtable::v2::PrepareQueryResponse>
+              refresh_response = refresh_future.get();
+          refresh_op_context->OnDone(refresh_response.status());
+          if (!refresh_response) return refresh_response;
+          if (Status metadata_status =
+                  ValidateResultSetMetadata(refresh_response->metadata());
+              !metadata_status.ok()) {
+            return metadata_status;
+          }
+          return refresh_response;
         });
   };
-  auto query_plan = QueryPlan::Create(background_->cq(), *std::move(response),
-                                      std::move(refresh_fn));
-  return bigtable::PreparedQuery(
-      params.instance, std::move(params.sql_statement), std::move(query_plan));
+  google::cloud::internal::OptionsSpan span(current);
+  std::shared_ptr<QueryPlan> query_plan = QueryPlan::Create(
+      background_->cq(), *std::move(response), std::move(refresh_fn));
+  return bigtable::PreparedQuery(params.instance, params.sql_statement,
+                                 std::move(query_plan));
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
@@ -843,13 +871,13 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
   auto backoff = backoff_policy(*current);
   auto operation_context = operation_context_factory_->PrepareQuery(
       instance_full_name, app_profile_id(*current));
-  auto const* func = __func__;
+  char const* func = __func__;
   auto instance_name = params.instance.FullName();
   auto stub = stub_manager_->GetStub(instance_name);
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kIdempotent,
              background_->cq(),
-             [stub, instance_name, operation_context](
+             [stub, operation_context](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
@@ -865,70 +893,86 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                    });
              },
              current, request, func)
-      .then([this, instance_name, request, operation_context, current,
-             params = std::move(params),
+      .then([this, instance_name, request, operation_context, current, params,
              func](future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
-                       future) -> StatusOr<bigtable::PreparedQuery> {
-        auto response = future.get();
+                       result_future) mutable {
+        google::cloud::internal::OptionsSpan span(current);
+        StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
+            result_future.get();
         operation_context->OnDone(response.status());
         if (!response) {
-          return std::move(response).status();
+          return StatusOr<bigtable::PreparedQuery>(
+              std::move(response).status());
         }
-        auto const& proto_schema = response->metadata().proto_schema();
-        auto const columns_size = proto_schema.columns_size();
-        if (columns_size == 0) {
-          return internal::InternalError(
-              "ResultSetMetadata columns cannot be empty", GCP_ERROR_INFO());
+        if (Status metadata_status =
+                ValidateResultSetMetadata(response->metadata());
+            !metadata_status.ok()) {
+          return StatusOr<bigtable::PreparedQuery>(std::move(metadata_status));
         }
-        for (auto const& column : proto_schema.columns()) {
-          if (!column.has_type() ||
-              column.type().kind_case() ==
-                  google::bigtable::v2::Type::KIND_NOT_SET) {
-            return StatusOr<bigtable::PreparedQuery>(internal::InternalError(
-                "Column type cannot be empty", GCP_ERROR_INFO()));
-          }
-        }
-        auto refresh_fn = [this, instance_name, request, func]() mutable {
-          auto current = google::cloud::internal::SaveCurrentOptions();
-          auto retry = query_plan_refresh_function_retry_policy(*current);
-          auto backoff = backoff_policy(*current);
-          auto operation_context = operation_context_factory_->PrepareQuery(
-              request.instance_name(), app_profile_id(*current));
+        auto refresh_fn = [this, instance_name = std::move(instance_name),
+                           request = std::move(request), current, func]() {
+          google::cloud::internal::OptionsSpan refresh_span(current);
+          std::unique_ptr<bigtable::DataRetryPolicy> retry =
+              query_plan_refresh_function_retry_policy(*current);
+          std::unique_ptr<BackoffPolicy> backoff = backoff_policy(*current);
+          std::shared_ptr<OperationContext> refresh_op_context =
+              operation_context_factory_->PrepareQuery(
+                  request.instance_name(), app_profile_id(*current));
           // Get a new stub here to take advantage of the pool.
-          auto stub = stub_manager_->GetStub(instance_name);
+          std::shared_ptr<BigtableStub> refresh_stub =
+              stub_manager_->GetStub(instance_name);
           return google::cloud::internal::AsyncRetryLoop(
                      std::move(retry), std::move(backoff),
                      Idempotency::kIdempotent, background_->cq(),
-                     [stub, instance_name, operation_context](
+                     [refresh_stub, refresh_op_context](
                          CompletionQueue& cq,
                          std::shared_ptr<grpc::ClientContext> context,
                          google::cloud::internal::ImmutableOptions options,
                          google::bigtable::v2::PrepareQueryRequest const&
                              request) {
-                       operation_context->PreCall(*context);
-                       auto f = stub->AsyncPrepareQuery(
-                           cq, context, std::move(options), request,
-                           operation_context);
-                       return f.then([operation_context,
-                                      context = std::move(context)](auto f) {
-                         auto s = f.get();
-                         operation_context->PostCall(*context, s.status());
-                         return s;
-                       });
+                       refresh_op_context->PreCall(*context);
+                       future<
+                           StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+                           f = refresh_stub->AsyncPrepareQuery(
+                               cq, context, std::move(options), request,
+                               refresh_op_context);
+                       return f.then(
+                           [refresh_op_context, context = std::move(context)](
+                               future<StatusOr<
+                                   google::bigtable::v2::PrepareQueryResponse>>
+                                   f) {
+                             StatusOr<
+                                 google::bigtable::v2::PrepareQueryResponse>
+                                 s = f.get();
+                             refresh_op_context->PostCall(*context, s.status());
+                             return s;
+                           });
                      },
-                     std::move(current), request, func)
-              .then([operation_context](auto f) mutable {
-                StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
-                    f.get();
-                operation_context->OnDone(response.status());
-                return response;
-              });
+                     current, request, func)
+              .then(
+                  [refresh_op_context](
+                      future<
+                          StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+                          refresh_future)
+                      -> StatusOr<google::bigtable::v2::PrepareQueryResponse> {
+                    StatusOr<google::bigtable::v2::PrepareQueryResponse>
+                        refresh_response = refresh_future.get();
+                    refresh_op_context->OnDone(refresh_response.status());
+                    if (!refresh_response) return refresh_response;
+                    if (Status metadata_status = ValidateResultSetMetadata(
+                            refresh_response->metadata());
+                        !metadata_status.ok()) {
+                      return metadata_status;
+                    }
+                    return refresh_response;
+                  });
         };
 
-        auto query_plan = QueryPlan::Create(background_->cq(),
-                                            *std::move(response), refresh_fn);
-        return bigtable::PreparedQuery(params.instance, params.sql_statement,
-                                       std::move(query_plan));
+        std::shared_ptr<QueryPlan> query_plan = QueryPlan::Create(
+            background_->cq(), *std::move(response), std::move(refresh_fn));
+        return StatusOr<bigtable::PreparedQuery>(bigtable::PreparedQuery(
+            std::move(params.instance), std::move(params.sql_statement),
+            std::move(query_plan)));
       });
 }
 

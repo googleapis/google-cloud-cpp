@@ -457,6 +457,106 @@ class BackupDRConnection {
       StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
   InitializeService(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  CreateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  CreateAutoProtectionPolicy(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicy>
+  ListAutoProtectionPolicies(
+      google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest request);
+
+  virtual StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>
+  GetAutoProtectionPolicy(
+      google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  UpdateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicy>>
+  UpdateAutoProtectionPolicy(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteAutoProtectionPolicy(
+      google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAutoProtectionPolicy(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteAutoProtectionPolicy(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  CreateAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::
+          CreateAutoProtectionPolicyBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAutoProtectionPolicyBinding(
+      NoAwaitTag, google::cloud::backupdr::v1::
+                      CreateAutoProtectionPolicyBindingRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  CreateAutoProtectionPolicyBinding(
+      google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+  GetAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>
+  ListAutoProtectionPolicyBindings(
+      google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest
+          request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::AppliedAutoProtectionPolicy>
+  ListAppliedAutoProtectionPolicies(
+      google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  InitiateDeleteAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::
+          InitiateDeleteAutoProtectionPolicyBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  InitiateDeleteAutoProtectionPolicyBinding(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::
+          InitiateDeleteAutoProtectionPolicyBindingRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::backupdr::v1::AutoProtectionPolicyBinding>>
+  InitiateDeleteAutoProtectionPolicyBinding(
+      google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BindingMatchingResource>
+  ListBindingMatchingResources(
+      google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

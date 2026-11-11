@@ -26,6 +26,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -86,7 +87,7 @@ inline bool IsEncoded(char c, std::int32_t mask) {
 // REQUIRES: n > 0
 // Note that all call sites are in this file, so it is trivial to verify the
 // requirements are satisfied.
-Status ValidateUTF8Encoding(absl::string_view s, std::size_t pos,
+Status ValidateUTF8Encoding(std::string_view s, std::size_t pos,
                             std::size_t n) {
   if (s.size() - pos < n) {
     return InvalidArgumentError(
@@ -119,7 +120,7 @@ inline std::uint32_t DecodeUTF8(std::uint32_t e3, std::uint32_t e2,
   return ((((e3 << 6 | e2) << 6) | e1) << 6) | e0;
 }
 
-StatusOr<std::string> Escape1(absl::string_view s, std::size_t pos) {
+StatusOr<std::string> Escape1(std::string_view s, std::size_t pos) {
   auto status = ValidateUTF8Encoding(s, pos, 1);
   if (!status.ok()) return status;
   // Some characters need to be escaped.
@@ -143,7 +144,7 @@ StatusOr<std::string> Escape1(absl::string_view s, std::size_t pos) {
   return std::string(s.substr(pos, 1));
 }
 
-StatusOr<std::string> Escape2(absl::string_view s, std::size_t pos) {
+StatusOr<std::string> Escape2(std::string_view s, std::size_t pos) {
   auto status = ValidateUTF8Encoding(s, pos, 2);
   if (!status.ok()) return status;
   auto const e = s.substr(pos, 2);
@@ -151,7 +152,7 @@ StatusOr<std::string> Escape2(absl::string_view s, std::size_t pos) {
                          DecodeUTF8(0, 0, Header2(e[0]), Trailer(e[1])));
 }
 
-StatusOr<std::string> Escape3(absl::string_view s, std::size_t pos) {
+StatusOr<std::string> Escape3(std::string_view s, std::size_t pos) {
   auto status = ValidateUTF8Encoding(s, pos, 3);
   if (!status.ok()) return status;
   auto const e = s.substr(pos, 3);
@@ -159,7 +160,7 @@ StatusOr<std::string> Escape3(absl::string_view s, std::size_t pos) {
       "\\u%04x", DecodeUTF8(0, Header3(e[0]), Trailer(e[1]), Trailer(e[2])));
 }
 
-StatusOr<std::string> Escape4(absl::string_view s, std::size_t pos) {
+StatusOr<std::string> Escape4(std::string_view s, std::size_t pos) {
   auto status = ValidateUTF8Encoding(s, pos, 4);
   if (!status.ok()) return status;
   auto const e = s.substr(pos, 4);
@@ -169,9 +170,9 @@ StatusOr<std::string> Escape4(absl::string_view s, std::size_t pos) {
   return absl::StrFormat("\\U%08x", codepoint);
 }
 
-StatusOr<std::string> EscapeUTF8(absl::string_view s) {
+StatusOr<std::string> EscapeUTF8(std::string_view s) {
   using Encoder =
-      absl::FunctionRef<StatusOr<std::string>(absl::string_view, std::size_t)>;
+      absl::FunctionRef<StatusOr<std::string>(std::string_view, std::size_t)>;
   struct {
     std::uint32_t mask;
     Encoder encode;

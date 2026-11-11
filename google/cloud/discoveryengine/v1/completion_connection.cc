@@ -44,6 +44,12 @@ CompletionServiceConnection::CompleteQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AdvancedCompleteQueryResponse>
+CompletionServiceConnection::AdvancedCompleteQuery(
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::ImportSuggestionDenyListEntries(

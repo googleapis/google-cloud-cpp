@@ -22,8 +22,11 @@
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include <google/protobuf/util/json_util.h>
+#include <initializer_list>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -50,6 +53,69 @@ inline std::string const& DetermineApiVersion(
   return opts.has<rest_internal::TargetApiVersionOption>()
              ? opts.get<rest_internal::TargetApiVersionOption>()
              : default_version;
+}
+
+/// A non-owning view of a piece of a REST URI path used with `EncodePath`.
+///
+/// Plain arguments convertible to `absl::AlphaNum` (strings,
+/// `std::string_view`, integers) construct a single-segment `PathPiece` inside
+/// `EncodePath(...)`, which rejects `.`, `..`, and `/` and percent-encodes
+/// characters outside `[-_.~0-9a-zA-Z]`.
+///
+/// Use `PathPiece::MultiSegment(...)` for variables whose URI template spans
+/// multiple `/` segments (e.g. `{parent=projects/*/locations/*}` or
+/// `{name=**}`), and `PathPiece::Verb(...)` for trailing custom verbs (e.g.
+/// `:cancel`).
+///
+/// @note Like `std::string_view`, `PathPiece` does not own the underlying
+/// character buffer and must only be used as a temporary argument to
+/// `EncodePath(...)`.
+class PathPiece {
+ public:
+  enum class EncodingKind {
+    kSingleSegment,
+    kMultiSegment,
+    kVerb,
+  };
+
+  static PathPiece MultiSegment(std::string_view value) {
+    return PathPiece(value, EncodingKind::kMultiSegment);
+  }
+
+  static PathPiece Verb(std::string_view value) {
+    return PathPiece(value, EncodingKind::kVerb);
+  }
+
+  PathPiece(PathPiece const&) = default;
+  PathPiece(PathPiece&&) = default;
+  PathPiece& operator=(PathPiece const&) = delete;
+  PathPiece& operator=(PathPiece&&) = delete;
+
+  std::string_view value() const { return value_; }
+  EncodingKind kind() const { return kind_; }
+
+ private:
+  template <typename... Pieces>
+  friend StatusOr<std::string> EncodePath(Pieces const&... pieces);
+
+  explicit PathPiece(absl::AlphaNum const& value)
+      : value_(value.Piece().data(), value.Piece().size()),
+        kind_(EncodingKind::kSingleSegment) {}
+
+  PathPiece(std::string_view value, EncodingKind kind)
+      : value_(value), kind_(kind) {}
+
+  std::string_view value_;
+  EncodingKind kind_;
+};
+
+StatusOr<std::string> EncodePathImpl(std::initializer_list<PathPiece> pieces);
+
+/// Validates and percent-encodes a sequence of path pieces into a REST URI
+/// path, prepending and joining segments with `'/'`.
+template <typename... Pieces>
+StatusOr<std::string> EncodePath(Pieces const&... pieces) {
+  return EncodePathImpl({PathPiece(pieces)...});
 }
 
 template <typename Response>

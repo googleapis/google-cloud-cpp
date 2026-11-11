@@ -39,9 +39,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/string_view.h"
 #include <memory>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 
@@ -949,7 +949,7 @@ class Client {
   template <typename... Options>
   StatusOr<ObjectMetadata> InsertObject(std::string const& bucket_name,
                                         std::string const& object_name,
-                                        absl::string_view contents,
+                                        std::string_view contents,
                                         Options&&... options) {
     google::cloud::internal::OptionsSpan const span(
         SpanOptions(std::forward<Options>(options)...));
@@ -959,24 +959,24 @@ class Client {
     return connection_->InsertObjectMedia(request);
   }
 
-  /// @overload InsertObject(std::string const& bucket_name, std::string const& object_name, absl::string_view contents, Options&&... options)
+  /// @overload InsertObject(std::string const& bucket_name, std::string const& object_name, std::string_view contents, Options&&... options)
   template <typename... Options>
   StatusOr<ObjectMetadata> InsertObject(std::string const& bucket_name,
                                         std::string const& object_name,
                                         std::string const& contents,
                                         Options&&... options) {
-    return InsertObject(bucket_name, object_name, absl::string_view(contents),
+    return InsertObject(bucket_name, object_name, std::string_view(contents),
                         std::forward<Options>(options)...);
   }
 
-  /// @overload InsertObject(std::string const& bucket_name, std::string const& object_name, absl::string_view contents, Options&&... options)
+  /// @overload InsertObject(std::string const& bucket_name, std::string const& object_name, std::string_view contents, Options&&... options)
   template <typename... Options>
   StatusOr<ObjectMetadata> InsertObject(std::string const& bucket_name,
                                         std::string const& object_name,
                                         char const* contents,
                                         Options&&... options) {
     auto c =
-        contents == nullptr ? absl::string_view{} : absl::string_view{contents};
+        contents == nullptr ? std::string_view{} : std::string_view{contents};
     return InsertObject(bucket_name, object_name, c,
                         std::forward<Options>(options)...);
   }

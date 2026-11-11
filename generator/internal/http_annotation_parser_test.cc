@@ -37,7 +37,7 @@ std::shared_ptr<PathTemplate::Segment> MakeMatchRecursiveSegment() {
       PathTemplate::Segment{PathTemplate::MatchRecursive{}});
 }
 
-std::shared_ptr<PathTemplate::Segment> MakeSegment(absl::string_view v) {
+std::shared_ptr<PathTemplate::Segment> MakeSegment(std::string_view v) {
   return std::make_shared<PathTemplate::Segment>(
       PathTemplate::Segment{std::string(v)});
 }

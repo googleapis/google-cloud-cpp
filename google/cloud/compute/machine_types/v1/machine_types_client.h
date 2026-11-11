@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the machineTypes resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes
 ///
-/// This client uses MachineTypes version 2026-09-01.
+/// This client uses MachineTypes version 2026-11-01.
 ///
 /// @par Equality
 ///

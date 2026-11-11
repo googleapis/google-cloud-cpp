@@ -39,6 +39,11 @@ Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CompletionServiceConnectionIdempotencyPolicy::AdvancedCompleteQuery(
+    google::cloud::discoveryengine::v1::AdvancedCompleteQueryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 CompletionServiceConnectionIdempotencyPolicy::ImportSuggestionDenyListEntries(
     google::cloud::discoveryengine::v1::

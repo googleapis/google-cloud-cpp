@@ -909,6 +909,87 @@ OracleDatabaseTracingConnection::DeleteOdbSubnet(
   return internal::EndSpan(std::move(span), child_->DeleteOdbSubnet(operation));
 }
 
+StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseTracingConnection::ListOdbDnsZones(
+    google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListOdbDnsZones");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOdbDnsZones(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::OdbDnsZone>(std::move(span),
+                                                     std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseTracingConnection::GetOdbDnsZone(
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetOdbDnsZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOdbDnsZone(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseTracingConnection::CreateOdbDnsZone(
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbDnsZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateOdbDnsZone(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbDnsZone");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateOdbDnsZone(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseTracingConnection::CreateOdbDnsZone(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbDnsZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateOdbDnsZone(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteOdbDnsZone(
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbDnsZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteOdbDnsZone(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbDnsZone");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteOdbDnsZone(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteOdbDnsZone(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbDnsZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteOdbDnsZone(operation));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
 OracleDatabaseTracingConnection::ListExadbVmClusters(
     google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request) {

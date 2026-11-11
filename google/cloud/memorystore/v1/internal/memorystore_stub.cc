@@ -34,6 +34,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MemorystoreStub::~MemorystoreStub() = default;
 
+StatusOr<google::cloud::memorystore::v1::ListAclPoliciesResponse>
+DefaultMemorystoreStub::ListAclPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::ListAclPoliciesRequest const& request) {
+  google::cloud::memorystore::v1::ListAclPoliciesResponse response;
+  auto status = grpc_stub_->ListAclPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
 DefaultMemorystoreStub::ListInstances(
     grpc::ClientContext& context, Options const&,
@@ -46,12 +58,36 @@ DefaultMemorystoreStub::ListInstances(
   return response;
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+DefaultMemorystoreStub::GetAclPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::GetAclPolicyRequest const& request) {
+  google::cloud::memorystore::v1::AclPolicy response;
+  auto status = grpc_stub_->GetAclPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance>
 DefaultMemorystoreStub::GetInstance(
     grpc::ClientContext& context, Options const&,
     google::cloud::memorystore::v1::GetInstanceRequest const& request) {
   google::cloud::memorystore::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+DefaultMemorystoreStub::CreateAclPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const& request) {
+  google::cloud::memorystore::v1::AclPolicy response;
+  auto status = grpc_stub_->CreateAclPolicy(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -89,6 +125,37 @@ StatusOr<google::longrunning::Operation> DefaultMemorystoreStub::CreateInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::UpdateAclPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAclPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMemorystoreStub::UpdateAclPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAclPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultMemorystoreStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -112,6 +179,64 @@ StatusOr<google::longrunning::Operation> DefaultMemorystoreStub::UpdateInstance(
     google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultMemorystoreStub::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memorystore::v1::DeleteAclPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAclPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMemorystoreStub::DeleteAclPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAclPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+DefaultMemorystoreStub::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  google::cloud::memorystore::v1::AclPolicyRevision response;
+  auto status = grpc_stub_->GetAclPolicyRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse>
+DefaultMemorystoreStub::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse response;
+  auto status =
+      grpc_stub_->ListAclPolicyRevisions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

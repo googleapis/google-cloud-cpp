@@ -23,6 +23,7 @@
 #include "generator/internal/printer.h"
 #include "google/cloud/status.h"
 #include <google/protobuf/descriptor.h>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -72,7 +73,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bespoke_methods() const {
     return bespoke_methods_;
   }
-  void SetVars(absl::string_view header_path);
+  void SetVars(std::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
 

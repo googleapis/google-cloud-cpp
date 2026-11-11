@@ -32,6 +32,22 @@ MemorystoreClient::MemorystoreClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 MemorystoreClient::~MemorystoreClient() = default;
 
+StreamRange<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreClient::ListAclPolicies(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::ListAclPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListAclPolicies(request);
+}
+
+StreamRange<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreClient::ListAclPolicies(
+    google::cloud::memorystore::v1::ListAclPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAclPolicies(std::move(request));
+}
+
 StreamRange<google::cloud::memorystore::v1::Instance>
 MemorystoreClient::ListInstances(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -48,6 +64,22 @@ MemorystoreClient::ListInstances(
   return connection_->ListInstances(std::move(request));
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreClient::GetAclPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::GetAclPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetAclPolicy(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreClient::GetAclPolicy(
+    google::cloud::memorystore::v1::GetAclPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAclPolicy(request);
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance>
 MemorystoreClient::GetInstance(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -62,6 +94,27 @@ MemorystoreClient::GetInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreClient::CreateAclPolicy(
+    std::string const& parent,
+    google::cloud::memorystore::v1::AclPolicy const& acl_policy,
+    std::string const& acl_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::CreateAclPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_acl_policy() = acl_policy;
+  request.set_acl_policy_id(acl_policy_id);
+  return connection_->CreateAclPolicy(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreClient::CreateAclPolicy(
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAclPolicy(request);
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -112,6 +165,50 @@ MemorystoreClient::CreateInstance(
   return connection_->CreateInstance(operation);
 }
 
+future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+MemorystoreClient::UpdateAclPolicy(
+    google::cloud::memorystore::v1::AclPolicy const& acl_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::UpdateAclPolicyRequest request;
+  *request.mutable_acl_policy() = acl_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAclPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::UpdateAclPolicy(
+    NoAwaitTag, google::cloud::memorystore::v1::AclPolicy const& acl_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::UpdateAclPolicyRequest request;
+  *request.mutable_acl_policy() = acl_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAclPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+MemorystoreClient::UpdateAclPolicy(
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAclPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::UpdateAclPolicy(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAclPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::AclPolicy>>
+MemorystoreClient::UpdateAclPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAclPolicy(operation);
+}
+
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreClient::UpdateInstance(
     google::cloud::memorystore::v1::Instance const& instance,
@@ -154,6 +251,78 @@ MemorystoreClient::UpdateInstance(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(operation);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteAclPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::DeleteAclPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteAclPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::DeleteAclPolicy(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::DeleteAclPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteAclPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteAclPolicy(
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAclPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreClient::DeleteAclPolicy(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAclPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreClient::DeleteAclPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAclPolicy(operation);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreClient::GetAclPolicyRevision(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::GetAclPolicyRevisionRequest request;
+  request.set_name(name);
+  return connection_->GetAclPolicyRevision(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreClient::GetAclPolicyRevision(
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAclPolicyRevision(request);
+}
+
+StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreClient::ListAclPolicyRevisions(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAclPolicyRevisions(request);
+}
+
+StreamRange<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreClient::ListAclPolicyRevisions(
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAclPolicyRevisions(std::move(request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>

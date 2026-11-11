@@ -38,6 +38,19 @@ MemorystoreLogging::MemorystoreLogging(std::shared_ptr<MemorystoreStub> child,
                                        std::set<std::string> const&)
     : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
+StatusOr<google::cloud::memorystore::v1::ListAclPoliciesResponse>
+MemorystoreLogging::ListAclPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::ListAclPoliciesRequest const&
+                 request) {
+        return child_->ListAclPolicies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
 MemorystoreLogging::ListInstances(
     grpc::ClientContext& context, Options const& options,
@@ -51,6 +64,19 @@ MemorystoreLogging::ListInstances(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreLogging::GetAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memorystore::v1::GetAclPolicyRequest const& request) {
+        return child_->GetAclPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::memorystore::v1::Instance>
 MemorystoreLogging::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -60,6 +86,19 @@ MemorystoreLogging::GetInstance(
           grpc::ClientContext& context, Options const& options,
           google::cloud::memorystore::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicy>
+MemorystoreLogging::CreateAclPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::CreateAclPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::CreateAclPolicyRequest const&
+                 request) {
+        return child_->CreateAclPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -96,6 +135,37 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::CreateInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncUpdateAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::UpdateAclPolicyRequest const&
+                 request) {
+        return child_->AsyncUpdateAclPolicy(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::UpdateAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::UpdateAclPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::UpdateAclPolicyRequest const&
+                 request) {
+        return child_->UpdateAclPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -122,6 +192,66 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::UpdateInstance(
              google::cloud::memorystore::v1::UpdateInstanceRequest const&
                  request) {
         return child_->UpdateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreLogging::AsyncDeleteAclPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::DeleteAclPolicyRequest const&
+                 request) {
+        return child_->AsyncDeleteAclPolicy(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreLogging::DeleteAclPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAclPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::DeleteAclPolicyRequest const&
+                 request) {
+        return child_->DeleteAclPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::AclPolicyRevision>
+MemorystoreLogging::GetAclPolicyRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::GetAclPolicyRevisionRequest const&
+                 request) {
+        return child_->GetAclPolicyRevision(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAclPolicyRevisionsResponse>
+MemorystoreLogging::ListAclPolicyRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memorystore::v1::ListAclPolicyRevisionsRequest const&
+              request) {
+        return child_->ListAclPolicyRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

@@ -77,6 +77,15 @@ SslPoliciesRestMetadata::GetSslPolicy(
   return child_->GetSslPolicy(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+SslPoliciesRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::GetIamPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesRestMetadata::AsyncInsertSslPolicy(
     CompletionQueue& cq,
@@ -138,6 +147,24 @@ SslPoliciesRestMetadata::PatchSslPolicy(
   return child_->PatchSslPolicy(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+SslPoliciesRestMetadata::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::SetIamPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+SslPoliciesRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -164,7 +191,7 @@ future<Status> SslPoliciesRestMetadata::AsyncCancelOperation(
 void SslPoliciesRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
-  rest_context.AddHeader("x-goog-api-version", "2026-09-01");
+  rest_context.AddHeader("x-goog-api-version", "2026-11-01");
   google::cloud::rest_internal::SetMetadata(rest_context, options, params,
                                             api_client_header_);
 }

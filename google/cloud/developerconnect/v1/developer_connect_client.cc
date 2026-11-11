@@ -373,6 +373,28 @@ DeveloperConnectClient::FetchReadToken(
   return connection_->FetchReadToken(request);
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::OpenGitRepositoryLinkPullRequest(
+    std::string const& name,
+    google::cloud::developerconnect::v1::PullRequest const& pull_request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::OpenGitRepositoryLinkPullRequestRequest
+      request;
+  request.set_name(name);
+  *request.mutable_pull_request() = pull_request;
+  return connection_->OpenGitRepositoryLinkPullRequest(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::OpenGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenGitRepositoryLinkPullRequest(request);
+}
+
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
 DeveloperConnectClient::FetchLinkableGitRepositories(
     std::string const& connection, Options opts) {
@@ -426,6 +448,204 @@ StreamRange<std::string> DeveloperConnectClient::FetchGitRefs(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchGitRefs(std::move(request));
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectClient::DiffGitRepositoryLinkCommit(std::string const& name,
+                                                    std::string const& base_sha,
+                                                    std::string const& head_sha,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitRequest
+      request;
+  request.set_name(name);
+  request.set_base_sha(base_sha);
+  request.set_head_sha(head_sha);
+  return connection_->DiffGitRepositoryLinkCommit(request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectClient::DiffGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DiffGitRepositoryLinkCommit(request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectClient::FetchGitRepositoryLinkCommit(
+    std::string const& name, std::string const& commit_sha, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitRequest
+      request;
+  request.set_name(name);
+  request.set_commit_sha(commit_sha);
+  return connection_->FetchGitRepositoryLinkCommit(request);
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectClient::FetchGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchGitRepositoryLinkCommit(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::SCMCommit>
+DeveloperConnectClient::FetchGitRepositoryLinkCommitList(
+    std::string const& name, std::string const& ref, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitListRequest
+      request;
+  request.set_name(name);
+  request.set_ref(ref);
+  return connection_->FetchGitRepositoryLinkCommitList(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::SCMCommit>
+DeveloperConnectClient::FetchGitRepositoryLinkCommitList(
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitListRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchGitRepositoryLinkCommitList(std::move(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectClient::FetchGitRepositoryLinkFileBlame(std::string const& name,
+                                                        std::string const& ref,
+                                                        std::string const& path,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkFileBlameRequest
+      request;
+  request.set_name(name);
+  request.set_ref(ref);
+  request.set_path(path);
+  return connection_->FetchGitRepositoryLinkFileBlame(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectClient::FetchGitRepositoryLinkFileBlame(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchGitRepositoryLinkFileBlame(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::FetchGitRepositoryLinkPullRequest(
+    std::string const& name, std::string const& pull_request_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FetchGitRepositoryLinkPullRequestRequest
+      request;
+  request.set_name(name);
+  request.set_pull_request_id(pull_request_id);
+  return connection_->FetchGitRepositoryLinkPullRequest(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::FetchGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchGitRepositoryLinkPullRequest(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectClient::AddGitRepositoryLinkPullRequestComment(
+    std::string const& name, std::string const& pull_request_id,
+    google::cloud::developerconnect::v1::PullRequestComment const& comment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::
+      AddGitRepositoryLinkPullRequestCommentRequest request;
+  request.set_name(name);
+  request.set_pull_request_id(pull_request_id);
+  *request.mutable_comment() = comment;
+  return connection_->AddGitRepositoryLinkPullRequestComment(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectClient::AddGitRepositoryLinkPullRequestComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddGitRepositoryLinkPullRequestComment(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectClient::AddGitRepositoryLinkPullRequestReviewComment(
+    std::string const& name, std::string const& pull_request_id,
+    google::cloud::developerconnect::v1::PullRequestReviewComment const&
+        comment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::
+      AddGitRepositoryLinkPullRequestReviewCommentRequest request;
+  request.set_name(name);
+  request.set_pull_request_id(pull_request_id);
+  *request.mutable_comment() = comment;
+  return connection_->AddGitRepositoryLinkPullRequestReviewComment(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectClient::AddGitRepositoryLinkPullRequestReviewComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddGitRepositoryLinkPullRequestReviewComment(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::ModifyGitRepositoryLinkPullRequest(
+    std::string const& name, std::string const& pull_request_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::ModifyGitRepositoryLinkPullRequestRequest
+      request;
+  request.set_name(name);
+  request.set_pull_request_id(pull_request_id);
+  return connection_->ModifyGitRepositoryLinkPullRequest(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::ModifyGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyGitRepositoryLinkPullRequest(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::FetchGitRepositoryLinkPullRequestList(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::
+      FetchGitRepositoryLinkPullRequestListRequest request;
+  request.set_name(name);
+  return connection_->FetchGitRepositoryLinkPullRequestList(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectClient::FetchGitRepositoryLinkPullRequestList(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchGitRepositoryLinkPullRequestList(std::move(request));
 }
 
 StreamRange<google::cloud::developerconnect::v1::AccountConnector>

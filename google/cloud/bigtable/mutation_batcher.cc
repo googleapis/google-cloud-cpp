@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include <algorithm>
 #include <sstream>
 
 namespace google {
@@ -124,6 +125,11 @@ grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
   // mutations in a batch because it should not pack more. If we have this
   // knowledge, we might as well simplify everything and not admit larger
   // mutations.
+  if (options_.max_batches == 0) {
+    return grpc::Status(
+        grpc::StatusCode::INVALID_ARGUMENT,
+        "Cannot admit mutations when Options::max_batches is 0.");
+  }
   auto mutation_limit = (std::min)(options_.max_mutations_per_batch,
                                    options_.max_outstanding_mutations);
   if (mut.num_mutations > mutation_limit) {
@@ -137,11 +143,13 @@ grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
                         "Supplied SingleRowMutations has no entries");
   }
-  if (mut.request_size > options_.max_size_per_batch) {
+  std::size_t const size_limit =
+      (std::min)(options_.max_size_per_batch, options_.max_outstanding_size);
+  if (mut.request_size > size_limit) {
     std::stringstream stream;
     stream << "Too large (" << mut.request_size
-           << " bytes) mutation in a SingleRowMutations request. "
-           << options_.max_size_per_batch << " bytes is the limit.";
+           << " bytes) mutation in a SingleRowMutations request. " << size_limit
+           << " bytes is the limit.";
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, stream.str());
   }
   return grpc::Status();

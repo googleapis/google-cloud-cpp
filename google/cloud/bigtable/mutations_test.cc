@@ -15,9 +15,14 @@
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/rpc/error_details.pb.h"
 #include <gmock/gmock.h>
+#include <cstddef>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -27,8 +32,12 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
 using ::google::cloud::testing_util::chrono_literals::operator""_us;
+using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 TEST(SingleRowMutation, Equality) {
   auto m1 = SingleRowMutation("m1", DeleteFromRow());
@@ -289,6 +298,56 @@ TEST(MutationsTest, SingleRowMutationClear) {
   btproto::MutateRowsRequest::Entry entry;
   mut.MoveTo(&entry);
   EXPECT_EQ(0, entry.mutations_size());
+}
+
+// Disable deprecation warnings to verify the runtime behavior of the
+// deprecated BulkMutation::emplace_back(FailedMutation) overload.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+TEST(MutationsTest, EmplaceBackFailedMutationDeprecatedNoOpLogsError) {
+  ScopedLog log;
+  BulkMutation batch;
+  FailedMutation fm(Status(StatusCode::kUnavailable, "try again"), 42);
+
+  batch.emplace_back(std::move(fm));
+  EXPECT_TRUE(batch.empty());
+  EXPECT_EQ(0U, batch.size());
+
+  btproto::MutateRowsRequest request;
+  batch.MoveTo(&request);
+  EXPECT_EQ(0, request.entries_size());
+
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(
+          HasSubstr("BulkMutation::emplace_back(FailedMutation) is a no-op"),
+          HasSubstr("original_index=42"))));
+}
+#include "google/cloud/internal/diagnostics_pop.inc"
+
+TEST(MutationsTest, ResendFailedMutationsUsingOriginalIndex) {
+  std::vector<SingleRowMutation> originals{
+      SingleRowMutation("row-0", {SetCell("f", "c", 0_ms, "v0")}),
+      SingleRowMutation("row-1", {SetCell("f", "c", 0_ms, "v1")}),
+      SingleRowMutation("row-2", {SetCell("f", "c", 0_ms, "v2")}),
+  };
+  std::vector<FailedMutation> failures{
+      FailedMutation(Status(StatusCode::kUnavailable, "try again"), 0),
+      FailedMutation(Status(StatusCode::kUnavailable, "try again"), 2),
+  };
+
+  BulkMutation retry_batch;
+  for (FailedMutation const& f : failures) {
+    retry_batch.emplace_back(
+        originals.at(static_cast<std::size_t>(f.original_index())));
+  }
+
+  EXPECT_FALSE(retry_batch.empty());
+  ASSERT_EQ(2U, retry_batch.size());
+  btproto::MutateRowsRequest request;
+  retry_batch.MoveTo(&request);
+  ASSERT_EQ(2, request.entries_size());
+  EXPECT_EQ("row-0", request.entries(0).row_key());
+  EXPECT_EQ("row-2", request.entries(1).row_key());
 }
 
 }  // namespace

@@ -87,7 +87,7 @@ bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs) {
                            rhs.stack_frames.begin()));
 }
 
-std::string EvaluationKind::DebugString(absl::string_view name,
+std::string EvaluationKind::DebugString(std::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -95,7 +95,7 @@ std::string EvaluationKind::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ScriptStackFrame::DebugString(absl::string_view name,
+std::string ScriptStackFrame::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -108,7 +108,7 @@ std::string ScriptStackFrame::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ScriptStatistics::DebugString(absl::string_view name,
+std::string ScriptStatistics::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -117,7 +117,7 @@ std::string ScriptStatistics::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string JobStatistics::DebugString(absl::string_view name,
+std::string JobStatistics::DebugString(std::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
