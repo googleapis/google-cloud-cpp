@@ -181,7 +181,8 @@ class GcRule {
  *     with `google::cloud::bigtable_admin::BigtableTableAdminClient` instead.
  */
 class GOOGLE_CLOUD_CPP_DEPRECATED(
-    "Use `google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification` "
+    "Use "
+    "`google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification` "
     "with `google::cloud::bigtable_admin::BigtableTableAdminClient` instead.")
     ColumnFamilyModification {
  public:
