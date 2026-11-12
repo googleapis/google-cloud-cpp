@@ -94,6 +94,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "datastore"
     "datastream"
     "deploy"
+    "designcenter"
     "developerconnect"
     "devicestreaming"
     "dialogflow_cx"
@@ -356,6 +357,9 @@ macro (google_cloud_cpp_enable_deps)
     endif ()
     if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
+    endif ()
+    if (designcenter IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 apphub config)
     endif ()
     if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)

@@ -155,6 +155,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "datastore",
     "datastream",
     "deploy",
+    "designcenter",
     "developerconnect",
     "devicestreaming",
     "dialogflow_cx",
