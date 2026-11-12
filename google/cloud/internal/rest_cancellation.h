@@ -19,6 +19,7 @@
 #include "google/cloud/rest_options.h"
 #include <algorithm>
 #include <chrono>
+#include <optional>
 #include <thread>
 
 namespace google {
@@ -27,8 +28,9 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 inline bool IsRestCancelled(Options const& options) {
-  return options.has<experimental::RestCancellationOption>() &&
-         options.get<experimental::RestCancellationOption>().IsCancelled();
+  std::optional<experimental::RestCancellation> const cancellation =
+      internal::FetchOption<experimental::RestCancellationOption>(options);
+  return cancellation && cancellation->IsCancelled();
 }
 
 inline Status RestCancelledError() {
@@ -39,12 +41,14 @@ inline Status RestCancelledError() {
 // same bounded polling as the transport avoids callbacks and lifetime coupling.
 inline void RestCancellationWait(Options const& options,
                                  std::chrono::milliseconds delay) {
-  if (!options.has<experimental::RestCancellationOption>()) {
+  std::optional<experimental::RestCancellation> const cancellation =
+      internal::FetchOption<experimental::RestCancellationOption>(options);
+  if (!cancellation) {
     std::this_thread::sleep_for(delay);
     return;
   }
   auto const deadline = std::chrono::steady_clock::now() + delay;
-  while (!IsRestCancelled(options)) {
+  while (!cancellation->IsCancelled()) {
     auto const remaining = deadline - std::chrono::steady_clock::now();
     if (remaining <= decltype(remaining)::zero()) return;
     std::this_thread::sleep_for(

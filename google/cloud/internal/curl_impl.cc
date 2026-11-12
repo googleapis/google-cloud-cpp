@@ -203,9 +203,8 @@ CurlImpl::CurlImpl(CurlHandle handle,
       multi_(factory_->CreateMultiHandle()),
       pqc_ec_curves_(std::move(pqc_ec_curves)) {
   CurlInitializeOnce(options);
-  if (options.has<experimental::RestCancellationOption>()) {
-    cancellation_ = options.get<experimental::RestCancellationOption>();
-  }
+  cancellation_ =
+      internal::FetchOption<experimental::RestCancellationOption>(options);
 
   logging_enabled_ = google::cloud::internal::Contains(
       options.get<LoggingComponentsOption>(), "http");
