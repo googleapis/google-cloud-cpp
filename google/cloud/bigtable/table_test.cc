@@ -466,6 +466,7 @@ TEST(TableTest, ReadModifyWriteRow) {
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
         CheckCurrentOptions();
+        EXPECT_EQ(kAppProfileId, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -476,6 +477,41 @@ TEST(TableTest, ReadModifyWriteRow) {
   auto table = TestTable(std::move(mock));
   auto row = table.ReadModifyWriteRow("row", TestAppendRule(),
                                       TestIncrementRule(), CallOptions());
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, ReadModifyWriteRowAppProfileIdOverride) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        Options const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("call-profile", options.get<AppProfileIdOption>());
+        EXPECT_EQ("call-profile", request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return PermanentError();
+      })
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        Options const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("latter-profile", options.get<AppProfileIdOption>());
+        EXPECT_EQ("latter-profile", request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        return PermanentError();
+      });
+
+  Table table = TestTable(std::move(mock));
+  StatusOr<Row> row = table.ReadModifyWriteRow(
+      "row", TestAppendRule(), TestIncrementRule(),
+      Options{}.set<AppProfileIdOption>("call-profile"));
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+
+  row = table.ReadModifyWriteRow(
+      "row", TestAppendRule(),
+      Options{}.set<AppProfileIdOption>("former-profile"), TestIncrementRule(),
+      Options{}.set<AppProfileIdOption>("latter-profile"));
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -506,6 +542,7 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
       .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
         CheckCurrentOptions();
+        EXPECT_EQ(kAppProfileId, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.rules(),
                     ElementsAre(MatchRule(TestAppendRule()),
@@ -516,6 +553,41 @@ TEST(TableTest, AsyncReadModifyWriteRow) {
   auto table = TestTable(std::move(mock));
   auto row = table.AsyncReadModifyWriteRow("row", TestAppendRule(),
                                            TestIncrementRule(), CallOptions());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncReadModifyWriteRowAppProfileIdOverride) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        Options const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("call-profile", options.get<AppProfileIdOption>());
+        EXPECT_EQ("call-profile", request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return make_ready_future<StatusOr<Row>>(PermanentError());
+      })
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        Options const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("latter-profile", options.get<AppProfileIdOption>());
+        EXPECT_EQ("latter-profile", request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        return make_ready_future<StatusOr<Row>>(PermanentError());
+      });
+
+  Table table = TestTable(std::move(mock));
+  future<StatusOr<Row>> row = table.AsyncReadModifyWriteRow(
+      "row", TestAppendRule(), TestIncrementRule(),
+      Options{}.set<AppProfileIdOption>("call-profile"));
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+
+  row = table.AsyncReadModifyWriteRow(
+      "row", TestAppendRule(),
+      Options{}.set<AppProfileIdOption>("former-profile"), TestIncrementRule(),
+      Options{}.set<AppProfileIdOption>("latter-profile"));
   EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 

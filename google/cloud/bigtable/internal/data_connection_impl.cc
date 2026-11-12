@@ -554,10 +554,10 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   auto stub = stub_manager_->GetStub(InstanceNameFromTableName(table_name));
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
-    internal::ConfigureContext(*context, internal::CurrentOptions());
+    internal::ConfigureContext(*context, *current);
     operation_context->PreCall(*context);
     auto stream =
-        stub->SampleRowKeys(context, Options{}, request, operation_context);
+        stub->SampleRowKeys(context, *current, request, operation_context);
 
     std::optional<Status> status;
     while (true) {
@@ -608,8 +608,11 @@ DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  if (current->has<bigtable::AppProfileIdOption>()) {
+    request.set_app_profile_id(app_profile_id(*current));
+  }
   auto operation_context = operation_context_factory_->ReadModifyWriteRow(
-      request.table_name(), app_profile_id(*current));
+      request.table_name(), request.app_profile_id());
   auto stub =
       stub_manager_->GetStub(InstanceNameFromTableName(request.table_name()));
   auto sor = google::cloud::internal::RetryLoop(
@@ -633,8 +636,11 @@ StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
 future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  if (current->has<bigtable::AppProfileIdOption>()) {
+    request.set_app_profile_id(app_profile_id(*current));
+  }
   auto operation_context = operation_context_factory_->ReadModifyWriteRow(
-      request.table_name(), app_profile_id(*current));
+      request.table_name(), request.app_profile_id());
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
   auto stub =

@@ -258,6 +258,21 @@ If the API is restricted/private and cannot be enabled in
 `cloud-cpp-testing-resources`, add `DISABLED "True"` to `set_tests_properties`
 for `<library>_quickstart` in `google/cloud/<library>/CMakeLists.txt`).
 
+If `quickstart-production-pr` still fails after enabling the API with a
+service-side `PERMISSION_DENIED` or `INVALID_ARGUMENT` permanent error (for
+example, when a regional CCFE service's global gRPC endpoint routes to
+`prod-global` without `grpc_multi_api_scope`, returning `Read/Write` access
+denied on `cloud-cpp-testing-resources`, or when extra project setup is
+required), configure `PASS_REGULAR_EXPRESSION` on `<library>_quickstart` in
+`google/cloud/<library>/CMakeLists.txt`:
+
+```cmake
+    set_tests_properties(
+        <library>_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error.*gcloud-cpp.retry.function=<ListMethod>")
+```
+
 ### Step 3.8: Update Documentation & Changelog
 
 1. **[CHANGELOG.md](../../../CHANGELOG.md)**: Add

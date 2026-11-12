@@ -150,6 +150,7 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   ClientResourceLabels client_resource_labels_;
   std::shared_ptr<DirectAccessCompatibility> direct_access_compatibility_;
+  std::shared_ptr<Metric const> outstanding_rpcs_;
 
   // These vectors are initialized exactly once and the initialization is
   // delayed until the first time the corresponding method is called.
