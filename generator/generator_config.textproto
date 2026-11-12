@@ -2378,6 +2378,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Design Center
+service {
+  service_proto_path: "google/cloud/designcenter/v1/designcenter.proto"
+  product_path: "google/cloud/designcenter/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Developer Connect
 service {
   service_proto_path: "google/cloud/developerconnect/v1/developer_connect.proto"

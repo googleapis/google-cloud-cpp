@@ -19,6 +19,7 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [App Lifecycle Manager API](/google/cloud/saasservicemgmt/README.md)
+- [Design Center API](/google/cloud/designcenter/README.md)
 
 ## v3.13.0 - 2026-11
 
