@@ -59,7 +59,7 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 # set the search path.
 
 # ```bash
-ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig
 # ```
 
 # #### curl
@@ -82,6 +82,22 @@ RUN curl -fsSL https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.
         -DBUILD_TESTING=OFF \
         -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--version-script=$(pwd)/libcurl.vers" \
         -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+# ```
+
+# #### Abseil
+
+# ```bash
+WORKDIR /var/tmp/build/abseil-cpp
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 # ```
@@ -139,7 +155,7 @@ RUN dnf makecache && dnf install -y c-ares-devel re2-devel
 ## at build or run time.
 RUN dnf makecache && dnf install -y golang
 ## [DONE IGNORED]
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.84.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.85.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
