@@ -1,0 +1,36 @@
+/*!
+@page saasservicemgmt-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `saasservicemgmt_v1::SaasDeploymentsClient`:
+
+@snippet saas_deployments_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c saasservicemgmt_v1::SaasDeploymentsClient](@ref saasservicemgmt_v1::SaasDeploymentsClient-endpoint-snippet)
+- [\c saasservicemgmt_v1::SaasRolloutsClient](@ref saasservicemgmt_v1::SaasRolloutsClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page saasservicemgmt_v1::SaasDeploymentsClient-endpoint-snippet Override saasservicemgmt_v1::SaasDeploymentsClient Endpoint Configuration
+
+@snippet google/cloud/saasservicemgmt/v1/samples/saas_deployments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page saasservicemgmt_v1::SaasRolloutsClient-endpoint-snippet Override saasservicemgmt_v1::SaasRolloutsClient Endpoint Configuration
+
+@snippet google/cloud/saasservicemgmt/v1/samples/saas_rollouts_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

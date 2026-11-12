@@ -1,0 +1,54 @@
+/*!
+
+@mainpage App Lifecycle Manager API C++ Client Library
+
+An idiomatic C++ client library for the [App Lifecycle Manager API][cloud-service-docs].
+
+Model, deploy, and operate your SaaS at scale.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/saasservicemgmt/quickstart/` directory,
+which should give you a taste of the App Lifecycle Manager API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c saasservicemgmt_v1::SaasDeploymentsClient](@ref google::cloud::saasservicemgmt_v1::SaasDeploymentsClient)
+- [\c saasservicemgmt_v1::SaasRolloutsClient](@ref google::cloud::saasservicemgmt_v1::SaasRolloutsClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref saasservicemgmt-override-endpoint - describes how to override the default
+  endpoint.
+- @ref saasservicemgmt-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref saasservicemgmt-override-retry - describes how to change the default retry
+  policies.
+- @ref saasservicemgmt-env - describes environment variables that can configure the
+  behavior of the library.
+- @ref saasservicemgmt-override-universe-domain - describes how to override the default universe domain.
+
+[cloud-service-docs]: https://docs.cloud.google.com/app-lifecycle-manager
+
+*/

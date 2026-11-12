@@ -3807,6 +3807,21 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# App Lifecycle Manager
+service {
+  service_proto_path: "google/cloud/saasplatform/saasservicemgmt/v1/deployments_service.proto"
+  product_path: "google/cloud/saasservicemgmt/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/saasplatform/saasservicemgmt/v1/rollouts_service.proto"
+  product_path: "google/cloud/saasservicemgmt/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Scheduler
 service {
   service_proto_path: "google/cloud/scheduler/v1/cloudscheduler.proto"

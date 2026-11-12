@@ -275,6 +275,7 @@ declare -A -r LIBRARIES=(
   ["resourcemanager"]="@googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
   ["retail"]="@googleapis//google/cloud/retail/v2:retail_cc_grpc"
   ["run"]="@googleapis//google/cloud/run/v2:run_cc_grpc"
+  ["saasservicemgmt"]="@googleapis//google/cloud/saasplatform/saasservicemgmt/v1:saasservicemgmt_cc_grpc"
   ["scheduler"]="@googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"
   ["secretmanager"]="$(
     printf ",%s" \
