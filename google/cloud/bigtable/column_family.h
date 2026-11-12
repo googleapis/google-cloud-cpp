@@ -33,14 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Implement a thin wrapper around google::bigtable::admin::v2::GcRule.
  *
  * Provides functions to create GcRules in a convenient form.
- *
- * @deprecated Use `google::bigtable::admin::v2::GcRule` with
- *     `google::cloud::bigtable_admin::BigtableTableAdminClient` instead.
  */
-class GOOGLE_CLOUD_CPP_DEPRECATED(
-    "Use `google::bigtable::admin::v2::GcRule` with "
-    "`google::cloud::bigtable_admin::BigtableTableAdminClient` instead.")
-    GcRule {
+class GcRule {
  public:
   /// Create a garbage collection rule that keeps the last @p n versions.
   static GcRule MaxNumVersions(std::int32_t n) {
