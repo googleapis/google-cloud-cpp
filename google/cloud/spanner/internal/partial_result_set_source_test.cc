@@ -35,6 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
@@ -931,6 +932,72 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
               StatusIs(StatusCode::kInternal,
                        "PartialResultSetSource stream ended at a point"
                        " that is not on a row boundary"));
+}
+
+/**
+ * @test Verify the behavior when a stream ending with an RPC error leaves an
+ * incomplete Row in the buffer. The RPC error should be surfaced.
+ */
+TEST(PartialResultSetSourceTest, StreamErrorOnIncompleteRow) {
+  std::array<char const*, 2> text{{
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "10" }
+        values: { string_value: "user10" }
+      )pb",
+      R"pb(
+        values: { string_value: "99" }
+      )pb",
+  }};
+  std::array<google::spanner::v1::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
+
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](std::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](std::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish())
+      .WillOnce(ResultMock(
+          Status(StatusCode::kResourceExhausted, "Memory limit exceeded")));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  StatusOr<std::unique_ptr<PartialResultSourceInterface>> reader =
+      CreatePartialResultSetSource(std::move(grpc_reader));
+  ASSERT_THAT(reader, IsOk());
+
+  // Verify the first row is correct.
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow({
+                                        {"UserId", spanner::Value(10)},
+                                        {"UserName", spanner::Value("user10")},
+                                    })));
+
+  // Trying to read the next row should fail with the status from Finish().
+  EXPECT_THAT((*reader)->NextRow(), StatusIs(StatusCode::kResourceExhausted,
+                                             "Memory limit exceeded"));
 }
 
 }  // namespace

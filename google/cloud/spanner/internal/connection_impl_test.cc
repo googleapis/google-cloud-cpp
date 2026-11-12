@@ -333,6 +333,52 @@ Options MakeLimitedRetryOptions() {
               /*scaling=*/2.0));
 }
 
+class ExpiringRetryPolicy : public spanner::RetryPolicy {
+ public:
+  explicit ExpiringRetryPolicy(std::shared_ptr<bool> expired)
+      : expired_(std::move(expired)) {}
+
+  std::unique_ptr<spanner::RetryPolicy> clone() const override {
+    return std::make_unique<ExpiringRetryPolicy>(expired_);
+  }
+  bool OnFailure(Status const& status) override {
+    return !IsPermanentFailure(status) && !IsExhausted();
+  }
+  bool IsExhausted() const override { return *expired_; }
+  bool IsPermanentFailure(Status const& status) const override {
+    return SafeGrpcRetry::IsPermanentFailure(status);
+  }
+
+ private:
+  std::shared_ptr<bool> expired_;
+};
+
+class ExpiringBackoffPolicy : public spanner::BackoffPolicy {
+ public:
+  explicit ExpiringBackoffPolicy(std::shared_ptr<bool> expired)
+      : expired_(std::move(expired)) {}
+
+  std::unique_ptr<spanner::BackoffPolicy> clone() const override {
+    return std::make_unique<ExpiringBackoffPolicy>(expired_);
+  }
+  std::chrono::milliseconds OnCompletion() override {
+    *expired_ = true;
+    return std::chrono::milliseconds(0);
+  }
+
+ private:
+  std::shared_ptr<bool> expired_;
+};
+
+Options MakeExpiringOnBackoffOptions() {
+  auto expired = std::make_shared<bool>(false);
+  return Options{}
+      .set<spanner::SpannerRetryPolicyOption>(
+          std::make_shared<ExpiringRetryPolicy>(expired))
+      .set<spanner::SpannerBackoffPolicyOption>(
+          std::make_shared<ExpiringBackoffPolicy>(expired));
+}
+
 std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
     spanner::Database db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock, Options opts = {}) {
@@ -861,6 +907,129 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
                               HasSubstr("uh-oh in GrpcReader::Finish")));
   }
+}
+
+/// @test Verify that retry deadline expiration during backoff in ExecuteQuery
+/// surfaces the streaming RPC error.
+TEST(ConnectionImplTest, ExecuteQueryRetryDeadlineExpiresDuringBackoff) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database const db("placeholder_project", "placeholder_instance",
+                             "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .Times(1)
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          {}, internal::ResourceExhaustedError("Memory limit exceeded")))));
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeExpiringOnBackoffOptions());
+  spanner::Transaction txn =
+      MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions());
+  spanner::RowStream rows =
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
+  std::vector<StatusOr<spanner::Row>> actual{rows.begin(), rows.end()};
+  EXPECT_THAT(actual,
+              ElementsAre(StatusIs(StatusCode::kResourceExhausted,
+                                   HasSubstr("Memory limit exceeded"))));
+}
+
+/// @test Verify that mid-stream retry deadline expiration during backoff
+/// surfaces the streaming RPC error after prior successful rows.
+TEST(ConnectionImplTest,
+     ExecuteQueryMidStreamRetryDeadlineExpiresDuringBackoff) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database const db("placeholder_project", "placeholder_instance",
+                             "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  constexpr char const* kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
+        }
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "10" }
+    values: { string_value: "user10" }
+    resume_token: "resume-1"
+  )pb";
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .Times(1)
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          {kText},
+          internal::ResourceExhaustedError("Memory limit exceeded")))));
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeExpiringOnBackoffOptions());
+  spanner::Transaction txn =
+      MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions());
+  spanner::RowStream rows =
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  spanner::TupleStream<RowType> stream = spanner::StreamOf<RowType>(rows);
+  std::vector<StatusOr<RowType>> actual{stream.begin(), stream.end()};
+  EXPECT_THAT(actual,
+              ElementsAre(IsOkAndHolds(RowType(10, "user10")),
+                          StatusIs(StatusCode::kResourceExhausted,
+                                   HasSubstr("Memory limit exceeded"))));
+}
+
+/// @test Verify that a streaming RPC error occurring mid-row surfaces the RPC
+/// status rather than masking it.
+TEST(ConnectionImplTest, ExecuteQueryMidRowErrorSurfacesRpcStatus) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database const db("placeholder_project", "placeholder_instance",
+                             "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  constexpr char const* kRow1WithResumeToken = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
+        }
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "10" }
+    values: { string_value: "user10" }
+    resume_token: "resume-1"
+  )pb";
+  constexpr char const* kIncompleteRow2WithoutToken = R"pb(
+    values: { string_value: "99" }
+  )pb";
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .Times(1)
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          {kRow1WithResumeToken, kIncompleteRow2WithoutToken},
+          internal::ResourceExhaustedError("Memory limit exceeded")))));
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeExpiringOnBackoffOptions());
+  spanner::Transaction txn =
+      MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions());
+  spanner::RowStream rows =
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  spanner::TupleStream<RowType> stream = spanner::StreamOf<RowType>(rows);
+  std::vector<StatusOr<RowType>> actual{stream.begin(), stream.end()};
+  EXPECT_THAT(actual,
+              ElementsAre(IsOkAndHolds(RowType(10, "user10")),
+                          StatusIs(StatusCode::kResourceExhausted,
+                                   HasSubstr("Memory limit exceeded"))));
 }
 
 TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
