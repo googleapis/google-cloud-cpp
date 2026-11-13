@@ -70,6 +70,20 @@ TEST(MakeOptionSpanTest, Declaration) {
   EXPECT_EQ("u-p-default", g2.get<UserProjectOption>());
 }
 
+TEST(MakeOptionSpanTest, NonConstLvalueOptionsPreserved) {
+  Options opts = TestOptions();
+  auto const g1 = GroupOptions(opts);
+  EXPECT_EQ("u-p-default", g1.get<UserProjectOption>());
+  EXPECT_EQ("a-default", g1.get<AuthorityOption>());
+  // Verify the non-const lvalue Options object was not moved-from.
+  EXPECT_EQ("u-p-default", opts.get<UserProjectOption>());
+  EXPECT_EQ("a-default", opts.get<AuthorityOption>());
+
+  auto const g2 = GroupOptions(opts);
+  EXPECT_EQ("u-p-default", g2.get<UserProjectOption>());
+  EXPECT_EQ("a-default", g2.get<AuthorityOption>());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
