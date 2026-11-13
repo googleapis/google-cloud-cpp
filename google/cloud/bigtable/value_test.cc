@@ -27,9 +27,13 @@
 #include <iomanip>
 #include <ios>
 #include <limits>
+#include <optional>
+#include <sstream>
 #include <string>
 #include <tuple>
 #include <type_traits>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -1054,6 +1058,474 @@ array_value {
   ASSERT_STATUS_OK(map);
   EXPECT_THAT(*map, ::testing::UnorderedElementsAre(
                         ::testing::Pair(Bytes("foo"), "bar")));
+}
+
+TEST(Value, ProtoArrayOfMapsWithDuplicateKeys) {
+  char constexpr kTypeProto[] = R"pb(
+    array_type {
+      element_type {
+        map_type {
+          key_type { string_type {} }
+          value_type { int64_type {} }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Type type_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTypeProto, &type_proto));
+
+  char constexpr kValueProto[] = R"pb(
+    array_value {
+      values {
+        array_value {
+          values {
+            array_value {
+              values { string_value: "k" }
+              values { int_value: 1 }
+            }
+          }
+          values {
+            array_value {
+              values { string_value: "other" }
+              values { int_value: 10 }
+            }
+          }
+          values {
+            array_value {
+              values { string_value: "k" }
+              values { int_value: 2 }
+            }
+          }
+          values {
+            array_value {
+              values { string_value: "k" }
+              values { int_value: 3 }
+            }
+          }
+        }
+      }
+      values {}
+      values { array_value {} }
+    }
+  )pb";
+  google::bigtable::v2::Value value_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kValueProto, &value_proto));
+
+  using MapType = std::unordered_map<std::string, std::int64_t>;
+  using ArrayType = std::vector<std::optional<MapType>>;
+
+  Value value = bigtable_internal::FromProto(type_proto, value_proto);
+  ArrayType const expected = {
+      std::optional<MapType>{MapType{{"other", 10}, {"k", 3}}},
+      std::nullopt,
+      std::optional<MapType>{MapType{}},
+  };
+
+  StatusOr<ArrayType> extracted = value.get<ArrayType>();
+  ASSERT_STATUS_OK(extracted);
+  EXPECT_EQ(*extracted, expected);
+  EXPECT_EQ(value, Value(expected));
+
+  std::ostringstream ss;
+  ss << value;
+  EXPECT_EQ(ss.str(), R"([{{"other" : 10}, {"k" : 3}}, NULL, {}])");
+
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      protos = bigtable_internal::ToProto(value);
+  ASSERT_EQ(protos.second.array_value().values_size(), 3);
+  EXPECT_EQ(protos.second.array_value().values(0).array_value().values_size(),
+            2);
+}
+
+TEST(Value, ProtoStructWithNestedMapDuplicateKeys) {
+  char constexpr kTypeProto[] = R"pb(
+    struct_type {
+      fields {
+        field_name: "name"
+        type { string_type {} }
+      }
+      fields {
+        field_name: "attrs"
+        type {
+          map_type {
+            key_type { bytes_type {} }
+            value_type { string_type {} }
+          }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Type type_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTypeProto, &type_proto));
+
+  char constexpr kValueProto[] = R"pb(
+    array_value {
+      values { string_value: "row1" }
+      values {
+        array_value {
+          values {
+            array_value {
+              values { bytes_value: "k1" }
+              values { string_value: "first" }
+            }
+          }
+          values {
+            array_value {
+              values { bytes_value: "k1" }
+              values { string_value: "last" }
+            }
+          }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Value value_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kValueProto, &value_proto));
+
+  using MapType = std::unordered_map<Bytes, std::string>;
+  using StructType = std::tuple<std::pair<std::string, std::string>,
+                                std::pair<std::string, MapType>>;
+
+  Value value = bigtable_internal::FromProto(type_proto, value_proto);
+  StructType const expected = std::make_tuple(
+      std::make_pair(std::string("name"), std::string("row1")),
+      std::make_pair(std::string("attrs"), MapType{{Bytes("k1"), "last"}}));
+
+  StatusOr<StructType> extracted = value.get<StructType>();
+  ASSERT_STATUS_OK(extracted);
+  EXPECT_EQ(*extracted, expected);
+
+  Value value_copy = value;
+  StatusOr<StructType> rvalue_extracted =
+      std::move(value_copy).get<StructType>();
+  ASSERT_STATUS_OK(rvalue_extracted);
+  EXPECT_EQ(*rvalue_extracted, expected);
+
+  EXPECT_EQ(value, Value(expected));
+
+  std::ostringstream ss;
+  ss << value;
+  EXPECT_EQ(ss.str(), R"(("name": "row1", "attrs": {{B"k1" : "last"}}))");
+
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      protos = bigtable_internal::ToProto(value);
+  ASSERT_EQ(protos.second.array_value().values_size(), 2);
+  EXPECT_EQ(protos.second.array_value().values(1).array_value().values_size(),
+            1);
+}
+
+TEST(Value, ProtoNestedMapOfMapsWithDuplicateKeys) {
+  char constexpr kTypeProto[] = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type {
+        map_type {
+          key_type { int64_type {} }
+          value_type { string_type {} }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Type type_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTypeProto, &type_proto));
+
+  char constexpr kValueProto[] = R"pb(
+    array_value {
+      values {
+        array_value {
+          values { string_value: "outer" }
+          values {
+            array_value {
+              values {
+                array_value {
+                  values { int_value: 1 }
+                  values { string_value: "stale1" }
+                }
+              }
+              values {
+                array_value {
+                  values { int_value: 1 }
+                  values { string_value: "stale2" }
+                }
+              }
+            }
+          }
+        }
+      }
+      values {
+        array_value {
+          values { string_value: "null_inner" }
+          values {}
+        }
+      }
+      values {
+        array_value {
+          values { string_value: "outer" }
+          values {
+            array_value {
+              values {
+                array_value {
+                  values { int_value: 1 }
+                  values { string_value: "first" }
+                }
+              }
+              values {
+                array_value {
+                  values { int_value: 2 }
+                  values { string_value: "keep" }
+                }
+              }
+              values {
+                array_value {
+                  values { int_value: 1 }
+                  values { string_value: "last" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Value value_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kValueProto, &value_proto));
+
+  using InnerMap = std::unordered_map<std::int64_t, std::string>;
+  using OuterMap = std::unordered_map<std::string, std::optional<InnerMap>>;
+
+  Value value = bigtable_internal::FromProto(type_proto, value_proto);
+  OuterMap const expected = {
+      {"null_inner", std::nullopt},
+      {"outer", std::optional<InnerMap>{InnerMap{{1, "last"}, {2, "keep"}}}},
+  };
+
+  StatusOr<OuterMap> extracted = value.get<OuterMap>();
+  ASSERT_STATUS_OK(extracted);
+  EXPECT_EQ(*extracted, expected);
+  EXPECT_EQ(value, Value(expected));
+
+  std::ostringstream ss;
+  ss << value;
+  EXPECT_EQ(
+      ss.str(),
+      R"({{"null_inner" : NULL}, {"outer" : {{2 : "keep"}, {1 : "last"}}}})");
+
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      protos = bigtable_internal::ToProto(value);
+  ASSERT_EQ(protos.second.array_value().values_size(), 2);
+  EXPECT_EQ(protos.second.array_value()
+                .values(1)
+                .array_value()
+                .values(1)
+                .array_value()
+                .values_size(),
+            2);
+}
+
+TEST(Value, ProtoMapPreservesMalformedEntries) {
+  char constexpr kTopLevelType[] = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  google::bigtable::v2::Type top_type;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTopLevelType, &top_type));
+
+  char constexpr kTopLevelValue[] = R"pb(
+    array_value {
+      values { string_value: "not-an-entry" }
+      values { array_value { values { string_value: "missing-value" } } }
+      values {
+        array_value {
+          values { string_value: "k" }
+          values { int_value: 1 }
+        }
+      }
+      values {
+        array_value {
+          values { string_value: "k" }
+          values { int_value: 2 }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Value top_value_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTopLevelValue, &top_value_proto));
+
+  using TopMap = std::unordered_map<std::string, std::int64_t>;
+  Value top_value = bigtable_internal::FromProto(top_type, top_value_proto);
+  EXPECT_THAT(top_value.get<TopMap>(), Not(IsOk()));
+
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      top_protos = bigtable_internal::ToProto(top_value);
+  ASSERT_EQ(top_protos.second.array_value().values_size(), 3);
+  EXPECT_EQ(top_protos.second.array_value().values(0).string_value(),
+            "not-an-entry");
+  EXPECT_EQ(
+      top_protos.second.array_value().values(1).array_value().values_size(), 1);
+  EXPECT_EQ(top_protos.second.array_value()
+                .values(2)
+                .array_value()
+                .values(1)
+                .int_value(),
+            2);
+
+  char constexpr kNestedType[] = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type {
+        map_type {
+          key_type { int64_type {} }
+          value_type { string_type {} }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Type nested_type;
+  ASSERT_TRUE(TextFormat::ParseFromString(kNestedType, &nested_type));
+
+  char constexpr kNestedValue[] = R"pb(
+    array_value {
+      values { array_value { values { string_value: "incomplete-outer" } } }
+      values {
+        array_value {
+          values { string_value: "outer" }
+          values {
+            array_value {
+              values { int_value: 99 }
+              values {
+                array_value {
+                  values { int_value: 1 }
+                  values { string_value: "first" }
+                }
+              }
+              values {
+                array_value {
+                  values { int_value: 1 }
+                  values { string_value: "last" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::Value nested_value_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kNestedValue, &nested_value_proto));
+
+  using InnerMap = std::unordered_map<std::int64_t, std::string>;
+  using OuterMap = std::unordered_map<std::string, InnerMap>;
+  Value nested_value =
+      bigtable_internal::FromProto(nested_type, nested_value_proto);
+  EXPECT_THAT(nested_value.get<OuterMap>(), Not(IsOk()));
+
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      nested_protos = bigtable_internal::ToProto(nested_value);
+  ASSERT_EQ(nested_protos.second.array_value().values_size(), 2);
+  google::bigtable::v2::ArrayValue const& inner_array =
+      nested_protos.second.array_value()
+          .values(1)
+          .array_value()
+          .values(1)
+          .array_value();
+  ASSERT_EQ(inner_array.values_size(), 2);
+  EXPECT_EQ(inner_array.values(0).int_value(), 99);
+  EXPECT_EQ(inner_array.values(1).array_value().values(1).string_value(),
+            "last");
+}
+
+TEST(Value, ProtoNestedMapDepthLimit) {
+  auto make_leaf_map_type = [] {
+    google::bigtable::v2::Type map_type;
+    map_type.mutable_map_type()->mutable_key_type()->mutable_string_type();
+    map_type.mutable_map_type()->mutable_value_type()->mutable_int64_type();
+    return map_type;
+  };
+  auto make_duplicate_map_value = [] {
+    google::bigtable::v2::Value map_value;
+    google::bigtable::v2::Value* entry1 =
+        map_value.mutable_array_value()->add_values();
+    entry1->mutable_array_value()->add_values()->set_string_value("k");
+    entry1->mutable_array_value()->add_values()->set_int_value(1);
+    google::bigtable::v2::Value* entry2 =
+        map_value.mutable_array_value()->add_values();
+    entry2->mutable_array_value()->add_values()->set_string_value("k");
+    entry2->mutable_array_value()->add_values()->set_int_value(2);
+    return map_value;
+  };
+  auto wrap_in_structs = [](google::bigtable::v2::Type inner_type,
+                            google::bigtable::v2::Value inner_value,
+                            int num_structs) {
+    for (int i = 0; i < num_structs; ++i) {
+      google::bigtable::v2::Type outer_type;
+      *outer_type.mutable_struct_type()->add_fields()->mutable_type() =
+          std::move(inner_type);
+      inner_type = std::move(outer_type);
+
+      google::bigtable::v2::Value outer_value;
+      *outer_value.mutable_array_value()->add_values() = std::move(inner_value);
+      inner_value = std::move(outer_value);
+    }
+    return std::make_pair(std::move(inner_type), std::move(inner_value));
+  };
+  auto unwrap_structs = [](google::bigtable::v2::Value const& v,
+                           int num_structs) {
+    google::bigtable::v2::Value const* cur = &v;
+    for (int i = 0; i < num_structs; ++i) {
+      cur = &cur->array_value().values(0);
+    }
+    return cur;
+  };
+
+  // 8 enclosing structs + 1 map + 1 scalar level = 10 levels (max valid depth).
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      ok_wrapped =
+          wrap_in_structs(make_leaf_map_type(), make_duplicate_map_value(), 8);
+  EXPECT_STATUS_OK(
+      Value::TypeAndValuesMatch(ok_wrapped.first, ok_wrapped.second));
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      ok_protos = bigtable_internal::ToProto(
+          bigtable_internal::FromProto(ok_wrapped.first, ok_wrapped.second));
+  google::bigtable::v2::Value const* deduped_leaf =
+      unwrap_structs(ok_protos.second, 8);
+  ASSERT_EQ(deduped_leaf->array_value().values_size(), 1);
+  EXPECT_EQ(
+      deduped_leaf->array_value().values(0).array_value().values(1).int_value(),
+      2);
+
+  // 9 enclosing structs + 1 map + 1 scalar level = 11 levels (exceeds max
+  // depth).
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      deep_wrapped =
+          wrap_in_structs(make_leaf_map_type(), make_duplicate_map_value(), 9);
+  EXPECT_THAT(
+      Value::TypeAndValuesMatch(deep_wrapped.first, deep_wrapped.second),
+      Not(IsOk()));
+  std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> const
+      deep_protos = bigtable_internal::ToProto(bigtable_internal::FromProto(
+          deep_wrapped.first, deep_wrapped.second));
+  google::bigtable::v2::Value const* untouched_leaf =
+      unwrap_structs(deep_protos.second, 9);
+  EXPECT_EQ(untouched_leaf->array_value().values_size(), 2);
+
+  // Deeply nested ARRAY<ARRAY<...<MAP>...>> with a single NULL element passes
+  // TypeAndValuesMatch at depth 2 and must stay bounded in FromProto.
+  google::bigtable::v2::Type deep_array_type = make_leaf_map_type();
+  for (int i = 0; i < 64; ++i) {
+    google::bigtable::v2::Type wrapper;
+    *wrapper.mutable_array_type()->mutable_element_type() =
+        std::move(deep_array_type);
+    deep_array_type = std::move(wrapper);
+  }
+  google::bigtable::v2::Value single_null_element;
+  single_null_element.mutable_array_value()->add_values();
+  EXPECT_STATUS_OK(
+      Value::TypeAndValuesMatch(deep_array_type, single_null_element));
+  Value bounded_null_array =
+      bigtable_internal::FromProto(deep_array_type, single_null_element);
+  EXPECT_FALSE(bounded_null_array.is_null());
 }
 
 void SetNullProtoKind(Value& v) {

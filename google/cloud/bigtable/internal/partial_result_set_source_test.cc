@@ -34,7 +34,12 @@
 #include <grpcpp/grpcpp.h>
 #include <array>
 #include <cstdint>
+#include <memory>
 #include <string>
+#include <tuple>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -43,6 +48,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
@@ -493,6 +499,235 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
   EXPECT_EQ(*row2->values().at(0).get<std::string>(), "c1");
   EXPECT_EQ(*row2->values().at(1).get<std::string>(), "c2");
   EXPECT_EQ(*row2->values().at(2).get<std::string>(), "c3");
+
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+TEST(PartialResultSetSourceTest, NestedMapsWithDuplicateKeys) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_shared<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone)
+      .WillOnce([](opentelemetry::context::Context const&,
+                   OnDoneParams const& p) -> void {
+        EXPECT_THAT(p.operation_status, IsOk());
+      });
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(2);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(2);
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  // NOLINTNEXTLINE(modernize-make-shared)
+  std::shared_ptr<OperationContext> operation_context(
+      new OperationContext({mock_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
+  char constexpr kResultMetadataText[] = R"pb(
+    proto_schema {
+      columns {
+        name: "arr_map"
+        type {
+          array_type {
+            element_type {
+              map_type {
+                key_type { string_type {} }
+                value_type { int64_type {} }
+              }
+            }
+          }
+        }
+      }
+      columns {
+        name: "struct_map"
+        type {
+          struct_type {
+            fields {
+              field_name: "label"
+              type { string_type {} }
+            }
+            fields {
+              field_name: "attrs"
+              type {
+                map_type {
+                  key_type { bytes_type {} }
+                  value_type { string_type {} }
+                }
+              }
+            }
+          }
+        }
+      }
+      columns {
+        name: "nested_map"
+        type {
+          map_type {
+            key_type { string_type {} }
+            value_type {
+              map_type {
+                key_type { string_type {} }
+                value_type { int64_type {} }
+              }
+            }
+          }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+
+  char constexpr kProtoRowsText[] = R"pb(
+    values {
+      array_value {
+        values {
+          array_value {
+            values {
+              array_value {
+                values { string_value: "k" }
+                values { int_value: 1 }
+              }
+            }
+            values {
+              array_value {
+                values { string_value: "other" }
+                values { int_value: 10 }
+              }
+            }
+            values {
+              array_value {
+                values { string_value: "k" }
+                values { int_value: 2 }
+              }
+            }
+          }
+        }
+      }
+    }
+    values {
+      array_value {
+        values { string_value: "item" }
+        values {
+          array_value {
+            values {
+              array_value {
+                values { bytes_value: "q" }
+                values { string_value: "first" }
+              }
+            }
+            values {
+              array_value {
+                values { bytes_value: "q" }
+                values { string_value: "second" }
+              }
+            }
+          }
+        }
+      }
+    }
+    values {
+      array_value {
+        values {
+          array_value {
+            values { string_value: "outer" }
+            values {
+              array_value {
+                values {
+                  array_value {
+                    values { string_value: "inner" }
+                    values { int_value: 10 }
+                  }
+                }
+              }
+            }
+          }
+        }
+        values {
+          array_value {
+            values { string_value: "outer" }
+            values {
+              array_value {
+                values {
+                  array_value {
+                    values { string_value: "inner" }
+                    values { int_value: 30 }
+                  }
+                }
+                values {
+                  array_value {
+                    values { string_value: "inner" }
+                    values { int_value: 40 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ProtoRows proto_rows;
+  ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  std::uint32_t const correct_checksum =
+      bigtable_internal::Crc32c(binary_batch_data);
+  google::bigtable::v2::PartialResultSet response;
+  response.mutable_proto_rows_batch()->set_batch_data(binary_batch_data);
+  response.set_resume_token("AAAAAWVyZXN1bWVfdG9rZW4=");
+  response.set_reset(true);
+  response.set_estimated_batch_size(
+      static_cast<std::int32_t>(binary_batch_data.size()));
+  response.set_batch_checksum(correct_checksum);
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](std::optional<std::string> const&,
+                            UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .Times(4)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
+      CreatePartialResultSetSource(metadata, std::move(operation_context),
+                                   std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+
+  StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
+  ASSERT_STATUS_OK(row);
+  ASSERT_EQ(row->values().size(), 3);
+
+  using StringIntMap = std::unordered_map<std::string, std::int64_t>;
+  using ArrMap = std::vector<StringIntMap>;
+  ArrMap const expected_arr_map = {StringIntMap{{"other", 10}, {"k", 2}}};
+  EXPECT_THAT(row->values().at(0).get<ArrMap>(),
+              IsOkAndHolds(expected_arr_map));
+  EXPECT_EQ(row->values().at(0), bigtable::Value(expected_arr_map));
+
+  using InnerBytesMap = std::unordered_map<bigtable::Bytes, std::string>;
+  using StructMap = std::tuple<std::pair<std::string, std::string>,
+                               std::pair<std::string, InnerBytesMap>>;
+  StructMap const expected_struct_map = std::make_tuple(
+      std::make_pair(std::string("label"), std::string("item")),
+      std::make_pair(std::string("attrs"),
+                     InnerBytesMap{{bigtable::Bytes("q"), "second"}}));
+  EXPECT_THAT(row->values().at(1).get<StructMap>(),
+              IsOkAndHolds(expected_struct_map));
+  EXPECT_EQ(row->values().at(1), bigtable::Value(expected_struct_map));
+
+  using NestedMap = std::unordered_map<std::string, StringIntMap>;
+  NestedMap const expected_nested_map = {
+      {"outer", StringIntMap{{"inner", 40}}}};
+  EXPECT_THAT(row->values().at(2).get<NestedMap>(),
+              IsOkAndHolds(expected_nested_map));
+  EXPECT_EQ(row->values().at(2), bigtable::Value(expected_nested_map));
 
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
 }

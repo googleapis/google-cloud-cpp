@@ -23,6 +23,9 @@
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 #include <algorithm>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -330,6 +333,147 @@ std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     delimiter = ", ";
   }
   return os << '}';
+}
+
+// Matches Value::TypeAndValuesMatch, where the root Type is at depth 1 and a
+// container at `depth` has child types/values at `depth + 1` (which must not
+// exceed `kMaxValueDepth`).
+struct SchemaNode {
+  google::bigtable::v2::Type const* type;
+  int depth;
+  bool children_pushed;
+};
+
+void PushChildSchemaNodes(google::bigtable::v2::Type const& type, int depth,
+                          std::vector<SchemaNode>& stack) {
+  if (type.has_map_type()) {
+    stack.push_back({&type.map_type().value_type(), depth + 1, false});
+  } else if (type.has_array_type()) {
+    stack.push_back({&type.array_type().element_type(), depth + 1, false});
+  } else if (type.has_struct_type()) {
+    for (google::bigtable::v2::Type::Struct::Field const& field :
+         type.struct_type().fields()) {
+      stack.push_back({&field.type(), depth + 1, false});
+    }
+  }
+}
+
+bool ChildHasMap(google::bigtable::v2::Type const& type,
+                 absl::flat_hash_set<google::bigtable::v2::Type const*> const&
+                     types_with_map) {
+  if (type.has_map_type()) return true;
+  if (type.has_array_type()) {
+    return types_with_map.contains(&type.array_type().element_type());
+  }
+  if (type.has_struct_type()) {
+    for (google::bigtable::v2::Type::Struct::Field const& field :
+         type.struct_type().fields()) {
+      if (types_with_map.contains(&field.type())) return true;
+    }
+  }
+  return false;
+}
+
+absl::flat_hash_set<google::bigtable::v2::Type const*>
+CollectTypesContainingMap(google::bigtable::v2::Type const& root_type) {
+  absl::flat_hash_set<google::bigtable::v2::Type const*> types_with_map;
+  std::vector<SchemaNode> stack;
+  stack.push_back({&root_type, 1, false});
+  while (!stack.empty()) {
+    if (stack.back().depth >= kMaxValueDepth) {
+      stack.pop_back();
+      continue;
+    }
+    if (!stack.back().children_pushed) {
+      stack.back().children_pushed = true;
+      google::bigtable::v2::Type const* type = stack.back().type;
+      int const depth = stack.back().depth;
+      PushChildSchemaNodes(*type, depth, stack);
+      continue;
+    }
+    google::bigtable::v2::Type const* type = stack.back().type;
+    stack.pop_back();
+    if (ChildHasMap(*type, types_with_map)) types_with_map.insert(type);
+  }
+  return types_with_map;
+}
+
+struct ValueNode {
+  google::bigtable::v2::Type const* type;
+  google::bigtable::v2::Value* value;
+};
+
+void DedupProtoMapEntries(google::bigtable::v2::Type::Map const& map_type,
+                          google::bigtable::v2::ArrayValue& array_val,
+                          bool value_has_map, std::vector<ValueNode>& stack) {
+  google::bigtable::v2::Type const& value_type = map_type.value_type();
+  google::bigtable::v2::ArrayValue dedup_array;
+  dedup_array.mutable_values()->Reserve(array_val.values_size());
+  absl::flat_hash_set<std::string> keys;
+  for (int i = array_val.values_size() - 1; i >= 0; --i) {
+    google::bigtable::v2::Value& entry = *array_val.mutable_values(i);
+    if (!entry.has_array_value() || entry.array_value().values_size() != 2) {
+      *dedup_array.add_values() = std::move(entry);
+      continue;
+    }
+    google::bigtable::v2::Value const& key = entry.array_value().values(0);
+    // TODO(#15766): Find a better way to hash these protos.
+    if (keys.insert(key.SerializeAsString()).second) {
+      *dedup_array.add_values() = std::move(entry);
+    }
+  }
+  std::reverse(dedup_array.mutable_values()->begin(),
+               dedup_array.mutable_values()->end());
+  array_val.Swap(&dedup_array);
+  if (!value_has_map) return;
+  for (int i = 0; i < array_val.values_size(); ++i) {
+    google::bigtable::v2::Value& entry = *array_val.mutable_values(i);
+    if (entry.has_array_value() && entry.array_value().values_size() == 2) {
+      stack.push_back(
+          {&value_type, entry.mutable_array_value()->mutable_values(1)});
+    }
+  }
+}
+
+void DedupProtoMaps(
+    google::bigtable::v2::Type const& root_type,
+    google::bigtable::v2::Value& root_value,
+    absl::flat_hash_set<google::bigtable::v2::Type const*> const&
+        types_with_map) {
+  std::vector<ValueNode> stack;
+  stack.push_back({&root_type, &root_value});
+  while (!stack.empty()) {
+    ValueNode const current = stack.back();
+    stack.pop_back();
+    google::bigtable::v2::Value& value = *current.value;
+    if (!value.has_array_value() || value.array_value().values().empty()) {
+      continue;
+    }
+    google::bigtable::v2::Type const& type = *current.type;
+    if (type.has_map_type()) {
+      DedupProtoMapEntries(
+          type.map_type(), *value.mutable_array_value(),
+          types_with_map.contains(&type.map_type().value_type()), stack);
+    } else if (type.has_array_type()) {
+      google::bigtable::v2::Type const& elem_type =
+          type.array_type().element_type();
+      google::bigtable::v2::ArrayValue* array_val = value.mutable_array_value();
+      for (int i = 0; i < array_val->values_size(); ++i) {
+        stack.push_back({&elem_type, array_val->mutable_values(i)});
+      }
+    } else if (type.has_struct_type()) {
+      google::bigtable::v2::ArrayValue* array_val = value.mutable_array_value();
+      int const n =
+          std::min(type.struct_type().fields_size(), array_val->values_size());
+      for (int i = 0; i < n; ++i) {
+        google::bigtable::v2::Type const& field_type =
+            type.struct_type().fields(i).type();
+        if (types_with_map.contains(&field_type)) {
+          stack.push_back({&field_type, array_val->mutable_values(i)});
+        }
+      }
+    }
+  }
 }
 }  // namespace
 
@@ -780,24 +924,10 @@ bool Value::is_null() const { return IsNullValue(value_); }
 // specified for the key, per:
 // https://github.com/googleapis/googleapis/blob/0eeb1be5b78a9c7e006ee57cde95349834ae9f3b/google/bigtable/v2/types.proto#L357
 void Value::DedupProtoMap() {
-  google::bigtable::v2::Value dedup_value;
-  absl::flat_hash_set<std::string> keys;
-  for (int i = value_.array_value().values_size() - 1; i >= 0; --i) {
-    auto map_value_proto = GetProtoValueArrayElement(value_, i);
-    if (!map_value_proto.has_array_value() ||
-        map_value_proto.array_value().values_size() != 2) {
-      continue;
-    }
-    auto const& key = map_value_proto.array_value().values(0);
-    // TODO(#15766): Find a better way to hash these protos.
-    if (keys.insert(key.SerializeAsString()).second) {
-      *dedup_value.mutable_array_value()->add_values() =
-          std::move(map_value_proto);
-    }
-  }
-  std::reverse(dedup_value.mutable_array_value()->mutable_values()->begin(),
-               dedup_value.mutable_array_value()->mutable_values()->end());
-  value_ = std::move(dedup_value);
+  absl::flat_hash_set<google::bigtable::v2::Type const*> const types_with_map =
+      CollectTypesContainingMap(type_);
+  if (!types_with_map.contains(&type_)) return;
+  DedupProtoMaps(type_, value_, types_with_map);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
