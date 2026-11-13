@@ -84,6 +84,15 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
         });
   }
 
+  future<Status> WarmUp(WarmUpParams p) override {
+    auto span = internal::MakeSpan("storage::AsyncConnection::WarmUp");
+    if (!p.bucket_name.name().empty()) {
+      EnrichSpan(*span, p.options, p.bucket_name.FullName());
+    }
+    internal::OTelScope scope(span);
+    return internal::EndSpan(std::move(span), impl_->WarmUp(std::move(p)));
+  }
+
   future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>> ReadObject(
       ReadObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadObject");
