@@ -83,6 +83,10 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     return res;
   }
   ++num_requests_pending_;
+  {
+    std::lock_guard<std::mutex> wait_lk(wait_state_->mu);
+    ++wait_state_->pending_work;
+  }
 
   if (!CanAppendToBatch(pending)) {
     pending_mutations_.push(std::move(pending));
@@ -98,12 +102,10 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
 }
 
 future<void> MutationBatcher::AsyncWaitForNoPendingRequests() {
-  std::unique_lock<std::mutex> lk(mu_);
-  if (num_requests_pending_ == 0) {
-    return make_ready_future();
-  }
-  no_more_pending_promises_.emplace_back();
-  return no_more_pending_promises_.back().get_future();
+  std::unique_lock<std::mutex> lk(wait_state_->mu);
+  if (wait_state_->pending_work == 0) return make_ready_future();
+  wait_state_->promises.emplace_back();
+  return wait_state_->promises.back().get_future();
 }
 
 MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
@@ -175,6 +177,10 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
   if (cur_batch_->num_mutations > 0 &&
       num_outstanding_batches_ < options_.max_batches) {
     ++num_outstanding_batches_;
+    {
+      std::lock_guard<std::mutex> wait_lk(wait_state_->mu);
+      ++wait_state_->pending_work;
+    }
 
     auto batch = std::make_shared<Batch>();
     cur_batch_.swap(batch);
@@ -198,9 +204,11 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
 void MutationBatcher::OnBulkApplyDone(
     CompletionQueue cq, MutationBatcher::Batch batch,
     std::vector<FailedMutation> const& failed) {
+  std::vector<std::pair<CompletionPromise, Status>> completion_promises;
+  completion_promises.reserve(batch.mutation_data.size());
   // First process all the failures, marking the mutations as done after
   // processing them.
-  for (auto const& f : failed) {
+  for (FailedMutation const& f : failed) {
     int const idx = f.original_index();
     if (idx < 0 ||
         static_cast<std::size_t>(idx) >= batch.mutation_data.size()) {
@@ -212,25 +220,63 @@ void MutationBatcher::OnBulkApplyDone(
       google::cloud::internal::ThrowRuntimeError(std::move(os).str());
     }
     MutationData& data = batch.mutation_data[idx];
-    data.completion_promise.set_value(f.status());
-    data.done = true;
-  }
-  // Any remaining mutations are treated as successful.
-  for (auto& data : batch.mutation_data) {
     if (!data.done) {
-      data.completion_promise.set_value(Status());
+      completion_promises.emplace_back(std::move(data.completion_promise),
+                                       f.status());
       data.done = true;
     }
   }
-  auto const num_mutations = batch.mutation_data.size();
+  // Any remaining mutations are treated as successful.
+  for (MutationData& data : batch.mutation_data) {
+    if (!data.done) {
+      completion_promises.emplace_back(std::move(data.completion_promise),
+                                       Status());
+      data.done = true;
+    }
+  }
+  std::size_t const num_mutations = batch.mutation_data.size();
   batch.mutation_data.clear();
 
-  std::unique_lock<std::mutex> lk(mu_);
-  outstanding_size_ -= batch.requests_size;
-  outstanding_mutations_ -= batch.num_mutations;
-  num_requests_pending_ -= num_mutations;
-  num_outstanding_batches_--;
-  SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
+  std::shared_ptr<WaitState> wait_state = wait_state_;
+  std::vector<AdmissionPromise> admission_promises;
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    outstanding_size_ -= batch.requests_size;
+    outstanding_mutations_ -= batch.num_mutations;
+    num_requests_pending_ -= num_mutations;
+    num_outstanding_batches_--;
+    {
+      std::lock_guard<std::mutex> wait_lk(wait_state->mu);
+      wait_state->pending_work -= num_mutations;
+    }
+    admission_promises = TryAdmit(cq);
+  }
+
+  // Satisfy admission and completion promises outside `mu_` and without
+  // touching `this` again, as a continuation or waiting thread may destroy the
+  // `MutationBatcher`. `wait_state->pending_work` still holds +1 for this
+  // in-progress batch completion until all callbacks below finish, preventing
+  // `AsyncWaitForNoPendingRequests()` from resolving prematurely (#2140),
+  // including when callbacks submit follow-up `AsyncApply()` work or when
+  // multiple batches complete concurrently across CQ threads.
+  for (AdmissionPromise& promise : admission_promises) {
+    promise.set_value();
+  }
+  for (auto& [promise, status] : completion_promises) {
+    promise.set_value(std::move(status));
+  }
+
+  std::vector<NoMorePendingPromise> no_more_pending_promises;
+  {
+    std::lock_guard<std::mutex> wait_lk(wait_state->mu);
+    --wait_state->pending_work;
+    if (wait_state->pending_work == 0) {
+      wait_state->promises.swap(no_more_pending_promises);
+    }
+  }
+  for (NoMorePendingPromise& promise : no_more_pending_promises) {
+    promise.set_value();
+  }
 }
 
 std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
@@ -259,26 +305,17 @@ void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   cur_batch_->mutation_data.emplace_back(std::move(mut));
 }
 
+// Kept as a non-static member definition to preserve the exported symbol for
+// ABI checks.
+// NOLINTNEXTLINE(readability-convert-member-functions-to-static)
 void MutationBatcher::SatisfyPromises(
     std::vector<AdmissionPromise> admission_promises,
     std::unique_lock<std::mutex>& lk) {
-  std::vector<NoMorePendingPromise> no_more_pending_promises;
-  if (num_requests_pending_ == 0 && num_outstanding_batches_ == 0) {
-    // We should wait not only on num_requests_pending_ being zero but also on
-    // num_outstanding_batches_ because we want to allow the user to kill the
-    // completion queue after this promise is fulfilled. Otherwise, the user can
-    // destroy the completion queue while the last batch is still being
-    // processed - we've had this bug (#2140).
-    no_more_pending_promises_.swap(no_more_pending_promises);
-  }
   lk.unlock();
 
   // Inform the user that we've admitted these mutations and there might be some
   // space in the buffer finally.
-  for (auto& promise : admission_promises) {
-    promise.set_value();
-  }
-  for (auto& promise : no_more_pending_promises) {
+  for (AdmissionPromise& promise : admission_promises) {
     promise.set_value();
   }
 }
