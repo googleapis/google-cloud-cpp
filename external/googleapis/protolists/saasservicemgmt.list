@@ -1,0 +1,5 @@
+@googleapis//google/cloud/saasplatform/saasservicemgmt/v1:common.proto
+@googleapis//google/cloud/saasplatform/saasservicemgmt/v1:deployments_resources.proto
+@googleapis//google/cloud/saasplatform/saasservicemgmt/v1:deployments_service.proto
+@googleapis//google/cloud/saasplatform/saasservicemgmt/v1:rollouts_resources.proto
+@googleapis//google/cloud/saasplatform/saasservicemgmt/v1:rollouts_service.proto

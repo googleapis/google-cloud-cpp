@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test_deprecated.proto
 
 #include "generator/integration_tests/golden/v1/internal/deprecated_rest_stub.h"
-#include "absl/strings/str_cat.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
@@ -45,10 +44,12 @@ Status DefaultDeprecatedServiceRestStub::Noop(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::deprecated::v1::DeprecatedServiceRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(rest_internal::DetermineApiVersion("v1", options), "noop");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "noop"), std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

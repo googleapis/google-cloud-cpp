@@ -114,19 +114,23 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows(
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(
     btproto::ReadModifyWriteRowRequest request, Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), options_));
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-      request, app_profile_id(), table_name_);
-  OptionsSpan span(MergeOptions(std::move(opts), options_));
+      request,
+      google::cloud::internal::CurrentOptions().get<AppProfileIdOption>(),
+      table_name_);
   return connection_->ReadModifyWriteRow(std::move(request));
 }
 
 future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
     ::google::bigtable::v2::ReadModifyWriteRowRequest request, Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), options_));
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-      request, app_profile_id(), table_name_);
-  OptionsSpan span(MergeOptions(std::move(opts), options_));
+      request,
+      google::cloud::internal::CurrentOptions().get<AppProfileIdOption>(),
+      table_name_);
   return connection_->AsyncReadModifyWriteRow(std::move(request));
 }
 

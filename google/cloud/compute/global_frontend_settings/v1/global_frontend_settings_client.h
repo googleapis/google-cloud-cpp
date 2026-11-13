@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the globalFrontendSettings resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/globalFrontendSettings
 ///
-/// This client uses GlobalFrontendSettings version 2026-09-01.
+/// This client uses GlobalFrontendSettings version 2026-11-01.
 ///
 /// @par Equality
 ///

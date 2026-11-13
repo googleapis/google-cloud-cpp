@@ -43,6 +43,39 @@ TEST(RowRangeTest, EndingAt) {
   EXPECT_EQ("foo", proto.end_key_closed());
 }
 
+TEST(RowRangeTest, EndingAtEmpty) {
+  btproto::RowRange const proto = RowRange::EndingAt("").as_proto();
+  EXPECT_EQ(btproto::RowRange::START_KEY_NOT_SET, proto.start_key_case());
+  EXPECT_EQ(btproto::RowRange::END_KEY_NOT_SET, proto.end_key_case());
+
+  EXPECT_EQ(RowRange::InfiniteRange(), RowRange::EndingAt(""));
+  EXPECT_EQ(RowRange::InfiniteRange(), RowRange::EndingAt(std::string{}));
+  EXPECT_EQ(RowRange::EndingAt(""),
+            RowRange(RowRange::EndingAt("").as_proto()));
+
+  RowRange const range = RowRange::EndingAt("");
+  EXPECT_FALSE(range.IsEmpty());
+  EXPECT_TRUE(range.Contains(""));
+  EXPECT_TRUE(range.Contains("a"));
+  EXPECT_TRUE(range.Contains("foo"));
+
+  std::pair<bool, RowRange> const intersect_range =
+      range.Intersect(RowRange::Range("a", "z"));
+  EXPECT_TRUE(intersect_range.first);
+  EXPECT_EQ(RowRange::Range("a", "z"), intersect_range.second);
+
+  std::pair<bool, RowRange> const intersect_retry =
+      range.Intersect(RowRange::Open("a", ""));
+  EXPECT_TRUE(intersect_retry.first);
+  EXPECT_EQ(RowRange::Open("a", ""), intersect_retry.second);
+
+  std::string const only_00("\0", 1);
+  RowRange const nul_end = RowRange::EndingAt(only_00);
+  EXPECT_NE(RowRange::InfiniteRange(), nul_end);
+  EXPECT_TRUE(nul_end.Contains(only_00));
+  EXPECT_FALSE(nul_end.Contains("a"));
+}
+
 TEST(RowRangeTest, Range) {
   auto proto = RowRange::Range("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());

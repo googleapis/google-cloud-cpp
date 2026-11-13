@@ -13,6 +13,14 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 - [Secret Manager](/google/cloud/secretmanager/README.md): In `google/cloud/secretmanager/v1`, the nested message `EnableManagedRotationRequest::CloudSQLSingleUserCredentials` was moved and renamed to `CloudSqlSingleUserCredentials`, and `EnableManagedRotationRequest`'s `oneof credentials` was renamed to `oneof credential`. This changes the signature of `SecretManagerServiceClient::EnableManagedRotation`.
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [App Lifecycle Manager API](/google/cloud/saasservicemgmt/README.md)
+- [Design Center API](/google/cloud/designcenter/README.md)
+
 ## v3.13.0 - 2026-11
 
 ### New Libraries

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/version.h"
 #include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
 #include "google/bigtable/admin/v2/table.pb.h"
@@ -174,8 +175,16 @@ class GcRule {
  *
  * This class contain helper functions to create the different protos
  * encapsulating these changes.
+ *
+ * @deprecated Use
+ *     `google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification`
+ *     with `google::cloud::bigtable_admin::BigtableTableAdminClient` instead.
  */
-class ColumnFamilyModification {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use "
+    "`google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification` "
+    "with `google::cloud::bigtable_admin::BigtableTableAdminClient` instead.")
+    ColumnFamilyModification {
  public:
   /// Return a modification that creates a new column family.
   static ColumnFamilyModification Create(std::string id, GcRule gc) {
@@ -243,5 +252,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H

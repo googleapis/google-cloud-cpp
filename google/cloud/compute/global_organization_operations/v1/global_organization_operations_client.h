@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the globalOrganizationOperations resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations
 ///
-/// This client uses GlobalOrganizationOperations version 2026-09-01.
+/// This client uses GlobalOrganizationOperations version 2026-11-01.
 ///
 /// @par Equality
 ///
