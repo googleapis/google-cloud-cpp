@@ -110,6 +110,7 @@ class DefaultRowReader : public RowReaderImpl {
       stream_;
   bool stream_is_open_ = false;
   bool operation_cancelled_ = false;
+  bool parser_failed_ = false;
   // TODO(#15314): Refactor state machine to not require this flag.
   bool called_post_call_ = false;
 

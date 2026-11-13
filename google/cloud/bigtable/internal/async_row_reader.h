@@ -166,6 +166,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   std::optional<promise<bool>> continue_reading_;
   /// The final status of the operation.
   bool whole_op_finished_ = false;
+  bool user_cancelled_ = false;
+  bool parser_failed_ = false;
   /**
    * The status of the last retry attempt_.
    *

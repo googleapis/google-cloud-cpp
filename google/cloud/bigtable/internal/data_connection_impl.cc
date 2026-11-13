@@ -410,6 +410,7 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   if (!*it) return it->status();
   auto result = std::make_pair(true, std::move(**it));
   if (++it != reader.end()) {
+    if (!*it) return it->status();
     return internal::InternalError(
         "internal error - RowReader returned more than one row in ReadRow(, "
         ")",
@@ -693,35 +694,48 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
     }
 
     future<bool> OnRow(bigtable::Row row) {
-      // assert(!row_received_);
+      if (row_received_) {
+        extra_row_received_ = true;
+        return make_ready_future(false);
+      }
       row_ = std::move(row);
       row_received_ = true;
       // Don't satisfy the promise before `OnStreamFinished`.
       //
       // The `CompletionQueue`, which this object holds a reference to, should
       // not be shut down before `OnStreamFinished` is called. In order to make
-      // sure of that, satisying the `promise<>` is deferred until then - the
+      // sure of that, satisfying the `promise<>` is deferred until then - the
       // user shouldn't shutdown the `CompletionQueue` before this whole
       // operation is done.
-      return make_ready_future(false);
+      //
+      // Return `true` so `AsyncRowReader` drains the `rows_limit = 1` stream
+      // without recording a client-side `CANCELLED` status.
+      return make_ready_future(true);
     }
 
     void OnStreamFinished(Status status) {
+      if (extra_row_received_) {
+        row_promise_.set_value(internal::InternalError(
+            "internal error - AsyncRowReader returned more than one row in "
+            "AsyncReadRow(, )",
+            GCP_ERROR_INFO()));
+        return;
+      }
+      if (!status.ok()) {
+        row_promise_.set_value(std::move(status));
+        return;
+      }
       if (row_received_) {
-        // If we got a row we don't need to care about the stream status.
         row_promise_.set_value(std::make_pair(true, std::move(row_)));
         return;
       }
-      if (status.ok()) {
-        row_promise_.set_value(std::make_pair(false, bigtable::Row("", {})));
-      } else {
-        row_promise_.set_value(std::move(status));
-      }
+      row_promise_.set_value(std::make_pair(false, bigtable::Row("", {})));
     }
 
    private:
     bigtable::Row row_;
     bool row_received_{};
+    bool extra_row_received_{};
     promise<StatusOr<std::pair<bool, bigtable::Row>>> row_promise_;
   };
 
