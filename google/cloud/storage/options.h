@@ -44,6 +44,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * resuming from the stream's current offset. This reduces tail latency at the
  * cost of additional requests.
  *
+ * Streams with `google::cloud::experimental::RestCancellationOption` set bypass
+ * hedging so cancellation does not depend on a hedging worker becoming free.
+ *
  * The client records two OpenTelemetry counters through the global meter
  * provider in effect when the client is created:
  * `storage.read_hedging.hedges_dispatched`, the number of hedged requests

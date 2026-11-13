@@ -63,6 +63,53 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
       .clone();
 }
 
+TEST(RestRetryLoopTest, CancelledBeforeFirstAttempt) {
+  experimental::RestCancellation cancel;
+  cancel.Cancel();
+  int calls = 0;
+  StatusOr<int> result = RestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [&calls](RestContext&, Options const&, int) -> StatusOr<int> {
+        ++calls;
+        return 42;
+      },
+      Options{}.set<experimental::RestCancellationOption>(cancel), 0, "test");
+  EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(calls, ::testing::Eq(0));
+}
+
+TEST(RestRetryLoopTest, CancelledDuringBackoff) {
+  experimental::RestCancellation cancel;
+  int calls = 0;
+  auto retry = TestRetryPolicy();
+  auto backoff = TestBackoffPolicy();
+  StatusOr<int> result = RestRetryLoopImpl(
+      *retry, *backoff, Idempotency::kIdempotent,
+      [&calls](RestContext&, Options const&, int) -> StatusOr<int> {
+        ++calls;
+        return Status(StatusCode::kUnavailable, "retry");
+      },
+      Options{}.set<experimental::RestCancellationOption>(cancel), 0, "test",
+      [cancel](std::chrono::milliseconds) { cancel.Cancel(); });
+  EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(calls, ::testing::Eq(1));
+}
+
+TEST(RestRetryLoopTest, CancellationOverridesRetryPolicy) {
+  experimental::RestCancellation cancel;
+  int calls = 0;
+  StatusOr<int> result = RestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [&](RestContext&, Options const&, int) -> StatusOr<int> {
+        ++calls;
+        cancel.Cancel();
+        return Status(StatusCode::kUnavailable, "retry");
+      },
+      Options{}.set<experimental::RestCancellationOption>(cancel), 0, "test");
+  EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(calls, ::testing::Eq(1));
+}
+
 TEST(RestRetryLoopTest, Success) {
   StatusOr<int> actual = RestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,

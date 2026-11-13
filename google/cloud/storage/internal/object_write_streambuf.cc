@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_cancellation.h"
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -141,6 +142,10 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
 
 void ObjectWriteStreambuf::FlushFinal() {
   if (!IsOpen()) return;
+  if (rest_internal::IsRestCancelled(span_options_)) {
+    last_status_ = rest_internal::RestCancelledError();
+    return;
+  }
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();

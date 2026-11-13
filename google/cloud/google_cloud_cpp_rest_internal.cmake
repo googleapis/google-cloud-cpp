@@ -110,6 +110,7 @@ add_library(
     internal/rest_carrier.cc
     internal/rest_carrier.h
     internal/rest_client.h
+    internal/rest_cancellation.h
     internal/rest_context.cc
     internal/rest_context.h
     internal/rest_lro_helpers.cc

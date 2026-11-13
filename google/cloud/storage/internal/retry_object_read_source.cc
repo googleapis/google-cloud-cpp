@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/rest_cancellation.h"
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -65,14 +66,29 @@ RetryObjectReadSource::RetryObjectReadSource(
     ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
-    : RetryObjectReadSource(
-          std::move(factory), std::move(options), std::move(request),
-          std::move(child), std::move(retry_policy), std::move(backoff_policy),
-          [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); }) {
+    : RetryObjectReadSource(std::move(factory), options, std::move(request),
+                            std::move(child), std::move(retry_policy),
+                            std::move(backoff_policy),
+                            [options](std::chrono::milliseconds d) {
+                              rest_internal::RestCancellationWait(*options, d);
+                            }) {}
+
+StatusOr<HttpResponse> RetryObjectReadSource::Close() {
+  // `Read()` releases the child when it retries, and leaves it released if
+  // the retry policy is then exhausted. In that case there is nothing to close.
+  // Otherwise close it even when cancelled, so the transport is released before
+  // reporting cancellation through the stream's existing error mechanism.
+  StatusOr<HttpResponse> response = HttpResponse{HttpStatusCode::kOk, {}, {}};
+  if (child_) response = child_->Close();
+  if (rest_internal::IsRestCancelled(*options_))
+    return rest_internal::RestCancelledError();
+  return response;
 }
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
+  if (rest_internal::IsRestCancelled(*options_))
+    return rest_internal::RestCancelledError();
   if (!child_) {
     return google::cloud::internal::FailedPreconditionError(
         "Stream is not open", GCP_ERROR_INFO());
@@ -95,7 +111,10 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   std::string const resource = storage_internal::RetryLogResource(
       request_.bucket_name(), request_.object_name());
   int counter = 0;
-  while (!result && retry_policy->OnFailure(result.status())) {
+  while (!result) {
+    if (rest_internal::IsRestCancelled(*options_))
+      return rest_internal::RestCancelledError();
+    if (!retry_policy->OnFailure(result.status())) break;
     // A Read() request failed, most likely that means the connection failed or
     // stalled. The current child might no longer be usable, so we will try to
     // create a new one and replace it. Should that fail, the retry policy would
@@ -115,6 +134,8 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     if (counter != 1) {
       backoff_(backoff_policy->OnCompletion());
     }
+    if (rest_internal::IsRestCancelled(*options_))
+      return rest_internal::RestCancelledError();
     if (has_emulator_instructions) {
       request_.set_multiple_options(
           CustomHeader("x-goog-emulator-instructions",
