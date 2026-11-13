@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
   namespace apikeys = ::google::cloud::apikeys_v2;
   auto client = apikeys::ApiKeysClient(apikeys::MakeApiKeysConnection());
 
-  for (auto k : client.ListKeys(location.FullName())) {
-    if (!k) throw std::move(k).status();
+  for (auto const& k : client.ListKeys(location.FullName())) {
+    if (!k) throw google::cloud::Status(k.status());
     std::cout << k->DebugString() << "\n";
   }
 

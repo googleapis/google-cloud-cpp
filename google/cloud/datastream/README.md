@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       datastream::DatastreamClient(datastream::MakeDatastreamConnection());
 
-  for (auto s : client.ListStreams(location.FullName())) {
-    if (!s) throw std::move(s).status();
+  for (auto const& s : client.ListStreams(location.FullName())) {
+    if (!s) throw google::cloud::Status(s.status());
     std::cout << s->DebugString() << "\n";
   }
 

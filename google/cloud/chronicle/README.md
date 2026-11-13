@@ -42,9 +42,9 @@ int main(int argc, char* argv[]) try {
               .set<gc::EndpointOption>(endpoint)
               .set<gc::AuthorityOption>(endpoint)));
 
-  for (auto r : client.ListWatchlists(location.FullName() + "/instances/" +
-                                      instance_id)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListWatchlists(location.FullName() +
+                                             "/instances/" + instance_id)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

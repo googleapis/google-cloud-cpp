@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) try {
   namespace ids = ::google::cloud::ids_v1;
   auto client = ids::IDSClient(ids::MakeIDSConnection());
 
-  for (auto ep : client.ListEndpoints(location.FullName())) {
-    if (!ep) throw std::move(ep).status();
+  for (auto const& ep : client.ListEndpoints(location.FullName())) {
+    if (!ep) throw google::cloud::Status(ep.status());
     std::cout << ep->DebugString() << "\n";
   }
 

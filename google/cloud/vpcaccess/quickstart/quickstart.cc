@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = vpcaccess::VpcAccessServiceClient(
       vpcaccess::MakeVpcAccessServiceConnection());
 
-  for (auto c : client.ListConnectors(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListConnectors(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

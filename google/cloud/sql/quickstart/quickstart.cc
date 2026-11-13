@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
 
   google::cloud::sql::v1::SqlInstancesListRequest request;
   request.set_project(argv[1]);
-  for (auto database : client.List(request)) {
-    if (!database) throw std::move(database).status();
+  for (auto const& database : client.List(request)) {
+    if (!database) throw google::cloud::Status(database.status());
     std::cout << database->DebugString() << "\n";
   }
 

@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   auto client = aiplatform::EndpointServiceClient(
       aiplatform::MakeEndpointServiceConnection(location.location_id()));
 
-  for (auto ep : client.ListEndpoints(location.FullName())) {
-    if (!ep) throw std::move(ep).status();
+  for (auto const& ep : client.ListEndpoints(location.FullName())) {
+    if (!ep) throw google::cloud::Status(ep.status());
     std::cout << ep->DebugString() << "\n";
   }
 

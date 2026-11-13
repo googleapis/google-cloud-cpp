@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
   auto client = rapidmigrationassessment::RapidMigrationAssessmentClient(
       rapidmigrationassessment::MakeRapidMigrationAssessmentConnection());
 
-  for (auto c : client.ListCollectors(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListCollectors(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

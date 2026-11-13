@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace lustre = ::google::cloud::lustre_v1;
   auto client = lustre::LustreClient(lustre::MakeLustreConnection());
 
-  for (auto r : client.ListInstances(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListInstances(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

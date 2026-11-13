@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
       talent::CompanyServiceClient(talent::MakeCompanyServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto c : client.ListCompanies(project.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListCompanies(project.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

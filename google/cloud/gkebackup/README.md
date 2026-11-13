@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       gkebackup::BackupForGKEClient(gkebackup::MakeBackupForGKEConnection());
 
-  for (auto bp : client.ListBackupPlans(location.FullName())) {
-    if (!bp) throw std::move(bp).status();
+  for (auto const& bp : client.ListBackupPlans(location.FullName())) {
+    if (!bp) throw google::cloud::Status(bp.status());
     std::cout << bp->DebugString() << "\n";
   }
 

@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
   namespace dlp = ::google::cloud::dlp_v2;
   auto client = dlp::DlpServiceClient(dlp::MakeDlpServiceConnection());
 
-  for (auto sit : client.ListStoredInfoTypes(location.FullName())) {
-    if (!sit) throw std::move(sit).status();
+  for (auto const& sit : client.ListStoredInfoTypes(location.FullName())) {
+    if (!sit) throw google::cloud::Status(sit.status());
     std::cout << sit->DebugString() << "\n";
   }
 

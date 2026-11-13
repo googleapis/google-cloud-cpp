@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       datacatalog::DataCatalogClient(datacatalog::MakeDataCatalogConnection());
 
-  for (auto eg : client.ListEntryGroups(location.FullName())) {
-    if (!eg) throw std::move(eg).status();
+  for (auto const& eg : client.ListEntryGroups(location.FullName())) {
+    if (!eg) throw google::cloud::Status(eg.status());
     std::cout << eg->DebugString() << "\n";
   }
 

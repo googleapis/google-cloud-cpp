@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) try {
   bigquery_v2_proto::ListJobsRequest list_request;
   list_request.set_project_id(project_id);
 
-  for (auto r : client.ListJobs(list_request)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListJobs(list_request)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

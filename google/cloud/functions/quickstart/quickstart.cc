@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = functions::FunctionServiceClient(
       functions::MakeFunctionServiceConnection());
 
-  for (auto f : client.ListFunctions(location.FullName())) {
-    if (!f) throw std::move(f).status();
+  for (auto const& f : client.ListFunctions(location.FullName())) {
+    if (!f) throw google::cloud::Status(f.status());
     std::cout << f->DebugString() << "\n";
   }
 

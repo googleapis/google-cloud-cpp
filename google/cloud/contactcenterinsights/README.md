@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
   auto client = ccai::ContactCenterInsightsClient(
       ccai::MakeContactCenterInsightsConnection());
 
-  for (auto c : client.ListConversations(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListConversations(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
 
     using ::google::protobuf::util::TimeUtil;
     std::cout << c->name() << "\n";

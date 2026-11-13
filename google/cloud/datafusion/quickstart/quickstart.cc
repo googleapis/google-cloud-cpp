@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       datafusion::DataFusionClient(datafusion::MakeDataFusionConnection());
 
-  for (auto av : client.ListAvailableVersions(location.FullName())) {
-    if (!av) throw std::move(av).status();
+  for (auto const& av : client.ListAvailableVersions(location.FullName())) {
+    if (!av) throw google::cloud::Status(av.status());
     std::cout << av->DebugString() << "\n";
   }
 
