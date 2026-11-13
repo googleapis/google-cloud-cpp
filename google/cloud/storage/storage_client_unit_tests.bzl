@@ -76,6 +76,7 @@ storage_client_unit_tests = [
     "internal/make_jwt_assertion_test.cc",
     "internal/md5hash_test.cc",
     "internal/metadata_parser_test.cc",
+    "internal/metrics_error_type_test.cc",
     "internal/notification_requests_test.cc",
     "internal/object_acl_requests_test.cc",
     "internal/object_read_streambuf_test.cc",
