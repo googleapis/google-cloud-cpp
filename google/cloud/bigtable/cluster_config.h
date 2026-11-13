@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLUSTER_CONFIG_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLUSTER_CONFIG_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/version.h"
 #include "google/bigtable/admin/v2/bigtable_instance_admin.pb.h"
 #include <string>
@@ -24,8 +25,16 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Specify the initial configuration for a new cluster.
-class ClusterConfig {
+/**
+ * Specify the initial configuration for a new cluster.
+ *
+ * @deprecated Use `google::bigtable::admin::v2::Cluster` with
+ *     `google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.
+ */
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use `google::bigtable::admin::v2::Cluster` with "
+    "`google::cloud::bigtable_admin::BigtableInstanceAdminClient` instead.")
+    ClusterConfig {
  public:
   using StorageType = ::google::bigtable::admin::v2::StorageType;
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -75,5 +84,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLUSTER_CONFIG_H

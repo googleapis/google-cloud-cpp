@@ -64,6 +64,12 @@ class SslPoliciesRestStub {
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::ssl_policies::v1::GetIamPolicyRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
@@ -104,6 +110,18 @@ class SslPoliciesRestStub {
       Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::ssl_policies::v1::SetIamPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::ssl_policies::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
@@ -157,6 +175,12 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::ssl_policies::v1::GetIamPolicyRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
@@ -198,6 +222,18 @@ class DefaultSslPoliciesRestStub : public SslPoliciesRestStub {
       Options const& options,
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::ssl_policies::v1::SetIamPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::ssl_policies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

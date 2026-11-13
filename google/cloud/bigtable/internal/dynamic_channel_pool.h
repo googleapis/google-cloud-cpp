@@ -25,10 +25,19 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/version.h"
+#include <algorithm>
+#include <chrono>
 #include <cmath>
+#include <cstddef>
+#include <cstdint>
 #include <functional>
+#include <iterator>
 #include <memory>
 #include <mutex>
+#include <numeric>
+#include <random>
+#include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -223,12 +232,16 @@ class DynamicChannelPool
                                        ChannelSelectionData& d) {
     std::vector<typename ChannelSelectionData::ChannelSelect> bad_channel_iters;
     if (d.shuffle_iter != d.iterators.end()) ++d.shuffle_iter;
-    ChannelSelectionData::FindGoodChannel(d.iterators, d.channel_1_iter,
-                                          d.channel_1_rpcs, d.shuffle_iter,
-                                          bad_channel_iters);
-    ChannelSelectionData::FindGoodChannel(d.iterators, d.channel_2_iter,
-                                          d.channel_2_rpcs, d.shuffle_iter,
-                                          bad_channel_iters);
+    if (!d.iterators.empty()) {
+      ChannelSelectionData::FindGoodChannel(d.iterators, d.channel_1_iter,
+                                            d.channel_1_rpcs, d.shuffle_iter,
+                                            bad_channel_iters);
+    }
+    if (d.iterators.size() >= 2) {
+      ChannelSelectionData::FindGoodChannel(d.iterators, d.channel_2_iter,
+                                            d.channel_2_rpcs, d.shuffle_iter,
+                                            bad_channel_iters);
+    }
 
     std::shared_ptr<ChannelUsage<T>> channel;
     int outstanding_rpcs = 0;
@@ -373,22 +386,13 @@ class DynamicChannelPool
       std::vector<
           typename std::vector<std::shared_ptr<ChannelUsage<T>>>::iterator>&
           bad_channel_iters) {
-    auto back_iter = channels_.rbegin();
-    for (auto& bad_channel_iter : bad_channel_iters) {
-      bool swapped = false;
-      while (!swapped && back_iter != channels_.rend()) {
-        auto b = (*back_iter)->instant_outstanding_rpcs();
-        if (b.ok()) {
-          std::swap(*back_iter, *bad_channel_iter);
-          draining_channels_.push_back(std::move(*back_iter));
-          swapped = true;
-        }
-        ++back_iter;
+    for (auto const& bad_iter : bad_channel_iters) {
+      if (*bad_iter != nullptr) {
+        draining_channels_.push_back(std::move(*bad_iter));
       }
     }
-    for (std::size_t i = 0; i < bad_channel_iters.size(); ++i) {
-      channels_.pop_back();
-    }
+    channels_.erase(std::remove(channels_.begin(), channels_.end(), nullptr),
+                    channels_.end());
   }
 
   void SetSizeDecreaseCooldownTimer(std::scoped_lock<std::mutex> const&) {

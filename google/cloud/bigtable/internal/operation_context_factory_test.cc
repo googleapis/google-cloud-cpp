@@ -22,6 +22,16 @@
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <condition_variable>
+#include <cstdint>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <set>
+#include <string>
+#include <tuple>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -29,6 +39,7 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::DoubleEq;
 using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::NotNull;
@@ -435,6 +446,144 @@ TEST(MetricsOperationContextFactoryTest, InitializeProviderWithoutConnection) {
       "projects/my-project/instances/my-instance/tables/my-table",
       "my-app-profile");
   EXPECT_THAT(operation_context, NotNull());
+}
+
+TEST(MetricsOperationContextFactoryTest,
+     NoDuplicateOutstandingRpcsTimeSeriesAcrossRpcMethods) {
+  auto mock_conn = std::make_shared<MockMetricServiceConnection>();
+
+  using LabelMapKey = std::map<std::string, std::string>;
+  using TimeSeriesKey =
+      std::tuple<std::string, LabelMapKey, std::string, LabelMapKey>;
+
+  std::mutex mu;
+  std::condition_variable cv;
+  int streaming_ts_count = 0;
+  std::int64_t streaming_sample_count = 0;
+  double streaming_mean = 0.0;
+  int unary_ts_count = 0;
+  std::int64_t unary_sample_count = 0;
+  double unary_mean = 0.0;
+
+  EXPECT_CALL(*mock_conn, CreateServiceTimeSeries)
+      .WillRepeatedly(
+          [&](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), Eq("projects/my-project"));
+            std::set<TimeSeriesKey> seen_keys;
+            int req_streaming_ts = 0;
+            std::int64_t req_streaming_samples = 0;
+            double req_streaming_mean = 0.0;
+            int req_unary_ts = 0;
+            std::int64_t req_unary_samples = 0;
+            double req_unary_mean = 0.0;
+            for (google::monitoring::v3::TimeSeries const& ts :
+                 request.time_series()) {
+              TimeSeriesKey key{
+                  ts.metric().type(),
+                  LabelMapKey(ts.metric().labels().begin(),
+                              ts.metric().labels().end()),
+                  ts.resource().type(),
+                  LabelMapKey(ts.resource().labels().begin(),
+                              ts.resource().labels().end()),
+              };
+              bool const inserted = seen_keys.insert(std::move(key)).second;
+              EXPECT_TRUE(inserted)
+                  << "Duplicate TimeSeries key in CreateTimeSeriesRequest for "
+                  << ts.metric().type();
+
+              if (ts.metric().type() ==
+                  "bigtable.googleapis.com/internal/client/connection_pool/"
+                  "outstanding_rpcs") {
+                EXPECT_THAT(ts.resource().type(), Eq("bigtable_client"));
+                EXPECT_THAT(ts.points(), SizeIs(1));
+                if (!ts.points().empty()) {
+                  google::api::Distribution const& dist =
+                      ts.points(0).value().distribution_value();
+                  auto const streaming_it =
+                      ts.metric().labels().find("streaming");
+                  EXPECT_TRUE(streaming_it != ts.metric().labels().end());
+                  if (streaming_it != ts.metric().labels().end()) {
+                    if (streaming_it->second == "true") {
+                      ++req_streaming_ts;
+                      req_streaming_samples += dist.count();
+                      req_streaming_mean = dist.mean();
+                    } else if (streaming_it->second == "false") {
+                      ++req_unary_ts;
+                      req_unary_samples += dist.count();
+                      req_unary_mean = dist.mean();
+                    }
+                  }
+                }
+              }
+            }
+            if (req_streaming_ts > 0 || req_unary_ts > 0) {
+              std::lock_guard<std::mutex> lk(mu);
+              streaming_ts_count = req_streaming_ts;
+              streaming_sample_count = req_streaming_samples;
+              streaming_mean = req_streaming_mean;
+              unary_ts_count = req_unary_ts;
+              unary_sample_count = req_unary_samples;
+              unary_mean = req_unary_mean;
+              if (streaming_sample_count == 5 && unary_sample_count == 4) {
+                cv.notify_all();
+              }
+            }
+            return Status();
+          });
+
+  Options const options =
+      Options{}.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(1));
+  std::string const table_name =
+      "projects/my-project/instances/my-instance/tables/my-table";
+  std::string const other_table_name =
+      "projects/my-project/instances/my-instance/tables/other-table";
+  std::string const instance_name = "projects/my-project/instances/my-instance";
+  std::string const app_profile = "my-app-profile";
+  {
+    MetricsOperationContextFactory factory("test-uid", mock_conn, options);
+
+    auto record_rpc = [](std::shared_ptr<OperationContext> const& op,
+                         std::int64_t outstanding, RpcType rpc_type) {
+      ASSERT_THAT(op, NotNull());
+      op->StubSelection(StubSelectionParams{
+          outstanding, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+          TransportType::kDirectPath, rpc_type});
+      op->OnDone(Status());
+    };
+
+    // Streaming RPC methods (5 distinct factory methods).
+    record_rpc(factory.ReadRow(table_name, app_profile), 1,
+               RpcType::kStreaming);
+    record_rpc(factory.ReadRows(other_table_name, app_profile), 2,
+               RpcType::kStreaming);
+    record_rpc(factory.MutateRows(table_name, app_profile), 3,
+               RpcType::kStreaming);
+    record_rpc(factory.SampleRowKeys(table_name, app_profile), 4,
+               RpcType::kStreaming);
+    record_rpc(factory.ExecuteQuery(instance_name, app_profile), 5,
+               RpcType::kStreaming);
+
+    // Unary RPC methods (4 distinct factory methods).
+    record_rpc(factory.MutateRow(table_name, app_profile), 6, RpcType::kUnary);
+    record_rpc(factory.CheckAndMutateRow(other_table_name, app_profile), 7,
+               RpcType::kUnary);
+    record_rpc(factory.ReadModifyWriteRow(table_name, app_profile), 8,
+               RpcType::kUnary);
+    record_rpc(factory.PrepareQuery(instance_name, app_profile), 9,
+               RpcType::kUnary);
+
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait_for(lk, std::chrono::seconds(5), [&] {
+      return streaming_sample_count == 5 && unary_sample_count == 4;
+    });
+  }
+
+  EXPECT_THAT(streaming_ts_count, Eq(1));
+  EXPECT_THAT(streaming_sample_count, Eq(5));
+  EXPECT_THAT(streaming_mean, DoubleEq(3.0));
+  EXPECT_THAT(unary_ts_count, Eq(1));
+  EXPECT_THAT(unary_sample_count, Eq(4));
+  EXPECT_THAT(unary_mean, DoubleEq(7.5));
 }
 
 }  // namespace

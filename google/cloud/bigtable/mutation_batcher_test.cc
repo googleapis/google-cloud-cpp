@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -35,7 +36,9 @@ using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
+using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::WithParamInterface;
@@ -446,6 +449,71 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   EXPECT_TRUE(state->completed);
   EXPECT_THAT(state->completion_status, Not(IsOk()));
   EXPECT_EQ(0, NumOperationsOutstanding());
+}
+
+TEST_F(MutationBatcherTest, MutationsExceedingMaxOutstandingSizeAreRejected) {
+  constexpr std::size_t kMaxOutstandingSize = 1000;
+  MutationBatcher::Options const options =
+      MutationBatcher::Options().SetMaxOutstandingSize(kMaxOutstandingSize);
+  SingleRowMutation too_large(
+      "row-large", {bt::SetCell("fam", "col", 0_ms, std::string(2000, 'x'))});
+  ASSERT_GT(MutationSize(too_large), options.max_outstanding_size);
+  ASSERT_LE(MutationSize(too_large), options.max_size_per_batch);
+
+  SingleRowMutation valid("row-small",
+                          {bt::SetCell("fam", "col", 0_ms, "baz")});
+  ASSERT_LE(MutationSize(valid), options.max_outstanding_size);
+
+  MutationBatcher batcher(*table_, options);
+
+  ExpectInteraction({Exchange({valid}, {})});
+
+  auto [admission_future, completion_future] =
+      batcher.AsyncApply(cq_, std::move(too_large));
+  ASSERT_TRUE(admission_future.is_ready());
+  admission_future.get();
+  ASSERT_TRUE(completion_future.is_ready());
+  EXPECT_THAT(completion_future.get(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("1000 bytes is the limit")));
+  EXPECT_EQ(0, NumOperationsOutstanding());
+
+  future<void> no_more_pending = batcher.AsyncWaitForNoPendingRequests();
+  ASSERT_TRUE(no_more_pending.is_ready());
+  no_more_pending.get();
+
+  std::shared_ptr<MutationState> valid_state = Apply(batcher, valid);
+  EXPECT_TRUE(valid_state->admitted);
+  EXPECT_FALSE(valid_state->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(valid_state->completed);
+  EXPECT_STATUS_OK(valid_state->completion_status);
+  EXPECT_EQ(0, NumOperationsOutstanding());
+
+  future<void> no_more_pending_after = batcher.AsyncWaitForNoPendingRequests();
+  ASSERT_TRUE(no_more_pending_after.is_ready());
+  no_more_pending_after.get();
+}
+
+TEST_F(MutationBatcherTest, ZeroMaxBatchesIsRejected) {
+  SingleRowMutation mut("foo", {bt::SetCell("fam", "col", 0_ms, "baz")});
+  MutationBatcher batcher(*table_, MutationBatcher::Options().SetMaxBatches(0));
+
+  auto [admission_future, completion_future] =
+      batcher.AsyncApply(cq_, std::move(mut));
+  ASSERT_TRUE(admission_future.is_ready());
+  admission_future.get();
+  ASSERT_TRUE(completion_future.is_ready());
+  EXPECT_THAT(completion_future.get(),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("max_batches")));
+  EXPECT_EQ(0, NumOperationsOutstanding());
+
+  future<void> no_more_pending = batcher.AsyncWaitForNoPendingRequests();
+  ASSERT_TRUE(no_more_pending.is_ready());
+  no_more_pending.get();
 }
 
 TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {

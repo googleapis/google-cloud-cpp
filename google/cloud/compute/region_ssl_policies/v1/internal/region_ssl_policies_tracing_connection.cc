@@ -76,6 +76,17 @@ RegionSslPoliciesTracingConnection::GetSslPolicy(
   return internal::EndSpan(*span, child_->GetSslPolicy(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesTracingConnection::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -166,6 +177,28 @@ RegionSslPoliciesTracingConnection::PatchSslPolicy(
       "PatchSslPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchSslPolicy(operation));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionSslPoliciesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>

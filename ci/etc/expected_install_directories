@@ -824,6 +824,10 @@
 ./include/google/cloud/deploy/v1
 ./include/google/cloud/deploy/v1/internal
 ./include/google/cloud/deploy/v1/mocks
+./include/google/cloud/designcenter
+./include/google/cloud/designcenter/v1
+./include/google/cloud/designcenter/v1/internal
+./include/google/cloud/designcenter/v1/mocks
 ./include/google/cloud/developerconnect
 ./include/google/cloud/developerconnect/v1
 ./include/google/cloud/developerconnect/v1/internal
@@ -1153,6 +1157,13 @@
 ./include/google/cloud/run/v2
 ./include/google/cloud/run/v2/internal
 ./include/google/cloud/run/v2/mocks
+./include/google/cloud/saasplatform
+./include/google/cloud/saasplatform/saasservicemgmt
+./include/google/cloud/saasplatform/saasservicemgmt/v1
+./include/google/cloud/saasservicemgmt
+./include/google/cloud/saasservicemgmt/v1
+./include/google/cloud/saasservicemgmt/v1/internal
+./include/google/cloud/saasservicemgmt/v1/mocks
 ./include/google/cloud/scheduler
 ./include/google/cloud/scheduler/v1
 ./include/google/cloud/scheduler/v1/internal
@@ -1516,6 +1527,8 @@
 ./lib64/cmake/google_cloud_cpp_datastream_mocks
 ./lib64/cmake/google_cloud_cpp_deploy
 ./lib64/cmake/google_cloud_cpp_deploy_mocks
+./lib64/cmake/google_cloud_cpp_designcenter
+./lib64/cmake/google_cloud_cpp_designcenter_mocks
 ./lib64/cmake/google_cloud_cpp_developerconnect
 ./lib64/cmake/google_cloud_cpp_developerconnect_mocks
 ./lib64/cmake/google_cloud_cpp_devicestreaming
@@ -1648,6 +1661,8 @@
 ./lib64/cmake/google_cloud_cpp_retail_mocks
 ./lib64/cmake/google_cloud_cpp_run
 ./lib64/cmake/google_cloud_cpp_run_mocks
+./lib64/cmake/google_cloud_cpp_saasservicemgmt
+./lib64/cmake/google_cloud_cpp_saasservicemgmt_mocks
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_scheduler_mocks
 ./lib64/cmake/google_cloud_cpp_secretmanager

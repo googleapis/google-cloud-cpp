@@ -1363,6 +1363,155 @@ TEST(AsyncWriterConnectionTest, FlushConsumesIntermediateMessagesBeforeSize) {
   next.first.set_value(true);
 }
 
+/// @test Verify that `Flush()` completes on the first response carrying
+/// `persisted_size`, even when it is smaller than the bytes sent. Regular
+/// buckets only persist 256 KiB multiples until the upload is finalized, and
+/// the service sends no further response for the flush.
+TEST(AsyncWriterConnectionTest, FlushPersistedSizeLagsExpectedOffset) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_FALSE(request.finish_write());
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read1").then([](future<bool> f) {
+          if (!f.get()) return std::optional<Response>();
+          Response response;
+          response.set_persisted_size(0);
+          return std::make_optional(std::move(response));
+        });
+      })
+      // The service sends nothing else for this flush; a second `Read()` would
+      // block until the stream is cancelled.
+      .WillRepeatedly([&]() {
+        return sequencer.PushBack("UnexpectedExtraRead")
+            .then([](future<bool> f) {
+              f.get();
+              return std::optional<Response>();
+            });
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](future<bool> f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash,
+      /*persisted_size=*/0);
+  // 15,890 bytes matches the 1,000-line payload in `StartBufferedUpload`
+  // (`storage_async_samples.cc`); a regular bucket persists none of it.
+  future<Status> flush = tested->Flush(WritePayload(std::string(15890, 'A')));
+  std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+
+  EXPECT_TRUE(flush.is_ready());
+  if (!flush.is_ready()) {
+    // Unblock the extra `Read()` and the resulting `Finish()` so a regression
+    // fails this test instead of hanging it.
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "UnexpectedExtraRead");
+    next.first.set_value(false);
+    next = sequencer.PopFrontWithName();
+    ASSERT_EQ(next.second, "Finish");
+    next.first.set_value(false);
+    return;
+  }
+  EXPECT_THAT(flush.get(), IsOk());
+  EXPECT_THAT(tested->PersistedState(), VariantWith<std::int64_t>(0));
+
+  tested.reset();
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+/// @test Verify that consecutive `Flush()` calls on one stream each consume
+/// exactly the one response the service sends for them, so a lagging
+/// `persisted_size` from an earlier flush is never mistaken for a later one.
+TEST(AsyncWriterConnectionTest, ConsecutiveFlushesEachReadOneResponse) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .Times(2)
+      .WillRepeatedly([&](Request const& request, grpc::WriteOptions) {
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        return sequencer.PushBack("Write");
+      });
+  // 200 KiB persists nothing; 200 KiB more crosses one 256 KiB boundary.
+  auto respond = [&](std::string name, std::int64_t persisted_size) {
+    return sequencer.PushBack(std::move(name))
+        .then([persisted_size](future<bool> f) {
+          if (!f.get()) return std::optional<Response>();
+          Response response;
+          response.set_persisted_size(persisted_size);
+          return std::make_optional(std::move(response));
+        });
+  };
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] { return respond("Read1", 0); })
+      .WillOnce([&] { return respond("Read2", 256 * 1024); });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](future<bool> f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(2);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash,
+      /*persisted_size=*/0);
+
+  future<Status> flush1 =
+      tested->Flush(WritePayload(std::string(200 * 1024, 'A')));
+  std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+  ASSERT_TRUE(flush1.is_ready());
+  EXPECT_THAT(flush1.get(), IsOk());
+  EXPECT_THAT(tested->PersistedState(), VariantWith<std::int64_t>(0));
+
+  future<Status> flush2 =
+      tested->Flush(WritePayload(std::string(200 * 1024, 'A')));
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+  ASSERT_TRUE(flush2.is_ready());
+  EXPECT_THAT(flush2.get(), IsOk());
+  EXPECT_THAT(tested->PersistedState(), VariantWith<std::int64_t>(256 * 1024));
+
+  tested.reset();
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

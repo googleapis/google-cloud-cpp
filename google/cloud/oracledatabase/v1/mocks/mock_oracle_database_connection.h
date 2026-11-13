@@ -988,6 +988,97 @@ class MockOracleDatabaseConnection
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>),
+      ListOdbDnsZones,
+      (google::cloud::oracledatabase::v1::ListOdbDnsZonesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>, GetOdbDnsZone,
+      (google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateOdbDnsZone(Matcher<google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>,
+              CreateOdbDnsZone,
+              (google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateOdbDnsZone(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateOdbDnsZone,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateOdbDnsZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>,
+              CreateOdbDnsZone,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteOdbDnsZone(Matcher<google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteOdbDnsZone,
+      (google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteOdbDnsZone(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteOdbDnsZone,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteOdbDnsZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteOdbDnsZone, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>),
       ListExadbVmClusters,
       (google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request),

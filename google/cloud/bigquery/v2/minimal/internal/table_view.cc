@@ -38,7 +38,7 @@ TableMetadataView TableMetadataView::Full() {
   return TableMetadataView{"FULL"};
 }
 
-std::string TableMetadataView::DebugString(absl::string_view name,
+std::string TableMetadataView::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -47,14 +47,14 @@ std::string TableMetadataView::DebugString(absl::string_view name,
 }
 
 std::string UserDefinedFunctionResource::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
+    std::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("resource_uri", resource_uri)
       .StringField("inline_code", inline_code)
       .Build();
 }
 
-std::string ViewDefinition::DebugString(absl::string_view name,
+std::string ViewDefinition::DebugString(std::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -65,7 +65,7 @@ std::string ViewDefinition::DebugString(absl::string_view name,
 }
 
 std::string MaterializedViewDefinition::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
+    std::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("query", query)
       .Field("enable_refresh", enable_refresh)
@@ -74,7 +74,7 @@ std::string MaterializedViewDefinition::DebugString(
       .Build();
 }
 
-std::string MaterializedViewStatus::DebugString(absl::string_view name,
+std::string MaterializedViewStatus::DebugString(std::string_view name,
                                                 TracingOptions const& options,
                                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)

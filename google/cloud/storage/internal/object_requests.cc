@@ -215,12 +215,12 @@ InsertObjectMediaRequest::InsertObjectMediaRequest() = default;
 
 InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
                                                    std::string object_name,
-                                                   absl::string_view payload)
+                                                   std::string_view payload)
     : InsertObjectRequestImpl<InsertObjectMediaRequest>(std::move(bucket_name),
                                                         std::move(object_name)),
       payload_(payload) {}
 
-void InsertObjectMediaRequest::set_payload(absl::string_view payload) {
+void InsertObjectMediaRequest::set_payload(std::string_view payload) {
   payload_ = payload;
   dirty_ = true;
 }

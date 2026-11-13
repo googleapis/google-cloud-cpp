@@ -257,7 +257,7 @@ Status StubRestGenerator::GenerateCc() {
 
   CcPrint("\n");
   CcLocalIncludes({vars("stub_rest_header_path"),
-                   "google/cloud/common_options.h", "absl/strings/str_cat.h",
+                   "google/cloud/common_options.h",
                    "google/cloud/internal/rest_stub_helpers.h",
                    "google/cloud/status_or.h"});
   CcProtobufGenCodeIncludes({vars("proto_header_path"),
@@ -326,11 +326,16 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
+      StatusOr<std::string> path = $method_rest_path_async$;
+      if (!path) {
+        p.set_value(std::move(path).status());
+        return;
+      }
       std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$,
           $preserve_proto_field_names_in_json$,
-          $method_rest_path_async$, std::move(query_params)));
+          *std::move(path), std::move(query_params)));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -349,10 +354,12 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+  StatusOr<std::string> path = $method_rest_path$;
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-      $method_rest_path$, std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 )""");
 
@@ -363,10 +370,12 @@ Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+  StatusOr<std::string> path = $method_rest_path$;
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
   return rest_internal::$method_http_verb$<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-      $method_rest_path$, std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 )""");
       } else {
@@ -376,10 +385,12 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+  StatusOr<std::string> path = $method_rest_path$;
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-      $method_rest_path$, std::move(query_params));
+      *std::move(path), std::move(query_params));
 }
 )""");
       }
@@ -402,10 +413,15 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
+      StatusOr<std::string> path = $method_rest_path_async$;
+      if (!path) {
+        p.set_value(std::move(path).status());
+        return;
+      }
       std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-          $method_rest_path_async$, std::move(query_params)));
+          *std::move(path), std::move(query_params)));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -429,10 +445,15 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
+      StatusOr<std::string> path = $method_rest_path_async$;
+      if (!path) {
+        p.set_value(std::move(path).status());
+        return;
+      }
       std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-          $method_rest_path_async$, std::move(query_params)));
+          *std::move(path), std::move(query_params)));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -459,9 +480,14 @@ Default$stub_rest_class_name$::AsyncGetOperation(
   promise<StatusOr<$longrunning_response_type$>> p;
   future<StatusOr<$longrunning_response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      StatusOr<std::string> path = $longrunning_get_operation_path_rest$;
+      if (!path) {
+        p.set_value(std::move(path).status());
+        return;
+      }
       p.set_value(rest_internal::Get<$longrunning_response_type$>(
           *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
-          $longrunning_get_operation_path_rest$));
+          *std::move(path)));
     },
     std::move(p), operations_, request, std::move(rest_context),
     std::move(options)};
@@ -482,9 +508,14 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      StatusOr<std::string> path = $longrunning_cancel_operation_path_rest$;
+      if (!path) {
+        p.set_value(std::move(path).status());
+        return;
+      }
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
           *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
-          $longrunning_cancel_operation_path_rest$));
+          *std::move(path)));
     },
     std::move(p), operations_, request, std::move(rest_context),
     std::move(options)};

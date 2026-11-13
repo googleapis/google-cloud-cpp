@@ -82,6 +82,14 @@ class DataStoreServiceStub {
       google::cloud::discoveryengine::v1::UpdateDataStoreRequest const&
           request) = 0;
 
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
@@ -157,6 +165,14 @@ class DefaultDataStoreServiceStub : public DataStoreServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request)
       override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,

@@ -1,0 +1,46 @@
+/*!
+@page saasservicemgmt-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet saas_deployments_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c saasservicemgmt_v1::SaasDeploymentsClient](@ref saasservicemgmt_v1::SaasDeploymentsClient-service-account-snippet)
+- [\c saasservicemgmt_v1::SaasRolloutsClient](@ref saasservicemgmt_v1::SaasRolloutsClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page saasservicemgmt_v1::SaasDeploymentsClient-service-account-snippet Override saasservicemgmt_v1::SaasDeploymentsClient Authentication Defaults
+
+@snippet google/cloud/saasservicemgmt/v1/samples/saas_deployments_client_samples.cc with-service-account
+
+*/
+
+/*! @page saasservicemgmt_v1::SaasRolloutsClient-service-account-snippet Override saasservicemgmt_v1::SaasRolloutsClient Authentication Defaults
+
+@snippet google/cloud/saasservicemgmt/v1/samples/saas_rollouts_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->

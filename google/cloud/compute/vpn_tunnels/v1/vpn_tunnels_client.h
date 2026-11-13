@@ -39,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the vpnTunnels resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels
 ///
-/// This client uses VpnTunnels version 2026-09-01.
+/// This client uses VpnTunnels version 2026-11-01.
 ///
 /// @par Equality
 ///
@@ -119,7 +119,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_184.proto#L522}
+  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_184.proto#L531}
   /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L117}
   ///
   // clang-format on
@@ -163,7 +163,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_184.proto#L522}
+  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_184.proto#L531}
   /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L117}
   ///
   // clang-format on

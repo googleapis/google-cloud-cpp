@@ -21,9 +21,22 @@ https://google.github.io/styleguide/cppguide.html with the following variances:
 
 - Use C++17 as its minimum C++ standard version.
 - Use `std::mutex` instead of `absl::mutex`.
-- Use `std::string_view` instead of `absl::string_view`.
-- Use `std::optional` instead of `absl::optional`.
-- Use `std::variant` instead of `absl::variant`.
+- **Reject Abseil Polyfills for C++17 Standard Library Types:** Always flag and
+  require replacing Abseil pre-C++17 polyfill types, helpers, constants, and
+  headers with their C++17 `std` equivalents (unless directly required by a
+  third-party or Abseil API signature):
+  - Replace `absl::optional`, `absl::nullopt`, and `absl::make_optional`
+    (`"absl/types/optional.h"`) with `std::optional`, `std::nullopt`, and
+    `std::make_optional` (`<optional>`).
+  - Replace `absl::variant`, `absl::monostate`, `absl::visit`, `absl::get`,
+    `absl::get_if`, and `absl::holds_alternative` (`"absl/types/variant.h"`)
+    with `std::variant`, `std::monostate`, `std::visit`, `std::get`,
+    `std::get_if`, and `std::holds_alternative` (`<variant>`).
+  - Replace `absl::any`, `absl::any_cast`, and `absl::make_any`
+    (`"absl/types/any.h"`) with `std::any`, `std::any_cast`, and `std::make_any`
+    (`<any>`).
+  - Replace `absl::string_view` (`"absl/strings/string_view.h"`) with
+    `std::string_view` (`<string_view>`).
 - Use `google::cloud::future` and `google::cloud::promise` instead of
   `std::future` and `std::promise`.
 - Use `google::cloud::Status` and `google::cloud::StatusOr` instead of

@@ -25,6 +25,7 @@
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -74,7 +75,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span = internal::MakeSpan(
-      absl::StrCat("HTTP/", absl::string_view{method.data(), method.size()}),
+      absl::StrCat("HTTP/", std::string_view{method.data(), method.size()}),
       {{sc::network::kNetworkTransport,
         sc::network::NetworkTransportValues::kTcp},
        {sc::http::kHttpRequestMethod, method},

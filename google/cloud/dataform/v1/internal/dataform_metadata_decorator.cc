@@ -612,6 +612,29 @@ DataformMetadata::CreateCompilationResult(
   return child_->CreateCompilationResult(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataformMetadata::AsyncCreateCompilationResultLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateCompilationResultLongRunning(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformMetadata::CreateCompilationResultLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCompilationResultLongRunning(context, options, request);
+}
+
 StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
 DataformMetadata::QueryCompilationResultActions(
     grpc::ClientContext& context, Options const& options,

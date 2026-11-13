@@ -45,7 +45,7 @@ TableResourceLabels TableResourceLabelsFromTableName(
     std::string const& table_name) {
   // split table_name into component pieces
   // projects/<project>/instances/<instance>/tables/<table>
-  std::vector<absl::string_view> name_parts = absl::StrSplit(table_name, '/');
+  std::vector<std::string_view> name_parts = absl::StrSplit(table_name, '/');
   if (name_parts.size() < 6) return {};
   TableResourceLabels resource_labels = {
       std::string(name_parts[1]), std::string(name_parts[3]),
@@ -57,8 +57,7 @@ TableResourceLabels TableResourceLabelsFromInstanceName(
     std::string const& instance_name) {
   // split instance_name into component pieces
   // projects/<project>/instances/<instance>
-  std::vector<absl::string_view> name_parts =
-      absl::StrSplit(instance_name, '/');
+  std::vector<std::string_view> name_parts = absl::StrSplit(instance_name, '/');
   if (name_parts.size() < 4) return {};
   TableResourceLabels resource_labels = {std::string(name_parts[1]),
                                          std::string(name_parts[3]), "",
@@ -372,6 +371,8 @@ void MetricsOperationContextFactory::InitializeProvider(
       std::move(context));
   direct_access_compatibility_ = std::make_shared<DirectAccessCompatibility>(
       kBigtableMetricNamePath, provider_, client_resource_labels_);
+  outstanding_rpcs_ =
+      std::make_shared<OutstandingRpcs>(kBigtableMetricNamePath, provider_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
@@ -387,7 +388,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(read_row_metrics_.metrics, v);
   });
 
@@ -411,7 +412,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(read_rows_metrics_.metrics, v);
   });
 
@@ -434,7 +435,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(mutate_row_metrics_.metrics, v);
   });
 
@@ -457,7 +458,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(mutate_rows_metrics_.metrics, v);
   });
 
@@ -481,7 +482,7 @@ MetricsOperationContextFactory::CheckAndMutateRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(check_and_mutate_row_metrics_.metrics, v);
   });
 
@@ -504,7 +505,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(sample_row_keys_metrics_.metrics, v);
   });
 
@@ -528,7 +529,7 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(read_modify_write_row_metrics_.metrics, v);
   });
 
@@ -549,7 +550,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(prepare_query_metrics_.metrics, v);
   });
 
@@ -573,7 +574,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
+    v.emplace_back(outstanding_rpcs_);
     swap(execute_query_metrics_.metrics, v);
   });
 

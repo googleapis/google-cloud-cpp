@@ -54,6 +54,7 @@
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_read_write_stream_timeout.h"
 #include "google/cloud/internal/async_retry_loop.h"
@@ -61,6 +62,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
+#include <cstdint>
 #include <memory>
 #include <set>
 #include <utility>
@@ -191,6 +193,15 @@ OpenStreamFactory MakeOpenStreamFactory(
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         DummyRequest const&) mutable {
+          // Every stream the descriptor opens (the first one, resumes, and
+          // the extra streams of the multi-stream optimization) goes through
+          // this factory, so this is where the service learns which client
+          // features are in play for the read.
+          std::uint32_t features = 0;
+          if (options->get<storage::EnableMultiStreamOptimizationOption>()) {
+            features |= FeatureBit(TrackedFeature::kMultistreamInMrd);
+          }
+          AddFeaturesHeader(*context, features);
           auto open = std::make_shared<OpenObject>(
               *stub, cq, std::move(context), std::move(options), request);
           // Extend the lifetime of the coroutine until it finishes.
@@ -241,6 +252,7 @@ future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::GetBucketRequest const& request) {
+    ApplyUnaryRpcDeadline(*context, *options);
     return stub->AsyncGetBucket(cq, std::move(context), std::move(options),
                                 request);
   };
@@ -623,6 +635,7 @@ AsyncConnectionImpl::ComposeObject(ComposeObjectParams p) {
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::ComposeObjectRequest const& request) {
+    ApplyUnaryRpcDeadline(*context, *options);
     AddIdempotencyToken(*context, id);
     return stub->AsyncComposeObject(cq, std::move(context), std::move(options),
                                     request);
@@ -646,6 +659,7 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::DeleteObjectRequest const& proto) {
+        ApplyUnaryRpcDeadline(*context, *options);
         AddIdempotencyToken(*context, id);
         return stub->AsyncDeleteObject(cq, std::move(context),
                                        std::move(options), proto);
@@ -756,6 +770,7 @@ AsyncConnectionImpl::StartResumableWrite(
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::StartResumableWriteRequest const& proto) {
+        ApplyUnaryRpcDeadline(*context, *options);
         internal::ConfigureContext(*context, *options);
         return stub->AsyncStartResumableWrite(cq, std::move(context),
                                               std::move(options), proto);
@@ -778,6 +793,7 @@ AsyncConnectionImpl::QueryWriteStatus(
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::QueryWriteStatusRequest const& proto) {
+        ApplyUnaryRpcDeadline(*context, *options);
         google::cloud::internal::ConfigurePollContext(*context, *options);
         return stub->AsyncQueryWriteStatus(cq, std::move(context),
                                            std::move(options), proto);

@@ -21,7 +21,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,13 +44,14 @@ DefaultSqlSslCertsServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "sslCerts",
+      request.sha1_fingerprint());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "sslCerts", "/",
-                   request.sha1_fingerprint()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -60,13 +60,14 @@ DefaultSqlSslCertsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "sslCerts",
+      request.sha1_fingerprint());
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::SslCert>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "sslCerts", "/",
-                   request.sha1_fingerprint()),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 
@@ -75,12 +76,13 @@ DefaultSqlSslCertsServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "sslCerts");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::SslCertsInsertResponse>(
-      *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "sslCerts"),
+      *service_, rest_context, request.body(), true, *std::move(path),
       std::move(query_params));
 }
 
@@ -89,12 +91,13 @@ DefaultSqlSslCertsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+  StatusOr<std::string> path = rest_internal::EncodePath(
+      rest_internal::DetermineApiVersion("v1", options), "projects",
+      request.project(), "instances", request.instance(), "sslCerts");
+  if (!path) return std::move(path).status();
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
-      *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "sslCerts"),
+      *service_, rest_context, request, true, *std::move(path),
       std::move(query_params));
 }
 

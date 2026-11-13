@@ -200,6 +200,13 @@ DeveloperConnectConnection::FetchReadToken(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnection::OpenGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
 DeveloperConnectConnection::FetchLinkableGitRepositories(
     google::cloud::developerconnect::v1::
@@ -220,6 +227,74 @@ StreamRange<std::string> DeveloperConnectConnection::FetchGitRefs(
         FetchGitRefsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+DeveloperConnectConnection::DiffGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<
+    google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+DeveloperConnectConnection::FetchGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::developerconnect::v1::SCMCommit>
+DeveloperConnectConnection::FetchGitRepositoryLinkCommitList(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitListRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::developerconnect::v1::SCMCommit>>();
+}
+
+StatusOr<google::cloud::developerconnect::v1::
+             FetchGitRepositoryLinkFileBlameResponse>
+DeveloperConnectConnection::FetchGitRepositoryLinkFileBlame(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnection::FetchGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+DeveloperConnectConnection::AddGitRepositoryLinkPullRequestComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestCommentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+DeveloperConnectConnection::AddGitRepositoryLinkPullRequestReviewComment(
+    google::cloud::developerconnect::v1::
+        AddGitRepositoryLinkPullRequestReviewCommentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnection::ModifyGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::developerconnect::v1::PullRequest>
+DeveloperConnectConnection::FetchGitRepositoryLinkPullRequestList(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestListRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::developerconnect::v1::PullRequest>>();
 }
 
 StreamRange<google::cloud::developerconnect::v1::AccountConnector>

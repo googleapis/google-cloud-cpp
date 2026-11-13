@@ -30,6 +30,7 @@
 #include "absl/strings/str_split.h"
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -138,7 +139,7 @@ bool IsDirectPath(Options const& options) {
   }
   if (direct_path.has_value()) {
     return absl::c_any_of(absl::StrSplit(*direct_path, ','),
-                          [](absl::string_view v) { return v == "bigtable"; });
+                          [](std::string_view v) { return v == "bigtable"; });
   }
   return options.get<experimental::DirectPathModeOption>() ==
          experimental::DirectPathMode::kEnabled;

@@ -18,9 +18,9 @@
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/internal/win32/win32_helpers.h"
 #include "absl/strings/str_cat.h"
-#include "absl/strings/string_view.h"
 #include <array>
 #include <memory>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 #include <Ntstatus.h>
@@ -68,12 +68,11 @@ StatusOr<std::vector<BYTE>> GetCngPrivateKeyBlobFromPkcsBuffer(
   }
   std::unique_ptr<CRYPT_PRIVATE_KEY_INFO, decltype(&LocalFree)>
       private_key_info(private_key_info_raw, &LocalFree);
-  if (absl::string_view(private_key_info->Algorithm.pszObjId) !=
-      szOID_RSA_RSA) {
+  if (std::string_view(private_key_info->Algorithm.pszObjId) != szOID_RSA_RSA) {
     return InvalidArgumentError(
         absl::StrCat("Invalid ServiceAccountCredentials - not an RSA key, "
                      "algorithm is: ",
-                     absl::string_view(private_key_info->Algorithm.pszObjId)),
+                     std::string_view(private_key_info->Algorithm.pszObjId)),
         GCP_ERROR_INFO());
   }
   DWORD rsa_blob_size;

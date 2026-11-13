@@ -15,7 +15,9 @@
 #include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/options.h"
 #include "google/bigtable/v2/data.pb.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -36,7 +38,17 @@ std::shared_ptr<QueryPlan> QueryPlan::Create(
 }
 
 QueryPlan::~QueryPlan() {
-  if (refresh_timer_.valid()) refresh_timer_.cancel();
+  future<void> timer;
+  future<void> op;
+  {
+    std::lock_guard<std::mutex> lock(mu_);
+    ++timer_generation_;
+    ++op_generation_;
+    timer = std::move(refresh_timer_);
+    op = std::move(refresh_op_);
+  }
+  if (timer.valid()) timer.cancel();
+  if (op.valid()) op.cancel();
 }
 
 void QueryPlan::Initialize() {
@@ -45,16 +57,22 @@ void QueryPlan::Initialize() {
 }
 
 // ScheduleRefresh should only be called after updating response_.
-void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
+void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex>& lock) {
   if (!response_.ok()) return;
   // We want to start the refresh process before the query plan expires.
-  auto refresh_deadline =
+  std::chrono::system_clock::time_point const refresh_deadline =
       internal::ToChronoTimePoint(response_->valid_until()) -
       kRefreshDeadlineOffsetMs;
-  std::weak_ptr<QueryPlan> plan = shared_from_this();
-  refresh_timer_ =
+  future<void> prev_timer = std::move(refresh_timer_);
+  std::uint64_t const timer_id = ++timer_generation_;
+  std::weak_ptr<QueryPlan> plan = weak_from_this();
+  internal::ImmutableOptions current = internal::SaveCurrentOptions();
+  lock.unlock();
+
+  if (prev_timer.valid()) prev_timer.cancel();
+  future<void> timer =
       cq_.MakeDeadlineTimer(refresh_deadline)
-          .then([plan, current = internal::SaveCurrentOptions()](
+          .then([plan = std::move(plan), current = std::move(current)](
                     future<StatusOr<std::chrono::system_clock::time_point>>
                         result) {
             // Options are stored in a thread_local variable. When this timer
@@ -63,107 +81,110 @@ void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
             // thread may be used.
             internal::OptionsSpan options_span(current);
             if (result.get().ok()) {
-              if (auto p = plan.lock()) {
-                p->ExpiredRefresh();
+              if (std::shared_ptr<QueryPlan> p = plan.lock()) {
+                std::unique_lock<std::mutex> lk(p->mu_);
+                p->StartRefresh(lk);
               }
             }
           });
+
+  lock.lock();
+  if (timer_generation_ == timer_id) {
+    refresh_timer_ = std::move(timer);
+    return;
+  }
+  if (timer.valid()) timer.cancel();
 }
 
-bool QueryPlan::IsRefreshing(std::unique_lock<std::mutex> const&) const {
-  return state_ == RefreshState::kBegin || state_ == RefreshState::kPending;
+void QueryPlan::StartRefresh(std::unique_lock<std::mutex>& lock) {
+  if (state_ == RefreshState::kPending) return;
+  state_ = RefreshState::kPending;
+  std::uint64_t const op_id = ++op_generation_;
+  std::weak_ptr<QueryPlan> plan = weak_from_this();
+  internal::ImmutableOptions current = internal::SaveCurrentOptions();
+  lock.unlock();
+
+  future<void> op = refresh_fn_().then(
+      [plan = std::move(plan), current = std::move(current)](
+          future<StatusOr<google::bigtable::v2::PrepareQueryResponse>> f) {
+        internal::OptionsSpan options_span(current);
+        if (std::shared_ptr<QueryPlan> p = plan.lock()) {
+          p->OnRefreshCompleted(f.get());
+        }
+      });
+
+  lock.lock();
+  if (op_generation_ == op_id && state_ == RefreshState::kPending) {
+    refresh_op_ = std::move(op);
+  }
 }
 
-void QueryPlan::ExpiredRefresh() {
+void QueryPlan::OnRefreshCompleted(
+    StatusOr<google::bigtable::v2::PrepareQueryResponse> response) {
   {
     std::unique_lock<std::mutex> lock(mu_);
-    if (!(IsRefreshing(lock))) {
-      if (response_.ok()) old_query_plan_id_ = response_->prepared_query();
+    ++op_generation_;
+    refresh_op_ = {};
+    ++refresh_generation_;
+    response_ = std::move(response);
+    if (response_.ok()) {
+      state_ = RefreshState::kDone;
+      ScheduleRefresh(lock);
+    } else {
       state_ = RefreshState::kBegin;
     }
   }
-  RefreshQueryPlan();
+  cond_.notify_all();
 }
 
 void QueryPlan::Invalidate(Status status,
                            std::string const& invalid_query_plan_id) {
+  future<void> prev_timer;
   {
     std::unique_lock<std::mutex> lock(mu_);
-    // We want to avoid a late arrival causing a refresh of an already refreshed
-    // query plan, so we track what the previous plan id was.
-    if (!IsRefreshing(lock) && old_query_plan_id_ != invalid_query_plan_id) {
-      old_query_plan_id_ = invalid_query_plan_id;
-      response_ = std::move(status);
-      state_ = RefreshState::kBegin;
+    // Avoid a late arrival causing a refresh of an already refreshed query
+    // plan: only invalidate if the currently active plan matches the plan ID
+    // reported as invalid.
+    if (!response_.ok() ||
+        response_->prepared_query() != invalid_query_plan_id) {
+      return;
     }
+    response_ = std::move(status);
+    ++timer_generation_;
+    prev_timer = std::move(refresh_timer_);
+    if (state_ == RefreshState::kDone) state_ = RefreshState::kBegin;
   }
-}
-
-void QueryPlan::RefreshQueryPlan() {
-  {
-    std::unique_lock<std::mutex> lock_1(mu_);
-    cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
-    if (state_ == RefreshState::kDone) return;
-    state_ = RefreshState::kPending;
-  }
-  auto response = refresh_fn_().get();
-  bool done = false;
-  {
-    std::unique_lock<std::mutex> lock_2(mu_);
-    response_ = std::move(response);
-    if (response_.ok()) {
-      state_ = RefreshState::kDone;
-      done = true;
-      // If we have to refresh an invalidated query plan, cancel any existing
-      // timer before starting a new one.
-      if (refresh_timer_.valid()) refresh_timer_.cancel();
-      ScheduleRefresh(lock_2);
-    } else {
-      // If there are no waiting threads that could call the refresh_fn, then
-      // we need to accept that the refresh is in a failed state and wait for
-      // some new event that would start this refresh process anew.
-      //
-      // If there are waiting threads, then we want to try again to get a
-      // refreshed query plan, but we want to avoid a stampede of refresh RPCs
-      // so we only notify one of the waiting threads.
-      state_ = RefreshState::kBegin;
-    }
-  }
-  if (done) {
-    cond_.notify_all();
-  } else {
-    cond_.notify_one();
-  }
+  if (prev_timer.valid()) prev_timer.cancel();
 }
 
 StatusOr<google::bigtable::v2::PrepareQueryResponse> QueryPlan::response() {
   std::unique_lock<std::mutex> lock(mu_);
-  if (IsRefreshing(lock)) {
-    if (response_.ok()) {
-      return response_;
-    }
-    lock.unlock();
-    RefreshQueryPlan();
-    lock.lock();
-  }
-
-  if (state_ == RefreshState::kDone && !response_.ok()) {
-    return response_.status();
-  }
-
+  // When a prior reactive refresh fails (`state_ == kBegin` and
+  // `!response_.ok()`), the next waiting `response()` caller intentionally
+  // initiates a fresh single-flight attempt (`StartRefresh` sets
+  // `state_ = kPending` under `mu_` so other woken waiters block again),
+  // preserving the retry contract verified by
+  // `QueryPlanMultithreadedTest.RefreshInvalidatedPlanAfterFailedRefresh`.
+  cond_.wait(lock, [this] {
+    return response_.ok() || state_ != RefreshState::kPending;
+  });
+  if (response_.ok()) return response_;
+  std::uint64_t const gen = refresh_generation_;
+  StartRefresh(lock);
+  cond_.wait(lock, [this, gen] { return refresh_generation_ != gen; });
   return response_;
 }
 
 StatusOr<std::string> QueryPlan::prepared_query() {
-  auto data = response();
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> data = response();
   if (!data.ok()) return data.status();
-  return response_->prepared_query();
+  return data->prepared_query();
 }
 
 StatusOr<google::bigtable::v2::ResultSetMetadata> QueryPlan::metadata() {
-  auto data = response();
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> data = response();
   if (!data.ok()) return data.status();
-  return response_->metadata();
+  return data->metadata();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -109,7 +109,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L117}
+  /// [google.cloud.discoveryengine.v1.GetSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L119}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on
@@ -139,7 +139,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L117}
+  /// [google.cloud.discoveryengine.v1.GetSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L119}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on
@@ -175,7 +175,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListSchemasRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L131}
+  /// [google.cloud.discoveryengine.v1.ListSchemasRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L133}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on
@@ -214,7 +214,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListSchemasRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L131}
+  /// [google.cloud.discoveryengine.v1.ListSchemasRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L133}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on
@@ -257,7 +257,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L177}
+  /// [google.cloud.discoveryengine.v1.CreateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L179}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   /// [google.cloud.discoveryengine.v1.Schema.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L57}
   ///
@@ -313,7 +313,7 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L177}
+  /// [google.cloud.discoveryengine.v1.CreateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L179}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on
@@ -380,7 +380,7 @@ class SchemaServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
-  /// [google.cloud.discoveryengine.v1.UpdateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L204}
+  /// [google.cloud.discoveryengine.v1.UpdateSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
@@ -441,8 +441,8 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteSchemaMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L249}
-  /// [google.cloud.discoveryengine.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L217}
+  /// [google.cloud.discoveryengine.v1.DeleteSchemaMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L251}
+  /// [google.cloud.discoveryengine.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L219}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on
@@ -494,8 +494,8 @@ class SchemaServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteSchemaMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L249}
-  /// [google.cloud.discoveryengine.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L217}
+  /// [google.cloud.discoveryengine.v1.DeleteSchemaMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L251}
+  /// [google.cloud.discoveryengine.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema_service.proto#L219}
   /// [google.cloud.discoveryengine.v1.Schema]: @googleapis_reference_link{google/cloud/discoveryengine/v1/schema.proto#L33}
   ///
   // clang-format on

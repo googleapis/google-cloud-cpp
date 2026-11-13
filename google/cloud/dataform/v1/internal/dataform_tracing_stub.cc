@@ -767,6 +767,36 @@ DataformTracingStub::CreateCompilationResult(
       child_->CreateCompilationResult(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataformTracingStub::AsyncCreateCompilationResultLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateCompilationResultLongRunning");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateCompilationResultLongRunning(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformTracingStub::CreateCompilationResultLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateCompilationResultLongRunning");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateCompilationResultLongRunning(context, options, request));
+}
+
 StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
 DataformTracingStub::QueryCompilationResultActions(
     grpc::ClientContext& context, Options const& options,

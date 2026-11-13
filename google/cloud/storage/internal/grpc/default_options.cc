@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
@@ -44,12 +45,6 @@ auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
 auto constexpr kDefaultMetricsExportTimeout = std::chrono::seconds(30);
 bool constexpr kDefaultDirectPathXdsOverInterconnect = false;
 
-/// The host of the DirectPath over Interconnect target. The service identifies
-/// Interconnect traffic by this value in the `:authority` of each RPC, so it is
-/// also the default authority for that target.
-constexpr std::string_view kDirectPathInterconnectHost =
-    "storage-direct.googleapis.com";
-
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing
   // across multiple sockets, it makes little sense to perform additional load
@@ -67,26 +62,6 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
   auto constexpr kMinimumChannels = 4;
   auto const count = std::thread::hardware_concurrency();
   return (std::max)(kMinimumChannels, static_cast<int>(count));
-}
-
-/// Returns true if @p endpoint targets `kDirectPathInterconnectHost` through
-/// the `google-c2p` resolver, whatever its query parameters.
-///
-/// This is deliberately narrower than `DetectTransportType()`, which classifies
-/// a `force-xds` target for any host as DirectPath over Interconnect. That
-/// label describes the network path the client requested, and is what the
-/// telemetry reports. The service decides Interconnect routing by the
-/// `:authority` of each RPC instead, and recognizes only this host there, so a
-/// `force-xds` target for any other host keeps the standard default authority.
-bool TargetsDirectPathInterconnectHost(std::string_view endpoint) {
-  for (std::string_view prefix : {kC2pPrefix, kC2pExperimentalPrefix}) {
-    if (!absl::StartsWith(endpoint, prefix)) continue;
-    std::string_view const host_and_query = endpoint.substr(prefix.size());
-    std::string_view const host =
-        host_and_query.substr(0, host_and_query.find_first_of("/?#:"));
-    return host == kDirectPathInterconnectHost;
-  }
-  return false;
 }
 
 }  // namespace
@@ -185,21 +160,38 @@ Options DefaultOptionsGrpc(
   }
 
   // The service identifies DirectPath over Interconnect traffic by the
-  // `:authority` of each RPC, which must be `storage-direct.googleapis.com`
-  // rather than `storage.googleapis.com` (otherwise requests are routed as
-  // regular DirectPath and the feature is silently inactive). Key this default
-  // on the effective endpoint so an application-supplied Interconnect endpoint
-  // gets the same authority, and skip it when gRPC ignores `force-xds` because
-  // the channel does not use Interconnect then. The `*.googleapis.com`
-  // certificate covers this hostname, so TLS verification needs no override.
-  // Set `AuthorityOption` explicitly here because `MergeOptions()` below would
+  // `:authority` of each RPC, which must be the Interconnect host itself,
+  // `storage-direct.googleapis.com` or, in preprod,
+  // `storage-preprod-direct.sandbox.googleapis.com` (otherwise requests are
+  // routed as regular DirectPath and the feature is silently inactive). Key
+  // this default on the effective endpoint so an application-supplied
+  // Interconnect endpoint gets the same authority, and skip it when gRPC
+  // ignores `force-xds` because the channel does not use Interconnect then.
+  // This is deliberately narrower than `DetectTransportType()`, which treats a
+  // `force-xds` target for any host as Interconnect; any other host keeps the
+  // standard default. gRPC also uses the authority as the TLS target name;
+  // as it is the dialed host for both Interconnect hosts, TLS verifies the
+  // name actually dialed and neither host needs an override. Set
+  // `AuthorityOption` explicitly here because `MergeOptions()` below would
   // otherwise default it to `storage.googleapis.com`.
   std::string const& endpoint = options.get<EndpointOption>();
-  if (!options.has<AuthorityOption>() && grpc_supports_force_xds &&
-      DetectTransportType(endpoint) == TransportType::kDirectPathInterconnect &&
-      TargetsDirectPathInterconnectHost(endpoint)) {
-    options.set<AuthorityOption>(std::string(kDirectPathInterconnectHost));
+  bool const interconnect_endpoint =
+      grpc_supports_force_xds &&
+      DetectTransportType(endpoint) == TransportType::kDirectPathInterconnect;
+  std::string_view const target_host = C2pTargetHost(endpoint);
+  if (!options.has<AuthorityOption>() && interconnect_endpoint &&
+      IsDirectPathInterconnectHost(target_host)) {
+    options.set<AuthorityOption>(std::string(target_host));
   }
+
+  // Interconnect clients run outside Google Cloud, where ALTS is unavailable,
+  // yet `grpc::GoogleDefaultCredentials()` selects ALTS for the (non-CFE) xDS
+  // cluster behind a `force-xds` target. Have default credentials use TLS plus
+  // the Application Default Credentials there instead. Unlike the authority
+  // above this applies to any `force-xds` host: the choice of transport
+  // security does not depend on which host is dialed.
+  options.set<google::cloud::internal::GrpcGoogleDefaultTlsOnlyOption>(
+      interconnect_endpoint);
 
   options = google::cloud::internal::MergeOptions(
       std::move(options),

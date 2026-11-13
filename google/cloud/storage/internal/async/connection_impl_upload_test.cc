@@ -130,8 +130,10 @@ TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
         });
       })
       .WillOnce(
-          [&](auto&, auto, auto,
+          [&](auto&, auto const& context, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
+            EXPECT_EQ(context->deadline(),
+                      std::chrono::system_clock::time_point::max());
             auto expected = google::storage::v2::StartResumableWriteRequest{};
             EXPECT_TRUE(
                 TextFormat::ParseFromString(kExpectedRequest, &expected));
@@ -284,13 +286,20 @@ TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
 TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncStartResumableWrite).WillOnce([&sequencer] {
-    return sequencer.PushBack("StartResumableWrite").then([](auto) {
-      auto response = google::storage::v2::StartResumableWriteResponse{};
-      response.set_upload_id("test-upload-id");
-      return make_status_or(response);
-    });
-  });
+  EXPECT_CALL(*mock, AsyncStartResumableWrite)
+      .WillOnce([&sequencer](
+                    CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const&,
+                    google::storage::v2::StartResumableWriteRequest const&) {
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
+        return sequencer.PushBack("StartResumableWrite").then([](auto) {
+          auto response = google::storage::v2::StartResumableWriteResponse{};
+          response.set_upload_id("test-upload-id");
+          return make_status_or(response);
+        });
+      });
   EXPECT_CALL(*mock, AsyncBidiWriteObject).WillOnce([&]() {
     auto stream = std::make_unique<MockAsyncBidiWriteObjectStream>();
     EXPECT_CALL(*stream, Start).WillOnce([&sequencer] {
@@ -498,8 +507,10 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
         });
       })
       .WillOnce(
-          [&](auto&, auto, auto,
+          [&](auto&, auto const& context, auto,
               google::storage::v2::QueryWriteStatusRequest const& request) {
+            EXPECT_LT(context->deadline(),
+                      std::chrono::system_clock::time_point::max());
             auto expected = google::storage::v2::QueryWriteStatusRequest{};
             EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &expected));
             EXPECT_THAT(request, IsProtoEqual(expected));

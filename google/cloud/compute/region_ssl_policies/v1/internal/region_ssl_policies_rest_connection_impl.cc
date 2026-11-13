@@ -192,6 +192,22 @@ RegionSslPoliciesRestConnectionImpl::GetSslPolicy(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::
+                 GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -509,6 +525,38 @@ RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
         r.set_region(info.region);
         r.set_operation(info.operation);
       });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::
+                 SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionSslPoliciesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

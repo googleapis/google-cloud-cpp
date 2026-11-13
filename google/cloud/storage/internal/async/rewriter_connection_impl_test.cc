@@ -249,6 +249,8 @@ TEST(RewriterConnectionImplTest, IterateReusesIdempotencyTokenOnRetry) {
   EXPECT_CALL(*mock, AsyncRewriteObject)
       .WillOnce([&](auto&, auto const& context, auto const&,
                     google::storage::v2::RewriteObjectRequest const&) {
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
         auto metadata = validate_metadata_fixture.GetMetadata(*context);
         auto l = metadata.find("x-goog-gcs-idempotency-token");
         EXPECT_NE(l, metadata.end());
@@ -263,6 +265,8 @@ TEST(RewriterConnectionImplTest, IterateReusesIdempotencyTokenOnRetry) {
       })
       .WillOnce([&](auto&, auto const& context, auto const&,
                     google::storage::v2::RewriteObjectRequest const&) {
+        EXPECT_LT(context->deadline(),
+                  std::chrono::system_clock::time_point::max());
         auto metadata = validate_metadata_fixture.GetMetadata(*context);
         auto l = metadata.find("x-goog-gcs-idempotency-token");
         EXPECT_NE(l, metadata.end());

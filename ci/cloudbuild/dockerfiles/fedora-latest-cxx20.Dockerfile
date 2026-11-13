@@ -176,8 +176,11 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.28
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.83.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.85.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE=Release \

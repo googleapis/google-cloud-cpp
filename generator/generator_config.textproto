@@ -2378,6 +2378,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Design Center
+service {
+  service_proto_path: "google/cloud/designcenter/v1/designcenter.proto"
+  product_path: "google/cloud/designcenter/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Developer Connect
 service {
   service_proto_path: "google/cloud/developerconnect/v1/developer_connect.proto"
@@ -3804,6 +3812,21 @@ service {
   service_proto_path: "google/cloud/run/v2/task.proto"
   product_path: "google/cloud/run/v2"
   initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# App Lifecycle Manager
+service {
+  service_proto_path: "google/cloud/saasplatform/saasservicemgmt/v1/deployments_service.proto"
+  product_path: "google/cloud/saasservicemgmt/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/saasplatform/saasservicemgmt/v1/rollouts_service.proto"
+  product_path: "google/cloud/saasservicemgmt/v1"
+  initial_copyright_year: "2026"
   retryable_status_codes: ["kUnavailable"]
 }
 

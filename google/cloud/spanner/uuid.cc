@@ -49,7 +49,7 @@ Uuid::operator std::string() const {
   return buf;
 }
 
-StatusOr<Uuid> MakeUuid(absl::string_view str) {
+StatusOr<Uuid> MakeUuid(std::string_view str) {
   absl::uint128 uuid = 0;
   auto const original_str = str;
   if (absl::StartsWith(str, "{") && absl::ConsumeSuffix(&str, "}")) {

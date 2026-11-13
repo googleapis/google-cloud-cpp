@@ -465,6 +465,11 @@ struct MaximumCurlSocketSendSizeOption {
  * this is as effective as a timeout parameter, but maybe unfamiliar and thus
  * harder to reason about.
  *
+ * For gRPC unary RPCs, where no incremental progress can be observed, this
+ * option is applied as a per-attempt deadline instead. It is enabled by
+ * default (120 seconds); setting it to `std::chrono::seconds(0)` (or a
+ * negative value) disables the deadline for these RPCs.
+ *
  * @ingroup storage-options
  */
 struct TransferStallTimeoutOption {

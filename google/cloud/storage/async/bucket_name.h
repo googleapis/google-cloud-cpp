@@ -17,9 +17,9 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <iosfwd>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -76,7 +76,7 @@ class BucketName {
  * Constructs a `BucketName` from the given @p full_name.
  * Returns a non-OK Status if `full_name` is improperly formed.
  */
-StatusOr<BucketName> MakeBucketName(absl::string_view full_name);
+StatusOr<BucketName> MakeBucketName(std::string_view full_name);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

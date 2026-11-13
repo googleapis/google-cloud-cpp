@@ -109,6 +109,29 @@ RegionSslPoliciesClient::GetSslPolicy(
   return connection_->GetSslPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesClient::GetIamPolicy(std::string const& project,
+                                      std::string const& region,
+                                      std::string const& resource,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_ssl_policies::v1::GetIamPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesClient::GetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetIamPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesClient::InsertSslPolicy(
     std::string const& project, std::string const& region,
@@ -263,6 +286,60 @@ RegionSslPoliciesClient::PatchSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(operation);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesClient::SetIamPolicy(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+        region_set_policy_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_ssl_policies::v1::SetIamPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  *request.mutable_region_set_policy_request_resource() =
+      region_set_policy_request_resource;
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+RegionSslPoliciesClient::SetIamPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        SetIamPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionSslPoliciesClient::TestIamPermissions(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_ssl_policies::v1::
+      TestIamPermissionsRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionSslPoliciesClient::TestIamPermissions(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

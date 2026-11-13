@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/tracked_features.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/storage/testing/mock_resume_policy.h"
@@ -57,9 +59,12 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Key;
+using ::testing::Not;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -611,6 +616,81 @@ TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->ReadObjectRange(
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+  ASSERT_FALSE(pending.is_ready());
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
+}
+
+// The multi-stream optimization only applies to object descriptors. The
+// plain `ReadObject()` and `ReadObjectRange()` paths must not report it even
+// though the option is set (it is on by default).
+TEST_F(AsyncConnectionImplTest, ReadObjectDoesNotSendFeaturesHeader) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const& options,
+                    google::storage::v2::ReadObjectRequest const&) {
+        EXPECT_TRUE(
+            options->get<storage::EnableMultiStreamOptimizationOption>());
+        EXPECT_THAT(GetMetadata(*context),
+                    Not(Contains(Key(storage_internal::kFeaturesHeader))));
+        return MakeErrorReadStream(sequencer, PermanentError());
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(
+      pool.cq(), mock,
+      Options{}.set<storage::EnableMultiStreamOptimizationOption>(true));
+  auto pending = connection->ReadObject(
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto response = data.get();
+  EXPECT_THAT(response, VariantWith<Status>(StatusIs(PermanentError().code())));
+}
+
+TEST_F(AsyncConnectionImplTest, ReadObjectRangeDoesNotSendFeaturesHeader) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    google::cloud::internal::ImmutableOptions const& options,
+                    google::storage::v2::ReadObjectRequest const&) {
+        EXPECT_TRUE(
+            options->get<storage::EnableMultiStreamOptimizationOption>());
+        EXPECT_THAT(GetMetadata(*context),
+                    Not(Contains(Key(storage_internal::kFeaturesHeader))));
+        return MakeErrorReadStream(sequencer, PermanentError());
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(
+      pool.cq(), mock,
+      Options{}.set<storage::EnableMultiStreamOptimizationOption>(true));
   auto pending = connection->ReadObjectRange(
       {google::storage::v2::ReadObjectRequest{}, connection->options()});
   ASSERT_FALSE(pending.is_ready());

@@ -139,7 +139,8 @@ struct GrpcMetricsExcludedLabelsOption {
  * [Cloud Interconnect], where the usual GCE environment detection would
  * otherwise disable it. The service identifies DirectPath over Interconnect
  * traffic by that `:authority`, so setting `AuthorityOption` to a different
- * value disables the feature even when this option is enabled.
+ * value disables the feature even when this option is enabled; the client
+ * logs a warning in that case.
  *
  * This requires gRPC 1.85.0 or later. Older versions accept the `force-xds`
  * query parameter but ignore it, and would silently connect over regular
@@ -156,7 +157,23 @@ struct GrpcMetricsExcludedLabelsOption {
  * the application. Neither the option nor the variable overrides an
  * application-supplied `EndpointOption`: an application that targets the
  * Interconnect endpoint itself gets the Interconnect `:authority` by default
- * even when the variable is `"false"`.
+ * even when the variable is `"false"`. The same applies to the preprod
+ * Interconnect host: an application-supplied `force-xds` endpoint for
+ * `storage-preprod-direct.sandbox.googleapis.com` gets that host as its
+ * default `:authority`.
+ *
+ * @par Credentials
+ * Interconnect hosts are outside Google Cloud, so the ALTS transport security
+ * that `grpc::GoogleDefaultCredentials()` would select for DirectPath is not
+ * available. On Interconnect channels the default credentials
+ * (`MakeGoogleDefaultCredentials()`) therefore use TLS composed with the
+ * [Application Default Credentials] attached to the channel. Explicit
+ * credentials such as `MakeServiceAccountCredentials()` already use TLS and
+ * are unchanged. An application that supplies raw gRPC credentials through
+ * `GrpcCredentialOption` must not use ALTS-based credentials here. Application
+ * Default Credentials must be configured even when explicit credentials are
+ * used, because gRPC's `google-c2p` resolver uses them for its own connection
+ * to the control plane.
  *
  * @par Example: Enable DirectPath over Interconnect
  * @code
@@ -166,6 +183,8 @@ struct GrpcMetricsExcludedLabelsOption {
  *         .set<gcs_ex::DirectPathXdsOverInterconnectOption>(true));
  * @endcode
  *
+ * [Application Default Credentials]:
+ * https://cloud.google.com/docs/authentication/application-default-credentials
  * [Cloud Interconnect]:
  * https://cloud.google.com/network-connectivity/docs/interconnect
  */

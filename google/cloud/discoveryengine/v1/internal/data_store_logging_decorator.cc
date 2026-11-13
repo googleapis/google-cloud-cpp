@@ -141,6 +141,28 @@ DataStoreServiceLogging::UpdateDataStore(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::iam::v1::Policy> DataStoreServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> DataStoreServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataStoreServiceLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,

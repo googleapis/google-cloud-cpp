@@ -101,7 +101,7 @@ StatusOr<ListDatasetsResponse> ListDatasetsResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string GetDatasetResponse::DebugString(absl::string_view name,
+std::string GetDatasetResponse::DebugString(std::string_view name,
                                             TracingOptions const& options,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -110,7 +110,7 @@ std::string GetDatasetResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ListDatasetsResponse::DebugString(absl::string_view name,
+std::string ListDatasetsResponse::DebugString(std::string_view name,
                                               TracingOptions const& options,
                                               int indent) const {
   return internal::DebugFormatter(name, options, indent)

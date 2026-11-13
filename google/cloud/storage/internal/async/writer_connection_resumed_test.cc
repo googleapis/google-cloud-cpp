@@ -2307,6 +2307,438 @@ INSTANTIATE_TEST_SUITE_P(WriteConnectionResumed,
                            return WriterOpName(info.param);
                          });
 
+/// The persisted size advances in multiples of this size in the tests below.
+/// The resumed writer serves appendable uploads, where the service is not
+/// expected to lag like this, but `state_lookup` allows the persisted size to
+/// lag the bytes written, and the writer must not depend on it keeping up.
+std::int64_t constexpr kPersistQuantum = 256 * 1024;
+
+/// The service-side state of an upload simulated by
+/// `ExpectQuantizedPersistence()`.
+struct QuantizedUpload {
+  std::int64_t sent = 0;
+  std::int64_t persisted = 0;
+  int empty_flushes = 0;
+};
+
+/// Configures `mock` so `Flush()` acknowledges every byte, but
+/// `PersistedState()` only advances in `kPersistQuantum` multiples. Each call
+/// is recorded in `sequencer` as
+/// `"Write"`, `"Flush"`, `"EmptyFlush"`, `"Finalize"` or `"Close"`. Completing
+/// a call with `false` fails it with a permanent error, which ends the upload
+/// without a `Resume()`.
+void ExpectQuantizedPersistence(
+    MockAsyncWriterConnection& mock, AsyncSequencer<bool>& sequencer,
+    std::shared_ptr<QuantizedUpload> const& upload) {
+  EXPECT_CALL(mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(mock, PersistedState).WillRepeatedly([upload] {
+    return MakePersistedState(upload->persisted);
+  });
+  EXPECT_CALL(mock, Write)
+      .WillRepeatedly([&sequencer, upload](storage::WritePayload const& p) {
+        auto const size = static_cast<std::int64_t>(p.size());
+        return sequencer.PushBack("Write").then([upload, size](future<bool> f) {
+          if (!f.get()) return PermanentError();
+          upload->sent += size;
+          return Status{};
+        });
+      });
+  EXPECT_CALL(mock, Flush)
+      .WillRepeatedly([&sequencer, upload](storage::WritePayload const& p) {
+        auto const size = static_cast<std::int64_t>(p.size());
+        if (size == 0) ++upload->empty_flushes;
+        return sequencer.PushBack(size == 0 ? "EmptyFlush" : "Flush")
+            .then([upload, size](future<bool> f) {
+              if (!f.get()) return PermanentError();
+              upload->sent += size;
+              upload->persisted =
+                  upload->sent / kPersistQuantum * kPersistQuantum;
+              return Status{};
+            });
+      });
+  EXPECT_CALL(mock, Finalize)
+      .WillRepeatedly([&sequencer, upload](storage::WritePayload const& p) {
+        auto const size = static_cast<std::int64_t>(p.size());
+        return sequencer.PushBack("Finalize")
+            .then([upload, size](
+                      future<bool> f) -> StatusOr<google::storage::v2::Object> {
+              if (!f.get()) return PermanentError();
+              upload->sent += size;
+              google::storage::v2::Object object = TestObject();
+              object.set_size(upload->sent);
+              return object;
+            });
+      });
+  EXPECT_CALL(mock, Close)
+      .WillRepeatedly([&sequencer, upload](storage::WritePayload const& p) {
+        auto const size = static_cast<std::int64_t>(p.size());
+        return sequencer.PushBack("Close").then([upload, size](future<bool> f) {
+          if (!f.get()) return PermanentError();
+          upload->sent += size;
+          return Status{};
+        });
+      });
+}
+
+/// Creates a resumed writer over `mock` with `WatermarkOptions()`. The factory
+/// must not be called, as the tests using this helper never resume.
+std::unique_ptr<storage::AsyncWriterConnection> MakeQuantizedConnection(
+    MockFactory& mock_factory,
+    std::unique_ptr<MockAsyncWriterConnection> mock) {
+  EXPECT_CALL(mock_factory, Call).Times(0);
+  return MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock),
+      google::storage::v2::BidiWriteObjectRequest{}, nullptr,
+      google::storage::v2::BidiWriteObjectResponse{}, WatermarkOptions());
+}
+
+/// Completes the calls recorded in `sequencer`, in order, until `done` is
+/// satisfied, and returns their names. A writer that keeps issuing calls has
+/// its `kMaxCalls`-th call failed, so the test fails instead of hanging.
+template <typename T>
+std::vector<std::string> RunUntilReady(AsyncSequencer<bool>& sequencer,
+                                       future<T> const& done) {
+  std::size_t constexpr kMaxCalls = 16;
+  std::vector<std::string> calls;
+  while (!done.is_ready()) {
+    std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+    calls.push_back(next.second);
+    next.first.set_value(calls.size() < kMaxCalls);
+  }
+  return calls;
+}
+
+future<Status> FinalizeStatus(storage::AsyncWriterConnection& connection,
+                              storage::WritePayload payload) {
+  return connection.Finalize(std::move(payload))
+      .then([](future<StatusOr<google::storage::v2::Object>> f) {
+        return f.get().status();
+      });
+}
+
+/// A sequence of operations ending in `Finalize()` or `Close()`, and the calls
+/// the writer must make when the persisted size lags.
+struct UnalignedUploadCase {
+  std::string name;
+  std::function<future<Status>(storage::AsyncWriterConnection&)> run;
+  std::int64_t total_size;
+  std::vector<std::string> expected_calls;
+};
+
+class WriterConnectionResumedUnalignedTest
+    : public ::testing::TestWithParam<UnalignedUploadCase> {};
+
+/// @test Verify that an upload whose size is not a multiple of 256 KiB reaches
+/// `Finalize()` or `Close()` when the persisted size lags, and every byte is
+/// sent exactly once. The terminal operation is already pending when any flush
+/// completes; `LwmFlushOnRegularBucketLeavesWriterIdle` covers a flush that
+/// completes while the writer is otherwise idle.
+TEST_P(WriterConnectionResumedUnalignedTest, ReachesTerminalOperation) {
+  AsyncSequencer<bool> sequencer;
+  auto upload = std::make_shared<QuantizedUpload>();
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ExpectQuantizedPersistence(*mock, sequencer, upload);
+  MockFactory mock_factory;
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeQuantizedConnection(mock_factory, std::move(mock));
+
+  future<Status> done = GetParam().run(*connection);
+  std::vector<std::string> calls = RunUntilReady(sequencer, done);
+
+  EXPECT_THAT(calls, Eq(GetParam().expected_calls));
+  EXPECT_STATUS_OK(done.get());
+  EXPECT_EQ(upload->empty_flushes, 0);
+  EXPECT_EQ(upload->sent, GetParam().total_size);
+}
+
+// Unlike the buffered writer, `Finalize()` here only flushes when the buffer
+// is at or above the low-water mark, so smaller uploads use plain writes.
+INSTANTIATE_TEST_SUITE_P(
+    WriteConnectionResumed, WriterConnectionResumedUnalignedTest,
+    ::testing::Values(
+        UnalignedUploadCase{"QueuedWritesThenFinalize",
+                            [](storage::AsyncWriterConnection& c) {
+                              EXPECT_STATUS_OK(c.Write(TestPayload(14)).get());
+                              EXPECT_STATUS_OK(
+                                  c.Write(TestPayload(15876)).get());
+                              return FinalizeStatus(c, {});
+                            },
+                            15890,
+                            {"Write", "Write", "Finalize"}},
+        UnalignedUploadCase{"FinalizePayloadBelowLwm",
+                            [](storage::AsyncWriterConnection& c) {
+                              return FinalizeStatus(c, TestPayload(1000));
+                            },
+                            1000,
+                            {"Write", "Finalize"}},
+        UnalignedUploadCase{"FinalizePayloadAboveLwm",
+                            [](storage::AsyncWriterConnection& c) {
+                              return FinalizeStatus(c, TestPayload(20 * 1024));
+                            },
+                            20 * 1024,
+                            {"Flush", "Finalize"}},
+        // Persists 256 KiB and leaves a 44 KiB tail above the low-water mark.
+        UnalignedUploadCase{"FinalizePayloadAcrossQuantum",
+                            [](storage::AsyncWriterConnection& c) {
+                              return FinalizeStatus(c, TestPayload(300 * 1024));
+                            },
+                            300 * 1024,
+                            {"Flush", "Finalize"}},
+        UnalignedUploadCase{"ClosePayloadAboveLwm",
+                            [](storage::AsyncWriterConnection& c) {
+                              return c.Close(TestPayload(20 * 1024));
+                            },
+                            20 * 1024,
+                            {"Flush", "Close"}},
+        // A `Write()` at or above the low-water mark flushes before
+        // `Finalize()` is called.
+        UnalignedUploadCase{"LwmFlushThenFinalize",
+                            [](storage::AsyncWriterConnection& c) {
+                              EXPECT_STATUS_OK(
+                                  c.Write(TestPayload(20 * 1024)).get());
+                              return FinalizeStatus(c, {});
+                            },
+                            20 * 1024,
+                            {"Flush", "Finalize"}}),
+    [](::testing::TestParamInfo<UnalignedUploadCase> const& info) {
+      return info.param.name;
+    });
+
+/// @test Verify that a `Flush()` completes once the service acknowledges its
+/// data, even if the service persists none of it, and that the
+/// unpersisted bytes are not sent again by the following `Finalize()`.
+TEST(WriteConnectionResumed, ExplicitFlushUnalignedCompletes) {
+  AsyncSequencer<bool> sequencer;
+  auto upload = std::make_shared<QuantizedUpload>();
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ExpectQuantizedPersistence(*mock, sequencer, upload);
+  MockFactory mock_factory;
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeQuantizedConnection(mock_factory, std::move(mock));
+
+  future<Status> flush = connection->Flush(TestPayload(1000));
+  EXPECT_THAT(RunUntilReady(sequencer, flush), ElementsAre("Flush"));
+  EXPECT_STATUS_OK(flush.get());
+  // `AsyncWriter::Flush()` documents that the data may not be persisted yet.
+  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
+
+  future<StatusOr<google::storage::v2::Object>> finalize =
+      connection->Finalize(storage::WritePayload{});
+  EXPECT_THAT(RunUntilReady(sequencer, finalize), ElementsAre("Finalize"));
+  StatusOr<google::storage::v2::Object> object = finalize.get();
+  ASSERT_STATUS_OK(object);
+  EXPECT_EQ(object->size(), 1000);
+  EXPECT_EQ(upload->empty_flushes, 0);
+}
+
+/// @test Verify that two `Flush()` calls complete in order when the persisted
+/// size lags, each once the flush carrying its data completes: the second
+/// call's data is still unsent when the first flush completes.
+TEST(WriteConnectionResumed, InterleavedUnalignedFlushesCompleteInOrder) {
+  AsyncSequencer<bool> sequencer;
+  auto upload = std::make_shared<QuantizedUpload>();
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ExpectQuantizedPersistence(*mock, sequencer, upload);
+  MockFactory mock_factory;
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeQuantizedConnection(mock_factory, std::move(mock));
+
+  future<Status> f1 = connection->Flush(TestPayload(1000));
+  future<Status> f2 = connection->Flush(TestPayload(1000));
+  // Record how many bytes had been sent when `f1` completed.
+  future<std::int64_t> sent_at_f1 = f1.then([upload](future<Status> f) {
+    EXPECT_STATUS_OK(f.get());
+    return upload->sent;
+  });
+
+  EXPECT_THAT(RunUntilReady(sequencer, f2), ElementsAre("Flush", "Flush"));
+  EXPECT_STATUS_OK(f2.get());
+  EXPECT_EQ(sent_at_f1.get(), 1000);
+  EXPECT_EQ(upload->empty_flushes, 0);
+}
+
+/// @test Verify that the writer goes idle after a flush triggered by the
+/// low-water mark when the persisted size lags, instead of flushing the
+/// unpersisted bytes again, so the next call after `Finalize()` is the finalize
+/// itself. Unlike the `ReachesTerminalOperation` cases, no terminal operation
+/// is pending when the flush completes.
+TEST(WriteConnectionResumed, LwmFlushOnRegularBucketLeavesWriterIdle) {
+  AsyncSequencer<bool> sequencer;
+  auto upload = std::make_shared<QuantizedUpload>();
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ExpectQuantizedPersistence(*mock, sequencer, upload);
+  MockFactory mock_factory;
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeQuantizedConnection(mock_factory, std::move(mock));
+
+  // At or above the low-water mark, below the high-water mark.
+  EXPECT_STATUS_OK(connection->Write(TestPayload(20 * 1024)).get());
+  std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+
+  future<StatusOr<google::storage::v2::Object>> finalize =
+      connection->Finalize(storage::WritePayload{});
+  EXPECT_THAT(RunUntilReady(sequencer, finalize), ElementsAre("Finalize"));
+  EXPECT_STATUS_OK(finalize.get());
+  EXPECT_EQ(upload->empty_flushes, 0);
+}
+
+/// @test Verify that a `Write()` blocked at the high-water mark is released
+/// once its data is flushed, even if the service persists none of it. The
+/// unpersisted bytes stay above the low-water mark, but no further flush could
+/// persist them.
+TEST(WriteConnectionResumed, HwmWaiterReleasedByUnalignedFlush) {
+  AsyncSequencer<bool> sequencer;
+  auto upload = std::make_shared<QuantizedUpload>();
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ExpectQuantizedPersistence(*mock, sequencer, upload);
+  MockFactory mock_factory;
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeQuantizedConnection(mock_factory, std::move(mock));
+
+  future<Status> write = connection->Write(TestPayload(32 * 1024));
+  ASSERT_FALSE(write.is_ready());
+  EXPECT_THAT(RunUntilReady(sequencer, write), ElementsAre("Flush"));
+  EXPECT_STATUS_OK(write.get());
+  EXPECT_EQ(upload->empty_flushes, 0);
+}
+
+/// @test Verify the flush cadence when the low-water mark is below 256 KiB,
+/// which applications can only configure with per-call options (client-level
+/// options raise it to at least 16 MiB). While the data sent but not persisted
+/// keeps the buffer at or above the high-water mark, each `Write()` waits for
+/// one non-empty flush of its own data and never triggers an empty flush. Once
+/// a flush crosses the next 256 KiB boundary the service persists it, the
+/// buffer shrinks, and a small `Write()` completes immediately again.
+TEST(WriteConnectionResumed, WritesAboveHwmWithUnpersistedTailFlushOnceEach) {
+  AsyncSequencer<bool> sequencer;
+  auto upload = std::make_shared<QuantizedUpload>();
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ExpectQuantizedPersistence(*mock, sequencer, upload);
+  MockFactory mock_factory;
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeQuantizedConnection(mock_factory, std::move(mock));
+
+  // Fill the buffer to the high-water mark; the service persists none of it.
+  future<Status> w1 = connection->Write(TestPayload(32 * 1024));
+  EXPECT_THAT(RunUntilReady(sequencer, w1), ElementsAre("Flush"));
+  EXPECT_STATUS_OK(w1.get());
+
+  // The unpersisted 32 KiB keep the buffer at the high-water mark, so even a
+  // 1-byte `Write()` waits for a flush, which carries only that byte.
+  future<Status> w2 = connection->Write(TestPayload(1));
+  ASSERT_FALSE(w2.is_ready());
+  EXPECT_THAT(RunUntilReady(sequencer, w2), ElementsAre("Flush"));
+  EXPECT_STATUS_OK(w2.get());
+  EXPECT_EQ(upload->sent, (32 * 1024) + 1);
+  EXPECT_EQ(upload->persisted, 0);
+
+  // This flush crosses 256 KiB, so the service persists 256 KiB and the buffer
+  // drops to the 1-byte remainder.
+  future<Status> w3 = connection->Write(TestPayload(224 * 1024));
+  EXPECT_THAT(RunUntilReady(sequencer, w3), ElementsAre("Flush"));
+  EXPECT_STATUS_OK(w3.get());
+  EXPECT_EQ(upload->persisted, kPersistQuantum);
+
+  // Below both watermarks again: the `Write()` completes without waiting and
+  // the data is sent with a plain write.
+  future<Status> w4 = connection->Write(TestPayload(1));
+  ASSERT_TRUE(w4.is_ready());
+  EXPECT_STATUS_OK(w4.get());
+  std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  EXPECT_EQ(upload->empty_flushes, 0);
+}
+
+/// @test Verify that bytes the service acknowledged but did not persist
+/// are sent again after a `Resume()`, because the resumed upload continues
+/// from the persisted size. The resumed stream is driven by a real
+/// `AsyncWriterConnectionImpl`, whose flush must also complete on a lagging
+/// `persisted_size`.
+TEST(WriteConnectionResumed, ResumeReplaysUnpersistedFlushedData) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Flush)
+      .WillOnce([&](storage::WritePayload const& p) {
+        EXPECT_EQ(p.size(), 1000);
+        return sequencer.PushBack("Flush").then(
+            [](future<bool>) { return Status{}; });
+      })
+      .WillOnce([&](storage::WritePayload const& p) {
+        EXPECT_EQ(p.size(), 500);
+        return sequencer.PushBack("FailedFlush").then([](future<bool>) {
+          return TransientError();
+        });
+      });
+
+  // The resumed upload reports nothing persisted, so the writer must send all
+  // 1,500 buffered bytes, including the 1,000 bytes the first flush sent.
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions) {
+        EXPECT_EQ(GetContent(request.checksummed_data()).size(), 1500);
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        return sequencer.PushBack("StreamFlush");
+      });
+  EXPECT_CALL(*stream, Read).WillOnce([&] {
+    return sequencer.PushBack("StreamRead").then([](future<bool>) {
+      google::storage::v2::BidiWriteObjectResponse response;
+      response.set_persisted_size(0);
+      return std::make_optional(std::move(response));
+    });
+  });
+  EXPECT_CALL(*stream, Cancel).WillRepeatedly(Return());
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
+
+  auto hash = std::make_shared<storage::testing::MockHashFunction>();
+  EXPECT_CALL(*hash, Update(An<std::int64_t>(), An<absl::Cord const&>(),
+                            An<std::uint32_t>()))
+      .WillRepeatedly(Return(Status{}));
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call)
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const&) {
+        WriteObject::WriteResult result;
+        result.stream = std::move(stream);
+        result.first_response.set_persisted_size(0);
+        return make_ready_future(make_status_or(std::move(result)));
+      });
+  std::unique_ptr<storage::AsyncWriterConnection> connection =
+      MakeWriterConnectionResumed(
+          mock_factory.AsStdFunction(), std::move(mock),
+          google::storage::v2::BidiWriteObjectRequest{}, hash,
+          google::storage::v2::BidiWriteObjectResponse{}, WatermarkOptions());
+
+  future<Status> f1 = connection->Flush(TestPayload(1000));
+  std::pair<promise<bool>, std::string> next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  ASSERT_TRUE(f1.is_ready());
+  EXPECT_STATUS_OK(f1.get());
+
+  future<Status> f2 = connection->Flush(TestPayload(500));
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "FailedFlush");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "StreamFlush");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "StreamRead");
+  next.first.set_value(true);
+  ASSERT_TRUE(f2.is_ready());
+  EXPECT_STATUS_OK(f2.get());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

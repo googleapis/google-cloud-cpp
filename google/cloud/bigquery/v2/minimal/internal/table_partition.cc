@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string TimePartitioning::DebugString(absl::string_view name,
+std::string TimePartitioning::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -32,7 +32,7 @@ std::string TimePartitioning::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Range::DebugString(absl::string_view name,
+std::string Range::DebugString(std::string_view name,
                                TracingOptions const& options,
                                int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -42,7 +42,7 @@ std::string Range::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RangePartitioning::DebugString(absl::string_view name,
+std::string RangePartitioning::DebugString(std::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -51,7 +51,7 @@ std::string RangePartitioning::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Clustering::DebugString(absl::string_view name,
+std::string Clustering::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)

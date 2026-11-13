@@ -188,6 +188,8 @@ add_library(
     internal/tracing_connection.h
     internal/tracing_object_read_source.cc
     internal/tracing_object_read_source.h
+    internal/tracked_features.cc
+    internal/tracked_features.h
     internal/tuple_filter.h
     internal/well_known_parameters_impl.h
     internal/win32/hash_function_impl.cc
@@ -481,6 +483,7 @@ if (BUILD_TESTING)
         internal/storage_connection_test.cc
         internal/tracing_connection_test.cc
         internal/tracing_object_read_source_test.cc
+        internal/tracked_features_test.cc
         internal/tuple_filter_test.cc
         lifecycle_rule_test.cc
         list_buckets_extended_reader_test.cc

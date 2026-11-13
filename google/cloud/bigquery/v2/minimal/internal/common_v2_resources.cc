@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 struct ValueKindDebugString {
-  absl::string_view name;
+  std::string_view name;
   TracingOptions const& options;
   int indent;
 
@@ -369,7 +369,7 @@ TypeKind TypeKind::Array() { return TypeKind{"ARRAY"}; }
 
 TypeKind TypeKind::Struct() { return TypeKind{"STRUCT"}; }
 
-std::string ErrorProto::DebugString(absl::string_view name,
+std::string ErrorProto::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -379,7 +379,7 @@ std::string ErrorProto::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RoundingMode::DebugString(absl::string_view name,
+std::string RoundingMode::DebugString(std::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -387,7 +387,7 @@ std::string RoundingMode::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string DatasetReference::DebugString(absl::string_view name,
+std::string DatasetReference::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -396,7 +396,7 @@ std::string DatasetReference::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string TableReference::DebugString(absl::string_view name,
+std::string TableReference::DebugString(std::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -406,7 +406,7 @@ std::string TableReference::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RoutineReference::DebugString(absl::string_view name,
+std::string RoutineReference::DebugString(std::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -416,7 +416,7 @@ std::string RoutineReference::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ConnectionProperty::DebugString(absl::string_view name,
+std::string ConnectionProperty::DebugString(std::string_view name,
                                             TracingOptions const& options,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -425,7 +425,7 @@ std::string ConnectionProperty::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string EncryptionConfiguration::DebugString(absl::string_view name,
+std::string EncryptionConfiguration::DebugString(std::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -433,7 +433,7 @@ std::string EncryptionConfiguration::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string KeyResultStatementKind::DebugString(absl::string_view name,
+std::string KeyResultStatementKind::DebugString(std::string_view name,
                                                 TracingOptions const& options,
                                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -441,7 +441,7 @@ std::string KeyResultStatementKind::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string ScriptOptions::DebugString(absl::string_view name,
+std::string ScriptOptions::DebugString(std::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -451,7 +451,7 @@ std::string ScriptOptions::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string TypeKind::DebugString(absl::string_view name,
+std::string TypeKind::DebugString(std::string_view name,
                                   TracingOptions const& options,
                                   int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -459,7 +459,7 @@ std::string TypeKind::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string StandardSqlField::DebugString(absl::string_view field_name,
+std::string StandardSqlField::DebugString(std::string_view field_name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(field_name, options, indent)
@@ -467,7 +467,7 @@ std::string StandardSqlField::DebugString(absl::string_view field_name,
       .Build();
 }
 
-std::string StandardSqlStructType::DebugString(absl::string_view name,
+std::string StandardSqlStructType::DebugString(std::string_view name,
                                                TracingOptions const& options,
                                                int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -475,7 +475,7 @@ std::string StandardSqlStructType::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Struct::DebugString(absl::string_view name,
+std::string Struct::DebugString(std::string_view name,
                                 TracingOptions const& options,
                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -483,7 +483,7 @@ std::string Struct::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string StandardSqlDataType::DebugString(absl::string_view name,
+std::string StandardSqlDataType::DebugString(std::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -491,13 +491,13 @@ std::string StandardSqlDataType::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string Value::DebugString(absl::string_view name,
+std::string Value::DebugString(std::string_view name,
                                TracingOptions const& options,
                                int indent) const {
   return std::visit(ValueKindDebugString{name, options, indent}, value_kind);
 }
 
-std::string SystemVariables::DebugString(absl::string_view name,
+std::string SystemVariables::DebugString(std::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -506,7 +506,7 @@ std::string SystemVariables::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string QueryParameterStructType::DebugString(absl::string_view qp_name,
+std::string QueryParameterStructType::DebugString(std::string_view qp_name,
                                                   TracingOptions const& options,
                                                   int indent) const {
   return internal::DebugFormatter(qp_name, options, indent)
@@ -515,7 +515,7 @@ std::string QueryParameterStructType::DebugString(absl::string_view qp_name,
       .Build();
 }
 
-std::string QueryParameterType::DebugString(absl::string_view name,
+std::string QueryParameterType::DebugString(std::string_view name,
                                             TracingOptions const& options,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -524,7 +524,7 @@ std::string QueryParameterType::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string QueryParameterValue::DebugString(absl::string_view name,
+std::string QueryParameterValue::DebugString(std::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -532,7 +532,7 @@ std::string QueryParameterValue::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string QueryParameter::DebugString(absl::string_view qp_name,
+std::string QueryParameter::DebugString(std::string_view qp_name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(qp_name, options, indent)
@@ -647,7 +647,7 @@ bool operator==(RowData const& lhs, RowData const& rhs) {
                     rhs.columns.begin());
 }
 
-std::string ColumnData::DebugString(absl::string_view name,
+std::string ColumnData::DebugString(std::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
@@ -656,7 +656,7 @@ std::string ColumnData::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RowData::DebugString(absl::string_view name,
+std::string RowData::DebugString(std::string_view name,
                                  TracingOptions const& options,
                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)

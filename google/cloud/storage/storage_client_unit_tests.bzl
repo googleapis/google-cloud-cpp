@@ -95,6 +95,7 @@ storage_client_unit_tests = [
     "internal/storage_connection_test.cc",
     "internal/tracing_connection_test.cc",
     "internal/tracing_object_read_source_test.cc",
+    "internal/tracked_features_test.cc",
     "internal/tuple_filter_test.cc",
     "lifecycle_rule_test.cc",
     "list_buckets_extended_reader_test.cc",

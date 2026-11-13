@@ -138,6 +138,12 @@ class DeveloperConnectMetadata : public DeveloperConnectStub {
       google::cloud::developerconnect::v1::FetchReadTokenRequest const& request)
       override;
 
+  StatusOr<google::cloud::developerconnect::v1::PullRequest>
+  OpenGitRepositoryLinkPullRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          OpenGitRepositoryLinkPullRequestRequest const& request) override;
+
   StatusOr<
       google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
   FetchLinkableGitRepositories(
@@ -156,6 +162,67 @@ class DeveloperConnectMetadata : public DeveloperConnectStub {
   FetchGitRefs(grpc::ClientContext& context, Options const& options,
                google::cloud::developerconnect::v1::FetchGitRefsRequest const&
                    request) override;
+
+  StatusOr<
+      google::cloud::developerconnect::v1::DiffGitRepositoryLinkCommitResponse>
+  DiffGitRepositoryLinkCommit(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          DiffGitRepositoryLinkCommitRequest const& request) override;
+
+  StatusOr<
+      google::cloud::developerconnect::v1::FetchGitRepositoryLinkCommitResponse>
+  FetchGitRepositoryLinkCommit(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkCommitRequest const& request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::
+               FetchGitRepositoryLinkCommitListResponse>
+  FetchGitRepositoryLinkCommitList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkCommitListRequest const& request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::
+               FetchGitRepositoryLinkFileBlameResponse>
+  FetchGitRepositoryLinkFileBlame(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkFileBlameRequest const& request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::PullRequest>
+  FetchGitRepositoryLinkPullRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkPullRequestRequest const& request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::PullRequestComment>
+  AddGitRepositoryLinkPullRequestComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          AddGitRepositoryLinkPullRequestCommentRequest const& request)
+      override;
+
+  StatusOr<google::cloud::developerconnect::v1::PullRequestReviewComment>
+  AddGitRepositoryLinkPullRequestReviewComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          AddGitRepositoryLinkPullRequestReviewCommentRequest const& request)
+      override;
+
+  StatusOr<google::cloud::developerconnect::v1::PullRequest>
+  ModifyGitRepositoryLinkPullRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          ModifyGitRepositoryLinkPullRequestRequest const& request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::
+               FetchGitRepositoryLinkPullRequestListResponse>
+  FetchGitRepositoryLinkPullRequestList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::
+          FetchGitRepositoryLinkPullRequestListRequest const& request) override;
 
   StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
   ListAccountConnectors(

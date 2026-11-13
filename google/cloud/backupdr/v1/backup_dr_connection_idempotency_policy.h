@@ -159,6 +159,48 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency InitializeService(
       google::cloud::backupdr::v1::InitializeServiceRequest const& request);
 
+  virtual google::cloud::Idempotency CreateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::CreateAutoProtectionPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAutoProtectionPolicies(
+      google::cloud::backupdr::v1::ListAutoProtectionPoliciesRequest request);
+
+  virtual google::cloud::Idempotency GetAutoProtectionPolicy(
+      google::cloud::backupdr::v1::GetAutoProtectionPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateAutoProtectionPolicy(
+      google::cloud::backupdr::v1::UpdateAutoProtectionPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAutoProtectionPolicy(
+      google::cloud::backupdr::v1::DeleteAutoProtectionPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::
+          CreateAutoProtectionPolicyBindingRequest const& request);
+
+  virtual google::cloud::Idempotency GetAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::GetAutoProtectionPolicyBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAutoProtectionPolicyBindings(
+      google::cloud::backupdr::v1::ListAutoProtectionPolicyBindingsRequest
+          request);
+
+  virtual google::cloud::Idempotency ListAppliedAutoProtectionPolicies(
+      google::cloud::backupdr::v1::ListAppliedAutoProtectionPoliciesRequest
+          request);
+
+  virtual google::cloud::Idempotency InitiateDeleteAutoProtectionPolicyBinding(
+      google::cloud::backupdr::v1::
+          InitiateDeleteAutoProtectionPolicyBindingRequest const& request);
+
+  virtual google::cloud::Idempotency ListBindingMatchingResources(
+      google::cloud::backupdr::v1::ListBindingMatchingResourcesRequest request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

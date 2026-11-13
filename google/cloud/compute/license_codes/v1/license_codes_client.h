@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the licenseCodes resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes
 ///
-/// This client uses LicenseCodes version 2026-09-01.
+/// This client uses LicenseCodes version 2026-11-01.
 ///
 /// @par Equality
 ///

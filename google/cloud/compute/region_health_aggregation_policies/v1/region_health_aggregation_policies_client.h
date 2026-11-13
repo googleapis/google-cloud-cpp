@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for the regionHealthAggregationPolicies resource.
 /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthAggregationPolicies
 ///
-/// This client uses RegionHealthAggregationPolicies version 2026-09-01.
+/// This client uses RegionHealthAggregationPolicies version 2026-11-01.
 ///
 /// @par Equality
 ///

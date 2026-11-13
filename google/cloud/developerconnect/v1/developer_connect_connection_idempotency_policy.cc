@@ -95,6 +95,13 @@ Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchReadToken(
 }
 
 Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::OpenGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        OpenGitRepositoryLinkPullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 DeveloperConnectConnectionIdempotencyPolicy::FetchLinkableGitRepositories(
     google::cloud::developerconnect::v1::
         FetchLinkableGitRepositoriesRequest) {  // NOLINT
@@ -110,6 +117,69 @@ DeveloperConnectConnectionIdempotencyPolicy::FetchGitHubInstallations(
 
 Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchGitRefs(
     google::cloud::developerconnect::v1::FetchGitRefsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::DiffGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        DiffGitRepositoryLinkCommitRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::FetchGitRepositoryLinkCommit(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::FetchGitRepositoryLinkCommitList(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkCommitListRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::FetchGitRepositoryLinkFileBlame(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkFileBlameRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::FetchGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        FetchGitRepositoryLinkPullRequestRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::
+    AddGitRepositoryLinkPullRequestComment(
+        google::cloud::developerconnect::v1::
+            AddGitRepositoryLinkPullRequestCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::
+    AddGitRepositoryLinkPullRequestReviewComment(
+        google::cloud::developerconnect::v1::
+            AddGitRepositoryLinkPullRequestReviewCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DeveloperConnectConnectionIdempotencyPolicy::ModifyGitRepositoryLinkPullRequest(
+    google::cloud::developerconnect::v1::
+        ModifyGitRepositoryLinkPullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::
+    FetchGitRepositoryLinkPullRequestList(
+        google::cloud::developerconnect::v1::
+            FetchGitRepositoryLinkPullRequestListRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

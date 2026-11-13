@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.discoveryengine.v1.Project]:
-/// @googleapis_reference_link{google/cloud/discoveryengine/v1/project.proto#L33}
+/// @googleapis_reference_link{google/cloud/discoveryengine/v1/project.proto#L34}
 ///
 class ProjectServiceClient {
  public:
@@ -123,8 +123,8 @@ class ProjectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Project]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project.proto#L33}
-  /// [google.cloud.discoveryengine.v1.ProvisionProjectRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project_service.proto#L65}
+  /// [google.cloud.discoveryengine.v1.Project]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project.proto#L34}
+  /// [google.cloud.discoveryengine.v1.ProvisionProjectRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project_service.proto#L71}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
@@ -179,8 +179,8 @@ class ProjectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Project]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project.proto#L33}
-  /// [google.cloud.discoveryengine.v1.ProvisionProjectRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project_service.proto#L65}
+  /// [google.cloud.discoveryengine.v1.Project]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project.proto#L34}
+  /// [google.cloud.discoveryengine.v1.ProvisionProjectRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/project_service.proto#L71}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>

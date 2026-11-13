@@ -18,20 +18,20 @@
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include <cstdint>
+#include <string_view>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data);
+std::uint32_t ExtendCrc32c(std::uint32_t crc, std::string_view data);
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
                            storage::internal::ConstBufferSequence const& data);
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data);
 
-std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
+std::uint32_t ExtendCrc32c(std::uint32_t crc, std::string_view data,
                            std::uint32_t data_crc);
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
                            storage::internal::ConstBufferSequence const& data,
@@ -39,7 +39,7 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc,
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data,
                            std::uint32_t data_crc);
 
-inline std::uint32_t Crc32c(absl::string_view data) {
+inline std::uint32_t Crc32c(std::string_view data) {
   return ExtendCrc32c(0, data);
 }
 

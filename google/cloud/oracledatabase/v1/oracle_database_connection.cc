@@ -660,6 +660,68 @@ OracleDatabaseConnection::DeleteOdbSubnet(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseConnection::ListOdbDnsZones(
+    google::cloud::oracledatabase::v1::
+        ListOdbDnsZonesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::OdbDnsZone>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>
+OracleDatabaseConnection::GetOdbDnsZone(
+    google::cloud::oracledatabase::v1::GetOdbDnsZoneRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseConnection::CreateOdbDnsZone(
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbDnsZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>
+OracleDatabaseConnection::CreateOdbDnsZone(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OdbDnsZone>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteOdbDnsZone(
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteOdbDnsZone(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbDnsZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteOdbDnsZone(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
 OracleDatabaseConnection::ListExadbVmClusters(
     google::cloud::oracledatabase::v1::
