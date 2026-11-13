@@ -229,6 +229,13 @@ struct HttpConnectTimeoutOption {
 /**
  * Enable or disable OpenTelemetry client metrics collection for Storage.
  *
+ * When enabled, the client collects and exports the standard Storage SDK
+ * OpenTelemetry metrics (such as operation counts, request durations,
+ * attempts, retries, errors, TTFB, and payload sizes). This option is
+ * independent of `EnableGrpcMetricsOption`, which controls gRPC's built-in
+ * channel and load-balancing telemetry (gRFC A66 / A78); both options may be
+ * used together and share the same underlying `MeterProvider`.
+ *
  * The default is `false`. The `GCP_STORAGE_CPP_ENABLE_OTEL_METRICS`
  * environment variable overrides this option: set it to `"true"` to enable
  * metrics collection, or to `"false"` to disable it even when this option is
@@ -245,6 +252,11 @@ struct EnableOTelMetricsOption {
 
 /**
  * Enable or disable OpenTelemetry debug client metrics collection for Storage.
+ *
+ * When enabled, the client collects and exports diagnostic OpenTelemetry
+ * metrics (such as stall durations, server durations, and network timings) in
+ * addition to the standard metrics. Like `EnableOTelMetricsOption`, this is
+ * independent of `EnableGrpcMetricsOption`.
  *
  * The default is `false`. The `GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS`
  * environment variable overrides this option: set it to `"true"` to enable
