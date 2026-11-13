@@ -52,6 +52,9 @@ class BulkMutatorState {
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
   void OnFinish(Status finish_status, bool enable_server_retries = false);
 
+  /// Record a cancellation or timer failure when no stream error has occurred.
+  void OnCancel(Status cancel_status);
+
   /// Terminate the retry loop and return all the failures.
   std::vector<bigtable::FailedMutation> OnRetryDone() &&;
 

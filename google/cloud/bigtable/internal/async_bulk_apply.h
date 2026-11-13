@@ -21,8 +21,14 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/status_or.h"
 #include <atomic>
+#include <chrono>
+#include <cstdint>
+#include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -62,10 +68,16 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
                    std::string const& table_name, bigtable::BulkMutation mut,
                    std::shared_ptr<OperationContext> operation_context);
 
+  future<std::vector<bigtable::FailedMutation>> Start();
   void StartIteration();
   void MakeRequest();
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(Status const& status);
+  void OnBackoff(StatusOr<std::chrono::system_clock::time_point> result);
+  void SetPending(std::uint_fast32_t operation, future<void> op);
+  void Cancel();
+  void Cancel(std::unique_lock<std::mutex> lk);
+  void FinishCancelled();
   void SetPromise();
 
   CompletionQueue cq_;
@@ -76,11 +88,17 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   bool enable_server_retries_;
   BulkMutatorState state_;
   std::atomic<bool> keep_reading_{true};
-  promise<std::vector<bigtable::FailedMutation>> promise_;
+  promise<std::vector<bigtable::FailedMutation>> promise_{null_promise_t{}};
   internal::ImmutableOptions options_;
   internal::CallContext call_context_;
-  std::shared_ptr<grpc::ClientContext> client_context_;
   std::shared_ptr<OperationContext> operation_context_;
+
+  std::mutex mu_;
+  bool cancelled_ = false;
+  bool pre_call_invoked_ = false;
+  std::uint_fast32_t operation_ = 0;
+  future<void> pending_operation_;
+  std::shared_ptr<grpc::ClientContext> client_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
