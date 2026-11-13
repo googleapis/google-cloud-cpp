@@ -108,7 +108,7 @@ WORKDIR /var/tmp/build/grpc
 ## at build or run time.
 RUN apt-get update && apt-get --no-install-recommends install -y golang-go
 ## [DONE IGNORED]
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.85.1.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.85.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mkdir -p third_party/grpc-proto && \
     curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
