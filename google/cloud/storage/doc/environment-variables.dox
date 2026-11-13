@@ -50,6 +50,25 @@ precedence over the option.
 
 @see google::cloud::storage_experimental::DirectPathXdsOverInterconnectOption
 
+`GCP_STORAGE_CPP_ENABLE_OTEL_METRICS=true`: enable OpenTelemetry client metrics
+collection for Storage. Set it to `true` to enable metrics collection, or to
+`false` to disable it even when the corresponding option is enabled in code.
+Only these exact values are recognized, and the comparison is case-sensitive;
+any other value, such as `1` or `TRUE`, is treated as if the variable were not
+set. This environment variable takes precedence over the option.
+
+@see google::cloud::storage_experimental::EnableOTelMetricsOption
+
+`GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS=true`: enable OpenTelemetry debug
+client metrics collection for Storage. Set it to `true` to enable debug metrics
+collection, or to `false` to disable it even when the corresponding option is
+enabled in code. Only these exact values are recognized, and the comparison is
+case-sensitive; any other value, such as `1` or `TRUE`, is treated as if the
+variable were not set. This environment variable takes precedence over the
+option.
+
+@see google::cloud::storage_experimental::EnableOTelDebugMetricsOption
+
 [project-definition-link]: https://cloud.google.com/storage/docs/projects
 'Project Definition in GCS'
 [interconnect-link]:

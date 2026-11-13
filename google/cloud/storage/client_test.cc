@@ -426,6 +426,89 @@ TEST_F(ClientTest, TracingWithEnv) {
   EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
 }
 
+TEST_F(ClientTest, OTelMetricsDefaultAndOption) {
+  ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
+  ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                              std::nullopt);
+  Options options = internal::DefaultOptions();
+  EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
+  EXPECT_FALSE(
+      options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+
+  options = internal::DefaultOptions(
+      Options{}.set<storage_experimental::EnableOTelMetricsOption>(true));
+  EXPECT_TRUE(options.get<storage_experimental::EnableOTelMetricsOption>());
+  EXPECT_FALSE(
+      options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+
+  options = internal::DefaultOptions(
+      Options{}.set<storage_experimental::EnableOTelDebugMetricsOption>(true));
+  EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
+  EXPECT_TRUE(
+      options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+}
+
+TEST_F(ClientTest, OTelMetricsEnvVarOverridesOption) {
+  {
+    ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "true");
+    ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                                std::nullopt);
+    Options const options = internal::DefaultOptions(
+        Options{}
+            .set<storage_experimental::EnableOTelMetricsOption>(false)
+            .set<storage_experimental::EnableOTelDebugMetricsOption>(false));
+    EXPECT_TRUE(options.get<storage_experimental::EnableOTelMetricsOption>());
+    EXPECT_FALSE(
+        options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+  }
+  {
+    ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
+    ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                                "true");
+    Options const options = internal::DefaultOptions(
+        Options{}
+            .set<storage_experimental::EnableOTelMetricsOption>(false)
+            .set<storage_experimental::EnableOTelDebugMetricsOption>(false));
+    EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
+    EXPECT_TRUE(
+        options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+  }
+  {
+    ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "false");
+    ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                                "false");
+    Options const options = internal::DefaultOptions(
+        Options{}
+            .set<storage_experimental::EnableOTelMetricsOption>(true)
+            .set<storage_experimental::EnableOTelDebugMetricsOption>(true));
+    EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
+    EXPECT_FALSE(
+        options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+  }
+}
+
+TEST_F(ClientTest, OTelMetricsInvalidEnvVarIgnored) {
+  for (auto const* val : {"1", "0", "TRUE", "False", "ON", "yes", ""}) {
+    for (bool const configured : {false, true}) {
+      SCOPED_TRACE(std::string("val=") + val +
+                   ", configured=" + (configured ? "true" : "false"));
+      ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", val);
+      ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                                  val);
+      Options const options = internal::DefaultOptions(
+          Options{}
+              .set<storage_experimental::EnableOTelMetricsOption>(configured)
+              .set<storage_experimental::EnableOTelDebugMetricsOption>(
+                  configured));
+      EXPECT_EQ(options.get<storage_experimental::EnableOTelMetricsOption>(),
+                configured);
+      EXPECT_EQ(
+          options.get<storage_experimental::EnableOTelDebugMetricsOption>(),
+          configured);
+    }
+  }
+}
+
 TEST_F(ClientTest, ProjectIdWithoutEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto const options = internal::DefaultOptions();
