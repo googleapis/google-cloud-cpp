@@ -306,6 +306,9 @@ Status PartialResultSetSource::ReadFromStream() {
             GCP_ERROR_INFO());
       }
       if (n_rows == 0) {
+        state_ = kFinished;
+        Status status = reader_->Finish();
+        if (!status.ok()) return status;
         return internal::InternalError(
             "PartialResultSetSource stream ended at a point"
             " that is not on a row boundary",
