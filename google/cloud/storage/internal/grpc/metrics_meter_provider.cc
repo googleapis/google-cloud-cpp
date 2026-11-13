@@ -161,8 +161,29 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
       *p, grpc_scope, "grpc.client.attempt.sent_total_compressed_message_size");
   // Instruments created by this library, rather than by gRPC, use a different
   // instrumentation scope and therefore need their own views.
-  AddLatencyHistogramView(*p, StorageMeterScope(),
+  MeterScope const storage_scope = StorageMeterScope();
+  for (char const* name : {
+           "gcp.client.request.duration",
+           "gcp.storage.client.ttfb",
+           "rpc.client.call.duration",
+           "http.client.request.duration",
+           "gcp.storage.client.stall.duration",
+           "gcp.storage.client.server.duration",
+           "gcp.storage.client.network.tls.handshake.duration",
+           "gcp.storage.client.network.dns.lookup.duration",
+           "gcp.storage.client.network.tcp.connect.duration",
+           "gcp.storage.client.auth.credential_refresh.duration",
+       }) {
+    AddLatencyHistogramView(*p, storage_scope, name);
+  }
+  AddLatencyHistogramView(*p, storage_scope,
                           ChannelCreationLatencyInstrument());
+  for (char const* name : {
+           "gcp.storage.client.request.body.size",
+           "gcp.storage.client.response.body.size",
+       }) {
+    AddSizeHistogramView(*p, storage_scope, name);
+  }
 
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || OPENTELEMETRY_VERSION_MINOR >= 10
   p->AddMetricReader(

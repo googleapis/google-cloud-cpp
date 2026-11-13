@@ -75,14 +75,20 @@ Options MetricsExporterOptions(
 
   return Options{}
       .set<otel::ServiceTimeSeriesOption>(true)
-      .set<otel::MetricNameFormatterOption>([](std::string s) {
-        std::replace(s.begin(), s.end(), '.', '/');
-        // Instruments created by this library opt into the internal namespace
-        // by naming themselves `internal/client/<name>`. Everything else comes
-        // from gRPC and keeps the customer-visible `client/` namespace.
+      .set<otel::MetricNameFormatterOption>([](std::string s) -> std::string {
         if (absl::StartsWith(s, kInternalMetricPrefix)) {
           return "storage.googleapis.com/" + std::move(s);
         }
+        if (s == "gcp.client.request.duration") {
+          return "storage.googleapis.com/client/request_duration";
+        }
+        constexpr std::string_view kStorageClientPrefix = "gcp.storage.client.";
+        if (absl::StartsWith(s, kStorageClientPrefix)) {
+          s.erase(0, kStorageClientPrefix.size());
+          std::replace(s.begin(), s.end(), '.', '_');
+          return "storage.googleapis.com/client/" + std::move(s);
+        }
+        std::replace(s.begin(), s.end(), '.', '/');
         return "storage.googleapis.com/client/" + std::move(s);
       })
       .set<otel::MonitoredResourceOption>(std::move(monitored_resource));
