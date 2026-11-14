@@ -94,7 +94,7 @@ void AsyncBulkApplier::MakeRequest() {
 void AsyncBulkApplier::OnRead(
     google::bigtable::v2::MutateRowsResponse response) {
   limiter_->Update(response);
-  state_.OnRead(std::move(response));
+  state_.OnRead(std::move(response), *options_);
 }
 
 void AsyncBulkApplier::OnFinish(Status const& status) {
