@@ -129,6 +129,9 @@ DataConnectionComponents MakeDataConnectionComponents(
     options.set<bigtable_internal::InstanceChannelAffinityOption>(instances);
   }
   options = bigtable::internal::DefaultDataOptions(std::move(options));
+  options.set<bigtable_internal::EnableClientConfigurationManagerOption>(
+      options.get<
+          bigtable::experimental::EnableClientConfigurationPollingOption>());
   std::unique_ptr<BackgroundThreads> background =
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth =

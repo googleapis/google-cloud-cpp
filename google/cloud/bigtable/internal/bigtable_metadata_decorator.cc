@@ -846,6 +846,19 @@ BigtableMetadata::AsyncPrepareQuery(
                                    request, std::move(operation_context));
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+BigtableMetadata::AsyncGetClientConfiguration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
+  SetMetadata(*context, *options);
+  return child_->AsyncGetClientConfiguration(cq, std::move(context),
+                                             std::move(options), request,
+                                             std::move(operation_context));
+}
+
 void BigtableMetadata::SetMetadata(grpc::ClientContext& context,
                                    Options const& options,
                                    std::string const& request_params) {

@@ -252,6 +252,18 @@ BigtableRoundRobin::AsyncPrepareQuery(
                                     request, std::move(operation_context));
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+BigtableRoundRobin::AsyncGetClientConfiguration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
+  return Child()->AsyncGetClientConfiguration(cq, std::move(context),
+                                              std::move(options), request,
+                                              std::move(operation_context));
+}
+
 std::shared_ptr<BigtableStub> BigtableRoundRobin::Child() {
   std::unique_lock<std::mutex> lk(mu_);
   auto const current = current_;

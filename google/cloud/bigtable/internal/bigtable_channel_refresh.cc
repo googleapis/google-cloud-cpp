@@ -196,6 +196,18 @@ BigtableChannelRefresh::AsyncPrepareQuery(
                                    request, std::move(operation_context));
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+BigtableChannelRefresh::AsyncGetClientConfiguration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
+  return child_->AsyncGetClientConfiguration(cq, std::move(context),
+                                             std::move(options), request,
+                                             std::move(operation_context));
+}
+
 StatusOr<google::bigtable::v2::ClientConfiguration>
 BigtableChannelRefresh::GetClientConfiguration(
     grpc::ClientContext& context, Options const& options,

@@ -198,6 +198,15 @@ class BigtableAuth : public BigtableStub {
                     std::shared_ptr<bigtable_internal::OperationContext>
                         operation_context) override;
 
+  future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+  AsyncGetClientConfiguration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::GetClientConfigurationRequest const& request,
+      std::shared_ptr<bigtable_internal::OperationContext> operation_context)
+      override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<BigtableStub> child_;

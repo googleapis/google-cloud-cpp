@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/client_configuration_manager.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
@@ -28,7 +29,13 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/container/flat_hash_map.h"
 #include <memory>
+#include <mutex>
+#include <shared_mutex>
+#include <string>
+#include <string_view>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -45,6 +52,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // store the instances.
 struct InstanceChannelAffinityOption {
   using Type = std::vector<bigtable::InstanceResource>;
+};
+
+struct EnableClientConfigurationManagerOption {
+  using Type = bool;
 };
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -124,7 +135,15 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::PrepareQueryParams const& p) override;
   bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
 
+  std::shared_ptr<ClientConfigurationManager> GetClientConfigurationManager(
+      std::string_view instance_name, std::string_view app_profile_id) const;
+
  private:
+  std::shared_ptr<ClientConfigurationManager> EnsureClientConfigurationManager(
+      std::string_view instance_name, std::string_view app_profile_id);
+  std::shared_ptr<BigtableStub> ResolveStubForOperation(
+      std::string_view instance_name, std::string_view app_profile_id);
+
   void AsyncReadRowsHelper(std::string const& table_name,
                            std::function<future<bool>(bigtable::Row)> on_row,
                            std::function<void(Status)> on_finish,
@@ -140,6 +159,12 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
+  bool enable_config_polling_ = false;
+  mutable std::shared_mutex config_managers_mu_;
+  bool shutting_down_ = false;
+  absl::flat_hash_map<std::pair<std::string, std::string>,
+                      std::shared_ptr<ClientConfigurationManager>>
+      config_managers_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

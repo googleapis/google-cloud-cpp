@@ -5118,6 +5118,133 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryRefreshFailsOnInvalidMetadata) {
               StatusIs(StatusCode::kInternal, "Column type cannot be empty"));
 }
 
+TEST_F(DataConnectionTest,
+       EagerClientConfigInitializationForAffinityInstancesAndCleanShutdown) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  v2::ClientConfiguration server_cfg;
+  server_cfg.mutable_polling_configuration()
+      ->mutable_polling_interval()
+      ->set_seconds(180);
+  server_cfg.mutable_session_configuration()
+      ->mutable_session_diversion_configuration()
+      ->mutable_global_diversion()
+      ->set_session_load(0.6F);
+
+  bigtable::InstanceResource instance(google::cloud::Project("the-project"),
+                                      "the-instance");
+  EXPECT_CALL(*mock, AsyncGetClientConfiguration)
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const&,
+                    v2::GetClientConfigurationRequest const& req,
+                    std::shared_ptr<OperationContext> const&) {
+        EXPECT_EQ(req.instance_name(), instance.FullName());
+        EXPECT_EQ(req.app_profile_id(), kAppProfile);
+        return make_ready_future(make_status_or(server_cfg));
+      });
+
+  Options opts = CallOptions();
+  opts.set<InstanceChannelAffinityOption>({instance})
+      .set<EnableClientConfigurationManagerOption>(true);
+
+  auto conn = std::make_shared<DataConnectionImpl>(
+      std::move(mock_bg), mock,
+      std::make_unique<SimpleOperationContextFactory>(),
+      std::make_shared<NoopMutateRowsLimiter>(), std::move(opts));
+
+  auto mgr =
+      conn->GetClientConfigurationManager(instance.FullName(), kAppProfile);
+  ASSERT_NE(mgr, nullptr);
+  EXPECT_EQ(mgr->config_seq(), 1);
+  EXPECT_FLOAT_EQ(mgr->GetConfig()
+                      .session_configuration()
+                      .session_diversion_configuration()
+                      .global_diversion()
+                      .session_load(),
+                  0.6F);
+  EXPECT_EQ(fake_cq_impl->size(), 1U);
+
+  // Destroying DataConnectionImpl shuts down the ClientConfigurationManager and
+  // cancels its periodic poll timer.
+  conn.reset();
+  EXPECT_TRUE(mgr->IsShutdown());
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST_F(DataConnectionTest,
+       LazyClientConfigInitializationPerInstanceAndAppProfileOnDataOperations) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  v2::ClientConfiguration server_cfg;
+  server_cfg.set_stop_polling(true);
+  server_cfg.mutable_session_configuration()
+      ->mutable_session_diversion_configuration()
+      ->mutable_global_diversion()
+      ->set_session_load(0.35F);
+
+  std::vector<std::pair<std::string, std::string>> polled_targets;
+  EXPECT_CALL(*mock, AsyncGetClientConfiguration)
+      .Times(2)
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::shared_ptr<grpc::ClientContext> const&,
+                          google::cloud::internal::ImmutableOptions const&,
+                          v2::GetClientConfigurationRequest const& req,
+                          std::shared_ptr<OperationContext> const&) {
+        polled_targets.emplace_back(req.instance_name(), req.app_profile_id());
+        return make_ready_future(make_status_or(server_cfg));
+      });
+
+  EXPECT_CALL(*mock, MutateRow)
+      .Times(3)
+      .WillRepeatedly(Return(v2::MutateRowResponse{}));
+
+  Options conn_opts = CallOptions();
+  conn_opts.set<EnableClientConfigurationManagerOption>(true);
+
+  auto conn = std::make_shared<DataConnectionImpl>(
+      std::move(mock_bg), mock,
+      std::make_unique<SimpleOperationContextFactory>(),
+      std::make_shared<NoopMutateRowsLimiter>(), conn_opts);
+
+  constexpr char kInstance[] = "projects/the-project/instances/the-instance";
+  EXPECT_EQ(conn->GetClientConfigurationManager(kInstance, "profile-a"),
+            nullptr);
+
+  // Two Apply calls on profile-a initialize and reuse a single manager.
+  {
+    internal::OptionsSpan span(
+        Options{conn_opts}.set<bigtable::AppProfileIdOption>("profile-a"));
+    EXPECT_STATUS_OK(conn->Apply(kTableName, IdempotentMutation("r1")));
+    EXPECT_STATUS_OK(conn->Apply(kTableName, IdempotentMutation("r2")));
+  }
+  // A call on profile-b initializes a second distinct manager.
+  {
+    internal::OptionsSpan span(
+        Options{conn_opts}.set<bigtable::AppProfileIdOption>("profile-b"));
+    EXPECT_STATUS_OK(conn->Apply(kTableName, IdempotentMutation("r3")));
+  }
+
+  EXPECT_THAT(polled_targets, ElementsAre(Pair(kInstance, "profile-a"),
+                                          Pair(kInstance, "profile-b")));
+  EXPECT_NE(conn->GetClientConfigurationManager(kInstance, "profile-a"),
+            nullptr);
+  EXPECT_NE(conn->GetClientConfigurationManager(kInstance, "profile-b"),
+            nullptr);
+  EXPECT_NE(conn->GetClientConfigurationManager(kInstance, "profile-a"),
+            conn->GetClientConfigurationManager(kInstance, "profile-b"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

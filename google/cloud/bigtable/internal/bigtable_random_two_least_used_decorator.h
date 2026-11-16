@@ -160,6 +160,14 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
                     std::shared_ptr<bigtable_internal::OperationContext>
                         operation_context) override;
 
+  future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+  AsyncGetClientConfiguration(
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+      internal::ImmutableOptions options,
+      google::bigtable::v2::GetClientConfigurationRequest const& request,
+      std::shared_ptr<bigtable_internal::OperationContext> operation_context)
+      override;
+
   StatusOr<google::bigtable::v2::ClientConfiguration> GetClientConfiguration(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::GetClientConfigurationRequest const& request,
