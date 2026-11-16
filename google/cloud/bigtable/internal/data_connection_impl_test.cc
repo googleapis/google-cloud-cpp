@@ -5158,7 +5158,7 @@ TEST_F(DataConnectionTest,
       std::make_unique<SimpleOperationContextFactory>(),
       std::make_shared<NoopMutateRowsLimiter>(), std::move(opts));
 
-  auto mgr =
+  std::shared_ptr<ClientConfigurationManager> mgr =
       conn->GetClientConfigurationManager(instance.FullName(), kAppProfile);
   ASSERT_NE(mgr, nullptr);
   EXPECT_EQ(mgr->config_seq(), 1);

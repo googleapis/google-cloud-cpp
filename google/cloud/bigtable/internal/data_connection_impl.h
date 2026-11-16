@@ -30,6 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/container/flat_hash_map.h"
+#include "absl/hash/hash.h"
+#include <cstddef>
 #include <memory>
 #include <mutex>
 #include <shared_mutex>
@@ -152,6 +154,41 @@ class DataConnectionImpl : public bigtable::DataConnection {
                            internal::ImmutableOptions const& current,
                            std::shared_ptr<OperationContext> operation_context);
 
+  struct ConfigManagerKey {
+    std::string instance_id;
+    std::string app_profile_id;
+
+    struct Hash {
+      using is_transparent = void;
+      std::size_t operator()(ConfigManagerKey const& key) const {
+        return absl::Hash<std::pair<std::string_view, std::string_view>>()(
+            {key.instance_id, key.app_profile_id});
+      }
+      std::size_t operator()(
+          std::pair<std::string_view, std::string_view> const& p) const {
+        return absl::Hash<std::pair<std::string_view, std::string_view>>()(p);
+      }
+    };
+
+    struct Equal {
+      using is_transparent = void;
+      bool operator()(ConfigManagerKey const& lhs,
+                      ConfigManagerKey const& rhs) const {
+        return lhs.instance_id == rhs.instance_id &&
+               lhs.app_profile_id == rhs.app_profile_id;
+      }
+      bool operator()(
+          ConfigManagerKey const& lhs,
+          std::pair<std::string_view, std::string_view> const& rhs) const {
+        return lhs.instance_id == rhs.first && lhs.app_profile_id == rhs.second;
+      }
+      bool operator()(std::pair<std::string_view, std::string_view> const& lhs,
+                      ConfigManagerKey const& rhs) const {
+        return lhs.first == rhs.instance_id && lhs.second == rhs.app_profile_id;
+      }
+    };
+  };
+
   std::unique_ptr<BackgroundThreads> background_;
   std::unique_ptr<StubManager> stub_manager_;
   std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
@@ -162,8 +199,9 @@ class DataConnectionImpl : public bigtable::DataConnection {
   bool enable_config_polling_ = false;
   mutable std::shared_mutex config_managers_mu_;
   bool shutting_down_ = false;
-  absl::flat_hash_map<std::pair<std::string, std::string>,
-                      std::shared_ptr<ClientConfigurationManager>>
+  absl::flat_hash_map<ConfigManagerKey,
+                      std::shared_ptr<ClientConfigurationManager>,
+                      ConfigManagerKey::Hash, ConfigManagerKey::Equal>
       config_managers_;
 };
 

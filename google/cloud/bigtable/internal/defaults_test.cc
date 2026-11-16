@@ -715,19 +715,19 @@ TEST(ConnectionRefreshRange, DisabledIfEmulator) {
 TEST(ClientConfigurationPollingDefaults, EnabledByDefaultDisabledIfEmulator) {
   {
     ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
-    auto opts = DefaultDataOptions({});
+    Options opts = DefaultDataOptions({});
     EXPECT_TRUE(
         opts.get<experimental::EnableClientConfigurationPollingOption>());
   }
   {
     ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
-    auto opts = DefaultDataOptions({});
+    Options opts = DefaultDataOptions({});
     EXPECT_FALSE(
         opts.get<experimental::EnableClientConfigurationPollingOption>());
   }
   {
     ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
-    auto opts = DefaultDataOptions(
+    Options opts = DefaultDataOptions(
         Options{}.set<experimental::EnableClientConfigurationPollingOption>(
             false));
     EXPECT_FALSE(

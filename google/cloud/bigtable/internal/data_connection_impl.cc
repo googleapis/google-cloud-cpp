@@ -251,8 +251,9 @@ DataConnectionImpl::DataConnectionImpl(
       enable_config_polling_(
           options_.get<EnableClientConfigurationManagerOption>()) {
   if (enable_config_polling_ && options_.has<InstanceChannelAffinityOption>()) {
-    auto const& default_app_profile = app_profile_id(options_);
-    for (auto const& instance : options_.get<InstanceChannelAffinityOption>()) {
+    std::string const& default_app_profile = app_profile_id(options_);
+    for (bigtable::InstanceResource const& instance :
+         options_.get<InstanceChannelAffinityOption>()) {
       (void)EnsureClientConfigurationManager(instance.FullName(),
                                              default_app_profile);
     }
@@ -260,16 +261,14 @@ DataConnectionImpl::DataConnectionImpl(
 }
 
 DataConnectionImpl::~DataConnectionImpl() {
-  absl::flat_hash_map<std::pair<std::string, std::string>,
-                      std::shared_ptr<ClientConfigurationManager>>
-      managers;
+  decltype(config_managers_) managers;
   {
     std::unique_lock<std::shared_mutex> lk(config_managers_mu_);
     shutting_down_ = true;
     managers.swap(config_managers_);
   }
-  for (auto& kv : managers) {
-    kv.second->Shutdown();
+  for (auto& [key, manager] : managers) {
+    manager->Shutdown();
   }
 }
 
@@ -278,8 +277,7 @@ DataConnectionImpl::GetClientConfigurationManager(
     std::string_view instance_name, std::string_view app_profile) const {
   if (!enable_config_polling_ || instance_name.empty()) return nullptr;
   std::shared_lock<std::shared_mutex> lk(config_managers_mu_);
-  auto iter = config_managers_.find(std::pair<std::string, std::string>{
-      std::string{instance_name}, std::string{app_profile}});
+  auto iter = config_managers_.find(std::make_pair(instance_name, app_profile));
   if (iter == config_managers_.end()) return nullptr;
   return iter->second;
 }
@@ -289,34 +287,36 @@ DataConnectionImpl::EnsureClientConfigurationManager(
     std::string_view instance_name, std::string_view app_profile) {
   if (!enable_config_polling_ || instance_name.empty()) return nullptr;
 
-  std::pair<std::string, std::string> key{std::string{instance_name},
-                                          std::string{app_profile}};
+  std::pair<std::string_view, std::string_view> const lookup_key{instance_name,
+                                                                 app_profile};
   {
     std::shared_lock<std::shared_mutex> lk(config_managers_mu_);
     if (shutting_down_) return nullptr;
-    if (auto iter = config_managers_.find(key);
+    if (auto iter = config_managers_.find(lookup_key);
         iter != config_managers_.end()) {
       return iter->second;
     }
   }
 
-  auto stub = stub_manager_->GetStub(instance_name);
-  auto candidate = ClientConfigurationManager::Create(
-      background_->cq(), std::move(stub), key.first, key.second, options_);
+  std::shared_ptr<BigtableStub> stub = stub_manager_->GetStub(instance_name);
+  std::shared_ptr<ClientConfigurationManager> candidate =
+      ClientConfigurationManager::Create(background_->cq(), std::move(stub),
+                                         std::string{instance_name},
+                                         std::string{app_profile}, options_);
 
   std::shared_ptr<ClientConfigurationManager> manager;
   bool inserted = false;
   {
     std::unique_lock<std::shared_mutex> lk(config_managers_mu_);
     if (shutting_down_) return nullptr;
-    auto res = config_managers_.emplace(std::move(key), std::move(candidate));
-    manager = res.first->second;
-    inserted = res.second;
+    auto [iter, was_inserted] = config_managers_.emplace(
+        ConfigManagerKey{std::string{instance_name}, std::string{app_profile}},
+        std::move(candidate));
+    manager = iter->second;
+    inserted = was_inserted;
   }
 
-  if (inserted) {
-    manager->Start();
-  }
+  if (inserted) manager->Start();
   return manager;
 }
 
@@ -354,8 +354,8 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
   auto operation_context = operation_context_factory_->MutateRow(
       table_name, app_profile_id(*current));
 
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
@@ -392,8 +392,8 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
       table_name, app_profile_id(*current));
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff),
              is_idempotent ? Idempotency::kIdempotent
@@ -438,8 +438,8 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   Status status;
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
   while (true) {
     status = mutator.MakeOneRequest(*stub, *limiter_, *current);
     if (!mutator.HasPendingMutations()) break;
@@ -476,7 +476,7 @@ bigtable::RowReader DataConnectionImpl::ReadRowsFull(
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto operation_context = operation_context_factory_->ReadRows(
       params.table_name, params.app_profile_id);
-  auto stub = ResolveStubForOperation(
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
       InstanceNameFromTableName(params.table_name), params.app_profile_id);
   return ReadRowsHelper(stub, current, std::move(params),
                         std::move(operation_context));
@@ -493,8 +493,8 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   //  OperationContextFactory::ReadRow to create the operation_context.
   auto operation_context =
       operation_context_factory_->ReadRow(table_name, app_profile_id(*current));
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
 
   auto reader =
       ReadRowsHelper(stub, current,
@@ -537,8 +537,8 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
                                : Idempotency::kNonIdempotent;
   auto operation_context = operation_context_factory_->CheckAndMutateRow(
       table_name, app_profile_id(*current));
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency,
       [stub, &operation_context](
@@ -584,8 +584,8 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
   auto backoff = backoff_policy(*current);
   auto operation_context = operation_context_factory_->CheckAndMutateRow(
       table_name, app_profile_id(*current));
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), idempotency,
              background_->cq(),
@@ -632,8 +632,8 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   std::unique_ptr<BackoffPolicy> backoff;
   auto operation_context = operation_context_factory_->SampleRowKeys(
       table_name, app_profile_id(*current));
-  auto stub = ResolveStubForOperation(InstanceNameFromTableName(table_name),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      InstanceNameFromTableName(table_name), app_profile_id(*current));
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, *current);
@@ -867,8 +867,8 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   }
   auto operation_context = operation_context_factory_->PrepareQuery(
       instance_full_name, app_profile_id(*current));
-  auto stub = ResolveStubForOperation(params.instance.FullName(),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      params.instance.FullName(), app_profile_id(*current));
   auto response = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       Idempotency::kIdempotent,
@@ -966,7 +966,8 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
       instance_full_name, app_profile_id(*current));
   char const* func = __func__;
   auto instance_name = params.instance.FullName();
-  auto stub = ResolveStubForOperation(instance_name, app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub =
+      ResolveStubForOperation(instance_name, app_profile_id(*current));
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kIdempotent,
              background_->cq(),
@@ -1211,8 +1212,8 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
 
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
-  auto stub = ResolveStubForOperation(params.bound_query.instance().FullName(),
-                                      app_profile_id(*current));
+  std::shared_ptr<BigtableStub> stub = ResolveStubForOperation(
+      params.bound_query.instance().FullName(), app_profile_id(*current));
   auto source_fn =
       [stub, tracing_enabled, tracing_options](
           google::bigtable::v2::ExecuteQueryRequest& request,

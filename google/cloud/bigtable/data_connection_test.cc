@@ -110,8 +110,9 @@ TEST(MakeDataConnection, ClientConfigurationPollingDisabledOnEmulator) {
   testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
                                            "localhost:8086");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
-  auto conn = MakeDataConnection({instance_a}, TestOptions());
-  auto options = conn->options();
+  std::shared_ptr<DataConnection> conn =
+      MakeDataConnection({instance_a}, TestOptions());
+  Options options = conn->options();
   EXPECT_FALSE(
       options.get<experimental::EnableClientConfigurationPollingOption>());
   EXPECT_FALSE(

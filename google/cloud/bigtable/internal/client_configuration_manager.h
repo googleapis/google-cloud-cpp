@@ -72,10 +72,16 @@ DiversionLoads ResolveDiversionLoads(
 
 /// Returns the effective poll interval from `config`, preferring
 /// `polling_configuration.polling_interval` over deprecated `polling_interval`
+/// and clamping at 1 minute.
+std::chrono::milliseconds EffectivePollingInterval(
+    google::bigtable::v2::ClientConfiguration const& config);
+
+/// Returns the effective poll interval from `config`, preferring
+/// `polling_configuration.polling_interval` over deprecated `polling_interval`
 /// and clamping at `min_interval`.
 std::chrono::milliseconds EffectivePollingInterval(
     google::bigtable::v2::ClientConfiguration const& config,
-    std::chrono::milliseconds min_interval = std::chrono::minutes(1));
+    std::chrono::milliseconds min_interval);
 
 /// Returns the effective validity window from `config`, capped so adding it to
 /// `steady_clock::now()` cannot overflow.
@@ -113,12 +119,13 @@ class ClientConfigurationManager
   using SystemClock = ::google::cloud::internal::SystemClock;
   using Config = ClientConfigurationManagerConfig;
 
-  static constexpr auto kMinPollingInterval =
+  static constexpr std::chrono::milliseconds kMinPollingInterval =
       std::chrono::milliseconds(std::chrono::minutes(1));
-  static constexpr auto kPollDeadline =
+  static constexpr std::chrono::milliseconds kPollDeadline =
       std::chrono::milliseconds(std::chrono::seconds(5));
-  static constexpr auto kInitialRetryBackoff = std::chrono::milliseconds(100);
-  static constexpr auto kMaxRetryBackoff =
+  static constexpr std::chrono::milliseconds kInitialRetryBackoff =
+      std::chrono::milliseconds(100);
+  static constexpr std::chrono::milliseconds kMaxRetryBackoff =
       std::chrono::milliseconds(std::chrono::seconds(30));
   static constexpr std::size_t kMaxPollHistory = 100;
 
@@ -152,12 +159,18 @@ class ClientConfigurationManager
 
   static std::shared_ptr<ClientConfigurationManager> Create(
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-      std::string instance_name, std::string app_profile_id,
-      Options options = {}, Config config = {},
-      std::shared_ptr<SteadyClock> steady_clock =
-          std::make_shared<SteadyClock>(),
-      std::shared_ptr<SystemClock> system_clock =
-          std::make_shared<SystemClock>());
+      std::string instance_name, std::string app_profile_id, Options options);
+
+  static std::shared_ptr<ClientConfigurationManager> Create(
+      CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+      std::string instance_name, std::string app_profile_id, Options options,
+      Config config);
+
+  static std::shared_ptr<ClientConfigurationManager> Create(
+      CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+      std::string instance_name, std::string app_profile_id, Options options,
+      Config config, std::shared_ptr<SteadyClock> steady_clock,
+      std::shared_ptr<SystemClock> system_clock);
 
   ~ClientConfigurationManager();
 
@@ -181,13 +194,17 @@ class ClientConfigurationManager
   std::int64_t config_seq() const;
   Snapshot GetSnapshot() const;
 
+  /// Registers a general configuration listener and delivers the current
+  /// `(config, seq)` synchronously before returning.
+  UnregisterCallback AddListener(ConfigListener listener);
+
   /// Registers a general configuration listener. When `fire_immediately` is
   /// true, delivers the current `(config, seq)` synchronously before returning
   /// (unless a newer configuration was concurrently delivered first).
   /// Listeners may safely call `GetConfig()`, `GetSnapshot()`, or their own
   /// unregister callback from inside the callback without deadlocking.
   UnregisterCallback AddListener(ConfigListener listener,
-                                 bool fire_immediately = true);
+                                 bool fire_immediately);
 
   /// Registers a listener for `SessionPoolConfiguration` changes, firing
   /// immediately with the current/default pool configuration and suppressing

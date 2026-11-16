@@ -38,9 +38,9 @@ namespace {
 // Safe 100-year cap so adding validity/polling durations to clock::now() never
 // overflows int64 nanoseconds.
 constexpr std::int64_t kMaxValiditySeconds = 100LL * 365 * 24 * 3600;
-constexpr auto kMaxValidityDuration =
+constexpr std::chrono::milliseconds kMaxValidityDuration =
     std::chrono::milliseconds(std::chrono::seconds(kMaxValiditySeconds));
-constexpr auto kMaxPollingInterval =
+constexpr std::chrono::milliseconds kMaxPollingInterval =
     std::chrono::milliseconds(std::chrono::hours(24 * 365));
 
 constexpr char kReadRowScopeKey[] = "method:Bigtable.ReadRow";
@@ -53,12 +53,10 @@ std::chrono::milliseconds ProtoDurationToMillisCapped(
   if (d.seconds() < 0 || (d.seconds() == 0 && d.nanos() < 0)) {
     return std::chrono::milliseconds(0);
   }
-  auto const max_seconds =
+  std::int64_t const max_seconds =
       std::chrono::duration_cast<std::chrono::seconds>(max_duration).count();
-  if (d.seconds() >= max_seconds) {
-    return max_duration;
-  }
-  auto const total_ms =
+  if (d.seconds() >= max_seconds) return max_duration;
+  std::int64_t const total_ms =
       d.seconds() * 1000LL + static_cast<std::int64_t>(d.nanos()) / 1000000LL;
   return (std::min)(std::chrono::milliseconds(total_ms), max_duration);
 }
@@ -89,7 +87,7 @@ Options SanitizeConfigPollOptions(Options options) {
 
 std::optional<google::bigtable::v2::ClientConfiguration>
 LoadEnvOverrideConfiguration() {
-  auto env = internal::GetEnv(kOverrideEnvVar);
+  std::optional<std::string> env = internal::GetEnv(kOverrideEnvVar);
   if (!env.has_value() || env->empty()) return std::nullopt;
   google::bigtable::v2::ClientConfiguration parsed;
   if (!google::protobuf::TextFormat::ParseFromString(*env, &parsed)) {
@@ -105,23 +103,29 @@ LoadEnvOverrideConfiguration() {
 google::bigtable::v2::ClientConfiguration DefaultClientConfiguration() {
   google::bigtable::v2::ClientConfiguration cfg;
 
-  auto* polling = cfg.mutable_polling_configuration();
+  google::bigtable::v2::ClientConfiguration::PollingConfiguration* polling =
+      cfg.mutable_polling_configuration();
   polling->mutable_polling_interval()->set_seconds(300);
   polling->mutable_validity_duration()->set_seconds(kMaxValiditySeconds);
   polling->set_max_rpc_retry_count(5);
 
-  auto* session = cfg.mutable_session_configuration();
+  google::bigtable::v2::SessionClientConfiguration* session =
+      cfg.mutable_session_configuration();
   session->set_session_load(0.0F);
 
-  auto* channel = session->mutable_channel_configuration();
+  google::bigtable::v2::SessionClientConfiguration::ChannelPoolConfiguration*
+      channel = session->mutable_channel_configuration();
   channel->set_min_server_count(2);
   channel->set_max_server_count(25);
   channel->set_per_server_session_count(10);
-  auto* fallback = channel->mutable_direct_access_with_fallback();
+  google::bigtable::v2::SessionClientConfiguration::ChannelPoolConfiguration::
+      DirectAccessWithFallback* fallback =
+          channel->mutable_direct_access_with_fallback();
   fallback->mutable_check_interval()->set_seconds(60);
   fallback->set_error_rate_threshold(0.8F);
 
-  auto* pool = session->mutable_session_pool_configuration();
+  google::bigtable::v2::SessionClientConfiguration::SessionPoolConfiguration*
+      pool = session->mutable_session_pool_configuration();
   pool->set_headroom(0.5F);
   pool->set_min_session_count(5);
   pool->set_max_session_count(400);
@@ -145,11 +149,10 @@ DiversionLoads ResolveDiversionLoads(
   loads.read_row_session_load = ClampLoad(config.session_load());
   loads.mutate_row_session_load = ClampLoad(config.session_load());
 
-  if (!config.has_session_diversion_configuration()) {
-    return loads;
-  }
+  if (!config.has_session_diversion_configuration()) return loads;
 
-  auto const& div = config.session_diversion_configuration();
+  google::bigtable::v2::SessionDiversionConfiguration const& div =
+      config.session_diversion_configuration();
   switch (div.diversion_strategy_case()) {
     case google::bigtable::v2::SessionDiversionConfiguration::
         kGlobalDiversion: {
@@ -161,7 +164,10 @@ DiversionLoads ResolveDiversionLoads(
     }
     case google::bigtable::v2::SessionDiversionConfiguration::
         kPerScopeDiversion: {
-      auto const& scopes = div.per_scope_diversion().scope_diversions();
+      google::protobuf::Map<
+          std::string,
+          google::bigtable::v2::SessionScopeDiversionConfiguration> const&
+          scopes = div.per_scope_diversion().scope_diversions();
       auto const read_it = scopes.find(kReadRowScopeKey);
       loads.read_row_session_load =
           read_it != scopes.end() ? ClampLoad(read_it->second.session_load())
@@ -181,6 +187,12 @@ DiversionLoads ResolveDiversionLoads(
 }
 
 std::chrono::milliseconds EffectivePollingInterval(
+    google::bigtable::v2::ClientConfiguration const& config) {
+  return EffectivePollingInterval(
+      config, ClientConfigurationManager::kMinPollingInterval);
+}
+
+std::chrono::milliseconds EffectivePollingInterval(
     google::bigtable::v2::ClientConfiguration const& config,
     std::chrono::milliseconds min_interval) {
   std::chrono::milliseconds interval{0};
@@ -192,7 +204,8 @@ std::chrono::milliseconds EffectivePollingInterval(
     interval = ProtoDurationToMillisCapped(config.polling_interval(),
                                            kMaxPollingInterval);
   } else {
-    auto const defaults = DefaultClientConfiguration();
+    google::bigtable::v2::ClientConfiguration const defaults =
+        DefaultClientConfiguration();
     interval = ProtoDurationToMillisCapped(
         defaults.polling_configuration().polling_interval(),
         kMaxPollingInterval);
@@ -208,7 +221,8 @@ std::chrono::milliseconds EffectiveValidityDuration(
         config.polling_configuration().validity_duration(),
         kMaxValidityDuration);
   }
-  auto const defaults = DefaultClientConfiguration();
+  google::bigtable::v2::ClientConfiguration const defaults =
+      DefaultClientConfiguration();
   return ProtoDurationToMillisCapped(
       defaults.polling_configuration().validity_duration(),
       kMaxValidityDuration);
@@ -222,6 +236,23 @@ int EffectiveMaxRpcRetryCount(
   return DefaultClientConfiguration()
       .polling_configuration()
       .max_rpc_retry_count();
+}
+
+std::shared_ptr<ClientConfigurationManager> ClientConfigurationManager::Create(
+    CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+    std::string instance_name, std::string app_profile_id, Options options) {
+  return Create(std::move(cq), std::move(stub), std::move(instance_name),
+                std::move(app_profile_id), std::move(options), Config{});
+}
+
+std::shared_ptr<ClientConfigurationManager> ClientConfigurationManager::Create(
+    CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+    std::string instance_name, std::string app_profile_id, Options options,
+    Config config) {
+  return Create(std::move(cq), std::move(stub), std::move(instance_name),
+                std::move(app_profile_id), std::move(options),
+                std::move(config), std::make_shared<SteadyClock>(),
+                std::make_shared<SystemClock>());
 }
 
 std::shared_ptr<ClientConfigurationManager> ClientConfigurationManager::Create(
@@ -292,22 +323,18 @@ void ClientConfigurationManager::Shutdown() {
     timer_to_cancel = std::move(timer_);
     context_to_cancel = std::move(active_rpc_context_);
     slots.reserve(listeners_.size());
-    for (auto& kv : listeners_) {
-      kv.second->active.store(false, std::memory_order_release);
-      slots.push_back(std::move(kv.second));
+    for (auto& [id, slot] : listeners_) {
+      slot->active.store(false, std::memory_order_release);
+      slots.push_back(std::move(slot));
     }
     listeners_.clear();
   }
 
-  if (context_to_cancel != nullptr) {
-    context_to_cancel->TryCancel();
-  }
-  if (timer_to_cancel.valid()) {
-    timer_to_cancel.cancel();
-  }
+  if (context_to_cancel != nullptr) context_to_cancel->TryCancel();
+  if (timer_to_cancel.valid()) timer_to_cancel.cancel();
 
-  auto const self_thread = std::this_thread::get_id();
-  for (auto const& slot : slots) {
+  std::thread::id const self_thread = std::this_thread::get_id();
+  for (std::shared_ptr<ListenerSlot> const& slot : slots) {
     if (slot->delivering_thread.load(std::memory_order_acquire) ==
         self_thread) {
       continue;
@@ -345,6 +372,11 @@ ClientConfigurationManager::Snapshot ClientConfigurationManager::GetSnapshot()
 }
 
 ClientConfigurationManager::UnregisterCallback
+ClientConfigurationManager::AddListener(ConfigListener listener) {
+  return AddListener(std::move(listener), /*fire_immediately=*/true);
+}
+
+ClientConfigurationManager::UnregisterCallback
 ClientConfigurationManager::AddListener(ConfigListener listener,
                                         bool fire_immediately) {
   if (!listener) return [] {};
@@ -365,18 +397,16 @@ ClientConfigurationManager::AddListener(ConfigListener listener,
     }
   }
 
-  if (fire_immediately) {
-    DeliverToSlot(*slot, initial_config, initial_seq);
-  }
+  if (fire_immediately) DeliverToSlot(*slot, initial_config, initial_seq);
 
   std::weak_ptr<ClientConfigurationManager> weak_self = weak_from_this();
   std::weak_ptr<ListenerSlot> weak_slot = slot;
   return [weak_self = std::move(weak_self), weak_slot = std::move(weak_slot),
           id]() {
-    if (auto s = weak_slot.lock()) {
+    if (std::shared_ptr<ListenerSlot> s = weak_slot.lock()) {
       s->active.store(false, std::memory_order_release);
     }
-    if (auto self = weak_self.lock()) {
+    if (std::shared_ptr<ClientConfigurationManager> self = weak_self.lock()) {
       std::lock_guard<std::mutex> lock(self->mu_);
       self->listeners_.erase(id);
     }
@@ -394,18 +424,21 @@ ClientConfigurationManager::AddSessionPoolConfigurationListener(
         prev;
   };
   auto state = std::make_shared<DiffState>();
-  auto default_pool_cfg = config_.default_config.session_configuration()
-                              .session_pool_configuration();
+  google::bigtable::v2::SessionClientConfiguration::SessionPoolConfiguration
+      default_pool_cfg = config_.default_config.session_configuration()
+                             .session_pool_configuration();
 
   return AddListener(
       [listener = std::move(listener), state = std::move(state),
        default_pool_cfg = std::move(default_pool_cfg)](
           google::bigtable::v2::ClientConfiguration const& cfg, std::int64_t) {
-        auto const& pool_cfg =
-            cfg.has_session_configuration() &&
-                    cfg.session_configuration().has_session_pool_configuration()
-                ? cfg.session_configuration().session_pool_configuration()
-                : default_pool_cfg;
+        google::bigtable::v2::SessionClientConfiguration::
+            SessionPoolConfiguration const& pool_cfg =
+                cfg.has_session_configuration() &&
+                        cfg.session_configuration()
+                            .has_session_pool_configuration()
+                    ? cfg.session_configuration().session_pool_configuration()
+                    : default_pool_cfg;
         if (state->has_prev &&
             google::protobuf::util::MessageDifferencer::Equals(state->prev,
                                                                pool_cfg)) {
@@ -438,9 +471,7 @@ ClientConfigurationManager::AddDiversionLoadsListener(
             cfg.has_session_configuration()
                 ? ResolveDiversionLoads(cfg.session_configuration())
                 : DiversionLoads{};
-        if (state->has_prev && state->prev == loads) {
-          return;
-        }
+        if (state->has_prev && state->prev == loads) return;
         state->has_prev = true;
         state->prev = loads;
         listener(loads);
@@ -479,16 +510,17 @@ void ClientConfigurationManager::StartFetchAttempt(
   request.set_app_profile_id(app_profile_id_);
 
   active_rpc_context_ = context;
-  auto stub = stub_;
-  auto cq = cq_;
-  auto options = options_;
+  std::shared_ptr<BigtableStub> stub = stub_;
+  CompletionQueue cq = cq_;
+  internal::ImmutableOptions options = options_;
   auto op_ctx = std::make_shared<OperationContext>();
   std::weak_ptr<ClientConfigurationManager> weak_self = weak_from_this();
   lock.unlock();
 
   internal::OptionsSpan span(options);
-  auto rpc_future = stub->AsyncGetClientConfiguration(
-      cq, context, options, request, std::move(op_ctx));
+  future<StatusOr<google::bigtable::v2::ClientConfiguration>> rpc_future =
+      stub->AsyncGetClientConfiguration(cq, context, options, request,
+                                        std::move(op_ctx));
   if (!rpc_future.valid()) {
     OnFetchAttemptCompleted(
         op_id, attempt, poll_start,
@@ -502,7 +534,8 @@ void ClientConfigurationManager::StartFetchAttempt(
              poll_start](
                 future<StatusOr<google::bigtable::v2::ClientConfiguration>> f) {
         internal::OptionsSpan cb_span(options);
-        if (auto self = weak_self.lock()) {
+        if (std::shared_ptr<ClientConfigurationManager> self =
+                weak_self.lock()) {
           self->OnFetchAttemptCompleted(op_id, attempt, poll_start, f.get());
         }
       });
@@ -530,29 +563,30 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
     active_rpc_context_.reset();
 
     if (result.ok()) {
-      auto now_steady = steady_clock_->Now();
-      auto now_sys = system_clock_->Now();
+      std::chrono::steady_clock::time_point const now_steady =
+          steady_clock_->Now();
+      std::chrono::system_clock::time_point const now_sys =
+          system_clock_->Now();
       last_response_ = *result;
       last_fetched_at_ = now_sys;
       last_error_.reset();
       last_error_at_.reset();
 
-      auto effective = ApplyOverrides(*std::move(result));
+      google::bigtable::v2::ClientConfiguration effective =
+          ApplyOverrides(*std::move(result));
       if (effective.stop_polling()) {
         valid_until_ = now_steady + kMaxValidityDuration;
       } else {
         valid_until_ = now_steady + EffectiveValidityDuration(effective);
       }
 
-      auto const elapsed =
+      std::chrono::milliseconds const elapsed =
           std::chrono::duration_cast<std::chrono::milliseconds>(now_steady -
                                                                 poll_start);
       if (google::protobuf::util::MessageDifferencer::Equals(effective,
                                                              current_config_)) {
         RecordPollLocked(PollEvent{now_sys, elapsed, Status{}, config_seq_});
-        if (!effective.stop_polling()) {
-          ScheduleNextPoll(lock);
-        }
+        if (!effective.stop_polling()) ScheduleNextPoll(lock);
         return;
       }
 
@@ -561,12 +595,10 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
       RecordPollLocked(PollEvent{now_sys, elapsed, Status{}, seq_to_notify});
       config_to_notify = current_config_;
       listeners_to_notify.reserve(listeners_.size());
-      for (auto const& kv : listeners_) {
-        listeners_to_notify.push_back(kv.second);
+      for (auto const& [id, slot] : listeners_) {
+        listeners_to_notify.push_back(slot);
       }
-      if (!current_config_.stop_polling()) {
-        ScheduleNextPoll(lock);
-      }
+      if (!current_config_.stop_polling()) ScheduleNextPoll(lock);
     } else {
       int const max_retries = EffectiveMaxRpcRetryCount(current_config_);
       if (IsRetryableConfigStatus(result.status().code()) &&
@@ -575,9 +607,11 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
         return;
       }
 
-      auto now_steady = steady_clock_->Now();
-      auto now_sys = system_clock_->Now();
-      auto const elapsed =
+      std::chrono::steady_clock::time_point const now_steady =
+          steady_clock_->Now();
+      std::chrono::system_clock::time_point const now_sys =
+          system_clock_->Now();
+      std::chrono::milliseconds const elapsed =
           std::chrono::duration_cast<std::chrono::milliseconds>(now_steady -
                                                                 poll_start);
       last_error_ = result.status();
@@ -589,20 +623,18 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
         seq_to_notify = ++config_seq_;
         config_to_notify = current_config_;
         listeners_to_notify.reserve(listeners_.size());
-        for (auto const& kv : listeners_) {
-          listeners_to_notify.push_back(kv.second);
+        for (auto const& [id, slot] : listeners_) {
+          listeners_to_notify.push_back(slot);
         }
       }
       RecordPollLocked(
           PollEvent{now_sys, elapsed, result.status(), config_seq_});
-      if (!current_config_.stop_polling()) {
-        ScheduleNextPoll(lock);
-      }
+      if (!current_config_.stop_polling()) ScheduleNextPoll(lock);
     }
   }
 
   if (shutdown_flag_.load(std::memory_order_acquire)) return;
-  for (auto const& slot : listeners_to_notify) {
+  for (std::shared_ptr<ListenerSlot> const& slot : listeners_to_notify) {
     DeliverToSlot(*slot, config_to_notify, seq_to_notify);
   }
 }
@@ -610,7 +642,7 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
 void ClientConfigurationManager::ScheduleRetry(
     std::unique_lock<std::mutex>& lock, int next_attempt,
     std::chrono::steady_clock::time_point poll_start) {
-  auto const delay = ComputeRetryBackoff(next_attempt - 1);
+  std::chrono::milliseconds const delay = ComputeRetryBackoff(next_attempt - 1);
   ScheduleTimer(lock, delay,
                 [this, next_attempt,
                  poll_start](std::unique_lock<std::mutex>& inner_lock) {
@@ -621,7 +653,7 @@ void ClientConfigurationManager::ScheduleRetry(
 void ClientConfigurationManager::ScheduleNextPoll(
     std::unique_lock<std::mutex>& lock) {
   if (shutdown_ || current_config_.stop_polling()) return;
-  auto const delay =
+  std::chrono::milliseconds const delay =
       EffectivePollingInterval(current_config_, config_.min_polling_interval);
   ScheduleTimer(lock, delay, [this](std::unique_lock<std::mutex>& inner_lock) {
     StartFetchAttempt(inner_lock, /*attempt=*/0, steady_clock_->Now());
@@ -636,8 +668,8 @@ void ClientConfigurationManager::ScheduleTimer(
   future<void> prev_timer = std::move(timer_);
   std::uint64_t const timer_id = ++timer_generation_;
   std::weak_ptr<ClientConfigurationManager> weak_self = weak_from_this();
-  auto cq = cq_;
-  auto options = options_;
+  CompletionQueue cq = cq_;
+  internal::ImmutableOptions options = options_;
   lock.unlock();
 
   if (prev_timer.valid()) prev_timer.cancel();
@@ -648,7 +680,8 @@ void ClientConfigurationManager::ScheduleTimer(
           future<StatusOr<std::chrono::system_clock::time_point>> fut) {
         internal::OptionsSpan span(options);
         if (!fut.get().ok()) return;
-        if (auto self = weak_self.lock()) {
+        if (std::shared_ptr<ClientConfigurationManager> self =
+                weak_self.lock()) {
           std::unique_lock<std::mutex> inner_lock(self->mu_);
           if (self->shutdown_ || self->timer_generation_ != timer_id) {
             return;
@@ -671,9 +704,10 @@ void ClientConfigurationManager::ScheduleTimer(
 std::chrono::milliseconds ClientConfigurationManager::ComputeRetryBackoff(
     int attempt) {
   int const clamped_shift = std::clamp(attempt, 0, 20);
-  auto const base_ms =
+  std::int64_t const base_ms =
       (std::max)(std::int64_t{0}, config_.initial_retry_backoff.count());
-  auto const max_ms = (std::max)(base_ms, config_.max_retry_backoff.count());
+  std::int64_t const max_ms =
+      (std::max)(base_ms, config_.max_retry_backoff.count());
   std::int64_t limit_ms = max_ms;
   if (base_ms == 0) {
     limit_ms = 0;
@@ -686,9 +720,7 @@ std::chrono::milliseconds ClientConfigurationManager::ComputeRetryBackoff(
 }
 
 void ClientConfigurationManager::RecordPollLocked(PollEvent event) {
-  if (poll_history_.size() >= kMaxPollHistory) {
-    poll_history_.pop_front();
-  }
+  if (poll_history_.size() >= kMaxPollHistory) poll_history_.pop_front();
   poll_history_.push_back(std::move(event));
 }
 

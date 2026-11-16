@@ -27,7 +27,9 @@
 #include <gmock/gmock.h>
 #include <atomic>
 #include <chrono>
+#include <cstdint>
 #include <future>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -50,7 +52,6 @@ using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::DoubleEq;
 using ::testing::ElementsAre;
-using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 
@@ -58,14 +59,14 @@ constexpr char kInstanceName[] = "projects/test-project/instances/test-inst";
 constexpr char kAppProfileId[] = "my profile/1";
 
 TEST(ClientConfigurationManagerDefaultsTest, DefaultConfigurationValues) {
-  auto const cfg = DefaultClientConfiguration();
+  v2::ClientConfiguration const cfg = DefaultClientConfiguration();
   ASSERT_TRUE(cfg.has_polling_configuration());
   EXPECT_EQ(cfg.polling_configuration().polling_interval().seconds(), 300);
   EXPECT_GT(cfg.polling_configuration().validity_duration().seconds(), 0);
   EXPECT_EQ(cfg.polling_configuration().max_rpc_retry_count(), 5);
 
   ASSERT_TRUE(cfg.has_session_configuration());
-  auto const& session = cfg.session_configuration();
+  v2::SessionClientConfiguration const& session = cfg.session_configuration();
   EXPECT_FLOAT_EQ(session.session_load(), 0.0F);
 
   ASSERT_TRUE(session.has_channel_configuration());
@@ -85,7 +86,8 @@ TEST(ClientConfigurationManagerDefaultsTest, DefaultConfigurationValues) {
                   0.8F);
 
   ASSERT_TRUE(session.has_session_pool_configuration());
-  auto const& pool = session.session_pool_configuration();
+  v2::SessionClientConfiguration::SessionPoolConfiguration const& pool =
+      session.session_pool_configuration();
   EXPECT_FLOAT_EQ(pool.headroom(), 0.5F);
   EXPECT_EQ(pool.min_session_count(), 5);
   EXPECT_EQ(pool.max_session_count(), 400);
@@ -102,7 +104,7 @@ TEST(ClientConfigurationManagerDefaultsTest, DefaultConfigurationValues) {
 TEST(ClientConfigurationManagerDefaultsTest, ResolveDiversionLoads) {
   v2::SessionClientConfiguration session_cfg;
   session_cfg.set_session_load(0.25F);
-  auto loads = ResolveDiversionLoads(session_cfg);
+  DiversionLoads loads = ResolveDiversionLoads(session_cfg);
   EXPECT_THAT(loads.read_row_session_load, DoubleEq(0.25));
   EXPECT_THAT(loads.mutate_row_session_load, DoubleEq(0.25));
 
@@ -115,9 +117,10 @@ TEST(ClientConfigurationManagerDefaultsTest, ResolveDiversionLoads) {
   EXPECT_THAT(loads.mutate_row_session_load, DoubleEq(1.0));
 
   // Per-scope diversion overrides per method; unspecified scopes default to 0.
-  auto* scopes = session_cfg.mutable_session_diversion_configuration()
-                     ->mutable_per_scope_diversion()
-                     ->mutable_scope_diversions();
+  google::protobuf::Map<std::string, v2::SessionScopeDiversionConfiguration>*
+      scopes = session_cfg.mutable_session_diversion_configuration()
+                   ->mutable_per_scope_diversion()
+                   ->mutable_scope_diversions();
   (*scopes)["method:Bigtable.ReadRow"].set_session_load(0.75F);
   loads = ResolveDiversionLoads(session_cfg);
   EXPECT_THAT(loads.read_row_session_load, DoubleEq(0.75));
@@ -156,9 +159,11 @@ TEST(ClientConfigurationManagerDefaultsTest, EffectivePollingParameters) {
   huge_validity_cfg.mutable_polling_configuration()
       ->mutable_validity_duration()
       ->set_seconds(315576000000LL);
-  auto const capped = EffectiveValidityDuration(huge_validity_cfg);
+  std::chrono::milliseconds const capped =
+      EffectiveValidityDuration(huge_validity_cfg);
   EXPECT_GT(capped, std::chrono::hours(24 * 365));
-  auto const future_tp = std::chrono::steady_clock::now() + capped;
+  std::chrono::steady_clock::time_point const future_tp =
+      std::chrono::steady_clock::now() + capped;
   EXPECT_GT(future_tp, std::chrono::steady_clock::now());
 }
 
@@ -166,7 +171,8 @@ TEST(ClientConfigurationManagerTest, EagerInitialPollAndPeriodicRefresh) {
   auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
   auto steady_clock = std::make_shared<FakeSteadyClock>();
   auto system_clock = std::make_shared<FakeSystemClock>();
-  auto const base_sys = std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point const base_sys =
+      std::chrono::system_clock::now();
   system_clock->SetTime(base_sys);
 
   auto mock = std::make_shared<MockBigtableStub>();
@@ -194,7 +200,8 @@ TEST(ClientConfigurationManagerTest, EagerInitialPollAndPeriodicRefresh) {
         EXPECT_EQ(req.app_profile_id(), kAppProfileId);
         EXPECT_EQ(context->deadline(),
                   base_sys + ClientConfigurationManager::kPollDeadline);
-        auto const headers = metadata_fixture.GetMetadata(*context);
+        std::multimap<std::string, std::string> const headers =
+            metadata_fixture.GetMetadata(*context);
         EXPECT_THAT(headers, Contains(Pair("google-cloud-resource-prefix",
                                            kInstanceName)));
         EXPECT_THAT(
@@ -222,17 +229,19 @@ TEST(ClientConfigurationManagerTest, EagerInitialPollAndPeriodicRefresh) {
         return make_ready_future(make_status_or(server_cfg_2));
       });
 
-  auto mgr = ClientConfigurationManager::Create(
-      CompletionQueue(fake_cq), mock, kInstanceName, kAppProfileId, Options{},
-      ClientConfigurationManager::Config{}, steady_clock, system_clock);
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(
+          CompletionQueue(fake_cq), mock, kInstanceName, kAppProfileId,
+          Options{}, ClientConfigurationManager::Config{}, steady_clock,
+          system_clock);
 
   std::vector<std::int64_t> observed_seqs;
   std::vector<double> observed_read_loads;
-  auto unreg_general =
+  ClientConfigurationManager::UnregisterCallback unreg_general =
       mgr->AddListener([&](v2::ClientConfiguration const&, std::int64_t seq) {
         observed_seqs.push_back(seq);
       });
-  auto unreg_loads =
+  ClientConfigurationManager::UnregisterCallback unreg_loads =
       mgr->AddDiversionLoadsListener([&](DiversionLoads const& loads) {
         observed_read_loads.push_back(loads.read_row_session_load);
       });
@@ -251,7 +260,8 @@ TEST(ClientConfigurationManagerTest, EagerInitialPollAndPeriodicRefresh) {
 
   // Advance steady clock by 300s and trigger the second poll (unchanged proto).
   steady_clock->AdvanceTime(std::chrono::seconds(300));
-  auto const valid_before = mgr->GetSnapshot().valid_until;
+  std::chrono::steady_clock::time_point const valid_before =
+      mgr->GetSnapshot().valid_until;
   fake_cq->SimulateCompletion(true);
   EXPECT_EQ(mgr->config_seq(), 1);
   EXPECT_GT(mgr->GetSnapshot().valid_until, valid_before);
@@ -288,8 +298,10 @@ TEST(ClientConfigurationManagerTest, StopPollingHaltsPeriodicTimers) {
         return make_ready_future(make_status_or(stop_cfg));
       });
 
-  auto mgr = ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
-                                                kInstanceName, kAppProfileId);
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
   mgr->Start();
   EXPECT_TRUE(mgr->GetConfig().stop_polling());
   // No periodic timer should be queued when stop_polling is true.
@@ -327,9 +339,10 @@ TEST(ClientConfigurationManagerTest, RetriesTransientErrorsUpToMaxRetryCount) {
 
   ClientConfigurationManager::Config cfg;
   cfg.default_config = custom_default;
-  auto mgr = ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
-                                                kInstanceName, kAppProfileId,
-                                                Options{}, std::move(cfg));
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{}, std::move(cfg));
 
   mgr->Start();
   EXPECT_EQ(attempts, 1);
@@ -369,11 +382,13 @@ TEST(ClientConfigurationManagerTest, NonRetryableErrorsSkipRetries) {
                 "missing bigtable.instances.ping")));
       });
 
-  auto mgr = ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
-                                                kInstanceName, kAppProfileId);
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
   mgr->Start();
   EXPECT_EQ(attempts, 1);
-  auto snap = mgr->GetSnapshot();
+  ClientConfigurationManager::Snapshot snap = mgr->GetSnapshot();
   ASSERT_TRUE(snap.last_error.has_value());
   EXPECT_THAT(*snap.last_error, StatusIs(StatusCode::kPermissionDenied));
   // Schedules the next periodic poll directly without immediate retry attempts.
@@ -417,14 +432,17 @@ TEST(ClientConfigurationManagerTest,
             internal::UnavailableError("control plane down")));
       });
 
-  auto mgr = ClientConfigurationManager::Create(
-      CompletionQueue(fake_cq), mock, kInstanceName, kAppProfileId, Options{},
-      ClientConfigurationManager::Config{}, steady_clock, system_clock);
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(
+          CompletionQueue(fake_cq), mock, kInstanceName, kAppProfileId,
+          Options{}, ClientConfigurationManager::Config{}, steady_clock,
+          system_clock);
 
   std::vector<double> load_updates;
-  auto unreg = mgr->AddDiversionLoadsListener([&](DiversionLoads const& loads) {
-    load_updates.push_back(loads.read_row_session_load);
-  });
+  ClientConfigurationManager::UnregisterCallback unreg =
+      mgr->AddDiversionLoadsListener([&](DiversionLoads const& loads) {
+        load_updates.push_back(loads.read_row_session_load);
+      });
 
   mgr->Start();
   EXPECT_EQ(mgr->config_seq(), 1);
@@ -491,8 +509,10 @@ TEST(ClientConfigurationManagerTest,
         return make_ready_future(make_status_or(cfg_b));
       });
 
-  auto mgr = ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
-                                                kInstanceName, kAppProfileId);
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
 
   std::vector<int> max_sessions_seen;
   ClientConfigurationManager::UnregisterCallback self_unreg;
@@ -504,9 +524,7 @@ TEST(ClientConfigurationManagerTest,
         (void)mgr->GetConfig();
         (void)mgr->GetSnapshot();
         max_sessions_seen.push_back(pool_cfg.max_session_count());
-        if (pool_cfg.max_session_count() == 250 && self_unreg) {
-          self_unreg();
-        }
+        if (pool_cfg.max_session_count() == 250 && self_unreg) self_unreg();
       });
 
   // Immediate bootstrap fire delivers default max_session_count = 400.
@@ -531,13 +549,20 @@ TEST(ClientConfigurationManagerTest,
 TEST(ClientConfigurationManagerTest, EnvironmentOverrideMergesIntoConfig) {
   ScopedEnvironment env(
       "BIGTABLE_CLIENT_CONFIG_OVERRIDE",
-      "session_configuration { session_load: 0.75 } stop_polling: true");
+      "session_configuration { session_diversion_configuration { "
+      "global_diversion { session_load: 0.75 } } } stop_polling: true");
   auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
   auto mock = std::make_shared<MockBigtableStub>();
 
-  auto mgr = ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
-                                                kInstanceName, kAppProfileId);
-  EXPECT_FLOAT_EQ(mgr->GetConfig().session_configuration().session_load(),
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
+  EXPECT_FLOAT_EQ(mgr->GetConfig()
+                      .session_configuration()
+                      .session_diversion_configuration()
+                      .global_diversion()
+                      .session_load(),
                   0.75F);
   EXPECT_TRUE(mgr->GetConfig().stop_polling());
 }
@@ -547,7 +572,7 @@ TEST(ClientConfigurationManagerTest,
   internal::AutomaticallyCreatedBackgroundThreads bg(1);
   auto mock = std::make_shared<MockBigtableStub>();
 
-  std::promise<void> second_poll_done;
+  google::cloud::promise<void> second_poll_done;
   std::atomic<int> call_count{0};
 
   // Poll #1 returns a 15ms interval so Poll #2 fires on the same
@@ -561,7 +586,8 @@ TEST(ClientConfigurationManagerTest,
                     std::shared_ptr<OperationContext> const&) {
         ++call_count;
         return cq.MakeRelativeTimer(std::chrono::milliseconds(5))
-            .then([](auto) -> StatusOr<v2::ClientConfiguration> {
+            .then([](future<StatusOr<std::chrono::system_clock::time_point>>)
+                      -> StatusOr<v2::ClientConfiguration> {
               v2::ClientConfiguration resp;
               resp.mutable_polling_configuration()
                   ->mutable_polling_interval()
@@ -577,7 +603,8 @@ TEST(ClientConfigurationManagerTest,
                     std::shared_ptr<OperationContext> const&) {
         ++call_count;
         return cq.MakeRelativeTimer(std::chrono::milliseconds(5))
-            .then([&](auto) -> StatusOr<v2::ClientConfiguration> {
+            .then([&](future<StatusOr<std::chrono::system_clock::time_point>>)
+                      -> StatusOr<v2::ClientConfiguration> {
               v2::ClientConfiguration resp;
               resp.mutable_polling_configuration()
                   ->mutable_polling_interval()
@@ -590,18 +617,21 @@ TEST(ClientConfigurationManagerTest,
 
   ClientConfigurationManager::Config cfg;
   cfg.min_polling_interval = std::chrono::milliseconds(15);
-  auto mgr = ClientConfigurationManager::Create(
-      bg.cq(), mock, kInstanceName, kAppProfileId, Options{}, std::move(cfg));
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(bg.cq(), mock, kInstanceName,
+                                         kAppProfileId, Options{},
+                                         std::move(cfg));
 
   mgr->Start();
   ASSERT_EQ(second_poll_done.get_future().wait_for(std::chrono::seconds(5)),
             std::future_status::ready);
   EXPECT_EQ(call_count.load(), 2);
 
-  auto const shutdown_start = std::chrono::steady_clock::now();
+  std::chrono::steady_clock::time_point const shutdown_start =
+      std::chrono::steady_clock::now();
   mgr->Shutdown();
   bg.Shutdown();
-  auto const shutdown_elapsed =
+  std::chrono::nanoseconds const shutdown_elapsed =
       std::chrono::steady_clock::now() - shutdown_start;
   EXPECT_LT(shutdown_elapsed, std::chrono::seconds(2));
 }
