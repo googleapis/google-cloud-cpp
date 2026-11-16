@@ -35,8 +35,8 @@ licenses(["notice"])  # Apache 2.0
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
-        "@googletest//:gtest_main",
-    ],
+        "@googletest//:gtest",
+    ] + ([] if test == "client_stress_test.cc" else ["@googletest//:gtest_main"]),
 ) for test in spanner_client_integration_tests]
 
 VARIATIONS = {
