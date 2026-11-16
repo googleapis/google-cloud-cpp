@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
+#include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -71,6 +72,45 @@ Options BasicTestPolicies() {
           // Make the tests faster.
           ExponentialBackoffPolicy(ms(1), ms(2), 2).clone())
       .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone());
+}
+
+TEST(RetryClientTest, UploadChunkCancelledBeforeFirstAttempt) {
+  experimental::RestCancellation cancel;
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, UploadChunk).Times(0);
+  EXPECT_CALL(*mock, QueryResumableUpload).Times(0);
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<experimental::RestCancellationOption>(cancel));
+
+  cancel.Cancel();
+  std::string const payload(UploadChunkRequest::kChunkSizeQuantum, 'x');
+  EXPECT_THAT(
+      client->UploadChunk(UploadChunkRequest(
+          "test-only-session-id", 0, {{payload}}, CreateNullHashFunction())),
+      StatusIs(StatusCode::kCancelled));
+}
+
+TEST(RetryClientTest, UploadChunkCancelledAfterPartialProgress) {
+  experimental::RestCancellation cancel;
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&] {
+    cancel.Cancel();
+    return QueryResumableUploadResponse{quantum / 2, std::nullopt};
+  });
+  EXPECT_CALL(*mock, QueryResumableUpload).Times(0);
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<experimental::RestCancellationOption>(cancel));
+
+  std::string const payload(quantum, 'x');
+  EXPECT_THAT(
+      client->UploadChunk(UploadChunkRequest(
+          "test-only-session-id", 0, {{payload}}, CreateNullHashFunction())),
+      StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that non-idempotent operations return on the first failure.

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -443,6 +444,32 @@ TEST(RestCancellation, OpeningDownload) {
   request.ExpectBlocked();
   cancel.Cancel();
   EXPECT_THAT(request.Finish(), StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(server.requests(), ::testing::SizeIs(1));
+}
+
+TEST(RestCancellation, CurlReadCancelledAfterHeaders) {
+  LocalServer server(LocalServer::Mode::kDownload);
+  RestCancellation cancel;
+  Options const options = Options{}.set<RestCancellationOption>(cancel);
+  auto factory = rest_internal::GetDefaultCurlHandleFactory();
+  rest_internal::CurlImpl transfer(
+      rest_internal::CurlHandle::MakeFromPool(*factory), factory, options);
+  transfer.SetUrl(server.endpoint(), {}, {});
+  rest_internal::RestContext context(options);
+  ASSERT_THAT(
+      transfer.MakeRequest(rest_internal::CurlImpl::HttpMethod::kGet, context),
+      IsOk());
+  ASSERT_TRUE(server.WaitForRequests(1));
+
+  // Exercise the transport directly: the Storage retry wrapper intercepts
+  // cancellation before reaching CurlImpl::Read(). The body is still open.
+  cancel.Cancel();
+  char buffer[1];
+  EXPECT_THAT(transfer.Read(absl::MakeSpan(buffer)),
+              StatusIs(StatusCode::kCancelled));
+  // The first read releases the handles; another read must remain safe.
+  EXPECT_THAT(transfer.Read(absl::MakeSpan(buffer)),
+              StatusIs(StatusCode::kCancelled));
   EXPECT_THAT(server.requests(), ::testing::SizeIs(1));
 }
 

@@ -95,6 +95,21 @@ TEST(RestRetryLoopTest, CancelledDuringBackoff) {
   EXPECT_THAT(calls, ::testing::Eq(1));
 }
 
+TEST(RestRetryLoopTest, RetrySucceedsWithUncancelledHandle) {
+  experimental::RestCancellation cancel;
+  int calls = 0;
+  StatusOr<int> result = RestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [&calls](RestContext&, Options const&, int) -> StatusOr<int> {
+        if (++calls == 1) return Status(StatusCode::kUnavailable, "retry");
+        return 42;
+      },
+      Options{}.set<experimental::RestCancellationOption>(cancel), 0, "test");
+  EXPECT_THAT(result, google::cloud::testing_util::IsOkAndHolds(42));
+  EXPECT_THAT(calls, ::testing::Eq(2));
+  EXPECT_FALSE(cancel.IsCancelled());
+}
+
 TEST(RestRetryLoopTest, CancellationOverridesRetryPolicy) {
   experimental::RestCancellation cancel;
   int calls = 0;
