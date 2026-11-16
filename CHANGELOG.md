@@ -7,7 +7,7 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.14.0 - TBD
+## v3.14.0 - 2026-11
 
 **BREAKING CHANGES**
 
@@ -20,6 +20,33 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [App Lifecycle Manager API](/google/cloud/saasservicemgmt/README.md)
 - [Design Center API](/google/cloud/designcenter/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): fix DynamicChannelPool eviction ([#16650](https://github.com/googleapis/google-cloud-cpp/pull/16650))
+- fix(bigtable): fix connectivity_error_count ([#16656](https://github.com/googleapis/google-cloud-cpp/pull/16656))
+- fix(bigtable): forward Options in SampleRows ([#16654](https://github.com/googleapis/google-cloud-cpp/pull/16654))
+- fix(bigtable): share OutstandingRpcs metric ([#16653](https://github.com/googleapis/google-cloud-cpp/pull/16653))
+- fix(bigtable): honor RMW AppProfileIdOption ([#16652](https://github.com/googleapis/google-cloud-cpp/pull/16652))
+- fix(bigtable): enforce batcher outstanding limit ([#16649](https://github.com/googleapis/google-cloud-cpp/pull/16649))
+- fix(bigtable): handle empty RowRange::EndingAt ([#16647](https://github.com/googleapis/google-cloud-cpp/pull/16647))
+- fix(bigtable): preserve options on plan refresh ([#16644](https://github.com/googleapis/google-cloud-cpp/pull/16644))
+- fix(bigtable): deprecate no-op FailedMutation add ([#16646](https://github.com/googleapis/google-cloud-cpp/pull/16646))
+- fix(bigtable): truncate 0xFF in PrefixRangeEnd ([#16645](https://github.com/googleapis/google-cloud-cpp/pull/16645))
+- fix(bigtable): avoid CompletionQueue self-deadlock on query plan refresh ([#16634](https://github.com/googleapis/google-cloud-cpp/pull/16634))
+- fix(bigtable): discard uncommitted SQL rows on stream resumption ([#16633](https://github.com/googleapis/google-cloud-cpp/pull/16633))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): lock mutex before reading metadata in ObjectDescriptorImpl::Read ([#16625](https://github.com/googleapis/google-cloud-cpp/pull/16625))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(rest): enforce path encoding ([#16580](https://github.com/googleapis/google-cloud-cpp/pull/16580))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-11-03T09:21:43-08:00](https://github.com/googleapis/googleapis/tree/57aa4dbce5d23b2115b2732b10dcb7ddc8e8698d)
 
 ## v3.13.0 - 2026-11
 
