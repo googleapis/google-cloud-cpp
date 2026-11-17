@@ -377,6 +377,20 @@ std::optional<T> GetRandomElement(
   return m[index];
 }
 
+// Returns a callback that records precommit tokens in the transaction. The
+// service may send the token in the last response of a stream, which may
+// arrive after the visit to the transaction has finished.
+PartialResultSetSource::PrecommitTokenCallback PrecommitTokenUpdater(
+    TransactionContext const& ctx) {
+  return
+      [transaction = ctx.transaction](
+          google::spanner::v1::MultiplexedSessionPrecommitToken const& token) {
+        if (std::shared_ptr<TransactionImpl> t = transaction.lock()) {
+          t->UpdatePrecommitToken(token);
+        }
+      };
+}
+
 }  // namespace
 
 using ::google::cloud::Idempotency;
@@ -699,7 +713,8 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     auto rpc = std::make_unique<PartialResultSetResume>(
         factory, Idempotency::kIdempotent, RetryPolicyPrototype()->clone(),
         BackoffPolicyPrototype()->clone());
-    auto reader = PartialResultSetSource::Create(std::move(rpc), op_context);
+    auto reader = PartialResultSetSource::Create(std::move(rpc), op_context,
+                                                 PrecommitTokenUpdater(ctx));
     if (reader.ok()) {
       ctx.precommit_token = (*reader)->PrecommitToken();
     }
@@ -926,8 +941,9 @@ ResultType ConnectionImpl::CommonQueryImpl(
   auto retry_resume_fn =
       [stub = stub_and_channel.stub, op_context, retry_policy_prototype,
        backoff_policy_prototype, route_to_leader = ctx.route_to_leader,
-       tracing_enabled,
-       tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
+       tracing_enabled, tracing_options,
+       on_precommit_token = PrecommitTokenUpdater(ctx)](
+          google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     auto factory = [stub, request, op_context, route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
@@ -952,7 +968,8 @@ ResultType ConnectionImpl::CommonQueryImpl(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
-    return PartialResultSetSource::Create(std::move(rpc), op_context);
+    return PartialResultSetSource::Create(std::move(rpc), op_context,
+                                          on_precommit_token);
   };
 
   StatusOr<ResultType> response =

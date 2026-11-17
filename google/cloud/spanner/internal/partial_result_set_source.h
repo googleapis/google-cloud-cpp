@@ -29,6 +29,7 @@
 #include <google/protobuf/repeated_field.h>
 #include <cstddef>
 #include <deque>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -60,10 +61,27 @@ class PartialResultSourceInterface : public spanner::ResultSourceInterface {
  */
 class PartialResultSetSource : public PartialResultSourceInterface {
  public:
+  /// Called with each precommit token received from the stream.
+  using PrecommitTokenCallback = std::function<void(
+      google::spanner::v1::MultiplexedSessionPrecommitToken const&)>;
+
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
       std::unique_ptr<PartialResultSetReader> reader,
       std::shared_ptr<OperationContext> operation_context);
+
+  /**
+   * Factory method to create a PartialResultSetSource that reports precommit
+   * tokens as they arrive.
+   *
+   * The service may send the precommit token in any response of the stream,
+   * including the last one, so the caller cannot rely on `PrecommitToken()`
+   * after the first response.
+   */
+  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
+      std::unique_ptr<PartialResultSetReader> reader,
+      std::shared_ptr<OperationContext> operation_context,
+      PrecommitTokenCallback on_precommit_token);
 
   ~PartialResultSetSource() override;
 
@@ -83,9 +101,9 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   }
 
  private:
-  explicit PartialResultSetSource(
-      std::unique_ptr<PartialResultSetReader> reader,
-      std::shared_ptr<OperationContext> operation_context);
+  PartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
+                         std::shared_ptr<OperationContext> operation_context,
+                         PrecommitTokenCallback on_precommit_token);
 
   Status ReadFromStream();
 
@@ -97,6 +115,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
   std::shared_ptr<OperationContext> operation_context_;
+  PrecommitTokenCallback on_precommit_token_;
   bool on_done_called_ = false;
   Status last_status_;
 
