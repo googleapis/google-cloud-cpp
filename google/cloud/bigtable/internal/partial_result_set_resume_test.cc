@@ -35,12 +35,14 @@ namespace {
 
 using ::google::cloud::Idempotency;
 using ::google::cloud::bigtable_testing::MockPartialResultSetReader;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Return;
 
 struct MockFactory {
@@ -60,6 +62,43 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
           /*scaling=*/2.0)
           .clone());
 }
+
+class ExpiringRetryPolicy : public bigtable::DataRetryPolicy {
+ public:
+  explicit ExpiringRetryPolicy(std::shared_ptr<bool> expired)
+      : expired_(std::move(expired)) {}
+
+  std::unique_ptr<bigtable::DataRetryPolicy> clone() const override {
+    return std::make_unique<ExpiringRetryPolicy>(expired_);
+  }
+  bool OnFailure(Status const& status) override {
+    return !IsPermanentFailure(status) && !IsExhausted();
+  }
+  bool IsExhausted() const override { return *expired_; }
+  bool IsPermanentFailure(Status const& status) const override {
+    return status.code() != StatusCode::kUnavailable;
+  }
+
+ private:
+  std::shared_ptr<bool> expired_;
+};
+
+class ExpiringBackoffPolicy : public BackoffPolicy {
+ public:
+  explicit ExpiringBackoffPolicy(std::shared_ptr<bool> expired)
+      : expired_(std::move(expired)) {}
+
+  std::unique_ptr<BackoffPolicy> clone() const override {
+    return std::make_unique<ExpiringBackoffPolicy>(expired_);
+  }
+  std::chrono::milliseconds OnCompletion() override {
+    *expired_ = true;
+    return std::chrono::milliseconds(0);
+  }
+
+ private:
+  std::shared_ptr<bool> expired_;
+};
 
 MATCHER_P(IsValidAndEquals, expected,
           "Verifies that a StatusOr<QueryRow> contains the given QueryRow") {
@@ -530,7 +569,7 @@ TEST(PartialResultSetResume, ResumptionDiscardsUncommittedBufferedRows) {
       PartialResultSetSource::Create(metadata,
                                      std::make_shared<OperationContext>(),
                                      std::move(grpc_reader));
-  ASSERT_STATUS_OK(reader);
+  ASSERT_THAT(reader, IsOk());
 
   for (char const* s : {"value-1", "value-2", "value-3", "value-4"}) {
     StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
@@ -603,7 +642,7 @@ TEST(PartialResultSetResume, ResumptionDiscardsPartialReadBuffer) {
       PartialResultSetSource::Create(metadata,
                                      std::make_shared<OperationContext>(),
                                      std::move(grpc_reader));
-  ASSERT_STATUS_OK(reader);
+  ASSERT_THAT(reader, IsOk());
 
   for (char const* s : {"value-1", "value-2", "value-3", "value-4"}) {
     StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
@@ -613,6 +652,95 @@ TEST(PartialResultSetResume, ResumptionDiscardsPartialReadBuffer) {
 
   StatusOr<bigtable::QueryRow> row = (*reader)->NextRow();
   EXPECT_THAT(row, IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+/// @test Verify that retry deadline expiration during backoff is surfaced
+/// correctly.
+TEST(PartialResultSetResume, RetryDeadlineExpiresDuringBackoff) {
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, MakeReader)
+      .Times(1)
+      .WillOnce([](std::string const& token) {
+        EXPECT_THAT(token, IsEmpty());
+        auto mock = std::make_unique<MockPartialResultSetReader>();
+        EXPECT_CALL(*mock, Read(_, _)).WillOnce(Return(false));
+        EXPECT_CALL(*mock, Finish())
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "Try again")));
+        return mock;
+      });
+
+  auto expired = std::make_shared<bool>(false);
+  PartialResultSetReaderFactory factory =
+      [&mock_factory](std::string const& token) {
+        return mock_factory.MakeReader(token);
+      };
+  auto reader = std::make_unique<PartialResultSetResume>(
+      factory, Idempotency::kIdempotent, ExpiringRetryPolicy(expired).clone(),
+      ExpiringBackoffPolicy(expired).clone());
+
+  google::bigtable::v2::PartialResultSet raw_result;
+  UnownedPartialResultSet result =
+      UnownedPartialResultSet::FromPartialResultSet(raw_result);
+  ASSERT_FALSE(reader->Read("", result));
+  Status status = reader->Finish();
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("Try again")));
+  EXPECT_THAT(status.error_info().metadata(),
+              ::testing::Contains(::testing::Pair("gcloud-cpp.retry.reason",
+                                                  "retry-policy-exhausted")));
+}
+
+/// @test Verify that resumption midway through a stream preserves error status
+/// if retry deadline expires during backoff.
+TEST(PartialResultSetResume, ResumptionMidwayDeadlineExpiresDuringBackoff) {
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+
+  google::bigtable::v2::PartialResultSet r12;
+  MakeResponse(r12, {"value-1", "value-2"}, "resume-after-2", true);
+
+  MockFactory mock_factory;
+  grpc::ClientContext context;
+  EXPECT_CALL(mock_factory, MakeReader)
+      .Times(1)
+      .WillOnce([&](std::string const& token) {
+        EXPECT_THAT(token, IsEmpty());
+        auto mock = std::make_unique<MockPartialResultSetReader>();
+        EXPECT_CALL(*mock, Read(_, _))
+            .WillOnce(ReadAction(r12, false))
+            .WillOnce(Return(false));
+        EXPECT_CALL(*mock, TryCancel()).Times(0);
+        EXPECT_CALL(*mock, Finish())
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "Try again")));
+        EXPECT_CALL(*mock, context)
+            .WillRepeatedly(
+                [&]() -> grpc::ClientContext const& { return context; });
+        return mock;
+      });
+
+  auto expired = std::make_shared<bool>(false);
+  PartialResultSetReaderFactory factory =
+      [&mock_factory](std::string const& token) {
+        return mock_factory.MakeReader(token);
+      };
+  auto grpc_reader = std::make_unique<PartialResultSetResume>(
+      factory, Idempotency::kIdempotent, ExpiringRetryPolicy(expired).clone(),
+      ExpiringBackoffPolicy(expired).clone());
+  StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> reader =
+      PartialResultSetSource::Create(metadata,
+                                     std::make_shared<OperationContext>(),
+                                     std::move(grpc_reader));
+  ASSERT_THAT(reader, IsOk());
+
+  StatusOr<bigtable::QueryRow> row1 = (*reader)->NextRow();
+  EXPECT_THAT(row1, IsValidAndEquals(bigtable_mocks::MakeQueryRow(
+                        {{"TestColumn", bigtable::Value("value-1")}})));
+  StatusOr<bigtable::QueryRow> row2 = (*reader)->NextRow();
+  EXPECT_THAT(row2, IsValidAndEquals(bigtable_mocks::MakeQueryRow(
+                        {{"TestColumn", bigtable::Value("value-2")}})));
+
+  StatusOr<bigtable::QueryRow> row3 = (*reader)->NextRow();
+  EXPECT_THAT(row3, StatusIs(StatusCode::kUnavailable, HasSubstr("Try again")));
 }
 
 }  // namespace
