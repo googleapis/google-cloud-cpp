@@ -298,7 +298,7 @@ auto MakeClientConfigs(Configuration const& cfg) {
   std::set<ClientConfig> cross;
   for (auto const& c : cfg.clients) {
     for (auto const& t : cfg.transports) {
-      for (auto const& p : cfg.paths) cross.emplace(c, t, p);
+      for (auto const& p : cfg.paths) cross.insert(ClientConfig{c, t, p});
     }
   }
   std::set<ClientConfig> r;
@@ -415,13 +415,13 @@ IterationResult AppendSummary(std::chrono::steady_clock::time_point start,
                         [](auto const& r) { return !r.status.ok(); });
   auto status = l == batch.end() ? g::Status{} : l->status;
 
-  batch.emplace_back(std::move(iteration), p.operation + "/BATCH", /*repeat=*/0,
-                     p.batch_start, p.batch_start, elapsed,
-                     /*object_name=*/"",
-                     /*generation=*/0,
-                     /*peer=*/kMissingPeer,
-                     /*transfer_id=*/kMissingUploadId,
-                     /*status=*/std::move(status));
+  batch.push_back(Result{std::move(iteration), p.operation + "/BATCH",
+                         /*repeat=*/0, p.batch_start, p.batch_start, elapsed,
+                         /*object_name=*/"",
+                         /*generation=*/0,
+                         /*peer=*/kMissingPeer,
+                         /*transfer_id=*/kMissingUploadId,
+                         /*status=*/std::move(status)});
   return batch;
 }
 
