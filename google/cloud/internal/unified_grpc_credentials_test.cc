@@ -1011,10 +1011,11 @@ class RecordingIamCredentialsService
     auto const it = metadata.find("authorization");
     {
       std::scoped_lock<std::mutex> lk(mu_);
-      authorization_ = it == metadata.end()
-                           ? std::nullopt
-                           : std::make_optional(std::string(it->second.data(),
-                                                            it->second.size()));
+      if (it == metadata.end()) {
+        authorization_ = std::nullopt;
+      } else {
+        authorization_.emplace(it->second.data(), it->second.size());
+      }
     }
     grpc::ServerUnaryReactor* reactor = context->DefaultReactor();
     reactor->Finish(grpc::Status::OK);
