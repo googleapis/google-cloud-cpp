@@ -138,7 +138,7 @@ steps:
   ]
 
   # Remove the image created by this build.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:1933d2e733c14df2506fa4e8a06f72b8abbde5da4768c768f589f8abf86c9d77'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:4c74525f2611f9f8684bbbe2b8630aa6fd1788e93a8fa4faa9fa3a0a7ba17a03'
   id: 'remove-image'
   allowFailure: true
   entrypoint: 'bash'
@@ -150,7 +150,7 @@ steps:
 
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:1933d2e733c14df2506fa4e8a06f72b8abbde5da4768c768f589f8abf86c9d77'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:4c74525f2611f9f8684bbbe2b8630aa6fd1788e93a8fa4faa9fa3a0a7ba17a03'
   id: 'cancel-in-progress-builds-for-PR'
   allowFailure: true
   waitFor: [ '-' ]
