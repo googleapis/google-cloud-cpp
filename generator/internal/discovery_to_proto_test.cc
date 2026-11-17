@@ -1676,11 +1676,9 @@ TEST_F(EstablishTypeDependenciesTest, DependedTypeNotFound) {
 
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("Unknown depended upon type: Foo")));
-  EXPECT_THAT(
-      result.error_info().metadata(),
-      Contains(AllOf(
-          (Pair(std::string("dependent type"), std::string("Bar")),
-           Pair(std::string("depended upon type"), std::string("Foo"))))));
+  EXPECT_THAT(result.error_info().metadata(),
+              AllOf(Contains(Pair("dependent type", "Bar")),
+                    Contains(Pair("depended upon type", "Foo"))));
 }
 
 TEST_F(EstablishTypeDependenciesTest, AllTypesLinked) {
