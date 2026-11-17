@@ -676,10 +676,19 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   auto op_context = context_factory_->StreamingRead();
   op_context->BindChannel(stub_and_channel.channel_id);
 
-  auto factory = [stub = stub_and_channel.stub, request, op_context,
-                  route_to_leader = ctx.route_to_leader, tracing_enabled,
+  auto allocated_txn_id = std::make_shared<std::string>();
+  auto factory = [stub = stub_and_channel.stub, request, allocated_txn_id,
+                  op_context, route_to_leader = ctx.route_to_leader,
+                  tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
-    if (!resume_token.empty()) request->set_resume_token(resume_token);
+    if (resume_token.empty()) {
+      if (!allocated_txn_id->empty()) {
+        request->mutable_transaction()->set_id(*allocated_txn_id);
+      }
+      request->clear_resume_token();
+    } else {
+      request->set_resume_token(resume_token);
+    }
     auto context = std::make_shared<grpc::ClientContext>();
     auto const& options = internal::CurrentOptions();
     internal::ConfigureContext(*context, options);
@@ -711,6 +720,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
           return MakeStatusOnlyResult<spanner::RowStream>(selector.status());
         }
         selector->set_id(metadata->transaction().id());
+        *allocated_txn_id = metadata->transaction().id();
       } else {
         auto begin = BeginTransaction(session, selector->begin(),
                                       request->request_options().request_tag(),
@@ -923,15 +933,24 @@ ResultType ConnectionImpl::CommonQueryImpl(
   auto op_context = context_factory_->ExecuteStreamingSql();
   op_context->BindChannel(stub_and_channel.channel_id);
 
+  auto allocated_txn_id = std::make_shared<std::string>();
   auto retry_resume_fn =
-      [stub = stub_and_channel.stub, op_context, retry_policy_prototype,
-       backoff_policy_prototype, route_to_leader = ctx.route_to_leader,
-       tracing_enabled,
+      [stub = stub_and_channel.stub, allocated_txn_id, op_context,
+       retry_policy_prototype, backoff_policy_prototype,
+       route_to_leader = ctx.route_to_leader, tracing_enabled,
        tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
-    auto factory = [stub, request, op_context, route_to_leader, tracing_enabled,
+    auto factory = [stub, request, allocated_txn_id, op_context,
+                    route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
-      if (!resume_token.empty()) request.set_resume_token(resume_token);
+      if (resume_token.empty()) {
+        if (!allocated_txn_id->empty()) {
+          request.mutable_transaction()->set_id(*allocated_txn_id);
+        }
+        request.clear_resume_token();
+      } else {
+        request.set_resume_token(resume_token);
+      }
       auto context = std::make_shared<grpc::ClientContext>();
       auto const& options = internal::CurrentOptions();
       internal::ConfigureContext(*context, options);
@@ -955,6 +974,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
     return PartialResultSetSource::Create(std::move(rpc), op_context);
   };
 
+  bool const had_begin = selector->has_begin();
   StatusOr<ResultType> response =
       ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
                                  query_mode, std::move(retry_resume_fn));
@@ -962,6 +982,9 @@ ResultType ConnectionImpl::CommonQueryImpl(
     auto status = std::move(response).status();
     if (IsSessionNotFound(status)) session->set_bad();
     return MakeStatusOnlyResult<ResultType>(std::move(status));
+  }
+  if (had_begin && selector.ok() && selector->has_id()) {
+    *allocated_txn_id = selector->id();
   }
   return std::move(*response);
 }
