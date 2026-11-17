@@ -63,6 +63,7 @@ cc_gapic_library(
         "//:bigquery",
         "//:bigquery_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@googletest//:gtest_main",
     ],
 ) for sample in glob(["samples/mock_*.cc"])]
 
@@ -100,7 +101,7 @@ cc_library(
         ":google_cloud_cpp_bigquery_rest_mocks",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@googletest//:gtest_main",
+        "@googletest//:gtest",
     ],
 )
 
@@ -115,5 +116,6 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@googletest//:gtest",
+        "@googletest//:gtest_main",
     ],
 ) for test in bigquery_rest_unit_tests]

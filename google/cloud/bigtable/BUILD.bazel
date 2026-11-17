@@ -96,7 +96,7 @@ cc_library(
         ":google_cloud_cpp_bigtable",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@googletest//:gtest_main",
+        "@googletest//:gtest",
     ],
 )
 
@@ -116,7 +116,7 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@googletest//:gtest_main",
+        "@googletest//:gtest",
     ],
 )
 

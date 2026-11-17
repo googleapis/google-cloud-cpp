@@ -51,8 +51,11 @@ VARIATIONS = {
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos/google/cloud/storage/tests:storage_conformance_tests_cc_proto",
         "@abseil-cpp//absl/strings",
-        "@googletest//:gtest_main",
-    ],
+        "@googletest//:gtest",
+    ] + ([] if test in [
+        "signed_url_conformance_test.cc",
+        "storage_include_test.cc",
+    ] else ["@googletest//:gtest_main"]),
 ) for test in storage_client_integration_tests for v_label, v_env in VARIATIONS.items()]
 
 [cc_test(

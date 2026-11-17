@@ -31,7 +31,7 @@ cc_library(
         "//:spanner_mocks",
         "//google/cloud/spanner:spanner_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@googletest//:gtest_main",
+        "@googletest//:gtest",
     ],
 )
 
@@ -46,5 +46,5 @@ cc_library(
         "//:spanner_mocks",
         "//google/cloud/spanner:spanner_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-    ],
+    ] + (["@googletest//:gtest_main"] if program.endswith("_test.cc") else []),
 ) for program in spanner_client_benchmark_programs]
