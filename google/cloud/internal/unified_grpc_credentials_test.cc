@@ -33,6 +33,7 @@
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
+#include <grpcpp/support/server_callback.h>
 #include <nlohmann/json.hpp>
 #include <algorithm>
 #include <chrono>
@@ -999,21 +1000,26 @@ Rm5nMJj1SMIhS6tnpSHJZQJyCzKAFBGC2pioX7bKbnXAKGfGPJoyBjX6
 // channel. `IAMCredentials` is used only because `grpc_utils` already links
 // its proto; any unary RPC would do.
 class RecordingIamCredentialsService
-    : public google::iam::credentials::v1::IAMCredentials::Service {
+    : public google::iam::credentials::v1::IAMCredentials::CallbackService {
  public:
-  grpc::Status GenerateAccessToken(
-      grpc::ServerContext* context,
+  grpc::ServerUnaryReactor* GenerateAccessToken(
+      grpc::CallbackServerContext* context,
       google::iam::credentials::v1::GenerateAccessTokenRequest const*,
       google::iam::credentials::v1::GenerateAccessTokenResponse*) override {
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata =
         context->client_metadata();
     auto const it = metadata.find("authorization");
-    std::scoped_lock<std::mutex> lk(mu_);
-    authorization_ = it == metadata.end()
-                         ? std::nullopt
-                         : std::make_optional(std::string(it->second.data(),
-                                                          it->second.size()));
-    return grpc::Status::OK;
+    {
+      std::scoped_lock<std::mutex> lk(mu_);
+      if (it == metadata.end()) {
+        authorization_ = std::nullopt;
+      } else {
+        authorization_.emplace(it->second.data(), it->second.size());
+      }
+    }
+    grpc::ServerUnaryReactor* reactor = context->DefaultReactor();
+    reactor->Finish(grpc::Status::OK);
+    return reactor;
   }
 
   std::optional<std::string> authorization() const {
