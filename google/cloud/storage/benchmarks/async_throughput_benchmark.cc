@@ -13,9 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/internal/port_platform.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC && __has_include(<grpcpp/version_info.h>)
+#include <grpcpp/version_info.h>
+#endif
 // TODO(#14750): Remove the gRPC version guard once vcpkg has a newer version of
 // grpc
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC && GOOGLE_CLOUD_CPP_HAVE_COROUTINES && \
+    defined(GRPC_CPP_VERSION_MAJOR) &&                                        \
     (GRPC_CPP_VERSION_MAJOR > 1 ||                                            \
      (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR > 65) ||          \
      (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR == 65 &&          \
