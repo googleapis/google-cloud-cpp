@@ -26,8 +26,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace v2 = ::google::bigtable::v2;
 
+namespace {
+
+bool ReachedRowsLimit(std::int64_t rows_limit, std::int64_t rows_count) {
+  static_assert(AsyncRowReader::NO_ROWS_LIMIT == 0, "NO_ROWS_LIMIT must be 0");
+  return rows_limit > 0 && rows_limit <= rows_count;
+}
+
+bigtable::RowSet RemainingRowSet(bigtable::RowSet row_set,
+                                 std::string const& last_read_row_key,
+                                 bool reverse) {
+  if (last_read_row_key.empty()) return row_set;
+  if (reverse) {
+    v2::RowRange range;
+    range.set_end_key_open(last_read_row_key);
+    return row_set.Intersect(bigtable::RowRange(std::move(range)));
+  }
+  return row_set.Intersect(bigtable::RowRange::Open(last_read_row_key, ""));
+}
+
+}  // namespace
+
 void AsyncRowReader::MakeRequest() {
   status_ = Status();
+  parser_failed_ = false;
+  if (rows_limit_ < 0) {
+    status_ = internal::InvalidArgumentError(
+        "rows_limit cannot be negative",
+        GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
+    whole_op_finished_ = true;
+    TryGiveRowToUser();
+    return;
+  }
   v2::ReadRowsRequest request;
 
   request.set_app_profile_id(app_profile_id_);
@@ -177,42 +207,28 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   if (status_.ok()) {
     status_ = std::move(status);
   }
+  bool const reached_rows_limit = ReachedRowsLimit(rows_limit_, rows_count_);
   grpc::Status parser_status;
   parser_->HandleEndOfStream(parser_status);
   if (!parser_status.ok() && status_.ok()) {
-    // If the stream finished with an error ignore what the parser says.
+    // If the stream finished cleanly with an unfinished row/cell, only ignore
+    // it when rows_limit was already reached. Otherwise, if the stream finished
+    // with an error, ignore what the parser says.
+    if (!reached_rows_limit) parser_failed_ = true;
     status_ = MakeStatusFromRpcError(parser_status);
   }
 
-  // In the unlikely case when we have already reached the requested
-  // number of rows and still receive an error (the parser can throw
-  // an error at end of stream for example), there is no need to
-  // retry and we have no good value for rows_limit anyway.
-  if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
+  row_set_ = RemainingRowSet(std::move(row_set_), last_read_row_key_, reverse_);
+  // If we have already reached the requested number of rows or exhausted the
+  // retryable row set, consider end-of-stream / trailing errors a success
+  // unless the user cancelled or the parser failed mid-stream.
+  if (!user_cancelled_ && !parser_failed_ &&
+      (reached_rows_limit || row_set_.IsEmpty())) {
     status_ = Status();
   }
 
-  if (!last_read_row_key_.empty()) {
-    // We've returned some rows and need to make sure we don't
-    // request them again.
-    if (reverse_) {
-      google::bigtable::v2::RowRange range;
-      range.set_end_key_open(last_read_row_key_);
-      row_set_ = row_set_.Intersect(bigtable::RowRange(std::move(range)));
-    } else {
-      row_set_ =
-          row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
-    }
-  }
-
-  // If we receive an error, but the retryable set is empty, consider it a
-  // success.
-  if (row_set_.IsEmpty()) {
-    status_ = Status();
-  }
-
-  if (status_.ok()) {
-    // We've successfully finished the scan.
+  if (status_.ok() || user_cancelled_ || reached_rows_limit ||
+      row_set_.IsEmpty()) {
     whole_op_finished_ = true;
     operation_context_->OnDone(status_);
     TryGiveRowToUser();
@@ -245,6 +261,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
 }
 
 void AsyncRowReader::Cancel(std::string const& reason) {
+  user_cancelled_ = true;
   ready_rows_ = std::queue<bigtable::Row>();
   auto continue_reading = std::move(continue_reading_);
   continue_reading_.reset();
@@ -283,10 +300,12 @@ Status AsyncRowReader::ConsumeResponse(
     grpc::Status status;
     parser_->HandleChunk(std::move(chunk), status);
     if (!status.ok()) {
+      parser_failed_ = true;
       return MakeStatusFromRpcError(status);
     }
     Status parser_status = DrainParser();
     if (!parser_status.ok()) {
+      parser_failed_ = true;
       return parser_status;
     }
   }
