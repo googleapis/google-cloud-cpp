@@ -247,7 +247,6 @@ void CreateTopicWithCloudStorageIngestion(
     }
 
     if (!minimum_object_create_time.empty()) {
-      google::protobuf::Timestamp timestamp;
       if (!google::protobuf::util::TimeUtil::FromString(
               minimum_object_create_time,
               cloud_storage.mutable_minimum_object_create_time())) {
