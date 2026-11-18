@@ -27,7 +27,7 @@ export CXX=g++
 mapfile -t args < <(bazel::common_args)
 for lib in $(quickstart::libraries); do
   io::log_h2 "Building Bazel quickstart for ${lib} using WORKSPACE"
-  USE_BAZEL_VERSION=7.6.1 io::run env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
+  USE_BAZEL_VERSION=7.7.1 io::run env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
     bazel build --enable_workspace --noenable_bzlmod "${args[@]}" :quickstart
 
   io::log_h2 "Building Bazel quickstart for ${lib} using MODULE"
