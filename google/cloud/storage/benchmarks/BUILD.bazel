@@ -58,7 +58,7 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@abseil-cpp//absl/strings",
         "@curl",
-    ],
+    ] + (["@googletest//:gtest_main"] if program.endswith("_test.cc") else []),
 ) for program in storage_benchmark_programs]
 
 [cc_test(

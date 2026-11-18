@@ -88,7 +88,7 @@ cc_library(
         ":google_cloud_cpp_spanner",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@googletest//:gtest_main",
+        "@googletest//:gtest",
     ],
 )
 
@@ -107,7 +107,7 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
         "@abseil-cpp//absl/strings",
-        "@googletest//:gtest_main",
+        "@googletest//:gtest",
     ],
 )
 

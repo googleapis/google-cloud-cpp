@@ -28,5 +28,6 @@ licenses(["notice"])  # Apache 2.0
     deps = [
         "//:sql",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@googletest//:gtest_main",
     ],
 ) for test in glob(["*_test.cc"])]

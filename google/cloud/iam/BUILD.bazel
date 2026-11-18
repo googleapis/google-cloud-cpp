@@ -48,5 +48,6 @@ cc_gapic_library(
         "//:iam",
         "//:iam_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@googletest//:gtest_main",
     ],
 ) for sample in glob(["samples/mock_*.cc"])]
