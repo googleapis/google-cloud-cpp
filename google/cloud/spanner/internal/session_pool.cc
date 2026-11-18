@@ -165,7 +165,8 @@ void SessionPool::ReplaceMultiplexedSession() {
   auto refresh_limit = now - multiplexed_session_replacement_interval_;
   std::unique_lock<std::mutex> lk(mu_);
   if (create_calls_in_progress_ == 0 &&
-      (*multiplexed_session_)->creation_time() <= refresh_limit) {
+      (!HasValidMultiplexedSession(lk) ||
+       (*multiplexed_session_)->creation_time() <= refresh_limit)) {
     ++create_calls_in_progress_;
     auto stub_and_channel = GetStub(std::move(lk));
     std::weak_ptr<SessionPool> pool = shared_from_this();
@@ -286,13 +287,24 @@ Status SessionPool::HandleMultiplexedCreateSessionDone(
     StatusOr<google::spanner::v1::Session> response) {
   std::unique_lock<std::mutex> lk(mu_);
   --create_calls_in_progress_;
-  if (!response.ok()) {
-    multiplexed_session_ = response.status();
-    return response.status();
+  Status status;
+  if (response.ok()) {
+    multiplexed_session_ =
+        MakeMultiplexedSessionHolder(response->name(), clock_);
+  } else {
+    status = std::move(response).status();
+    // Keep using the current session if it is still usable. For example, a
+    // failed background replacement should not discard a working session.
+    if (!HasValidMultiplexedSession(lk)) multiplexed_session_ = status;
   }
+  lk.unlock();
+  cond_.notify_all();
+  return status;
+}
 
-  multiplexed_session_ = MakeMultiplexedSessionHolder(response->name(), clock_);
-  return {};
+bool SessionPool::HasValidMultiplexedSession(
+    std::unique_lock<std::mutex> const&) const {
+  return multiplexed_session_.ok() && !(*multiplexed_session_)->is_bad();
 }
 
 Status SessionPool::CreateMultiplexedSession(std::unique_lock<std::mutex>& lk) {
@@ -309,10 +321,7 @@ Status SessionPool::CreateMultiplexedSessionSync(
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();
-  auto const& labels = opts_.get<spanner::SessionPoolLabelsOption>();
-  if (!labels.empty()) {
-    session->mutable_labels()->insert(labels.begin(), labels.end());
-  }
+  // Multiplexed sessions do not support labels.
   auto const& role = opts_.get<spanner::SessionCreatorRoleOption>();
   if (!role.empty()) session->set_creator_role(role);
   session->set_multiplexed(true);
@@ -339,10 +348,7 @@ SessionPool::CreateMultiplexedSessionAsync(SelectedStub const& selected_stub) {
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();
-  auto const& labels = opts_.get<spanner::SessionPoolLabelsOption>();
-  if (!labels.empty()) {
-    session->mutable_labels()->insert(labels.begin(), labels.end());
-  }
+  // Multiplexed sessions do not support labels.
   auto const& role = opts_.get<spanner::SessionCreatorRoleOption>();
   if (!role.empty()) session->set_creator_role(role);
   session->set_multiplexed(true);
@@ -477,19 +483,33 @@ StatusOr<SessionHolder> SessionPool::Allocate(Session::Mode mode) {
 }
 
 StatusOr<SessionHolder> SessionPool::Multiplexed(Session::Mode mode) {
-  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
-    std::unique_lock<std::mutex> lk(mu_);
-    if (mode == Session::Mode::kDisassociated && multiplexed_session_.ok()) {
-      // For disassociated sessions, only used in partitioned operations, we do
-      // NOT want to maintain transaction to channel affinity. Instead, we want
-      // to "best effort" round-robin over the stubs.
-      return MakeDissociatedSessionHolder(
-          (*multiplexed_session_)->session_name());
-    }
-    return multiplexed_session_;
+  if (!opts_.has<spanner::EnableMultiplexedSessionOption>()) {
+    return internal::FailedPreconditionError(
+        "multiplexed sessions are not enabled", GCP_ERROR_INFO());
   }
-  return internal::FailedPreconditionError(
-      "multiplexed sessions are not enabled", GCP_ERROR_INFO());
+  std::unique_lock<std::mutex> lk(mu_);
+  // If the session was never created, or the service reported that it is
+  // gone, wait for any creation in progress or create a new session.
+  while (!HasValidMultiplexedSession(lk)) {
+    if (create_calls_in_progress_ > 0) {
+      Wait(lk, [this] { return create_calls_in_progress_ == 0; });
+      // Report the failure of the creation we waited for, if any.
+      if (!multiplexed_session_.ok()) return multiplexed_session_.status();
+      continue;
+    }
+    internal::OptionsSpan span(opts_);
+    Status const status = CreateMultiplexedSession(lk);  // releases `lk`
+    if (!status.ok()) return status;
+    lk = std::unique_lock<std::mutex>(mu_);
+  }
+  if (mode == Session::Mode::kDisassociated) {
+    // For disassociated sessions, only used in partitioned operations, we do
+    // NOT want to maintain transaction to channel affinity. Instead, we want
+    // to "best effort" round-robin over the stubs.
+    return MakeDissociatedSessionHolder(
+        (*multiplexed_session_)->session_name());
+  }
+  return multiplexed_session_;
 }
 
 SelectedStub SessionPool::GetStub(Session const& session) {

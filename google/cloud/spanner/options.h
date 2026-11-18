@@ -251,6 +251,9 @@ struct GOOGLE_CLOUD_CPP_DEPRECATED("Option not used with Multiplex Sessions")
  *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
  *  * The maximum number of labels is 64.
  *
+ * @note The library uses multiplexed sessions, which do not support labels,
+ *     so these labels are not sent to the service.
+ *
  * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolLabelsOption {

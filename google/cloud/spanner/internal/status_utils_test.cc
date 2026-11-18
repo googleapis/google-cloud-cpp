@@ -51,6 +51,16 @@ TEST(StatusUtils, SessionNotFoundResourceInfo) {
   EXPECT_TRUE(IsSessionNotFound(still_not_found)) << still_not_found;
 }
 
+TEST(StatusUtils, MultiplexedSessionExpired) {
+  Status const expired(StatusCode::kFailedPrecondition,
+                       "Multiplexed session expired.");
+  EXPECT_TRUE(IsSessionNotFound(expired)) << expired;
+
+  Status const other_precondition(StatusCode::kFailedPrecondition,
+                                  "Other precondition");
+  EXPECT_FALSE(IsSessionNotFound(other_precondition)) << other_precondition;
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
