@@ -3185,6 +3185,94 @@ TEST(ConnectionImplTest, MultiplexedPrecommitUpdated) {
   EXPECT_THAT(conn->Commit({txn, {}}), IsOk());
 }
 
+// The service returns the precommit token in the final `PartialResultSet` of
+// a stream, which is not the first one when the results span multiple
+// responses.
+std::vector<std::string> MultiResponseStreamWithPrecommitToken() {
+  return {
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "Steve" }
+      )pb",
+      R"pb(
+        values: { string_value: "Ann" }
+        precommit_token: { precommit_token: "final-precommit-token" seq_num: 1 }
+        last: true
+      )pb",
+  };
+}
+
+TEST(ConnectionImplTest, MultiplexedPrecommitTokenInFinalReadResponse) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, StreamingRead)
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          MultiResponseStreamWithPrecommitToken()))));
+  EXPECT_CALL(*mock, Commit(_, _,
+                            AllOf(HasNakedTransactionId("test-txn-id"),
+                                  PrecommitTokenIs("final-precommit-token", 1)),
+                            _))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value())));
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn = spanner::MakeReadWriteTransaction();
+  SetTransactionId(txn, "test-txn-id");
+  spanner::RowStream rows =
+      conn->Read({txn, "table", spanner::KeySet::All(), {"UserName"}});
+  int count = 0;
+  for (auto& row : rows) {
+    EXPECT_STATUS_OK(row);
+    ++count;
+  }
+  EXPECT_EQ(count, 2);
+  EXPECT_STATUS_OK(conn->Commit({txn, {}}));
+}
+
+TEST(ConnectionImplTest, MultiplexedPrecommitTokenInFinalQueryResponse) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
+          MultiResponseStreamWithPrecommitToken()))));
+  EXPECT_CALL(*mock, Commit(_, _,
+                            AllOf(HasNakedTransactionId("test-txn-id"),
+                                  PrecommitTokenIs("final-precommit-token", 1)),
+                            _))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value())));
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn = spanner::MakeReadWriteTransaction();
+  SetTransactionId(txn, "test-txn-id");
+  spanner::RowStream rows =
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT UserName")});
+  int count = 0;
+  for (auto& row : rows) {
+    EXPECT_STATUS_OK(row);
+    ++count;
+  }
+  EXPECT_EQ(count, 2);
+  EXPECT_STATUS_OK(conn->Commit({txn, {}}));
+}
+
 TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreams) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",

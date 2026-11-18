@@ -61,6 +61,12 @@ TransactionImpl::TransactionImpl(
 }
 
 void TransactionImpl::UpdatePrecommitToken(
+    google::spanner::v1::MultiplexedSessionPrecommitToken token) {
+  std::unique_lock<std::mutex> lock(mu_);
+  UpdatePrecommitToken(lock, std::move(token));
+}
+
+void TransactionImpl::UpdatePrecommitToken(
     std::unique_lock<std::mutex> const&,
     std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
         token) {

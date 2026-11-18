@@ -61,8 +61,17 @@ StatusOr<std::unique_ptr<PartialResultSourceInterface>>
 PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader,
     std::shared_ptr<OperationContext> operation_context) {
+  return Create(std::move(reader), std::move(operation_context), nullptr);
+}
+
+StatusOr<std::unique_ptr<PartialResultSourceInterface>>
+PartialResultSetSource::Create(
+    std::unique_ptr<PartialResultSetReader> reader,
+    std::shared_ptr<OperationContext> operation_context,
+    PrecommitTokenCallback on_precommit_token) {
   std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
-      std::move(reader), std::move(operation_context)));
+      std::move(reader), std::move(operation_context),
+      std::move(on_precommit_token)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
@@ -89,10 +98,12 @@ PartialResultSetSource::Create(
 
 PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader,
-    std::shared_ptr<OperationContext> operation_context)
+    std::shared_ptr<OperationContext> operation_context,
+    PrecommitTokenCallback on_precommit_token)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
       operation_context_(std::move(operation_context)),
+      on_precommit_token_(std::move(on_precommit_token)),
       values_(std::make_optional(
           google::protobuf::Arena::Create<
               google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
@@ -235,6 +246,7 @@ Status PartialResultSetSource::ReadFromStream() {
   }
   if (result_set.result.has_precommit_token()) {
     precommit_token_ = std::move(*result_set.result.mutable_precommit_token());
+    if (on_precommit_token_) on_precommit_token_(*precommit_token_);
   }
 
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it

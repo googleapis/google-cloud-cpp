@@ -506,7 +506,8 @@ TEST_F(SessionPoolTest, ChannelIdRoundRobinAndAffinity) {
                          /*seqno=*/1,
                          /*stub=*/std::nullopt,
                          /*channel_id=*/std::nullopt,
-                         /*precommit_token=*/std::nullopt};
+                         /*precommit_token=*/std::nullopt,
+                         /*transaction=*/{}};
   auto pinned1 = pool->GetStub(*session, ctx);
   EXPECT_THAT(pinned1.stub, Eq(mock2));
   EXPECT_THAT(pinned1.channel_id, Eq(1));

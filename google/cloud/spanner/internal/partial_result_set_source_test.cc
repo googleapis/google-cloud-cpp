@@ -27,6 +27,7 @@
 #include <array>
 #include <cstdint>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -40,6 +41,8 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
 using ::testing::Return;
 using ::testing::UnitTest;
 
@@ -998,6 +1001,67 @@ TEST(PartialResultSetSourceTest, StreamErrorOnIncompleteRow) {
   // Trying to read the next row should fail with the status from Finish().
   EXPECT_THAT((*reader)->NextRow(), StatusIs(StatusCode::kResourceExhausted,
                                              "Memory limit exceeded"));
+}
+
+/**
+ * @test Verify that precommit tokens are reported as they arrive, including
+ * the token in the final response of the stream.
+ */
+TEST(PartialResultSetSourceTest, PrecommitTokenCallback) {
+  std::array<char const*, 2> text{{
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "AnInt",
+              type: { code: INT64 }
+            }
+          }
+        }
+        values: { string_value: "80" }
+      )pb",
+      R"pb(
+        values: { string_value: "81" }
+        precommit_token: { precommit_token: "token" seq_num: 1 }
+        last: true
+      )pb",
+  }};
+  std::array<google::spanner::v1::PartialResultSet, 2> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i])) << i;
+  }
+
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](std::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](std::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
+
+  std::vector<std::int64_t> seq_nums;
+  StatusOr<std::unique_ptr<PartialResultSourceInterface>> reader =
+      PartialResultSetSource::Create(
+          std::move(grpc_reader), nullptr,
+          [&seq_nums](
+              google::spanner::v1::MultiplexedSessionPrecommitToken const&
+                  token) { seq_nums.push_back(token.seq_num()); });
+  ASSERT_STATUS_OK(reader);
+  EXPECT_THAT(seq_nums, IsEmpty());
+
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
+                                        {{"AnInt", spanner::Value(80)}})));
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner_mocks::MakeRow(
+                                        {{"AnInt", spanner::Value(81)}})));
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
+  EXPECT_THAT(seq_nums, ElementsAre(1));
 }
 
 }  // namespace

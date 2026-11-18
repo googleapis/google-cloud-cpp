@@ -32,6 +32,8 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class TransactionImpl;
+
 struct TransactionContext {
   bool route_to_leader;
   std::string const& tag;
@@ -40,6 +42,9 @@ struct TransactionContext {
   std::optional<std::uint32_t> channel_id;
   std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
       precommit_token;
+  // The transaction being visited. This allows results that outlive the
+  // visit, such as streaming reads and queries, to report a precommit token.
+  std::weak_ptr<TransactionImpl> transaction;
 };
 
 template <typename Functor>
@@ -50,7 +55,7 @@ using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
  */
-class TransactionImpl {
+class TransactionImpl : public std::enable_shared_from_this<TransactionImpl> {
  public:
   TransactionImpl(google::spanner::v1::TransactionSelector selector,
                   bool route_to_leader, std::string tag);
@@ -93,7 +98,8 @@ class TransactionImpl {
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
     TransactionContext ctx{route_to_leader_, tag_,         0,
-                           std::nullopt,     std::nullopt, std::nullopt};
+                           std::nullopt,     std::nullopt, std::nullopt,
+                           weak_from_this()};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
@@ -142,6 +148,12 @@ class TransactionImpl {
     }
 #endif
   }
+
+  // Records `token` if its sequence number is higher than any seen so far.
+  // This acquires `mu_`, so it may be called from a `Visit()` functor, or
+  // after `Visit()` returns (e.g., while iterating over a stream's rows).
+  void UpdatePrecommitToken(
+      google::spanner::v1::MultiplexedSessionPrecommitToken token);
 
  private:
   void UpdatePrecommitToken(
