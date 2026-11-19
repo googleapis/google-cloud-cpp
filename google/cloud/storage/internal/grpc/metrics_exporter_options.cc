@@ -24,6 +24,7 @@
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <algorithm>
+#include <string_view>
 #include <type_traits>
 #include <variant>
 
@@ -75,11 +76,20 @@ Options MetricsExporterOptions(
 
   return Options{}
       .set<otel::ServiceTimeSeriesOption>(true)
-      .set<otel::MetricNameFormatterOption>([](std::string s) {
+      .set<otel::MetricNameFormatterOption>([](std::string s) -> std::string {
+        if (s == "gcp.client.request.duration") {
+          return "storage.googleapis.com/client/request_duration";
+        }
+        // Storage SDK metrics under `gcp.storage.client.*` are registered in
+        // Cloud Monitoring with flat underscore-separated names rather than
+        // slash-separated paths.
+        constexpr std::string_view kStorageClientPrefix = "gcp.storage.client.";
+        if (absl::StartsWith(s, kStorageClientPrefix)) {
+          s.erase(0, kStorageClientPrefix.size());
+          std::replace(s.begin(), s.end(), '.', '_');
+          return "storage.googleapis.com/client/" + std::move(s);
+        }
         std::replace(s.begin(), s.end(), '.', '/');
-        // Instruments created by this library opt into the internal namespace
-        // by naming themselves `internal/client/<name>`. Everything else comes
-        // from gRPC and keeps the customer-visible `client/` namespace.
         if (absl::StartsWith(s, kInternalMetricPrefix)) {
           return "storage.googleapis.com/" + std::move(s);
         }
