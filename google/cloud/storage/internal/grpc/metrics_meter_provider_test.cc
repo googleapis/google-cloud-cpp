@@ -257,10 +257,10 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
 }
 
 TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
-  std::set<std::string> const expected_latency(
+  std::set<std::string_view> const expected_latency(
       kStorageLatencyHistogramInstruments.begin(),
       kStorageLatencyHistogramInstruments.end());
-  std::set<std::string> const expected_size(
+  std::set<std::string_view> const expected_size(
       kStorageSizeHistogramInstruments.begin(),
       kStorageSizeHistogramInstruments.end());
 

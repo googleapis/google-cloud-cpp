@@ -55,7 +55,7 @@ std::string ChannelCreationLatencyInstrument();
 
 /// Storage SDK latency histogram instruments registered with explicit buckets.
 inline constexpr std::array<std::string_view, 9>
-    kStorageLatencyHistogramInstruments = {
+    kStorageLatencyHistogramInstruments = {{
         "gcp.client.request.duration",
         "gcp.storage.client.ttfb",
         "rpc.client.call.duration",
@@ -65,15 +65,15 @@ inline constexpr std::array<std::string_view, 9>
         "gcp.storage.client.network.dns.lookup.duration",
         "gcp.storage.client.network.tcp.connect.duration",
         "gcp.storage.client.auth.credential_refresh.duration",
-    };
+    }};
 
 /// Storage SDK payload size histogram instruments registered with explicit
 /// buckets.
 inline constexpr std::array<std::string_view, 2>
-    kStorageSizeHistogramInstruments = {
+    kStorageSizeHistogramInstruments = {{
         "gcp.storage.client.request.body.size",
         "gcp.storage.client.response.body.size",
-    };
+    }};
 
 /**
  * Create a meter provider used for gRPC metrics.
