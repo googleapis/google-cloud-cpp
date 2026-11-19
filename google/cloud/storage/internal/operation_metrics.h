@@ -45,6 +45,7 @@ class OperationMetrics {
                        double duration_seconds) const;
 
  private:
+  std::string version_;
   std::string server_address_;
   std::string rpc_system_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter> meter_;
