@@ -56,7 +56,7 @@ args+=("--sandbox_tmpfs_path=/tmp")
 # integration::bazel_with_emulators still runs the full integration test suite
 # when using the default targets.
 coverage_targets=("${BAZEL_TARGETS[@]}")
-if [[ "${BAZEL_TARGETS[*]}" == "..." ]]; then
+if [[ ${#BAZEL_TARGETS[@]} -eq 1 && "${BAZEL_TARGETS[0]}" == "..." ]]; then
   coverage_targets=(
     "//examples/..."
     "//generator/..."
