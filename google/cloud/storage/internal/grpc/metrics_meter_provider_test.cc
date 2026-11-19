@@ -27,6 +27,7 @@
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
+#include <cstddef>
 #include <mutex>
 #include <set>
 #include <string>
@@ -47,6 +48,7 @@ using ::testing::ElementsAreArray;
 using ::testing::IsEmpty;
 using ::testing::ResultOf;
 using ::testing::Return;
+using ::testing::UnorderedElementsAreArray;
 using ::testing::VariantWith;
 
 class MockPushMetricExporter
@@ -266,7 +268,15 @@ TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
 
   std::mutex mu;
   std::set<std::string> verified;
-  auto const total_expected = expected_latency.size() + expected_size.size();
+  std::vector<std::string> expected_all;
+  expected_all.reserve(expected_latency.size() + expected_size.size());
+  for (std::string_view name : kStorageLatencyHistogramInstruments) {
+    expected_all.emplace_back(name);
+  }
+  for (std::string_view name : kStorageSizeHistogramInstruments) {
+    expected_all.emplace_back(name);
+  }
+  std::size_t const total_expected = expected_all.size();
 
   auto mock = std::make_unique<MockPushMetricExporter>();
   EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
@@ -306,16 +316,14 @@ TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
       opentelemetry::metrics::Histogram<double>>>
       instruments;
   for (std::string_view name : kStorageLatencyHistogramInstruments) {
-    auto h = meter->CreateDoubleHistogram(std::string(name),
-                                          "test-only-description", "s");
-    h->Record(1.0, opentelemetry::context::Context{});
-    instruments.push_back(std::move(h));
+    instruments.push_back(meter->CreateDoubleHistogram(
+        std::string(name), "test-only-description", "s"));
+    instruments.back()->Record(1.0, opentelemetry::context::Context{});
   }
   for (std::string_view name : kStorageSizeHistogramInstruments) {
-    auto h = meter->CreateDoubleHistogram(std::string(name),
-                                          "test-only-description", "By");
-    h->Record(1024.0, opentelemetry::context::Context{});
-    instruments.push_back(std::move(h));
+    instruments.push_back(meter->CreateDoubleHistogram(
+        std::string(name), "test-only-description", "By"));
+    instruments.back()->Record(1024.0, opentelemetry::context::Context{});
   }
   for (int i = 0; i != 50; ++i) {
     {
@@ -325,7 +333,7 @@ TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
     std::this_thread::sleep_for(kExportInterval);
   }
   std::lock_guard<std::mutex> lk(mu);
-  EXPECT_EQ(verified.size(), total_expected);
+  EXPECT_THAT(verified, UnorderedElementsAreArray(expected_all));
 }
 
 }  // namespace

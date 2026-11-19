@@ -80,6 +80,9 @@ Options MetricsExporterOptions(
         if (s == "gcp.client.request.duration") {
           return "storage.googleapis.com/client/request_duration";
         }
+        // Storage SDK metrics under `gcp.storage.client.*` are registered in
+        // Cloud Monitoring with flat underscore-separated names rather than
+        // slash-separated paths.
         constexpr std::string_view kStorageClientPrefix = "gcp.storage.client.";
         if (absl::StartsWith(s, kStorageClientPrefix)) {
           s.erase(0, kStorageClientPrefix.size());
