@@ -34,7 +34,7 @@ TransactionImpl::TransactionImpl(
     : TransactionImpl(impl.session_, std::move(selector), route_to_leader,
                       std::move(tag),
                       (impl.session_ && impl.session_->is_multiplexed() &&
-                       impl.selector_->has_id())
+                       impl.selector_.ok() && impl.selector_->has_id())
                           ? std::optional<std::string>(impl.selector_->id())
                           : std::nullopt) {}
 

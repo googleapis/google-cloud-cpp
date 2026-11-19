@@ -3010,6 +3010,76 @@ TEST(ConnectionImplTest, MutationCommitRetryOnceSuccess) {
   EXPECT_EQ(3, commit->commit_stats->mutation_count);
 }
 
+// A mutations-only `Client::Commit()` on a multiplexed session uses an explicit
+// `BeginTransaction` with a `mutation_key`. The service can abort that RPC
+// (e.g., when the mutation key was encoded against a stale schema), which
+// invalidates the transaction. Rerunning must start a new transaction on the
+// same session instead of reading the invalidated selector.
+TEST(ConnectionImplTest, MutationCommitRerunAfterBeginTransactionAborted) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::BeginTransactionRequest const& request,
+                   auto const&) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_TRUE(request.has_mutation_key());
+        return Status(StatusCode::kAborted, "stale client schema");
+      })
+      .WillOnce(
+          [&token](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::BeginTransactionRequest const& request,
+                   auto const&) {
+            EXPECT_EQ("multiplexed", request.session());
+            EXPECT_TRUE(request.has_mutation_key());
+            // The aborted `BeginTransaction` never returned a transaction ID,
+            // so there is no previous transaction to report.
+            EXPECT_THAT(request.options()
+                            .read_write()
+                            .multiplexed_session_previous_transaction_id(),
+                        IsEmpty());
+            return MakeTestTransaction(token, "rerun-txn");
+          });
+
+  spanner::Timestamp const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce(
+          [commit_timestamp](grpc::ClientContext&, Options const&,
+                             google::spanner::v1::CommitRequest const& request,
+                             auto const&) {
+            EXPECT_EQ("multiplexed", request.session());
+            EXPECT_EQ("rerun-txn", request.transaction_id());
+            EXPECT_EQ(1, request.mutations_size());
+            EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
+            return MakeCommitResponse(commit_timestamp);
+          });
+
+  std::shared_ptr<ConnectionImpl> conn =
+      MakeConnectionImpl(db, mock, Options{});
+  spanner::Client client(conn);
+  StatusOr<spanner::CommitResult> commit = client.Commit(
+      [](spanner::Transaction const&) -> StatusOr<spanner::Mutations> {
+        return spanner::Mutations{
+            spanner::MakeInsertMutation("table-name", {}, std::string{"mut"})};
+      },
+      spanner::LimitedErrorCountTransactionRerunPolicy(1).clone(),
+      spanner::ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                        std::chrono::microseconds(1), 2.0)
+          .clone());
+  ASSERT_STATUS_OK(commit);
+  EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
+}
+
 TEST(ConnectionImplTest, MutationCommitRetryMoreThanOnceSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
