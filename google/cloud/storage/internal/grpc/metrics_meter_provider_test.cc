@@ -27,7 +27,12 @@
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
+#include <mutex>
+#include <set>
+#include <string>
+#include <string_view>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -252,7 +257,17 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
 }
 
 TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
-  std::atomic<int> export_count{0};
+  std::set<std::string> const expected_latency(
+      kStorageLatencyHistogramInstruments.begin(),
+      kStorageLatencyHistogramInstruments.end());
+  std::set<std::string> const expected_size(
+      kStorageSizeHistogramInstruments.begin(),
+      kStorageSizeHistogramInstruments.end());
+
+  std::mutex mu;
+  std::set<std::string> verified;
+  auto const total_expected = expected_latency.size() + expected_size.size();
+
   auto mock = std::make_unique<MockPushMetricExporter>();
   EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
   EXPECT_CALL(*mock, GetAggregationTemporality)
@@ -263,34 +278,54 @@ TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
           Return(opentelemetry::sdk::common::ExportResult::kSuccess));
   EXPECT_CALL(*mock, Export(MetricDataNotEmpty()))
       .Times(AtLeast(1))
-      .WillRepeatedly([&export_count](
-                          opentelemetry::sdk::metrics::ResourceMetrics const&
-                              data) {
-        EXPECT_THAT(
-            data.scope_metric_data_,
-            Contains(WithMetricsData(AllOf(
-                Contains(AllOf(
-                    MatchesInstrumentName("gcp.client.request.duration"),
-                    WithPointData(ElementsAre(ExpectedLatencyHistogram())))),
-                Contains(AllOf(
-                    MatchesInstrumentName(
-                        "gcp.storage.client.request.body.size"),
-                    WithPointData(ElementsAre(ExpectedSizeHistogram()))))))));
-        ++export_count;
-        return opentelemetry::sdk::common::ExportResult::kSuccess;
-      });
+      .WillRepeatedly(
+          [&](opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+            std::lock_guard<std::mutex> lk(mu);
+            for (auto const& scope : data.scope_metric_data_) {
+              for (auto const& metric : scope.metric_data_) {
+                auto const& name = metric.instrument_descriptor.name_;
+                if (expected_latency.count(name) != 0) {
+                  EXPECT_THAT(metric.point_data_attr_,
+                              ElementsAre(ExpectedLatencyHistogram()))
+                      << "instrument=" << name;
+                  verified.insert(name);
+                } else if (expected_size.count(name) != 0) {
+                  EXPECT_THAT(metric.point_data_attr_,
+                              ElementsAre(ExpectedSizeHistogram()))
+                      << "instrument=" << name;
+                  verified.insert(name);
+                }
+              }
+            }
+            return opentelemetry::sdk::common::ExportResult::kSuccess;
+          });
 
   auto provider = MakeGrpcMeterProvider(std::move(mock), TestReaderOptions());
   auto meter = provider->GetMeter(kStorageMeterName, version_string());
-  auto latency = meter->CreateDoubleHistogram("gcp.client.request.duration",
-                                              "test-only-description", "s");
-  auto size = meter->CreateDoubleHistogram(
-      "gcp.storage.client.request.body.size", "test-only-description", "By");
-  latency->Record(1.0, opentelemetry::context::Context{});
-  size->Record(1024.0, opentelemetry::context::Context{});
-  for (int i = 0; i != 50 && export_count.load() == 0; ++i) {
+  std::vector<opentelemetry::nostd::unique_ptr<
+      opentelemetry::metrics::Histogram<double>>>
+      instruments;
+  for (std::string_view name : kStorageLatencyHistogramInstruments) {
+    auto h = meter->CreateDoubleHistogram(std::string(name),
+                                          "test-only-description", "s");
+    h->Record(1.0, opentelemetry::context::Context{});
+    instruments.push_back(std::move(h));
+  }
+  for (std::string_view name : kStorageSizeHistogramInstruments) {
+    auto h = meter->CreateDoubleHistogram(std::string(name),
+                                          "test-only-description", "By");
+    h->Record(1024.0, opentelemetry::context::Context{});
+    instruments.push_back(std::move(h));
+  }
+  for (int i = 0; i != 50; ++i) {
+    {
+      std::lock_guard<std::mutex> lk(mu);
+      if (verified.size() == total_expected) break;
+    }
     std::this_thread::sleep_for(kExportInterval);
   }
+  std::lock_guard<std::mutex> lk(mu);
+  EXPECT_EQ(verified.size(), total_expected);
 }
 
 }  // namespace

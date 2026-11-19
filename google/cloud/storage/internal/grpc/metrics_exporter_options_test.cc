@@ -188,9 +188,10 @@ TEST(MetricsExporterOptions, DefaultMonitoredResource) {
 
 /// @test Verify the formatter routes instruments to the right namespace.
 ///
-/// gRPC's own instruments stay customer-visible under `client/`, while this
-/// library's opt into `internal/client/`. Only a leading prefix may route, so
-/// a gRPC instrument cannot reach the internal namespace by accident.
+/// Customer-visible gRPC and SDK instruments stay under `client/`, while
+/// internal-only instruments opt into `internal/client/`. Only a leading
+/// prefix may route to `internal/client/`, so a gRPC instrument cannot reach
+/// the internal namespace by accident.
 TEST(MetricsExporterOptions, MetricNameFormatter) {
   auto actual = MetricsExporterOptions(
       Project("test-project"),
@@ -206,10 +207,13 @@ TEST(MetricsExporterOptions, MetricNameFormatter) {
       // namespace. Note that `.` becomes `/`.
       {"grpc.client.attempt.duration",
        "storage.googleapis.com/client/grpc/client/attempt/duration"},
-      // Instruments created by this library opt into the internal namespace by
-      // naming themselves `internal/client/<name>`.
+      // Internal-only instruments opt into the internal namespace by naming
+      // themselves `internal/client/<name>` (with `.` normalized to `/`).
       {"internal/client/channel_creation_latency",
        "storage.googleapis.com/internal/client/channel_creation_latency"},
+      {"internal/client/foo.bar",
+       "storage.googleapis.com/internal/client/foo/bar"},
+      {"internal.client.foo", "storage.googleapis.com/internal/client/foo"},
       // Only a leading prefix counts, otherwise a gRPC instrument could
       // accidentally land in the internal namespace.
       {"client/internal/client/duration",

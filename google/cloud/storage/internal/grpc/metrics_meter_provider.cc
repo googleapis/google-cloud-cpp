@@ -38,6 +38,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -162,27 +163,13 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
   // Instruments created by this library, rather than by gRPC, use a different
   // instrumentation scope and therefore need their own views.
   MeterScope const storage_scope = StorageMeterScope();
-  for (char const* name : {
-           "gcp.client.request.duration",
-           "gcp.storage.client.ttfb",
-           "rpc.client.call.duration",
-           "http.client.request.duration",
-           "gcp.storage.client.stall.duration",
-           "gcp.storage.client.server.duration",
-           "gcp.storage.client.network.tls.handshake.duration",
-           "gcp.storage.client.network.dns.lookup.duration",
-           "gcp.storage.client.network.tcp.connect.duration",
-           "gcp.storage.client.auth.credential_refresh.duration",
-       }) {
-    AddLatencyHistogramView(*p, storage_scope, name);
+  for (std::string_view name : kStorageLatencyHistogramInstruments) {
+    AddLatencyHistogramView(*p, storage_scope, std::string(name));
   }
   AddLatencyHistogramView(*p, storage_scope,
                           ChannelCreationLatencyInstrument());
-  for (char const* name : {
-           "gcp.storage.client.request.body.size",
-           "gcp.storage.client.response.body.size",
-       }) {
-    AddSizeHistogramView(*p, storage_scope, name);
+  for (std::string_view name : kStorageSizeHistogramInstruments) {
+    AddSizeHistogramView(*p, storage_scope, std::string(name));
   }
 
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || OPENTELEMETRY_VERSION_MINOR >= 10
