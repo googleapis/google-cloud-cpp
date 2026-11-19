@@ -83,10 +83,11 @@ Options DefaultOptionsGrpc(
   options = google::cloud::internal::MergeOptions(
       std::move(options), Options{}.set<storage::UploadBufferSizeOption>(
                               kDefaultGrpcUploadBufferSize));
-  options =
-      storage::internal::DefaultOptionsWithCredentials(std::move(options));
-  if (!options.has<UnifiedCredentialsOption>() &&
-      !options.has<GrpcCredentialOption>()) {
+  // `DefaultOptions()` sets no credentials. Use Application Default
+  // Credentials unless `UnifiedCredentialsOption` is set, so the REST emulator
+  // endpoint does not change the gRPC credentials.
+  options = storage::internal::DefaultOptions(std::move(options));
+  if (!options.has<UnifiedCredentialsOption>()) {
     options.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials(
             google::cloud::internal::MakeAuthOptions(options)));

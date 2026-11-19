@@ -612,11 +612,6 @@ Options ApplyPolicy(Options opts, IdempotencyPolicy const& p) {
   return opts;
 }
 
-Options DefaultOptions(std::shared_ptr<oauth2_internal::Credentials> const&,
-                       Options opts) {
-  return DefaultOptions(std::move(opts));
-}
-
 Options DefaultOptions(Options opts) {
   auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
   if (ud && !ud->empty()) {
@@ -628,9 +623,6 @@ Options DefaultOptions(Options opts) {
                                  "https://iamcredentials.googleapis.com", opts),
                              "/v1");
   Options o;
-  if (!opts.has<UnifiedCredentialsOption>()) {
-    o.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  }
   // Storage has more stringent requirements w.r.t. self-signed JWTs
   // than most services. Any scope makes the self-signed JWTs unusable with
   // storage, but they remain usable with other services. We need to disable
@@ -771,21 +763,18 @@ Options DefaultOptions(Options opts) {
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
-  if (opts.has<UnifiedCredentialsOption>()) {
-    auto credentials =
-        rest_internal::MapCredentials(*opts.get<UnifiedCredentialsOption>());
-    return internal::DefaultOptions(std::move(credentials), std::move(opts));
-  }
-  if (GetEmulator().has_value()) {
-    return internal::DefaultOptions(
-        rest_internal::MapCredentials(
-            *google::cloud::MakeInsecureCredentials()),
-        std::move(opts));
-  }
-  auto credentials = rest_internal::MapCredentials(
-      *google::cloud::MakeGoogleDefaultCredentials(
-          google::cloud::internal::MakeAuthOptions(opts)));
-  return internal::DefaultOptions(std::move(credentials), std::move(opts));
+  // Apply the defaults first, so the auth options below include tracing and
+  // logging settings from the environment.
+  opts = internal::DefaultOptions(std::move(opts));
+  if (opts.has<UnifiedCredentialsOption>()) return opts;
+  // The emulator does not support authentication, use insecure (sometimes
+  // called "anonymous") credentials.
+  opts.set<UnifiedCredentialsOption>(
+      GetEmulator().has_value()
+          ? google::cloud::MakeInsecureCredentials()
+          : google::cloud::MakeGoogleDefaultCredentials(
+                google::cloud::internal::MakeAuthOptions(opts)));
+  return opts;
 }
 
 Client ClientImplDetails::CreateWithDecorations(
