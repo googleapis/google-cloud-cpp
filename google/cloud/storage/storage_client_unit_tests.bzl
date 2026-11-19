@@ -81,6 +81,7 @@ storage_client_unit_tests = [
     "internal/object_read_streambuf_test.cc",
     "internal/object_requests_test.cc",
     "internal/object_write_streambuf_test.cc",
+    "internal/operation_metrics_test.cc",
     "internal/patch_builder_test.cc",
     "internal/policy_document_request_test.cc",
     "internal/request_project_id_test.cc",
