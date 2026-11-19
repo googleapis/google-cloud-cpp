@@ -41,10 +41,11 @@ OperationMetrics::OperationMetrics(
     opentelemetry::nostd::shared_ptr<
         opentelemetry::metrics::MeterProvider> const& provider,
     std::string server_address, std::string rpc_system)
-    : server_address_(std::move(server_address)),
+    : version_(google::cloud::version_string()),
+      server_address_(std::move(server_address)),
       rpc_system_(std::move(rpc_system)) {
   if (!provider) return;
-  meter_ = provider->GetMeter("gl-cpp", google::cloud::version_string());
+  meter_ = provider->GetMeter("gl-cpp", version_);
   if (!meter_) return;
   operations_ = meter_->CreateUInt64Counter(
       "gcp.storage.client.operations",
@@ -61,12 +62,15 @@ void OperationMetrics::RecordOperation(std::string_view operation,
                                        std::string_view error_type,
                                        double duration_seconds) const {
   if (!operations_ && !request_duration_) return;
-  auto const ctx = opentelemetry::context::RuntimeContext::GetCurrent();
-  auto const ver = google::cloud::version_string();
+  opentelemetry::context::Context const ctx =
+      opentelemetry::context::RuntimeContext::GetCurrent();
+  // `rpc.method` is placed last so `operations_` can exclude it via a prefix
+  // span of size `attrs.size() - 1`.
   std::array<Attr, 9> const attrs{{
-      {"gcp.client.version", ToNostd(ver)},
-      {"gcp.client.artifact", "google-cloud-cpp"},
-      {"gcp.client.service", "storage"},
+      {"gcp.client.version", ToNostd(version_)},
+      {"gcp.client.artifact",
+       opentelemetry::nostd::string_view("google-cloud-cpp")},
+      {"gcp.client.service", opentelemetry::nostd::string_view("storage")},
       {"server.address", ToNostd(server_address_)},
       {"rpc.system.name", ToNostd(rpc_system_)},
       {"gcp.storage.operation", ToNostd(operation)},
@@ -75,7 +79,8 @@ void OperationMetrics::RecordOperation(std::string_view operation,
       {"rpc.method", ToNostd(rpc_method)},
   }};
   if (operations_) {
-    opentelemetry::nostd::span<Attr const> const op_attrs(attrs.data(), 8);
+    opentelemetry::nostd::span<Attr const> const op_attrs(attrs.data(),
+                                                          attrs.size() - 1);
     operations_->Add(std::uint64_t{1},
                      opentelemetry::common::MakeKeyValueIterableView(op_attrs),
                      ctx);
