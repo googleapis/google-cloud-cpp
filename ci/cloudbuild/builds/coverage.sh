@@ -42,6 +42,7 @@ instrumentation_filter="$(printf ",%s" "${instrumented_patterns[@]}")"
 instrumentation_filter="${instrumentation_filter:1}"
 
 mapfile -t args < <(bazel::common_args)
+args+=("--build_tests_only")
 args+=("--instrumentation_filter=${instrumentation_filter}")
 args+=("--instrument_test_targets")
 # This is a workaround for:
@@ -49,8 +50,29 @@ args+=("--instrument_test_targets")
 # Based on the recommendations from:
 #     https://github.com/bazelbuild/bazel/issues/3236
 args+=("--sandbox_tmpfs_path=/tmp")
+
+# Only build and test targets in the instrumented packages (plus opentelemetry,
+# whose unit tests exercise //google/cloud:). Keep BAZEL_TARGETS untouched so
+# integration::bazel_with_emulators still runs the full integration test suite
+# when using the default targets.
+coverage_targets=("${BAZEL_TARGETS[@]}")
+if [[ "${BAZEL_TARGETS[*]}" == "..." ]]; then
+  coverage_targets=(
+    "//examples/..."
+    "//generator/..."
+    "//docfx/..."
+    "//google/cloud:all"
+    "//google/cloud/testing_util/..."
+    "//google/cloud/bigtable/..."
+    "//google/cloud/pubsub/..."
+    "//google/cloud/spanner/..."
+    "//google/cloud/storage/..."
+    "//google/cloud/bigquery/..."
+    "//google/cloud/opentelemetry/..."
+  )
+fi
 io::log_h2 "Running coverage on non-integration tests."
-bazel coverage "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
+bazel coverage "${args[@]}" --test_tag_filters=-integration-test "${coverage_targets[@]}"
 
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)

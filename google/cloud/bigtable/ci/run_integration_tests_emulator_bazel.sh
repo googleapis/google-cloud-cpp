@@ -39,17 +39,23 @@ fi
 BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
 readonly BAZEL_BIN_DIR
 
+# `instance_admin_emulator` is a `cc_binary` (not a test target), so override
+# `--build_tests_only` if it was passed in `bazel_test_args`.
 CBT_INSTANCE_ADMIN_EMULATOR_START=(
   "${BAZEL_BIN}"
   run
   "${bazel_test_args[@]}"
+  --nobuild_tests_only
   --
   //google/cloud/bigtable/tests:instance_admin_emulator
 )
 # We need to build `instance_admin_emulator` without coverage, so it can start
-# up quickly.
+# up quickly. Pass `--nobuild_tests_only` because it is a `cc_binary` target
+# and would otherwise be filtered out if `bazel_test_args` sets
+# `--build_tests_only`.
 if [[ "${BAZEL_VERB}" == "coverage" ]]; then
   io::run "${BAZEL_BIN}" build "${bazel_test_args[@]}" \
+    --nobuild_tests_only \
     //google/cloud/bigtable/tests:instance_admin_emulator
 fi
 
