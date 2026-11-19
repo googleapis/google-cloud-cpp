@@ -254,9 +254,10 @@ struct EnableOTelMetricsOption {
  * Enable or disable OpenTelemetry debug client metrics collection for Storage.
  *
  * When enabled, the client collects and exports diagnostic OpenTelemetry
- * metrics (such as stall durations, server durations, and network timings) in
- * addition to the standard metrics. Like `EnableOTelMetricsOption`, this is
- * independent of `EnableGrpcMetricsOption`.
+ * metrics (such as stall durations, server durations, and network timings).
+ * This option is independent of `EnableOTelMetricsOption` and
+ * `EnableGrpcMetricsOption`, so debug metrics can be enabled on their own or
+ * alongside the standard metrics.
  *
  * The default is `false`. The `GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS`
  * environment variable overrides this option: set it to `"true"` to enable

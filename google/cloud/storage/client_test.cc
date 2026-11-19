@@ -453,6 +453,24 @@ TEST_F(ClientTest, OTelMetricsEnvVarOverridesOption) {
     ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "true");
     ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
                                 std::nullopt);
+    Options const options = internal::DefaultOptions();
+    EXPECT_TRUE(options.get<storage_experimental::EnableOTelMetricsOption>());
+    EXPECT_FALSE(
+        options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+  }
+  {
+    ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
+    ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                                "true");
+    Options const options = internal::DefaultOptions();
+    EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
+    EXPECT_TRUE(
+        options.get<storage_experimental::EnableOTelDebugMetricsOption>());
+  }
+  {
+    ScopedEnvironment env("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "true");
+    ScopedEnvironment debug_env("GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS",
+                                std::nullopt);
     Options const options = internal::DefaultOptions(
         Options{}
             .set<storage_experimental::EnableOTelMetricsOption>(false)
