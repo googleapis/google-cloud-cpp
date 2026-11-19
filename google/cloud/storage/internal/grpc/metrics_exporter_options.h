@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Instruments whose name starts with this prefix are published under the
  * Google-owned internal namespace.
  *
- * gRPC's instruments are published under `storage.googleapis.com/client/`,
- * which is customer-visible. Instruments created by this library go to
- * `storage.googleapis.com/internal/client/` instead, mirroring
- * `bigtable.googleapis.com/internal/client/`.
+ * Customer-visible SDK and gRPC instruments are published under
+ * `storage.googleapis.com/client/`. Internal-only instruments created by this
+ * library opt into `storage.googleapis.com/internal/client/` by using this
+ * prefix, mirroring `bigtable.googleapis.com/internal/client/`.
  */
 auto constexpr kInternalMetricPrefix = "internal/client/";
 

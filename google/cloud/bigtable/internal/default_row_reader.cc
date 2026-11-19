@@ -24,6 +24,27 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+bool ReachedRowsLimit(std::int64_t rows_limit, std::int64_t rows_count) {
+  static_assert(bigtable::RowReader::NO_ROWS_LIMIT == 0,
+                "NO_ROWS_LIMIT must be 0");
+  return rows_limit > 0 && rows_limit <= rows_count;
+}
+
+bigtable::RowSet RemainingRowSet(bigtable::RowSet row_set,
+                                 std::string const& last_read_row_key,
+                                 bool reverse) {
+  if (last_read_row_key.empty()) return row_set;
+  if (reverse) {
+    google::bigtable::v2::RowRange range;
+    range.set_end_key_open(last_read_row_key);
+    return row_set.Intersect(bigtable::RowRange(std::move(range)));
+  }
+  return row_set.Intersect(bigtable::RowRange::Open(last_read_row_key, ""));
+}
+
+}  // namespace
 
 DefaultRowReader::DefaultRowReader(
     std::shared_ptr<BigtableStub> stub, std::string app_profile_id,
@@ -48,6 +69,7 @@ DefaultRowReader::DefaultRowReader(
 void DefaultRowReader::MakeRequest() {
   response_ = {};
   processed_chunks_count_ = 0;
+  parser_failed_ = false;
 
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(table_name_);
@@ -79,17 +101,18 @@ void DefaultRowReader::MakeRequest() {
 bool DefaultRowReader::NextChunk() {
   ++processed_chunks_count_;
   while (processed_chunks_count_ >= response_.chunks_size()) {
+    if (!response_.last_scanned_row_key().empty()) {
+      last_read_row_key_ = std::move(*response_.mutable_last_scanned_row_key());
+      response_.clear_last_scanned_row_key();
+    }
     processed_chunks_count_ = 0;
-    auto status = stream_->Read(&response_);
+    std::optional<Status> status = stream_->Read(&response_);
     if (status.has_value()) {
       last_status_ = *std::move(status);
       operation_context_->PostCall(*client_context_, last_status_);
       called_post_call_ = true;
       response_ = {};
       return false;
-    }
-    if (!response_.last_scanned_row_key().empty()) {
-      last_read_row_key_ = std::move(*response_.mutable_last_scanned_row_key());
     }
   }
   return true;
@@ -106,44 +129,32 @@ std::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
         "call cancelled",
         GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
   }
+  if (rows_limit_ < 0) {
+    return internal::InvalidArgumentError(
+        "rows_limit cannot be negative",
+        GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
+  }
   while (true) {
-    auto variant = AdvanceOrFail();
+    std::variant<Status, bigtable::Row> variant = AdvanceOrFail();
     if (std::holds_alternative<bigtable::Row>(variant)) {
       operation_context_->ElementDelivery(*client_context_);
       return std::get<bigtable::Row>(std::move(variant));
     }
 
-    auto status = std::get<Status>(std::move(variant));
+    Status status = std::get<Status>(std::move(variant));
     if (status.ok()) return Status{};
 
-    // In the unlikely case when we have already reached the requested
-    // number of rows and still receive an error (the parser can throw
-    // an error at end of stream for example), there is no need to
-    // retry and we have no good value for rows_limit anyway.
-    if (rows_limit_ != bigtable::RowReader::NO_ROWS_LIMIT &&
-        rows_limit_ <= rows_count_) {
+    row_set_ =
+        RemainingRowSet(std::move(row_set_), last_read_row_key_, reverse_);
+    if (ReachedRowsLimit(rows_limit_, rows_count_) || row_set_.IsEmpty()) {
+      if (parser_failed_) return status;
+      last_status_ = Status{};
       return Status{};
     }
 
-    if (!last_read_row_key_.empty()) {
-      // We've returned some rows and need to make sure we don't
-      // request them again.
-      if (reverse_) {
-        google::bigtable::v2::RowRange range;
-        range.set_end_key_open(last_read_row_key_);
-        row_set_ = row_set_.Intersect(bigtable::RowRange(std::move(range)));
-      } else {
-        row_set_ = row_set_.Intersect(
-            bigtable::RowRange::Open(last_read_row_key_, ""));
-      }
-    }
-
-    // If we receive an error, but the retryable set is empty, stop.
-    if (row_set_.IsEmpty()) return Status{};
-
-    auto delay = internal::Backoff(status, "AsyncReadRows", *retry_policy_,
-                                   *backoff_policy_, Idempotency::kIdempotent,
-                                   enable_server_retries_);
+    StatusOr<std::chrono::milliseconds> delay = internal::Backoff(
+        status, "AsyncReadRows", *retry_policy_, *backoff_policy_,
+        Idempotency::kIdempotent, enable_server_retries_);
     if (!delay) return std::move(delay).status();
     sleeper_(*delay);
 
@@ -161,10 +172,11 @@ std::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
           std::move(*(response_.mutable_chunks(processed_chunks_count_))),
           grpc_status);
       if (!grpc_status.ok()) {
-        auto status = MakeStatusFromRpcError(grpc_status);
-        operation_context_->PostCall(*client_context_, status);
+        parser_failed_ = true;
+        last_status_ = MakeStatusFromRpcError(grpc_status);
+        operation_context_->PostCall(*client_context_, last_status_);
         called_post_call_ = true;
-        return status;
+        return last_status_;
       }
       continue;
     }
@@ -175,13 +187,21 @@ std::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
     stream_is_open_ = false;
     if (!last_status_.ok()) return last_status_;
     parser_->HandleEndOfStream(grpc_status);
-    return MakeStatusFromRpcError(grpc_status);
+    if (!grpc_status.ok() && !ReachedRowsLimit(rows_limit_, rows_count_)) {
+      parser_failed_ = true;
+    }
+    last_status_ = MakeStatusFromRpcError(grpc_status);
+    return last_status_;
   }
 
   // We have a complete row in the parser.
   bigtable::Row parsed_row = parser_->Next(grpc_status);
 
-  if (!grpc_status.ok()) return MakeStatusFromRpcError(grpc_status);
+  if (!grpc_status.ok()) {
+    parser_failed_ = true;
+    last_status_ = MakeStatusFromRpcError(grpc_status);
+    return last_status_;
+  }
 
   ++rows_count_;
   last_read_row_key_ = parsed_row.row_key();

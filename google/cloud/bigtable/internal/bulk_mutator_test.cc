@@ -850,6 +850,39 @@ TEST_F(BulkMutatorTest, BigtableCookies) {
   status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
+
+TEST_F(BulkMutatorTest, StateOnCancelBeforeStart) {
+  BulkMutation mut(IdempotentMutation("r0"), NonIdempotentMutation("r1"));
+  std::unique_ptr<IdempotentMutationPolicy> policy =
+      DefaultIdempotentMutationPolicy();
+  bigtable_internal::BulkMutatorState state(kAppProfile, kTableName, *policy,
+                                            std::move(mut));
+
+  state.OnCancel(Status(StatusCode::kCancelled, "cancelled"));
+  std::vector<FailedMutation> failures = std::move(state).OnRetryDone();
+  ASSERT_EQ(2UL, failures.size());
+  EXPECT_EQ(0, failures[0].original_index());
+  EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kCancelled));
+  EXPECT_EQ(1, failures[1].original_index());
+  EXPECT_THAT(failures[1].status(), StatusIs(StatusCode::kCancelled));
+}
+
+TEST_F(BulkMutatorTest, StateOnCancelPreservesExistingStreamError) {
+  BulkMutation mut(IdempotentMutation("r0"));
+  std::unique_ptr<IdempotentMutationPolicy> policy =
+      DefaultIdempotentMutationPolicy();
+  bigtable_internal::BulkMutatorState state(kAppProfile, kTableName, *policy,
+                                            std::move(mut));
+
+  (void)state.BeforeStart();
+  state.OnFinish(Status(StatusCode::kUnavailable, "try again"));
+  state.OnCancel(Status(StatusCode::kCancelled, "cancelled"));
+
+  std::vector<FailedMutation> failures = std::move(state).OnRetryDone();
+  ASSERT_EQ(1UL, failures.size());
+  EXPECT_EQ(0, failures[0].original_index());
+  EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kUnavailable));
+}
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

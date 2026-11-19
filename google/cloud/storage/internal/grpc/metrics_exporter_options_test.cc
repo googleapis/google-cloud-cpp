@@ -188,9 +188,10 @@ TEST(MetricsExporterOptions, DefaultMonitoredResource) {
 
 /// @test Verify the formatter routes instruments to the right namespace.
 ///
-/// gRPC's own instruments stay customer-visible under `client/`, while this
-/// library's opt into `internal/client/`. Only a leading prefix may route, so
-/// a gRPC instrument cannot reach the internal namespace by accident.
+/// Customer-visible gRPC and SDK instruments stay under `client/`, while
+/// internal-only instruments opt into `internal/client/`. Only a leading
+/// prefix may route to `internal/client/`, so a gRPC instrument cannot reach
+/// the internal namespace by accident.
 TEST(MetricsExporterOptions, MetricNameFormatter) {
   auto actual = MetricsExporterOptions(
       Project("test-project"),
@@ -206,14 +207,53 @@ TEST(MetricsExporterOptions, MetricNameFormatter) {
       // namespace. Note that `.` becomes `/`.
       {"grpc.client.attempt.duration",
        "storage.googleapis.com/client/grpc/client/attempt/duration"},
-      // Instruments created by this library opt into the internal namespace by
-      // naming themselves `internal/client/<name>`.
+      // Internal-only instruments opt into the internal namespace by naming
+      // themselves `internal/client/<name>` (with `.` normalized to `/`).
       {"internal/client/channel_creation_latency",
        "storage.googleapis.com/internal/client/channel_creation_latency"},
+      {"internal/client/foo.bar",
+       "storage.googleapis.com/internal/client/foo/bar"},
+      {"internal.client.foo", "storage.googleapis.com/internal/client/foo"},
       // Only a leading prefix counts, otherwise a gRPC instrument could
       // accidentally land in the internal namespace.
       {"client/internal/client/duration",
        "storage.googleapis.com/client/client/internal/client/duration"},
+      // Standard and debug OTel SDK instruments map to their Cloud Monitoring
+      // descriptor names under `storage.googleapis.com/client/`.
+      {"gcp.client.request.duration",
+       "storage.googleapis.com/client/request_duration"},
+      {"gcp.storage.client.operations",
+       "storage.googleapis.com/client/operations"},
+      {"gcp.storage.client.attempts", "storage.googleapis.com/client/attempts"},
+      {"gcp.storage.client.retries", "storage.googleapis.com/client/retries"},
+      {"gcp.storage.client.errors", "storage.googleapis.com/client/errors"},
+      {"gcp.storage.client.request.body.size",
+       "storage.googleapis.com/client/request_body_size"},
+      {"gcp.storage.client.response.body.size",
+       "storage.googleapis.com/client/response_body_size"},
+      {"gcp.storage.client.ttfb", "storage.googleapis.com/client/ttfb"},
+      {"gcp.storage.client.server.unreached",
+       "storage.googleapis.com/client/server_unreached"},
+      {"rpc.client.call.duration",
+       "storage.googleapis.com/client/rpc/client/call/duration"},
+      {"http.client.request.duration",
+       "storage.googleapis.com/client/http/client/request/duration"},
+      {"gcp.storage.client.network.io",
+       "storage.googleapis.com/client/network_io"},
+      {"gcp.storage.client.stall.duration",
+       "storage.googleapis.com/client/stall_duration"},
+      {"gcp.storage.client.server.duration",
+       "storage.googleapis.com/client/server_duration"},
+      {"gcp.storage.client.network.tls.handshake.duration",
+       "storage.googleapis.com/client/network_tls_handshake_duration"},
+      {"gcp.storage.client.network.dns.lookup.duration",
+       "storage.googleapis.com/client/network_dns_lookup_duration"},
+      {"gcp.storage.client.network.tcp.connect.duration",
+       "storage.googleapis.com/client/network_tcp_connect_duration"},
+      {"gcp.storage.client.auth.credential_refresh.duration",
+       "storage.googleapis.com/client/auth_credential_refresh_duration"},
+      {"gcp.storage.client.request.active",
+       "storage.googleapis.com/client/request_active"},
   };
   for (auto const& t : cases) {
     SCOPED_TRACE("Testing with " + t.input);

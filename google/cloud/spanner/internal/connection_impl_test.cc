@@ -699,6 +699,158 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
               HasSessionAndTransaction("multiplexed", "ABCDEF00", false, ""));
 }
 
+TEST(ConnectionImplTest, ReadImplicitBeginTransactionRestart) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database db("placeholder_project", "placeholder_instance",
+                       "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  Status const retry_status = internal::UnavailableError("try-again");
+  std::vector<std::string> const responses = {
+      R"pb(
+        metadata: {
+          transaction: { id: "ABCDEF00" }
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+      )pb",
+      R"pb(
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        resume_token: "restart-row-2"
+      )pb",
+      R"pb(
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+  };
+  EXPECT_CALL(*mock, StreamingRead(_, _, HasSession("multiplexed"), _))
+      .WillOnce([&responses, &retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ReadRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Begin the transaction inline and return the metadata and first row
+        // without a resume token before failing.
+        EXPECT_THAT(request, HasBeginTransaction());
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({responses[0]}, retry_status);
+      })
+      .WillOnce([&responses, &retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ReadRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Restart from the beginning using the assigned transaction ID, and
+        // now yield a resume token for the first row before failing again.
+        EXPECT_THAT(request, HasTransactionId("ABCDEF00"));
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({responses[1]}, retry_status);
+      })
+      .WillOnce([&responses](std::shared_ptr<grpc::ClientContext> const&,
+                             Options const&,
+                             google::spanner::v1::ReadRequest const& request,
+                             std::shared_ptr<OperationContext> const&) {
+        // Resume the restarted stream using the assigned transaction ID.
+        EXPECT_THAT(request, HasTransactionId("ABCDEF00"));
+        EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
+        return MakeReader<PartialResultSet>({responses[2]});
+      });
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn = spanner::MakeReadWriteTransaction();
+  spanner::RowStream rows = conn->Read(
+      {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto stream = spanner::StreamOf<RowType>(rows);
+  std::vector<StatusOr<RowType>> actual{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
+  EXPECT_THAT(txn,
+              HasSessionAndTransaction("multiplexed", "ABCDEF00", true, ""));
+}
+
+TEST(ConnectionImplTest, ReadImplicitBeginTransactionResume) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database db("placeholder_project", "placeholder_instance",
+                       "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  Status const retry_status = internal::UnavailableError("try-again");
+  std::vector<std::string> const responses = {
+      R"pb(
+        metadata: {
+          transaction: { id: "ABCDEF00" }
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        resume_token: "restart-row-2"
+      )pb",
+      R"pb(
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+  };
+  EXPECT_CALL(*mock, StreamingRead(_, _, HasSession("multiplexed"), _))
+      .WillOnce([&responses, &retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ReadRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Begin the transaction inline and return the metadata, first row, and
+        // a resume token before failing.
+        EXPECT_THAT(request, HasBeginTransaction());
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({responses[0]}, retry_status);
+      })
+      .WillOnce([&responses](std::shared_ptr<grpc::ClientContext> const&,
+                             Options const&,
+                             google::spanner::v1::ReadRequest const& request,
+                             std::shared_ptr<OperationContext> const&) {
+        // Resume the initial inline-begin stream from the checkpoint token,
+        // preserving the begin selector so the server request fingerprint
+        // matches.
+        EXPECT_THAT(request, HasBeginTransaction());
+        EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
+        return MakeReader<PartialResultSet>({responses[1]});
+      });
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn = spanner::MakeReadWriteTransaction();
+  spanner::RowStream rows = conn->Read(
+      {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto stream = spanner::StreamOf<RowType>(rows);
+  std::vector<StatusOr<RowType>> actual{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
+  EXPECT_THAT(txn,
+              HasSessionAndTransaction("multiplexed", "ABCDEF00", true, ""));
+}
+
 TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
@@ -1366,6 +1518,158 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   EXPECT_TRUE(ContainsNoRows(rows));
   EXPECT_THAT(txn,
               HasSessionAndTransaction("multiplexed", "00FEDCBA", false, ""));
+}
+
+TEST(ConnectionImplTest, ExecuteQueryImplicitBeginRestart) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database db("placeholder_project", "placeholder_instance",
+                       "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  Status const retry_status = internal::UnavailableError("try-again");
+  std::vector<std::string> const responses = {
+      R"pb(
+        metadata: {
+          transaction: { id: "00FEDCBA" }
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+      )pb",
+      R"pb(
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        resume_token: "restart-row-2"
+      )pb",
+      R"pb(
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+  };
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _, HasSession("multiplexed"), _))
+      .WillOnce([&responses, &retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Begin the transaction inline and return the metadata and first row
+        // without a resume token before failing.
+        EXPECT_THAT(request, HasBeginTransaction());
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({responses[0]}, retry_status);
+      })
+      .WillOnce([&responses, &retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Restart from the beginning using the assigned transaction ID, and
+        // now yield a resume token for the first row before failing again.
+        EXPECT_THAT(request, HasTransactionId("00FEDCBA"));
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({responses[1]}, retry_status);
+      })
+      .WillOnce([&responses](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Resume the restarted stream using the assigned transaction ID.
+        EXPECT_THAT(request, HasTransactionId("00FEDCBA"));
+        EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
+        return MakeReader<PartialResultSet>({responses[2]});
+      });
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn = spanner::MakeReadWriteTransaction();
+  spanner::RowStream rows =
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto stream = spanner::StreamOf<RowType>(rows);
+  std::vector<StatusOr<RowType>> actual{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
+  EXPECT_THAT(txn,
+              HasSessionAndTransaction("multiplexed", "00FEDCBA", true, ""));
+}
+
+TEST(ConnectionImplTest, ExecuteQueryImplicitBeginResume) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  spanner::Database db("placeholder_project", "placeholder_instance",
+                       "placeholder_database_id");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  Status const retry_status = internal::UnavailableError("try-again");
+  std::vector<std::string> const responses = {
+      R"pb(
+        metadata: {
+          transaction: { id: "00FEDCBA" }
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        resume_token: "restart-row-2"
+      )pb",
+      R"pb(
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+  };
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _, HasSession("multiplexed"), _))
+      .WillOnce([&responses, &retry_status](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Begin the transaction inline and return the metadata, first row, and
+        // a resume token before failing.
+        EXPECT_THAT(request, HasBeginTransaction());
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader<PartialResultSet>({responses[0]}, retry_status);
+      })
+      .WillOnce([&responses](
+                    std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    google::spanner::v1::ExecuteSqlRequest const& request,
+                    std::shared_ptr<OperationContext> const&) {
+        // Resume the initial inline-begin stream from the checkpoint token,
+        // preserving the begin selector so the server request fingerprint
+        // matches.
+        EXPECT_THAT(request, HasBeginTransaction());
+        EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
+        return MakeReader<PartialResultSet>({responses[1]});
+      });
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn = spanner::MakeReadWriteTransaction();
+  spanner::RowStream rows =
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto stream = spanner::StreamOf<RowType>(rows);
+  std::vector<StatusOr<RowType>> actual{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
+  EXPECT_THAT(txn,
+              HasSessionAndTransaction("multiplexed", "00FEDCBA", true, ""));
 }
 
 /**
@@ -3008,6 +3312,76 @@ TEST(ConnectionImplTest, MutationCommitRetryOnceSuccess) {
   ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(3, commit->commit_stats->mutation_count);
+}
+
+// A mutations-only `Client::Commit()` on a multiplexed session uses an explicit
+// `BeginTransaction` with a `mutation_key`. The service can abort that RPC
+// (e.g., when the mutation key was encoded against a stale schema), which
+// invalidates the transaction. Rerunning must start a new transaction on the
+// same session instead of reading the invalidated selector.
+TEST(ConnectionImplTest, MutationCommitRerunAfterBeginTransactionAborted) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::BeginTransactionRequest const& request,
+                   auto const&) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_TRUE(request.has_mutation_key());
+        return Status(StatusCode::kAborted, "stale client schema");
+      })
+      .WillOnce(
+          [&token](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::BeginTransactionRequest const& request,
+                   auto const&) {
+            EXPECT_EQ("multiplexed", request.session());
+            EXPECT_TRUE(request.has_mutation_key());
+            // The aborted `BeginTransaction` never returned a transaction ID,
+            // so there is no previous transaction to report.
+            EXPECT_THAT(request.options()
+                            .read_write()
+                            .multiplexed_session_previous_transaction_id(),
+                        IsEmpty());
+            return MakeTestTransaction(token, "rerun-txn");
+          });
+
+  spanner::Timestamp const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce(
+          [commit_timestamp](grpc::ClientContext&, Options const&,
+                             google::spanner::v1::CommitRequest const& request,
+                             auto const&) {
+            EXPECT_EQ("multiplexed", request.session());
+            EXPECT_EQ("rerun-txn", request.transaction_id());
+            EXPECT_EQ(1, request.mutations_size());
+            EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
+            return MakeCommitResponse(commit_timestamp);
+          });
+
+  std::shared_ptr<ConnectionImpl> conn =
+      MakeConnectionImpl(db, mock, Options{});
+  spanner::Client client(conn);
+  StatusOr<spanner::CommitResult> commit = client.Commit(
+      [](spanner::Transaction const&) -> StatusOr<spanner::Mutations> {
+        return spanner::Mutations{
+            spanner::MakeInsertMutation("table-name", {}, std::string{"mut"})};
+      },
+      spanner::LimitedErrorCountTransactionRerunPolicy(1).clone(),
+      spanner::ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                        std::chrono::microseconds(1), 2.0)
+          .clone());
+  ASSERT_STATUS_OK(commit);
+  EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
 }
 
 TEST(ConnectionImplTest, MutationCommitRetryMoreThanOnceSuccess) {

@@ -163,6 +163,12 @@ void BulkMutatorState::OnFinish(Status finish_status,
   }
 }
 
+void BulkMutatorState::OnCancel(Status cancel_status) {
+  if (last_status_.ok()) {
+    last_status_ = std::move(cancel_status);
+  }
+}
+
 std::vector<bigtable::FailedMutation> BulkMutatorState::OnRetryDone() && {
   std::vector<bigtable::FailedMutation> result(std::move(failures_));
 

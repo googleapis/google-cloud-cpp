@@ -24,6 +24,7 @@
 #include <deque>
 #include <functional>
 #include <memory>
+#include <mutex>
 #include <queue>
 #include <vector>
 
@@ -92,7 +93,8 @@ class MutationBatcher {
   explicit MutationBatcher(Table table, Options options = Options())
       : table_(std::move(table)),
         options_(options),
-        cur_batch_(std::make_shared<Batch>()) {}
+        cur_batch_(std::make_shared<Batch>()),
+        wait_state_(std::make_shared<WaitState>()) {}
 
   virtual ~MutationBatcher() = default;
 
@@ -299,12 +301,18 @@ class MutationBatcher {
   std::queue<PendingSingleRowMutation> pending_mutations_;
 
   /**
-   * The list of promises made to this point.
-   *
-   * These promises are satisfied as part of calling
-   * `AsyncWaitForNoPendingRequests()`.
+   * Shared state for `AsyncWaitForNoPendingRequests()`, held via `shared_ptr`
+   * so `OnBulkApplyDone` can finalize pending-work accounting after running
+   * user completion callbacks even if a callback destroys `MutationBatcher`.
    */
-  std::vector<NoMorePendingPromise> no_more_pending_promises_;
+  struct WaitState {
+    std::mutex mu;
+    std::size_t pending_work = 0;
+    std::vector<NoMorePendingPromise> promises;
+  };
+
+  /// Shared wait state for `AsyncWaitForNoPendingRequests()`.
+  std::shared_ptr<WaitState> wait_state_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

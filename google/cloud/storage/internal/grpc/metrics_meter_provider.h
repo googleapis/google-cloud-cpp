@@ -21,8 +21,10 @@
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
+#include <array>
 #include <memory>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -50,6 +52,28 @@ auto constexpr kStorageMeterName = "gl-cpp";
  * the two cannot drift apart.
  */
 std::string ChannelCreationLatencyInstrument();
+
+/// Storage SDK latency histogram instruments registered with explicit buckets.
+inline constexpr std::array<std::string_view, 9>
+    kStorageLatencyHistogramInstruments = {{
+        "gcp.client.request.duration",
+        "gcp.storage.client.ttfb",
+        "rpc.client.call.duration",
+        "gcp.storage.client.stall.duration",
+        "gcp.storage.client.server.duration",
+        "gcp.storage.client.network.tls.handshake.duration",
+        "gcp.storage.client.network.dns.lookup.duration",
+        "gcp.storage.client.network.tcp.connect.duration",
+        "gcp.storage.client.auth.credential_refresh.duration",
+    }};
+
+/// Storage SDK payload size histogram instruments registered with explicit
+/// buckets.
+inline constexpr std::array<std::string_view, 2>
+    kStorageSizeHistogramInstruments = {{
+        "gcp.storage.client.request.body.size",
+        "gcp.storage.client.response.body.size",
+    }};
 
 /**
  * Create a meter provider used for gRPC metrics.

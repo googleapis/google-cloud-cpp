@@ -38,6 +38,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -161,8 +162,15 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
       *p, grpc_scope, "grpc.client.attempt.sent_total_compressed_message_size");
   // Instruments created by this library, rather than by gRPC, use a different
   // instrumentation scope and therefore need their own views.
-  AddLatencyHistogramView(*p, StorageMeterScope(),
+  MeterScope const storage_scope = StorageMeterScope();
+  for (std::string_view name : kStorageLatencyHistogramInstruments) {
+    AddLatencyHistogramView(*p, storage_scope, std::string(name));
+  }
+  AddLatencyHistogramView(*p, storage_scope,
                           ChannelCreationLatencyInstrument());
+  for (std::string_view name : kStorageSizeHistogramInstruments) {
+    AddSizeHistogramView(*p, storage_scope, std::string(name));
+  }
 
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || OPENTELEMETRY_VERSION_MINOR >= 10
   p->AddMetricReader(
