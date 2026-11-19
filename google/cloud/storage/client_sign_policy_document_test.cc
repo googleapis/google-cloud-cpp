@@ -31,6 +31,7 @@ namespace {
 
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::StartsWith;
@@ -267,6 +268,46 @@ TEST(CreateSignedPolicyDocTest, SignV4CustomEndpoint) {
 
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->url, StartsWith(custom_endpoint));
+}
+
+/// @test Verify GenerateSignedPostPolicyV4() signs remotely when the connection
+/// has no `UnifiedCredentialsOption`, as in a gRPC client using
+/// `GrpcCredentialOption`.
+TEST_F(CreateSignedPolicyDocRPCTest, SignV4RemoteWithoutUnifiedCredentials) {
+  std::string const expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
+  std::string const expected_signed_blob_hex =
+      "746573742d7369676e65642d626c6f62";
+
+  EXPECT_CALL(*mock_, options)
+      .WillRepeatedly(Return(storage::internal::DefaultOptions(
+          Options{}.set<AuthorityOption>("a-default"))));
+  EXPECT_CALL(*mock_, SignBlob)
+      .WillOnce([&expected_signed_blob](internal::SignBlobRequest const& r) {
+        EXPECT_EQ(r.service_account(), "test-only-invalid@example.com");
+        return make_status_or(
+            internal::SignBlobResponse{"test-key-id", expected_signed_blob});
+      });
+  Client client = ClientForMock();
+  StatusOr<PolicyDocumentV4Result> actual = client.GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(),
+      SigningAccount("test-only-invalid@example.com"));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->signature, expected_signed_blob_hex);
+}
+
+/// @test Verify GenerateSignedPostPolicyV4() reports a missing signing account
+/// when the connection has no `UnifiedCredentialsOption`.
+TEST_F(CreateSignedPolicyDocRPCTest,
+       SignV4WithoutUnifiedCredentialsOrSigningAccount) {
+  EXPECT_CALL(*mock_, options)
+      .WillRepeatedly(Return(storage::internal::DefaultOptions(
+          Options{}.set<AuthorityOption>("a-default"))));
+  EXPECT_CALL(*mock_, SignBlob).Times(0);
+  Client client = ClientForMock();
+  StatusOr<PolicyDocumentV4Result> actual =
+      client.GenerateSignedPostPolicyV4(CreatePolicyDocumentV4ForTest());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("signing account cannot be empty")));
 }
 
 }  // namespace

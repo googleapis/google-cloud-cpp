@@ -84,13 +84,15 @@ Options DefaultOptionsGrpc(
       std::move(options), Options{}.set<storage::UploadBufferSizeOption>(
                               kDefaultGrpcUploadBufferSize));
   // `DefaultOptions()` sets no credentials. Use Application Default
-  // Credentials unless `UnifiedCredentialsOption` is set, so the REST emulator
-  // endpoint does not change the gRPC credentials. As in
-  // `DefaultOptionsWithCredentials()`, capture the auth options before
-  // `DefaultOptions()` adds the `CLOUD_STORAGE_ENABLE_TRACING` components.
+  // Credentials unless `UnifiedCredentialsOption` or `GrpcCredentialOption` is
+  // set, so the REST emulator endpoint does not change gRPC credentials and
+  // `GrpcCredentialOption` is honored. As in `DefaultOptionsWithCredentials()`,
+  // capture the auth options before `DefaultOptions()` adds the
+  // `CLOUD_STORAGE_ENABLE_TRACING` components.
   auto auth_options = google::cloud::internal::MakeAuthOptions(options);
   options = storage::internal::DefaultOptions(std::move(options));
-  if (!options.has<UnifiedCredentialsOption>()) {
+  if (!options.has<UnifiedCredentialsOption>() &&
+      !options.has<GrpcCredentialOption>()) {
     options.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials(std::move(auth_options)));
   }
