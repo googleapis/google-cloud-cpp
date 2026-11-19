@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ATTEMPT_METRICS_H
 
 #include "google/cloud/storage/version.h"
+#include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/metrics/sync_instruments.h>
@@ -38,14 +39,26 @@ class AttemptMetrics {
                      opentelemetry::metrics::MeterProvider> const& provider,
                  std::string server_address, std::string rpc_system);
 
-  void RecordAttempt(std::string_view operation, std::string_view error_type,
-                     std::string_view status_code,
-                     std::string_view network_path) const;
+  void RecordGrpcAttempt(std::string_view operation,
+                         std::string_view error_type,
+                         std::string_view rpc_status_code,
+                         std::string_view network_path) const;
+
+  void RecordHttpAttempt(std::string_view operation,
+                         std::string_view error_type,
+                         std::int64_t http_status_code,
+                         std::string_view network_path) const;
 
   void RecordRetry(std::string_view operation, std::string_view error_type,
                    std::string_view network_path) const;
 
  private:
+  void RecordAttemptImpl(
+      std::string_view operation, std::string_view error_type,
+      std::string_view network_path, char const* status_key,
+      opentelemetry::common::AttributeValue status_value) const;
+
+  std::string version_;
   std::string server_address_;
   std::string rpc_system_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter> meter_;
