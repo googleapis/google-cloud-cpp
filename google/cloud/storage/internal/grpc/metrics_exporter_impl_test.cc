@@ -96,8 +96,31 @@ class ScopedProviderShutdown {
 TEST(GrpcMetricsExporter, DisabledBecauseOption) {
   auto config = MakeMeterProviderConfig(
       FullResource(),
-      TestOptions().set<storage_experimental::EnableGrpcMetricsOption>(false));
+      TestOptions()
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(false)
+          .set<storage_experimental::EnableOTelDebugMetricsOption>(false));
   EXPECT_FALSE(config.has_value());
+}
+
+TEST(GrpcMetricsExporter, EnabledByOTelMetricsWithoutGrpcMetrics) {
+  auto config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(true));
+  ASSERT_TRUE(config.has_value());
+  EXPECT_FALSE(config->enable_grpc_plugin);
+}
+
+TEST(GrpcMetricsExporter, EnabledByOTelDebugMetricsWithoutGrpcMetrics) {
+  auto config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelDebugMetricsOption>(true));
+  ASSERT_TRUE(config.has_value());
+  EXPECT_FALSE(config->enable_grpc_plugin);
 }
 
 TEST(GrpcMetricsExporter, DisabledBecauseNoProject) {
@@ -308,6 +331,32 @@ TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   for (int i = 1; i != kThreadCount; ++i) {
     EXPECT_THAT(providers[i], Eq(providers[0]));
   }
+}
+
+/// @test Verify OTel-only enable creates a provider without the gRPC plugin
+/// and a subsequent gRPC-metrics enable reuses the same provider.
+TEST(GrpcMetricsExporter, OTelOnlyProviderReusedByGrpcEnable) {
+  std::string const authority = "test-only-otel-then-grpc.example.com";
+  auto otel_config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<AuthorityOption>(authority)
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(true));
+  ASSERT_TRUE(otel_config.has_value());
+  ASSERT_FALSE(otel_config->enable_grpc_plugin);
+
+  EnableGrpcMetricsImpl(*otel_config);
+  auto const provider = FindMeterProvider(authority);
+  ScopedProviderShutdown const provider_shutdown(provider);
+  EXPECT_THAT(provider, NotNull());
+
+  auto grpc_config = MakeMeterProviderConfig(
+      FullResource(), TestOptions().set<AuthorityOption>(authority));
+  ASSERT_TRUE(grpc_config.has_value());
+  ASSERT_TRUE(grpc_config->enable_grpc_plugin);
+  EnableGrpcMetricsImpl(*grpc_config);
+  EXPECT_THAT(FindMeterProvider(authority), Eq(provider));
 }
 
 }  // namespace

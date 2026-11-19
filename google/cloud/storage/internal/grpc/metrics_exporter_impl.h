@@ -39,6 +39,7 @@ struct ExporterConfig {
   opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
       reader_options;
   std::string authority;
+  bool enable_grpc_plugin = true;
 };
 
 std::optional<ExporterConfig> MakeMeterProviderConfig(
