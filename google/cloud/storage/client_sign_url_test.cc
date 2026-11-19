@@ -263,6 +263,48 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
 }
 
+/// @test Verify CreateV4SignedUrl() signs remotely when the connection has no
+/// `UnifiedCredentialsOption`, as in a gRPC client using
+/// `GrpcCredentialOption`.
+TEST_F(CreateSignedUrlTest, V4SignRemoteWithoutUnifiedCredentials) {
+  // Use `echo -n test-signed-blob | openssl base64 -e` to create the magic
+  // string.
+  std::string const expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
+  // Use `echo -n test-signed-blob | od -x` to create the magic string.
+  std::string const expected_signed_blob_hex =
+      "746573742d7369676e65642d626c6f62";
+
+  EXPECT_CALL(*mock_, options)
+      .WillRepeatedly(Return(storage::internal::DefaultOptions(
+          Options{}.set<AuthorityOption>("a-default"))));
+  EXPECT_CALL(*mock_, SignBlob)
+      .WillOnce([&expected_signed_blob](internal::SignBlobRequest const& r) {
+        EXPECT_EQ(r.service_account(), "test-only-invalid@example.com");
+        return make_status_or(
+            internal::SignBlobResponse{"test-key-id", expected_signed_blob});
+      });
+  Client client = ClientForMock();
+  StatusOr<std::string> actual =
+      client.CreateV4SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
+}
+
+/// @test Verify CreateV4SignedUrl() reports a missing signing account when the
+/// connection has no `UnifiedCredentialsOption`.
+TEST_F(CreateSignedUrlTest, V4SignWithoutUnifiedCredentialsOrSigningAccount) {
+  EXPECT_CALL(*mock_, options)
+      .WillRepeatedly(Return(storage::internal::DefaultOptions(
+          Options{}.set<AuthorityOption>("a-default"))));
+  EXPECT_CALL(*mock_, SignBlob).Times(0);
+  Client client = ClientForMock();
+  StatusOr<std::string> actual =
+      client.CreateV4SignedUrl("GET", "test-bucket", "test-object");
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("signing account cannot be empty")));
+}
+
 /// @test Verify that CreateV4SignedUrl() respects the custom endpoint.
 TEST_F(CreateSignedUrlTest, V4SignCustomEndpoint) {
   auto const custom_endpoint = std::string{"https://storage.mydomain.com"};

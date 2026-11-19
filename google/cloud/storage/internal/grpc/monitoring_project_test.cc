@@ -18,10 +18,12 @@
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/constants.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 #include <nlohmann/json.hpp>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <optional>
@@ -136,6 +138,27 @@ TEST(MonitoringProject, WithExplicitProject) {
       Options{}.set<storage::ProjectIdOption>("test-only-project"));
   EXPECT_THAT(MonitoringProject(storage_options),
               Optional<Project>(Project("test-only-project")));
+}
+
+TEST(MonitoringProject, WithGrpcCredentialOption) {
+  ScopedEnvironment pr("GOOGLE_CLOUD_PROJECT", std::nullopt);
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  Options const options_no_project = DefaultOptionsGrpc(
+      Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()));
+  EXPECT_EQ(
+      MonitoringProject(opentelemetry::sdk::resource::Resource::Create({}),
+                        options_no_project),
+      std::optional<Project>(std::nullopt));
+
+  Options const options_with_project = DefaultOptionsGrpc(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<storage::ProjectIdOption>("test-only-project"));
+  EXPECT_THAT(
+      MonitoringProject(opentelemetry::sdk::resource::Resource::Create({}),
+                        options_with_project),
+      Optional<Project>(Project("test-only-project")));
 }
 
 }  // namespace
