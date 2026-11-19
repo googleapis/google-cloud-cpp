@@ -52,9 +52,10 @@ void EnableGrpcMetricsImpl(ExporterConfig config);
  * Returns the meter provider created for @p authority, or `nullptr`.
  *
  * `EnableGrpcMetricsImpl()` creates at most one provider per authority and
- * hands it to gRPC. Instruments created by this library reuse it, so they
- * inherit the customer's opt-out, export period, and monitoring project
- * instead of needing a second exporter.
+ * registers the gRPC OpenTelemetry plugin when `enable_grpc_plugin` is true.
+ * Instruments created by this library reuse the same provider, so they inherit
+ * the customer's opt-out, export period, and monitoring project instead of
+ * needing a second exporter.
  *
  * Returns `nullptr` when metrics are disabled, when no monitoring project
  * could be determined, or when `EnableGrpcMetricsImpl()` has not run for

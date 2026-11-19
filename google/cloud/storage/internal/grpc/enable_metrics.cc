@@ -19,6 +19,7 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
+#include "google/cloud/storage/options.h"
 
 namespace google {
 namespace cloud {
@@ -27,8 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnableGrpcMetrics(Options const& storage_options) {
   auto options = DefaultOptionsGrpc(storage_options);
-  // Avoid running the resource detector if the metrics are disabled.
-  if (!options.get<storage_experimental::EnableGrpcMetricsOption>()) return;
+  // Avoid running the resource detector if all metrics options are disabled.
+  if (!options.get<storage_experimental::EnableGrpcMetricsOption>() &&
+      !options.get<storage_experimental::EnableOTelMetricsOption>() &&
+      !options.get<storage_experimental::EnableOTelDebugMetricsOption>()) {
+    return;
+  }
   auto detector = otel::MakeResourceDetector();
   auto resources = detector->Detect();
   auto config = MakeMeterProviderConfig(resources, options);

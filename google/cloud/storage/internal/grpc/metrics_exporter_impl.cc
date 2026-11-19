@@ -140,16 +140,14 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
 }
 
 void EnableGrpcMetricsImpl(ExporterConfig config) {
-  // `config.authority` is moved into `scope_filter` below, so keep a copy.
-  std::string const authority = config.authority;
   ExporterRegistry::Singleton().Register(
-      authority, config.enable_grpc_plugin,
+      config.authority, config.enable_grpc_plugin,
       [&] {
         auto exporter = otel::MakeMonitoringExporter(
             std::move(config.project),
             monitoring_v3::MakeMetricServiceConnection(
                 std::move(config.exporter_connection_options)),
-            config.exporter_options);
+            std::move(config.exporter_options));
         return MakeGrpcMeterProvider(std::move(exporter),
                                      std::move(config.reader_options));
       },
@@ -172,7 +170,7 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
             "grpc.lb.rls.failed_picks",
         };
         auto scope_filter =
-            [authority = std::move(config.authority)](
+            [authority = config.authority](
                 grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
               return scope.default_authority() == authority;
             };
