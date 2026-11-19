@@ -579,6 +579,20 @@ std::size_t DefaultConnectionPoolSize() {
   return 4 * nthreads;
 }
 
+template <typename Option>
+void ApplyBoolEnvOption(Options& o, char const* env_var) {
+  if (!o.has<Option>()) {
+    o.set<Option>(false);
+  }
+  std::optional<std::string> const val = GetEnv(env_var);
+  if (!val.has_value()) return;
+  if (*val == "true") {
+    o.set<Option>(true);
+  } else if (*val == "false") {
+    o.set<Option>(false);
+  }
+}
+
 }  // namespace
 
 namespace internal {
@@ -701,6 +715,11 @@ Options DefaultOptions(Options opts) {
   if (tracing && !tracing->empty()) {
     o.set<OpenTelemetryTracingOption>(true);
   }
+
+  ApplyBoolEnvOption<storage_experimental::EnableOTelMetricsOption>(
+      o, "GCP_STORAGE_CPP_ENABLE_OTEL_METRICS");
+  ApplyBoolEnvOption<storage_experimental::EnableOTelDebugMetricsOption>(
+      o, "GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS");
 
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
   if (project_id.has_value()) {
