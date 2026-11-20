@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
+#include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -87,6 +88,51 @@ Options BasicTestPolicies() {
           // Make the tests faster.
           ExponentialBackoffPolicy(us(1), us(2), 2).clone())
       .set<IdempotencyPolicyOption>(StrictIdempotencyPolicy().clone());
+}
+
+TEST(RetryObjectReadSourceTest, CancelledBeforeRead) {
+  experimental::RestCancellation cancel;
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, ReadObject).WillOnce([] {
+    auto source = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*source, Read).Times(0);
+    return std::unique_ptr<ObjectReadSource>(std::move(source));
+  });
+  auto client = StorageConnectionImpl::Create(std::move(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<experimental::RestCancellationOption>(cancel));
+  StatusOr<std::unique_ptr<ObjectReadSource>> source =
+      client->ReadObject(ReadObjectRangeRequest{});
+  ASSERT_STATUS_OK(source);
+
+  cancel.Cancel();
+  EXPECT_THAT((*source)->Read(nullptr, 1024), StatusIs(StatusCode::kCancelled));
+}
+
+TEST(RetryObjectReadSourceTest, CancelledDuringResumeBackoff) {
+  experimental::RestCancellation cancel;
+  ::testing::MockFunction<StatusOr<std::unique_ptr<ObjectReadSource>>(
+      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>
+      factory;
+  auto child = std::make_unique<MockObjectReadSource>();
+  EXPECT_CALL(*child, Read).WillOnce(Return(TransientError()));
+  // The first resume is immediate. Its failure triggers the backoff below.
+  EXPECT_CALL(factory, Call).WillOnce(Return(TransientError()));
+  ::testing::MockFunction<void(std::chrono::milliseconds)> backoff;
+  EXPECT_CALL(backoff, Call).WillOnce([&] { cancel.Cancel(); });
+
+  Options options =
+      BasicTestPolicies().set<experimental::RestCancellationOption>(cancel);
+  auto retry_policy = options.get<RetryPolicyOption>()->clone();
+  auto backoff_policy = options.get<BackoffPolicyOption>()->clone();
+  RetryObjectReadSource source(
+      factory.AsStdFunction(),
+      google::cloud::internal::MakeImmutableOptions(std::move(options)),
+      ReadObjectRangeRequest{}, std::move(child), std::move(retry_policy),
+      std::move(backoff_policy), backoff.AsStdFunction());
+
+  EXPECT_THAT(source.Read(nullptr, 1024), StatusIs(StatusCode::kCancelled));
 }
 
 /// @test No failures scenario.

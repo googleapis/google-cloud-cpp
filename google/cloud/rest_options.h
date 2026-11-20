@@ -19,14 +19,72 @@
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <atomic>
 #include <chrono>
 #include <functional>
+#include <memory>
 #include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace experimental {
+
+/**
+ * A copyable handle for cooperatively cancelling synchronous REST operations.
+ *
+ * Copies share state. Cancel() is irreversible, idempotent, and safe to call
+ * concurrently with IsCancelled() on this handle or a copy. Do not assign or
+ * destroy the same handle concurrently with these calls. This is not a signal
+ * handler API: invoke Cancel() from an ordinary application thread.
+ *
+ * Operations retain their own copy, so the application handle need not outlive
+ * them. Construct a new handle for each independently cancellable operation.
+ */
+class RestCancellation {
+ public:
+  /// Creates independent, initially uncancelled state.
+  RestCancellation() : cancelled_(std::make_shared<std::atomic<bool>>(false)) {}
+
+  /// Requests cancellation of every operation sharing this handle's state.
+  void Cancel() const { cancelled_->store(true, std::memory_order_relaxed); }
+
+  /// Returns whether cancellation has been requested.
+  bool IsCancelled() const {
+    return cancelled_->load(std::memory_order_relaxed);
+  }
+
+ private:
+  std::shared_ptr<std::atomic<bool>> cancelled_;
+};
+
+/**
+ * Associates a RestCancellation with synchronous REST requests.
+ *
+ * Pass this in per-call Options to storage::Client. ReadObject() and
+ * WriteObject() retain the option for the entire stream, including retries and
+ * Close(). Setting it on a client deliberately shares cancellation across all
+ * calls inheriting that option. Other calls on the client are unaffected.
+ *
+ * Cancellation is reported as StatusCode::kCancelled through the existing
+ * operation result or stream error. It prevents further retries and upload
+ * finalization during cleanup. It does not roll back server-side effects: when
+ * cancellation races with completion, success or cancellation may be returned,
+ * and the server may have committed the operation even if cancellation wins.
+ *
+ * Cancellable libcurl waits check state at intervals of at most 50ms; thread
+ * scheduling, synchronous DNS resolvers, and application callbacks can delay
+ * observation. Credential acquisition already in progress is not interrupted.
+ * This option does not cancel gRPC operations. Buffered stream I/O may complete
+ * before the next transport call observes cancellation.
+ * Setting this option disables Storage read hedging for the stream, even before
+ * cancellation is requested, so occupied hedging workers cannot delay it.
+ *
+ * @ingroup rest-options
+ */
+struct RestCancellationOption {
+  using Type = RestCancellation;
+};
 
 /**
  * Function signature for the libcurl SSL context callback.
@@ -106,7 +164,8 @@ struct Interface {
 using RestOptionList =
     ::google::cloud::OptionList<QuotaUserOption, RestTracingOptionsOption,
                                 ServerTimeoutOption, UserIpOption, Interface,
-                                experimental::SslCtxCallbackOption>;
+                                experimental::SslCtxCallbackOption,
+                                experimental::RestCancellationOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

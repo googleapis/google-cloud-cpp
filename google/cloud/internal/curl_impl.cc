@@ -20,6 +20,7 @@
 #include "google/cloud/internal/curl_writev.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_cancellation.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
@@ -202,6 +203,8 @@ CurlImpl::CurlImpl(CurlHandle handle,
       multi_(factory_->CreateMultiHandle()),
       pqc_ec_curves_(std::move(pqc_ec_curves)) {
   CurlInitializeOnce(options);
+  cancellation_ =
+      internal::FetchOption<experimental::RestCancellationOption>(options);
 
   logging_enabled_ = google::cloud::internal::Contains(
       options.get<LoggingComponentsOption>(), "http");
@@ -239,6 +242,15 @@ CurlImpl::CurlImpl(CurlHandle handle,
 }
 
 CurlImpl::~CurlImpl() {
+  if (IsCancelled()) {
+    // Never drive a cancelled transfer during cleanup, including a paused one.
+    closing_ = true;
+    curl_closed_ = true;
+    CleanupHandles();
+    CurlHandle::DiscardFromPool(*factory_, std::move(handle_));
+    factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+    return;
+  }
   if (!curl_closed_) {
     // Set the closing_ flag to trigger a return 0 from the next
     // WriteCallback().  See the header file for more details.
@@ -644,6 +656,7 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
 
 Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
+  if (IsCancelled()) return OnTransferError(context, RestCancelledError());
 
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
@@ -666,6 +679,19 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
 
+  if (cancellation_) {
+    status = handle_.SetOption(CURLOPT_NOPROGRESS, 0L);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(
+        CURLOPT_XFERINFOFUNCTION,
+        +[](void* p, curl_off_t, curl_off_t, curl_off_t, curl_off_t) -> int {
+          return static_cast<CurlImpl*>(p)->IsCancelled() ? 1 : 0;
+        });
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_XFERINFODATA, this);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
   // This indicates that we are using the API incorrectly. The application
@@ -686,6 +712,11 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(RestContext& context,
                                          absl::Span<char> output) {
+  if (IsCancelled()) {
+    // Completed/failed transfers have already released their handles.
+    if (curl_closed_) return RestCancelledError();
+    return OnTransferError(context, RestCancelledError());
+  }
   handle_.FlushDebug(__func__);
   avail_ = output;
   TRACE_STATE() << ", begin";
@@ -826,6 +857,10 @@ StatusOr<int> CurlImpl::PerformWork() {
       // libcurl may have received a block of data, but the WriteCallback()
       // (see above) tells libcurl that it cannot receive more data.
       if (closing_) continue;
+      if (multi_info_read_result == CURLE_ABORTED_BY_CALLBACK &&
+          IsCancelled()) {
+        return RestCancelledError();
+      }
       if (multi_info_read_result != CURLE_OK) {
         return CurlHandle::AsStatus(multi_info_read_result, __func__);
       }
@@ -842,6 +877,7 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
   TRACE_STATE() << ", begin";
   int repeats = 0;
   while (!predicate()) {
+    if (IsCancelled()) return RestCancelledError();
     handle_.FlushDebug(__func__);
     TRACE_STATE() << ", repeats=" << repeats;
     auto running_handles = PerformWork();
@@ -859,7 +895,9 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
 }
 
 Status CurlImpl::WaitForHandles(int& repeats) {
-  int const timeout_ms = 1000;
+  // Only cancellable requests pay for more frequent wakeups. All CURL handle
+  // access stays on the request thread, including cancellation and pool reuse.
+  int const timeout_ms = cancellation_ ? 50 : 1000;
   int numfds = 0;
   CURLMcode result;
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
@@ -871,7 +909,9 @@ Status CurlImpl::WaitForHandles(int& repeats) {
   do {
     errno = 0;
     result = curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
-  } while (result == CURLM_UNRECOVERABLE_POLL && errno == EINTR);
+  } while (result == CURLM_UNRECOVERABLE_POLL && errno == EINTR &&
+           !IsCancelled());
+  if (IsCancelled()) return RestCancelledError();
 #else
   // EINTR will be simply ignored by curl_multi_poll().
   result = curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
@@ -904,6 +944,7 @@ Status CurlImpl::OnTransferError(RestContext& context, Status status) {
   // When there is a transfer error the handle is suspect. It could be pointing
   // to an invalid host, a host that is slow and trickling data, or otherwise
   // be in a bad state. Release the handle, but do not return it to the pool.
+  curl_closed_ = true;
   CleanupHandles();
   CurlHandle::DiscardFromPool(*factory_, std::move(handle_));
 

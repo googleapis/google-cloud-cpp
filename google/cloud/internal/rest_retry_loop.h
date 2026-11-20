@@ -20,6 +20,7 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/rest_cancellation.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/options.h"
@@ -69,11 +70,14 @@ auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                        char const* location, Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<
         Functor, RestContext&, Options const&, Request const&> {
+  if (IsRestCancelled(options)) return RestCancelledError();
   auto last_status = Status{};
   while (!retry_policy.IsExhausted()) {
+    if (IsRestCancelled(options)) return RestCancelledError();
     RestContext rest_context(options);
     auto result = functor(rest_context, options, request);
     if (result.ok()) return result;
+    if (IsRestCancelled(options)) return RestCancelledError();
     last_status = internal::GetResultStatus(std::move(result));
     if (idempotency == Idempotency::kNonIdempotent) {
       return internal::RetryLoopNonIdempotentError(std::move(last_status),
@@ -84,6 +88,8 @@ auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     if (!retry_policy.OnFailure(last_status)) break;
     sleeper(backoff_policy.OnCompletion());
   }
+  // Cancellation may interrupt a backoff after the retry deadline expires.
+  if (IsRestCancelled(options)) return RestCancelledError();
   return internal::RetryLoopError(last_status, location,
                                   retry_policy.IsExhausted());
 }
@@ -102,7 +108,9 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
     -> google::cloud::internal::invoke_result_t<
         Functor, RestContext&, Options const&, Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
-      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
+      [&options](std::chrono::milliseconds p) {
+        RestCancellationWait(options, p);
+      };
   sleeper = internal::MakeTracedSleeper(options, std::move(sleeper), "Backoff");
   return RestRetryLoopImpl(*retry_policy, *backoff_policy, idempotency,
                            std::forward<Functor>(functor), options, request,
@@ -122,7 +130,9 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     -> google::cloud::internal::invoke_result_t<
         Functor, RestContext&, Options const&, Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
-      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
+      [&options](std::chrono::milliseconds p) {
+        RestCancellationWait(options, p);
+      };
   sleeper = internal::MakeTracedSleeper(options, std::move(sleeper), "Backoff");
   return RestRetryLoopImpl(retry_policy, backoff_policy, idempotency,
                            std::forward<Functor>(functor), options, request,

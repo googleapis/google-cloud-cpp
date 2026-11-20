@@ -24,6 +24,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/log.h"
+#include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 #include <opentelemetry/metrics/provider.h>
 #include <algorithm>
@@ -420,8 +421,11 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
       current->get<storage_experimental::MaxReadHedgesOption>();
   std::size_t const max_buffer =
       current->get<storage_experimental::MaximumHedgeBufferOption>();
+  // Queued hedging tasks cannot observe cancellation until a worker is free.
+  // Keep cancellable streams on the calling thread for their entire lifetime.
   bool const hedging_active =
-      enable_hedging && max_hedges > 0 && hedge_pool_ && read_pool_;
+      enable_hedging && max_hedges > 0 && hedge_pool_ && read_pool_ &&
+      !current->has<experimental::RestCancellationOption>();
 
   // Tell the service which client-side features shaped this read. Only the
   // features actually in effect are reported; `kReadHedging` means hedging is
@@ -751,7 +755,9 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
     UploadChunkRequest const& request) {
   auto const& current = google::cloud::internal::CurrentOptions();
   std::function<void(std::chrono::milliseconds)> sleeper =
-      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); };
+      [&current](std::chrono::milliseconds d) {
+        rest_internal::RestCancellationWait(current, d);
+      };
   sleeper = google::cloud::internal::MakeTracedSleeper(
       current, std::move(sleeper), "Backoff");
   auto last_status = google::cloud::internal::DeadlineExceededError(
@@ -794,8 +800,14 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
 
   int error_count = 0;
 
+  if (rest_internal::IsRestCancelled(current))
+    return rest_internal::RestCancelledError();
   while (!retry_policy->IsExhausted()) {
+    if (rest_internal::IsRestCancelled(current))
+      return rest_internal::RestCancelledError();
     auto result = (*operation)(committed_size);
+    if (!result && rest_internal::IsRestCancelled(current))
+      return rest_internal::RestCancelledError();
     if (!result) {
       ++error_count;
       // On a failure we preserve the error, then query if retry policy allows
@@ -873,6 +885,9 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
     // On a full write we can return immediately.
     return result;
   }
+  // Cancellation may interrupt a backoff after the retry deadline expires.
+  if (rest_internal::IsRestCancelled(current))
+    return rest_internal::RestCancelledError();
   return RetryError(last_status, *retry_policy, __func__);
 }
 

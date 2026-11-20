@@ -472,6 +472,7 @@ if (BUILD_TESTING)
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/request_project_id_test.cc
+        internal/rest/cancellation_test.cc
         internal/rest/object_read_source_test.cc
         internal/rest/request_builder_test.cc
         internal/rest/stub_test.cc

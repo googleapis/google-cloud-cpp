@@ -63,6 +63,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/populate_rest_options.h",
     "internal/rest_carrier.h",
     "internal/rest_client.h",
+    "internal/rest_cancellation.h",
     "internal/rest_context.h",
     "internal/rest_lro_helpers.h",
     "internal/rest_opentelemetry.h",
