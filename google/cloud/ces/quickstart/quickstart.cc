@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
   namespace ces = ::google::cloud::ces_v1;
   auto client = ces::AgentServiceClient(ces::MakeAgentServiceConnection());
 
-  for (auto r : client.ListApps(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListApps(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

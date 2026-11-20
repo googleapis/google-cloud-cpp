@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
   auto client = devicestreaming::DirectAccessServiceClient(
       devicestreaming::MakeDirectAccessServiceConnection());
 
-  for (auto r : client.ListDeviceSessions(parent)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListDeviceSessions(parent)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

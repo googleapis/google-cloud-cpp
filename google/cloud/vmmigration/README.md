@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       vmmigration::VmMigrationClient(vmmigration::MakeVmMigrationConnection());
 
-  for (auto s : client.ListSources(location.FullName())) {
-    if (!s) throw std::move(s).status();
+  for (auto const& s : client.ListSources(location.FullName())) {
+    if (!s) throw google::cloud::Status(s.status());
     std::cout << s->DebugString() << "\n";
   }
 

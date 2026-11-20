@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) try {
   auto client = privateca::CertificateAuthorityServiceClient(
       privateca::MakeCertificateAuthorityServiceConnection());
 
-  for (auto ca_pool : client.ListCaPools(location.FullName())) {
-    if (!ca_pool) throw std::move(ca_pool).status();
+  for (auto const& ca_pool : client.ListCaPools(location.FullName())) {
+    if (!ca_pool) throw google::cloud::Status(ca_pool.status());
     std::cout << ca_pool->DebugString() << "\n";
   }
 

@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = appconnectors::AppConnectorsServiceClient(
       appconnectors::MakeAppConnectorsServiceConnection());
 
-  for (auto ac : client.ListAppConnectors(location.FullName())) {
-    if (!ac) throw std::move(ac).status();
+  for (auto const& ac : client.ListAppConnectors(location.FullName())) {
+    if (!ac) throw google::cloud::Status(ac.status());
     std::cout << ac->DebugString() << "\n";
   }
 

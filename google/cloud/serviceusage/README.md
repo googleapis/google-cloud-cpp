@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) try {
   google::api::serviceusage::v1::ListServicesRequest request;
   request.set_parent(project.FullName());
   request.set_filter("state:ENABLED");
-  for (auto s : client.ListServices(request)) {
-    if (!s) throw std::move(s).status();
+  for (auto const& s : client.ListServices(request)) {
+    if (!s) throw google::cloud::Status(s.status());
     std::cout << s->DebugString() << "\n";
   }
 

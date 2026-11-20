@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = gkemulticloud::AttachedClustersClient(
       gkemulticloud::MakeAttachedClustersConnection(location.location_id()));
 
-  for (auto ac : client.ListAttachedClusters(location.FullName())) {
-    if (!ac) throw std::move(ac).status();
+  for (auto const& ac : client.ListAttachedClusters(location.FullName())) {
+    if (!ac) throw google::cloud::Status(ac.status());
     std::cout << ac->DebugString() << "\n";
   }
 

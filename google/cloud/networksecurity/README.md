@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   auto client = networksecurity::NetworkSecurityClient(
       networksecurity::MakeNetworkSecurityConnection());
 
-  for (auto ap : client.ListAuthorizationPolicies(location.FullName())) {
-    if (!ap) throw std::move(ap).status();
+  for (auto const& ap : client.ListAuthorizationPolicies(location.FullName())) {
+    if (!ap) throw google::cloud::Status(ap.status());
     std::cout << ap->DebugString() << "\n";
   }
 

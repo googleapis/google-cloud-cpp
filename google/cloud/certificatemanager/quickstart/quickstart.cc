@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = certificatemanager::CertificateManagerClient(
       certificatemanager::MakeCertificateManagerConnection());
 
-  for (auto c : client.ListCertificates(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListCertificates(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

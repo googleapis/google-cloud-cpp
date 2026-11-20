@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
       essentialcontacts::MakeEssentialContactsServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.ListContacts(project.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListContacts(project.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

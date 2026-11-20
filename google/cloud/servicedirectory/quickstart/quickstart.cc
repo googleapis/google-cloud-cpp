@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = servicedirectory::RegistrationServiceClient(
       servicedirectory::MakeRegistrationServiceConnection());
 
-  for (auto ns : client.ListNamespaces(location.FullName())) {
-    if (!ns) throw std::move(ns).status();
+  for (auto const& ns : client.ListNamespaces(location.FullName())) {
+    if (!ns) throw google::cloud::Status(ns.status());
     std::cout << ns->DebugString() << "\n";
   }
 

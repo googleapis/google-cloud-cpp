@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = observability::ObservabilityClient(
       observability::MakeObservabilityConnection());
 
-  for (auto r : client.ListBuckets(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListBuckets(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
       support::CaseServiceClient(support::MakeCaseServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto c : client.ListCases(project.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListCases(project.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

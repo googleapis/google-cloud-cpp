@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) try {
       secretmanager::MakeSecretManagerServiceConnection());
 
   auto const parent = std::string("projects/") + argv[1];
-  for (auto secret : client.ListSecrets(parent)) {
-    if (!secret) throw std::move(secret).status();
+  for (auto const& secret : client.ListSecrets(parent)) {
+    if (!secret) throw google::cloud::Status(secret.status());
     std::cout << secret->DebugString() << "\n";
   }
 
