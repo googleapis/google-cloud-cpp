@@ -138,6 +138,8 @@ add_library(
     internal/md5hash.h
     internal/metadata_parser.cc
     internal/metadata_parser.h
+    internal/metrics_error_type.cc
+    internal/metrics_error_type.h
     internal/notification_metadata_parser.cc
     internal/notification_metadata_parser.h
     internal/notification_requests.cc
@@ -464,6 +466,7 @@ if (BUILD_TESTING)
         internal/make_jwt_assertion_test.cc
         internal/md5hash_test.cc
         internal/metadata_parser_test.cc
+        internal/metrics_error_type_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
         internal/object_read_streambuf_test.cc
