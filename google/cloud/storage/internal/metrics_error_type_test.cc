@@ -57,6 +57,8 @@ TEST(MetricsErrorTypeTest, ChecksumMismatch) {
       {StatusCode::kFailedPrecondition, "crc32c metadata did not match",
        "FAILED_PRECONDITION"},
       {StatusCode::kInvalidArgument, "mismatched offset", "INVALID_ARGUMENT"},
+      {StatusCode::kInvalidArgument, "Invalid bucket name: 'md5-match'",
+       "INVALID_ARGUMENT"},
       {StatusCode::kDataLoss, "invalid crc32c header", "DATA_LOSS"},
   };
   for (auto const& c : cases) {

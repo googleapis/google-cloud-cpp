@@ -14,7 +14,9 @@
 
 #include "google/cloud/storage/internal/metrics_error_type.h"
 #include "absl/strings/match.h"
+#include <string>
 #include <string_view>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -23,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 bool IsChecksumMismatch(Status const& status) {
-  auto const code = status.code();
+  StatusCode const code = status.code();
   if (code != StatusCode::kDataLoss && code != StatusCode::kInvalidArgument) {
     return false;
   }
@@ -32,16 +34,22 @@ bool IsChecksumMismatch(Status const& status) {
       absl::StrContains(msg, "(): mismatched hashes in ")) {
     return true;
   }
-  return (absl::StrContainsIgnoreCase(msg, "crc32c") ||
-          absl::StrContainsIgnoreCase(msg, "md5")) &&
-         absl::StrContainsIgnoreCase(msg, "match");
+  return absl::StrContainsIgnoreCase(msg, "mismatched crc32c") ||
+         absl::StrContainsIgnoreCase(msg, "mismatched md5") ||
+         ((absl::StrContainsIgnoreCase(msg, "crc32c") ||
+           absl::StrContainsIgnoreCase(msg, "md5")) &&
+          (absl::StrContainsIgnoreCase(msg, "doesn't match calculated") ||
+           absl::StrContainsIgnoreCase(msg, "does not match calculated")));
 }
 
 std::string_view ClassifyHttpMetadataCode(Status const& status) {
-  // The REST layer coalesces HTTP 408/429/500/504 into `kUnavailable` while
-  // attaching the original `http_status_code` in `ErrorInfo` metadata.
+  // The REST layer coalesces HTTP 408/429/500/504 into `kUnavailable`.
+  // `http_status_code` is attached in `ErrorInfo` metadata for empty or
+  // structured JSON error bodies (see `ParseJsonError()`), so non-JSON proxy
+  // responses fall through as `UNAVAILABLE`.
   if (status.code() != StatusCode::kUnavailable) return {};
-  auto const& metadata = status.error_info().metadata();
+  std::unordered_map<std::string, std::string> const& metadata =
+      status.error_info().metadata();
   auto const it = metadata.find("http_status_code");
   if (it == metadata.end()) return {};
   if (it->second == "429") return "RESOURCE_EXHAUSTED";
