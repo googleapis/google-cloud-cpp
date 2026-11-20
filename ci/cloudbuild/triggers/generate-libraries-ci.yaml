@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: generate-libraries-ci
+name: v3-14-x-generate-libraries-ci
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: checkers

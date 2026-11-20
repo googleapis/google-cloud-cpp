@@ -17,8 +17,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
-name: publish-docs-release
+    branch: v3.14.x
+name: v3-14-x-publish-docs-release
 substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora-latest-publish-docs

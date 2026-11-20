@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: quickstart-cmake-ci
+name: v3-14-x-quickstart-cmake-ci
 substitutions:
   _BUILD_NAME: quickstart-cmake
   _DISTRO: ubuntu-24.04

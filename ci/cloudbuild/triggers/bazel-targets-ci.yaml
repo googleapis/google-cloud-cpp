@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-targets-ci
+name: v3-14-x-bazel-targets-ci
 substitutions:
   _BUILD_NAME: bazel-targets
   _DISTRO: fedora-latest-bazel
