@@ -32,9 +32,11 @@
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
+#include <functional>
 #include <map>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -108,6 +110,44 @@ class ExporterRegistry {
   std::mutex mu_;
 };
 
+void RegisterGrpcPlugin(
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider,
+    std::string const& authority) {
+  auto const metrics = std::vector<std::string_view>{
+      "grpc.lb.wrr.rr_fallback",
+      "grpc.lb.wrr.endpoint_weight_not_yet_usable",
+      "grpc.lb.wrr.endpoint_weight_stale",
+      "grpc.lb.wrr.endpoint_weights",
+      "grpc.xds_client.connected",
+      "grpc.xds_client.server_failure",
+      "grpc.xds_client.resource_updates_valid",
+      "grpc.xds_client.resource_updates_invalid",
+      "grpc.xds_client.resources",
+      "grpc.lb.rls.cache_size",
+      "grpc.lb.rls.cache_entries",
+      "grpc.lb.rls.default_target_picks",
+      "grpc.lb.rls.target_picks",
+      "grpc.lb.rls.failed_picks",
+  };
+  auto scope_filter =
+      [authority](grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
+        return scope.default_authority() == authority;
+      };
+  auto status =
+      grpc::OpenTelemetryPluginBuilder()
+          .SetMeterProvider(provider)
+          .EnableMetrics(metrics)
+          .AddOptionalLabel("grpc.lb.locality")
+          .SetGenericMethodAttributeFilter([](std::string_view target) {
+            return absl::StartsWith(target, "google.storage.v2");
+          })
+          .SetChannelScopeFilter(std::move(scope_filter))
+          .BuildAndRegisterGlobal();
+  if (!status.ok()) {
+    GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
+  }
+}
+
 }  // namespace
 
 std::optional<ExporterConfig> MakeMeterProviderConfig(
@@ -140,6 +180,15 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
 }
 
 void EnableGrpcMetricsImpl(ExporterConfig config) {
+  EnableGrpcMetricsImpl(std::move(config), RegisterGrpcPlugin);
+}
+
+void EnableGrpcMetricsImpl(
+    ExporterConfig config,
+    std::function<
+        void(std::shared_ptr<opentelemetry::metrics::MeterProvider> const&,
+             std::string const&)>
+        register_grpc_plugin) {
   ExporterRegistry::Singleton().Register(
       config.authority, config.enable_grpc_plugin,
       [&] {
@@ -152,43 +201,7 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
                                      std::move(config.reader_options));
       },
       [&](std::shared_ptr<opentelemetry::metrics::MeterProvider> const&
-              provider) {
-        auto const metrics = std::vector<std::string_view>{
-            "grpc.lb.wrr.rr_fallback",
-            "grpc.lb.wrr.endpoint_weight_not_yet_usable",
-            "grpc.lb.wrr.endpoint_weight_stale",
-            "grpc.lb.wrr.endpoint_weights",
-            "grpc.xds_client.connected",
-            "grpc.xds_client.server_failure",
-            "grpc.xds_client.resource_updates_valid",
-            "grpc.xds_client.resource_updates_invalid",
-            "grpc.xds_client.resources",
-            "grpc.lb.rls.cache_size",
-            "grpc.lb.rls.cache_entries",
-            "grpc.lb.rls.default_target_picks",
-            "grpc.lb.rls.target_picks",
-            "grpc.lb.rls.failed_picks",
-        };
-        auto scope_filter =
-            [authority = config.authority](
-                grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
-              return scope.default_authority() == authority;
-            };
-        auto status =
-            grpc::OpenTelemetryPluginBuilder()
-                .SetMeterProvider(provider)
-                .EnableMetrics(metrics)
-                .AddOptionalLabel("grpc.lb.locality")
-                .SetGenericMethodAttributeFilter([](std::string_view target) {
-                  return absl::StartsWith(target, "google.storage.v2");
-                })
-                .SetChannelScopeFilter(std::move(scope_filter))
-                .BuildAndRegisterGlobal();
-        if (!status.ok()) {
-          GCP_LOG(ERROR) << "Cannot register provider status="
-                         << status.ToString();
-        }
-      });
+              provider) { register_grpc_plugin(provider, config.authority); });
 }
 
 std::shared_ptr<opentelemetry::metrics::MeterProvider> FindMeterProvider(

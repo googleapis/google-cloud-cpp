@@ -23,6 +23,7 @@
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -47,6 +48,14 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
     Options const& options);
 
 void EnableGrpcMetricsImpl(ExporterConfig config);
+
+/// Test-only overload allowing callers to intercept gRPC plugin registration.
+void EnableGrpcMetricsImpl(
+    ExporterConfig config,
+    std::function<
+        void(std::shared_ptr<opentelemetry::metrics::MeterProvider> const&,
+             std::string const&)>
+        register_grpc_plugin);
 
 /**
  * Returns the meter provider created for @p authority, or `nullptr`.
