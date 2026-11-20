@@ -22,7 +22,12 @@ be even simpler:
 @section storage-env-endpoint Endpoint Overrides
 
 `CLOUD_STORAGE_EMULATOR_ENDPOINT=...`: override the default endpoint used by
-the library. Intended for testing only.
+the library. Intended for testing only. Unless the application configures
+`google::cloud::UnifiedCredentialsOption`, a `google::cloud::storage::Client`
+created with this variable set uses insecure (anonymous) credentials, as the
+emulator does not support authentication. This variable does not change the
+gRPC endpoint or credentials used by `google::cloud::storage::MakeGrpcClient()`
+or `google::cloud::storage::AsyncClient`.
 
 `CLOUD_STORAGE_TESTBENCH_ENDPOINT=...`: **DEPRECATED** please use
 `CLOUD_STORAGE_EMULATOR_ENDPOINT` instead.

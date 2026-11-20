@@ -66,9 +66,6 @@ Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
   return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
 }
 
-Options DefaultOptions(
-    std::shared_ptr<oauth2_internal::Credentials> const& credentials,
-    Options opts);
 Options DefaultOptions(Options opts = {});
 Options DefaultOptionsWithCredentials(Options opts);
 
