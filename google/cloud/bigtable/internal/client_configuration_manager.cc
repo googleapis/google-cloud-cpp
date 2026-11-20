@@ -552,10 +552,7 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
     std::uint64_t op_id, int attempt,
     std::chrono::steady_clock::time_point poll_start,
     StatusOr<google::bigtable::v2::ClientConfiguration> result) {
-  std::vector<std::shared_ptr<ListenerSlot>> listeners_to_notify;
-  google::bigtable::v2::ClientConfiguration config_to_notify;
-  std::int64_t seq_to_notify = 0;
-
+  std::optional<PendingNotification> notification;
   {
     std::unique_lock<std::mutex> lock(mu_);
     if (shutdown_ || op_id != op_generation_) return;
@@ -563,80 +560,94 @@ void ClientConfigurationManager::OnFetchAttemptCompleted(
     active_rpc_context_.reset();
 
     if (result.ok()) {
-      std::chrono::steady_clock::time_point const now_steady =
-          steady_clock_->Now();
-      std::chrono::system_clock::time_point const now_sys =
-          system_clock_->Now();
-      last_response_ = *result;
-      last_fetched_at_ = now_sys;
-      last_error_.reset();
-      last_error_at_.reset();
-
-      google::bigtable::v2::ClientConfiguration effective =
-          ApplyOverrides(*std::move(result));
-      if (effective.stop_polling()) {
-        valid_until_ = now_steady + kMaxValidityDuration;
-      } else {
-        valid_until_ = now_steady + EffectiveValidityDuration(effective);
-      }
-
-      std::chrono::milliseconds const elapsed =
-          std::chrono::duration_cast<std::chrono::milliseconds>(now_steady -
-                                                                poll_start);
-      if (google::protobuf::util::MessageDifferencer::Equals(effective,
-                                                             current_config_)) {
-        RecordPollLocked(PollEvent{now_sys, elapsed, Status{}, config_seq_});
-        if (!effective.stop_polling()) ScheduleNextPoll(lock);
-        return;
-      }
-
-      current_config_ = std::move(effective);
-      seq_to_notify = ++config_seq_;
-      RecordPollLocked(PollEvent{now_sys, elapsed, Status{}, seq_to_notify});
-      config_to_notify = current_config_;
-      listeners_to_notify.reserve(listeners_.size());
-      for (auto const& [id, slot] : listeners_) {
-        listeners_to_notify.push_back(slot);
-      }
-      if (!current_config_.stop_polling()) ScheduleNextPoll(lock);
+      notification = HandleFetchSuccess(lock, poll_start, *std::move(result));
     } else {
-      int const max_retries = EffectiveMaxRpcRetryCount(current_config_);
-      if (IsRetryableConfigStatus(result.status().code()) &&
-          attempt < max_retries) {
-        ScheduleRetry(lock, attempt + 1, poll_start);
-        return;
-      }
-
-      std::chrono::steady_clock::time_point const now_steady =
-          steady_clock_->Now();
-      std::chrono::system_clock::time_point const now_sys =
-          system_clock_->Now();
-      std::chrono::milliseconds const elapsed =
-          std::chrono::duration_cast<std::chrono::milliseconds>(now_steady -
-                                                                poll_start);
-      last_error_ = result.status();
-      last_error_at_ = now_sys;
-
-      if (now_steady >= valid_until_) {
-        current_config_ = ApplyOverrides(config_.default_config);
-        valid_until_ = now_steady + EffectiveValidityDuration(current_config_);
-        seq_to_notify = ++config_seq_;
-        config_to_notify = current_config_;
-        listeners_to_notify.reserve(listeners_.size());
-        for (auto const& [id, slot] : listeners_) {
-          listeners_to_notify.push_back(slot);
-        }
-      }
-      RecordPollLocked(
-          PollEvent{now_sys, elapsed, result.status(), config_seq_});
-      if (!current_config_.stop_polling()) ScheduleNextPoll(lock);
+      notification = HandleFetchFailure(lock, attempt, poll_start,
+                                        std::move(result).status());
     }
   }
 
-  if (shutdown_flag_.load(std::memory_order_acquire)) return;
-  for (std::shared_ptr<ListenerSlot> const& slot : listeners_to_notify) {
-    DeliverToSlot(*slot, config_to_notify, seq_to_notify);
+  if (!notification.has_value() ||
+      shutdown_flag_.load(std::memory_order_acquire)) {
+    return;
   }
+  for (std::shared_ptr<ListenerSlot> const& slot : notification->listeners) {
+    DeliverToSlot(*slot, notification->config, notification->seq);
+  }
+}
+
+std::optional<ClientConfigurationManager::PendingNotification>
+ClientConfigurationManager::HandleFetchSuccess(
+    std::unique_lock<std::mutex>& lock,
+    std::chrono::steady_clock::time_point poll_start,
+    google::bigtable::v2::ClientConfiguration response) {
+  std::chrono::steady_clock::time_point const now_steady = steady_clock_->Now();
+  std::chrono::system_clock::time_point const now_sys = system_clock_->Now();
+  last_response_ = response;
+  last_fetched_at_ = now_sys;
+  last_error_.reset();
+  last_error_at_.reset();
+
+  google::bigtable::v2::ClientConfiguration effective =
+      ApplyOverrides(std::move(response));
+  valid_until_ = now_steady + (effective.stop_polling()
+                                   ? kMaxValidityDuration
+                                   : EffectiveValidityDuration(effective));
+
+  std::optional<PendingNotification> notification;
+  if (!google::protobuf::util::MessageDifferencer::Equals(effective,
+                                                          current_config_)) {
+    current_config_ = std::move(effective);
+    notification = CaptureNotificationLocked();
+  }
+
+  std::chrono::milliseconds const elapsed =
+      std::chrono::duration_cast<std::chrono::milliseconds>(now_steady -
+                                                            poll_start);
+  RecordPollLocked(PollEvent{now_sys, elapsed, Status{}, config_seq_});
+  ScheduleNextPoll(lock);
+  return notification;
+}
+
+std::optional<ClientConfigurationManager::PendingNotification>
+ClientConfigurationManager::HandleFetchFailure(
+    std::unique_lock<std::mutex>& lock, int attempt,
+    std::chrono::steady_clock::time_point poll_start, Status status) {
+  int const max_retries = EffectiveMaxRpcRetryCount(current_config_);
+  if (IsRetryableConfigStatus(status.code()) && attempt < max_retries) {
+    ScheduleRetry(lock, attempt + 1, poll_start);
+    return std::nullopt;
+  }
+
+  std::chrono::steady_clock::time_point const now_steady = steady_clock_->Now();
+  std::chrono::system_clock::time_point const now_sys = system_clock_->Now();
+  std::chrono::milliseconds const elapsed =
+      std::chrono::duration_cast<std::chrono::milliseconds>(now_steady -
+                                                            poll_start);
+  last_error_ = status;
+  last_error_at_ = now_sys;
+
+  std::optional<PendingNotification> notification;
+  if (now_steady >= valid_until_) {
+    current_config_ = ApplyOverrides(config_.default_config);
+    valid_until_ = now_steady + EffectiveValidityDuration(current_config_);
+    notification = CaptureNotificationLocked();
+  }
+  RecordPollLocked(PollEvent{now_sys, elapsed, std::move(status), config_seq_});
+  ScheduleNextPoll(lock);
+  return notification;
+}
+
+ClientConfigurationManager::PendingNotification
+ClientConfigurationManager::CaptureNotificationLocked() {
+  PendingNotification pending;
+  pending.seq = ++config_seq_;
+  pending.config = current_config_;
+  pending.listeners.reserve(listeners_.size());
+  for (auto const& [id, slot] : listeners_) {
+    pending.listeners.push_back(slot);
+  }
+  return pending;
 }
 
 void ClientConfigurationManager::ScheduleRetry(
@@ -705,9 +716,11 @@ std::chrono::milliseconds ClientConfigurationManager::ComputeRetryBackoff(
     int attempt) {
   int const clamped_shift = std::clamp(attempt, 0, 20);
   std::int64_t const base_ms =
-      (std::max)(std::int64_t{0}, config_.initial_retry_backoff.count());
+      (std::max)(std::int64_t{0}, static_cast<std::int64_t>(
+                                      config_.initial_retry_backoff.count()));
   std::int64_t const max_ms =
-      (std::max)(base_ms, config_.max_retry_backoff.count());
+      (std::max)(base_ms,
+                 static_cast<std::int64_t>(config_.max_retry_backoff.count()));
   std::int64_t limit_ms = max_ms;
   if (base_ms == 0) {
     limit_ms = 0;

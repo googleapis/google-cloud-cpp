@@ -222,9 +222,15 @@ class ClientConfigurationManager
 
     std::mutex delivery_mu;
     std::atomic<bool> active{true};
-    std::atomic<std::thread::id> delivering_thread{};
+    std::atomic<std::thread::id> delivering_thread;
     std::int64_t last_delivered_seq = -1;
     ConfigListener callback;
+  };
+
+  struct PendingNotification {
+    std::vector<std::shared_ptr<ListenerSlot>> listeners;
+    google::bigtable::v2::ClientConfiguration config;
+    std::int64_t seq = 0;
   };
 
   ClientConfigurationManager(CompletionQueue cq,
@@ -244,6 +250,14 @@ class ClientConfigurationManager
       std::uint64_t op_id, int attempt,
       std::chrono::steady_clock::time_point poll_start,
       StatusOr<google::bigtable::v2::ClientConfiguration> result);
+  std::optional<PendingNotification> HandleFetchSuccess(
+      std::unique_lock<std::mutex>& lock,
+      std::chrono::steady_clock::time_point poll_start,
+      google::bigtable::v2::ClientConfiguration response);
+  std::optional<PendingNotification> HandleFetchFailure(
+      std::unique_lock<std::mutex>& lock, int attempt,
+      std::chrono::steady_clock::time_point poll_start, Status status);
+  PendingNotification CaptureNotificationLocked();
   void ScheduleRetry(std::unique_lock<std::mutex>& lock, int next_attempt,
                      std::chrono::steady_clock::time_point poll_start);
   void ScheduleNextPoll(std::unique_lock<std::mutex>& lock);
