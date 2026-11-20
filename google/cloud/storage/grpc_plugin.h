@@ -27,6 +27,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
+ * @par Credentials
+ * Use `google::cloud::UnifiedCredentialsOption` to configure the credentials.
+ * The client also accepts `google::cloud::GrpcCredentialOption`. These gRPC
+ * credentials do not expose a service account, so creating signed URLs or
+ * signed policy documents with such a client requires the
+ * `google::cloud::storage::SigningAccount` option. The client then signs
+ * using the IAM Credentials API, authenticated with the configured
+ * credentials.
+ *
  * @param opts the configuration parameters for the Client.
  *
  * @par Example
