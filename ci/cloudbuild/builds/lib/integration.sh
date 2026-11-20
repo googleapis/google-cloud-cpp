@@ -32,7 +32,7 @@ export PATH="${HOME}/.local/bin:${PATH}"
 if python3 -m pip --version >/dev/null 2>&1; then
   python3 -m pip uninstall -y --quiet googleapis-storage-testbench || true
   python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-    "git+https://github.com/googleapis/storage-testbench@v0.61.0" || true
+    "git+https://github.com/googleapis/storage-testbench@v0.67.0" || true
 fi
 
 # Some of the tests will need a valid roots.pem file.
