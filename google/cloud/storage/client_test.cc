@@ -37,6 +37,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -93,13 +94,24 @@ class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
 };
 int ObservableBackoffPolicy::on_completion_call_count_;
 
-/// Returns a visitor describing the `UnifiedCredentialsOption` in @p options.
-TestCredentialsVisitor CredentialsVisitorFor(Options const& options) {
+/// Returns the name of the `UnifiedCredentialsOption` in @p options, or an
+/// empty string if the option is not set.
+std::string CredentialsName(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
   TestCredentialsVisitor visitor;
-  if (!options.has<UnifiedCredentialsOption>()) return visitor;
   CredentialsVisitor::dispatch(*options.get<UnifiedCredentialsOption>(),
                                visitor);
-  return visitor;
+  return visitor.name;
+}
+
+/// Returns the logging components of the `UnifiedCredentialsOption` in
+/// @p options, or an empty set if the option is not set.
+std::set<std::string> CredentialsLoggingComponents(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
+  TestCredentialsVisitor visitor;
+  CredentialsVisitor::dispatch(*options.get<UnifiedCredentialsOption>(),
+                               visitor);
+  return visitor.options.get<LoggingComponentsOption>();
 }
 
 class ClientTest : public ::testing::Test {
@@ -302,58 +314,62 @@ TEST_F(ClientTest, EndpointsEmulator) {
 TEST_F(ClientTest, EmulatorUsesInsecureCredentials) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            "http://localhost:1234");
-  auto const options = internal::DefaultOptionsWithCredentials(Options{});
-  EXPECT_EQ(CredentialsVisitorFor(options).name, "InsecureCredentialsConfig");
+  Options const options = internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
 }
 
 TEST_F(ClientTest, OldEmulatorUsesInsecureCredentials) {
   google::cloud::testing_util::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                            "http://localhost:1234");
-  auto const options = internal::DefaultOptionsWithCredentials(Options{});
-  EXPECT_EQ(CredentialsVisitorFor(options).name, "InsecureCredentialsConfig");
+  Options const options = internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
 }
 
 TEST_F(ClientTest, EmulatorKeepsExplicitCredentials) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            "http://localhost:1234");
-  auto const options = internal::DefaultOptionsWithCredentials(
+  Options const options = internal::DefaultOptionsWithCredentials(
       Options{}.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
           "token1", std::chrono::system_clock::now() + std::chrono::hours(1))));
-  EXPECT_EQ(CredentialsVisitorFor(options).name, "AccessTokenConfig");
+  EXPECT_EQ(CredentialsName(options), "AccessTokenConfig");
 }
 
 TEST_F(ClientTest, DefaultCredentialsKeepAuthOptions) {
-  auto const options = internal::DefaultOptionsWithCredentials(
+  Options const options = internal::DefaultOptionsWithCredentials(
       Options{}.set<LoggingComponentsOption>({"auth"}));
-  auto const visitor = CredentialsVisitorFor(options);
-  EXPECT_EQ(visitor.name, "GoogleDefaultCredentialsConfig");
-  EXPECT_THAT(visitor.options.get<LoggingComponentsOption>(),
-              ElementsAre("auth"));
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
 }
 
-TEST_F(ClientTest, DefaultCredentialsKeepAuthOptionsFromEnvironment) {
-  testing_util::ScopedEnvironment tracing("CLOUD_STORAGE_ENABLE_TRACING",
-                                          "auth");
-  auto const options = internal::DefaultOptionsWithCredentials(Options{});
-  auto const visitor = CredentialsVisitorFor(options);
-  EXPECT_EQ(visitor.name, "GoogleDefaultCredentialsConfig");
-  EXPECT_THAT(visitor.options.get<LoggingComponentsOption>(),
-              ElementsAre("auth"));
+/// @test Verify `CLOUD_STORAGE_ENABLE_TRACING` configures the client logging
+/// only. The default credentials use `GOOGLE_CLOUD_CPP_ENABLE_TRACING`, and
+/// must not log the OAuth token requests when `http` tracing is enabled.
+TEST_F(ClientTest, DefaultCredentialsIgnoreStorageTracingEnvironment) {
+  testing_util::ScopedEnvironment storage_tracing(
+      "CLOUD_STORAGE_ENABLE_TRACING", "raw-client,http");
+  testing_util::ScopedEnvironment common_tracing(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "auth");
+  Options const options = internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("raw-client", "http"));
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
 }
 
 TEST_F(ClientTest, DefaultOptionsHasNoCredentials) {
-  auto const options = internal::DefaultOptions();
+  Options const options = internal::DefaultOptions();
   EXPECT_FALSE(options.has<UnifiedCredentialsOption>());
 }
 
 TEST_F(ClientTest, ClientConstructorUsesEmulatorCredentials) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            "http://localhost:1234");
-  auto client = Client(DisableTracing(Options{}));
-  auto const connection = ClientImplDetails::GetConnection(client);
+  Client client(DisableTracing(Options{}));
+  std::shared_ptr<internal::StorageConnection> const connection =
+      ClientImplDetails::GetConnection(client);
   ASSERT_THAT(connection, NotNull());
-  EXPECT_EQ(CredentialsVisitorFor(connection->options()).name,
+  EXPECT_EQ(CredentialsName(connection->options()),
             "InsecureCredentialsConfig");
 }
 

@@ -763,17 +763,19 @@ Options DefaultOptions(Options opts) {
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
-  // Apply the defaults first, so the auth options below include tracing and
-  // logging settings from the environment.
+  // Capture the auth options before `DefaultOptions()` adds the components in
+  // `CLOUD_STORAGE_ENABLE_TRACING`. Those configure the storage client only:
+  // `http` would log the OAuth token requests, and any value would replace the
+  // `GOOGLE_CLOUD_CPP_ENABLE_TRACING` components used by the credentials.
+  auto auth_options = google::cloud::internal::MakeAuthOptions(opts);
   opts = internal::DefaultOptions(std::move(opts));
   if (opts.has<UnifiedCredentialsOption>()) return opts;
   // The emulator does not support authentication, use insecure (sometimes
   // called "anonymous") credentials.
   opts.set<UnifiedCredentialsOption>(
-      GetEmulator().has_value()
-          ? google::cloud::MakeInsecureCredentials()
-          : google::cloud::MakeGoogleDefaultCredentials(
-                google::cloud::internal::MakeAuthOptions(opts)));
+      GetEmulator().has_value() ? google::cloud::MakeInsecureCredentials()
+                                : google::cloud::MakeGoogleDefaultCredentials(
+                                      std::move(auth_options)));
   return opts;
 }
 

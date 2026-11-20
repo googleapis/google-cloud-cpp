@@ -29,6 +29,7 @@
 #include <grpcpp/grpcpp.h>
 #include <memory>
 #include <optional>
+#include <set>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -47,14 +48,15 @@ class MockGcpDetector : public google::cloud::internal::GcpDetector {
 
 using ::google::cloud::internal::GrpcGoogleDefaultTlsOnlyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 google::cloud::Options TestOptions() {
   return Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
 }
 
-std::shared_ptr<MockGcpDetector> MakeNotOnGcpDetector() {
+std::shared_ptr<google::cloud::internal::GcpDetector> MakeNotOnGcpDetector() {
   auto mock_detector = std::make_shared<MockGcpDetector>();
   EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
       .WillRepeatedly(Return(false));
@@ -71,6 +73,16 @@ std::string CredentialsName(Options const& options) {
   ::google::cloud::internal::CredentialsVisitor::dispatch(
       *options.get<UnifiedCredentialsOption>(), visitor);
   return visitor.name;
+}
+
+/// Returns the logging components of the `UnifiedCredentialsOption` in
+/// @p options, or an empty set if the option is not set.
+std::set<std::string> CredentialsLoggingComponents(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
+  ::google::cloud::testing_util::TestCredentialsVisitor visitor;
+  ::google::cloud::internal::CredentialsVisitor::dispatch(
+      *options.get<UnifiedCredentialsOption>(), visitor);
+  return visitor.options.get<LoggingComponentsOption>();
 }
 
 TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
@@ -103,7 +115,7 @@ TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
 
 /// @test Verify the REST emulator endpoints do not change gRPC credentials.
 TEST(DefaultOptionsGrpc, RestEmulatorDoesNotChangeGrpcCredentials) {
-  for (auto const* var : {"CLOUD_STORAGE_EMULATOR_ENDPOINT",
+  for (char const* var : {"CLOUD_STORAGE_EMULATOR_ENDPOINT",
                           "CLOUD_STORAGE_TESTBENCH_ENDPOINT"}) {
     SCOPED_TRACE(var);
     ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
@@ -111,7 +123,8 @@ TEST(DefaultOptionsGrpc, RestEmulatorDoesNotChangeGrpcCredentials) {
     ScopedEnvironment testbench(
         "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
     ScopedEnvironment rest(var, "http://localhost:1234");
-    auto const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+    Options const options =
+        DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
     EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
   }
 }
@@ -125,7 +138,7 @@ TEST(DefaultOptionsGrpc, GrpcTestbenchStillInsecureWithRestEmulator) {
       "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", "localhost:9999");
   ScopedEnvironment preserve(
       "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", {});
-  auto const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+  Options const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
   EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
 }
 
@@ -136,26 +149,27 @@ TEST(DefaultOptionsGrpc, GrpcKeepsExplicitCredentialsWithRestEmulator) {
                              "http://localhost:1234");
   ScopedEnvironment testbench(
       "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
-  auto const options = DefaultOptionsGrpc(
+  Options const options = DefaultOptionsGrpc(
       Options{}.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
           "token1", std::chrono::system_clock::now() + std::chrono::hours(1))),
       MakeNotOnGcpDetector());
   EXPECT_EQ(CredentialsName(options), "AccessTokenConfig");
 }
 
-/// @test Verify the default gRPC credentials keep the auth logging options.
-TEST(DefaultOptionsGrpc, DefaultCredentialsKeepAuthOptionsFromEnvironment) {
+/// @test Verify `CLOUD_STORAGE_ENABLE_TRACING` configures the client logging
+/// only. The default credentials use `GOOGLE_CLOUD_CPP_ENABLE_TRACING`.
+TEST(DefaultOptionsGrpc, DefaultCredentialsIgnoreStorageTracingEnvironment) {
   ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   ScopedEnvironment testbench(
       "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
-  ScopedEnvironment tracing("CLOUD_STORAGE_ENABLE_TRACING", "auth");
-  auto const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
-  ASSERT_TRUE(options.has<UnifiedCredentialsOption>());
-  ::google::cloud::testing_util::TestCredentialsVisitor visitor;
-  ::google::cloud::internal::CredentialsVisitor::dispatch(
-      *options.get<UnifiedCredentialsOption>(), visitor);
-  EXPECT_EQ(visitor.name, "GoogleDefaultCredentialsConfig");
-  EXPECT_THAT(visitor.options.get<LoggingComponentsOption>(), Contains("auth"));
+  ScopedEnvironment storage_tracing("CLOUD_STORAGE_ENABLE_TRACING",
+                                    "raw-client,http");
+  ScopedEnvironment common_tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "auth");
+  Options const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("raw-client", "http"));
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
 }
 
 TEST(DefaultOptionsGrpc, DefaultEndpointsCloudPath) {
