@@ -246,6 +246,14 @@ TEST_F(AsyncClientIntegrationTest, GetBucket) {
   EXPECT_EQ(bucket->name(), BucketName(bucket_name()).FullName());
 }
 
+TEST_F(AsyncClientIntegrationTest, WarmUp) {
+  AsyncClient async(TestOptions());
+
+  EXPECT_THAT(async.WarmUp(BucketName(bucket_name())).get(), IsOk());
+  EXPECT_THAT(async.WarmUp(BucketName(bucket_name()), "warmup-prefix/").get(),
+              IsOk());
+}
+
 TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   auto async = AsyncClient(TestOptions());
   auto o1 = MakeRandomObjectName();
