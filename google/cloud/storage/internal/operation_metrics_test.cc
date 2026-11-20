@@ -17,6 +17,7 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <string>
@@ -55,6 +56,9 @@ std::map<std::string, std::string> ExtractStringAttrs(
                     &value)) {
           result.emplace(std::string(key.data(), key.size()),
                          std::string(sv->data(), sv->size()));
+        } else {
+          ADD_FAILURE() << "Unexpected non-string attribute for key: "
+                        << std::string(key.data(), key.size());
         }
         return true;
       });
