@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METRICS_ATTRIBUTES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METRICS_ATTRIBUTES_H
 
-#include "google/cloud/version.h"
+#include "google/cloud/storage/version.h"
 #include <string>
 #include <string_view>
 

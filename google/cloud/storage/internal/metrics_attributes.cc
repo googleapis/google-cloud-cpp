@@ -13,13 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/metrics_attributes.h"
-#include "absl/strings/ascii.h"
+#include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 #include <array>
 #include <charconv>
+#include <cstddef>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
+#include <system_error>
 
 namespace google {
 namespace cloud {
@@ -44,15 +47,13 @@ bool ParseIpv4(std::string_view ip, bool& is_directpath) {
     if (!ParseUint(part, 10, octets[i]) || octets[i] > 255) return false;
     if (expect_dot) ip.remove_prefix(dot + 1);
   }
+  // DirectPath IPv4 VIP range: 34.126.0.0/18 (34.126.0.0 - 34.126.63.255).
   is_directpath = octets[0] == 34 && octets[1] == 126 && octets[2] <= 63;
   return true;
 }
 
 bool ParseHexGroup(std::string_view part, std::uint32_t& out) {
   if (part.empty() || part.size() > 4) return false;
-  for (char const c : part) {
-    if (!absl::ascii_isxdigit(static_cast<unsigned char>(c))) return false;
-  }
   return ParseUint(part, 16, out);
 }
 
@@ -71,7 +72,7 @@ bool ParseIpv6Half(std::string_view part, std::array<std::uint32_t, 8>& groups,
 }
 
 bool ParseIpv6(std::string_view ip, bool& is_directpath) {
-  if (ip.find(':') == std::string_view::npos) return false;
+  if (!absl::StrContains(ip, ':')) return false;
   if (absl::ConsumePrefix(&ip, "::ffff:") ||
       absl::ConsumePrefix(&ip, "::FFFF:")) {
     return ParseIpv4(ip, is_directpath);
@@ -91,22 +92,31 @@ bool ParseIpv6(std::string_view ip, bool& is_directpath) {
       return false;
     }
   }
+  // DirectPath IPv6 VIP range: 2001:4860:8040::/42.
   is_directpath = head_count >= 3 && head[0] == 0x2001 && head[1] == 0x4860 &&
                   (head[2] & 0xFFC0) == 0x8040;
   return true;
 }
 
-std::string_view UnwrapBrackets(std::string_view s) {
-  if (absl::ConsumePrefix(&s, "[")) {
-    std::size_t const close = s.find(']');
-    if (close != std::string_view::npos) return s.substr(0, close);
+std::optional<std::string_view> UnwrapBrackets(std::string_view s) {
+  std::string_view body = s;
+  if (absl::ConsumePrefix(&body, "[")) {
+    std::size_t const close = body.find(']');
+    if (close != std::string_view::npos) return body.substr(0, close);
+    return std::nullopt;
   }
-  if (absl::ConsumePrefix(&s, "%5B") || absl::ConsumePrefix(&s, "%5b")) {
-    std::size_t close = s.find("%5D");
-    if (close == std::string_view::npos) close = s.find("%5d");
-    if (close != std::string_view::npos) return s.substr(0, close);
+  if (absl::ConsumePrefix(&body, "%5B") || absl::ConsumePrefix(&body, "%5b")) {
+    std::size_t close = body.find("%5D");
+    if (close == std::string_view::npos) close = body.find("%5d");
+    if (close != std::string_view::npos) return body.substr(0, close);
+    return std::nullopt;
   }
-  return s;
+  return std::nullopt;
+}
+
+std::string_view StripZone(std::string_view ip) {
+  std::size_t const zone = ip.find('%');
+  return zone != std::string_view::npos ? ip.substr(0, zone) : ip;
 }
 
 std::string_view StripPeerWrapper(std::string_view peer) {
@@ -115,15 +125,12 @@ std::string_view StripPeerWrapper(std::string_view peer) {
     return colon != std::string_view::npos ? peer.substr(0, colon) : peer;
   }
   if (absl::ConsumePrefix(&peer, "ipv6:")) {
-    peer = UnwrapBrackets(peer);
-    std::size_t const zone = peer.find('%');
-    return zone != std::string_view::npos ? peer.substr(0, zone) : peer;
+    std::optional<std::string_view> const unwrapped = UnwrapBrackets(peer);
+    return StripZone(unwrapped.value_or(peer));
   }
-  std::string_view const unwrapped = UnwrapBrackets(peer);
-  if (unwrapped.data() != peer.data()) {
-    std::size_t const zone = unwrapped.find('%');
-    return zone != std::string_view::npos ? unwrapped.substr(0, zone)
-                                          : unwrapped;
+  if (std::optional<std::string_view> const unwrapped = UnwrapBrackets(peer);
+      unwrapped.has_value()) {
+    return StripZone(*unwrapped);
   }
   std::size_t const colon = peer.find(':');
   if (colon != std::string_view::npos && peer.rfind(':') == colon) {
