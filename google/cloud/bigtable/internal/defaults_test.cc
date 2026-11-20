@@ -712,6 +712,29 @@ TEST(ConnectionRefreshRange, DisabledIfEmulator) {
   EXPECT_EQ(secs(0), opts.get<MaxConnectionRefreshOption>());
 }
 
+TEST(ClientConfigurationPollingDefaults, EnabledByDefaultDisabledIfEmulator) {
+  {
+    ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+    Options opts = DefaultDataOptions({});
+    EXPECT_TRUE(
+        opts.get<experimental::EnableClientConfigurationPollingOption>());
+  }
+  {
+    ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
+    Options opts = DefaultDataOptions({});
+    EXPECT_FALSE(
+        opts.get<experimental::EnableClientConfigurationPollingOption>());
+  }
+  {
+    ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+    Options opts = DefaultDataOptions(
+        Options{}.set<experimental::EnableClientConfigurationPollingOption>(
+            false));
+    EXPECT_FALSE(
+        opts.get<experimental::EnableClientConfigurationPollingOption>());
+  }
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -198,6 +198,15 @@ class BigtableMetadata : public BigtableStub {
                     std::shared_ptr<bigtable_internal::OperationContext>
                         operation_context) override;
 
+  future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+  AsyncGetClientConfiguration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::GetClientConfigurationRequest const& request,
+      std::shared_ptr<bigtable_internal::OperationContext> operation_context)
+      override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

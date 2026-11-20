@@ -367,6 +367,26 @@ DefaultBigtableStub::AsyncPrepareQuery(
       request, std::move(context));
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+DefaultBigtableStub::AsyncGetClientConfiguration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext>) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::v2::GetClientConfigurationRequest,
+      google::bigtable::v2::ClientConfiguration>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::bigtable::v2::GetClientConfigurationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncGetClientConfiguration(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

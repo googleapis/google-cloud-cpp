@@ -487,6 +487,27 @@ BigtableLogging::AsyncPrepareQuery(
       tracing_options_);
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+BigtableLogging::AsyncGetClientConfiguration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
+  return google::cloud::internal::LogWrapper(
+      [this, operation_context = std::move(operation_context)](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::bigtable::v2::GetClientConfigurationRequest const& request) {
+        return child_->AsyncGetClientConfiguration(
+            cq, std::move(context), std::move(options), request,
+            std::move(operation_context));
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

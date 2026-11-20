@@ -313,6 +313,10 @@ Options DefaultDataOptions(Options opts) {
   if (!opts.has<EnableServerRetriesOption>()) {
     opts.set<EnableServerRetriesOption>(true);
   }
+  if (!opts.has<experimental::EnableClientConfigurationPollingOption>()) {
+    opts.set<experimental::EnableClientConfigurationPollingOption>(
+        !GetEnv("BIGTABLE_EMULATOR_HOST").has_value());
+  }
   opts = DefaultOptions(std::move(opts));
   if (!opts.has<AuthorityOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(

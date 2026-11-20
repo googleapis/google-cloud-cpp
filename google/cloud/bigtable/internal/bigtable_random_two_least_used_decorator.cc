@@ -463,6 +463,23 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
       });
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+BigtableRandomTwoLeastUsed::AsyncGetClientConfiguration(
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
+  return AsyncHelper<
+      future<StatusOr<google::bigtable::v2::ClientConfiguration>>>(
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
+        return stub.AsyncGetClientConfiguration(cq, std::move(context),
+                                                std::move(options), request,
+                                                std::move(operation_context));
+      });
+}
+
 StatusOr<google::bigtable::v2::ClientConfiguration>
 BigtableRandomTwoLeastUsed::GetClientConfiguration(
     grpc::ClientContext& context, Options const& options,

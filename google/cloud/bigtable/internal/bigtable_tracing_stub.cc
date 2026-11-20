@@ -449,6 +449,25 @@ BigtableTracingStub::AsyncPrepareQuery(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+future<StatusOr<google::bigtable::v2::ClientConfiguration>>
+BigtableTracingStub::AsyncGetClientConfiguration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    std::shared_ptr<bigtable_internal::OperationContext> operation_context) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "GetClientConfiguration");
+  if (op_ctx_fn_ != nullptr && operation_context != nullptr) {
+    op_ctx_fn_(*span, *operation_context);
+  }
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetClientConfiguration(
+      cq, context, std::move(options), request, std::move(operation_context));
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 std::shared_ptr<BigtableStub> MakeBigtableTracingStub(
     std::shared_ptr<BigtableStub> stub,
     std::function<void(opentelemetry::trace::Span&,

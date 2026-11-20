@@ -97,6 +97,7 @@ grpc::Status CbtTestProxy::CreateClient(
           .set<EndpointOption>(request->data_target())
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<MaxConnectionRefreshOption>(std::chrono::milliseconds(0))
+          .set<experimental::EnableClientConfigurationPollingOption>(false)
           .set<AppProfileIdOption>(request->app_profile_id());
 
   if (request->has_per_operation_timeout()) {
