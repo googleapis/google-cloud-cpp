@@ -181,6 +181,9 @@ struct SignedUrlDuration
  *
  * With this option the application can sign a URL or policy document using a
  * different account than the account associated with the current credentials.
+ * This option is required when the credentials do not identify a service
+ * account, for example `google::cloud::MakeAccessTokenCredentials()` or
+ * `google::cloud::GrpcCredentialOption`.
  */
 struct SigningAccount
     : public internal::ComplexOption<SigningAccount, std::string> {
