@@ -38,6 +38,8 @@ bool IsChecksumMismatch(Status const& status) {
 }
 
 std::string_view ClassifyHttpMetadataCode(Status const& status) {
+  // The REST layer coalesces HTTP 408/429/500/504 into `kUnavailable` while
+  // attaching the original `http_status_code` in `ErrorInfo` metadata.
   if (status.code() != StatusCode::kUnavailable) return {};
   auto const& metadata = status.error_info().metadata();
   auto const it = metadata.find("http_status_code");

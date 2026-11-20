@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/metrics_error_type.h"
-#include "google/cloud/internal/make_status.h"
-#include <gmock/gmock.h>
+#include "google/cloud/status.h"
+#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
@@ -28,7 +28,8 @@ TEST(MetricsErrorTypeTest, OkAndCanonicalCodes) {
        i <= static_cast<int>(StatusCode::kUnauthenticated); ++i) {
     auto const code = static_cast<StatusCode>(i);
     EXPECT_EQ(ComputeErrorType(Status(code, "server error")),
-              StatusCodeToString(code));
+              StatusCodeToString(code))
+        << "code=" << StatusCodeToString(code);
   }
 }
 
@@ -55,9 +56,12 @@ TEST(MetricsErrorTypeTest, ChecksumMismatch) {
        "NOT_FOUND"},
       {StatusCode::kFailedPrecondition, "crc32c metadata did not match",
        "FAILED_PRECONDITION"},
+      {StatusCode::kInvalidArgument, "mismatched offset", "INVALID_ARGUMENT"},
+      {StatusCode::kDataLoss, "invalid crc32c header", "DATA_LOSS"},
   };
   for (auto const& c : cases) {
-    EXPECT_EQ(ComputeErrorType(Status(c.code, c.msg)), c.expected);
+    EXPECT_EQ(ComputeErrorType(Status(c.code, c.msg)), c.expected)
+        << "code=" << StatusCodeToString(c.code) << ", msg=" << c.msg;
   }
 }
 
@@ -69,13 +73,19 @@ TEST(MetricsErrorTypeTest, HttpStatusMetadataOverridesCoalescedUnavailable) {
       {"429", "RESOURCE_EXHAUSTED"}, {"408", "DEADLINE_EXCEEDED"},
       {"504", "DEADLINE_EXCEEDED"},  {"500", "INTERNAL"},
       {"502", "UNAVAILABLE"},        {"503", "UNAVAILABLE"},
+      {"", "UNAVAILABLE"},
   };
   for (auto const& c : cases) {
     Status const status(
         StatusCode::kUnavailable, "http error",
         ErrorInfo{"", "googleapis.com", {{"http_status_code", c.http_code}}});
-    EXPECT_EQ(ComputeErrorType(status), c.expected);
+    EXPECT_EQ(ComputeErrorType(status), c.expected)
+        << "http_code=" << c.http_code;
   }
+  Status const non_unavailable(
+      StatusCode::kPermissionDenied, "denied",
+      ErrorInfo{"", "googleapis.com", {{"http_status_code", "429"}}});
+  EXPECT_EQ(ComputeErrorType(non_unavailable), "PERMISSION_DENIED");
 }
 
 }  // namespace
