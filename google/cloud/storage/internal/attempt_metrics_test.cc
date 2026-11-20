@@ -21,6 +21,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -35,6 +36,7 @@ using ::google::cloud::testing_util::MockMeterProvider;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Eq;
+using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -62,6 +64,8 @@ CapturedAttrs ExtractAttrs(
         } else if (auto const* i =
                        opentelemetry::nostd::get_if<std::int64_t>(&value)) {
           out.ints.emplace(std::move(k), *i);
+        } else {
+          ADD_FAILURE() << "Unexpected attribute type for key: " << k;
         }
         return true;
       });
@@ -72,7 +76,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
   std::vector<CapturedAttrs> attempt_attrs;
   auto attempts = std::make_unique<MockCounter<std::uint64_t>>();
   EXPECT_CALL(*attempts, Add(std::uint64_t{1}, _, _))
-      .Times(3)
+      .Times(4)
       .WillRepeatedly([&](std::uint64_t,
                           opentelemetry::common::KeyValueIterable const& kv,
                           opentelemetry::context::Context const&) {
@@ -111,7 +115,22 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
       .WillOnce(Return(ByMove(CounterPtr(retries.release()))));
 
   auto provider = std::make_shared<MockMeterProvider>();
-  EXPECT_CALL(*provider, GetMeter).WillOnce(Return(meter));
+  EXPECT_CALL(*provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) {
+#endif
+        EXPECT_EQ(std::string(scope.data(), scope.size()), "gl-cpp");
+        EXPECT_EQ(std::string(scope_version.data(), scope_version.size()),
+                  google::cloud::version_string());
+        return meter;
+      });
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider> mp(
       std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
           provider));
@@ -120,34 +139,81 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
   metrics.RecordGrpcAttempt("ReadObject", "OK", "OK", "directpath");
   metrics.RecordGrpcAttempt("ReadObject", "UNAVAILABLE", "UNAVAILABLE",
                             "cloudpath");
+  metrics.RecordHttpAttempt("ReadObject", "OK", 200, "cloudpath");
   metrics.RecordHttpAttempt("ReadObject", "UNAVAILABLE", 503, "cloudpath");
   metrics.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
 
-  ASSERT_EQ(attempt_attrs.size(), 3U);
-  EXPECT_EQ(attempt_attrs[0].strings["rpc.response.status_code"], "OK");
-  EXPECT_EQ(attempt_attrs[1].strings["rpc.response.status_code"],
-            "UNAVAILABLE");
-  EXPECT_THAT(attempt_attrs[2].ints,
-              UnorderedElementsAre(Pair("http.response.status_code", 503)));
-  ASSERT_EQ(error_attrs.size(), 2U);
-  EXPECT_EQ(error_attrs[0].strings.count("rpc.response.status_code"), 0U);
-  EXPECT_EQ(error_attrs[1].ints.count("http.response.status_code"), 0U);
-  EXPECT_THAT(retry_attrs.strings,
+  std::string const ver = google::cloud::version_string();
+  ASSERT_EQ(attempt_attrs.size(), 4U);
+  EXPECT_THAT(attempt_attrs[0].strings,
               UnorderedElementsAre(
-                  Pair("gcp.client.version", google::cloud::version_string()),
+                  Pair("gcp.client.version", ver),
                   Pair("gcp.client.artifact", "google-cloud-cpp"),
                   Pair("gcp.client.service", "storage"),
                   Pair("server.address", "storage.googleapis.com"),
                   Pair("rpc.system.name", "grpc"),
                   Pair("gcp.storage.operation", "ReadObject"),
-                  Pair("error.type", "UNAVAILABLE"),
-                  Pair("network.path", "cloudpath")));
+                  Pair("error.type", "OK"), Pair("network.path", "directpath"),
+                  Pair("rpc.response.status_code", "OK")));
+  EXPECT_THAT(attempt_attrs[0].ints, IsEmpty());
+  EXPECT_THAT(
+      attempt_attrs[3].strings,
+      UnorderedElementsAre(Pair("gcp.client.version", ver),
+                           Pair("gcp.client.artifact", "google-cloud-cpp"),
+                           Pair("gcp.client.service", "storage"),
+                           Pair("server.address", "storage.googleapis.com"),
+                           Pair("rpc.system.name", "grpc"),
+                           Pair("gcp.storage.operation", "ReadObject"),
+                           Pair("error.type", "UNAVAILABLE"),
+                           Pair("network.path", "cloudpath")));
+  EXPECT_THAT(attempt_attrs[3].ints,
+              UnorderedElementsAre(Pair("http.response.status_code", 503)));
+
+  ASSERT_EQ(error_attrs.size(), 2U);
+  for (auto const& err : error_attrs) {
+    EXPECT_THAT(
+        err.strings,
+        UnorderedElementsAre(Pair("gcp.client.version", ver),
+                             Pair("gcp.client.artifact", "google-cloud-cpp"),
+                             Pair("gcp.client.service", "storage"),
+                             Pair("server.address", "storage.googleapis.com"),
+                             Pair("rpc.system.name", "grpc"),
+                             Pair("gcp.storage.operation", "ReadObject"),
+                             Pair("error.type", "UNAVAILABLE"),
+                             Pair("network.path", "cloudpath")));
+    EXPECT_THAT(err.ints, IsEmpty());
+  }
+  EXPECT_THAT(
+      retry_attrs.strings,
+      UnorderedElementsAre(Pair("gcp.client.version", ver),
+                           Pair("gcp.client.artifact", "google-cloud-cpp"),
+                           Pair("gcp.client.service", "storage"),
+                           Pair("server.address", "storage.googleapis.com"),
+                           Pair("rpc.system.name", "grpc"),
+                           Pair("gcp.storage.operation", "ReadObject"),
+                           Pair("error.type", "UNAVAILABLE"),
+                           Pair("network.path", "cloudpath")));
+  EXPECT_THAT(retry_attrs.ints, IsEmpty());
 }
 
-TEST(AttemptMetricsTest, NullProviderIsNoOp) {
-  AttemptMetrics metrics(nullptr, "storage.googleapis.com", "http");
-  metrics.RecordHttpAttempt("ReadObject", "UNAVAILABLE", 503, "cloudpath");
-  metrics.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
+TEST(AttemptMetricsTest, NullProviderAndNullMeterAreNoOps) {
+  AttemptMetrics no_provider(nullptr, "storage.googleapis.com", "http");
+  no_provider.RecordGrpcAttempt("ReadObject", "OK", "OK", "directpath");
+  no_provider.RecordHttpAttempt("ReadObject", "UNAVAILABLE", 503, "cloudpath");
+  no_provider.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
+
+  auto provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*provider, GetMeter)
+      .WillOnce(Return(
+          opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>{
+              nullptr}));
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider> mp(
+      std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
+          provider));
+  AttemptMetrics no_meter(mp, "storage.googleapis.com", "grpc");
+  no_meter.RecordGrpcAttempt("ReadObject", "UNAVAILABLE", "UNAVAILABLE",
+                             "cloudpath");
+  no_meter.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
 }
 
 }  // namespace
