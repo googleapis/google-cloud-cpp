@@ -24,8 +24,12 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <atomic>
 #include <chrono>
+#include <condition_variable>
 #include <memory>
+#include <mutex>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -470,6 +474,160 @@ TEST(OpenImpl, TimeoutCancellation) {
 
   StatusOr<OpenStreamResult> response = pending.get();
   EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
+}
+
+enum class CancelPhase { kStart, kWrite, kRead, kFinish };
+
+class OpenObjectCancelPhaseTest : public ::testing::TestWithParam<CancelPhase> {
+};
+
+TEST_P(OpenObjectCancelPhaseTest, CancelsCleanlyAtHandshakePhase) {
+  CancelPhase const phase = GetParam();
+  AsyncSequencer<bool> sequencer;
+  MockStorageStub mock;
+  EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer, phase] {
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer] {
+      return sequencer.PushBack("Start").then(
+          [](future<bool> f) { return f.get(); });
+    });
+    if (phase == CancelPhase::kWrite || phase == CancelPhase::kRead) {
+      EXPECT_CALL(*stream, Write).WillOnce([&sequencer] {
+        return sequencer.PushBack("Write").then(
+            [](future<bool> f) { return f.get(); });
+      });
+    }
+    if (phase == CancelPhase::kRead) {
+      EXPECT_CALL(*stream, Read).WillOnce([&sequencer] {
+        return sequencer.PushBack("Read").then([](future<bool>) {
+          return std::make_optional(
+              google::storage::v2::BidiReadObjectResponse{});
+        });
+      });
+    }
+    EXPECT_CALL(*stream, Cancel).Times(1);
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer] {
+      return sequencer.PushBack("Finish").then(
+          [](future<bool>) { return Status{}; });
+    });
+    return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
+  });
+
+  CompletionQueue cq;
+  auto coro = std::make_shared<OpenObject>(
+      mock, cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}),
+      google::storage::v2::BidiReadObjectRequest{});
+  future<StatusOr<OpenStreamResult>> pending = coro->Call();
+
+  auto const pop = [&sequencer](char const* expected) {
+    auto [p, name] = sequencer.PopFrontWithName();
+    EXPECT_EQ(name, expected);
+    return std::move(p);
+  };
+
+  promise<bool> start = pop("Start");
+  if (phase == CancelPhase::kStart) pending.cancel();
+  start.set_value(phase != CancelPhase::kFinish);
+
+  if (phase == CancelPhase::kWrite || phase == CancelPhase::kRead) {
+    promise<bool> write = pop("Write");
+    if (phase == CancelPhase::kWrite) pending.cancel();
+    write.set_value(true);
+  }
+  if (phase == CancelPhase::kRead) {
+    promise<bool> read = pop("Read");
+    pending.cancel();
+    read.set_value(true);
+  }
+
+  promise<bool> finish = pop("Finish");
+  if (phase == CancelPhase::kFinish) pending.cancel();
+  finish.set_value(true);
+
+  EXPECT_THAT(pending.get(), StatusIs(StatusCode::kCancelled));
+}
+
+INSTANTIATE_TEST_SUITE_P(CancelPhases, OpenObjectCancelPhaseTest,
+                         ::testing::Values(CancelPhase::kStart,
+                                           CancelPhase::kWrite,
+                                           CancelPhase::kRead,
+                                           CancelPhase::kFinish));
+
+TEST(OpenImpl, ConcurrentCancelAndReadCompletion) {
+  for (int iter = 0; iter != 25; ++iter) {
+    std::mutex gate_mu;
+    std::condition_variable gate_cv;
+    int ready = 0;
+    bool release = false;
+    std::atomic<int> cancel_calls{0};
+    auto read_promise = std::make_shared<
+        promise<std::optional<google::storage::v2::BidiReadObjectResponse>>>();
+    future<OpenStream::ReadType> read_future = read_promise->get_future();
+
+    MockStorageStub mock;
+    EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&] {
+      auto stream = std::make_unique<::testing::NiceMock<MockStream>>();
+      ON_CALL(*stream, Start).WillByDefault([] {
+        return make_ready_future(true);
+      });
+      ON_CALL(*stream, Write)
+          .WillByDefault(
+              [](google::storage::v2::BidiReadObjectRequest const&,
+                 grpc::WriteOptions) { return make_ready_future(true); });
+      EXPECT_CALL(*stream, Read)
+          .WillOnce(
+              [f = std::move(read_future)]() mutable { return std::move(f); });
+      ON_CALL(*stream, Cancel).WillByDefault([&cancel_calls] {
+        ++cancel_calls;
+      });
+      ON_CALL(*stream, Finish).WillByDefault([] {
+        return make_ready_future(Status{});
+      });
+      return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
+    });
+
+    CompletionQueue cq;
+    auto coro = std::make_shared<OpenObject>(
+        mock, cq, std::make_shared<grpc::ClientContext>(),
+        internal::MakeImmutableOptions({}),
+        google::storage::v2::BidiReadObjectRequest{});
+    future<StatusOr<OpenStreamResult>> pending = coro->Call();
+
+    auto const wait_at_gate = [&] {
+      std::unique_lock<std::mutex> lock(gate_mu);
+      ++ready;
+      gate_cv.notify_all();
+      gate_cv.wait(lock, [&] { return release; });
+    };
+    std::thread reader([&] {
+      wait_at_gate();
+      read_promise->set_value(
+          std::make_optional(google::storage::v2::BidiReadObjectResponse{}));
+    });
+    std::thread canceller([&] {
+      wait_at_gate();
+      pending.cancel();
+    });
+
+    {
+      std::unique_lock<std::mutex> lock(gate_mu);
+      gate_cv.wait(lock, [&] { return ready == 2; });
+      release = true;
+    }
+    gate_cv.notify_all();
+    reader.join();
+    canceller.join();
+
+    StatusOr<OpenStreamResult> result = pending.get();
+    if (result.ok()) {
+      EXPECT_EQ(cancel_calls.load(), 0);
+      EXPECT_FALSE(result->stream->IsCancelled());
+    } else {
+      EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
+      EXPECT_EQ(cancel_calls.load(), 1);
+    }
+  }
 }
 
 }  // namespace

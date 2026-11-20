@@ -36,12 +36,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * gRPC imposes a number of restrictions on how to close bidi streaming RPCs.
  * This class automates most of these restrictions. In particular, it waits
- * (using background threads) until all pending `Read()` and `Write()` calls
- * complete before trying to `Finish()` and then delete the stream.
+ * (using background threads) until all pending `Start()`, `Read()`, and
+ * `Write()` calls complete before trying to `Finish()` and then delete the
+ * stream.
  *
  * gRPC will assert if one deletes a streaming read-write RPC before waiting for
  * the result of `Finish()` calls. It will also assert if one calls `Finish()`
- * while there are pending `Read()` or `Write()` calls.
+ * while there are pending `Start()`, `Read()`, or `Write()` calls.
  *
  * This class tracks what operations, if any, are pending. On cancel, it waits
  * until all pending operations complete, then calls `Finish()` and then deletes
@@ -62,18 +63,25 @@ class OpenStream : public std::enable_shared_from_this<OpenStream> {
 
   explicit OpenStream(std::unique_ptr<StreamingRpc> rpc);
 
+  // Cancels the stream and calls `Finish()` once all pending operations drain.
+  // Against real gRPC streams, `Start()` must have been initiated first.
   void Cancel();
+  bool IsCancelled() const { return cancel_.load(); }
   future<bool> Start();
   future<bool> Write(google::storage::v2::BidiReadObjectRequest const& request);
   future<ReadType> Read();
+  // Issues `rpc_->Finish()` on the first call; subsequent calls return an
+  // invalid `future<Status>{}`.
   future<Status> Finish();
 
  private:
+  void OnStart();
   void OnWrite();
   void OnRead();
   void MaybeFinish();
 
   std::atomic<bool> cancel_{false};
+  std::atomic<bool> pending_start_{false};
   std::atomic<bool> pending_read_{false};
   std::atomic<bool> pending_write_{false};
   std::atomic<bool> finish_issued_{false};

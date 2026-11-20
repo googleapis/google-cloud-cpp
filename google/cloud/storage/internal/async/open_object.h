@@ -25,6 +25,7 @@
 #include "google/cloud/version.h"
 #include "google/storage/v2/storage.pb.h"
 #include <grpcpp/grpcpp.h>
+#include <atomic>
 #include <memory>
 #include <string>
 
@@ -89,6 +90,8 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
   future<StatusOr<OpenStreamResult>> Call();
 
  private:
+  enum class State { kOpening, kCommitted, kCancelled };
+
   std::weak_ptr<OpenObject> WeakFromThis();
 
   static std::unique_ptr<OpenStream::StreamingRpc> CreateRpc(
@@ -101,12 +104,14 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
   void OnWrite(bool ok);
   void OnRead(
       std::optional<google::storage::v2::BidiReadObjectResponse> response);
+  void OnCancel();
   void DoFinish();
   void OnFinish(Status status);
 
-  std::shared_ptr<OpenStream> rpc_;
+  std::shared_ptr<OpenStream> const rpc_;
   promise<StatusOr<OpenStreamResult>> promise_;
   google::storage::v2::BidiReadObjectRequest initial_request_;
+  std::atomic<State> state_{State::kOpening};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
