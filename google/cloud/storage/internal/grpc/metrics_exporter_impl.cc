@@ -150,17 +150,20 @@ void RegisterGrpcPlugin(
 
 }  // namespace
 
+bool AnyMetricsEnabled(Options const& options) {
+  return options.get<storage_experimental::EnableGrpcMetricsOption>() ||
+         options.get<storage_experimental::EnableOTelMetricsOption>() ||
+         options.get<storage_experimental::EnableOTelDebugMetricsOption>();
+}
+
 std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options) {
-  bool const enable_grpc =
-      options.get<storage_experimental::EnableGrpcMetricsOption>();
-  bool const enable_otel =
-      options.get<storage_experimental::EnableOTelMetricsOption>() ||
-      options.get<storage_experimental::EnableOTelDebugMetricsOption>();
-  if (!enable_grpc && !enable_otel) {
+  if (!AnyMetricsEnabled(options)) {
     return std::nullopt;
   }
+  bool const enable_grpc =
+      options.get<storage_experimental::EnableGrpcMetricsOption>();
   auto project = MonitoringProject(resource, options);
   if (!project) return std::nullopt;
 

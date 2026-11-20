@@ -105,14 +105,16 @@ TEST(GrpcMetricsExporter, OptionCombinationsGateConfigAndGrpcPlugin) {
         SCOPED_TRACE(std::string("grpc=") + (enable_grpc ? "true" : "false") +
                      ", otel=" + (enable_otel ? "true" : "false") +
                      ", debug=" + (enable_debug ? "true" : "false"));
-        std::optional<ExporterConfig> const config = MakeMeterProviderConfig(
-            FullResource(),
+        Options const opts =
             TestOptions()
                 .set<storage_experimental::EnableGrpcMetricsOption>(enable_grpc)
                 .set<storage_experimental::EnableOTelMetricsOption>(enable_otel)
                 .set<storage_experimental::EnableOTelDebugMetricsOption>(
-                    enable_debug));
+                    enable_debug);
         bool const expect_config = enable_grpc || enable_otel || enable_debug;
+        EXPECT_EQ(AnyMetricsEnabled(opts), expect_config);
+        std::optional<ExporterConfig> const config =
+            MakeMeterProviderConfig(FullResource(), opts);
         ASSERT_EQ(config.has_value(), expect_config);
         if (expect_config) {
           EXPECT_EQ(config->enable_grpc_plugin, enable_grpc);
@@ -300,13 +302,21 @@ TEST(GrpcMetricsExporter, FindMeterProviderAfterEnable) {
   EXPECT_THAT(FindMeterProvider("test-only-unknown.example.com"), IsNull());
 }
 
-/// @test Verify concurrent callers for the same authority all observe the
-/// initialized provider.
+/// @test Verify concurrent OTel-only and gRPC-enabled callers for the same
+/// authority share one provider and every gRPC-enabled caller observes the
+/// gRPC plugin registered before `EnableGrpcMetricsImpl()` returns.
 TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   std::string const authority = "test-only-concurrent-provider.example.com";
-  std::optional<ExporterConfig> const config = MakeMeterProviderConfig(
+  std::optional<ExporterConfig> const grpc_config = MakeMeterProviderConfig(
       FullResource(), TestOptions().set<AuthorityOption>(authority));
-  ASSERT_TRUE(config.has_value());
+  std::optional<ExporterConfig> const otel_config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<AuthorityOption>(authority)
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(true));
+  ASSERT_TRUE(grpc_config.has_value());
+  ASSERT_TRUE(otel_config.has_value());
 
   int constexpr kThreadCount = 8;
   std::atomic<int> plugin_registrations{0};
@@ -320,9 +330,14 @@ TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   std::vector<std::thread> threads;
   threads.reserve(kThreadCount);
   for (int i = 0; i != kThreadCount; ++i) {
-    threads.emplace_back([&, i] {
+    bool const grpc_enabled = (i % 2 == 0);
+    threads.emplace_back([&, i, grpc_enabled] {
       start.wait();
-      EnableGrpcMetricsImpl(*config, register_plugin);
+      EnableGrpcMetricsImpl(grpc_enabled ? *grpc_config : *otel_config,
+                            register_plugin);
+      if (grpc_enabled) {
+        EXPECT_EQ(plugin_registrations.load(), 1);
+      }
       providers[i] = FindMeterProvider(authority);
     });
   }

@@ -43,6 +43,9 @@ struct ExporterConfig {
   bool enable_grpc_plugin = true;
 };
 
+/// Returns true if any gRPC or OpenTelemetry storage metrics option is enabled.
+bool AnyMetricsEnabled(Options const& options);
+
 std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options);
@@ -62,13 +65,14 @@ void EnableGrpcMetricsImpl(
  *
  * `EnableGrpcMetricsImpl()` creates at most one provider per authority and
  * registers the gRPC OpenTelemetry plugin when `enable_grpc_plugin` is true.
- * Instruments created by this library reuse the same provider, so they inherit
- * the customer's opt-out, export period, and monitoring project instead of
- * needing a second exporter.
+ * Because `EnableGrpcMetricsOption`, `EnableOTelMetricsOption`, and
+ * `EnableOTelDebugMetricsOption` independently populate this process-wide
+ * registry, callers must check their own `Enable*MetricsOption` before looking
+ * up and recording to the shared provider.
  *
- * Returns `nullptr` when metrics are disabled, when no monitoring project
- * could be determined, or when `EnableGrpcMetricsImpl()` has not run for
- * @p authority.
+ * Returns `nullptr` when all metrics options are disabled, when no monitoring
+ * project could be determined, or when `EnableGrpcMetricsImpl()` has not run
+ * for @p authority.
  */
 std::shared_ptr<opentelemetry::metrics::MeterProvider> FindMeterProvider(
     std::string const& authority);
