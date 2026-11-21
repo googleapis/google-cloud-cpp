@@ -16,6 +16,8 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
@@ -23,6 +25,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -34,6 +37,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -44,9 +48,11 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::TestCredentialsVisitor;
 using ::testing::ElementsAre;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -87,6 +93,26 @@ class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
   static int on_completion_call_count_;
 };
 int ObservableBackoffPolicy::on_completion_call_count_;
+
+/// Returns the name of the `UnifiedCredentialsOption` in @p options, or an
+/// empty string if the option is not set.
+std::string CredentialsName(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
+  TestCredentialsVisitor visitor;
+  CredentialsVisitor::dispatch(*options.get<UnifiedCredentialsOption>(),
+                               visitor);
+  return visitor.name;
+}
+
+/// Returns the logging components of the `UnifiedCredentialsOption` in
+/// @p options, or an empty set if the option is not set.
+std::set<std::string> CredentialsLoggingComponents(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
+  TestCredentialsVisitor visitor;
+  CredentialsVisitor::dispatch(*options.get<UnifiedCredentialsOption>(),
+                               visitor);
+  return visitor.options.get<LoggingComponentsOption>();
+}
 
 class ClientTest : public ::testing::Test {
  public:
@@ -283,6 +309,68 @@ TEST_F(ClientTest, EndpointsEmulator) {
   auto options = internal::DefaultOptions();
   EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
   EXPECT_EQ("http://localhost:1234/iamapi", options.get<IamEndpointOption>());
+}
+
+TEST_F(ClientTest, EmulatorUsesInsecureCredentials) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           "http://localhost:1234");
+  Options const options = internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
+}
+
+TEST_F(ClientTest, OldEmulatorUsesInsecureCredentials) {
+  google::cloud::testing_util::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                           "http://localhost:1234");
+  Options const options = internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
+}
+
+TEST_F(ClientTest, EmulatorKeepsExplicitCredentials) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           "http://localhost:1234");
+  Options const options = internal::DefaultOptionsWithCredentials(
+      Options{}.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "token1", std::chrono::system_clock::now() + std::chrono::hours(1))));
+  EXPECT_EQ(CredentialsName(options), "AccessTokenConfig");
+}
+
+TEST_F(ClientTest, DefaultCredentialsKeepAuthOptions) {
+  Options const options = internal::DefaultOptionsWithCredentials(
+      Options{}.set<LoggingComponentsOption>({"auth"}));
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
+}
+
+/// @test Verify `CLOUD_STORAGE_ENABLE_TRACING` configures the client logging
+/// only. The default credentials use `GOOGLE_CLOUD_CPP_ENABLE_TRACING`, and
+/// must not log the OAuth token requests when `http` tracing is enabled.
+TEST_F(ClientTest, DefaultCredentialsIgnoreStorageTracingEnvironment) {
+  testing_util::ScopedEnvironment storage_tracing(
+      "CLOUD_STORAGE_ENABLE_TRACING", "raw-client,http");
+  testing_util::ScopedEnvironment common_tracing(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "auth");
+  Options const options = internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("raw-client", "http"));
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
+}
+
+TEST_F(ClientTest, DefaultOptionsHasNoCredentials) {
+  Options const options = internal::DefaultOptions();
+  EXPECT_FALSE(options.has<UnifiedCredentialsOption>());
+}
+
+TEST_F(ClientTest, ClientConstructorUsesEmulatorCredentials) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           "http://localhost:1234");
+  Client client(DisableTracing(Options{}));
+  std::shared_ptr<internal::StorageConnection> const connection =
+      ClientImplDetails::GetConnection(client);
+  ASSERT_THAT(connection, NotNull());
+  EXPECT_EQ(CredentialsName(connection->options()),
+            "InsecureCredentialsConfig");
 }
 
 TEST_F(ClientTest, OldEndpointsEmulator) {

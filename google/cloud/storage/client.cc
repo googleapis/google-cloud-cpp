@@ -364,20 +364,33 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
     return signing_account.value();
   }
 
-  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
-      *connection_->options().get<UnifiedCredentialsOption>()));
+  // gRPC clients configured with `GrpcCredentialOption` have no
+  // `UnifiedCredentialsOption`. Hold `options` locally because `options()`
+  // returns by value.
+  Options const options = connection_->options();
+  std::shared_ptr<Credentials> const& unified =
+      options.get<UnifiedCredentialsOption>();
+  if (!unified) return {};
+  auto credentials =
+      WrapRestCredentials(rest_internal::MapCredentials(*unified));
   return credentials.AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
-      *connection_->options().get<UnifiedCredentialsOption>()));
-
-  // First try to sign locally.
-  auto signed_blob = credentials.SignBlob(signing_account, string_to_sign);
-  if (signed_blob) {
-    return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
+  // First try to sign locally when `UnifiedCredentialsOption` is present. gRPC
+  // clients using `GrpcCredentialOption` can only sign using the API.
+  Options const options = connection_->options();
+  std::shared_ptr<Credentials> const& unified =
+      options.get<UnifiedCredentialsOption>();
+  if (unified) {
+    auto credentials =
+        WrapRestCredentials(rest_internal::MapCredentials(*unified));
+    StatusOr<std::vector<std::uint8_t>> signed_blob =
+        credentials.SignBlob(signing_account, string_to_sign);
+    if (signed_blob) {
+      return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
+    }
   }
 
   // If signing locally fails that may be because the credentials do not
@@ -612,11 +625,6 @@ Options ApplyPolicy(Options opts, IdempotencyPolicy const& p) {
   return opts;
 }
 
-Options DefaultOptions(std::shared_ptr<oauth2_internal::Credentials> const&,
-                       Options opts) {
-  return DefaultOptions(std::move(opts));
-}
-
 Options DefaultOptions(Options opts) {
   auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
   if (ud && !ud->empty()) {
@@ -628,9 +636,6 @@ Options DefaultOptions(Options opts) {
                                  "https://iamcredentials.googleapis.com", opts),
                              "/v1");
   Options o;
-  if (!opts.has<UnifiedCredentialsOption>()) {
-    o.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  }
   // Storage has more stringent requirements w.r.t. self-signed JWTs
   // than most services. Any scope makes the self-signed JWTs unusable with
   // storage, but they remain usable with other services. We need to disable
@@ -771,21 +776,20 @@ Options DefaultOptions(Options opts) {
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
-  if (opts.has<UnifiedCredentialsOption>()) {
-    auto credentials =
-        rest_internal::MapCredentials(*opts.get<UnifiedCredentialsOption>());
-    return internal::DefaultOptions(std::move(credentials), std::move(opts));
-  }
-  if (GetEmulator().has_value()) {
-    return internal::DefaultOptions(
-        rest_internal::MapCredentials(
-            *google::cloud::MakeInsecureCredentials()),
-        std::move(opts));
-  }
-  auto credentials = rest_internal::MapCredentials(
-      *google::cloud::MakeGoogleDefaultCredentials(
-          google::cloud::internal::MakeAuthOptions(opts)));
-  return internal::DefaultOptions(std::move(credentials), std::move(opts));
+  // Capture the auth options before `DefaultOptions()` adds the components in
+  // `CLOUD_STORAGE_ENABLE_TRACING`. Those configure the storage client only:
+  // `http` would log the OAuth token requests, and any value would replace the
+  // `GOOGLE_CLOUD_CPP_ENABLE_TRACING` components used by the credentials.
+  auto auth_options = google::cloud::internal::MakeAuthOptions(opts);
+  opts = internal::DefaultOptions(std::move(opts));
+  if (opts.has<UnifiedCredentialsOption>()) return opts;
+  // The emulator does not support authentication, use insecure (sometimes
+  // called "anonymous") credentials.
+  opts.set<UnifiedCredentialsOption>(
+      GetEmulator().has_value() ? google::cloud::MakeInsecureCredentials()
+                                : google::cloud::MakeGoogleDefaultCredentials(
+                                      std::move(auth_options)));
+  return opts;
 }
 
 Client ClientImplDetails::CreateWithDecorations(
