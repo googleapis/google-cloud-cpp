@@ -32,7 +32,7 @@ RUN ln -s /usr/bin/g++-10 /usr/local/bin/g++
 RUN ln -s /usr/bin/gcc-10 /usr/local/bin/gcc
 
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.2.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=17 \
@@ -117,8 +117,11 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.81.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.85.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    mkdir -p third_party/grpc-proto && \
+    curl -fsSL https://github.com/grpc/grpc-proto/archive/ec30f589e2519d595688b9a42f88a91bdd6b733f.tar.gz | \
+    tar -xzf - -C third_party/grpc-proto --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_STANDARD=17 \
