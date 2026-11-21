@@ -25,7 +25,7 @@ jobs:
   identity-federation-integration-test:
     if: github.repository == 'googleapis/google-cloud-cpp'
     name: external-account-integration-test
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # Add "id-token" with the intended permissions.
     permissions:
       contents: read
