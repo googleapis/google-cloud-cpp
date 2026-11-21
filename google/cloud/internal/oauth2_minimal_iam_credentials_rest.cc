@@ -28,6 +28,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,10 +36,10 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::string IamCredentialsEndpoint(
-    StatusOr<std::string> const& universe_domain) {
-  return absl::StrCat("https://iamcredentials.",
-                      universe_domain ? *universe_domain : "googleapis.com");
+StatusOr<std::string> IamCredentialsEndpoint(
+    StatusOr<std::string> universe_domain) {
+  if (!universe_domain) return std::move(universe_domain).status();
+  return absl::StrCat("https://iamcredentials.", *universe_domain);
 }
 
 }  // namespace
@@ -59,13 +60,15 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto authorization_header =
+  StatusOr<std::string> path = MakeRequestPath(request);
+  if (!path) return std::move(path).status();
+  StatusOr<rest_internal::HttpHeader> authorization_header =
       credentials_->Authorization(std::chrono::system_clock::now());
   if (!authorization_header) return std::move(authorization_header).status();
   rest_internal::RestRequest rest_request;
   rest_request.AddHeader(*std::move(authorization_header));
   rest_request.AddHeader("Content-Type", "application/json");
-  rest_request.SetPath(MakeRequestPath(request));
+  rest_request.SetPath(*std::move(path));
   nlohmann::json payload{
       {"delegates", request.delegates},
       {"scope", request.scopes},
@@ -84,21 +87,27 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
            {"serviceAccount", request.service_account}}));
 }
 
-std::string MinimalIamCredentialsRestStub::MakeRequestPath(
+StatusOr<std::string> MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) const {
-  return absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
-                      "/v1/projects/-/serviceAccounts/",
+  StatusOr<std::string> endpoint =
+      IamCredentialsEndpoint(universe_domain(options_));
+  if (!endpoint) return std::move(endpoint).status();
+  return absl::StrCat(*endpoint, "/v1/projects/-/serviceAccounts/",
                       request.service_account, ":generateAccessToken");
 }
 
 StatusOr<AllowedLocationsResponse>
-MinimalIamCredentialsRestStub::AllowedLocationsHelper(std::string path) {
-  auto authorization_header =
+MinimalIamCredentialsRestStub::AllowedLocationsHelper(
+    std::string_view relative_path) {
+  StatusOr<std::string> endpoint =
+      IamCredentialsEndpoint(universe_domain(options_));
+  if (!endpoint) return std::move(endpoint).status();
+  StatusOr<rest_internal::HttpHeader> authorization_header =
       credentials_->Authorization(std::chrono::system_clock::now());
   if (!authorization_header) return std::move(authorization_header).status();
   rest_internal::RestRequest rest_request;
   rest_request.AddHeader(*std::move(authorization_header));
-  rest_request.SetPath(std::move(path));
+  rest_request.SetPath(absl::StrCat(*endpoint, relative_path));
 
   auto client = client_factory_(options_);
   rest_internal::RestContext context;
@@ -115,29 +124,26 @@ MinimalIamCredentialsRestStub::AllowedLocationsHelper(std::string path) {
 StatusOr<AllowedLocationsResponse>
 MinimalIamCredentialsRestStub::AllowedLocations(
     ServiceAccountAllowedLocationsRequest const& request) {
-  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
-                           "/v1/projects/-/serviceAccounts/",
-                           request.service_account_email, "/allowedLocations");
-  return AllowedLocationsHelper(std::move(path));
+  return AllowedLocationsHelper(absl::StrCat("/v1/projects/-/serviceAccounts/",
+                                             request.service_account_email,
+                                             "/allowedLocations"));
 }
 
 StatusOr<AllowedLocationsResponse>
 MinimalIamCredentialsRestStub::AllowedLocations(
     WorkloadIdentityAllowedLocationsRequest const& request) {
-  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
-                           "/v1/projects/", request.project_id,
-                           "/locations/global/workloadIdentityPools/",
-                           request.pool_id, "/allowedLocations");
-  return AllowedLocationsHelper(std::move(path));
+  return AllowedLocationsHelper(
+      absl::StrCat("/v1/projects/", request.project_id,
+                   "/locations/global/workloadIdentityPools/", request.pool_id,
+                   "/allowedLocations"));
 }
 
 StatusOr<AllowedLocationsResponse>
 MinimalIamCredentialsRestStub::AllowedLocations(
     WorkforceIdentityAllowedLocationsRequest const& request) {
-  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
-                           "/v1/locations/global/workforcePools/",
-                           request.pool_id, "/allowedLocations");
-  return AllowedLocationsHelper(std::move(path));
+  return AllowedLocationsHelper(
+      absl::StrCat("/v1/locations/global/workforcePools/", request.pool_id,
+                   "/allowedLocations"));
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
