@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include <chrono>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace google {
@@ -107,8 +108,10 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
   }
 
  private:
-  std::string MakeRequestPath(GenerateAccessTokenRequest const& request) const;
-  StatusOr<AllowedLocationsResponse> AllowedLocationsHelper(std::string path);
+  StatusOr<std::string> MakeRequestPath(
+      GenerateAccessTokenRequest const& request) const;
+  StatusOr<AllowedLocationsResponse> AllowedLocationsHelper(
+      std::string_view relative_path);
 
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
   Options options_;
