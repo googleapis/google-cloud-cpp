@@ -18,6 +18,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
@@ -35,7 +36,7 @@ Options PopulateRestOptions(Options opts) {
   }
   if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
     opts.set<rest_internal::LongrunningEndpointOption>(
-        "https://longrunning.googleapis.com");
+        UniverseDomainEndpoint("https://longrunning.googleapis.com", opts));
   }
   if (opts.has<EndpointOption>()) {
     auto& endpoint = opts.lookup<EndpointOption>();
