@@ -18,7 +18,7 @@ gitFileSource:
   repoType: GITHUB
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
-name: integration-daily
+name: v3-14-x-integration-daily
 sourceToBuild:
   ref: refs/heads/main
   repoType: GITHUB

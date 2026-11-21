@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: integration-production-ci
+name: v3-14-x-integration-production-ci
 substitutions:
   _BUILD_NAME: integration-production
   _DISTRO: fedora-latest-bazel

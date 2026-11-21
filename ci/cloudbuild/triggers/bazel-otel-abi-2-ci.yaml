@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-otel-abi-2-ci
+name: v3-14-x-bazel-otel-abi-2-ci
 substitutions:
   _BUILD_NAME: bazel-otel-abi-2
   _DISTRO: fedora-latest-bazel

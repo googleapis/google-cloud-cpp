@@ -17,10 +17,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: main
+    branch: v3.14.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: openssl-4-pr
+name: v3-14-x-openssl-4-pr
 substitutions:
   _BUILD_NAME: openssl-4
   _DISTRO: fedora-openssl-4

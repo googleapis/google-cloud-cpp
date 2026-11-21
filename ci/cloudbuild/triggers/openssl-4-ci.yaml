@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: openssl-4-ci
+name: v3-14-x-openssl-4-ci
 substitutions:
   _BUILD_NAME: openssl-4
   _DISTRO: fedora-openssl-4

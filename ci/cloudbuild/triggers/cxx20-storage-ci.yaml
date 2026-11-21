@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: main
+    branch: v3.14.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cxx20-storage-ci
+name: v3-14-x-cxx20-storage-ci
 substitutions:
   _BUILD_NAME: cxx20
   _DISTRO: fedora-latest-cxx20
