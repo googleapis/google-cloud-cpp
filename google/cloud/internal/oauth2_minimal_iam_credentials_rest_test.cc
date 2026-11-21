@@ -321,6 +321,8 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
 
 TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
   auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(Return(StatusOr<std::string>{"googleapis.com"}));
   EXPECT_CALL(*mock_credentials, GetToken).WillOnce([] {
     return Status(StatusCode::kPermissionDenied, "Permission Denied");
   });
@@ -329,8 +331,31 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
   auto stub = MinimalIamCredentialsRestStub(
       std::move(mock_credentials), {}, mock_client_factory.AsStdFunction());
   GenerateAccessTokenRequest request;
-  auto access_token = stub.GenerateAccessToken(request);
+  StatusOr<AccessToken> access_token = stub.GenerateAccessToken(request);
   EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenUniverseDomainFailure) {
+  struct TestOption {
+    using Type = std::string;
+  };
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce([](Options const& options) -> StatusOr<std::string> {
+        EXPECT_THAT(options.get<TestOption>(), Eq("forwarded"));
+        return Status(StatusCode::kUnavailable, "MDS unavailable");
+      });
+  EXPECT_CALL(*mock_credentials, GetToken).Times(0);
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub = MinimalIamCredentialsRestStub(
+      std::move(mock_credentials), Options{}.set<TestOption>("forwarded"),
+      mock_client_factory.AsStdFunction());
+  GenerateAccessTokenRequest request;
+  request.service_account = "foo@somewhere.com";
+  StatusOr<AccessToken> access_token = stub.GenerateAccessToken(request);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("MDS unavailable")));
 }
 
 TEST(MinimalIamCredentialsRestTest, GetUniverseDomainFromCredentials) {
@@ -362,6 +387,70 @@ TEST(MinimalIamCredentialsRestTest, AllowedLocationsAuthorizationFailure) {
   request.service_account_email = "foo@somewhere.com";
   auto access_token = stub.AllowedLocations(request);
   EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(MinimalIamCredentialsRestTest,
+     ServiceAccountAllowedLocationsUniverseDomainFailure) {
+  struct TestOption {
+    using Type = std::string;
+  };
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce([](Options const& options) -> StatusOr<std::string> {
+        EXPECT_THAT(options.get<TestOption>(), Eq("forwarded"));
+        return Status(StatusCode::kUnavailable, "MDS unavailable");
+      });
+  EXPECT_CALL(*mock_credentials, GetToken).Times(0);
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub = MinimalIamCredentialsRestStub(
+      std::move(mock_credentials), Options{}.set<TestOption>("forwarded"),
+      mock_client_factory.AsStdFunction());
+  ServiceAccountAllowedLocationsRequest request;
+  request.service_account_email = "foo@somewhere.com";
+  StatusOr<AllowedLocationsResponse> allowed_locations =
+      stub.AllowedLocations(request);
+  EXPECT_THAT(allowed_locations,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("MDS unavailable")));
+}
+
+TEST(MinimalIamCredentialsRestTest,
+     WorkloadIdentityAllowedLocationsUniverseDomainFailure) {
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "MDS unavailable")));
+  EXPECT_CALL(*mock_credentials, GetToken).Times(0);
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  WorkloadIdentityAllowedLocationsRequest request;
+  request.project_id = "my-project";
+  request.pool_id = "my-pool";
+  StatusOr<AllowedLocationsResponse> allowed_locations =
+      stub.AllowedLocations(request);
+  EXPECT_THAT(allowed_locations,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("MDS unavailable")));
+}
+
+TEST(MinimalIamCredentialsRestTest,
+     WorkforceIdentityAllowedLocationsUniverseDomainFailure) {
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "MDS unavailable")));
+  EXPECT_CALL(*mock_credentials, GetToken).Times(0);
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  WorkforceIdentityAllowedLocationsRequest request;
+  request.pool_id = "my-pool";
+  StatusOr<AllowedLocationsResponse> allowed_locations =
+      stub.AllowedLocations(request);
+  EXPECT_THAT(allowed_locations,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("MDS unavailable")));
 }
 
 // TODO(#16177): Update these tests to compile with MSVC.
