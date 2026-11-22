@@ -767,15 +767,25 @@ Options DefaultOptionsWithCredentials(Options opts) {
   // `CLOUD_STORAGE_ENABLE_TRACING`. Those configure the storage client only:
   // `http` would log the OAuth token requests, and any value would replace the
   // `GOOGLE_CLOUD_CPP_ENABLE_TRACING` components used by the credentials.
-  auto auth_options = google::cloud::internal::MakeAuthOptions(opts);
+  Options auth_options = google::cloud::internal::MakeAuthOptions(opts);
   opts = internal::DefaultOptions(std::move(opts));
   if (opts.has<UnifiedCredentialsOption>()) return opts;
-  // The emulator does not support authentication, use insecure (sometimes
-  // called "anonymous") credentials.
+  if (GetEmulator().has_value()) {
+    // The emulator does not support authentication, use insecure (sometimes
+    // called "anonymous") credentials.
+    opts.set<UnifiedCredentialsOption>(
+        google::cloud::MakeInsecureCredentials());
+    return opts;
+  }
+  // `PopulateAuthOptions()` does not read
+  // `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING`, so propagate the value set by
+  // `DefaultOptions()`.
+  if (opts.has<OpenTelemetryTracingOption>()) {
+    auth_options.set<OpenTelemetryTracingOption>(
+        opts.get<OpenTelemetryTracingOption>());
+  }
   opts.set<UnifiedCredentialsOption>(
-      GetEmulator().has_value() ? google::cloud::MakeInsecureCredentials()
-                                : google::cloud::MakeGoogleDefaultCredentials(
-                                      std::move(auth_options)));
+      google::cloud::MakeGoogleDefaultCredentials(std::move(auth_options)));
   return opts;
 }
 

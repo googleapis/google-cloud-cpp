@@ -23,6 +23,7 @@
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
@@ -87,10 +88,15 @@ Options DefaultOptionsGrpc(
   // Credentials unless `UnifiedCredentialsOption` is set, so the REST emulator
   // endpoint does not change the gRPC credentials. As in
   // `DefaultOptionsWithCredentials()`, capture the auth options before
-  // `DefaultOptions()` adds the `CLOUD_STORAGE_ENABLE_TRACING` components.
-  auto auth_options = google::cloud::internal::MakeAuthOptions(options);
+  // `DefaultOptions()` adds the `CLOUD_STORAGE_ENABLE_TRACING` components, and
+  // then propagate `OpenTelemetryTracingOption` from `DefaultOptions()`.
+  Options auth_options = google::cloud::internal::MakeAuthOptions(options);
   options = storage::internal::DefaultOptions(std::move(options));
   if (!options.has<UnifiedCredentialsOption>()) {
+    if (options.has<OpenTelemetryTracingOption>()) {
+      auth_options.set<OpenTelemetryTracingOption>(
+          options.get<OpenTelemetryTracingOption>());
+    }
     options.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials(std::move(auth_options)));
   }

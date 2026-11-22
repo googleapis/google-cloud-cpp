@@ -114,6 +114,16 @@ std::set<std::string> CredentialsLoggingComponents(Options const& options) {
   return visitor.options.get<LoggingComponentsOption>();
 }
 
+/// Returns whether OpenTelemetry tracing is enabled on the
+/// `UnifiedCredentialsOption` in @p options.
+bool CredentialsOpenTelemetryTracing(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return false;
+  TestCredentialsVisitor visitor;
+  CredentialsVisitor::dispatch(*options.get<UnifiedCredentialsOption>(),
+                               visitor);
+  return visitor.options.get<OpenTelemetryTracingOption>();
+}
+
 class ClientTest : public ::testing::Test {
  public:
   ClientTest()
@@ -336,10 +346,15 @@ TEST_F(ClientTest, EmulatorKeepsExplicitCredentials) {
 }
 
 TEST_F(ClientTest, DefaultCredentialsKeepAuthOptions) {
+  ScopedEnvironment common_tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
+  ScopedEnvironment otel_tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", {});
   Options const options = internal::DefaultOptionsWithCredentials(
-      Options{}.set<LoggingComponentsOption>({"auth"}));
+      Options{}
+          .set<LoggingComponentsOption>({"auth"})
+          .set<OpenTelemetryTracingOption>(true));
   EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
   EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
+  EXPECT_TRUE(CredentialsOpenTelemetryTracing(options));
 }
 
 /// @test Verify `CLOUD_STORAGE_ENABLE_TRACING` configures the client logging
@@ -350,11 +365,32 @@ TEST_F(ClientTest, DefaultCredentialsIgnoreStorageTracingEnvironment) {
       "CLOUD_STORAGE_ENABLE_TRACING", "raw-client,http");
   testing_util::ScopedEnvironment common_tracing(
       "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "auth");
+  ScopedEnvironment otel_tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", {});
   Options const options = internal::DefaultOptionsWithCredentials(Options{});
   EXPECT_THAT(options.get<LoggingComponentsOption>(),
               UnorderedElementsAre("raw-client", "http"));
   EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
   EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
+  EXPECT_FALSE(CredentialsOpenTelemetryTracing(options));
+}
+
+/// @test Verify `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING` reaches the default
+/// credentials.
+TEST_F(ClientTest, DefaultCredentialsUseOpenTelemetryTracingEnvironment) {
+  ScopedEnvironment otel_tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
+                                 "ON");
+  Options const default_options =
+      internal::DefaultOptionsWithCredentials(Options{});
+  EXPECT_TRUE(default_options.get<OpenTelemetryTracingOption>());
+  EXPECT_EQ(CredentialsName(default_options), "GoogleDefaultCredentialsConfig");
+  EXPECT_TRUE(CredentialsOpenTelemetryTracing(default_options));
+
+  Options const overridden_options = internal::DefaultOptionsWithCredentials(
+      Options{}.set<OpenTelemetryTracingOption>(false));
+  EXPECT_TRUE(overridden_options.get<OpenTelemetryTracingOption>());
+  EXPECT_EQ(CredentialsName(overridden_options),
+            "GoogleDefaultCredentialsConfig");
+  EXPECT_TRUE(CredentialsOpenTelemetryTracing(overridden_options));
 }
 
 TEST_F(ClientTest, DefaultOptionsHasNoCredentials) {
