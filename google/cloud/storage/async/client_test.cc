@@ -13,17 +13,23 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 #include <memory>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -1503,6 +1509,23 @@ TEST(AsyncClient, ResumeRewrite2) {
   ASSERT_STATUS_OK(rt);
   EXPECT_FALSE(rt->second.valid());
   EXPECT_THAT(rt->first, MatchRewriteResponse());
+}
+
+/// @test Verify `AsyncClient(Options)` accepts `GrpcCredentialOption` without
+/// `UnifiedCredentialsOption`.
+TEST(AsyncClient, GrpcCredentialOption) {
+  testing_util::ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  AsyncClient const client(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<GrpcBackgroundThreadPoolSizeOption>(1)
+          .set<storage_experimental::EnableGrpcMetricsOption>(false));
+  (void)client;
 }
 
 }  // namespace

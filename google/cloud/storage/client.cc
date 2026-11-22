@@ -371,7 +371,7 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   std::shared_ptr<Credentials> const& unified =
       options.get<UnifiedCredentialsOption>();
   if (!unified) return {};
-  auto credentials =
+  auto const credentials =
       WrapRestCredentials(rest_internal::MapCredentials(*unified));
   return credentials.AccountEmail();
 }
@@ -384,7 +384,7 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   std::shared_ptr<Credentials> const& unified =
       options.get<UnifiedCredentialsOption>();
   if (unified) {
-    auto credentials =
+    auto const credentials =
         WrapRestCredentials(rest_internal::MapCredentials(*unified));
     StatusOr<std::vector<std::uint8_t>> signed_blob =
         credentials.SignBlob(signing_account, string_to_sign);

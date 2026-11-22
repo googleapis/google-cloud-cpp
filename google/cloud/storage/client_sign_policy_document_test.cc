@@ -148,6 +148,45 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
   EXPECT_THAT(actual->signature, expected_signed_blob);
 }
 
+/// @test Verify CreateSignedPolicyDocument() signs remotely when the connection
+/// has no `UnifiedCredentialsOption`, as in a gRPC client using
+/// `GrpcCredentialOption`.
+TEST_F(CreateSignedPolicyDocRPCTest, SignRemoteWithoutUnifiedCredentials) {
+  std::string const expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
+
+  EXPECT_CALL(*mock_, options)
+      .WillRepeatedly(Return(storage::internal::DefaultOptions(
+          Options{}.set<AuthorityOption>("a-default"))));
+  EXPECT_CALL(*mock_, SignBlob)
+      .WillOnce([&expected_signed_blob](internal::SignBlobRequest const& r) {
+        EXPECT_EQ(r.service_account(), "test-only-invalid@example.com");
+        return make_status_or(
+            internal::SignBlobResponse{"test-key-id", expected_signed_blob});
+      });
+  Client client = ClientForMock();
+  StatusOr<PolicyDocumentResult> actual = client.CreateSignedPolicyDocument(
+      CreatePolicyDocumentForTest(),
+      SigningAccount("test-only-invalid@example.com"));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->access_id, "test-only-invalid@example.com");
+  EXPECT_EQ(actual->signature, expected_signed_blob);
+}
+
+/// @test Verify CreateSignedPolicyDocument() reports a missing signing account
+/// when the connection has no `UnifiedCredentialsOption`.
+TEST_F(CreateSignedPolicyDocRPCTest,
+       SignWithoutUnifiedCredentialsOrSigningAccount) {
+  EXPECT_CALL(*mock_, options)
+      .WillRepeatedly(Return(storage::internal::DefaultOptions(
+          Options{}.set<AuthorityOption>("a-default"))));
+  EXPECT_CALL(*mock_, SignBlob).Times(0);
+  Client client = ClientForMock();
+  StatusOr<PolicyDocumentResult> actual =
+      client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("signing account cannot be empty")));
+}
+
 PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   PolicyDocumentV4 result;
   result.bucket = "test-bucket";
