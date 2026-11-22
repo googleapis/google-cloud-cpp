@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -28,13 +29,9 @@ namespace internal {
 
 int DefaultConnectionPoolSize();
 
-constexpr char const* DefaultDirectPathDataEndpoint() {
-  return "google-c2p:///bigtable.googleapis.com";
-}
+std::string DefaultDirectPathDataEndpoint(Options const& opts);
 
-constexpr char const* DefaultDirectPathAuthority() {
-  return "bigtable.googleapis.com";
-}
+std::string DefaultDirectPathAuthority(Options const& opts);
 
 constexpr experimental::DirectPathMode DefaultDirectPathMode() {
   return experimental::DirectPathMode::kDisabled;
@@ -61,6 +58,19 @@ DefaultDirectPathInitializationMode() {
  * Returns true if Direct Path is enabled for Bigtable.
  */
 bool IsDirectPath(Options const& options);
+
+/**
+ * Returns a copy of @p opts configured for DirectPath data connections,
+ * respecting `UniverseDomainOption` and `GOOGLE_CLOUD_UNIVERSE_DOMAIN`.
+ */
+Options MakeDirectPathOptions(Options opts);
+
+/**
+ * Returns a copy of @p opts configured for CloudPath data connections,
+ * respecting `UniverseDomainOption`, `GOOGLE_CLOUD_UNIVERSE_DOMAIN`, and
+ * `BIGTABLE_EMULATOR_HOST`.
+ */
+Options MakeCloudPathOptions(Options opts);
 
 /**
  * Returns an `Options` with the appropriate defaults for Bigtable.

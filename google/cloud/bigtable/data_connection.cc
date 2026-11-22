@@ -201,28 +201,6 @@ std::shared_ptr<bigtable::DataConnection> MakeInstanceAffinityDataConnection(
       std::move(components.limiter), std::move(components.options));
 }
 
-Options MakeDirectPathOptions(Options options) {
-  options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-      bigtable::internal::DefaultDirectPathDataEndpoint());
-  options.set<EndpointOption>(
-      bigtable::internal::DefaultDirectPathDataEndpoint());
-  options.set<AuthorityOption>(
-      bigtable::internal::DefaultDirectPathAuthority());
-  options.set<bigtable::experimental::DirectPathModeOption>(
-      bigtable::experimental::DirectPathMode::kEnabled);
-  return options;
-}
-
-Options MakeCloudPathOptions(Options options) {
-  options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-      "bigtable.googleapis.com");
-  options.set<EndpointOption>("bigtable.googleapis.com");
-  options.set<AuthorityOption>("bigtable.googleapis.com");
-  options.set<bigtable::experimental::DirectPathModeOption>(
-      bigtable::experimental::DirectPathMode::kDisabled);
-  return options;
-}
-
 std::shared_ptr<bigtable::DataConnection>
 MakeSpeculativeDirectPathDataConnection(
     DataConnectionComponents components,
@@ -393,9 +371,10 @@ std::shared_ptr<bigtable::DataConnection> MakeDirectPathDataConnection(
   experimental::DirectPathInitializationMode const initialization_mode =
       components.options
           .get<bigtable::experimental::DirectPathInitializationModeOption>();
-  Options directpath_options = MakeDirectPathOptions(components.options);
+  Options directpath_options =
+      bigtable::internal::MakeDirectPathOptions(components.options);
   Options cloudpath_options =
-      MakeCloudPathOptions(std::move(components.options));
+      bigtable::internal::MakeCloudPathOptions(std::move(components.options));
 
   if (initialization_mode ==
       bigtable::experimental::DirectPathInitializationMode::kBlocking) {

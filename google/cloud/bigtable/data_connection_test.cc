@@ -22,6 +22,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/universe_domain_options.h"
 #include "rpc_retry_policy.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -174,6 +175,28 @@ TEST(MakeDataConnection, DirectPathInitializationModeSpeculative) {
   EXPECT_NE(conn, nullptr);
 }
 #endif
+
+TEST(MakeDataConnection, DirectPathFallbackUsesUniverseDomainOption) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
+  InstanceResource const instance_a{Project("my-project"), "instance-a"};
+  std::shared_ptr<DataConnection> conn = MakeDataConnection(
+      {instance_a},
+      TestOptions()
+          .set<EnableMetricsOption>(false)
+          .set<google::cloud::internal::UniverseDomainOption>("ud.invalid")
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::kBlocking)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100)));
+  ASSERT_THAT(conn, testing::NotNull());
+  EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("bigtable.ud.invalid"));
+  EXPECT_THAT(conn->options().get<AuthorityOption>(),
+              Eq("bigtable.ud.invalid"));
+}
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
