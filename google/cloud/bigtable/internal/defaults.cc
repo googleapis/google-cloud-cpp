@@ -182,12 +182,16 @@ std::string DefaultDirectPathDataEndpoint(Options const& opts) {
   return absl::StrCat("google-c2p:///", DefaultDirectPathAuthority(opts));
 }
 
-bool IsDirectPath(Options const& options) {
+bool IsDirectPathAllowed(Options const& options) {
   if (!IsGoogleDefaultUniverse(options)) return false;
   std::optional<std::string> const emulator =
       google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator && !emulator->empty()) return false;
-  if (HasCustomEndpoint(options)) return false;
+  return !HasCustomEndpoint(options);
+}
+
+bool IsDirectPath(Options const& options) {
+  if (!IsDirectPathAllowed(options)) return false;
   std::optional<std::string> const direct_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   // Bigtable specific env var for Direct Path support used by all clients.

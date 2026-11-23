@@ -129,6 +129,11 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
       return internal::InternalError("Auth strategy cannot be null",
                                      GCP_ERROR_INFO());
     }
+    if (!bigtable::internal::IsDirectPathAllowed(options)) {
+      return internal::FailedPreconditionError(
+          "DirectPath is not supported for the configured options",
+          GCP_ERROR_INFO());
+    }
 
     probe_options = bigtable::internal::MakeDirectPathOptions(options);
     probe_options.set<GrpcNumChannelsOption>(1);

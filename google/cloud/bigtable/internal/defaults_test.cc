@@ -656,7 +656,42 @@ TEST(EndpointEnvTest, DirectPathDisabledWithEmptyUniverseDomainOption) {
           .set<google::cloud::internal::UniverseDomainOption>("")
           .set<experimental::DirectPathModeOption>(
               experimental::DirectPathMode::kEnabled);
+  EXPECT_FALSE(IsDirectPathAllowed(base));
   EXPECT_FALSE(IsDirectPath(base));
+}
+
+TEST(EndpointEnvTest, IsDirectPathAllowed) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                std::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+
+  // Permitted in GDU even when DirectPath is not explicitly enabled.
+  EXPECT_TRUE(IsDirectPathAllowed(Options{}));
+  EXPECT_FALSE(IsDirectPath(Options{}));
+  EXPECT_TRUE(IsDirectPathAllowed(
+      Options{}.set<EndpointOption>("google-c2p:///bigtable.googleapis.com")));
+  EXPECT_TRUE(IsDirectPathAllowed(
+      Options{}.set<::google::cloud::bigtable_internal::DataEndpointOption>(
+          "google-c2p:///bigtable.googleapis.com")));
+
+  EXPECT_FALSE(IsDirectPathAllowed(
+      Options{}.set<google::cloud::internal::UniverseDomainOption>("ud.net")));
+  EXPECT_FALSE(
+      IsDirectPathAllowed(Options{}.set<EndpointOption>("custom.tpc.invalid")));
+  EXPECT_FALSE(IsDirectPathAllowed(
+      Options{}.set<::google::cloud::bigtable_internal::DataEndpointOption>(
+          "custom-data.tpc.invalid")));
+
+  {
+    ScopedEnvironment emulator_set("BIGTABLE_EMULATOR_HOST", "localhost:8086");
+    EXPECT_FALSE(IsDirectPathAllowed(Options{}));
+  }
+  {
+    ScopedEnvironment ud_set("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env.net");
+    EXPECT_FALSE(IsDirectPathAllowed(Options{}));
+  }
 }
 
 TEST(EndpointEnvTest, DirectPathModeOptionEnabled) {
