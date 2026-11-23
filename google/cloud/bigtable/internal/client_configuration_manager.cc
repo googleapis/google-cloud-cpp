@@ -403,12 +403,18 @@ ClientConfigurationManager::AddListener(ConfigListener listener,
   std::weak_ptr<ListenerSlot> weak_slot = slot;
   return [weak_self = std::move(weak_self), weak_slot = std::move(weak_slot),
           id]() {
-    if (std::shared_ptr<ListenerSlot> s = weak_slot.lock()) {
-      s->active.store(false, std::memory_order_release);
-    }
+    std::shared_ptr<ListenerSlot> s = weak_slot.lock();
+    if (s != nullptr) s->active.store(false, std::memory_order_release);
     if (std::shared_ptr<ClientConfigurationManager> self = weak_self.lock()) {
       std::lock_guard<std::mutex> lock(self->mu_);
       self->listeners_.erase(id);
+    }
+    if (s != nullptr) {
+      std::thread::id const owner =
+          s->delivering_thread.load(std::memory_order_acquire);
+      if (owner != std::this_thread::get_id()) {
+        std::lock_guard<std::mutex> delivery_lock(s->delivery_mu);
+      }
     }
   };
 }
@@ -476,7 +482,7 @@ ClientConfigurationManager::AddDiversionLoadsListener(
         state->prev = loads;
         listener(loads);
       },
-      /*fire_immediately=*/false);
+      /*fire_immediately=*/true);
 }
 
 void ClientConfigurationManager::StartFetchAttempt(
@@ -595,8 +601,10 @@ ClientConfigurationManager::HandleFetchSuccess(
                                    : EffectiveValidityDuration(effective));
 
   std::optional<PendingNotification> notification;
-  if (!google::protobuf::util::MessageDifferencer::Equals(effective,
-                                                          current_config_)) {
+  bool const equals_current =
+      google::protobuf::util::MessageDifferencer::Equals(effective,
+                                                         current_config_);
+  if (config_seq_ == 0 || !equals_current) {
     current_config_ = std::move(effective);
     notification = CaptureNotificationLocked();
   }
@@ -715,12 +723,12 @@ void ClientConfigurationManager::ScheduleTimer(
 std::chrono::milliseconds ClientConfigurationManager::ComputeRetryBackoff(
     int attempt) {
   int const clamped_shift = std::clamp(attempt, 0, 20);
-  std::int64_t const base_ms =
-      (std::max)(std::int64_t{0}, static_cast<std::int64_t>(
-                                      config_.initial_retry_backoff.count()));
-  std::int64_t const max_ms =
-      (std::max)(base_ms,
-                 static_cast<std::int64_t>(config_.max_retry_backoff.count()));
+  std::chrono::milliseconds const base =
+      (std::max)(std::chrono::milliseconds{0}, config_.initial_retry_backoff);
+  std::chrono::milliseconds const max_delay =
+      (std::max)(base, config_.max_retry_backoff);
+  std::int64_t const base_ms = base.count();
+  std::int64_t const max_ms = max_delay.count();
   std::int64_t limit_ms = max_ms;
   if (base_ms == 0) {
     limit_ms = 0;

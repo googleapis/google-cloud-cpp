@@ -32,6 +32,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -634,6 +635,223 @@ TEST(ClientConfigurationManagerTest,
   std::chrono::nanoseconds const shutdown_elapsed =
       std::chrono::steady_clock::now() - shutdown_start;
   EXPECT_LT(shutdown_elapsed, std::chrono::seconds(2));
+}
+
+TEST(ClientConfigurationManagerTest,
+     DiversionLoadsListenerFiresImmediatelyOnLateRegistration) {
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock = std::make_shared<MockBigtableStub>();
+
+  v2::ClientConfiguration server_cfg_1;
+  server_cfg_1.mutable_polling_configuration()
+      ->mutable_polling_interval()
+      ->set_seconds(120);
+  server_cfg_1.mutable_session_configuration()->set_session_load(0.6F);
+
+  v2::ClientConfiguration server_cfg_2 = server_cfg_1;
+  server_cfg_2.mutable_session_configuration()->set_session_load(0.8F);
+  server_cfg_2.set_stop_polling(true);
+
+  EXPECT_CALL(*mock, AsyncGetClientConfiguration)
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    internal::ImmutableOptions const&,
+                    v2::GetClientConfigurationRequest const&,
+                    std::shared_ptr<OperationContext> const&) {
+        return make_ready_future(make_status_or(server_cfg_1));
+      })
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    internal::ImmutableOptions const&,
+                    v2::GetClientConfigurationRequest const&,
+                    std::shared_ptr<OperationContext> const&) {
+        return make_ready_future(make_status_or(server_cfg_1));
+      })
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    internal::ImmutableOptions const&,
+                    v2::GetClientConfigurationRequest const&,
+                    std::shared_ptr<OperationContext> const&) {
+        return make_ready_future(make_status_or(server_cfg_2));
+      });
+
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
+
+  // Start completes the initial poll synchronously (seq == 1) before any
+  // DiversionLoadsListener is registered.
+  mgr->Start();
+  ASSERT_EQ(mgr->config_seq(), 1);
+
+  std::vector<double> late_loads;
+  ClientConfigurationManager::UnregisterCallback unreg_late =
+      mgr->AddDiversionLoadsListener([&](DiversionLoads const& loads) {
+        late_loads.push_back(loads.read_row_session_load);
+      });
+  EXPECT_THAT(late_loads, ElementsAre(DoubleEq(static_cast<double>(0.6F))));
+
+  // Unchanged subsequent poll does not re-fire the late listener.
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(mgr->config_seq(), 1);
+  EXPECT_THAT(late_loads, ElementsAre(DoubleEq(static_cast<double>(0.6F))));
+
+  // Updated poll with stop_polling=true delivers 0.8, and a listener registered
+  // after polling has stopped still immediately receives 0.8.
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(mgr->config_seq(), 2);
+  EXPECT_THAT(late_loads, ElementsAre(DoubleEq(static_cast<double>(0.6F)),
+                                      DoubleEq(static_cast<double>(0.8F))));
+
+  std::vector<double> post_stop_loads;
+  ClientConfigurationManager::UnregisterCallback unreg_post_stop =
+      mgr->AddDiversionLoadsListener([&](DiversionLoads const& loads) {
+        post_stop_loads.push_back(loads.read_row_session_load);
+      });
+  EXPECT_THAT(post_stop_loads,
+              ElementsAre(DoubleEq(static_cast<double>(0.8F))));
+
+  unreg_late();
+  unreg_post_stop();
+  mgr->Shutdown();
+}
+
+TEST(ClientConfigurationManagerTest,
+     InitialPollMatchingDefaultConfigAdvancesSeqAndNotifiesListeners) {
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock = std::make_shared<MockBigtableStub>();
+
+  v2::ClientConfiguration const default_cfg = DefaultClientConfiguration();
+  EXPECT_CALL(*mock, AsyncGetClientConfiguration)
+      .Times(2)
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::shared_ptr<grpc::ClientContext> const&,
+                          internal::ImmutableOptions const&,
+                          v2::GetClientConfigurationRequest const&,
+                          std::shared_ptr<OperationContext> const&) {
+        return make_ready_future(make_status_or(default_cfg));
+      });
+
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
+
+  std::vector<std::int64_t> observed_seqs;
+  std::vector<double> observed_loads;
+  ClientConfigurationManager::UnregisterCallback unreg_general =
+      mgr->AddListener([&](v2::ClientConfiguration const&, std::int64_t seq) {
+        observed_seqs.push_back(seq);
+      });
+  ClientConfigurationManager::UnregisterCallback unreg_loads =
+      mgr->AddDiversionLoadsListener([&](DiversionLoads const& loads) {
+        observed_loads.push_back(loads.read_row_session_load);
+      });
+
+  EXPECT_THAT(observed_seqs, ElementsAre(0));
+  EXPECT_THAT(observed_loads, IsEmpty());
+
+  // First poll returns DefaultClientConfiguration(), matching current_config_,
+  // yet still advances config_seq from 0 to 1 and notifies listeners.
+  mgr->Start();
+  EXPECT_EQ(mgr->config_seq(), 1);
+  EXPECT_THAT(observed_seqs, ElementsAre(0, 1));
+  EXPECT_THAT(observed_loads, ElementsAre(DoubleEq(0.0)));
+
+  // Second poll also returns DefaultClientConfiguration(): now that seq > 0,
+  // duplicate config notifications are suppressed.
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(mgr->config_seq(), 1);
+  EXPECT_THAT(observed_seqs, ElementsAre(0, 1));
+  EXPECT_THAT(observed_loads, ElementsAre(DoubleEq(0.0)));
+
+  unreg_general();
+  unreg_loads();
+  mgr->Shutdown();
+  fake_cq->SimulateCompletion(false);
+}
+
+TEST(ClientConfigurationManagerTest,
+     UnregisterCallbackDrainsInFlightCallbackOnAnotherThread) {
+  internal::AutomaticallyCreatedBackgroundThreads bg(1);
+  auto mock = std::make_shared<MockBigtableStub>();
+
+  google::cloud::promise<void> callback_entered;
+  google::cloud::future<void> callback_entered_future =
+      callback_entered.get_future();
+  google::cloud::promise<void> allow_callback_exit;
+  google::cloud::future<void> allow_callback_exit_future =
+      allow_callback_exit.get_future();
+  google::cloud::promise<void> unregister_started;
+  google::cloud::future<void> unregister_started_future =
+      unregister_started.get_future();
+  google::cloud::promise<void> unregister_returned;
+  google::cloud::future<void> unregister_returned_future =
+      unregister_returned.get_future();
+
+  std::atomic<bool> callback_finished{false};
+  std::atomic<int> post_bootstrap_calls{0};
+
+  EXPECT_CALL(*mock, AsyncGetClientConfiguration)
+      .WillOnce([&](CompletionQueue& cq,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    internal::ImmutableOptions const&,
+                    v2::GetClientConfigurationRequest const&,
+                    std::shared_ptr<OperationContext> const&) {
+        return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
+            .then([](future<StatusOr<std::chrono::system_clock::time_point>>)
+                      -> StatusOr<v2::ClientConfiguration> {
+              v2::ClientConfiguration resp;
+              resp.mutable_session_configuration()->set_session_load(0.5F);
+              return resp;
+            });
+      });
+
+  std::shared_ptr<ClientConfigurationManager> mgr =
+      ClientConfigurationManager::Create(bg.cq(), mock, kInstanceName,
+                                         kAppProfileId, Options{});
+
+  ClientConfigurationManager::UnregisterCallback unreg = mgr->AddListener(
+      [&](v2::ClientConfiguration const&, std::int64_t seq) {
+        if (seq == 0) return;
+        ++post_bootstrap_calls;
+        callback_entered.set_value();
+        allow_callback_exit_future.get();
+        callback_finished.store(true, std::memory_order_release);
+      },
+      /*fire_immediately=*/false);
+
+  mgr->Start();
+  ASSERT_EQ(callback_entered_future.wait_for(std::chrono::seconds(5)),
+            std::future_status::ready);
+
+  std::atomic<bool> finished_before_unreg_returned{false};
+  std::thread unreg_thread([&]() {
+    unregister_started.set_value();
+    unreg();
+    finished_before_unreg_returned.store(
+        callback_finished.load(std::memory_order_acquire),
+        std::memory_order_release);
+    unregister_returned.set_value();
+  });
+
+  ASSERT_EQ(unregister_started_future.wait_for(std::chrono::seconds(5)),
+            std::future_status::ready);
+  // While the callback is blocked on the CQ thread, unreg() must not return.
+  EXPECT_EQ(unregister_returned_future.wait_for(std::chrono::milliseconds(20)),
+            std::future_status::timeout);
+
+  allow_callback_exit.set_value();
+  ASSERT_EQ(unregister_returned_future.wait_for(std::chrono::seconds(5)),
+            std::future_status::ready);
+  unreg_thread.join();
+
+  EXPECT_TRUE(finished_before_unreg_returned.load(std::memory_order_acquire));
+  EXPECT_EQ(post_bootstrap_calls.load(), 1);
+
+  mgr->Shutdown();
+  bg.Shutdown();
 }
 
 }  // namespace

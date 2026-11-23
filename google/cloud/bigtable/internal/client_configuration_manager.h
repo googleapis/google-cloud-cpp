@@ -201,8 +201,11 @@ class ClientConfigurationManager
   /// Registers a general configuration listener. When `fire_immediately` is
   /// true, delivers the current `(config, seq)` synchronously before returning
   /// (unless a newer configuration was concurrently delivered first).
-  /// Listeners may safely call `GetConfig()`, `GetSnapshot()`, or their own
-  /// unregister callback from inside the callback without deadlocking.
+  /// When invoked from outside the callback, the returned `UnregisterCallback`
+  /// drains any in-flight execution of this listener on another thread before
+  /// returning. Listeners may safely call `GetConfig()`, `GetSnapshot()`, or
+  /// their own unregister callback from inside the callback without
+  /// deadlocking.
   UnregisterCallback AddListener(ConfigListener listener,
                                  bool fire_immediately);
 
@@ -212,8 +215,10 @@ class ClientConfigurationManager
   UnregisterCallback AddSessionPoolConfigurationListener(
       SessionPoolConfigurationListener listener);
 
-  /// Registers a listener for server-driven `DiversionLoads` updates, skipping
-  /// the bootstrap `seq == 0` configuration and suppressing unchanged loads.
+  /// Registers a listener for server-driven `DiversionLoads` updates, firing
+  /// immediately when a server configuration has already been fetched
+  /// (`seq >= 1`), skipping the bootstrap `seq == 0` configuration, and
+  /// suppressing unchanged loads.
   UnregisterCallback AddDiversionLoadsListener(DiversionLoadsListener listener);
 
  private:
@@ -222,7 +227,7 @@ class ClientConfigurationManager
 
     std::mutex delivery_mu;
     std::atomic<bool> active{true};
-    std::atomic<std::thread::id> delivering_thread;
+    std::atomic<std::thread::id> delivering_thread{std::thread::id{}};
     std::int64_t last_delivered_seq = -1;
     ConfigListener callback;
   };
