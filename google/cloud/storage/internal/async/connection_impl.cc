@@ -65,6 +65,7 @@
 #include <cstdint>
 #include <memory>
 #include <set>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -72,6 +73,9 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+constexpr char const kWarmUpSentinelObject[] =
+    "__gcs_sdk_warmup_nonexistent_object__";
 
 inline std::unique_ptr<storage::AsyncRetryPolicy> retry_policy(
     Options const& options) {
@@ -175,12 +179,12 @@ OpenStreamFactory MakeOpenStreamFactory(
     std::shared_ptr<storage::AsyncRetryPolicy> retry,
     std::shared_ptr<storage::BackoffPolicy> backoff,
     google::cloud::internal::ImmutableOptions current,
-    char const* function_name, OpenLogging logging) {
+    char const* function_name, OpenLogging logging, std::uint32_t features) {
   return OpenStreamFactory(
       [stub = std::move(stub), cq = std::move(cq), retry = std::move(retry),
        backoff = std::move(backoff), current = std::move(current),
-       function_name,
-       logging](google::storage::v2::BidiReadObjectRequest request) {
+       function_name, logging,
+       features](google::storage::v2::BidiReadObjectRequest request) {
         struct DummyRequest {};
 
         std::string resource =
@@ -188,19 +192,11 @@ OpenStreamFactory MakeOpenStreamFactory(
                 ? RetryLogResource(request.read_object_spec().bucket(),
                                    request.read_object_spec().object())
                 : std::string{};
-        auto call = [stub, request = std::move(request)](
+        auto call = [stub, request = std::move(request), features](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         DummyRequest const&) mutable {
-          // Every stream the descriptor opens (the first one, resumes, and
-          // the extra streams of the multi-stream optimization) goes through
-          // this factory, so this is where the service learns which client
-          // features are in play for the read.
-          std::uint32_t features = 0;
-          if (options->get<storage::EnableMultiStreamOptimizationOption>()) {
-            features |= FeatureBit(TrackedFeature::kMultistreamInMrd);
-          }
           AddFeaturesHeader(*context, features);
           auto open = std::make_shared<OpenObject>(
               *stub, cq, std::move(context), std::move(options), request);
@@ -223,7 +219,7 @@ OpenStreamFactory MakeOpenStreamFactory(
         std::unique_ptr<google::cloud::RetryPolicy> policy = retry->clone();
         if (logging == OpenLogging::kEnabled) {
           policy = std::make_unique<LoggingRetryPolicy>(
-              std::move(policy), "Open", std::move(resource));
+              std::move(policy), function_name, std::move(resource));
         }
         return google::cloud::internal::AsyncRetryLoop(
             std::move(policy), backoff->clone(), Idempotency::kIdempotent, cq,
@@ -332,15 +328,24 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   auto const* function_name = __func__;
+  // Every stream the descriptor opens (the first one, resumes, and the extra
+  // streams of the multi-stream optimization) goes through these factories, so
+  // this is where the service learns which client features are in play for the
+  // read.
+  std::uint32_t const features =
+      current->get<storage::EnableMultiStreamOptimizationOption>()
+          ? FeatureBit(TrackedFeature::kMultistreamInMrd)
+          : 0;
   // The application is waiting on this open, so its retries are reported. So
   // are the descriptor's, with one exception below.
-  auto factory = MakeOpenStreamFactory(stub_, cq_, retry, backoff, current,
-                                       function_name, OpenLogging::kEnabled);
+  auto factory =
+      MakeOpenStreamFactory(stub_, cq_, retry, backoff, current, function_name,
+                            OpenLogging::kEnabled, features);
   // Used only when the descriptor re-opens a stream that ended cleanly: see
   // `MakeOpenStreamFactory()` and `ObjectDescriptorImpl`.
   auto clean_resume_factory = MakeOpenStreamFactory(
       stub_, cq_, std::move(retry), std::move(backoff), std::move(current),
-      function_name, OpenLogging::kDisabled);
+      function_name, OpenLogging::kDisabled, features);
 
   auto pending = factory(std::move(initial_request));
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
@@ -372,6 +377,35 @@ AsyncConnectionImpl::Open(OpenParams p) {
     impl->Start(std::move(result->first_response));
     return ReturnType(impl);
   });
+}
+
+future<Status> AsyncConnectionImpl::WarmUp(WarmUpParams p) {
+  google::storage::v2::BidiReadObjectRequest initial_request;
+  google::storage::v2::BidiReadObjectSpec& spec =
+      *initial_request.mutable_read_object_spec();
+  spec.set_bucket(p.bucket_name.FullName());
+  p.object_prefix.append(kWarmUpSentinelObject);
+  spec.set_object(std::move(p.object_prefix));
+  spec.set_generation(1);
+
+  internal::ImmutableOptions current =
+      internal::MakeImmutableOptions(std::move(p.options));
+  std::shared_ptr<storage::AsyncRetryPolicy> retry = retry_policy(*current);
+  std::shared_ptr<storage::BackoffPolicy> backoff = backoff_policy(*current);
+  OpenStreamFactory factory = MakeOpenStreamFactory(
+      stub_, cq_, std::move(retry), std::move(backoff), std::move(current),
+      __func__, OpenLogging::kEnabled, /*features=*/0);
+
+  return factory(std::move(initial_request))
+      .then([](future<StatusOr<OpenStreamResult>> f) {
+        StatusOr<OpenStreamResult> res = f.get();
+        if (res.ok()) {
+          res->stream->Cancel();
+          return Status{};
+        }
+        if (res.status().code() == StatusCode::kNotFound) return Status{};
+        return std::move(res).status();
+      });
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>

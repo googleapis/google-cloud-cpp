@@ -681,6 +681,98 @@ TEST(ConnectionTracing, OpenSuccessWithInitialReadRanges) {
                        SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
 }
 
+TEST(ConnectionTracing, WarmUpSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<Status> p;
+
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
+  EXPECT_CALL(*mock, WarmUp).WillOnce(expect_context(p));
+  std::shared_ptr<storage::AsyncConnection> actual =
+      MakeTracingAsyncConnection(std::move(mock));
+  future<Status> result =
+      actual->WarmUp(AsyncConnection::WarmUpParams{}).then(expect_no_context);
+  p.set_value(Status{});
+  ASSERT_THAT(result.get(), IsOk());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanNamed("storage::AsyncConnection::WarmUp"),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
+TEST(ConnectionTracing, WarmUpError) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<Status> p;
+
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
+  EXPECT_CALL(*mock, WarmUp).WillOnce(expect_context(p));
+  std::shared_ptr<storage::AsyncConnection> actual =
+      MakeTracingAsyncConnection(std::move(mock));
+  future<Status> result =
+      actual->WarmUp(AsyncConnection::WarmUpParams{}).then(expect_no_context);
+  p.set_value(PermanentError());
+  EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, ElementsAre(
+                 AllOf(SpanNamed("storage::AsyncConnection::WarmUp"),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+                       SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
+TEST(ConnectionTracing, WarmUpSpanEnrichment) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> bucket_p;
+  PromiseWithOTelContext<Status> warmup_p;
+
+  Options options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
+  EXPECT_CALL(*mock, GetBucket).WillOnce(expect_context(bucket_p));
+  EXPECT_CALL(*mock, WarmUp).WillOnce(expect_context(warmup_p));
+
+  std::shared_ptr<storage::AsyncConnection> actual =
+      MakeTracingAsyncConnection(std::move(mock));
+
+  google::storage::v2::GetBucketRequest bucket_req;
+  bucket_req.set_name("projects/_/buckets/test-bucket");
+  future<StatusOr<google::storage::v2::Bucket>> res_bucket =
+      actual->GetBucket({bucket_req, options}).then(expect_no_context);
+  google::storage::v2::Bucket bucket_meta;
+  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_location("us-east1");
+  bucket_meta.set_location_type("regional");
+  bucket_p.set_value(make_status_or(std::move(bucket_meta)));
+  ASSERT_THAT(res_bucket.get(), IsOk());
+  (void)span_catcher->GetSpans();
+
+  future<Status> result =
+      actual->WarmUp({storage::BucketName("test-bucket"), "prefix/", options})
+          .then(expect_no_context);
+  warmup_p.set_value(Status{});
+  ASSERT_THAT(result.get(), IsOk());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("storage::AsyncConnection::WarmUp"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "//storage.googleapis.com/projects/"
+                                         "123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
 TEST(ConnectionTracing, StartAppendableObjectUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<

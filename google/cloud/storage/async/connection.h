@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 
+#include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/async/write_payload.h"
@@ -253,6 +254,29 @@ class AsyncConnection {
   /// Start an object rewrite.
   virtual std::shared_ptr<AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) = 0;
+
+  /**
+   * A thin wrapper around the `WarmUp()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct WarmUpParams {
+    /// The name of the bucket to warm up.
+    BucketName bucket_name{""};
+    /// An optional prefix prepended verbatim to probe object names.
+    std::string object_prefix;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Pre-warm credentials and gRPC connections for a bucket.
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  virtual future<Status> WarmUp(WarmUpParams) {
+    return make_ready_future(
+        Status(StatusCode::kUnimplemented, "not implemented"));
+  }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

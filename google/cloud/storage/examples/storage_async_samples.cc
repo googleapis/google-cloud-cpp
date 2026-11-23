@@ -1329,6 +1329,24 @@ void GetBucket(google::cloud::storage::AsyncClient& client,
   (client, argv.at(0));
 }
 
+void WarmUp(google::cloud::storage::AsyncClient& client,
+            std::vector<std::string> const& argv) {
+  //! [warmup]
+  namespace g = ::google::cloud;
+  namespace gcs = ::google::cloud::storage;
+  [](gcs::AsyncClient& client, std::string bucket_name) {
+    client.WarmUp(gcs::BucketName(std::move(bucket_name)))
+        .then([](g::future<g::Status> f) {
+          g::Status status = f.get();
+          if (!status.ok()) throw g::Status(std::move(status));
+          std::cout << "Client successfully warmed up\n";
+        })
+        .get();
+  }
+  //! [warmup]
+  (client, argv.at(0));
+}
+
 // We would like to call this function `DeleteObject()`, but that conflicts with
 // a global `DeleteObject()` function on Windows.
 void AsyncDeleteObject(google::cloud::storage::AsyncClient& client,
@@ -1395,6 +1413,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "Running GetBucket() example" << std::endl;
   GetBucket(client, {bucket_name});
+
+  std::cout << "Running WarmUp() example" << std::endl;
+  WarmUp(client, {bucket_name});
 
   // We need different object names because writing to the same object within
   // a second exceeds the service's quota.
@@ -1705,6 +1726,7 @@ int main(int argc, char* argv[]) try {
       {"create-client", CreateClientCommand},
       {"create-client-with-dp", CreateClientWithDPCommand},
       make_bucket_entry("get-bucket", {}, GetBucket),
+      make_bucket_entry("warmup", {}, WarmUp),
       make_entry("insert-object", {}, InsertObject),
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
