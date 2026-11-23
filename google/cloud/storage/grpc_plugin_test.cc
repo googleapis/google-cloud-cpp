@@ -20,6 +20,9 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
+#include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -114,6 +117,34 @@ TEST(GrpcPluginTest, GrpcBackgroundThreadsFactoryOptionWithTracing) {
           .set<GrpcBackgroundThreadsFactoryOption>(factory)
           .set<storage_experimental::OTelSpanEnrichmentOption>(true));
   EXPECT_TRUE(invoked);
+}
+
+/// @test Verify `MakeGrpcClient()` accepts `GrpcCredentialOption` without
+/// `UnifiedCredentialsOption`, including stub and IAM channel creation.
+TEST(GrpcPluginTest, MakeGrpcClientWithGrpcCredentialOption) {
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
+  ScopedEnvironment otel("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
+                         std::nullopt);
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                           std::nullopt);
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", std::nullopt);
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  Client client = MakeGrpcClient(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<GrpcBackgroundThreadPoolSizeOption>(1)
+          .set<storage_experimental::EnableGrpcMetricsOption>(false));
+  std::shared_ptr<internal::StorageConnection> const impl =
+      ClientImplDetails::GetConnection(client);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("GrpcStub", "StorageConnectionImpl"));
+  Options const options = impl->options();
+  EXPECT_FALSE(options.has<UnifiedCredentialsOption>());
+  EXPECT_TRUE(options.has<GrpcCredentialOption>());
 }
 
 }  // namespace

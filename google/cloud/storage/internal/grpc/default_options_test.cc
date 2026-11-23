@@ -225,6 +225,63 @@ TEST(DefaultOptionsGrpc, DefaultCredentialsUseOpenTelemetryTracingEnvironment) {
   EXPECT_TRUE(CredentialsOpenTelemetryTracing(overridden_options));
 }
 
+/// @test Verify `GrpcCredentialOption` is honored and not shadowed by default
+/// `UnifiedCredentialsOption`, even when the REST emulator endpoint is set.
+TEST(DefaultOptionsGrpc, GrpcCredentialOptionIsHonored) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                             "http://localhost:1234");
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()),
+      MakeNotOnGcpDetector());
+  EXPECT_FALSE(options.has<UnifiedCredentialsOption>());
+  EXPECT_TRUE(options.has<GrpcCredentialOption>());
+}
+
+/// @test Verify explicit `UnifiedCredentialsOption` takes precedence when both
+/// `UnifiedCredentialsOption` and `GrpcCredentialOption` are set.
+TEST(DefaultOptionsGrpc,
+     UnifiedCredentialsOptionTakesPrecedenceOverGrpcCredentialOption) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  Options const options = DefaultOptionsGrpc(
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+              "token1",
+              std::chrono::system_clock::now() + std::chrono::hours(1)))
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()),
+      MakeNotOnGcpDetector());
+  EXPECT_EQ(CredentialsName(options), "AccessTokenConfig");
+}
+
+/// @test Verify the gRPC testbench overrides `GrpcCredentialOption` unless
+/// `GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS` is set.
+TEST(DefaultOptionsGrpc,
+     GrpcTestbenchOverridesGrpcCredentialOptionUnlessPreserved) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", "localhost:9999");
+  {
+    ScopedEnvironment preserve(
+        "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", {});
+    Options const options = DefaultOptionsGrpc(
+        Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()),
+        MakeNotOnGcpDetector());
+    EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
+  }
+  {
+    ScopedEnvironment preserve(
+        "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", "1");
+    Options const options = DefaultOptionsGrpc(
+        Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()),
+        MakeNotOnGcpDetector());
+    EXPECT_FALSE(options.has<UnifiedCredentialsOption>());
+    EXPECT_TRUE(options.has<GrpcCredentialOption>());
+  }
+}
+
 TEST(DefaultOptionsGrpc, DefaultEndpointsCloudPath) {
   auto mock_detector = std::make_shared<MockGcpDetector>();
   EXPECT_CALL(*mock_detector, IsGoogleCloudBios())

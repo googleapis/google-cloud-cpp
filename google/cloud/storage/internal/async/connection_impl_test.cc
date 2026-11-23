@@ -16,22 +16,27 @@
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -472,6 +477,28 @@ TEST_F(AsyncConnectionImplTest, AppendableObjectUploadToken) {
   next.first.set_value(true);
 
   EXPECT_THAT(pending.get(), StatusIs(StatusCode::kCancelled));
+}
+
+/// @test Verify `MakeAsyncConnection()` accepts `GrpcCredentialOption` without
+/// `UnifiedCredentialsOption`.
+TEST_F(AsyncConnectionImplTest, MakeAsyncConnectionWithGrpcCredentialOption) {
+  testing_util::ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  std::shared_ptr<storage::AsyncConnection> const connection =
+      MakeAsyncConnection(
+          pool.cq(),
+          Options{}
+              .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+              .set<EndpointOption>("localhost:1")
+              .set<GrpcNumChannelsOption>(1)
+              .set<storage_experimental::EnableGrpcMetricsOption>(false));
+  ASSERT_THAT(connection, ::testing::NotNull());
+  Options const options = connection->options();
+  EXPECT_FALSE(options.has<UnifiedCredentialsOption>());
+  EXPECT_TRUE(options.has<GrpcCredentialOption>());
 }
 
 }  // namespace

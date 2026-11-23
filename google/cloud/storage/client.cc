@@ -364,20 +364,33 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
     return signing_account.value();
   }
 
-  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
-      *connection_->options().get<UnifiedCredentialsOption>()));
+  // gRPC clients configured with `GrpcCredentialOption` have no
+  // `UnifiedCredentialsOption`. Hold `options` locally because `options()`
+  // returns by value.
+  Options const options = connection_->options();
+  std::shared_ptr<Credentials> const& unified =
+      options.get<UnifiedCredentialsOption>();
+  if (!unified) return {};
+  auto const credentials =
+      WrapRestCredentials(rest_internal::MapCredentials(*unified));
   return credentials.AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
-      *connection_->options().get<UnifiedCredentialsOption>()));
-
-  // First try to sign locally.
-  auto signed_blob = credentials.SignBlob(signing_account, string_to_sign);
-  if (signed_blob) {
-    return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
+  // First try to sign locally when `UnifiedCredentialsOption` is present. gRPC
+  // clients using `GrpcCredentialOption` can only sign using the API.
+  Options const options = connection_->options();
+  std::shared_ptr<Credentials> const& unified =
+      options.get<UnifiedCredentialsOption>();
+  if (unified) {
+    auto const credentials =
+        WrapRestCredentials(rest_internal::MapCredentials(*unified));
+    StatusOr<std::vector<std::uint8_t>> signed_blob =
+        credentials.SignBlob(signing_account, string_to_sign);
+    if (signed_blob) {
+      return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
+    }
   }
 
   // If signing locally fails that may be because the credentials do not
