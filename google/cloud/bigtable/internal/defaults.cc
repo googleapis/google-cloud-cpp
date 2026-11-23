@@ -73,6 +73,8 @@ auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
 
 auto constexpr kGoogleDefaultUniverse = "googleapis.com";
+auto constexpr kGduDirectPathDataEndpoint =
+    "google-c2p:///bigtable.googleapis.com";
 
 Options ApplyUniverseDomainEnv(Options opts) {
   std::optional<std::string> ud =
@@ -100,16 +102,14 @@ bool IsDirectPathEndpoint(std::string_view endpoint) {
   return absl::StartsWith(endpoint, "google-c2p:///");
 }
 
+// Assumes `IsGoogleDefaultUniverse(options)` has already returned true.
 bool HasCustomEndpoint(Options const& options) {
-  std::string const dp_endpoint =
-      DefaultDirectPathDataEndpoint(ApplyUniverseDomainEnv(options));
-  if (options.has<::google::cloud::bigtable_internal::DataEndpointOption>()) {
-    return options
-               .get<::google::cloud::bigtable_internal::DataEndpointOption>() !=
-           dp_endpoint;
+  using ::google::cloud::bigtable_internal::DataEndpointOption;
+  if (options.has<DataEndpointOption>()) {
+    return options.get<DataEndpointOption>() != kGduDirectPathDataEndpoint;
   }
   if (options.has<EndpointOption>()) {
-    return options.get<EndpointOption>() != dp_endpoint;
+    return options.get<EndpointOption>() != kGduDirectPathDataEndpoint;
   }
   return false;
 }
