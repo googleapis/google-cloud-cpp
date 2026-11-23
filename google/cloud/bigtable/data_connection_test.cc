@@ -176,14 +176,13 @@ TEST(MakeDataConnection, DirectPathInitializationModeSpeculative) {
 }
 #endif
 
-TEST(MakeDataConnection, DirectPathFallbackUsesUniverseDomainOption) {
+TEST(MakeDataConnection, DirectPathDisabledOutsideGoogleDefaultUniverse) {
   testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
                                            std::nullopt);
   testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
                                      std::nullopt);
   InstanceResource const instance_a{Project("my-project"), "instance-a"};
-  std::shared_ptr<DataConnection> conn = MakeDataConnection(
-      {instance_a},
+  Options options =
       TestOptions()
           .set<EnableMetricsOption>(false)
           .set<google::cloud::internal::UniverseDomainOption>("ud.invalid")
@@ -191,7 +190,10 @@ TEST(MakeDataConnection, DirectPathFallbackUsesUniverseDomainOption) {
               experimental::DirectPathMode::kEnabled)
           .set<experimental::DirectPathInitializationModeOption>(
               experimental::DirectPathInitializationMode::kBlocking)
-          .set<experimental::DirectPathProbeTimeoutOption>(ms(100)));
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+  options.unset<EndpointOption>();
+  std::shared_ptr<DataConnection> conn =
+      MakeDataConnection({instance_a}, std::move(options));
   ASSERT_THAT(conn, testing::NotNull());
   EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("bigtable.ud.invalid"));
   EXPECT_THAT(conn->options().get<AuthorityOption>(),

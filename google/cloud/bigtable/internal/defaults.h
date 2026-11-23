@@ -56,6 +56,10 @@ DefaultDirectPathInitializationMode() {
 
 /**
  * Returns true if Direct Path is enabled for Bigtable.
+ *
+ * Direct Path is only supported in the Google Default Universe
+ * (`"googleapis.com"`). Returns false when `UniverseDomainOption` or
+ * `GOOGLE_CLOUD_UNIVERSE_DOMAIN` specifies a non-default universe domain.
  */
 bool IsDirectPath(Options const& options);
 

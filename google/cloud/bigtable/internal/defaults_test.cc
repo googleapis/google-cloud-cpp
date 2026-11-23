@@ -656,7 +656,7 @@ TEST(EndpointEnvTest, EmulatorOverridesBigtableDirectPath) {
   EXPECT_EQ("emulator-host:8000", opts.get<EndpointOption>());
 }
 
-TEST(EndpointEnvTest, DirectPathWithUniverseDomainOption) {
+TEST(EndpointEnvTest, DirectPathDisabledOutsideGoogleDefaultUniverseOption) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
                                 std::nullopt);
@@ -669,6 +669,7 @@ TEST(EndpointEnvTest, DirectPathWithUniverseDomainOption) {
           .set<experimental::DirectPathModeOption>(
               experimental::DirectPathMode::kEnabled);
 
+  EXPECT_FALSE(IsDirectPath(base));
   EXPECT_THAT(DefaultDirectPathAuthority(base), Eq("bigtable.ud.net"));
   EXPECT_THAT(DefaultDirectPathDataEndpoint(base),
               Eq("google-c2p:///bigtable.ud.net"));
@@ -676,8 +677,8 @@ TEST(EndpointEnvTest, DirectPathWithUniverseDomainOption) {
   Options const opts = DefaultDataOptions(base);
   EXPECT_THAT(
       opts.get<::google::cloud::bigtable_internal::DataEndpointOption>(),
-      Eq("google-c2p:///bigtable.ud.net"));
-  EXPECT_THAT(opts.get<EndpointOption>(), Eq("google-c2p:///bigtable.ud.net"));
+      Eq("bigtable.ud.net"));
+  EXPECT_THAT(opts.get<EndpointOption>(), Eq("bigtable.ud.net"));
   EXPECT_THAT(opts.get<AuthorityOption>(), Eq("bigtable.ud.net"));
   EXPECT_THAT(
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>(),
@@ -688,21 +689,68 @@ TEST(EndpointEnvTest, DirectPathWithUniverseDomainOption) {
       Eq("bigtableadmin.ud.net"));
 }
 
-TEST(EndpointEnvTest, DirectPathWithUniverseDomainEnvVar) {
+TEST(EndpointEnvTest, DirectPathDisabledOutsideGoogleDefaultUniverseEnvVar) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  Options const base =
+      Options{}
+          .set<google::cloud::internal::UniverseDomainOption>("googleapis.com")
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled);
+  EXPECT_FALSE(IsDirectPath(base));
+
+  Options const opts = DefaultDataOptions(base);
+  EXPECT_THAT(
+      opts.get<::google::cloud::bigtable_internal::DataEndpointOption>(),
+      Eq("bigtable.ud-env-var.net"));
+  EXPECT_THAT(opts.get<EndpointOption>(), Eq("bigtable.ud-env-var.net"));
+  EXPECT_THAT(opts.get<AuthorityOption>(), Eq("bigtable.ud-env-var.net"));
+}
+
+TEST(EndpointEnvTest, DirectPathEnabledInGoogleDefaultUniverseOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                std::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+
+  Options const base =
+      Options{}
+          .set<google::cloud::internal::UniverseDomainOption>("googleapis.com")
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled);
+
+  EXPECT_TRUE(IsDirectPath(base));
+  Options const opts = DefaultDataOptions(base);
+  EXPECT_THAT(
+      opts.get<::google::cloud::bigtable_internal::DataEndpointOption>(),
+      Eq("google-c2p:///bigtable.googleapis.com"));
+  EXPECT_THAT(opts.get<EndpointOption>(),
+              Eq("google-c2p:///bigtable.googleapis.com"));
+  EXPECT_THAT(opts.get<AuthorityOption>(), Eq("bigtable.googleapis.com"));
+}
+
+TEST(EndpointEnvTest, DirectPathEnabledInGoogleDefaultUniverseEnvVar) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
   ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
-  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "googleapis.com");
 
-  Options const opts = DefaultDataOptions(
+  Options const base =
       Options{}.set<google::cloud::internal::UniverseDomainOption>(
-          "ud-option.net"));
+          "ud-option.net");
+  EXPECT_TRUE(IsDirectPath(base));
+
+  Options const opts = DefaultDataOptions(base);
   EXPECT_THAT(
       opts.get<::google::cloud::bigtable_internal::DataEndpointOption>(),
-      Eq("google-c2p:///bigtable.ud-env-var.net"));
+      Eq("google-c2p:///bigtable.googleapis.com"));
   EXPECT_THAT(opts.get<EndpointOption>(),
-              Eq("google-c2p:///bigtable.ud-env-var.net"));
-  EXPECT_THAT(opts.get<AuthorityOption>(), Eq("bigtable.ud-env-var.net"));
+              Eq("google-c2p:///bigtable.googleapis.com"));
+  EXPECT_THAT(opts.get<AuthorityOption>(), Eq("bigtable.googleapis.com"));
 }
 
 TEST(EndpointEnvTest, MakeDirectPathOptionsDefault) {

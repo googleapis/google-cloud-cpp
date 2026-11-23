@@ -71,6 +71,8 @@ auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 // for a keepalive ping.
 auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
 
+auto constexpr kGoogleDefaultUniverse = "googleapis.com";
+
 Options ApplyUniverseDomainEnv(Options opts) {
   std::optional<std::string> ud =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
@@ -78,6 +80,20 @@ Options ApplyUniverseDomainEnv(Options opts) {
     opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
   }
   return opts;
+}
+
+bool IsGoogleDefaultUniverse(Options const& options) {
+  std::optional<std::string> const ud_env =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (ud_env && !ud_env->empty()) {
+    return *ud_env == kGoogleDefaultUniverse;
+  }
+  if (options.has<google::cloud::internal::UniverseDomainOption>()) {
+    std::string const& ud =
+        options.get<google::cloud::internal::UniverseDomainOption>();
+    return ud.empty() || ud == kGoogleDefaultUniverse;
+  }
+  return true;
 }
 
 Options DefaultConnectionRefreshOptions(Options opts) {
@@ -149,6 +165,7 @@ std::string DefaultDirectPathDataEndpoint(Options const& opts) {
 }
 
 bool IsDirectPath(Options const& options) {
+  if (!IsGoogleDefaultUniverse(options)) return false;
   std::optional<std::string> const direct_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   // Bigtable specific env var for Direct Path support used by all clients.
