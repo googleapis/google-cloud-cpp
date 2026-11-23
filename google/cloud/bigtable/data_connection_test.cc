@@ -22,6 +22,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/universe_domain_options.h"
 #include "rpc_retry_policy.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -123,16 +124,23 @@ TEST(MakeDataConnection, DirectPathMetricsModeOptionDisabled) {
 }
 
 TEST(MakeDataConnection, DirectPathMetricsModeOptionEnabled) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
                                       "1");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
-  auto conn = MakeDataConnection(
-      {instance_a}, TestOptions()
-                        .set<EnableMetricsOption>(true)
-                        .set<experimental::DirectPathModeOption>(
-                            experimental::DirectPathMode::kEnabled)
-                        .set<experimental::DirectPathMetricsModeOption>(
-                            experimental::DirectPathMetricsMode::kEnabled));
+  Options options =
+      TestOptions()
+          .set<EnableMetricsOption>(true)
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathMetricsModeOption>(
+              experimental::DirectPathMetricsMode::kEnabled)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+  options.unset<EndpointOption>();
+  auto conn = MakeDataConnection({instance_a}, std::move(options));
   EXPECT_NE(conn, nullptr);
 }
 
@@ -151,29 +159,128 @@ TEST(MakeDataConnection, DirectPathModeOptionDisabledNoGrpcMetrics) {
 }
 
 TEST(MakeDataConnection, DirectPathInitializationModeBlocking) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
   InstanceResource instance_a{Project("my-project"), "instance-a"};
-  auto conn = MakeDataConnection(
-      {instance_a},
+  Options options =
       TestOptions()
           .set<experimental::DirectPathModeOption>(
               experimental::DirectPathMode::kEnabled)
           .set<experimental::DirectPathInitializationModeOption>(
-              experimental::DirectPathInitializationMode::kBlocking));
+              experimental::DirectPathInitializationMode::kBlocking)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+  options.unset<EndpointOption>();
+  auto conn = MakeDataConnection({instance_a}, std::move(options));
   EXPECT_NE(conn, nullptr);
 }
 
 TEST(MakeDataConnection, DirectPathInitializationModeSpeculative) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
   InstanceResource instance_a{Project("my-project"), "instance-a"};
-  auto conn = MakeDataConnection(
-      {instance_a}, TestOptions()
-                        .set<experimental::DirectPathModeOption>(
-                            experimental::DirectPathMode::kEnabled)
-                        .set<experimental::DirectPathInitializationModeOption>(
-                            experimental::DirectPathInitializationMode::
-                                kAsynchronousSpeculative));
+  Options options =
+      TestOptions()
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::
+                  kAsynchronousSpeculative)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+  options.unset<EndpointOption>();
+  auto conn = MakeDataConnection({instance_a}, std::move(options));
   EXPECT_NE(conn, nullptr);
 }
 #endif
+
+TEST(MakeDataConnection, DirectPathDisabledOutsideGoogleDefaultUniverse) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
+  InstanceResource const instance_a{Project("my-project"), "instance-a"};
+  Options options =
+      TestOptions()
+          .set<EnableMetricsOption>(false)
+          .set<google::cloud::internal::UniverseDomainOption>("ud.invalid")
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::kBlocking)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+  options.unset<EndpointOption>();
+  std::shared_ptr<DataConnection> conn =
+      MakeDataConnection({instance_a}, std::move(options));
+  ASSERT_THAT(conn, testing::NotNull());
+  EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("bigtable.ud.invalid"));
+  EXPECT_THAT(conn->options().get<AuthorityOption>(),
+              Eq("bigtable.ud.invalid"));
+}
+
+TEST(MakeDataConnection, DirectPathDisabledWithCustomEndpoint) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           std::nullopt);
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
+  testing_util::ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                              "bigtable");
+  testing_util::ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH",
+                                                  "true");
+  InstanceResource const instance_a{Project("my-project"), "instance-a"};
+  Options const options =
+      TestOptions()
+          .set<EnableMetricsOption>(false)
+          .set<EndpointOption>("custom.tpc.invalid")
+          .set<AuthorityOption>("custom.tpc.invalid")
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::kBlocking)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+
+  std::shared_ptr<DataConnection> conn =
+      MakeDataConnection({instance_a}, options);
+  ASSERT_THAT(conn, testing::NotNull());
+  EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("custom.tpc.invalid"));
+  EXPECT_THAT(conn->options().get<AuthorityOption>(), Eq("custom.tpc.invalid"));
+
+  std::shared_ptr<DataConnection> single_stub_conn =
+      MakeDataConnection(options);
+  ASSERT_THAT(single_stub_conn, testing::NotNull());
+  EXPECT_THAT(single_stub_conn->options().get<EndpointOption>(),
+              Eq("custom.tpc.invalid"));
+  EXPECT_THAT(single_stub_conn->options().get<AuthorityOption>(),
+              Eq("custom.tpc.invalid"));
+}
+
+TEST(MakeDataConnection, DirectPathDisabledWithEmulator) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           "localhost:1");
+  testing_util::ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                     std::nullopt);
+  testing_util::ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                              "bigtable");
+  testing_util::ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH",
+                                                  "true");
+  InstanceResource const instance_a{Project("my-project"), "instance-a"};
+  Options options =
+      TestOptions()
+          .set<EnableMetricsOption>(false)
+          .set<experimental::DirectPathModeOption>(
+              experimental::DirectPathMode::kEnabled)
+          .set<experimental::DirectPathInitializationModeOption>(
+              experimental::DirectPathInitializationMode::kBlocking)
+          .set<experimental::DirectPathProbeTimeoutOption>(ms(100));
+  options.unset<EndpointOption>();
+
+  std::shared_ptr<DataConnection> conn =
+      MakeDataConnection({instance_a}, std::move(options));
+  ASSERT_THAT(conn, testing::NotNull());
+  EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("localhost:1"));
+}
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

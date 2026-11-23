@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -28,13 +29,9 @@ namespace internal {
 
 int DefaultConnectionPoolSize();
 
-constexpr char const* DefaultDirectPathDataEndpoint() {
-  return "google-c2p:///bigtable.googleapis.com";
-}
+std::string DefaultDirectPathDataEndpoint(Options const& opts);
 
-constexpr char const* DefaultDirectPathAuthority() {
-  return "bigtable.googleapis.com";
-}
+std::string DefaultDirectPathAuthority(Options const& opts);
 
 constexpr experimental::DirectPathMode DefaultDirectPathMode() {
   return experimental::DirectPathMode::kDisabled;
@@ -59,8 +56,29 @@ DefaultDirectPathInitializationMode() {
 
 /**
  * Returns true if Direct Path is enabled for Bigtable.
+ *
+ * Direct Path is only supported in the Google Default Universe
+ * (`"googleapis.com"`). Returns false when `UniverseDomainOption` or
+ * `GOOGLE_CLOUD_UNIVERSE_DOMAIN` specifies a non-default universe domain, when
+ * `BIGTABLE_EMULATOR_HOST` is set, or when a custom `EndpointOption` or
+ * `DataEndpointOption` is configured.
  */
 bool IsDirectPath(Options const& options);
+
+/**
+ * Returns a copy of @p opts configured for DirectPath data connections,
+ * respecting `UniverseDomainOption`, `GOOGLE_CLOUD_UNIVERSE_DOMAIN`, and any
+ * explicit `AuthorityOption`.
+ */
+Options MakeDirectPathOptions(Options opts);
+
+/**
+ * Returns a copy of @p opts configured for CloudPath data connections,
+ * respecting `UniverseDomainOption`, `GOOGLE_CLOUD_UNIVERSE_DOMAIN`,
+ * `BIGTABLE_EMULATOR_HOST`, and any explicit non-DirectPath `EndpointOption`,
+ * `DataEndpointOption`, or `AuthorityOption`.
+ */
+Options MakeCloudPathOptions(Options opts);
 
 /**
  * Returns an `Options` with the appropriate defaults for Bigtable.
