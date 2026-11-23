@@ -575,9 +575,7 @@ TEST(DirectPathProberTest, ProbeUsesDefaultDirectPathEndpoint) {
       mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
       Options{}, CompletionQueue{});
   EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
-  if (captured_authority.has_value()) {
-    EXPECT_THAT(captured_authority, Optional(Eq("bigtable.googleapis.com")));
-  }
+  EXPECT_THAT(captured_authority, Optional(Eq("bigtable.googleapis.com")));
 }
 
 TEST(DirectPathProberTest, ProbeUsesUniverseDomainOption) {
@@ -606,9 +604,7 @@ TEST(DirectPathProberTest, ProbeUsesUniverseDomainOption) {
       mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
       options, CompletionQueue{});
   EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
-  if (captured_authority.has_value()) {
-    EXPECT_THAT(captured_authority, Optional(Eq("bigtable.ud.net")));
-  }
+  EXPECT_THAT(captured_authority, Optional(Eq("bigtable.ud.net")));
 }
 
 TEST(DirectPathProberTest, ProbeUsesUniverseDomainEnvVar) {
@@ -639,9 +635,7 @@ TEST(DirectPathProberTest, ProbeUsesUniverseDomainEnvVar) {
       mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
       options, CompletionQueue{});
   EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
-  if (captured_authority.has_value()) {
-    EXPECT_THAT(captured_authority, Optional(Eq("bigtable.ud-env-var.net")));
-  }
+  EXPECT_THAT(captured_authority, Optional(Eq("bigtable.ud-env-var.net")));
 }
 
 }  // namespace

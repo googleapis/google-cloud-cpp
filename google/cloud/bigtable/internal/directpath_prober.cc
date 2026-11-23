@@ -123,15 +123,14 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     std::string const& peer_address,
     std::shared_ptr<grpc::AuthContext const> const& auth_context) {
   std::shared_ptr<BigtableStub> effective_stub = stub;
-  Options probe_options = options;
+  Options probe_options;
   if (!effective_stub) {
     if (!auth) {
       return internal::InternalError("Auth strategy cannot be null",
                                      GCP_ERROR_INFO());
     }
 
-    probe_options =
-        bigtable::internal::MakeDirectPathOptions(std::move(probe_options));
+    probe_options = bigtable::internal::MakeDirectPathOptions(options);
     probe_options.set<GrpcNumChannelsOption>(1);
     probe_options.set<bigtable::MinConnectionRefreshOption>(
         std::chrono::milliseconds::zero());
@@ -144,6 +143,8 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     };
     effective_stub =
         CreateDecoratedStubs(auth, cq, probe_options, stub_factory);
+  } else {
+    probe_options = options;
   }
 
   std::chrono::milliseconds timeout =
