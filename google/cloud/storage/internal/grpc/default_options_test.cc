@@ -15,11 +15,14 @@
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/chrono_output.h"
+#include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/strings/str_cat.h"
@@ -27,6 +30,7 @@
 #include <grpcpp/grpcpp.h>
 #include <memory>
 #include <optional>
+#include <set>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -45,10 +49,51 @@ class MockGcpDetector : public google::cloud::internal::GcpDetector {
 
 using ::google::cloud::internal::GrpcGoogleDefaultTlsOnlyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::ElementsAre;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 google::cloud::Options TestOptions() {
   return Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+}
+
+std::shared_ptr<google::cloud::internal::GcpDetector> MakeNotOnGcpDetector() {
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+  return mock_detector;
+}
+
+/// Returns the name of the `UnifiedCredentialsOption` in @p options, or an
+/// empty string if the option is not set.
+std::string CredentialsName(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
+  ::google::cloud::testing_util::TestCredentialsVisitor visitor;
+  ::google::cloud::internal::CredentialsVisitor::dispatch(
+      *options.get<UnifiedCredentialsOption>(), visitor);
+  return visitor.name;
+}
+
+/// Returns the logging components of the `UnifiedCredentialsOption` in
+/// @p options, or an empty set if the option is not set.
+std::set<std::string> CredentialsLoggingComponents(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return {};
+  ::google::cloud::testing_util::TestCredentialsVisitor visitor;
+  ::google::cloud::internal::CredentialsVisitor::dispatch(
+      *options.get<UnifiedCredentialsOption>(), visitor);
+  return visitor.options.get<LoggingComponentsOption>();
+}
+
+/// Returns whether OpenTelemetry tracing is enabled on the
+/// `UnifiedCredentialsOption` in @p options.
+bool CredentialsOpenTelemetryTracing(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return false;
+  ::google::cloud::testing_util::TestCredentialsVisitor visitor;
+  ::google::cloud::internal::CredentialsVisitor::dispatch(
+      *options.get<UnifiedCredentialsOption>(), visitor);
+  return visitor.options.get<OpenTelemetryTracingOption>();
 }
 
 TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
@@ -77,6 +122,107 @@ TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
                                            .set<GrpcNumChannelsOption>(42));
     EXPECT_EQ(42, override.get<GrpcNumChannelsOption>());
   }
+}
+
+/// @test Verify the REST emulator endpoints do not change gRPC credentials.
+TEST(DefaultOptionsGrpc, RestEmulatorDoesNotChangeGrpcCredentials) {
+  for (char const* var : {"CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                          "CLOUD_STORAGE_TESTBENCH_ENDPOINT"}) {
+    SCOPED_TRACE(var);
+    ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+    ScopedEnvironment old_emulator("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+    ScopedEnvironment testbench(
+        "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+    ScopedEnvironment rest(var, "http://localhost:1234");
+    Options const options =
+        DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+    EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  }
+}
+
+/// @test Verify the gRPC testbench still uses insecure credentials when the
+/// REST emulator endpoint is also set.
+TEST(DefaultOptionsGrpc, GrpcTestbenchStillInsecureWithRestEmulator) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                             "http://localhost:1234");
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", "localhost:9999");
+  ScopedEnvironment preserve(
+      "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", {});
+  Options const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+  EXPECT_EQ(CredentialsName(options), "InsecureCredentialsConfig");
+}
+
+/// @test Verify explicit credentials are kept when the REST emulator endpoint
+/// is set.
+TEST(DefaultOptionsGrpc, GrpcKeepsExplicitCredentialsWithRestEmulator) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                             "http://localhost:1234");
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "token1", std::chrono::system_clock::now() + std::chrono::hours(1))),
+      MakeNotOnGcpDetector());
+  EXPECT_EQ(CredentialsName(options), "AccessTokenConfig");
+}
+
+/// @test Verify the default gRPC credentials preserve explicit auth options.
+TEST(DefaultOptionsGrpc, DefaultCredentialsKeepAuthOptions) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment storage_tracing("CLOUD_STORAGE_ENABLE_TRACING", {});
+  ScopedEnvironment common_tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
+  ScopedEnvironment otel_tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", {});
+  Options const options =
+      DefaultOptionsGrpc(Options{}
+                             .set<LoggingComponentsOption>({"auth"})
+                             .set<OpenTelemetryTracingOption>(true),
+                         MakeNotOnGcpDetector());
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
+  EXPECT_TRUE(CredentialsOpenTelemetryTracing(options));
+}
+
+/// @test Verify `CLOUD_STORAGE_ENABLE_TRACING` configures the client logging
+/// only. The default credentials use `GOOGLE_CLOUD_CPP_ENABLE_TRACING`.
+TEST(DefaultOptionsGrpc, DefaultCredentialsIgnoreStorageTracingEnvironment) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment storage_tracing("CLOUD_STORAGE_ENABLE_TRACING",
+                                    "raw-client,http");
+  ScopedEnvironment common_tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "auth");
+  ScopedEnvironment otel_tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", {});
+  Options const options = DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("raw-client", "http"));
+  EXPECT_EQ(CredentialsName(options), "GoogleDefaultCredentialsConfig");
+  EXPECT_THAT(CredentialsLoggingComponents(options), ElementsAre("auth"));
+  EXPECT_FALSE(CredentialsOpenTelemetryTracing(options));
+}
+
+/// @test Verify `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING` reaches the default
+/// gRPC credentials.
+TEST(DefaultOptionsGrpc, DefaultCredentialsUseOpenTelemetryTracingEnvironment) {
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment otel_tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
+                                 "ON");
+  Options const default_options =
+      DefaultOptionsGrpc(Options{}, MakeNotOnGcpDetector());
+  EXPECT_TRUE(default_options.get<OpenTelemetryTracingOption>());
+  EXPECT_EQ(CredentialsName(default_options), "GoogleDefaultCredentialsConfig");
+  EXPECT_TRUE(CredentialsOpenTelemetryTracing(default_options));
+
+  Options const overridden_options = DefaultOptionsGrpc(
+      Options{}.set<OpenTelemetryTracingOption>(false), MakeNotOnGcpDetector());
+  EXPECT_TRUE(overridden_options.get<OpenTelemetryTracingOption>());
+  EXPECT_EQ(CredentialsName(overridden_options),
+            "GoogleDefaultCredentialsConfig");
+  EXPECT_TRUE(CredentialsOpenTelemetryTracing(overridden_options));
 }
 
 TEST(DefaultOptionsGrpc, DefaultEndpointsCloudPath) {
