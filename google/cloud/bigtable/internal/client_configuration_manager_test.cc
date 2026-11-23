@@ -774,9 +774,10 @@ TEST(ClientConfigurationManagerTest,
 
 TEST(ClientConfigurationManagerTest,
      UnregisterCallbackDrainsInFlightCallbackOnAnotherThread) {
-  internal::AutomaticallyCreatedBackgroundThreads bg(1);
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
   auto mock = std::make_shared<MockBigtableStub>();
 
+  google::cloud::promise<StatusOr<v2::ClientConfiguration>> rpc_promise;
   google::cloud::promise<void> callback_entered;
   google::cloud::future<void> callback_entered_future =
       callback_entered.get_future();
@@ -794,23 +795,18 @@ TEST(ClientConfigurationManagerTest,
   std::atomic<int> post_bootstrap_calls{0};
 
   EXPECT_CALL(*mock, AsyncGetClientConfiguration)
-      .WillOnce([&](CompletionQueue& cq,
+      .WillOnce([&](CompletionQueue&,
                     std::shared_ptr<grpc::ClientContext> const&,
                     internal::ImmutableOptions const&,
                     v2::GetClientConfigurationRequest const&,
                     std::shared_ptr<OperationContext> const&) {
-        return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
-            .then([](future<StatusOr<std::chrono::system_clock::time_point>>)
-                      -> StatusOr<v2::ClientConfiguration> {
-              v2::ClientConfiguration resp;
-              resp.mutable_session_configuration()->set_session_load(0.5F);
-              return resp;
-            });
+        return rpc_promise.get_future();
       });
 
   std::shared_ptr<ClientConfigurationManager> mgr =
-      ClientConfigurationManager::Create(bg.cq(), mock, kInstanceName,
-                                         kAppProfileId, Options{});
+      ClientConfigurationManager::Create(CompletionQueue(fake_cq), mock,
+                                         kInstanceName, kAppProfileId,
+                                         Options{});
 
   ClientConfigurationManager::UnregisterCallback unreg = mgr->AddListener(
       [&](v2::ClientConfiguration const&, std::int64_t seq) {
@@ -822,7 +818,17 @@ TEST(ClientConfigurationManagerTest,
       },
       /*fire_immediately=*/false);
 
+  // Start attaches the continuation while rpc_promise is still unsatisfied so
+  // delivery never runs inline on the main test thread.
   mgr->Start();
+
+  std::thread delivery_thread([&]() {
+    v2::ClientConfiguration resp;
+    resp.set_stop_polling(true);
+    resp.mutable_session_configuration()->set_session_load(0.5F);
+    rpc_promise.set_value(std::move(resp));
+  });
+
   ASSERT_EQ(callback_entered_future.wait_for(std::chrono::seconds(5)),
             std::future_status::ready);
 
@@ -838,7 +844,7 @@ TEST(ClientConfigurationManagerTest,
 
   ASSERT_EQ(unregister_started_future.wait_for(std::chrono::seconds(5)),
             std::future_status::ready);
-  // While the callback is blocked on the CQ thread, unreg() must not return.
+  // While the callback is blocked on delivery_thread, unreg() must not return.
   EXPECT_EQ(unregister_returned_future.wait_for(std::chrono::milliseconds(20)),
             std::future_status::timeout);
 
@@ -846,12 +852,12 @@ TEST(ClientConfigurationManagerTest,
   ASSERT_EQ(unregister_returned_future.wait_for(std::chrono::seconds(5)),
             std::future_status::ready);
   unreg_thread.join();
+  delivery_thread.join();
 
   EXPECT_TRUE(finished_before_unreg_returned.load(std::memory_order_acquire));
   EXPECT_EQ(post_bootstrap_calls.load(), 1);
 
   mgr->Shutdown();
-  bg.Shutdown();
 }
 
 }  // namespace
