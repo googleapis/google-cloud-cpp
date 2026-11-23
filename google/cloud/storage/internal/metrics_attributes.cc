@@ -73,9 +73,9 @@ bool ParseIpv6Half(std::string_view part, std::array<std::uint32_t, 8>& groups,
 
 bool ParseIpv6(std::string_view ip, bool& is_directpath) {
   if (!absl::StrContains(ip, ':')) return false;
-  if (absl::ConsumePrefix(&ip, "::ffff:") ||
-      absl::ConsumePrefix(&ip, "::FFFF:")) {
-    return ParseIpv4(ip, is_directpath);
+  if (absl::StartsWithIgnoreCase(ip, "::ffff:") &&
+      absl::StrContains(ip.substr(7), '.')) {
+    return ParseIpv4(ip.substr(7), is_directpath);
   }
   std::array<std::uint32_t, 8> head{};
   std::array<std::uint32_t, 8> tail{};
@@ -136,7 +136,7 @@ std::string_view StripPeerWrapper(std::string_view peer) {
   if (colon != std::string_view::npos && peer.rfind(':') == colon) {
     return peer.substr(0, colon);
   }
-  return peer;
+  return StripZone(peer);
 }
 
 }  // namespace
@@ -146,8 +146,9 @@ std::string NormalizeServerAddress(std::string_view endpoint) {
   if (scheme_pos != std::string_view::npos) {
     std::string_view const scheme = endpoint.substr(0, scheme_pos);
     endpoint.remove_prefix(scheme_pos + 3);
-    if (scheme == "dns" || scheme == "google-c2p" ||
-        scheme == "google-c2p-experimental") {
+    if (absl::EqualsIgnoreCase(scheme, "dns") ||
+        absl::EqualsIgnoreCase(scheme, "google-c2p") ||
+        absl::EqualsIgnoreCase(scheme, "google-c2p-experimental")) {
       std::size_t const slash = endpoint.find('/');
       if (slash != std::string_view::npos) endpoint.remove_prefix(slash + 1);
     }
