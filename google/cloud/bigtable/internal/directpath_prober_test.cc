@@ -95,6 +95,8 @@ TEST(DirectPathProberTest, ProbeNullAuthFails) {
 }
 
 TEST(DirectPathProberTest, ProbeHonorsTimeoutOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*mock_auth, RequiresConfigureContext())
       .WillRepeatedly(testing::Return(false));
@@ -116,6 +118,8 @@ TEST(DirectPathProberTest, ProbeHonorsTimeoutOption) {
 }
 
 TEST(DirectPathProberTest, ProbeDefaultTimeoutWhenZeroOrNegative) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*mock_auth, RequiresConfigureContext())
       .WillRepeatedly(testing::Return(false));
@@ -137,6 +141,8 @@ TEST(DirectPathProberTest, ProbeDefaultTimeoutWhenZeroOrNegative) {
 }
 
 TEST(DirectPathProberTest, ProbeSucceedsRpcOverInsecureChannel) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   FakeBigtableService service;
   grpc::ServerBuilder builder;
   int port = 0;
@@ -170,6 +176,8 @@ TEST(DirectPathProberTest, ProbeSucceedsRpcOverInsecureChannel) {
 }
 
 TEST(DirectPathProberTest, ProbePropagatesInstanceAndAppProfileOptions) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   FakeBigtableService service;
   grpc::ServerBuilder builder;
   int port = 0;
@@ -206,6 +214,8 @@ TEST(DirectPathProberTest, ProbePropagatesInstanceAndAppProfileOptions) {
 }
 
 TEST(DirectPathProberTest, ProbeReturnsErrorWhenRpcFails) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   FakeBigtableService service;
   service.ping_status =
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "service unavailable");

@@ -73,6 +73,7 @@ auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
 
 auto constexpr kGoogleDefaultUniverse = "googleapis.com";
+auto constexpr kDirectPathScheme = "google-c2p:///";
 auto constexpr kGduDirectPathDataEndpoint =
     "google-c2p:///bigtable.googleapis.com";
 
@@ -99,7 +100,7 @@ bool IsGoogleDefaultUniverse(Options const& options) {
 }
 
 bool IsDirectPathEndpoint(std::string_view endpoint) {
-  return absl::StartsWith(endpoint, "google-c2p:///");
+  return absl::StartsWith(endpoint, kDirectPathScheme);
 }
 
 // Assumes `IsGoogleDefaultUniverse(options)` has already returned true.
@@ -179,7 +180,7 @@ std::string DefaultDirectPathAuthority(Options const& opts) {
 }
 
 std::string DefaultDirectPathDataEndpoint(Options const& opts) {
-  return absl::StrCat("google-c2p:///", DefaultDirectPathAuthority(opts));
+  return absl::StrCat(kDirectPathScheme, DefaultDirectPathAuthority(opts));
 }
 
 bool IsDirectPathAllowed(Options const& options) {
@@ -212,7 +213,7 @@ bool IsDirectPath(Options const& options) {
 Options MakeDirectPathOptions(Options opts) {
   opts = ApplyUniverseDomainEnv(std::move(opts));
   std::string authority = DefaultDirectPathAuthority(opts);
-  std::string endpoint = DefaultDirectPathDataEndpoint(opts);
+  std::string endpoint = absl::StrCat(kDirectPathScheme, authority);
   opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(endpoint);
   opts.set<EndpointOption>(std::move(endpoint));
   if (!opts.has<AuthorityOption>()) {
@@ -297,10 +298,11 @@ Options DefaultOptions(Options opts) {
 
   // Set the specific data endpoints if Direct Path is enabled.
   if (IsDirectPath(opts)) {
+    std::string authority = DefaultDirectPathAuthority(opts);
     opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-        DefaultDirectPathDataEndpoint(opts));
+        absl::StrCat(kDirectPathScheme, authority));
     if (!opts.has<AuthorityOption>()) {
-      opts.set<AuthorityOption>(DefaultDirectPathAuthority(opts));
+      opts.set<AuthorityOption>(std::move(authority));
     }
   }
 
