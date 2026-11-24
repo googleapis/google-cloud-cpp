@@ -14,9 +14,9 @@
 
 #include "google/cloud/storage/internal/attempt_metrics.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include <opentelemetry/common/key_value_iterable_view.h>
 #include <opentelemetry/context/context.h>
-#include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/nostd/span.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <array>
@@ -35,17 +35,22 @@ opentelemetry::nostd::string_view ToNostd(std::string_view sv) {
   return opentelemetry::nostd::string_view(sv.data(), sv.size());
 }
 
+std::string SemanticVersionString() {
+  return absl::StrCat(google::cloud::version_major(), ".",
+                      google::cloud::version_minor(), ".",
+                      google::cloud::version_patch());
+}
+
 }  // namespace
 
 AttemptMetrics::AttemptMetrics(
     opentelemetry::nostd::shared_ptr<
         opentelemetry::metrics::MeterProvider> const& provider,
-    std::string server_address, std::string rpc_system)
-    : version_(google::cloud::version_string()),
-      server_address_(std::move(server_address)),
-      rpc_system_(std::move(rpc_system)) {
+    std::string server_address)
+    : client_version_(SemanticVersionString()),
+      server_address_(std::move(server_address)) {
   if (!provider) return;
-  meter_ = provider->GetMeter("gl-cpp", version_);
+  meter_ = provider->GetMeter("gl-cpp", google::cloud::version_string());
   if (!meter_) return;
   attempts_ = meter_->CreateUInt64Counter(
       "gcp.storage.client.attempts",
@@ -60,38 +65,37 @@ AttemptMetrics::AttemptMetrics(
       "Number of retry attempts initiated by the client.", "{retry}");
 }
 
-void AttemptMetrics::RecordGrpcAttempt(std::string_view operation,
-                                       std::string_view error_type,
-                                       std::string_view rpc_status_code,
-                                       std::string_view network_path) const {
-  RecordAttemptImpl(operation, error_type, network_path,
-                    "rpc.response.status_code", ToNostd(rpc_status_code));
+void AttemptMetrics::RecordGrpcAttempt(
+    GrpcAttemptLabels const& labels,
+    opentelemetry::context::Context const& ctx) const {
+  RecordAttemptImpl("grpc", labels.operation, labels.error_type,
+                    labels.network_path, "rpc.response.status_code",
+                    ToNostd(labels.rpc_status_code), ctx);
 }
 
-void AttemptMetrics::RecordHttpAttempt(std::string_view operation,
-                                       std::string_view error_type,
-                                       std::int64_t http_status_code,
-                                       std::string_view network_path) const {
-  RecordAttemptImpl(operation, error_type, network_path,
-                    "http.response.status_code", http_status_code);
+void AttemptMetrics::RecordHttpAttempt(
+    HttpAttemptLabels const& labels,
+    opentelemetry::context::Context const& ctx) const {
+  RecordAttemptImpl("http", labels.operation, labels.error_type,
+                    labels.network_path, "http.response.status_code",
+                    labels.http_status_code, ctx);
 }
 
 void AttemptMetrics::RecordAttemptImpl(
-    std::string_view operation, std::string_view error_type,
-    std::string_view network_path, char const* status_key,
-    opentelemetry::common::AttributeValue status_value) const {
+    std::string_view rpc_system, std::string_view operation,
+    std::string_view error_type, std::string_view network_path,
+    char const* status_key, opentelemetry::common::AttributeValue status_value,
+    opentelemetry::context::Context const& ctx) const {
   if (!attempts_ && !errors_) return;
-  opentelemetry::context::Context const ctx =
-      opentelemetry::context::RuntimeContext::GetCurrent();
   // The status code attribute is placed last so `errors_` can exclude it via a
   // prefix span of size `attrs.size() - 1`.
   std::array<Attr, 9> const attrs{{
-      {"gcp.client.version", ToNostd(version_)},
+      {"gcp.client.version", ToNostd(client_version_)},
       {"gcp.client.artifact",
        opentelemetry::nostd::string_view("google-cloud-cpp")},
       {"gcp.client.service", opentelemetry::nostd::string_view("storage")},
       {"server.address", ToNostd(server_address_)},
-      {"rpc.system.name", ToNostd(rpc_system_)},
+      {"rpc.system.name", ToNostd(rpc_system)},
       {"gcp.storage.operation", ToNostd(operation)},
       {"error.type", ToNostd(error_type)},
       {"network.path", ToNostd(network_path)},
@@ -110,24 +114,23 @@ void AttemptMetrics::RecordAttemptImpl(
   }
 }
 
-void AttemptMetrics::RecordRetry(std::string_view operation,
-                                 std::string_view error_type,
-                                 std::string_view network_path) const {
+void AttemptMetrics::RecordRetry(
+    RetryLabels const& labels,
+    opentelemetry::context::Context const& ctx) const {
   if (!retries_) return;
   std::array<Attr, 8> const attrs{{
-      {"gcp.client.version", ToNostd(version_)},
+      {"gcp.client.version", ToNostd(client_version_)},
       {"gcp.client.artifact",
        opentelemetry::nostd::string_view("google-cloud-cpp")},
       {"gcp.client.service", opentelemetry::nostd::string_view("storage")},
       {"server.address", ToNostd(server_address_)},
-      {"rpc.system.name", ToNostd(rpc_system_)},
-      {"gcp.storage.operation", ToNostd(operation)},
-      {"error.type", ToNostd(error_type)},
-      {"network.path", ToNostd(network_path)},
+      {"rpc.system.name", ToNostd(labels.rpc_system)},
+      {"gcp.storage.operation", ToNostd(labels.operation)},
+      {"error.type", ToNostd(labels.error_type)},
+      {"network.path", ToNostd(labels.network_path)},
   }};
   retries_->Add(std::uint64_t{1},
-                opentelemetry::common::MakeKeyValueIterableView(attrs),
-                opentelemetry::context::RuntimeContext::GetCurrent());
+                opentelemetry::common::MakeKeyValueIterableView(attrs), ctx);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

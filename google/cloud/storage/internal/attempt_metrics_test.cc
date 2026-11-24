@@ -15,12 +15,12 @@
 #include "google/cloud/storage/internal/attempt_metrics.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/common/key_value_iterable.h>
 #include <opentelemetry/context/context.h>
-#include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/nostd/variant.h>
 #include <opentelemetry/version.h>
@@ -152,19 +152,22 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
       std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
           provider));
 
-  AttemptMetrics metrics(mp, "storage.googleapis.com", "grpc");
-  opentelemetry::nostd::unique_ptr<opentelemetry::context::Token> const token =
-      opentelemetry::context::RuntimeContext::Attach(
-          opentelemetry::context::RuntimeContext::GetCurrent().SetValue(
-              "trace_marker", std::int64_t{42}));
-  metrics.RecordGrpcAttempt("ReadObject", "OK", "OK", "directpath");
-  metrics.RecordGrpcAttempt("WriteObject", "DEADLINE_EXCEEDED",
-                            "DEADLINE_EXCEEDED", "directpath");
-  metrics.RecordHttpAttempt("GetObjectMetadata", "OK", 200, "cloudpath");
-  metrics.RecordHttpAttempt("DeleteObject", "UNAVAILABLE", 503, "cloudpath");
-  metrics.RecordRetry("DeleteObject", "UNAVAILABLE", "cloudpath");
+  AttemptMetrics metrics(mp, "storage.googleapis.com");
+  opentelemetry::context::Context const ctx =
+      opentelemetry::context::Context("trace_marker", std::int64_t{42});
+  metrics.RecordGrpcAttempt({"ReadObject", "OK", "OK", "directpath"}, ctx);
+  metrics.RecordGrpcAttempt(
+      {"WriteObject", "DEADLINE_EXCEEDED", "DEADLINE_EXCEEDED", "directpath"},
+      ctx);
+  metrics.RecordHttpAttempt({"GetObjectMetadata", "OK", 200, "cloudpath"}, ctx);
+  metrics.RecordHttpAttempt({"DeleteObject", "UNAVAILABLE", 503, "cloudpath"},
+                            ctx);
+  metrics.RecordRetry({"http", "DeleteObject", "UNAVAILABLE", "cloudpath"},
+                      ctx);
 
-  std::string const ver = google::cloud::version_string();
+  std::string const ver = absl::StrCat(google::cloud::version_major(), ".",
+                                       google::cloud::version_minor(), ".",
+                                       google::cloud::version_patch());
   ASSERT_EQ(attempt_attrs.size(), 4U);
   EXPECT_THAT(attempt_attrs[0].strings,
               UnorderedElementsAre(
@@ -195,7 +198,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
                   Pair("gcp.client.artifact", "google-cloud-cpp"),
                   Pair("gcp.client.service", "storage"),
                   Pair("server.address", "storage.googleapis.com"),
-                  Pair("rpc.system.name", "grpc"),
+                  Pair("rpc.system.name", "http"),
                   Pair("gcp.storage.operation", "GetObjectMetadata"),
                   Pair("error.type", "OK"), Pair("network.path", "cloudpath")));
   EXPECT_THAT(attempt_attrs[2].ints,
@@ -206,7 +209,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
                            Pair("gcp.client.artifact", "google-cloud-cpp"),
                            Pair("gcp.client.service", "storage"),
                            Pair("server.address", "storage.googleapis.com"),
-                           Pair("rpc.system.name", "grpc"),
+                           Pair("rpc.system.name", "http"),
                            Pair("gcp.storage.operation", "DeleteObject"),
                            Pair("error.type", "UNAVAILABLE"),
                            Pair("network.path", "cloudpath")));
@@ -231,7 +234,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
                            Pair("gcp.client.artifact", "google-cloud-cpp"),
                            Pair("gcp.client.service", "storage"),
                            Pair("server.address", "storage.googleapis.com"),
-                           Pair("rpc.system.name", "grpc"),
+                           Pair("rpc.system.name", "http"),
                            Pair("gcp.storage.operation", "DeleteObject"),
                            Pair("error.type", "UNAVAILABLE"),
                            Pair("network.path", "cloudpath")));
@@ -242,7 +245,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
                            Pair("gcp.client.artifact", "google-cloud-cpp"),
                            Pair("gcp.client.service", "storage"),
                            Pair("server.address", "storage.googleapis.com"),
-                           Pair("rpc.system.name", "grpc"),
+                           Pair("rpc.system.name", "http"),
                            Pair("gcp.storage.operation", "DeleteObject"),
                            Pair("error.type", "UNAVAILABLE"),
                            Pair("network.path", "cloudpath")));
@@ -250,10 +253,13 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
 }
 
 TEST(AttemptMetricsTest, NullProviderAndNullMeterAreNoOps) {
-  AttemptMetrics no_provider(nullptr, "storage.googleapis.com", "http");
-  no_provider.RecordGrpcAttempt("ReadObject", "OK", "OK", "directpath");
-  no_provider.RecordHttpAttempt("ReadObject", "UNAVAILABLE", 503, "cloudpath");
-  no_provider.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
+  opentelemetry::context::Context const ctx{};
+  AttemptMetrics no_provider(nullptr, "storage.googleapis.com");
+  no_provider.RecordGrpcAttempt({"ReadObject", "OK", "OK", "directpath"}, ctx);
+  no_provider.RecordHttpAttempt({"ReadObject", "UNAVAILABLE", 503, "cloudpath"},
+                                ctx);
+  no_provider.RecordRetry({"http", "ReadObject", "UNAVAILABLE", "cloudpath"},
+                          ctx);
 
   auto provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*provider, GetMeter)
@@ -263,14 +269,16 @@ TEST(AttemptMetricsTest, NullProviderAndNullMeterAreNoOps) {
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider> mp(
       std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
           provider));
-  AttemptMetrics no_meter(mp, "storage.googleapis.com", "grpc");
-  no_meter.RecordGrpcAttempt("ReadObject", "UNAVAILABLE", "UNAVAILABLE",
-                             "cloudpath");
-  no_meter.RecordHttpAttempt("ReadObject", "UNAVAILABLE", 503, "cloudpath");
-  no_meter.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
+  AttemptMetrics no_meter(mp, "storage.googleapis.com");
+  no_meter.RecordGrpcAttempt(
+      {"ReadObject", "UNAVAILABLE", "UNAVAILABLE", "cloudpath"}, ctx);
+  no_meter.RecordHttpAttempt({"ReadObject", "UNAVAILABLE", 503, "cloudpath"},
+                             ctx);
+  no_meter.RecordRetry({"grpc", "ReadObject", "UNAVAILABLE", "cloudpath"}, ctx);
 }
 
 TEST(AttemptMetricsTest, NullAndPartialInstruments) {
+  opentelemetry::context::Context const ctx{};
   opentelemetry::nostd::shared_ptr<MockMeter> empty_meter =
       std::make_shared<MockMeter>();
   EXPECT_CALL(*empty_meter, CreateUInt64Counter)
@@ -282,31 +290,46 @@ TEST(AttemptMetricsTest, NullAndPartialInstruments) {
   EXPECT_CALL(*errors, Add(std::uint64_t{1}, _, _)).Times(1);
   auto retries = std::make_unique<MockCounter<std::uint64_t>>();
   EXPECT_CALL(*retries, Add(std::uint64_t{1}, _, _)).Times(1);
-  opentelemetry::nostd::shared_ptr<MockMeter> partial_meter =
+  opentelemetry::nostd::shared_ptr<MockMeter> no_attempts_meter =
       std::make_shared<MockMeter>();
-  EXPECT_CALL(*partial_meter, CreateUInt64Counter)
+  EXPECT_CALL(*no_attempts_meter, CreateUInt64Counter)
       .WillOnce(Return(ByMove(CounterPtr(nullptr))))
       .WillOnce(Return(ByMove(CounterPtr(errors.release()))))
       .WillOnce(Return(ByMove(CounterPtr(retries.release()))));
 
+  auto attempts = std::make_unique<MockCounter<std::uint64_t>>();
+  EXPECT_CALL(*attempts, Add(std::uint64_t{1}, _, _)).Times(1);
+  opentelemetry::nostd::shared_ptr<MockMeter> no_errors_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*no_errors_meter, CreateUInt64Counter)
+      .WillOnce(Return(ByMove(CounterPtr(attempts.release()))))
+      .WillOnce(Return(ByMove(CounterPtr(nullptr))))
+      .WillOnce(Return(ByMove(CounterPtr(nullptr))));
+
   auto provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*provider, GetMeter)
       .WillOnce(Return(empty_meter))
-      .WillOnce(Return(partial_meter));
+      .WillOnce(Return(no_attempts_meter))
+      .WillOnce(Return(no_errors_meter));
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider> mp(
       std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
           provider));
 
-  AttemptMetrics none(mp, "storage.googleapis.com", "grpc");
-  none.RecordGrpcAttempt("ReadObject", "UNAVAILABLE", "UNAVAILABLE",
-                         "cloudpath");
-  none.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
+  AttemptMetrics none(mp, "storage.googleapis.com");
+  none.RecordGrpcAttempt(
+      {"ReadObject", "UNAVAILABLE", "UNAVAILABLE", "cloudpath"}, ctx);
+  none.RecordRetry({"grpc", "ReadObject", "UNAVAILABLE", "cloudpath"}, ctx);
 
-  AttemptMetrics partial(mp, "storage.googleapis.com", "grpc");
-  partial.RecordGrpcAttempt("ReadObject", "OK", "OK", "directpath");
-  partial.RecordGrpcAttempt("ReadObject", "UNAVAILABLE", "UNAVAILABLE",
-                            "cloudpath");
-  partial.RecordRetry("ReadObject", "UNAVAILABLE", "cloudpath");
+  AttemptMetrics no_attempts(mp, "storage.googleapis.com");
+  no_attempts.RecordGrpcAttempt({"ReadObject", "OK", "OK", "directpath"}, ctx);
+  no_attempts.RecordGrpcAttempt(
+      {"ReadObject", "UNAVAILABLE", "UNAVAILABLE", "cloudpath"}, ctx);
+  no_attempts.RecordRetry({"grpc", "ReadObject", "UNAVAILABLE", "cloudpath"},
+                          ctx);
+
+  AttemptMetrics no_errors(mp, "storage.googleapis.com");
+  no_errors.RecordGrpcAttempt(
+      {"ReadObject", "UNAVAILABLE", "UNAVAILABLE", "cloudpath"}, ctx);
 }
 
 }  // namespace
