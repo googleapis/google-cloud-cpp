@@ -16,12 +16,12 @@
 #include "google/cloud/storage/internal/metrics_constants.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/version.h"
-#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/common/key_value_iterable.h>
 #include <opentelemetry/context/context.h>
+#include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/nostd/variant.h>
 #include <opentelemetry/version.h>
@@ -139,9 +139,9 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
                            "google.storage.v2.Storage/ReadObject", "OK"},
                           std::chrono::milliseconds(250), ctx);
 
-  std::string const ver = absl::StrCat(google::cloud::version_major(), ".",
-                                       google::cloud::version_minor(), ".",
-                                       google::cloud::version_patch());
+  std::string const ver = std::to_string(google::cloud::version_major()) + "." +
+                          std::to_string(google::cloud::version_minor()) + "." +
+                          std::to_string(google::cloud::version_patch());
   EXPECT_THAT(op_attrs, UnorderedElementsAre(
                             Pair("gcp.client.version", ver),
                             Pair("gcp.client.artifact", "google-cloud-cpp"),
