@@ -16,6 +16,7 @@
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
+#include "google/cloud/storage/internal/metrics_constants.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/universe_domain_options.h"
@@ -77,7 +78,7 @@ Options MetricsExporterOptions(
   return Options{}
       .set<otel::ServiceTimeSeriesOption>(true)
       .set<otel::MetricNameFormatterOption>([](std::string s) -> std::string {
-        if (s == "gcp.client.request.duration") {
+        if (s == kRequestDurationMetric) {
           return "storage.googleapis.com/client/request_duration";
         }
         // Storage SDK metrics under `gcp.storage.client.*` are registered in

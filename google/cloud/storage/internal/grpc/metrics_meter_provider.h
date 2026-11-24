@@ -17,6 +17,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
+#include "google/cloud/storage/internal/metrics_constants.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
@@ -30,15 +31,6 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * The instrumentation scope for instruments created by this library.
- *
- * gRPC's own instruments use the `grpc-c++` scope. Using the same scope name
- * as the tracer (`gl-cpp`) keeps the library's telemetry identifiable and
- * lets `MakeGrpcMeterProvider()` attach a latency view to it.
- */
-auto constexpr kStorageMeterName = "gl-cpp";
 
 /**
  * The fully qualified name of the `channel_creation_latency` instrument.
@@ -56,7 +48,7 @@ std::string ChannelCreationLatencyInstrument();
 /// Storage SDK latency histogram instruments registered with explicit buckets.
 inline constexpr std::array<std::string_view, 9>
     kStorageLatencyHistogramInstruments = {{
-        "gcp.client.request.duration",
+        kRequestDurationMetric,
         "gcp.storage.client.ttfb",
         "rpc.client.call.duration",
         "gcp.storage.client.stall.duration",

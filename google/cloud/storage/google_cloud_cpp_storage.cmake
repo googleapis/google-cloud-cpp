@@ -140,6 +140,7 @@ add_library(
     internal/metadata_parser.h
     internal/metrics_attributes.cc
     internal/metrics_attributes.h
+    internal/metrics_constants.h
     internal/metrics_error_type.cc
     internal/metrics_error_type.h
     internal/notification_metadata_parser.cc

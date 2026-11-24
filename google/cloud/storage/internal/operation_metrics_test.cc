@@ -13,17 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/operation_metrics.h"
+#include "google/cloud/storage/internal/metrics_constants.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/common/key_value_iterable.h>
 #include <opentelemetry/context/context.h>
-#include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/nostd/variant.h>
 #include <opentelemetry/version.h>
+#include <chrono>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -102,11 +104,11 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
 
   opentelemetry::nostd::shared_ptr<MockMeter> meter =
       std::make_shared<MockMeter>();
-  EXPECT_CALL(*meter, CreateUInt64Counter(Eq("gcp.storage.client.operations"),
-                                          _, Eq("{operation}")))
+  EXPECT_CALL(*meter,
+              CreateUInt64Counter(Eq(kOperationsMetric), _, Eq("{operation}")))
       .WillOnce(Return(ByMove(CounterPtr(ops.release()))));
-  EXPECT_CALL(*meter, CreateDoubleHistogram(Eq("gcp.client.request.duration"),
-                                            _, Eq("s")))
+  EXPECT_CALL(*meter,
+              CreateDoubleHistogram(Eq(kRequestDurationMetric), _, Eq("s")))
       .WillOnce(Return(ByMove(HistPtr(dur.release()))));
 
   auto provider = std::make_shared<MockMeterProvider>();
@@ -121,7 +123,7 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) {
 #endif
-        EXPECT_EQ(std::string(scope.data(), scope.size()), "gl-cpp");
+        EXPECT_EQ(std::string(scope.data(), scope.size()), kStorageMeterName);
         EXPECT_EQ(std::string(scope_version.data(), scope_version.size()),
                   google::cloud::version_string());
         return meter;
@@ -131,26 +133,27 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
           provider));
 
   OperationMetrics metrics(mp, "storage.googleapis.com", "grpc");
-  opentelemetry::nostd::unique_ptr<opentelemetry::context::Token> const token =
-      opentelemetry::context::RuntimeContext::Attach(
-          opentelemetry::context::RuntimeContext::GetCurrent().SetValue(
-              "trace_marker", std::int64_t{42}));
-  metrics.RecordOperation("ReadObject", "Client::ReadObject",
-                          "google.storage.v2.Storage/ReadObject", "OK", 0.25);
+  opentelemetry::context::Context const ctx =
+      opentelemetry::context::Context("trace_marker", std::int64_t{42});
+  metrics.RecordOperation({"ReadObject", "Client::ReadObject",
+                           "google.storage.v2.Storage/ReadObject", "OK"},
+                          std::chrono::milliseconds(250), ctx);
 
-  EXPECT_THAT(op_attrs,
-              UnorderedElementsAre(
-                  Pair("gcp.client.version", google::cloud::version_string()),
-                  Pair("gcp.client.artifact", "google-cloud-cpp"),
-                  Pair("gcp.client.service", "storage"),
-                  Pair("server.address", "storage.googleapis.com"),
-                  Pair("rpc.system.name", "grpc"),
-                  Pair("gcp.storage.operation", "ReadObject"),
-                  Pair("gcp.client.method", "Client::ReadObject"),
-                  Pair("error.type", "OK")));
+  std::string const ver = absl::StrCat(google::cloud::version_major(), ".",
+                                       google::cloud::version_minor(), ".",
+                                       google::cloud::version_patch());
+  EXPECT_THAT(op_attrs, UnorderedElementsAre(
+                            Pair("gcp.client.version", ver),
+                            Pair("gcp.client.artifact", "google-cloud-cpp"),
+                            Pair("gcp.client.service", "storage"),
+                            Pair("server.address", "storage.googleapis.com"),
+                            Pair("rpc.system.name", "grpc"),
+                            Pair("gcp.storage.operation", "ReadObject"),
+                            Pair("gcp.client.method", "Client::ReadObject"),
+                            Pair("error.type", "OK")));
   EXPECT_THAT(dur_attrs,
               UnorderedElementsAre(
-                  Pair("gcp.client.version", google::cloud::version_string()),
+                  Pair("gcp.client.version", ver),
                   Pair("gcp.client.artifact", "google-cloud-cpp"),
                   Pair("gcp.client.service", "storage"),
                   Pair("server.address", "storage.googleapis.com"),
@@ -161,11 +164,38 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
                   Pair("rpc.method", "google.storage.v2.Storage/ReadObject")));
 }
 
+TEST(OperationMetricsTest, ClampsNegativeDurationToZero) {
+  auto ops = std::make_unique<MockCounter<std::uint64_t>>();
+  EXPECT_CALL(*ops, Add(std::uint64_t{1}, _, _)).Times(1);
+  auto dur = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(*dur, Record(DoubleEq(0.0), _, _)).Times(1);
+
+  opentelemetry::nostd::shared_ptr<MockMeter> meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*meter, CreateUInt64Counter)
+      .WillOnce(Return(ByMove(CounterPtr(ops.release()))));
+  EXPECT_CALL(*meter, CreateDoubleHistogram)
+      .WillOnce(Return(ByMove(HistPtr(dur.release()))));
+
+  auto provider = std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*provider, GetMeter).WillOnce(Return(meter));
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider> mp(
+      std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
+          provider));
+
+  OperationMetrics metrics(mp, "storage.googleapis.com", "grpc");
+  metrics.RecordOperation({"ReadObject", "Client::ReadObject",
+                           "google.storage.v2.Storage/ReadObject", "OK"},
+                          std::chrono::milliseconds(-5),
+                          opentelemetry::context::Context{});
+}
+
 TEST(OperationMetricsTest, NullProviderAndNullMeterAreNoOps) {
+  OperationLabels const labels{"ReadObject", "Client::ReadObject",
+                               "google.storage.v2.Storage/ReadObject", "OK"};
+  opentelemetry::context::Context const ctx{};
   OperationMetrics no_provider(nullptr, "storage.googleapis.com", "grpc");
-  no_provider.RecordOperation("ReadObject", "Client::ReadObject",
-                              "google.storage.v2.Storage/ReadObject", "OK",
-                              0.1);
+  no_provider.RecordOperation(labels, std::chrono::milliseconds(100), ctx);
 
   auto provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*provider, GetMeter)
@@ -176,11 +206,14 @@ TEST(OperationMetricsTest, NullProviderAndNullMeterAreNoOps) {
       std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
           provider));
   OperationMetrics no_meter(mp, "storage.googleapis.com", "grpc");
-  no_meter.RecordOperation("ReadObject", "Client::ReadObject",
-                           "google.storage.v2.Storage/ReadObject", "OK", 0.1);
+  no_meter.RecordOperation(labels, std::chrono::milliseconds(100), ctx);
 }
 
 TEST(OperationMetricsTest, NullAndPartialInstruments) {
+  OperationLabels const labels{"ReadObject", "Client::ReadObject",
+                               "google.storage.v2.Storage/ReadObject", "OK"};
+  opentelemetry::context::Context const ctx{};
+
   opentelemetry::nostd::shared_ptr<MockMeter> empty_meter =
       std::make_shared<MockMeter>();
   EXPECT_CALL(*empty_meter, CreateUInt64Counter)
@@ -190,28 +223,39 @@ TEST(OperationMetricsTest, NullAndPartialInstruments) {
 
   auto dur = std::make_unique<MockHistogram<double>>();
   EXPECT_CALL(*dur, Record(DoubleEq(0.5), _, _)).Times(1);
-  opentelemetry::nostd::shared_ptr<MockMeter> partial_meter =
+  opentelemetry::nostd::shared_ptr<MockMeter> duration_only_meter =
       std::make_shared<MockMeter>();
-  EXPECT_CALL(*partial_meter, CreateUInt64Counter)
+  EXPECT_CALL(*duration_only_meter, CreateUInt64Counter)
       .WillOnce(Return(ByMove(CounterPtr(nullptr))));
-  EXPECT_CALL(*partial_meter, CreateDoubleHistogram)
+  EXPECT_CALL(*duration_only_meter, CreateDoubleHistogram)
       .WillOnce(Return(ByMove(HistPtr(dur.release()))));
+
+  auto ops = std::make_unique<MockCounter<std::uint64_t>>();
+  EXPECT_CALL(*ops, Add(std::uint64_t{1}, _, _)).Times(1);
+  opentelemetry::nostd::shared_ptr<MockMeter> ops_only_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*ops_only_meter, CreateUInt64Counter)
+      .WillOnce(Return(ByMove(CounterPtr(ops.release()))));
+  EXPECT_CALL(*ops_only_meter, CreateDoubleHistogram)
+      .WillOnce(Return(ByMove(HistPtr(nullptr))));
 
   auto provider = std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*provider, GetMeter)
       .WillOnce(Return(empty_meter))
-      .WillOnce(Return(partial_meter));
+      .WillOnce(Return(duration_only_meter))
+      .WillOnce(Return(ops_only_meter));
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::MeterProvider> mp(
       std::static_pointer_cast<opentelemetry::metrics::MeterProvider>(
           provider));
 
   OperationMetrics none(mp, "storage.googleapis.com", "grpc");
-  none.RecordOperation("ReadObject", "Client::ReadObject",
-                       "google.storage.v2.Storage/ReadObject", "OK", 0.1);
+  none.RecordOperation(labels, std::chrono::milliseconds(100), ctx);
 
-  OperationMetrics partial(mp, "storage.googleapis.com", "grpc");
-  partial.RecordOperation("ReadObject", "Client::ReadObject",
-                          "google.storage.v2.Storage/ReadObject", "OK", 0.5);
+  OperationMetrics duration_only(mp, "storage.googleapis.com", "grpc");
+  duration_only.RecordOperation(labels, std::chrono::milliseconds(500), ctx);
+
+  OperationMetrics ops_only(mp, "storage.googleapis.com", "grpc");
+  ops_only.RecordOperation(labels, std::chrono::milliseconds(500), ctx);
 }
 
 }  // namespace

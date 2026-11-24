@@ -86,6 +86,7 @@ google_cloud_cpp_storage_hdrs = [
     "internal/md5hash.h",
     "internal/metadata_parser.h",
     "internal/metrics_attributes.h",
+    "internal/metrics_constants.h",
     "internal/metrics_error_type.h",
     "internal/notification_metadata_parser.h",
     "internal/notification_requests.h",
