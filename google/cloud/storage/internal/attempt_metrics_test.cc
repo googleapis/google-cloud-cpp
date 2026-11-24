@@ -15,12 +15,12 @@
 #include "google/cloud/storage/internal/attempt_metrics.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/version.h"
-#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/common/key_value_iterable.h>
 #include <opentelemetry/context/context.h>
+#include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/nostd/variant.h>
 #include <opentelemetry/version.h>
@@ -165,9 +165,9 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
   metrics.RecordRetry({"http", "DeleteObject", "UNAVAILABLE", "cloudpath"},
                       ctx);
 
-  std::string const ver = absl::StrCat(google::cloud::version_major(), ".",
-                                       google::cloud::version_minor(), ".",
-                                       google::cloud::version_patch());
+  std::string const ver = std::to_string(google::cloud::version_major()) + "." +
+                          std::to_string(google::cloud::version_minor()) + "." +
+                          std::to_string(google::cloud::version_patch());
   ASSERT_EQ(attempt_attrs.size(), 4U);
   EXPECT_THAT(attempt_attrs[0].strings,
               UnorderedElementsAre(

@@ -14,12 +14,12 @@
 
 #include "google/cloud/storage/internal/attempt_metrics.h"
 #include "google/cloud/version.h"
-#include "absl/strings/str_cat.h"
 #include <opentelemetry/common/key_value_iterable_view.h>
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/nostd/span.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <array>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -36,9 +36,9 @@ opentelemetry::nostd::string_view ToNostd(std::string_view sv) {
 }
 
 std::string SemanticVersionString() {
-  return absl::StrCat(google::cloud::version_major(), ".",
-                      google::cloud::version_minor(), ".",
-                      google::cloud::version_patch());
+  return std::to_string(google::cloud::version_major()) + "." +
+         std::to_string(google::cloud::version_minor()) + "." +
+         std::to_string(google::cloud::version_patch());
 }
 
 }  // namespace
