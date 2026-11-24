@@ -15,16 +15,22 @@
 #include "google/cloud/bigtable/internal/directpath_prober.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/universe_domain_options.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -36,13 +42,16 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockAuthenticationStrategy;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::AllOf;
 using ::testing::Eq;
 using ::testing::ExplainMatchResult;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::Optional;
 
 MATCHER_P(ProbeSuccess, matcher, "") {
   return ExplainMatchResult(matcher, arg.success, result_listener);
@@ -86,6 +95,8 @@ TEST(DirectPathProberTest, ProbeNullAuthFails) {
 }
 
 TEST(DirectPathProberTest, ProbeHonorsTimeoutOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*mock_auth, RequiresConfigureContext())
       .WillRepeatedly(testing::Return(false));
@@ -107,6 +118,8 @@ TEST(DirectPathProberTest, ProbeHonorsTimeoutOption) {
 }
 
 TEST(DirectPathProberTest, ProbeDefaultTimeoutWhenZeroOrNegative) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*mock_auth, RequiresConfigureContext())
       .WillRepeatedly(testing::Return(false));
@@ -128,6 +141,8 @@ TEST(DirectPathProberTest, ProbeDefaultTimeoutWhenZeroOrNegative) {
 }
 
 TEST(DirectPathProberTest, ProbeSucceedsRpcOverInsecureChannel) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   FakeBigtableService service;
   grpc::ServerBuilder builder;
   int port = 0;
@@ -161,6 +176,8 @@ TEST(DirectPathProberTest, ProbeSucceedsRpcOverInsecureChannel) {
 }
 
 TEST(DirectPathProberTest, ProbePropagatesInstanceAndAppProfileOptions) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   FakeBigtableService service;
   grpc::ServerBuilder builder;
   int port = 0;
@@ -197,6 +214,8 @@ TEST(DirectPathProberTest, ProbePropagatesInstanceAndAppProfileOptions) {
 }
 
 TEST(DirectPathProberTest, ProbeReturnsErrorWhenRpcFails) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
   FakeBigtableService service;
   service.ping_status =
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "service unavailable");
@@ -541,6 +560,146 @@ TEST(DirectPathProberTest, ProbeNullStubFails) {
   StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
       nullptr, instance, Options{}, CompletionQueue{}, nullptr, "", nullptr);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
+}
+
+TEST(DirectPathProberTest, ProbeUsesDefaultDirectPathEndpoint) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+  ValidateMetadataFixture metadata_fixture;
+  std::optional<std::string> captured_authority;
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, RequiresConfigureContext())
+      .WillRepeatedly(testing::Return(true));
+  EXPECT_CALL(
+      *mock_auth,
+      CreateChannel(Eq("google-c2p:///bigtable.googleapis.com"), testing::_))
+      .WillOnce([](std::string const&, grpc::ChannelArguments const& args) {
+        return grpc::CreateCustomChannel(
+            "localhost:1", grpc::InsecureChannelCredentials(), args);
+      });
+  EXPECT_CALL(*mock_auth, ConfigureContext)
+      .WillOnce([&](grpc::ClientContext& context) {
+        captured_authority = metadata_fixture.GetAuthority(context);
+        return Status(StatusCode::kCancelled, "inspected");
+      });
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      Options{}, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(captured_authority, Optional(Eq("bigtable.googleapis.com")));
+}
+
+TEST(DirectPathProberTest, ProbeAllowsExplicitGoogleDefaultUniverse) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "googleapis.com");
+  ValidateMetadataFixture metadata_fixture;
+  std::optional<std::string> captured_authority;
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, RequiresConfigureContext())
+      .WillRepeatedly(testing::Return(true));
+  EXPECT_CALL(
+      *mock_auth,
+      CreateChannel(Eq("google-c2p:///bigtable.googleapis.com"), testing::_))
+      .WillOnce([](std::string const&, grpc::ChannelArguments const& args) {
+        return grpc::CreateCustomChannel(
+            "localhost:1", grpc::InsecureChannelCredentials(), args);
+      });
+  EXPECT_CALL(*mock_auth, ConfigureContext)
+      .WillOnce([&](grpc::ClientContext& context) {
+        captured_authority = metadata_fixture.GetAuthority(context);
+        return Status(StatusCode::kCancelled, "inspected");
+      });
+
+  Options const options =
+      Options{}.set<google::cloud::internal::UniverseDomainOption>(
+          "ud-option.net");
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(captured_authority, Optional(Eq("bigtable.googleapis.com")));
+}
+
+TEST(DirectPathProberTest, ProbeFailsClosedForNonDefaultUniverseDomainOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, CreateChannel).Times(0);
+  EXPECT_CALL(*mock_auth, ConfigureContext).Times(0);
+
+  Options const options =
+      Options{}.set<google::cloud::internal::UniverseDomainOption>("ud.net");
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(DirectPathProberTest, ProbeFailsClosedForNonDefaultUniverseDomainEnvVar) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, CreateChannel).Times(0);
+  EXPECT_CALL(*mock_auth, ConfigureContext).Times(0);
+
+  Options const options =
+      Options{}.set<google::cloud::internal::UniverseDomainOption>(
+          "googleapis.com");
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(DirectPathProberTest, ProbeFailsClosedForCustomEndpointOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, CreateChannel).Times(0);
+  EXPECT_CALL(*mock_auth, ConfigureContext).Times(0);
+
+  Options const options = Options{}.set<EndpointOption>("custom.tpc.invalid");
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(DirectPathProberTest, ProbeFailsClosedForCustomDataEndpointOption) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, CreateChannel).Times(0);
+  EXPECT_CALL(*mock_auth, ConfigureContext).Times(0);
+
+  Options const options =
+      Options{}.set<::google::cloud::bigtable_internal::DataEndpointOption>(
+          "custom-data.tpc.invalid");
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      options, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(DirectPathProberTest, ProbeFailsClosedForEmulatorEnvVar) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "localhost:8086");
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+
+  auto mock_auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*mock_auth, CreateChannel).Times(0);
+  EXPECT_CALL(*mock_auth, ConfigureContext).Times(0);
+
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      mock_auth, bigtable::InstanceResource(Project("test-proj"), "test-inst"),
+      Options{}, CompletionQueue{});
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition));
 }
 
 }  // namespace
