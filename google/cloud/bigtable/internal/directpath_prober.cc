@@ -18,10 +18,8 @@
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/defaults.h"
-#include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/match.h"
@@ -125,21 +123,19 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     std::string const& peer_address,
     std::shared_ptr<grpc::AuthContext const> const& auth_context) {
   std::shared_ptr<BigtableStub> effective_stub = stub;
+  Options probe_options;
   if (!effective_stub) {
     if (!auth) {
       return internal::InternalError("Auth strategy cannot be null",
                                      GCP_ERROR_INFO());
     }
+    if (!bigtable::internal::IsDirectPathAllowed(options)) {
+      return internal::FailedPreconditionError(
+          "DirectPath is not supported for the configured options",
+          GCP_ERROR_INFO());
+    }
 
-    Options probe_options = options;
-    probe_options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-        bigtable::internal::DefaultDirectPathDataEndpoint());
-    probe_options.set<EndpointOption>(
-        bigtable::internal::DefaultDirectPathDataEndpoint());
-    probe_options.set<AuthorityOption>(
-        bigtable::internal::DefaultDirectPathAuthority());
-    probe_options.set<bigtable::experimental::DirectPathModeOption>(
-        bigtable::experimental::DirectPathMode::kEnabled);
+    probe_options = bigtable::internal::MakeDirectPathOptions(options);
     probe_options.set<GrpcNumChannelsOption>(1);
     probe_options.set<bigtable::MinConnectionRefreshOption>(
         std::chrono::milliseconds::zero());
@@ -152,10 +148,12 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     };
     effective_stub =
         CreateDecoratedStubs(auth, cq, probe_options, stub_factory);
+  } else {
+    probe_options = options;
   }
 
   std::chrono::milliseconds timeout =
-      options.get<bigtable::experimental::DirectPathProbeTimeoutOption>();
+      probe_options.get<bigtable::experimental::DirectPathProbeTimeoutOption>();
   if (timeout <= std::chrono::milliseconds::zero()) {
     timeout = bigtable::internal::DefaultDirectPathProbeTimeout();
   }
@@ -165,12 +163,14 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
 
   google::bigtable::v2::PingAndWarmRequest request;
   request.set_name(instance_resource.FullName());
-  if (options.has<bigtable::AppProfileIdOption>()) {
-    request.set_app_profile_id(options.get<bigtable::AppProfileIdOption>());
+  if (probe_options.has<bigtable::AppProfileIdOption>()) {
+    request.set_app_profile_id(
+        probe_options.get<bigtable::AppProfileIdOption>());
   }
   OperationContext op_ctx;
   StatusOr<google::bigtable::v2::PingAndWarmResponse> response =
-      effective_stub->PingAndWarm(client_context, options, request, op_ctx);
+      effective_stub->PingAndWarm(client_context, probe_options, request,
+                                  op_ctx);
   if (!response.ok()) return response.status();
 
   DirectPathProbeResult result;

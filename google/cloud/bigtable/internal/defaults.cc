@@ -27,10 +27,14 @@
 #include "google/cloud/options.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/algorithm/container.h"
+#include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <chrono>
+#include <optional>
 #include <string>
 #include <string_view>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,6 +71,49 @@ auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 // this case the Cloud Bigtable C++ client library) waits for an acknowledgement
 // for a keepalive ping.
 auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
+
+auto constexpr kGoogleDefaultUniverse = "googleapis.com";
+auto constexpr kDirectPathScheme = "google-c2p:///";
+auto constexpr kGduDirectPathDataEndpoint =
+    "google-c2p:///bigtable.googleapis.com";
+
+Options ApplyUniverseDomainEnv(Options opts) {
+  std::optional<std::string> ud =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (ud && !ud->empty()) {
+    opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
+  }
+  return opts;
+}
+
+bool IsGoogleDefaultUniverse(Options const& options) {
+  std::optional<std::string> const ud_env =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (ud_env && !ud_env->empty()) {
+    return *ud_env == kGoogleDefaultUniverse;
+  }
+  if (options.has<google::cloud::internal::UniverseDomainOption>()) {
+    return options.get<google::cloud::internal::UniverseDomainOption>() ==
+           kGoogleDefaultUniverse;
+  }
+  return true;
+}
+
+bool IsDirectPathEndpoint(std::string_view endpoint) {
+  return absl::StartsWith(endpoint, kDirectPathScheme);
+}
+
+// Assumes `IsGoogleDefaultUniverse(options)` has already returned true.
+bool HasCustomEndpoint(Options const& options) {
+  using ::google::cloud::bigtable_internal::DataEndpointOption;
+  if (options.has<DataEndpointOption>()) {
+    return options.get<DataEndpointOption>() != kGduDirectPathDataEndpoint;
+  }
+  if (options.has<EndpointOption>()) {
+    return options.get<EndpointOption>() != kGduDirectPathDataEndpoint;
+  }
+  return false;
+}
 
 Options DefaultConnectionRefreshOptions(Options opts) {
   auto const has_min = opts.has<MinConnectionRefreshOption>();
@@ -127,7 +174,25 @@ int DefaultConnectionPoolSize() {
                     cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
 }
 
+std::string DefaultDirectPathAuthority(Options const& opts) {
+  return google::cloud::internal::UniverseDomainEndpoint(
+      "bigtable.googleapis.com", opts);
+}
+
+std::string DefaultDirectPathDataEndpoint(Options const& opts) {
+  return absl::StrCat(kDirectPathScheme, DefaultDirectPathAuthority(opts));
+}
+
+bool IsDirectPathAllowed(Options const& options) {
+  if (!IsGoogleDefaultUniverse(options)) return false;
+  std::optional<std::string> const emulator =
+      google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  if (emulator && !emulator->empty()) return false;
+  return !HasCustomEndpoint(options);
+}
+
 bool IsDirectPath(Options const& options) {
+  if (!IsDirectPathAllowed(options)) return false;
   std::optional<std::string> const direct_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   // Bigtable specific env var for Direct Path support used by all clients.
@@ -143,6 +208,50 @@ bool IsDirectPath(Options const& options) {
   }
   return options.get<experimental::DirectPathModeOption>() ==
          experimental::DirectPathMode::kEnabled;
+}
+
+Options MakeDirectPathOptions(Options opts) {
+  opts = ApplyUniverseDomainEnv(std::move(opts));
+  std::string authority = DefaultDirectPathAuthority(opts);
+  std::string endpoint = absl::StrCat(kDirectPathScheme, authority);
+  opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(endpoint);
+  opts.set<EndpointOption>(std::move(endpoint));
+  if (!opts.has<AuthorityOption>()) {
+    opts.set<AuthorityOption>(std::move(authority));
+  }
+  opts.set<bigtable::experimental::DirectPathModeOption>(
+      bigtable::experimental::DirectPathMode::kEnabled);
+  return opts;
+}
+
+Options MakeCloudPathOptions(Options opts) {
+  using ::google::cloud::bigtable_internal::DataEndpointOption;
+  opts = ApplyUniverseDomainEnv(std::move(opts));
+  std::string const default_endpoint =
+      google::cloud::internal::UniverseDomainEndpoint("bigtable.googleapis.com",
+                                                      opts);
+  std::optional<std::string> const emulator =
+      google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  std::string endpoint;
+  if (emulator && !emulator->empty()) {
+    endpoint = *emulator;
+  } else if (opts.has<DataEndpointOption>() &&
+             !IsDirectPathEndpoint(opts.get<DataEndpointOption>())) {
+    endpoint = opts.get<DataEndpointOption>();
+  } else if (opts.has<EndpointOption>() &&
+             !IsDirectPathEndpoint(opts.get<EndpointOption>())) {
+    endpoint = opts.get<EndpointOption>();
+  } else {
+    endpoint = default_endpoint;
+  }
+  opts.set<DataEndpointOption>(endpoint);
+  opts.set<EndpointOption>(std::move(endpoint));
+  if (!opts.has<AuthorityOption>()) {
+    opts.set<AuthorityOption>(default_endpoint);
+  }
+  opts.set<bigtable::experimental::DirectPathModeOption>(
+      bigtable::experimental::DirectPathMode::kDisabled);
+  return opts;
 }
 
 Options HandleUniverseDomain(Options opts) {
@@ -170,10 +279,7 @@ Options HandleUniverseDomain(Options opts) {
 
 Options DefaultOptions(Options opts) {
   using ::google::cloud::internal::GetEnv;
-  auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
-  if (ud && !ud->empty()) {
-    opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
-  }
+  opts = ApplyUniverseDomainEnv(std::move(opts));
 
   if (opts.has<EndpointOption>()) {
     auto const& ep = opts.get<EndpointOption>();
@@ -192,9 +298,12 @@ Options DefaultOptions(Options opts) {
 
   // Set the specific data endpoints if Direct Path is enabled.
   if (IsDirectPath(opts)) {
+    std::string authority = DefaultDirectPathAuthority(opts);
     opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-            DefaultDirectPathDataEndpoint())
-        .set<AuthorityOption>(DefaultDirectPathAuthority());
+        absl::StrCat(kDirectPathScheme, authority));
+    if (!opts.has<AuthorityOption>()) {
+      opts.set<AuthorityOption>(std::move(authority));
+    }
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");

@@ -28,14 +28,16 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
+#include "google/cloud/universe_domain_options.h"
 #include "google/bigtable/v2/feature_flags.pb.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <optional>
 #include <regex>
 
 namespace google {
@@ -46,6 +48,7 @@ namespace {
 
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::MakeStubFactoryMockAuth;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -386,20 +389,22 @@ TEST(BigtableStubFactory, FeaturesFlagsCloudDirectPath) {
         return mock;
       });
 
-  testing_util::SetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
   auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), std::move(cq),
       Options{}
-          .set<EndpointOption>("localhost:1")
+          .set<EndpointOption>("google-c2p:///bigtable.googleapis.com")
           .set<GrpcNumChannelsOption>(1)
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());
   grpc::ClientContext context;
   OperationContext op_ctx;
   (void)stub->MutateRow(context, Options{}, {}, op_ctx);
-  testing_util::UnsetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
 }
 
 TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
@@ -437,20 +442,116 @@ TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
         return mock;
       });
 
-  testing_util::SetEnv("CBT_ENABLE_DIRECTPATH", "true");
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                std::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
   auto auth = MakeStubFactoryMockAuth();
   CompletionQueue cq;
   auto stub = CreateDecoratedStubs(
       std::move(auth), std::move(cq),
       Options{}
-          .set<EndpointOption>("localhost:1")
+          .set<EndpointOption>("google-c2p:///bigtable.googleapis.com")
           .set<GrpcNumChannelsOption>(1)
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());
   grpc::ClientContext context;
   OperationContext op_ctx;
   (void)stub->MutateRow(context, Options{}, {}, op_ctx);
-  testing_util::UnsetEnv("CBT_ENABLE_DIRECTPATH");
+}
+
+TEST(BigtableStubFactory, FeaturesFlagsCustomEndpointDisablesDirectPath) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const&,
+                         auto const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_FALSE(proto.traffic_director_enabled());
+              EXPECT_FALSE(proto.direct_access_requested());
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
+  auto auth = MakeStubFactoryMockAuth();
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), std::move(cq),
+      Options{}
+          .set<EndpointOption>("custom.endpoint.invalid")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
+}
+
+TEST(BigtableStubFactory, FeaturesFlagsNonDefaultUniverseDisablesDirectPath) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const&,
+                         auto const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_FALSE(proto.traffic_director_enabled());
+              EXPECT_FALSE(proto.direct_access_requested());
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", std::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
+  auto auth = MakeStubFactoryMockAuth();
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), std::move(cq),
+      Options{}
+          .set<google::cloud::internal::UniverseDomainOption>("ud.invalid")
+          .set<EndpointOption>("google-c2p:///bigtable.googleapis.com")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  OperationContext op_ctx;
+  (void)stub->MutateRow(context, Options{}, {}, op_ctx);
 }
 
 TEST(BigtableStubFactory, FeaturesFlags) {
