@@ -37,19 +37,18 @@ bool ParseUint(std::string_view s, int base, std::uint32_t& out) {
   return res.ec == std::errc{} && res.ptr == end;
 }
 
-bool ParseIpv4(std::string_view ip, bool& is_directpath) {
+std::optional<bool> ParseIpv4(std::string_view ip) {
   std::array<std::uint32_t, 4> octets{};
   for (std::size_t i = 0; i != octets.size(); ++i) {
     std::size_t const dot = ip.find('.');
     bool const expect_dot = i + 1 != octets.size();
-    if (expect_dot != (dot != std::string_view::npos)) return false;
+    if (expect_dot != (dot != std::string_view::npos)) return std::nullopt;
     std::string_view const part = expect_dot ? ip.substr(0, dot) : ip;
-    if (!ParseUint(part, 10, octets[i]) || octets[i] > 255) return false;
+    if (!ParseUint(part, 10, octets[i]) || octets[i] > 255) return std::nullopt;
     if (expect_dot) ip.remove_prefix(dot + 1);
   }
   // DirectPath IPv4 VIP range: 34.126.0.0/18 (34.126.0.0 - 34.126.63.255).
-  is_directpath = octets[0] == 34 && octets[1] == 126 && octets[2] <= 63;
-  return true;
+  return octets[0] == 34 && octets[1] == 126 && octets[2] <= 63;
 }
 
 bool ParseHexGroup(std::string_view part, std::uint32_t& out) {
@@ -71,31 +70,43 @@ bool ParseIpv6Half(std::string_view part, std::array<std::uint32_t, 8>& groups,
   }
 }
 
-bool ParseIpv6(std::string_view ip, bool& is_directpath) {
-  if (!absl::StrContains(ip, ':')) return false;
+std::optional<bool> ParseIpv6(std::string_view ip) {
+  if (!absl::StrContains(ip, ':')) return std::nullopt;
   if (absl::StartsWithIgnoreCase(ip, "::ffff:") &&
       absl::StrContains(ip.substr(7), '.')) {
-    return ParseIpv4(ip.substr(7), is_directpath);
+    return ParseIpv4(ip.substr(7));
   }
-  std::array<std::uint32_t, 8> head{};
-  std::array<std::uint32_t, 8> tail{};
+  std::array<std::uint32_t, 8> groups{};
   std::size_t head_count = 0;
-  std::size_t tail_count = 0;
   std::size_t const dcolon = ip.find("::");
   if (dcolon == std::string_view::npos) {
-    if (!ParseIpv6Half(ip, head, head_count) || head_count != 8) return false;
+    if (!ParseIpv6Half(ip, groups, head_count) || head_count != 8) {
+      return std::nullopt;
+    }
   } else {
-    if (ip.find("::", dcolon + 2) != std::string_view::npos) return false;
-    if (!ParseIpv6Half(ip.substr(0, dcolon), head, head_count) ||
+    if (ip.find("::", dcolon + 2) != std::string_view::npos) {
+      return std::nullopt;
+    }
+    std::array<std::uint32_t, 8> tail{};
+    std::size_t tail_count = 0;
+    if (!ParseIpv6Half(ip.substr(0, dcolon), groups, head_count) ||
         !ParseIpv6Half(ip.substr(dcolon + 2), tail, tail_count) ||
         head_count + tail_count >= 8) {
-      return false;
+      return std::nullopt;
+    }
+    for (std::size_t i = 0; i != tail_count; ++i) {
+      groups[groups.size() - tail_count + i] = tail[i];
     }
   }
+  // Hex IPv4-mapped IPv6 (::ffff:aabb:ccdd) against 34.126.0.0/18.
+  if (groups[0] == 0 && groups[1] == 0 && groups[2] == 0 && groups[3] == 0 &&
+      groups[4] == 0 && groups[5] == 0xffff) {
+    return (groups[6] >> 8) == 34 && (groups[6] & 0xff) == 126 &&
+           (groups[7] >> 8) <= 63;
+  }
   // DirectPath IPv6 VIP range: 2001:4860:8040::/42.
-  is_directpath = head_count >= 3 && head[0] == 0x2001 && head[1] == 0x4860 &&
-                  (head[2] & 0xFFC0) == 0x8040;
-  return true;
+  return groups[0] == 0x2001 && groups[1] == 0x4860 &&
+         (groups[2] & 0xFFC0) == 0x8040;
 }
 
 std::optional<std::string_view> UnwrapBrackets(std::string_view s) {
@@ -147,11 +158,15 @@ std::string NormalizeServerAddress(std::string_view endpoint) {
     std::string_view const scheme = endpoint.substr(0, scheme_pos);
     endpoint.remove_prefix(scheme_pos + 3);
     if (absl::EqualsIgnoreCase(scheme, "dns") ||
+        absl::EqualsIgnoreCase(scheme, "xds") ||
         absl::EqualsIgnoreCase(scheme, "google-c2p") ||
         absl::EqualsIgnoreCase(scheme, "google-c2p-experimental")) {
       std::size_t const slash = endpoint.find('/');
       if (slash != std::string_view::npos) endpoint.remove_prefix(slash + 1);
     }
+  } else if (absl::StartsWithIgnoreCase(endpoint, "dns:") ||
+             absl::StartsWithIgnoreCase(endpoint, "xds:")) {
+    endpoint.remove_prefix(4);
   }
   std::size_t const cut = endpoint.find_first_of("/?#");
   if (cut != std::string_view::npos) endpoint = endpoint.substr(0, cut);
@@ -173,9 +188,13 @@ std::string_view NetworkPathOfPeer(std::string_view peer) {
   if (peer.empty()) return "unknown";
   std::string_view const ip = StripPeerWrapper(peer);
   if (ip.empty()) return "unknown";
-  bool is_directpath = false;
-  if (ParseIpv4(ip, is_directpath) || ParseIpv6(ip, is_directpath)) {
-    return is_directpath ? "directpath" : "cloudpath";
+  if (std::optional<bool> const is_directpath = ParseIpv4(ip);
+      is_directpath.has_value()) {
+    return *is_directpath ? "directpath" : "cloudpath";
+  }
+  if (std::optional<bool> const is_directpath = ParseIpv6(ip);
+      is_directpath.has_value()) {
+    return *is_directpath ? "directpath" : "cloudpath";
   }
   return "unknown";
 }

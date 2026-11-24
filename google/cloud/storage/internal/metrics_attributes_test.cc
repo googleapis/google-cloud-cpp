@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/metrics_attributes.h"
 #include <gtest/gtest.h>
+#include <ostream>
 #include <string_view>
 
 namespace google {
@@ -22,78 +23,110 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-TEST(MetricsAttributes, NormalizeServerAddress) {
-  struct Case {
-    std::string_view in;
-    std::string_view out;
-  } const cases[] = {
-      {"", ""},
-      {"storage.googleapis.com", "storage.googleapis.com"},
-      {"storage.googleapis.com:443", "storage.googleapis.com"},
-      {"https://storage.googleapis.com:443/v1", "storage.googleapis.com"},
-      {"https://user:pass@storage.googleapis.com:443/v1",
-       "storage.googleapis.com"},
-      {"http://localhost:8080/storage/v1", "localhost"},
-      {"dns:///storage.googleapis.com:443", "storage.googleapis.com"},
-      {"DNS:///storage.googleapis.com:443", "storage.googleapis.com"},
-      {"dns://8.8.8.8/storage.googleapis.com:443", "storage.googleapis.com"},
-      {"google-c2p:///storage.googleapis.com", "storage.googleapis.com"},
-      {"google-c2p-experimental:///storage.googleapis.com?force-xds",
-       "storage.googleapis.com"},
-      {"https://storage.us-central1.rep.googleapis.com",
-       "storage.us-central1.rep.googleapis.com"},
-      {"https://storage.googleapis.com/path#frag", "storage.googleapis.com"},
-      {"https://[::1]:8080/path", "::1"},
-      {"[::1]:8080", "::1"},
-      {"2001:4860:8040::1", "2001:4860:8040::1"},
-  };
-  for (auto const& c : cases) {
-    EXPECT_EQ(NormalizeServerAddress(c.in), c.out) << "in=" << c.in;
-  }
+struct StringCase {
+  std::string_view input;
+  std::string_view expected;
+};
+
+std::ostream& operator<<(std::ostream& os, StringCase const& c) {
+  return os << "{input=\"" << c.input << "\", expected=\"" << c.expected
+            << "\"}";
 }
 
-TEST(MetricsAttributes, NetworkPathOfPeer) {
-  struct Case {
-    std::string_view peer;
-    std::string_view expected;
-  } const cases[] = {
-      {"ipv4:34.126.0.1:443", "directpath"},
-      {"ipv4:34.126.0.1", "directpath"},
-      {"34.126.0.1", "directpath"},
-      {"ipv4:34.126.63.255:443", "directpath"},
-      {"34.126.10.20:443", "directpath"},
-      {"ipv6:[2001:4860:8040::1]:443", "directpath"},
-      {"ipv6:2001:4860:8040::1", "directpath"},
-      {"[2001:4860:8040::1]:443", "directpath"},
-      {"2001:4860:8040:0:0:0:0:1", "directpath"},
-      {"2001:4860:8040::1%eth0", "directpath"},
-      {"ipv6:%5B2001:4860:8040::1%5D:443", "directpath"},
-      {"ipv6:%5b2001:4860:8040::1%5d:443", "directpath"},
-      {"ipv6:%5B2001:4860:807f::1%25eth0%5D:443", "directpath"},
-      {"ipv6:[::ffff:34.126.0.1]:443", "directpath"},
-      {"ipv6:[::FfFf:34.126.0.1]:443", "directpath"},
-      {"ipv4:34.125.255.255:443", "cloudpath"},
-      {"ipv4:34.126.64.0:443", "cloudpath"},
-      {"ipv4:142.250.190.78:443", "cloudpath"},
-      {"ipv6:%5B2001:4860:803f::1%5D:443", "cloudpath"},
-      {"ipv6:%5B2001:4860:8080::1%5D:443", "cloudpath"},
-      {"ipv6:[::ffff:142.250.190.78]:443", "cloudpath"},
-      {"::ffff:1", "cloudpath"},
-      {"::1", "cloudpath"},
-      {"", "unknown"},
-      {"unix:/tmp/sock", "unknown"},
-      {"not-an-ip", "unknown"},
-      {"ipv4:999.0.0.1:443", "unknown"},
-      {"ipv6:[2001:4860:80400::1]:443", "unknown"},
-      {"ipv6:[2001:4860:8040:]:443", "unknown"},
-      {"ipv6:[2001:4860:8040::1", "unknown"},
-      {"2001::4860::1", "unknown"},
-      {":::", "unknown"},
-  };
-  for (auto const& c : cases) {
-    EXPECT_EQ(NetworkPathOfPeer(c.peer), c.expected) << "peer=" << c.peer;
-  }
+class NormalizeServerAddressTest : public ::testing::TestWithParam<StringCase> {
+};
+
+TEST_P(NormalizeServerAddressTest, NormalizesEndpoint) {
+  StringCase const& c = GetParam();
+  EXPECT_EQ(NormalizeServerAddress(c.input), c.expected);
 }
+
+INSTANTIATE_TEST_SUITE_P(
+    MetricsAttributes, NormalizeServerAddressTest,
+    ::testing::Values(
+        StringCase{"", ""},
+        StringCase{"storage.googleapis.com", "storage.googleapis.com"},
+        StringCase{"storage.googleapis.com:443", "storage.googleapis.com"},
+        StringCase{"https://storage.googleapis.com:443/v1",
+                   "storage.googleapis.com"},
+        StringCase{"https://user:pass@storage.googleapis.com:443/v1",
+                   "storage.googleapis.com"},
+        StringCase{"http://localhost:8080/storage/v1", "localhost"},
+        StringCase{"dns:///storage.googleapis.com:443",
+                   "storage.googleapis.com"},
+        StringCase{"DNS:///storage.googleapis.com:443",
+                   "storage.googleapis.com"},
+        StringCase{"dns://8.8.8.8/storage.googleapis.com:443",
+                   "storage.googleapis.com"},
+        StringCase{"dns:storage.googleapis.com", "storage.googleapis.com"},
+        StringCase{"dns:storage.googleapis.com:443", "storage.googleapis.com"},
+        StringCase{"xds:///storage.googleapis.com", "storage.googleapis.com"},
+        StringCase{"xds://authority/storage.googleapis.com:443",
+                   "storage.googleapis.com"},
+        StringCase{"xds:storage.googleapis.com", "storage.googleapis.com"},
+        StringCase{"google-c2p:///storage.googleapis.com",
+                   "storage.googleapis.com"},
+        StringCase{
+            "google-c2p-experimental:///storage.googleapis.com?force-xds",
+            "storage.googleapis.com"},
+        StringCase{"https://storage.us-central1.rep.googleapis.com",
+                   "storage.us-central1.rep.googleapis.com"},
+        StringCase{"https://storage.googleapis.com#frag",
+                   "storage.googleapis.com"},
+        StringCase{"https://[::1]:8080/path", "::1"},
+        StringCase{"[::1]:8080", "::1"},
+        StringCase{"2001:4860:8040::1", "2001:4860:8040::1"}));
+
+class NetworkPathOfPeerTest : public ::testing::TestWithParam<StringCase> {};
+
+TEST_P(NetworkPathOfPeerTest, ClassifiesPeer) {
+  StringCase const& c = GetParam();
+  EXPECT_EQ(NetworkPathOfPeer(c.input), c.expected);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    MetricsAttributes, NetworkPathOfPeerTest,
+    ::testing::Values(
+        StringCase{"ipv4:34.126.0.1:443", "directpath"},
+        StringCase{"ipv4:34.126.0.1", "directpath"},
+        StringCase{"34.126.0.1", "directpath"},
+        StringCase{"ipv4:34.126.63.255:443", "directpath"},
+        StringCase{"34.126.10.20:443", "directpath"},
+        StringCase{"ipv6:[2001:4860:8040::1]:443", "directpath"},
+        StringCase{"ipv6:2001:4860:8040::1", "directpath"},
+        StringCase{"[2001:4860:8040::1]:443", "directpath"},
+        StringCase{"2001:4860:8040:0:0:0:0:1", "directpath"},
+        StringCase{"2001:4860:8040::1%eth0", "directpath"},
+        StringCase{"ipv6:%5B2001:4860:8040::1%5D:443", "directpath"},
+        StringCase{"ipv6:%5b2001:4860:8040::1%5d:443", "directpath"},
+        StringCase{"ipv6:%5B2001:4860:807f::1%25eth0%5D:443", "directpath"},
+        StringCase{"ipv6:[::ffff:34.126.0.1]:443", "directpath"},
+        StringCase{"ipv6:[::FfFf:34.126.0.1]:443", "directpath"},
+        StringCase{"ipv6:[::ffff:227e:1]:443", "directpath"},
+        StringCase{"0:0:0:0:0:ffff:227e:1", "directpath"},
+        StringCase{"ipv4:35.126.0.1:443", "cloudpath"},
+        StringCase{"ipv4:34.125.255.255:443", "cloudpath"},
+        StringCase{"ipv4:34.126.64.0:443", "cloudpath"},
+        StringCase{"ipv4:142.250.190.78:443", "cloudpath"},
+        StringCase{"ipv6:[2002:4860:8040::1]:443", "cloudpath"},
+        StringCase{"ipv6:[2001:4861:8040::1]:443", "cloudpath"},
+        StringCase{"ipv6:%5B2001:4860:803f::1%5D:443", "cloudpath"},
+        StringCase{"ipv6:%5B2001:4860:8080::1%5D:443", "cloudpath"},
+        StringCase{"ipv6:[::ffff:142.250.190.78]:443", "cloudpath"},
+        StringCase{"ipv6:[::ffff:227e:4000]:443", "cloudpath"},
+        StringCase{"::ffff:1", "cloudpath"}, StringCase{"::1", "cloudpath"},
+        StringCase{"", "unknown"}, StringCase{"unix:/tmp/sock", "unknown"},
+        StringCase{"not-an-ip", "unknown"},
+        StringCase{"ipv4:999.0.0.1:443", "unknown"},
+        StringCase{"34.126.0.1a", "unknown"},
+        StringCase{"ipv6:[2001:4860:80400::1]:443", "unknown"},
+        StringCase{"ipv6:[2001:4860:8040:]:443", "unknown"},
+        StringCase{"ipv6:[2001:4860:8040::1", "unknown"},
+        StringCase{"ipv6:%5B2001:4860:8040::1", "unknown"},
+        StringCase{"1:2:3:4:5:6:7", "unknown"},
+        StringCase{"1:2:3:4:5:6:7:8:9", "unknown"},
+        StringCase{"1:2:3:4::5:6:7:8", "unknown"},
+        StringCase{"2001::4860::1", "unknown"}, StringCase{":::", "unknown"}));
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
