@@ -48,16 +48,8 @@ struct HttpAttemptLabels {
   std::string_view network_path;
 };
 
-/// Labels for recording a client-initiated retry attempt.
-struct RetryLabels {
-  std::string_view rpc_system;
-  std::string_view operation;
-  std::string_view error_type;
-  std::string_view network_path;
-};
-
 /// Thread-safe recorder for attempt-scoped OpenTelemetry Storage counters
-/// (`attempts`, `errors`, and `retries`). No-op when `provider` is null.
+/// (`attempts` and `errors`). No-op when `provider` is null.
 class AttemptMetrics {
  public:
   AttemptMetrics(opentelemetry::nostd::shared_ptr<
@@ -69,9 +61,6 @@ class AttemptMetrics {
 
   void RecordHttpAttempt(HttpAttemptLabels const& labels,
                          opentelemetry::context::Context const& ctx) const;
-
-  void RecordRetry(RetryLabels const& labels,
-                   opentelemetry::context::Context const& ctx) const;
 
  private:
   void RecordAttemptImpl(std::string_view rpc_system,
@@ -90,9 +79,6 @@ class AttemptMetrics {
   opentelemetry::nostd::unique_ptr<
       opentelemetry::metrics::Counter<std::uint64_t>>
       errors_;
-  opentelemetry::nostd::unique_ptr<
-      opentelemetry::metrics::Counter<std::uint64_t>>
-      retries_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

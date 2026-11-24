@@ -60,9 +60,6 @@ AttemptMetrics::AttemptMetrics(
       "gcp.storage.client.errors",
       "Number of failed backend attempts encountered by the client.",
       "{error}");
-  retries_ = meter_->CreateUInt64Counter(
-      "gcp.storage.client.retries",
-      "Number of retry attempts initiated by the client.", "{retry}");
 }
 
 void AttemptMetrics::RecordGrpcAttempt(
@@ -112,25 +109,6 @@ void AttemptMetrics::RecordAttemptImpl(
                  opentelemetry::common::MakeKeyValueIterableView(err_attrs),
                  ctx);
   }
-}
-
-void AttemptMetrics::RecordRetry(
-    RetryLabels const& labels,
-    opentelemetry::context::Context const& ctx) const {
-  if (!retries_) return;
-  std::array<Attr, 8> const attrs{{
-      {"gcp.client.version", ToNostd(client_version_)},
-      {"gcp.client.artifact",
-       opentelemetry::nostd::string_view("google-cloud-cpp")},
-      {"gcp.client.service", opentelemetry::nostd::string_view("storage")},
-      {"server.address", ToNostd(server_address_)},
-      {"rpc.system.name", ToNostd(labels.rpc_system)},
-      {"gcp.storage.operation", ToNostd(labels.operation)},
-      {"error.type", ToNostd(labels.error_type)},
-      {"network.path", ToNostd(labels.network_path)},
-  }};
-  retries_->Add(std::uint64_t{1},
-                opentelemetry::common::MakeKeyValueIterableView(attrs), ctx);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
