@@ -36,6 +36,9 @@ bool IsChecksumMismatch(Status const& status) {
   }
   return absl::StrContainsIgnoreCase(msg, "mismatched crc32c") ||
          absl::StrContainsIgnoreCase(msg, "mismatched md5") ||
+         absl::StrContainsIgnoreCase(msg,
+                                     "crc32c mismatch: server computed:") ||
+         absl::StrContainsIgnoreCase(msg, "md5 mismatch: server computed:") ||
          ((absl::StrContainsIgnoreCase(msg, "crc32c") ||
            absl::StrContainsIgnoreCase(msg, "md5")) &&
           (absl::StrContainsIgnoreCase(msg, "doesn't match calculated") ||
