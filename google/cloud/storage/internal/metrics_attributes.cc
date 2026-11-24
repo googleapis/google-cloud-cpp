@@ -31,7 +31,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 bool ParseUint(std::string_view s, int base, std::uint32_t& out) {
-  if (s.empty()) return false;
   char const* const end = s.data() + s.size();
   std::from_chars_result const res = std::from_chars(s.data(), end, out, base);
   return res.ec == std::errc{} && res.ptr == end;
@@ -164,9 +163,14 @@ std::string NormalizeServerAddress(std::string_view endpoint) {
       std::size_t const slash = endpoint.find('/');
       if (slash != std::string_view::npos) endpoint.remove_prefix(slash + 1);
     }
-  } else if (absl::StartsWithIgnoreCase(endpoint, "dns:") ||
-             absl::StartsWithIgnoreCase(endpoint, "xds:")) {
-    endpoint.remove_prefix(4);
+  } else {
+    for (std::string_view const prefix :
+         {"dns:", "xds:", "google-c2p:", "google-c2p-experimental:"}) {
+      if (absl::StartsWithIgnoreCase(endpoint, prefix)) {
+        endpoint.remove_prefix(prefix.size());
+        break;
+      }
+    }
   }
   std::size_t const cut = endpoint.find_first_of("/?#");
   if (cut != std::string_view::npos) endpoint = endpoint.substr(0, cut);
