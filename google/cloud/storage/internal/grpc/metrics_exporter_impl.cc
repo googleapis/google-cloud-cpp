@@ -32,9 +32,11 @@
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
+#include <functional>
 #include <map>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -65,17 +67,24 @@ class ExporterRegistry {
     return *exporters;
   }
 
-  // Registers a meter provider for @p authority if none exists yet.
+  // Registers a meter provider for @p authority if none exists yet, and runs
+  // @p on_grpc_plugin once when @p enable_grpc_plugin is true.
   //
-  // Holding `mu_` across @p factory ensures that a concurrent caller for the
-  // same authority waits until the provider is stored and registered with
-  // gRPC, rather than observing an uninitialized entry through `Find()`.
-  template <typename F>
-  void Register(std::string const& authority, F&& factory) {
+  // Holding `mu_` across both callbacks ensures that a concurrent caller for
+  // the same authority waits until the provider is stored and (when requested)
+  // registered with gRPC, rather than observing an uninitialized entry.
+  template <typename Factory, typename OnGrpcPlugin>
+  void Register(std::string const& authority, bool enable_grpc_plugin,
+                Factory&& factory, OnGrpcPlugin&& on_grpc_plugin) {
     std::unique_lock<std::mutex> lk(mu_);
-    auto const l = known_authority_.find(authority);
-    if (l != known_authority_.end()) return;
-    known_authority_.emplace(authority, std::forward<F>(factory)());
+    auto& entry = known_authority_[authority];
+    if (!entry.provider) {
+      entry.provider = std::forward<Factory>(factory)();
+    }
+    if (enable_grpc_plugin && !entry.grpc_plugin_registered) {
+      std::forward<OnGrpcPlugin>(on_grpc_plugin)(entry.provider);
+      entry.grpc_plugin_registered = true;
+    }
   }
 
   // Returns the provider stored for @p authority, or `nullptr` if
@@ -85,7 +94,7 @@ class ExporterRegistry {
     std::unique_lock<std::mutex> lk(mu_);
     auto const l = known_authority_.find(authority);
     if (l == known_authority_.end()) return nullptr;
-    return l->second;
+    return l->second.provider;
   }
 
   void Clear() {
@@ -93,19 +102,68 @@ class ExporterRegistry {
     known_authority_.clear();
   }
 
-  std::map<std::string, std::shared_ptr<opentelemetry::metrics::MeterProvider>>
-      known_authority_;
+  struct Entry {
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> provider;
+    bool grpc_plugin_registered = false;
+  };
+  std::map<std::string, Entry> known_authority_;
   std::mutex mu_;
 };
 
+void RegisterGrpcPlugin(
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider,
+    std::string const& authority) {
+  auto const metrics = std::vector<std::string_view>{
+      "grpc.lb.wrr.rr_fallback",
+      "grpc.lb.wrr.endpoint_weight_not_yet_usable",
+      "grpc.lb.wrr.endpoint_weight_stale",
+      "grpc.lb.wrr.endpoint_weights",
+      "grpc.xds_client.connected",
+      "grpc.xds_client.server_failure",
+      "grpc.xds_client.resource_updates_valid",
+      "grpc.xds_client.resource_updates_invalid",
+      "grpc.xds_client.resources",
+      "grpc.lb.rls.cache_size",
+      "grpc.lb.rls.cache_entries",
+      "grpc.lb.rls.default_target_picks",
+      "grpc.lb.rls.target_picks",
+      "grpc.lb.rls.failed_picks",
+  };
+  auto scope_filter =
+      [authority](grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
+        return scope.default_authority() == authority;
+      };
+  auto status =
+      grpc::OpenTelemetryPluginBuilder()
+          .SetMeterProvider(provider)
+          .EnableMetrics(metrics)
+          .AddOptionalLabel("grpc.lb.locality")
+          .SetGenericMethodAttributeFilter([](std::string_view target) {
+            return absl::StartsWith(target, "google.storage.v2");
+          })
+          .SetChannelScopeFilter(std::move(scope_filter))
+          .BuildAndRegisterGlobal();
+  if (!status.ok()) {
+    GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
+  }
+}
+
 }  // namespace
+
+bool AnyMetricsEnabled(Options const& options) {
+  return options.get<storage_experimental::EnableGrpcMetricsOption>() ||
+         options.get<storage_experimental::EnableOTelMetricsOption>() ||
+         options.get<storage_experimental::EnableOTelDebugMetricsOption>();
+}
 
 std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options) {
-  if (!options.get<storage_experimental::EnableGrpcMetricsOption>()) {
+  if (!AnyMetricsEnabled(options)) {
     return std::nullopt;
   }
+  bool const enable_grpc =
+      options.get<storage_experimental::EnableGrpcMetricsOption>();
   auto project = MonitoringProject(resource, options);
   if (!project) return std::nullopt;
 
@@ -116,64 +174,37 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
   }
 
   auto exporter_connection_options = MetricsExporterConnectionOptions(options);
-  return ExporterConfig{std::move(*project), std::move(exporter_options),
+  return ExporterConfig{std::move(*project),
+                        std::move(exporter_options),
                         std::move(exporter_connection_options),
                         MakeReaderOptions(options),
-                        options.get<AuthorityOption>()};
+                        options.get<AuthorityOption>(),
+                        enable_grpc};
 }
 
 void EnableGrpcMetricsImpl(ExporterConfig config) {
-  // `config.authority` is moved into `scope_filter` below, so keep a copy.
-  std::string const authority = config.authority;
-  ExporterRegistry::Singleton().Register(authority, [&] {
-    auto exporter = otel::MakeMonitoringExporter(
-        std::move(config.project),
-        monitoring_v3::MakeMetricServiceConnection(
-            std::move(config.exporter_connection_options)),
-        config.exporter_options);
+  EnableGrpcMetricsImpl(std::move(config), RegisterGrpcPlugin);
+}
 
-    auto provider = MakeGrpcMeterProvider(std::move(exporter),
-                                          std::move(config.reader_options));
-
-    auto const metrics = std::vector<std::string_view>{
-        "grpc.lb.wrr.rr_fallback",
-        "grpc.lb.wrr.endpoint_weight_not_yet_usable",
-        "grpc.lb.wrr.endpoint_weight_stale",
-        "grpc.lb.wrr.endpoint_weights",
-        "grpc.xds_client.connected",
-        "grpc.xds_client.server_failure",
-        "grpc.xds_client.resource_updates_valid",
-        "grpc.xds_client.resource_updates_invalid",
-        "grpc.xds_client.resources",
-        "grpc.lb.rls.cache_size",
-        "grpc.lb.rls.cache_entries",
-        "grpc.lb.rls.default_target_picks",
-        "grpc.lb.rls.target_picks",
-        "grpc.lb.rls.failed_picks",
-    };
-    auto scope_filter =
-        [authority = std::move(config.authority)](
-            grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
-          return scope.default_authority() == authority;
-        };
-    auto status =
-        grpc::OpenTelemetryPluginBuilder()
-            .SetMeterProvider(provider)
-            .EnableMetrics(metrics)
-            .AddOptionalLabel("grpc.lb.locality")
-            .SetGenericMethodAttributeFilter([](std::string_view target) {
-              return absl::StartsWith(target, "google.storage.v2");
-            })
-            .SetChannelScopeFilter(std::move(scope_filter))
-            .BuildAndRegisterGlobal();
-    if (!status.ok()) {
-      GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
-    }
-    // Retain the provider. Instruments created by this library, rather than by
-    // gRPC, look it up through `FindMeterProvider()` so both share one
-    // exporter.
-    return provider;
-  });
+void EnableGrpcMetricsImpl(
+    ExporterConfig config,
+    std::function<
+        void(std::shared_ptr<opentelemetry::metrics::MeterProvider> const&,
+             std::string const&)>
+        register_grpc_plugin) {
+  ExporterRegistry::Singleton().Register(
+      config.authority, config.enable_grpc_plugin,
+      [&] {
+        auto exporter = otel::MakeMonitoringExporter(
+            std::move(config.project),
+            monitoring_v3::MakeMetricServiceConnection(
+                std::move(config.exporter_connection_options)),
+            std::move(config.exporter_options));
+        return MakeGrpcMeterProvider(std::move(exporter),
+                                     std::move(config.reader_options));
+      },
+      [&](std::shared_ptr<opentelemetry::metrics::MeterProvider> const&
+              provider) { register_grpc_plugin(provider, config.authority); });
 }
 
 std::shared_ptr<opentelemetry::metrics::MeterProvider> FindMeterProvider(

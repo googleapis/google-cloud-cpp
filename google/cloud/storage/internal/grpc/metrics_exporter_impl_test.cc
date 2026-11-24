@@ -26,6 +26,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/meter_provider.h>
+#include <atomic>
 #include <chrono>
 #include <future>
 #include <memory>
@@ -56,9 +57,13 @@ auto FullResource() {
 }
 
 auto TestOptions(Options opts = {}) {
-  // In CI builds this environment variable may be set and affect the behavior
+  // In CI builds these environment variables may be set and affect the behavior
   // in ways we do not need to (re)test here.
   auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
+  auto otel_env =
+      ScopedEnvironment("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
+  auto debug_env = ScopedEnvironment(
+      "GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS", std::nullopt);
   opts.set<storage_experimental::EnableGrpcMetricsOption>(true)
       .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
           "unused",
@@ -93,11 +98,30 @@ class ScopedProviderShutdown {
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
 };
 
-TEST(GrpcMetricsExporter, DisabledBecauseOption) {
-  auto config = MakeMeterProviderConfig(
-      FullResource(),
-      TestOptions().set<storage_experimental::EnableGrpcMetricsOption>(false));
-  EXPECT_FALSE(config.has_value());
+TEST(GrpcMetricsExporter, OptionCombinationsGateConfigAndGrpcPlugin) {
+  for (bool const enable_grpc : {false, true}) {
+    for (bool const enable_otel : {false, true}) {
+      for (bool const enable_debug : {false, true}) {
+        SCOPED_TRACE(std::string("grpc=") + (enable_grpc ? "true" : "false") +
+                     ", otel=" + (enable_otel ? "true" : "false") +
+                     ", debug=" + (enable_debug ? "true" : "false"));
+        Options const opts =
+            TestOptions()
+                .set<storage_experimental::EnableGrpcMetricsOption>(enable_grpc)
+                .set<storage_experimental::EnableOTelMetricsOption>(enable_otel)
+                .set<storage_experimental::EnableOTelDebugMetricsOption>(
+                    enable_debug);
+        bool const expect_config = enable_grpc || enable_otel || enable_debug;
+        EXPECT_EQ(AnyMetricsEnabled(opts), expect_config);
+        std::optional<ExporterConfig> const config =
+            MakeMeterProviderConfig(FullResource(), opts);
+        ASSERT_EQ(config.has_value(), expect_config);
+        if (expect_config) {
+          EXPECT_EQ(config->enable_grpc_plugin, enable_grpc);
+        }
+      }
+    }
+  }
 }
 
 TEST(GrpcMetricsExporter, DisabledBecauseNoProject) {
@@ -278,15 +302,27 @@ TEST(GrpcMetricsExporter, FindMeterProviderAfterEnable) {
   EXPECT_THAT(FindMeterProvider("test-only-unknown.example.com"), IsNull());
 }
 
-/// @test Verify concurrent callers for the same authority all observe the
-/// initialized provider.
+/// @test Verify concurrent OTel-only and gRPC-enabled callers for the same
+/// authority share one provider and every gRPC-enabled caller observes the
+/// gRPC plugin registered before `EnableGrpcMetricsImpl()` returns.
 TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   std::string const authority = "test-only-concurrent-provider.example.com";
-  std::optional<ExporterConfig> const config = MakeMeterProviderConfig(
+  std::optional<ExporterConfig> const grpc_config = MakeMeterProviderConfig(
       FullResource(), TestOptions().set<AuthorityOption>(authority));
-  ASSERT_TRUE(config.has_value());
+  std::optional<ExporterConfig> const otel_config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<AuthorityOption>(authority)
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(true));
+  ASSERT_TRUE(grpc_config.has_value());
+  ASSERT_TRUE(otel_config.has_value());
 
   int constexpr kThreadCount = 8;
+  std::atomic<int> plugin_registrations{0};
+  auto register_plugin =
+      [&](std::shared_ptr<opentelemetry::metrics::MeterProvider> const&,
+          std::string const&) { ++plugin_registrations; };
   std::promise<void> start_promise;
   std::shared_future<void> const start = start_promise.get_future().share();
   std::vector<std::shared_ptr<opentelemetry::metrics::MeterProvider>> providers(
@@ -294,9 +330,14 @@ TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   std::vector<std::thread> threads;
   threads.reserve(kThreadCount);
   for (int i = 0; i != kThreadCount; ++i) {
-    threads.emplace_back([&, i] {
+    bool const grpc_enabled = (i % 2 == 0);
+    threads.emplace_back([&, i, grpc_enabled] {
       start.wait();
-      EnableGrpcMetricsImpl(*config);
+      EnableGrpcMetricsImpl(grpc_enabled ? *grpc_config : *otel_config,
+                            register_plugin);
+      if (grpc_enabled) {
+        EXPECT_EQ(plugin_registrations.load(), 1);
+      }
       providers[i] = FindMeterProvider(authority);
     });
   }
@@ -304,10 +345,65 @@ TEST(GrpcMetricsExporter, ConcurrentEnableFindsSameProvider) {
   for (auto& t : threads) t.join();
   ScopedProviderShutdown const provider_shutdown(FindMeterProvider(authority));
 
+  EXPECT_EQ(plugin_registrations.load(), 1);
   EXPECT_THAT(providers[0], NotNull());
   for (int i = 1; i != kThreadCount; ++i) {
     EXPECT_THAT(providers[i], Eq(providers[0]));
   }
+}
+
+/// @test Verify OTel-only enable creates a provider without registering the
+/// gRPC plugin, and a subsequent gRPC-metrics enable reuses the same provider
+/// and registers the plugin once.
+TEST(GrpcMetricsExporter, OTelOnlyProviderReusedByGrpcEnable) {
+  std::string const authority = "test-only-otel-then-grpc.example.com";
+  std::optional<ExporterConfig> const otel_config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<AuthorityOption>(authority)
+          .set<storage_experimental::EnableGrpcMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(true));
+  ASSERT_TRUE(otel_config.has_value());
+  ASSERT_FALSE(otel_config->enable_grpc_plugin);
+
+  int plugin_registrations = 0;
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> registered_provider;
+  auto register_plugin =
+      [&](std::shared_ptr<opentelemetry::metrics::MeterProvider> const&
+              provider,
+          std::string const& registered_authority) {
+        EXPECT_EQ(registered_authority, authority);
+        registered_provider = provider;
+        ++plugin_registrations;
+      };
+
+  EnableGrpcMetricsImpl(*otel_config, register_plugin);
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> const provider =
+      FindMeterProvider(authority);
+  ScopedProviderShutdown const provider_shutdown(provider);
+  EXPECT_THAT(provider, NotNull());
+  EXPECT_EQ(plugin_registrations, 0);
+
+  // Repeated OTel-only calls reuse the same provider and skip plugin setup.
+  EnableGrpcMetricsImpl(*otel_config, register_plugin);
+  EXPECT_THAT(FindMeterProvider(authority), Eq(provider));
+  EXPECT_EQ(plugin_registrations, 0);
+
+  std::optional<ExporterConfig> const grpc_config = MakeMeterProviderConfig(
+      FullResource(), TestOptions().set<AuthorityOption>(authority));
+  ASSERT_TRUE(grpc_config.has_value());
+  ASSERT_TRUE(grpc_config->enable_grpc_plugin);
+  EnableGrpcMetricsImpl(*grpc_config, register_plugin);
+  EXPECT_THAT(FindMeterProvider(authority), Eq(provider));
+  EXPECT_THAT(registered_provider, Eq(provider));
+  EXPECT_EQ(plugin_registrations, 1);
+
+  // Repeated gRPC-enabled and subsequent OTel-only calls reuse the provider
+  // without registering the gRPC plugin again.
+  EnableGrpcMetricsImpl(*grpc_config, register_plugin);
+  EnableGrpcMetricsImpl(*otel_config, register_plugin);
+  EXPECT_THAT(FindMeterProvider(authority), Eq(provider));
+  EXPECT_EQ(plugin_registrations, 1);
 }
 
 }  // namespace

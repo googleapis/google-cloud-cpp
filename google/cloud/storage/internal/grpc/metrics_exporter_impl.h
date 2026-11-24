@@ -23,6 +23,7 @@
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -39,7 +40,11 @@ struct ExporterConfig {
   opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
       reader_options;
   std::string authority;
+  bool enable_grpc_plugin = true;
 };
+
+/// Returns true if any gRPC or OpenTelemetry storage metrics option is enabled.
+bool AnyMetricsEnabled(Options const& options);
 
 std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
@@ -47,17 +52,27 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
 
 void EnableGrpcMetricsImpl(ExporterConfig config);
 
+/// Test-only overload allowing callers to intercept gRPC plugin registration.
+void EnableGrpcMetricsImpl(
+    ExporterConfig config,
+    std::function<
+        void(std::shared_ptr<opentelemetry::metrics::MeterProvider> const&,
+             std::string const&)>
+        register_grpc_plugin);
+
 /**
  * Returns the meter provider created for @p authority, or `nullptr`.
  *
  * `EnableGrpcMetricsImpl()` creates at most one provider per authority and
- * hands it to gRPC. Instruments created by this library reuse it, so they
- * inherit the customer's opt-out, export period, and monitoring project
- * instead of needing a second exporter.
+ * registers the gRPC OpenTelemetry plugin when `enable_grpc_plugin` is true.
+ * Because `EnableGrpcMetricsOption`, `EnableOTelMetricsOption`, and
+ * `EnableOTelDebugMetricsOption` independently populate this process-wide
+ * registry, callers must check their own `Enable*MetricsOption` before looking
+ * up and recording to the shared provider.
  *
- * Returns `nullptr` when metrics are disabled, when no monitoring project
- * could be determined, or when `EnableGrpcMetricsImpl()` has not run for
- * @p authority.
+ * Returns `nullptr` when all metrics options are disabled, when no monitoring
+ * project could be determined, or when `EnableGrpcMetricsImpl()` has not run
+ * for @p authority.
  */
 std::shared_ptr<opentelemetry::metrics::MeterProvider> FindMeterProvider(
     std::string const& authority);

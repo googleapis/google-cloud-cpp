@@ -27,8 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnableGrpcMetrics(Options const& storage_options) {
   auto options = DefaultOptionsGrpc(storage_options);
-  // Avoid running the resource detector if the metrics are disabled.
-  if (!options.get<storage_experimental::EnableGrpcMetricsOption>()) return;
+  // Avoid running the resource detector if all metrics options are disabled.
+  if (!AnyMetricsEnabled(options)) return;
   auto detector = otel::MakeResourceDetector();
   auto resources = detector->Detect();
   auto config = MakeMeterProviderConfig(resources, options);
