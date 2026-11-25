@@ -9,6 +9,26 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.15.0 - TBD
 
+## v3.14.2 - 2026-11
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): ensure directpath configuration honors UniverseDomain and custom endpoints ([#16705](https://github.com/googleapis/google-cloud-cpp/pull/16705))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-11-03T09:21:43-08:00](https://github.com/googleapis/googleapis/tree/57aa4dbce5d23b2115b2732b10dcb7ddc8e8698d)
+
+## v3.14.1 - 2026-11
+
+### Bazel
+
+- chore: update gRPC to v1.85.4 ([#16701](https://github.com/googleapis/google-cloud-cpp/pull/16701))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-11-03T09:21:43-08:00](https://github.com/googleapis/googleapis/tree/57aa4dbce5d23b2115b2732b10dcb7ddc8e8698d)
+
 ## v3.14.0 - 2026-11
 
 **BREAKING CHANGES**
