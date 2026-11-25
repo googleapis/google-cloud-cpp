@@ -91,6 +91,10 @@ auto TestOptions(Options opts = {}) {
       ScopedEnvironment("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
   auto debug_env = ScopedEnvironment(
       "GCP_STORAGE_CPP_ENABLE_OTEL_DEBUG_METRICS", std::nullopt);
+  ScopedEnvironment const emulator_env(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", std::nullopt);
+  ScopedEnvironment const universe_env("GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+                                       std::nullopt);
   // Use the credentials of the host. Only for those does the resource passed
   // to `MakeMeterProviderConfig()` supply the monitoring project.
   opts.set<storage_experimental::EnableGrpcMetricsOption>(true)
@@ -1183,20 +1187,29 @@ INSTANTIATE_TEST_SUITE_P(
         // Credentials that carry no universe are not compared.
         CredentialsUniverseTestCase{"AccessTokenInOtherUniverse",
                                     AccessTokenCredentials(), "ud.net", true},
-        CredentialsUniverseTestCase{"ApiKeyInOtherUniverse",
-                                    MakeApiKeyCredentials("test-only-api-key"),
-                                    "ud.net", true},
         CredentialsUniverseTestCase{"ComputeEngineInOtherUniverse",
                                     MakeComputeEngineCredentials(), "ud.net",
                                     true},
         CredentialsUniverseTestCase{
             "ImpersonationFromAccessTokenInOtherUniverse",
             ImpersonationFrom(AccessTokenCredentials()), "ud.net", true},
+        // Credentials not supported for Cloud Monitoring export.
+        CredentialsUniverseTestCase{"ApiKeyInDefaultUniverse",
+                                    MakeApiKeyCredentials("test-only-api-key"),
+                                    std::nullopt, false},
+        CredentialsUniverseTestCase{"ApiKeyInOtherUniverse",
+                                    MakeApiKeyCredentials("test-only-api-key"),
+                                    "ud.net", false},
+        CredentialsUniverseTestCase{
+            "GdchServiceAccountInDefaultUniverse",
+            MakeGDCHServiceAccountCredentials(
+                "{}", "https://test-only-audience.example.com"),
+            std::nullopt, false},
         CredentialsUniverseTestCase{
             "GdchServiceAccountInOtherUniverse",
             MakeGDCHServiceAccountCredentials(
                 "{}", "https://test-only-audience.example.com"),
-            "ud.net", true},
+            "ud.net", false},
         // Credentials that failed to load are passed on like any other. Each
         // export then fails with the stored error.
         CredentialsUniverseTestCase{
@@ -1402,6 +1415,27 @@ TEST_F(GrpcMetricsExporterConfigTest, LogsUnknownCredentialsUniverseDomain) {
                                "credentials"))));
 }
 
+/// @test Verify the log line reports unsupported credentials when export is
+/// disabled for API key or GDCH credentials.
+TEST_F(GrpcMetricsExporterConfigTest, LogsUnsupportedCredentials) {
+  for (std::shared_ptr<Credentials> const& credentials : {
+           MakeApiKeyCredentials("test-only-api-key"),
+           MakeGDCHServiceAccountCredentials(
+               "{}", "https://test-only-audience.example.com"),
+       }) {
+    ScopedLog log;
+    std::optional<ExporterConfig> const config = MakeMeterProviderConfig(
+        EmptyResource(),
+        DefaultOptionsGrpc(
+            EnabledOptionsWithProject().set<UnifiedCredentialsOption>(
+                credentials)));
+    EXPECT_FALSE(config.has_value());
+    EXPECT_THAT(log.ExtractLines(),
+                Contains(AllOf(HasSubstr("metrics export is disabled"),
+                               HasSubstr("unsupported credentials"))));
+  }
+}
+
 /// @test Verify nothing is logged about a skipped exporter when the exporter
 /// is created.
 TEST_F(GrpcMetricsExporterConfigTest, DoesNotLogWhenExporting) {
@@ -1468,6 +1502,10 @@ INSTANTIATE_TEST_SUITE_P(
                 .set<storage_experimental::EnableGrpcMetricsOption>(false)
                 .set<storage_experimental::EnableOTelMetricsOption>(true)
                 .set<EndpointOption>("storage.ud.net")},
+        ResourceDetectionTestCase{
+            "ApiKeyCredentials",
+            Unified(MakeApiKeyCredentials("test-only-api-key"))
+                .set<storage_experimental::EnableGrpcMetricsOption>(true)},
         ResourceDetectionTestCase{
             "OTelDebugMetricsCredentialsForOtherUniverse",
             Unified(ServiceAccountFor("ud.net"))
@@ -1554,11 +1592,31 @@ TEST_F(GrpcMetricsExporterConfigTest,
   }
 }
 
-/// @test Verify the resource is detected once for a client that exports
-/// metrics, and the exporter is created. The authority is unique to this test
-/// because the registry of exporters is process-wide.
+/// @test Verify the resource is detected once for a client using metadata
+/// credentials, and the exporter is created. The authority is unique to this
+/// test because the registry of exporters is process-wide.
 TEST_F(GrpcMetricsExporterConfigTest, DetectsResourceOnceWhenExporting) {
   std::string const authority = "test-only-detects-resource.example.com";
+  int detections = 0;
+  EnableGrpcMetrics(
+      EnabledOptionsWithProject()
+          .set<UnifiedCredentialsOption>(MakeComputeEngineCredentials())
+          .set<AuthorityOption>(authority),
+      [&detections] {
+        ++detections;
+        return HostResource();
+      });
+  ScopedProviderShutdown const provider_shutdown(FindMeterProvider(authority));
+  EXPECT_EQ(detections, 1);
+  EXPECT_THAT(FindMeterProvider(authority), NotNull());
+}
+
+/// @test Verify `EnableGrpcMetrics()` skips GCP resource detection and still
+/// creates an exporter when the client uses non-host credentials.
+TEST_F(GrpcMetricsExporterConfigTest,
+       SkipsResourceDetectionForNonHostCredentials) {
+  std::string const authority =
+      "test-only-skips-detection-non-host.example.com";
   int detections = 0;
   EnableGrpcMetrics(EnabledOptionsWithProject()
                         .set<UnifiedCredentialsOption>(AccessTokenCredentials())
@@ -1568,8 +1626,30 @@ TEST_F(GrpcMetricsExporterConfigTest, DetectsResourceOnceWhenExporting) {
                       return HostResource();
                     });
   ScopedProviderShutdown const provider_shutdown(FindMeterProvider(authority));
-  EXPECT_EQ(detections, 1);
+  EXPECT_EQ(detections, 0);
   EXPECT_THAT(FindMeterProvider(authority), NotNull());
+}
+
+/// @test Verify clients sharing an authority reuse the first client's
+/// `MeterProvider` even when later clients supply different credentials.
+TEST_F(GrpcMetricsExporterConfigTest,
+       ReusesFirstExporterPerAuthorityAcrossCredentials) {
+  std::string const authority =
+      "test-only-reuses-provider-across-credentials.example.com";
+  EnableGrpcMetrics(EnabledOptionsWithProject()
+                        .set<UnifiedCredentialsOption>(AccessTokenCredentials())
+                        .set<AuthorityOption>(authority),
+                    [] { return HostResource(); });
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> const first =
+      FindMeterProvider(authority);
+  ScopedProviderShutdown const provider_shutdown(first);
+  ASSERT_THAT(first, NotNull());
+
+  EnableGrpcMetrics(EnabledOptions()
+                        .set<UnifiedCredentialsOption>(ServiceAccount())
+                        .set<AuthorityOption>(authority),
+                    [] { return HostResource(); });
+  EXPECT_THAT(FindMeterProvider(authority), Eq(first));
 }
 
 }  // namespace

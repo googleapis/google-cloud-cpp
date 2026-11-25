@@ -37,13 +37,18 @@ void EnableGrpcMetrics(
     Options const& storage_options,
     std::function<opentelemetry::sdk::resource::Resource()> const&
         detect_resource) {
-  auto options = DefaultOptionsGrpc(storage_options);
+  Options const options = DefaultOptionsGrpc(storage_options);
   // Avoid querying the metadata server for GCP resource attributes when metrics
-  // export is disabled.
+  // export is disabled or does not use host resource attributes.
   if (!AnyMetricsEnabled(options)) return;
-  if (DetectMetricsExportMode(options) == MetricsExportMode::kDisabled) return;
+  MetricsExportMode const mode = DetectMetricsExportMode(options);
+  if (mode == MetricsExportMode::kDisabled) return;
+  opentelemetry::sdk::resource::Resource const resource =
+      mode == MetricsExportMode::kWithHostResource
+          ? detect_resource()
+          : opentelemetry::sdk::resource::Resource::GetEmpty();
   std::optional<ExporterConfig> config =
-      MakeMeterProviderConfig(detect_resource(), options);
+      MakeMeterProviderConfig(resource, options);
   if (!config) return;
   EnableGrpcMetricsImpl(std::move(*config));
 }

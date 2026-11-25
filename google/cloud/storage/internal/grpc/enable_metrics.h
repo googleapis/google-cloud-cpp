@@ -34,8 +34,9 @@ void EnableGrpcMetrics(Options const& storage_options);
  * Overload of `EnableGrpcMetrics` that takes an explicit resource detector for
  * testing.
  *
- * Invokes @p detect_resource only when metrics export is enabled for
- * @p storage_options, avoiding an unnecessary metadata server query otherwise.
+ * Invokes @p detect_resource only when `DetectMetricsExportMode()` returns
+ * `MetricsExportMode::kWithHostResource`, avoiding an unnecessary metadata
+ * server query otherwise.
  */
 void EnableGrpcMetrics(
     Options const& storage_options,

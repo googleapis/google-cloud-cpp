@@ -72,7 +72,8 @@ enum class MetricsExportMode {
  *
  * - The client's endpoint must be a `google-c2p` target or `host[:port]` whose
  *   host is a subdomain of the client's universe domain.
- * - The client must not use `MakeInsecureCredentials()`.
+ * - The client must not use `MakeInsecureCredentials()`,
+ *   `MakeApiKeyCredentials()`, or `MakeGDCHServiceAccountCredentials()`.
  * - If the credentials specify a universe domain, it must match the client's
  *   universe domain; if it cannot be determined, export is disabled.
  *

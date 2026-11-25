@@ -66,11 +66,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * telemetry).
  *
  * The exporter connects to Cloud Monitoring using the client's credentials, CA
- * certificates file, and proxy configuration. Telemetry is exported when the
- * client's endpoint host belongs to the client's universe domain, the client
- * does not use `google::cloud::MakeInsecureCredentials()`, and any universe
- * domain specified in the credentials matches the client's universe domain.
- * Setting this option to `true` does not override these requirements.
+ * certificates file, and proxy configuration. Telemetry is exported only when
+ * the client's endpoint host belongs to the client's universe domain, the
+ * client does not use `google::cloud::MakeInsecureCredentials()`,
+ * `google::cloud::MakeApiKeyCredentials()`, or
+ * `google::cloud::MakeGDCHServiceAccountCredentials()`, and any credentials
+ * file's universe domain matches the client's universe domain. A credentials
+ * file without a `universe_domain` field defaults to `googleapis.com`; export
+ * is disabled if the file's universe domain cannot be determined. Credential
+ * types without a file (such as access tokens, metadata-server credentials, or
+ * `google::cloud::GrpcCredentialOption`) skip the universe-domain check. These
+ * requirements apply to `EnableGrpcMetricsOption`, `EnableOTelMetricsOption`,
+ * and `EnableOTelDebugMetricsOption`; setting any of those options to `true`
+ * does not override them.
+ *
+ * Clients with the same `google::cloud::AuthorityOption` (by default,
+ * `storage.` followed by the universe domain) share one Cloud Monitoring
+ * exporter for the life of the process. The first qualifying client creates
+ * the exporter, and subsequent clients sharing that authority reuse it without
+ * re-checking these requirements.
  *
  * Monitored resource attributes from the host (project, zone, and instance)
  * are used when the client authenticates through the host's metadata server.

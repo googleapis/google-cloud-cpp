@@ -44,7 +44,6 @@
 #include <string_view>
 #include <type_traits>
 #include <variant>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -67,18 +66,18 @@ void Forward(Options const& from, Options& to) {
 // Returns true if @p host is a DNS name: non-empty labels of letters, digits
 // and `-`, separated by `.`.
 bool IsHostName(std::string_view host) {
-  std::vector<std::string_view> const labels = absl::StrSplit(host, '.');
-  return std::all_of(labels.begin(), labels.end(), [](std::string_view label) {
-    return !label.empty() &&
-           std::all_of(label.begin(), label.end(), [](unsigned char c) {
-             return absl::ascii_isalnum(c) || c == '-';
-           });
-  });
+  for (std::string_view const label : absl::StrSplit(host, '.')) {
+    if (label.empty()) return false;
+    for (unsigned char const c : label) {
+      if (!absl::ascii_isalnum(c) && c != '-') return false;
+    }
+  }
+  return true;
 }
 
 // Extracts the DNS host from supported Storage gRPC targets (`google-c2p`
 // targets and scheme-less `host` or `host:port` endpoints). Returns an empty
-// view for other gRPC target formats (such as `unix:` or `dns:` URIs, IP
+// view for other gRPC target formats (such as `unix:` or `dns:` URIs, IPv6
 // literals, or targets with paths).
 std::string_view EndpointHost(std::string_view endpoint) {
   for (std::string_view prefix : {kC2pPrefix, kC2pExperimentalPrefix}) {
@@ -104,6 +103,7 @@ std::string_view EndpointHost(std::string_view endpoint) {
 
 struct CredentialsSummary {
   bool insecure = false;
+  bool unsupported = false;
   bool from_host = false;
   // False when a credential source carries a universe domain that could not
   // be read or parsed.
@@ -174,14 +174,18 @@ CredentialsSummary Summarize(Credentials const& credentials) {
     void visit(internal::ExternalAccountConfig const& cfg) override {
       FromCredentialsFile(cfg.json_object());
     }
-    void visit(internal::ApiKeyConfig const&) override {}
+    void visit(internal::ApiKeyConfig const&) override {
+      summary.unsupported = true;
+    }
     void visit(internal::ComputeEngineCredentialsConfig const&) override {
       summary.from_host = true;
     }
     void visit(internal::AuthorizedUserConfig const& cfg) override {
       FromCredentialsFile(cfg.json_object());
     }
-    void visit(internal::GDCHServiceAccountConfig const&) override {}
+    void visit(internal::GDCHServiceAccountConfig const&) override {
+      summary.unsupported = true;
+    }
   };
 
   Visitor visitor;
@@ -298,6 +302,11 @@ MetricsExportMode DetectMetricsExportMode(Options const& options) {
   if (summary.insecure) {
     GCP_LOG(INFO) << "gRPC metrics export is disabled: the client uses"
                      " insecure credentials";
+    return MetricsExportMode::kDisabled;
+  }
+  if (summary.unsupported) {
+    GCP_LOG(INFO) << "gRPC metrics export is disabled: the client uses"
+                     " unsupported credentials";
     return MetricsExportMode::kDisabled;
   }
   if (!summary.universe_domain_known) {
