@@ -19,6 +19,9 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
+#include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
+#include <optional>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -26,12 +29,21 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnableGrpcMetrics(Options const& storage_options) {
+  EnableGrpcMetrics(storage_options,
+                    [] { return otel::MakeResourceDetector()->Detect(); });
+}
+
+void EnableGrpcMetrics(
+    Options const& storage_options,
+    std::function<opentelemetry::sdk::resource::Resource()> const&
+        detect_resource) {
   auto options = DefaultOptionsGrpc(storage_options);
-  // Avoid running the resource detector if all metrics options are disabled.
+  // Avoid querying the metadata server for GCP resource attributes when metrics
+  // export is disabled.
   if (!AnyMetricsEnabled(options)) return;
-  auto detector = otel::MakeResourceDetector();
-  auto resources = detector->Detect();
-  auto config = MakeMeterProviderConfig(resources, options);
+  if (DetectMetricsExportMode(options) == MetricsExportMode::kDisabled) return;
+  std::optional<ExporterConfig> config =
+      MakeMeterProviderConfig(detect_resource(), options);
   if (!config) return;
   EnableGrpcMetricsImpl(std::move(*config));
 }

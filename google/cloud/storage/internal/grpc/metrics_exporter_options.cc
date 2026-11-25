@@ -16,17 +16,35 @@
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
+#include "google/cloud/storage/internal/grpc/channel_telemetry.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/invocation_id_generator.h"
+#include "google/cloud/internal/oauth2_universe_domain.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/log.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/ascii.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_split.h"
 #include "google/api/monitored_resource.pb.h"
+#include <nlohmann/json.hpp>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <algorithm>
+#include <fstream>
+#include <iterator>
+#include <memory>
+#include <optional>
+#include <string>
 #include <string_view>
 #include <type_traits>
 #include <variant>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -39,6 +57,136 @@ auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
   auto const l = attributes.find(name);
   if (l == attributes.end()) return default_value;
   return std::get<std::string>(l->second);
+}
+
+template <typename Option>
+void Forward(Options const& from, Options& to) {
+  if (from.has<Option>()) to.set<Option>(from.get<Option>());
+}
+
+// Returns true if @p host is a DNS name: non-empty labels of letters, digits
+// and `-`, separated by `.`.
+bool IsHostName(std::string_view host) {
+  std::vector<std::string_view> const labels = absl::StrSplit(host, '.');
+  return std::all_of(labels.begin(), labels.end(), [](std::string_view label) {
+    return !label.empty() &&
+           std::all_of(label.begin(), label.end(), [](unsigned char c) {
+             return absl::ascii_isalnum(c) || c == '-';
+           });
+  });
+}
+
+// Extracts the DNS host from supported Storage gRPC targets (`google-c2p`
+// targets and scheme-less `host` or `host:port` endpoints). Returns an empty
+// view for other gRPC target formats (such as `unix:` or `dns:` URIs, IP
+// literals, or targets with paths).
+std::string_view EndpointHost(std::string_view endpoint) {
+  for (std::string_view prefix : {kC2pPrefix, kC2pExperimentalPrefix}) {
+    if (absl::StartsWith(endpoint, prefix)) {
+      std::string_view const rest = endpoint.substr(prefix.size());
+      endpoint = rest.substr(0, rest.find('?'));
+      break;
+    }
+  }
+  std::string_view::size_type const colon = endpoint.find(':');
+  std::string_view const host = endpoint.substr(0, colon);
+  if (colon != std::string_view::npos) {
+    std::string_view const port = endpoint.substr(colon + 1);
+    bool const is_port =
+        !port.empty() &&
+        std::all_of(port.begin(), port.end(),
+                    [](unsigned char c) { return absl::ascii_isdigit(c); });
+    if (!is_port) return {};
+  }
+  if (!IsHostName(host)) return {};
+  return host;
+}
+
+struct CredentialsSummary {
+  bool insecure = false;
+  bool from_host = false;
+  // False when a credential source carries a universe domain that could not
+  // be read or parsed.
+  bool universe_domain_known = true;
+  std::optional<std::string> universe_domain;
+};
+
+CredentialsSummary Summarize(Credentials const& credentials) {
+  struct Visitor : public internal::CredentialsVisitor {
+    CredentialsSummary summary;
+
+    void UniverseDomainUnknown() { summary.universe_domain_known = false; }
+
+    void FromCredentialsFile(std::string const& contents) {
+      nlohmann::json const json =
+          nlohmann::json::parse(contents, nullptr, false);
+      // `GetUniverseDomainFromCredentialsJson()` expects a JSON object. It
+      // reads anything else as a file without the field, that is, as a file
+      // for the default universe.
+      if (!json.is_object()) return UniverseDomainUnknown();
+      StatusOr<std::string> universe_domain =
+          oauth2_internal::GetUniverseDomainFromCredentialsJson(json);
+      if (!universe_domain) return UniverseDomainUnknown();
+      summary.universe_domain = *universe_domain;
+    }
+
+    void visit(internal::ErrorCredentialsConfig const&) override {}
+    void visit(internal::InsecureCredentialsConfig const&) override {
+      summary.insecure = true;
+    }
+    void visit(internal::GoogleDefaultCredentialsConfig const&) override {
+      StatusOr<internal::AdcLookup> adc =
+          internal::LookupApplicationDefaultCredentials();
+      if (!adc) return UniverseDomainUnknown();
+      switch (adc->source) {
+        case internal::AdcSource::kNone:
+          summary.from_host = true;
+          return;
+        case internal::AdcSource::kServiceAccount:
+        case internal::AdcSource::kAuthorizedUser:
+        case internal::AdcSource::kExternalAccount:
+          return FromCredentialsFile(*adc->contents);
+        case internal::AdcSource::kNotJsonObject:
+        case internal::AdcSource::kUnsupportedType:
+          // gRPC's Google Default credentials do not accept these files, so
+          // this library cannot tell which credentials the channel uses.
+          return UniverseDomainUnknown();
+      }
+    }
+    void visit(internal::AccessTokenConfig const&) override {}
+    void visit(internal::ImpersonateServiceAccountConfig const& cfg) override {
+      // Impersonated credentials are obtained with the base credentials, so
+      // the base credentials decide which universe they are for, and whether
+      // they come from the host.
+      std::shared_ptr<Credentials> const base = cfg.base_credentials();
+      if (!base) return UniverseDomainUnknown();
+      internal::CredentialsVisitor::dispatch(*base, *this);
+    }
+    void visit(internal::ServiceAccountConfig const& cfg) override {
+      if (cfg.json_object().has_value()) {
+        return FromCredentialsFile(*cfg.json_object());
+      }
+      // A file that cannot be read yields an empty string, which is not a
+      // JSON object.
+      std::ifstream is(cfg.file_path().value_or(""));
+      FromCredentialsFile(std::string{std::istreambuf_iterator<char>{is}, {}});
+    }
+    void visit(internal::ExternalAccountConfig const& cfg) override {
+      FromCredentialsFile(cfg.json_object());
+    }
+    void visit(internal::ApiKeyConfig const&) override {}
+    void visit(internal::ComputeEngineCredentialsConfig const&) override {
+      summary.from_host = true;
+    }
+    void visit(internal::AuthorizedUserConfig const& cfg) override {
+      FromCredentialsFile(cfg.json_object());
+    }
+    void visit(internal::GDCHServiceAccountConfig const&) override {}
+  };
+
+  Visitor visitor;
+  internal::CredentialsVisitor::dispatch(credentials, visitor);
+  return visitor.summary;
 }
 
 }  // namespace
@@ -100,6 +248,10 @@ Options MetricsExporterOptions(
 
 Options MetricsExporterConnectionOptions(Options const& options) {
   auto result = Options{};
+  Forward<UnifiedCredentialsOption>(options, result);
+  Forward<GrpcCredentialOption>(options, result);
+  Forward<CARootsFilePathOption>(options, result);
+  Forward<ProxyOption>(options, result);
   auto ep_canonical = std::string{"storage.googleapis.com"};
   auto ep_private = std::string{"private.googleapis.com"};
   auto ep_restricted = std::string{"restricted.googleapis.com"};
@@ -119,6 +271,51 @@ Options MetricsExporterConnectionOptions(Options const& options) {
   if (matches(ep_private)) result.set<EndpointOption>(ep_private);
   if (matches(ep_restricted)) result.set<EndpointOption>(ep_restricted);
   return result;
+}
+
+MetricsExportMode DetectMetricsExportMode(Options const& options) {
+  std::string const universe_domain =
+      options.has<internal::UniverseDomainOption>()
+          ? options.get<internal::UniverseDomainOption>()
+          : oauth2_internal::GoogleDefaultUniverseDomain();
+  std::string_view const host = EndpointHost(options.get<EndpointOption>());
+  // Require a dot-delimited subdomain of `universe_domain` (for example,
+  // `storage.googleapis.com` in `googleapis.com`).
+  if (!absl::EndsWithIgnoreCase(host, absl::StrCat(".", universe_domain))) {
+    GCP_LOG(INFO) << "gRPC metrics export is disabled: the endpoint is not in"
+                     " the universe domain, endpoint_host="
+                  << (host.empty() ? "(unrecognized)" : host)
+                  << ", universe_domain=" << universe_domain;
+    return MetricsExportMode::kDisabled;
+  }
+
+  std::shared_ptr<Credentials> const& credentials =
+      options.get<UnifiedCredentialsOption>();
+  // Only `GrpcCredentialOption` is set. gRPC channel credentials are opaque,
+  // so nothing ties them to the host.
+  if (!credentials) return MetricsExportMode::kWithoutHostResource;
+  CredentialsSummary const summary = Summarize(*credentials);
+  if (summary.insecure) {
+    GCP_LOG(INFO) << "gRPC metrics export is disabled: the client uses"
+                     " insecure credentials";
+    return MetricsExportMode::kDisabled;
+  }
+  if (!summary.universe_domain_known) {
+    GCP_LOG(INFO) << "gRPC metrics export is disabled: cannot determine the"
+                     " universe domain of the credentials, universe_domain="
+                  << universe_domain;
+    return MetricsExportMode::kDisabled;
+  }
+  if (summary.universe_domain.has_value() &&
+      !absl::EqualsIgnoreCase(*summary.universe_domain, universe_domain)) {
+    GCP_LOG(INFO)
+        << "gRPC metrics export is disabled: the credentials are"
+           " for another universe domain, credentials_universe_domain="
+        << *summary.universe_domain << ", universe_domain=" << universe_domain;
+    return MetricsExportMode::kDisabled;
+  }
+  return summary.from_host ? MetricsExportMode::kWithHostResource
+                           : MetricsExportMode::kWithoutHostResource;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

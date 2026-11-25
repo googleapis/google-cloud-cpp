@@ -45,7 +45,43 @@ Options MetricsExporterOptions(
 
 /// Returns the monitoring exporter connection options given the fully populated
 /// storage options.
+///
+/// Propagates the client's credentials, CA certificates file, and proxy
+/// options to the Cloud Monitoring connection.
+///
+/// This function does not check whether metrics export is enabled. Callers
+/// check `DetectMetricsExportMode()` before connecting with the result.
 Options MetricsExporterConnectionOptions(Options const& options);
+
+/// How metrics export should be configured for a Storage client.
+enum class MetricsExportMode {
+  /// Skip metrics export.
+  kDisabled,
+  /// Export metrics using default monitored resource attributes.
+  kWithoutHostResource,
+  /// Export metrics using the detected host resource attributes.
+  kWithHostResource,
+};
+
+/**
+ * Determines the `MetricsExportMode` for the resolved @p options.
+ *
+ * Cloud Monitoring export targets the Monitoring service in the client's
+ * universe domain using the client's credentials, so export is enabled only
+ * when @p options are compatible with that target:
+ *
+ * - The client's endpoint must be a `google-c2p` target or `host[:port]` whose
+ *   host is a subdomain of the client's universe domain.
+ * - The client must not use `MakeInsecureCredentials()`.
+ * - If the credentials specify a universe domain, it must match the client's
+ *   universe domain; if it cannot be determined, export is disabled.
+ *
+ * Returns `kWithHostResource` when the client uses metadata-server credentials,
+ * and `kWithoutHostResource` for other supported credentials. Impersonated
+ * credentials follow their base credentials. Logs the reason at `INFO` when
+ * returning `kDisabled`.
+ */
+MetricsExportMode DetectMetricsExportMode(Options const& options);
 
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 

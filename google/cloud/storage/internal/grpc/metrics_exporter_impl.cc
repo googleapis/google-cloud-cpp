@@ -162,12 +162,20 @@ std::optional<ExporterConfig> MakeMeterProviderConfig(
   if (!AnyMetricsEnabled(options)) {
     return std::nullopt;
   }
+  MetricsExportMode const mode = DetectMetricsExportMode(options);
+  if (mode == MetricsExportMode::kDisabled) return std::nullopt;
   bool const enable_grpc =
       options.get<storage_experimental::EnableGrpcMetricsOption>();
-  auto project = MonitoringProject(resource, options);
+  // Attach host resource attributes only when the client authenticates via the
+  // host's metadata server; otherwise use default client resource labels.
+  opentelemetry::sdk::resource::Resource const& client_resource =
+      mode == MetricsExportMode::kWithHostResource
+          ? resource
+          : opentelemetry::sdk::resource::Resource::GetEmpty();
+  std::optional<Project> project = MonitoringProject(client_resource, options);
   if (!project) return std::nullopt;
 
-  auto exporter_options = MetricsExporterOptions(*project, resource);
+  Options exporter_options = MetricsExporterOptions(*project, client_resource);
   if (options.has<storage_experimental::GrpcMetricsExcludedLabelsOption>()) {
     exporter_options.set<otel_internal::ResourceFilterDataFnOption>(
         options.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());

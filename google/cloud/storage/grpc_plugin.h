@@ -65,6 +65,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * CPU (a single RPC every few minutes) or memory (a few KiB to batch the
  * telemetry).
  *
+ * The exporter connects to Cloud Monitoring using the client's credentials, CA
+ * certificates file, and proxy configuration. Telemetry is exported when the
+ * client's endpoint host belongs to the client's universe domain, the client
+ * does not use `google::cloud::MakeInsecureCredentials()`, and any universe
+ * domain specified in the credentials matches the client's universe domain.
+ * Setting this option to `true` does not override these requirements.
+ *
+ * Monitored resource attributes from the host (project, zone, and instance)
+ * are used when the client authenticates through the host's metadata server.
+ * For other credential types, the monitoring project comes from
+ * `google::cloud::storage::ProjectIdOption` or the credentials, and metrics
+ * export is skipped when neither specifies a project.
+ *
  * [gRFC/66]: https://github.com/grpc/proposal/blob/master/A66-otel-stats.md
  * [gRFC/78]:
  * https://github.com/grpc/proposal/blob/master/A78-grpc-metrics-wrr-pf-xds.md

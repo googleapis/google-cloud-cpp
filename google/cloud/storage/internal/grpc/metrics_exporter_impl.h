@@ -46,6 +46,15 @@ struct ExporterConfig {
 /// Returns true if any gRPC or OpenTelemetry storage metrics option is enabled.
 bool AnyMetricsEnabled(Options const& options);
 
+/**
+ * Returns the exporter configuration for the resolved @p options, or
+ * `std::nullopt` when metrics export is disabled or no monitoring project can
+ * be determined.
+ *
+ * Uses the host @p resource for the monitoring project and resource labels only
+ * when `DetectMetricsExportMode()` returns
+ * `MetricsExportMode::kWithHostResource`.
+ */
 std::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options);

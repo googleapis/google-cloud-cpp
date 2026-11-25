@@ -17,6 +17,10 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+#include <opentelemetry/sdk/resource/resource.h>
+#include <functional>
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 namespace google {
 namespace cloud {
@@ -24,6 +28,20 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnableGrpcMetrics(Options const& storage_options);
+
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+/**
+ * Overload of `EnableGrpcMetrics` that takes an explicit resource detector for
+ * testing.
+ *
+ * Invokes @p detect_resource only when metrics export is enabled for
+ * @p storage_options, avoiding an unnecessary metadata server query otherwise.
+ */
+void EnableGrpcMetrics(
+    Options const& storage_options,
+    std::function<opentelemetry::sdk::resource::Resource()> const&
+        detect_resource);
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
