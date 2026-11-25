@@ -118,7 +118,7 @@ TEST(WellKnownHeader, EncryptionKeyEmptyString) {
 }
 
 /// @test Verify that an unset EncryptionKey streams `<not set>`.
-TEST(WellKnownHeader, EncryptionKeyEmpty) {
+TEST(WellKnownHeader, EncryptionKeyUnset) {
   EncryptionKey const header;
   std::ostringstream os;
   os << header;
@@ -126,7 +126,7 @@ TEST(WellKnownHeader, EncryptionKeyEmpty) {
 }
 
 /// @test Verify that an unset SourceEncryptionKey streams `<not set>`.
-TEST(WellKnownHeader, SourceEncryptionKeyEmpty) {
+TEST(WellKnownHeader, SourceEncryptionKeyUnset) {
   SourceEncryptionKey const header;
   std::ostringstream os;
   os << header;

@@ -358,6 +358,7 @@ TEST_F(LoggingStubTest, EnvTracingFormatsEncryptionKey) {
         EXPECT_THAT(lr.message, HasSubstr("Enabling logging for raw-client"));
       });
   Options const opts = DefaultOptions(Options{});
+  ::testing::Mock::VerifyAndClearExpectations(log_backend_.get());
 
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, ReadObject)
