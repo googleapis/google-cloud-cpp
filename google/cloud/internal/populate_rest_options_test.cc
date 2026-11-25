@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/populate_rest_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -20,8 +21,11 @@
 #include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 #include <optional>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -31,6 +35,7 @@ namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::TestCredentialsVisitor;
+using ::testing::Eq;
 
 TEST(PopulateRestOptions, EndpointOption) {
   struct TestCase {
@@ -83,16 +88,32 @@ TEST(PopulateRestOptions, CustomCredentials) {
 
 TEST(PopulateRestOptions, LongrunningEndpointOption) {
   using ::google::cloud::rest_internal::LongrunningEndpointOption;
-  auto options = Options{};
-  options = PopulateRestOptions(std::move(options));
-  EXPECT_EQ(options.get<LongrunningEndpointOption>(),
-            "https://longrunning.googleapis.com");
+
+  Options options = PopulateRestOptions(Options{});
+  EXPECT_THAT(options.get<LongrunningEndpointOption>(),
+              Eq("https://longrunning.googleapis.com"));
+
+  options = PopulateRestOptions(
+      Options{}.set<EndpointOption>("spanner.googleapis.com"));
+  EXPECT_THAT(options.get<LongrunningEndpointOption>(),
+              Eq("https://longrunning.googleapis.com"));
 
   options =
-      Options{}.set<LongrunningEndpointOption>("https://foo.googleapis.com");
-  options = PopulateRestOptions(std::move(options));
-  EXPECT_EQ(options.get<LongrunningEndpointOption>(),
-            "https://foo.googleapis.com");
+      PopulateRestOptions(Options{}.set<UniverseDomainOption>("my-ud.net"));
+  EXPECT_THAT(options.get<LongrunningEndpointOption>(),
+              Eq("https://longrunning.my-ud.net"));
+
+  options = PopulateRestOptions(
+      Options{}.set<LongrunningEndpointOption>("https://foo.googleapis.com"));
+  EXPECT_THAT(options.get<LongrunningEndpointOption>(),
+              Eq("https://foo.googleapis.com"));
+
+  options = PopulateRestOptions(
+      Options{}
+          .set<LongrunningEndpointOption>("https://foo.googleapis.com")
+          .set<UniverseDomainOption>("my-ud.net"));
+  EXPECT_THAT(options.get<LongrunningEndpointOption>(),
+              Eq("https://foo.googleapis.com"));
 }
 
 TEST(PopulateRestOptions, TracingOptions) {
