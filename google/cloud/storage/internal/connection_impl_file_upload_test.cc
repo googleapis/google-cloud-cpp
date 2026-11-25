@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <iterator>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -29,6 +30,9 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::TempFile;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
+using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 
 class ConnectionImplFileUploadTest : public ::testing::Test {
@@ -142,6 +146,71 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileResumableWithLimit) {
   std::string actual(buffer.begin(), buffer.end());
 
   EXPECT_EQ("01234", actual);
+}
+
+/// @test Verify `EncryptionKey` option formatting in simple and resumable
+/// file-upload error statuses.
+TEST_F(ConnectionImplFileUploadTest, UploadFileErrorsFormatEncryptionKey) {
+  // /bin/echo -n "0123456789-ABCDEFGHIJ-0123456789" | openssl base64
+  constexpr std::string_view kKeyBinary = "0123456789-ABCDEFGHIJ-0123456789";
+  constexpr std::string_view kKeyBase64 =
+      "MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=";
+  EncryptionKey const key =
+      EncryptionKey::FromBinaryKey(std::string{kKeyBinary});
+
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = "0123456789";
+  TempFile temp(contents);
+
+  InsertObjectMediaRequest simple_missing("test-bucket", "test-object", "");
+  simple_missing.set_option(key);
+  StatusOr<std::unique_ptr<std::string>> const missing_result =
+      connection->UploadFileSimple("/no/such/file/exists.txt", 123,
+                                   simple_missing);
+  EXPECT_THAT(missing_result,
+              StatusIs(StatusCode::kNotFound,
+                       AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                             Not(HasSubstr(kKeyBase64)))));
+
+  InsertObjectMediaRequest simple_offset("test-bucket", "test-object", "");
+  simple_offset.set_multiple_options(key,
+                                     UploadFromOffset(contents.size() + 1));
+  StatusOr<std::unique_ptr<std::string>> const offset_result =
+      connection->UploadFileSimple(temp.name(), contents.size(), simple_offset);
+  EXPECT_THAT(offset_result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                             Not(HasSubstr(kKeyBase64)))));
+
+  InsertObjectMediaRequest simple_short_read("test-bucket", "test-object", "");
+  simple_short_read.set_option(key);
+  StatusOr<std::unique_ptr<std::string>> const short_read_result =
+      connection->UploadFileSimple(temp.name(), contents.size() + 1,
+                                   simple_short_read);
+  EXPECT_THAT(short_read_result,
+              StatusIs(StatusCode::kInternal,
+                       AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                             Not(HasSubstr(kKeyBase64)))));
+
+  ResumableUploadRequest resumable_missing("test-bucket", "test-object");
+  resumable_missing.set_option(key);
+  StatusOr<std::unique_ptr<std::istream>> const resumable_missing_result =
+      connection->UploadFileResumable("/no/such/file/exists.txt",
+                                      resumable_missing);
+  EXPECT_THAT(resumable_missing_result,
+              StatusIs(StatusCode::kNotFound,
+                       AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                             Not(HasSubstr(kKeyBase64)))));
+
+  ResumableUploadRequest resumable_offset("test-bucket", "test-object");
+  resumable_offset.set_multiple_options(key,
+                                        UploadFromOffset(contents.size() + 1));
+  StatusOr<std::unique_ptr<std::istream>> const resumable_offset_result =
+      connection->UploadFileResumable(temp.name(), resumable_offset);
+  EXPECT_THAT(resumable_offset_result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                             Not(HasSubstr(kKeyBase64)))));
 }
 
 }  // namespace

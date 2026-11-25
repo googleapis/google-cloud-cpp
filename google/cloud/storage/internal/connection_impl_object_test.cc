@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
@@ -24,6 +25,7 @@
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -45,12 +47,14 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedLog;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Each;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::Return;
 using ::testing::SizeIs;
 
 // Shaped like a real REST resumable session URL: the `upload_id` is a bearer
@@ -558,6 +562,31 @@ TEST(StorageConnectionImpl, RestoreObjectPermanentFailure) {
   EXPECT_THAT(response, StoppedOnPermanentError("RestoreObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
+}
+
+/// @test Verify `EncryptionKey` option formatting in `DownloadStreamToFile`
+/// error statuses.
+TEST(StorageConnectionImpl, DownloadStreamToFileFormatsEncryptionKey) {
+  // /bin/echo -n "0123456789-ABCDEFGHIJ-0123456789" | openssl base64
+  constexpr std::string_view kKeyBinary = "0123456789-ABCDEFGHIJ-0123456789";
+  constexpr std::string_view kKeyBase64 =
+      "MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=";
+
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  std::shared_ptr<StorageConnectionImpl> client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan const span(client->options());
+
+  ReadObjectRangeRequest request("test-bucket", "test-object");
+  request.set_option(EncryptionKey::FromBinaryKey(std::string{kKeyBinary}));
+  ObjectReadStream stream;
+  Status const status = client->DownloadStreamToFile(
+      std::move(stream), "/no/such/directory/exists.bin", request);
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                             Not(HasSubstr(kKeyBase64)))));
 }
 
 }  // namespace
