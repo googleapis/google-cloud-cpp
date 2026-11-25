@@ -24,62 +24,100 @@ OpenStream::OpenStream(std::unique_ptr<StreamingRpc> rpc)
     : rpc_(std::move(rpc)) {}
 
 void OpenStream::Cancel() {
-  cancel_.store(true);
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    if (cancel_) return;
+    cancel_ = true;
+    ++pending_ops_;
+    if (!finish_issued_) {
+      finish_issued_ = true;
+      finish_deferred_ = true;
+      finish_promise_ = promise<Status>{};
+      finish_ = finish_promise_.get_future();
+    }
+  }
   rpc_->Cancel();
-  MaybeFinish();
+  EndOp();
 }
 
 future<bool> OpenStream::Start() {
-  if (cancel_) return make_ready_future(false);
-  return rpc_->Start();
+  if (!BeginOp()) return make_ready_future(false);
+  return rpc_->Start().then([s = shared_from_this()](future<bool> f) mutable {
+    std::shared_ptr<OpenStream> self = std::move(s);
+    bool const cancelled = self->EndOp();
+    bool const ok = f.get();
+    return !cancelled && ok;
+  });
 }
 
 future<bool> OpenStream::Write(
     google::storage::v2::BidiReadObjectRequest const& request) {
-  if (cancel_) return make_ready_future(false);
-  pending_write_.store(true);
+  if (!BeginOp()) return make_ready_future(false);
   return rpc_->Write(request, grpc::WriteOptions{})
-      .then([s = shared_from_this()](auto f) mutable {
-        auto self = std::move(s);
-        self->OnWrite();
-        return f.get();
+      .then([s = shared_from_this()](future<bool> f) mutable {
+        std::shared_ptr<OpenStream> self = std::move(s);
+        bool const cancelled = self->EndOp();
+        bool const ok = f.get();
+        return !cancelled && ok;
       });
 }
 
 future<OpenStream::ReadType> OpenStream::Read() {
-  if (cancel_) return make_ready_future(ReadType(std::nullopt));
-  pending_read_.store(true);
-  return rpc_->Read().then([s = shared_from_this()](auto f) mutable {
-    auto self = std::move(s);
-    self->OnRead();
-    return f.get();
-  });
+  if (!BeginOp()) return make_ready_future(ReadType(std::nullopt));
+  return rpc_->Read().then(
+      [s = shared_from_this()](future<ReadType> f) mutable {
+        std::shared_ptr<OpenStream> self = std::move(s);
+        bool const cancelled = self->EndOp();
+        ReadType result = f.get();
+        if (cancelled) return ReadType(std::nullopt);
+        return result;
+      });
 }
 
 future<Status> OpenStream::Finish() {
-  if (finish_issued_.exchange(true)) return {};
-  return rpc_->Finish().then([s = shared_from_this()](auto f) mutable {
-    auto result = f.get();
-    s.reset();
-    return result;
-  });
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    if (finish_issued_) return std::move(finish_);
+    finish_issued_ = true;
+  }
+  return rpc_->Finish().then(
+      [s = shared_from_this()](future<Status> f) mutable {
+        s.reset();
+        return f.get();
+      });
 }
 
-void OpenStream::OnWrite() {
-  pending_write_.store(false);
-  return MaybeFinish();
+bool OpenStream::BeginOp() {
+  std::lock_guard<std::mutex> lk(mu_);
+  if (cancel_ || finish_issued_) return false;
+  ++pending_ops_;
+  return true;
 }
 
-void OpenStream::OnRead() {
-  pending_read_.store(false);
-  return MaybeFinish();
-}
-
-void OpenStream::MaybeFinish() {
-  if (!cancel_) return;
-  // Once `cancel_` is true these can only become false.
-  if (pending_read_ || pending_write_) return;
-  Finish();
+bool OpenStream::EndOp() {
+  promise<Status> deferred_finish{null_promise_t{}};
+  bool issue_finish = false;
+  bool cancelled = false;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    --pending_ops_;
+    cancelled = cancel_;
+    if (finish_deferred_ && pending_ops_ == 0) {
+      finish_deferred_ = false;
+      deferred_finish = std::move(finish_promise_);
+      issue_finish = true;
+    }
+  }
+  if (issue_finish) {
+    rpc_->Finish().then(
+        [s = shared_from_this(),
+         p = std::move(deferred_finish)](future<Status> f) mutable {
+          promise<Status> out = std::move(p);
+          s.reset();
+          out.set_value(f.get());
+        });
+  }
+  return cancelled;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
