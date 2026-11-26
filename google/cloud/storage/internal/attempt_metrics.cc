@@ -13,13 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/attempt_metrics.h"
+#include "google/cloud/storage/internal/metrics_constants.h"
 #include "google/cloud/version.h"
+#include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/common/key_value_iterable_view.h>
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/nostd/span.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <array>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -50,7 +53,8 @@ AttemptMetrics::AttemptMetrics(
     : client_version_(SemanticVersionString()),
       server_address_(std::move(server_address)) {
   if (!provider) return;
-  meter_ = provider->GetMeter("gl-cpp", google::cloud::version_string());
+  meter_ =
+      provider->GetMeter(kStorageMeterName, google::cloud::version_string());
   if (!meter_) return;
   attempts_ = meter_->CreateUInt64Counter(
       "gcp.storage.client.attempts",
