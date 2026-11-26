@@ -161,8 +161,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
       opentelemetry::context::Context("trace_marker", std::int64_t{42});
   metrics.RecordGrpcAttempt({"ReadObject", "OK", "OK", "directpath"}, ctx);
   metrics.RecordGrpcAttempt(
-      {"WriteObject", "DEADLINE_EXCEEDED", "DEADLINE_EXCEEDED", "directpath"},
-      ctx);
+      {"WriteObject", "CHECKSUM_MISMATCH", "OK", "directpath"}, ctx);
   metrics.RecordHttpAttempt({"GetObjectMetadata", "OK", 200, "cloudpath"}, ctx);
   metrics.RecordHttpAttempt({"DeleteObject", "UNAVAILABLE", 503, "cloudpath"},
                             ctx);
@@ -176,13 +175,13 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
                                        {"network.path", "directpath"},
                                        {"rpc.response.status_code", "OK"}})));
   EXPECT_THAT(attempt_attrs[0].ints, IsEmpty());
-  EXPECT_THAT(attempt_attrs[1].strings,
-              ContainerEq(ExpectedStringAttrs(
-                  {{"rpc.system.name", "grpc"},
-                   {"gcp.storage.operation", "WriteObject"},
-                   {"error.type", "DEADLINE_EXCEEDED"},
-                   {"network.path", "directpath"},
-                   {"rpc.response.status_code", "DEADLINE_EXCEEDED"}})));
+  EXPECT_THAT(
+      attempt_attrs[1].strings,
+      ContainerEq(ExpectedStringAttrs({{"rpc.system.name", "grpc"},
+                                       {"gcp.storage.operation", "WriteObject"},
+                                       {"error.type", "CHECKSUM_MISMATCH"},
+                                       {"network.path", "directpath"},
+                                       {"rpc.response.status_code", "OK"}})));
   EXPECT_THAT(attempt_attrs[1].ints, IsEmpty());
   EXPECT_THAT(attempt_attrs[2].strings,
               ContainerEq(ExpectedStringAttrs(
@@ -206,7 +205,7 @@ TEST(AttemptMetricsTest, RecordsGrpcAndHttpAttributes) {
       error_attrs[0].strings,
       ContainerEq(ExpectedStringAttrs({{"rpc.system.name", "grpc"},
                                        {"gcp.storage.operation", "WriteObject"},
-                                       {"error.type", "DEADLINE_EXCEEDED"},
+                                       {"error.type", "CHECKSUM_MISMATCH"},
                                        {"network.path", "directpath"}})));
   EXPECT_THAT(error_attrs[0].ints, IsEmpty());
   EXPECT_THAT(error_attrs[1].strings,
