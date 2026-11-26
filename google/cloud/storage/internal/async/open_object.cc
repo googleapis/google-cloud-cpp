@@ -44,7 +44,10 @@ OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
       initial_request_(std::move(request)) {}
 
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
-  auto future = promise_.get_future();
+  promise_ = promise<StatusOr<OpenStreamResult>>([w = WeakFromThis()] {
+    if (std::shared_ptr<OpenObject> self = w.lock()) self->OnCancel();
+  });
+  future<StatusOr<OpenStreamResult>> future = promise_.get_future();
   rpc_->Start().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnStart(f.get());
   });
@@ -92,7 +95,18 @@ void OpenObject::OnWrite(bool ok) {
 void OpenObject::OnRead(
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   if (!response) return DoFinish();
+  State expected = State::kOpening;
+  if (!state_.compare_exchange_strong(expected, State::kCommitted)) {
+    rpc_->Cancel();
+    return DoFinish();
+  }
   promise_.set_value(OpenStreamResult{std::move(rpc_), std::move(*response)});
+}
+
+void OpenObject::OnCancel() {
+  State expected = State::kOpening;
+  if (!state_.compare_exchange_strong(expected, State::kCancelled)) return;
+  rpc_->Cancel();
 }
 
 void OpenObject::DoFinish() {
@@ -102,6 +116,11 @@ void OpenObject::DoFinish() {
 }
 
 void OpenObject::OnFinish(Status status) {
+  if (state_.load() == State::kCancelled) {
+    promise_.set_value(google::cloud::internal::CancelledError(
+        "Stream cancelled while opening", GCP_ERROR_INFO()));
+    return;
+  }
   if (!status.ok()) return promise_.set_value(std::move(status));
   // This should not happen, it indicates an EOF on the stream, but we
   // did not ask to close it.

@@ -40,12 +40,15 @@ TEST(OpenStream, CancelBlocksAllRequest) {
   EXPECT_CALL(*mock, Start).Times(0);
   EXPECT_CALL(*mock, Write).Times(0);
   EXPECT_CALL(*mock, Read).Times(0);
-  EXPECT_CALL(*mock, Cancel).Times(1);
-  EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {
-    return sequencer.PushBack("Finish").then([](auto) {
-      return internal::CancelledError("test-only", GCP_ERROR_INFO());
+  {
+    ::testing::InSequence seq;
+    EXPECT_CALL(*mock, Cancel).Times(1);
+    EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {
+      return sequencer.PushBack("Finish").then([](auto) {
+        return internal::CancelledError("test-only", GCP_ERROR_INFO());
+      });
     });
-  });
+  }
 
   auto actual = std::make_shared<OpenStream>(std::move(mock));
   actual->Cancel();
@@ -73,7 +76,8 @@ TEST(OpenStream, DuplicateFinish) {
 
   auto actual = std::make_shared<OpenStream>(std::move(mock));
 
-  auto f1 = actual->Finish();
+  future<Status> f1 = actual->Finish();
+  EXPECT_FALSE(actual->Finish().valid());
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
@@ -117,6 +121,75 @@ TEST(OpenStream, CleanShutdown) {
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+TEST(OpenStream, CancelDuringStartDefersFinishAndHandsOffFutureOnce) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Start).WillOnce([&sequencer] {
+    return sequencer.PushBack("Start").then(
+        [](future<bool> f) { return f.get(); });
+  });
+  {
+    ::testing::InSequence seq;
+    EXPECT_CALL(*mock, Cancel).Times(1);
+    EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {
+      return sequencer.PushBack("Finish").then([](future<bool>) {
+        return internal::CancelledError("test-only", GCP_ERROR_INFO());
+      });
+    });
+  }
+
+  auto actual = std::make_shared<OpenStream>(std::move(mock));
+  future<bool> start = actual->Start();
+  auto [pending_start, start_name] = sequencer.PopFrontWithName();
+  EXPECT_EQ(start_name, "Start");
+
+  actual->Cancel();
+  actual->Cancel();
+  future<Status> claimed = actual->Finish();
+  ASSERT_TRUE(claimed.valid());
+  EXPECT_FALSE(claimed.is_ready());
+  EXPECT_FALSE(actual->Finish().valid());
+  actual.reset();
+
+  // `Finish` must not be invoked on `mock` until `Start` completes.
+  EXPECT_TRUE(sequencer.empty());
+  pending_start.set_value(true);
+  EXPECT_FALSE(start.get());
+
+  auto [pending_finish, finish_name] = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish_name, "Finish");
+  pending_finish.set_value(true);
+  EXPECT_THAT(claimed.get(), StatusIs(StatusCode::kCancelled));
+}
+
+TEST(OpenStream, CancelDuringReadDropsResponseAndReleasesRetainedPromise) {
+  auto retained_read = std::make_shared<promise<ReadType>>();
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read).WillOnce([retained_read] {
+    return retained_read->get_future();
+  });
+  {
+    ::testing::InSequence seq;
+    EXPECT_CALL(*mock, Cancel).Times(1);
+    EXPECT_CALL(*mock, Finish).WillOnce([] {
+      return make_ready_future(Status{});
+    });
+  }
+
+  auto actual = std::make_shared<OpenStream>(std::move(mock));
+  std::weak_ptr<OpenStream> weak = actual;
+  future<ReadType> read = actual->Read();
+
+  actual->Cancel();
+  actual.reset();
+  EXPECT_FALSE(weak.expired());
+
+  retained_read->set_value(
+      ReadType(google::storage::v2::BidiReadObjectResponse{}));
+  EXPECT_FALSE(read.get().has_value());
+  EXPECT_TRUE(weak.expired());
 }
 
 }  // namespace

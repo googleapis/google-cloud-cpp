@@ -23,6 +23,7 @@
 #include "google/cloud/storage/internal/async/checksum_helpers.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
+#include "google/cloud/storage/internal/async/hedged_open_stream.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/open_object.h"
@@ -51,6 +52,8 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
+#include "google/cloud/storage/internal/hedge_limiter.h"
+#include "google/cloud/storage/internal/hedged_read_metrics.h"
 #include "google/cloud/storage/internal/retry_logging.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
@@ -62,6 +65,8 @@
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
+#include <opentelemetry/metrics/provider.h>
+#include <chrono>
 #include <cstdint>
 #include <memory>
 #include <set>
@@ -150,6 +155,9 @@ std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
 /// Whether the retry loop opening a bidi read stream reports its retries.
 enum class OpenLogging { kEnabled, kDisabled };
 
+/// Whether the stream-open attempt is part of a hedged `Open()` race.
+enum class OpenHedging { kDisabled, kEnabled };
+
 /**
  * Creates the factory that opens a bidi read stream.
  *
@@ -175,12 +183,12 @@ OpenStreamFactory MakeOpenStreamFactory(
     std::shared_ptr<storage::AsyncRetryPolicy> retry,
     std::shared_ptr<storage::BackoffPolicy> backoff,
     google::cloud::internal::ImmutableOptions current,
-    char const* function_name, OpenLogging logging) {
+    char const* function_name, OpenLogging logging, OpenHedging hedging) {
   return OpenStreamFactory(
       [stub = std::move(stub), cq = std::move(cq), retry = std::move(retry),
        backoff = std::move(backoff), current = std::move(current),
-       function_name,
-       logging](google::storage::v2::BidiReadObjectRequest request) {
+       function_name, logging,
+       hedging](google::storage::v2::BidiReadObjectRequest request) {
         struct DummyRequest {};
 
         std::string resource =
@@ -188,7 +196,7 @@ OpenStreamFactory MakeOpenStreamFactory(
                 ? RetryLogResource(request.read_object_spec().bucket(),
                                    request.read_object_spec().object())
                 : std::string{};
-        auto call = [stub, request = std::move(request)](
+        auto call = [stub, request = std::move(request), hedging](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
@@ -196,10 +204,15 @@ OpenStreamFactory MakeOpenStreamFactory(
           // Every stream the descriptor opens (the first one, resumes, and
           // the extra streams of the multi-stream optimization) goes through
           // this factory, so this is where the service learns which client
-          // features are in play for the read.
+          // features are in play for the read. `kReadHedging` is set only on
+          // the initial hedged `Open()` attempts, not on unhedged descriptor
+          // secondary or resume streams.
           std::uint32_t features = 0;
           if (options->get<storage::EnableMultiStreamOptimizationOption>()) {
             features |= FeatureBit(TrackedFeature::kMultistreamInMrd);
+          }
+          if (hedging == OpenHedging::kEnabled) {
+            features |= FeatureBit(TrackedFeature::kReadHedging);
           }
           AddFeaturesHeader(*context, features);
           auto open = std::make_shared<OpenObject>(
@@ -239,7 +252,22 @@ AsyncConnectionImpl::AsyncConnectionImpl(
     : cq_(std::move(cq)),
       refresh_(std::move(refresh)),
       stub_(std::move(stub)),
-      options_(std::move(options)) {}
+      options_(std::move(options)) {
+  if (options_.get<storage_experimental::EnableReadHedgingOption>()) {
+    double const rate_limit =
+        options_.get<storage_experimental::ReadHedgeRateLimitOption>();
+    std::int64_t const max_concurrent =
+        options_.get<storage_experimental::MaxConcurrentHedgesOption>();
+    std::int64_t const max_total =
+        options_.get<storage_experimental::MaxTotalHedgesOption>();
+    // Allow bursts of up to one second worth of hedges.
+    hedge_limiter_ = std::make_shared<storage::internal::HedgeLimiter>(
+        rate_limit, rate_limit, max_concurrent, max_total);
+    hedged_read_metrics_ =
+        std::make_shared<storage::internal::HedgedReadMetrics>(
+            opentelemetry::metrics::Provider::GetMeterProvider());
+  }
+}
 
 future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
     GetBucketParams p) {
@@ -327,22 +355,39 @@ AsyncConnectionImpl::Open(OpenParams p) {
   // Get the policy factory and immediately create a policy.
   auto resume_policy = current->get<storage::ResumePolicyOption>()();
 
-  auto retry =
-      std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
-  auto backoff =
-      std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
-  auto const* function_name = __func__;
+  std::shared_ptr<storage::AsyncRetryPolicy> retry = retry_policy(*current);
+  std::shared_ptr<storage::BackoffPolicy> backoff = backoff_policy(*current);
+  char const* function_name = __func__;
   // The application is waiting on this open, so its retries are reported. So
   // are the descriptor's, with one exception below.
-  auto factory = MakeOpenStreamFactory(stub_, cq_, retry, backoff, current,
-                                       function_name, OpenLogging::kEnabled);
+  OpenStreamFactory factory =
+      MakeOpenStreamFactory(stub_, cq_, retry, backoff, current, function_name,
+                            OpenLogging::kEnabled, OpenHedging::kDisabled);
+
+  int const max_hedges =
+      hedge_limiter_ && !hedge_limiter_->IsTotalBudgetSpent() &&
+              current->get<storage_experimental::EnableReadHedgingOption>()
+          ? current->get<storage_experimental::MaxReadHedgesOption>()
+          : 0;
+  future<StatusOr<OpenStreamResult>> pending;
+  if (max_hedges > 0) {
+    HedgedOpenParams const params{
+        current->get<storage_experimental::ReadHedgeDelayOption>(), max_hedges};
+    OpenStreamFactory hedged_factory = MakeOpenStreamFactory(
+        stub_, cq_, retry, backoff, current, function_name,
+        OpenLogging::kEnabled, OpenHedging::kEnabled);
+    pending = HedgedOpenStream(cq_, std::move(hedged_factory),
+                               std::move(initial_request), retry, params,
+                               hedge_limiter_, hedged_read_metrics_, current);
+  } else {
+    pending = factory(std::move(initial_request));
+  }
+
   // Used only when the descriptor re-opens a stream that ended cleanly: see
   // `MakeOpenStreamFactory()` and `ObjectDescriptorImpl`.
-  auto clean_resume_factory = MakeOpenStreamFactory(
+  OpenStreamFactory clean_resume_factory = MakeOpenStreamFactory(
       stub_, cq_, std::move(retry), std::move(backoff), std::move(current),
-      function_name, OpenLogging::kDisabled);
-
-  auto pending = factory(std::move(initial_request));
+      function_name, OpenLogging::kDisabled, OpenHedging::kDisabled);
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
   return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
                        qfa = std::move(clean_resume_factory),
