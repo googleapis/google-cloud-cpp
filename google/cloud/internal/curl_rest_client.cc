@@ -21,6 +21,7 @@
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/rest_cancellation.h"
 #include "google/cloud/internal/ssl_ec_curves.h"
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
@@ -131,12 +132,14 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestContext const& context, RestRequest const& request,
     Options const& options) {
+  if (IsRestCancelled(options)) return RestCancelledError();
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl = std::make_unique<CurlImpl>(std::move(handle), handle_factory_,
                                          options, pqc_ec_curves_);
   if (credentials_) {
     auto auth_headers = credentials_->AuthenticationHeaders(
         std::chrono::system_clock::now(), endpoint_address_);
+    if (IsRestCancelled(options)) return RestCancelledError();
     if (!auth_headers.ok()) return std::move(auth_headers).status();
     for (auto& header : *auth_headers) {
       impl->SetHeader(std::move(header));

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
+#include "google/cloud/rest_options.h"
 #include "google/cloud/ssl_certificate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -93,9 +94,10 @@ class CurlImpl {
   ~CurlImpl();
 
   CurlImpl(CurlImpl const&) = delete;
-  CurlImpl(CurlImpl&&) = default;
+  // libcurl callbacks retain this object's address for the whole transfer.
+  CurlImpl(CurlImpl&&) = delete;
   CurlImpl& operator=(CurlImpl const&) = delete;
-  CurlImpl& operator=(CurlImpl&&) = default;
+  CurlImpl& operator=(CurlImpl&&) = delete;
 
   void SetHeader(HttpHeader header);
   void SetHeaders(HttpHeaders const& headers);
@@ -117,6 +119,10 @@ class CurlImpl {
 
   bool HasUnreadData() const;
   StatusOr<std::size_t> Read(absl::Span<char> output);
+
+  bool IsCancelled() const {
+    return cancellation_ && cancellation_->IsCancelled();
+  }
 
   // Called from libcurl callbacks for received data.
   std::size_t WriteCallback(absl::Span<char> response);
@@ -160,6 +166,7 @@ class CurlImpl {
   CurlHeaders request_headers_;
   CurlHandle handle_;
   CurlMulti multi_;
+  std::optional<experimental::RestCancellation> cancellation_;
 
   bool logging_enabled_;
   bool follow_location_;
