@@ -23,7 +23,12 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Determine if `status` represents a "Session not found" error.
+/**
+ * Determine if `status` represents a "Session not found" error.
+ *
+ * This includes the error the service returns for an expired multiplexed
+ * session, as the session must be replaced in both cases.
+ */
 bool IsSessionNotFound(google::cloud::Status const& status);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

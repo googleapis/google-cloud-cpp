@@ -56,6 +56,7 @@ using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
@@ -278,9 +279,10 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
 TEST_F(SessionPoolTest, MultiplexedCreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, CreateSession(_, _, _, _))
-      .WillRepeatedly(
-          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
+  // Both the initial creation and the retry in `Multiplexed()` fail.
+  EXPECT_CALL(*mock, CreateSession(_, _, _, _)).Times(2).WillRepeatedly([] {
+    return Status(StatusCode::kInternal, "init failure");
+  });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), {});
@@ -288,6 +290,47 @@ TEST_F(SessionPoolTest, MultiplexedCreateError) {
   auto session = pool->Multiplexed();
   EXPECT_THAT(session,
               StatusIs(StatusCode::kInternal, HasSubstr("init failure")));
+}
+
+TEST_F(SessionPoolTest, MultiplexedCreateRetriedAfterError) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(
+          Return(ByMove(Status(StatusCode::kPermissionDenied, "init failure"))))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession("multiplexed"))));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  std::shared_ptr<SessionPool> pool =
+      MakeTestSessionPool(db, {mock}, threads.cq());
+
+  // The failure of the initial creation is not permanent.
+  StatusOr<SessionHolder> session = pool->Multiplexed();
+  ASSERT_STATUS_OK(session);
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
+}
+
+TEST_F(SessionPoolTest, MultiplexedBadSessionReplaced) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession("multiplexed1"))))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession("multiplexed2"))));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  std::shared_ptr<SessionPool> pool =
+      MakeTestSessionPool(db, {mock}, threads.cq());
+
+  StatusOr<SessionHolder> s1 = pool->Multiplexed();
+  ASSERT_STATUS_OK(s1);
+  EXPECT_THAT((*s1)->session_name(), Eq("multiplexed1"));
+
+  // The connection marks the session bad when the service reports it is gone.
+  (*s1)->set_bad();
+
+  StatusOr<SessionHolder> s2 = pool->Multiplexed();
+  ASSERT_STATUS_OK(s2);
+  EXPECT_THAT((*s2)->session_name(), Eq("multiplexed2"));
 }
 
 TEST_F(SessionPoolTest, ReuseSession) {
@@ -322,16 +365,13 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
   EXPECT_CALL(
       *mock,
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
-      .WillOnce(
-          [labels](grpc::ClientContext&, Options const&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    google::spanner::v1::CreateSessionRequest const& request,
                    spanner_internal::OperationContext&) {
-            auto const& request_labels = request.session().labels();
-            EXPECT_THAT((std::map<std::string, std::string>(
-                            request_labels.begin(), request_labels.end())),
-                        Eq(labels));
-            return MakeMultiplexedSession("multiplexed");
-          });
+        // The service rejects labels on multiplexed sessions.
+        EXPECT_THAT(request.session().labels(), IsEmpty());
+        return MakeMultiplexedSession("multiplexed");
+      });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -431,7 +471,7 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _, _))
       .WillOnce(Return(make_ready_future(StatusOr<google::spanner::v1::Session>(
-          Status(StatusCode::kResourceExhausted, "retry policy exhausted")))));
+          Status(StatusCode::kPermissionDenied, "permission denied")))));
 
   auto impl = std::make_shared<FakeCompletionQueueImpl>();
   auto background_interval =
@@ -458,6 +498,42 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
   auto s2 = pool->Multiplexed();
   ASSERT_STATUS_OK(s2);
   EXPECT_THAT((*s2)->session_name(), Eq("multiplexed"));
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  impl->SimulateCompletion(false);
+}
+
+TEST_F(SessionPoolTest, MultilpexedSessionReplacementAfterCreateFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed()), _))
+      .WillOnce(Return(
+          ByMove(Status(StatusCode::kPermissionDenied, "permission denied"))));
+  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _, _))
+      .WillOnce(Return(make_ready_future(StatusOr<google::spanner::v1::Session>(
+          MakeMultiplexedSession({"multiplexed"})))));
+
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto background_interval =
+      std::chrono::duration_cast<std::chrono::minutes>(std::chrono::seconds(1));
+  auto clock = std::make_shared<FakeSteadyClock>();
+  std::shared_ptr<SessionPool> pool = MakeTestSessionPool(
+      db, {mock}, CompletionQueue(impl),
+      Options{}
+          .set<SessionPoolClockOption>(clock)
+          .set<MultiplexedSessionBackgroundWorkIntervalOption>(
+              background_interval));
+
+  // The initial creation failed, so the background work must create a new
+  // session.
+  clock->AdvanceTime(background_interval);
+  impl->SimulateCompletion(true);
+
+  StatusOr<SessionHolder> session = pool->Multiplexed();
+  ASSERT_STATUS_OK(session);
+  EXPECT_THAT((*session)->session_name(), Eq("multiplexed"));
 
   // Cancel all pending operations, satisfying any remaining futures.
   impl->SimulateCompletion(false);

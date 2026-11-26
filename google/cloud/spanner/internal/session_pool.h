@@ -123,8 +123,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * A multiplexed session is long-lived, but does not require keep-alive
    * requests when idle.
    *
-   * May fallback to a "regular" session if no multiplexed session has
-   * been allocated.
+   * If there is no usable multiplexed session (for example, because the
+   * initial creation failed, or the service reported the session as gone),
+   * this waits for any creation in progress, and creates a new session if
+   * needed.
    *
    * @return a `SessionHolder` on success (which is guaranteed not to be
    * `nullptr`), or an error.

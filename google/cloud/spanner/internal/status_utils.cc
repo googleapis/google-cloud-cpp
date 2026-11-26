@@ -27,6 +27,11 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bool IsSessionNotFound(google::cloud::Status const& status) {
+  // The service reports an expired multiplexed session as a
+  // `kFailedPrecondition` error, without any `ResourceInfo` details.
+  if (status.code() == StatusCode::kFailedPrecondition) {
+    return absl::StrContains(status.message(), "Multiplexed session expired");
+  }
   if (status.code() != StatusCode::kNotFound) return false;
 
   // In the case of `kNotFound` errors, we can extract the resource

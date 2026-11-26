@@ -4507,6 +4507,58 @@ TEST(ConnectionImplTest, RollbackSessionNotFound) {
   EXPECT_THAT(txn, HasBadSession());
 }
 
+// The service expires multiplexed sessions after a fixed lifetime. The client
+// must replace the expired session and rerun the transaction.
+TEST(ConnectionImplTest, CommitMultiplexedSessionExpired) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed(), _))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed1"}))))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed2"}))));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::BeginTransactionRequest const& request,
+                   auto const&) {
+        EXPECT_EQ("multiplexed1", request.session());
+        return Status(StatusCode::kFailedPrecondition,
+                      "Multiplexed session expired.");
+      })
+      .WillOnce(
+          [&token](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::BeginTransactionRequest const& request,
+                   auto const&) {
+            EXPECT_EQ("multiplexed2", request.session());
+            return MakeTestTransaction(token, "txn");
+          });
+  spanner::Timestamp const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  EXPECT_CALL(*mock, Commit(_, _,
+                            AllOf(HasSession("multiplexed2"),
+                                  HasNakedTransactionId("txn"),
+                                  PrecommitTokenIs("test-precommit-token", 1)),
+                            _))
+      .WillOnce(Return(MakeCommitResponse(commit_timestamp)));
+
+  std::shared_ptr<ConnectionImpl> conn = MakeConnectionImpl(db, mock);
+  spanner::Client client(conn);
+  StatusOr<spanner::CommitResult> commit = client.Commit(
+      [](spanner::Transaction const&) -> StatusOr<spanner::Mutations> {
+        return spanner::Mutations{
+            spanner::MakeInsertMutation("table-name", {}, std::string{"mut"})};
+      },
+      spanner::LimitedErrorCountTransactionRerunPolicy(1).clone(),
+      spanner::ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                        std::chrono::microseconds(1), 2.0)
+          .clone());
+  ASSERT_STATUS_OK(commit);
+  EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
+}
+
 TEST(ConnectionImplTest, ReadRequestOrderByParameterUnspecified) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
