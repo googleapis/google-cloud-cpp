@@ -257,8 +257,9 @@ TEST(ObjectRequestsTest, CopyAllOptions) {
   EXPECT_THAT(actual, HasSubstr("destinationKmsKeyName=test-only-kms-key"));
   EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
   EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
-  // /bin/echo -n ABCD1234 | openssl base64 -e
-  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: MTIzNEFCQ0Q="));
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: [censored]"));
+  // /bin/echo -n 1234ABCD | openssl base64
+  EXPECT_THAT(actual, Not(HasSubstr("MTIzNEFCQ0Q=")));
   // /bin/echo -n 1234ABCD | sha256sum | awk '{printf("%s", $1);}' |
   //     xxd -r -p | openssl base64
   EXPECT_THAT(actual,
@@ -276,9 +277,10 @@ TEST(ObjectRequestsTest, CopyAllOptions) {
   EXPECT_THAT(actual, HasSubstr("sourceGeneration=7"));
   EXPECT_THAT(actual,
               HasSubstr("x-goog-copy-source-encryption-algorithm: AES256"));
-  // /bin/echo -n ABCD1234 | openssl base64 -e
   EXPECT_THAT(actual,
-              HasSubstr("x-goog-copy-source-encryption-key: QUJDRDEyMzQ="));
+              HasSubstr("x-goog-copy-source-encryption-key: [censored]"));
+  // /bin/echo -n ABCD1234 | openssl base64
+  EXPECT_THAT(actual, Not(HasSubstr("QUJDRDEyMzQ=")));
   // /bin/echo -n ABCD1234 | sha256sum | awk '{printf("%s", $1);}' |
   //     xxd -r -p | openssl base64
   EXPECT_THAT(actual,
@@ -414,8 +416,9 @@ TEST(ObjectRequestsTest, Update) {
   EXPECT_THAT(actual, HasSubstr("content_type=application/json"));
   EXPECT_THAT(actual, HasSubstr("generation=7"));
   EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
-  // /bin/echo -n 1234ABCD | openssl base64 -e
-  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: MTIzNEFCQ0Q="));
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: [censored]"));
+  // /bin/echo -n 1234ABCD | openssl base64
+  EXPECT_THAT(actual, Not(HasSubstr("MTIzNEFCQ0Q=")));
   // /bin/echo -n 1234ABCD | sha256sum | awk '{printf("%s", $1);}' |
   //     xxd -r -p | openssl base64
   EXPECT_THAT(actual,
@@ -1076,8 +1079,9 @@ TEST(PatchObjectRequestTest, Builder) {
   EXPECT_THAT(actual, HasSubstr("contentType"));
   EXPECT_THAT(actual, HasSubstr("application/json"));
   EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
-  // /bin/echo -n ABCD1234 | sha256sum #openssl base64 -e
-  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: QUJDRDEyMzQ="));
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: [censored]"));
+  // /bin/echo -n ABCD1234 | openssl base64
+  EXPECT_THAT(actual, Not(HasSubstr("QUJDRDEyMzQ=")));
   // /bin/echo -n ABCD1234 | sha256sum | awk '{printf("%s", $1);}' |
   //     xxd -r -p | openssl base64
   EXPECT_THAT(actual,

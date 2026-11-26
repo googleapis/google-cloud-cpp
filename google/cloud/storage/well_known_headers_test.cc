@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/well_known_headers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 #include <string>
 
 namespace google {
@@ -23,6 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 /// @test Verify that CustomHeader works as expected.
 TEST(WellKnownHeader, CustomHeader) {
@@ -41,8 +43,9 @@ TEST(WellKnownHeader, EncryptionKey) {
   os << header;
   auto actual = os.str();
   std::string prefix = "x-goog-encryption";
-  EXPECT_THAT(actual, HasSubstr(prefix + "-algorithm: test-algo"));
-  EXPECT_THAT(actual, HasSubstr(prefix + "-key: test-fake-key"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-algorithm: test-algo\n"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-key: [censored]\n"));
+  EXPECT_THAT(actual, Not(HasSubstr("test-fake-key")));
   EXPECT_THAT(actual, HasSubstr(prefix + "-key-sha256: test-sha"));
 }
 
@@ -78,6 +81,10 @@ TEST(WellKnownHeader, EncryptionKeyFromBase64) {
   EXPECT_EQ(expected.value().algorithm, actual.value().algorithm);
   EXPECT_EQ(expected.value().key, actual.value().key);
   EXPECT_EQ(expected.value().sha256, actual.value().sha256);
+  std::ostringstream os;
+  os << actual;
+  EXPECT_THAT(os.str(), HasSubstr("x-goog-encryption-key: [censored]\n"));
+  EXPECT_THAT(os.str(), Not(HasSubstr(expected.value().key)));
 }
 
 /// @test Verify that SourceEncryptionKey streaming works as expected.
@@ -88,9 +95,42 @@ TEST(WellKnownHeader, SourceEncryptionKey) {
   os << header;
   auto actual = os.str();
   std::string prefix = "x-goog-copy-source-encryption";
-  EXPECT_THAT(actual, HasSubstr(prefix + "-algorithm: test-algo"));
-  EXPECT_THAT(actual, HasSubstr(prefix + "-key: test-fake-key"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-algorithm: test-algo\n"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-key: [censored]\n"));
+  EXPECT_THAT(actual, Not(HasSubstr("test-fake-key")));
   EXPECT_THAT(actual, HasSubstr(prefix + "-key-sha256: test-sha"));
+}
+
+/// @test Verify that EncryptionKey and SourceEncryptionKey with an empty key
+/// value format as expected.
+TEST(WellKnownHeader, EncryptionKeyEmptyString) {
+  EncryptionKey const key(EncryptionKeyData{"AES256", "", "test-sha"});
+  std::ostringstream key_os;
+  key_os << key;
+  EXPECT_THAT(key_os.str(), HasSubstr("x-goog-encryption-key: [censored]\n"));
+
+  SourceEncryptionKey const source_key(
+      EncryptionKeyData{"AES256", "", "test-sha"});
+  std::ostringstream source_os;
+  source_os << source_key;
+  EXPECT_THAT(source_os.str(),
+              HasSubstr("x-goog-copy-source-encryption-key: [censored]\n"));
+}
+
+/// @test Verify that an unset EncryptionKey streams `<not set>`.
+TEST(WellKnownHeader, EncryptionKeyUnset) {
+  EncryptionKey const header;
+  std::ostringstream os;
+  os << header;
+  EXPECT_EQ(os.str(), "x-goog-encryption-*: <not set>");
+}
+
+/// @test Verify that an unset SourceEncryptionKey streams `<not set>`.
+TEST(WellKnownHeader, SourceEncryptionKeyUnset) {
+  SourceEncryptionKey const header;
+  std::ostringstream os;
+  os << header;
+  EXPECT_EQ(os.str(), "x-goog-copy-source-encryption-*: <not set>");
 }
 
 /// @test Verify that SourceEncryptionKey::FromBinaryKey works as expected.
@@ -121,6 +161,11 @@ TEST(WellKnownHeader, SourceEncryptionKeyFromBase64) {
   EXPECT_EQ(expected.value().algorithm, actual.value().algorithm);
   EXPECT_EQ(expected.value().key, actual.value().key);
   EXPECT_EQ(expected.value().sha256, actual.value().sha256);
+  std::ostringstream os;
+  os << actual;
+  EXPECT_THAT(os.str(),
+              HasSubstr("x-goog-copy-source-encryption-key: [censored]\n"));
+  EXPECT_THAT(os.str(), Not(HasSubstr(expected.value().key)));
 }
 
 /// @test Verify that CreateKeyFromGenerator works as expected.

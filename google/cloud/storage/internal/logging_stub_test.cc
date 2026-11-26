@@ -13,14 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_stub.h"
+#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -33,7 +38,9 @@ namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 
 class MockLogBackend : public google::cloud::LogBackend {
@@ -283,6 +290,96 @@ TEST_F(LoggingStubTest, ReadObjectSuccessLogsOnlyTheRequest) {
   rest_internal::RestContext context;
   client.ReadObject(context, Options{},
                     ReadObjectRangeRequest("my-bucket", "my-object"));
+}
+
+class LoggingStubComponentTest
+    : public LoggingStubTest,
+      public ::testing::WithParamInterface<std::string_view> {};
+
+/// @test Verify `EncryptionKey` and `SourceEncryptionKey` option formatting
+/// across `LoggingStub` components.
+TEST_P(LoggingStubComponentTest, FormatsEncryptionKeyOptions) {
+  // /bin/echo -n "0123456789-ABCDEFGHIJ-0123456789" | openssl base64
+  constexpr std::string_view kDestKeyBinary =
+      "0123456789-ABCDEFGHIJ-0123456789";
+  constexpr std::string_view kDestKeyBase64 =
+      "MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=";
+  // /bin/echo -n "9876543210-JIHGFEDCBA-9876543210" | openssl base64
+  constexpr std::string_view kSourceKeyBinary =
+      "9876543210-JIHGFEDCBA-9876543210";
+  constexpr std::string_view kSourceKeyBase64 =
+      "OTg3NjU0MzIxMC1KSUhHRkVEQ0JBLTk4NzY1NDMyMTA=";
+
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, RewriteObject)
+      .WillOnce(Return(StatusOr<RewriteObjectResponse>(TransientError())));
+
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
+      .WillOnce([kDestKeyBase64, kSourceKeyBase64](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("RewriteObjectRequest={"));
+        EXPECT_THAT(lr.message, HasSubstr("x-goog-encryption-key: [censored]"));
+        EXPECT_THAT(lr.message,
+                    HasSubstr("x-goog-copy-source-encryption-key: [censored]"));
+        EXPECT_THAT(lr.message, Not(HasSubstr(kDestKeyBase64)));
+        EXPECT_THAT(lr.message, Not(HasSubstr(kSourceKeyBase64)));
+      })
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("status={"));
+      });
+
+  std::unique_ptr<storage_internal::GenericStub> client =
+      storage_internal::DecorateStub(
+          Options{}.set<LoggingComponentsOption>({std::string{GetParam()}}),
+          std::move(mock));
+  rest_internal::RestContext context;
+  RewriteObjectRequest request("src-bucket", "src-object", "dst-bucket",
+                               "dst-object", "");
+  request.set_multiple_options(
+      EncryptionKey::FromBinaryKey(std::string{kDestKeyBinary}),
+      SourceEncryptionKey::FromBinaryKey(std::string{kSourceKeyBinary}));
+  (void)client->RewriteObject(context, Options{}, request);
+}
+
+INSTANTIATE_TEST_SUITE_P(LoggingComponents, LoggingStubComponentTest,
+                         ::testing::Values("raw-client", "rpc"));
+
+/// @test Verify `EncryptionKey` option formatting when logging is enabled via
+/// `CLOUD_STORAGE_ENABLE_TRACING`.
+TEST_F(LoggingStubTest, EnvTracingFormatsEncryptionKey) {
+  // /bin/echo -n "0123456789-ABCDEFGHIJ-0123456789" | openssl base64
+  constexpr std::string_view kKeyBinary = "0123456789-ABCDEFGHIJ-0123456789";
+  constexpr std::string_view kKeyBase64 =
+      "MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=";
+
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "raw-client");
+  // `DefaultOptions` logs an INFO message when applying the env var.
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("Enabling logging for raw-client"));
+      });
+  Options const opts = DefaultOptions(Options{});
+  ::testing::Mock::VerifyAndClearExpectations(log_backend_.get());
+
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce(Return(
+          StatusOr<std::unique_ptr<ObjectReadSource>>(TransientError())));
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
+      .WillOnce([kKeyBase64](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("ReadObjectRangeRequest={"));
+        EXPECT_THAT(lr.message, HasSubstr("x-goog-encryption-key: [censored]"));
+        EXPECT_THAT(lr.message, Not(HasSubstr(kKeyBase64)));
+      })
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("status={"));
+      });
+
+  std::unique_ptr<storage_internal::GenericStub> client =
+      storage_internal::DecorateStub(opts, std::move(mock));
+  rest_internal::RestContext context;
+  ReadObjectRangeRequest request("my-bucket", "my-object");
+  request.set_option(EncryptionKey::FromBinaryKey(std::string{kKeyBinary}));
+  (void)client->ReadObject(context, opts, request);
 }
 
 }  // namespace

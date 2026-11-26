@@ -56,7 +56,7 @@ std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs) {
   char const* prefix = EncryptionKey::prefix();
   if (rhs.has_value()) {
     return os << prefix << "algorithm: " << rhs.value().algorithm << "\n"
-              << prefix << "key: " << rhs.value().key << "\n"
+              << prefix << "key: [censored]\n"
               << prefix << "key-sha256: " << rhs.value().sha256;
   }
   return os << prefix << "*: <not set>";
@@ -74,7 +74,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs) {
   char const* prefix = SourceEncryptionKey::prefix();
   if (rhs.has_value()) {
     return os << prefix << "algorithm: " << rhs.value().algorithm << "\n"
-              << prefix << "key: " << rhs.value().key << "\n"
+              << prefix << "key: [censored]\n"
               << prefix << "key-sha256: " << rhs.value().sha256;
   }
   return os << prefix << "*: <not set>";

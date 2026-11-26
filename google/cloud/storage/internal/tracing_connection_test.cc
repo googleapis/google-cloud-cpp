@@ -13,15 +13,21 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/tracing_connection.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <thread>
 #include <utility>
 
@@ -32,12 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::MockClient;
+using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanIsRoot;
@@ -48,7 +56,10 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pointee;
+using ::testing::Property;
 using ::testing::Return;
 
 TEST(TracingClientTest, Options) {
@@ -1805,6 +1816,109 @@ TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
   (void)under_test.GetObjectMetadata(
       storage::internal::GetObjectMetadataRequest("test-bucket",
                                                   "test-object"));
+}
+
+/// @test Verify `EncryptionKey` option formatting in file-transfer error spans.
+TEST(TracingClientTest, FileTransferErrorFormatsEncryptionKey) {
+  // /bin/echo -n "0123456789-ABCDEFGHIJ-0123456789" | openssl base64
+  constexpr std::string_view kKeyBinary = "0123456789-ABCDEFGHIJ-0123456789";
+  constexpr std::string_view kKeyBase64 =
+      "MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=";
+  storage::EncryptionKey const key =
+      storage::EncryptionKey::FromBinaryKey(std::string{kKeyBinary});
+
+  std::shared_ptr<testing_util::SpanCatcher> span_catcher =
+      InstallSpanCatcher();
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  Options const opts =
+      Options{}
+          .set<OpenTelemetryTracingOption>(true)
+          .set<storage_experimental::OTelSpanEnrichmentOption>(false);
+  std::shared_ptr<storage::internal::StorageConnection> connection =
+      MakeStorageConnection(opts, std::move(mock));
+  google::cloud::internal::OptionsSpan const options_span(
+      connection->options());
+
+  storage::internal::InsertObjectMediaRequest upload_request("test-bucket",
+                                                             "test-object", "");
+  upload_request.set_option(key);
+  StatusOr<std::unique_ptr<std::string>> const upload_result =
+      connection->UploadFileSimple("/no/such/file/exists.txt", 123,
+                                   upload_request);
+  EXPECT_THAT(upload_result, StatusIs(StatusCode::kNotFound));
+
+  storage::internal::ReadObjectRangeRequest download_request("test-bucket",
+                                                             "test-object");
+  download_request.set_option(key);
+  storage::ObjectReadStream stream;
+  Status const download_status = connection->DownloadStreamToFile(
+      std::move(stream), "/no/such/directory/exists.bin", download_request);
+  EXPECT_THAT(download_status, StatusIs(StatusCode::kInvalidArgument));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanNamed("storage::Client::UploadFile/UploadFileSimple"),
+                Pointee(Property(
+                    &opentelemetry::sdk::trace::SpanData::GetDescription,
+                    AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                          Not(HasSubstr(kKeyBase64))))),
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    "gl-cpp.error.message",
+                    AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                          Not(HasSubstr(kKeyBase64)))))),
+          AllOf(
+              SpanNamed("storage::Client::DownloadToFile/DownloadStreamToFile"),
+              Pointee(
+                  Property(&opentelemetry::sdk::trace::SpanData::GetDescription,
+                           AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                                 Not(HasSubstr(kKeyBase64))))),
+              SpanHasAttributes(OTelAttribute<std::string>(
+                  "gl-cpp.error.message",
+                  AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                        Not(HasSubstr(kKeyBase64))))))));
+}
+
+/// @test Verify `EncryptionKey` option formatting in error spans enabled via
+/// `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING`.
+TEST(TracingClientTest, EnvTracingFormatsEncryptionKey) {
+  // /bin/echo -n "0123456789-ABCDEFGHIJ-0123456789" | openssl base64
+  constexpr std::string_view kKeyBinary = "0123456789-ABCDEFGHIJ-0123456789";
+  constexpr std::string_view kKeyBase64 =
+      "MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=";
+
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", "1");
+  std::shared_ptr<testing_util::SpanCatcher> span_catcher =
+      InstallSpanCatcher();
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  Options const opts = storage::internal::DefaultOptions(
+      Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(false));
+  std::shared_ptr<storage::internal::StorageConnection> connection =
+      MakeStorageConnection(opts, std::move(mock));
+  google::cloud::internal::OptionsSpan const options_span(
+      connection->options());
+
+  storage::internal::ResumableUploadRequest request("test-bucket",
+                                                    "test-object");
+  request.set_option(
+      storage::EncryptionKey::FromBinaryKey(std::string{kKeyBinary}));
+  StatusOr<std::unique_ptr<std::istream>> const result =
+      connection->UploadFileResumable("/no/such/file/exists.txt", request);
+  EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanNamed("storage::Client::UploadFile/UploadFileResumable"),
+          Pointee(Property(&opentelemetry::sdk::trace::SpanData::GetDescription,
+                           AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                                 Not(HasSubstr(kKeyBase64))))),
+          SpanHasAttributes(OTelAttribute<std::string>(
+              "gl-cpp.error.message",
+              AllOf(HasSubstr("x-goog-encryption-key: [censored]"),
+                    Not(HasSubstr(kKeyBase64))))))));
 }
 
 }  // namespace
