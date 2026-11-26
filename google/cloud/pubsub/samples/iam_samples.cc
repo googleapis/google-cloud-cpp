@@ -226,17 +226,15 @@ void AutoRun(std::vector<std::string> const& argv) {
       pubsub_admin::MakeSubscriptionAdminConnection());
 
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
-  auto topic = topic_admin_client
-                   .CreateTopic(pubsub::Topic(project_id, topic_id).FullName())
-                   .value();
+  topic_admin_client.CreateTopic(pubsub::Topic(project_id, topic_id).FullName())
+      .value();
 
   std::cout << "\nCreate subscription (" << subscription_id << ")" << std::endl;
-  auto subscription =
-      subscription_admin_client
-          .CreateSubscription(
-              pubsub::Subscription(project_id, subscription_id).FullName(),
-              pubsub::Topic(project_id, topic_id).FullName(), {}, {})
-          .value();
+  subscription_admin_client
+      .CreateSubscription(
+          pubsub::Subscription(project_id, subscription_id).FullName(),
+          pubsub::Topic(project_id, topic_id).FullName(), {}, {})
+      .value();
 
   std::cout << "\nRunning GetTopicPolicy() sample" << std::endl;
   GetTopicPolicy({project_id, topic_id});
