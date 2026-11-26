@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/metrics_error_type.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include <gtest/gtest.h>
+#include <initializer_list>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -105,6 +108,103 @@ TEST(MetricsErrorTypeTest, HttpStatusMetadataOverridesCoalescedUnavailable) {
       StatusCode::kPermissionDenied, "denied",
       ErrorInfo{"", "googleapis.com", {{"http_status_code", "429"}}});
   EXPECT_EQ(ComputeErrorType(non_unavailable), "PERMISSION_DENIED");
+}
+
+TEST(MetricsErrorTypeTest, ClientTimeoutsAndCurlTransportErrors) {
+  EXPECT_EQ(ComputeErrorType(google::cloud::internal::DeadlineExceededError(
+                "Retry policy exhausted before first request attempt",
+                GCP_ERROR_INFO())),
+            "TIMEOUT");
+  EXPECT_EQ(ComputeErrorType(google::cloud::internal::UnavailableError(
+                "timeout [30s] while waiting for Write()", GCP_ERROR_INFO())),
+            "UNAVAILABLE");
+  EXPECT_EQ(ComputeErrorType(
+                Status(StatusCode::kDeadlineExceeded,
+                       "Deadline expired before operation could complete",
+                       ErrorInfo{"", "googleapis.com", {}})),
+            "DEADLINE_EXCEEDED");
+  EXPECT_EQ(
+      ComputeErrorType(Status(
+          StatusCode::kUnavailable,
+          "PerformWork() - CURL error [6]=Couldn't resolve host name",
+          ErrorInfo{"", "googleapis.com", {{"http_status_code", "429"}}})),
+      "RESOURCE_EXHAUSTED");
+
+  struct TestCase {
+    StatusCode code;
+    char const* msg;
+    char const* expected;
+  } const cases[] = {
+      {StatusCode::kDeadlineExceeded,
+       "Deadline exceeded waiting for data in ReadObject", "TIMEOUT"},
+      {StatusCode::kDeadlineExceeded, "timeout [30s] while waiting for Write()",
+       "TIMEOUT"},
+      {StatusCode::kDeadlineExceeded,
+       "PerformWork() - CURL error [28]=Operation timed out", "TIMEOUT"},
+      {StatusCode::kDeadlineExceeded, "Deadline Exceeded", "DEADLINE_EXCEEDED"},
+      {StatusCode::kDeadlineExceeded, "server timeout [10s]",
+       "DEADLINE_EXCEEDED"},
+      {StatusCode::kDeadlineExceeded, "rpc [10s] while waiting for server",
+       "DEADLINE_EXCEEDED"},
+      {StatusCode::kUnavailable,
+       "PerformWork() - CURL error [6]=Couldn't resolve host name",
+       "DNS_FAILURE"},
+      {StatusCode::kUnavailable,
+       "PerformWork() - CURL error [35]=SSL connect error", "TLS_FAILURE"},
+      {StatusCode::kUnavailable,
+       "PerformWork() - CURL error [98]=Client cert error", "TLS_FAILURE"},
+      {StatusCode::kUnknown,
+       "PerformWork() - CURL error [60]=Peer certificate cannot be verified",
+       "TLS_FAILURE"},
+      {StatusCode::kUnavailable,
+       "PerformWork() - CURL error [7]=Failed to connect to host",
+       "CONNECTION_ERROR"},
+      {StatusCode::kUnavailable,
+       "PerformWork() - CURL error [56]=Failure when receiving data",
+       "CONNECTION_ERROR"},
+      {StatusCode::kUnavailable,
+       "PerformWork() - CURL error [96]=QUIC connect error",
+       "CONNECTION_ERROR"},
+      {StatusCode::kUnknown, "PerformWork() - CURL error [6]=Unknown option",
+       "UNKNOWN"},
+      {StatusCode::kInvalidArgument,
+       "PerformWork() - CURL error [6]=Couldn't resolve host name",
+       "INVALID_ARGUMENT"},
+      {StatusCode::kInvalidArgument,
+       "PerformWork() - CURL error [60]=Peer certificate cannot be verified",
+       "INVALID_ARGUMENT"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error [2]=Failed init",
+       "UNAVAILABLE"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error [abc]=malformed",
+       "UNAVAILABLE"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error [6x]=malformed",
+       "UNAVAILABLE"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error []=empty",
+       "UNAVAILABLE"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error [6",
+       "UNAVAILABLE"},
+  };
+  for (auto const& c : cases) {
+    EXPECT_EQ(ComputeErrorType(Status(c.code, c.msg)), c.expected)
+        << "code=" << StatusCodeToString(c.code) << ", msg=" << c.msg;
+  }
+
+  auto check_curl_codes = [](StatusCode code, std::initializer_list<int> codes,
+                             char const* expected) {
+    for (int curl_code : codes) {
+      std::string const msg =
+          "PerformWork() - CURL error [" + std::to_string(curl_code) + "]=err";
+      EXPECT_EQ(ComputeErrorType(Status(code, msg)), expected)
+          << "code=" << StatusCodeToString(code) << ", curl_code=" << curl_code;
+    }
+  };
+  check_curl_codes(StatusCode::kUnavailable, {5, 6}, "DNS_FAILURE");
+  check_curl_codes(StatusCode::kUnavailable, {35, 66, 90, 91, 98},
+                   "TLS_FAILURE");
+  check_curl_codes(StatusCode::kUnknown,
+                   {53, 54, 58, 59, 60, 64, 77, 80, 82, 83}, "TLS_FAILURE");
+  check_curl_codes(StatusCode::kUnavailable, {7, 18, 52, 55, 56, 65, 89, 96},
+                   "CONNECTION_ERROR");
 }
 
 }  // namespace
