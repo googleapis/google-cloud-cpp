@@ -110,7 +110,6 @@ std::string_view ClassifyCurlOrTransportError(Status const& status) {
     }
   }
   switch (*curl_code) {
-    case 51:  // CURLE_PEER_FAILED_VERIFICATION (libcurl < 7.62)
     case 53:  // CURLE_SSL_ENGINE_NOTFOUND
     case 54:  // CURLE_SSL_ENGINE_SETFAILED
     case 58:  // CURLE_SSL_CERTPROBLEM

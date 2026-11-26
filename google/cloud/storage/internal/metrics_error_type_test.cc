@@ -16,6 +16,8 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include <gtest/gtest.h>
+#include <initializer_list>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -186,6 +188,23 @@ TEST(MetricsErrorTypeTest, ClientTimeoutsAndCurlTransportErrors) {
     EXPECT_EQ(ComputeErrorType(Status(c.code, c.msg)), c.expected)
         << "code=" << StatusCodeToString(c.code) << ", msg=" << c.msg;
   }
+
+  auto check_curl_codes = [](StatusCode code, std::initializer_list<int> codes,
+                             char const* expected) {
+    for (int curl_code : codes) {
+      std::string const msg =
+          "PerformWork() - CURL error [" + std::to_string(curl_code) + "]=err";
+      EXPECT_EQ(ComputeErrorType(Status(code, msg)), expected)
+          << "code=" << StatusCodeToString(code) << ", curl_code=" << curl_code;
+    }
+  };
+  check_curl_codes(StatusCode::kUnavailable, {5, 6}, "DNS_FAILURE");
+  check_curl_codes(StatusCode::kUnavailable, {35, 66, 90, 91, 98},
+                   "TLS_FAILURE");
+  check_curl_codes(StatusCode::kUnknown,
+                   {53, 54, 58, 59, 60, 64, 77, 80, 82, 83}, "TLS_FAILURE");
+  check_curl_codes(StatusCode::kUnavailable, {7, 18, 52, 55, 56, 65, 89, 96},
+                   "CONNECTION_ERROR");
 }
 
 }  // namespace
