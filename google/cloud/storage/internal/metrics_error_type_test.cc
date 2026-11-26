@@ -175,6 +175,10 @@ TEST(MetricsErrorTypeTest, ClientTimeoutsAndCurlTransportErrors) {
        "UNAVAILABLE"},
       {StatusCode::kUnavailable, "PerformWork() - CURL error [abc]=malformed",
        "UNAVAILABLE"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error [6x]=malformed",
+       "UNAVAILABLE"},
+      {StatusCode::kUnavailable, "PerformWork() - CURL error []=empty",
+       "UNAVAILABLE"},
       {StatusCode::kUnavailable, "PerformWork() - CURL error [6",
        "UNAVAILABLE"},
   };
