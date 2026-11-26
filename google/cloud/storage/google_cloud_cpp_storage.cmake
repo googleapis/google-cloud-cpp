@@ -67,6 +67,8 @@ add_library(
     idempotency_policy.cc
     idempotency_policy.h
     include_folders_as_prefixes.h
+    internal/attempt_metrics.cc
+    internal/attempt_metrics.h
     internal/base64.cc
     internal/base64.h
     internal/binary_data_as_debug_string.h
@@ -436,6 +438,7 @@ if (BUILD_TESTING)
         hashing_options_test.cc
         hmac_key_metadata_test.cc
         idempotency_policy_test.cc
+        internal/attempt_metrics_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_metadata_cache_test.cc
