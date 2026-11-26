@@ -63,8 +63,8 @@ inline constexpr std::array<std::string_view, 9>
 /// buckets.
 inline constexpr std::array<std::string_view, 2>
     kStorageSizeHistogramInstruments = {{
-        "gcp.storage.client.request.body.size",
-        "gcp.storage.client.response.body.size",
+        kRequestBodySizeMetric,
+        kResponseBodySizeMetric,
     }};
 
 /**

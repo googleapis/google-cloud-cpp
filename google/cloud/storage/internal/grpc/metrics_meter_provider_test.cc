@@ -28,6 +28,7 @@
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
 #include <cstddef>
+#include <cstdint>
 #include <mutex>
 #include <set>
 #include <string>
@@ -314,16 +315,20 @@ TEST(GrpcMetricsExporter, ValidateStorageClientHistograms) {
   auto meter = provider->GetMeter(kStorageMeterName, version_string());
   std::vector<opentelemetry::nostd::unique_ptr<
       opentelemetry::metrics::Histogram<double>>>
-      instruments;
+      latency_instruments;
   for (std::string_view name : kStorageLatencyHistogramInstruments) {
-    instruments.push_back(meter->CreateDoubleHistogram(
+    latency_instruments.push_back(meter->CreateDoubleHistogram(
         std::string(name), "test-only-description", "s"));
-    instruments.back()->Record(1.0, opentelemetry::context::Context{});
+    latency_instruments.back()->Record(1.0, opentelemetry::context::Context{});
   }
+  std::vector<opentelemetry::nostd::unique_ptr<
+      opentelemetry::metrics::Histogram<std::uint64_t>>>
+      size_instruments;
   for (std::string_view name : kStorageSizeHistogramInstruments) {
-    instruments.push_back(meter->CreateDoubleHistogram(
+    size_instruments.push_back(meter->CreateUInt64Histogram(
         std::string(name), "test-only-description", "By"));
-    instruments.back()->Record(1024.0, opentelemetry::context::Context{});
+    size_instruments.back()->Record(std::uint64_t{1024},
+                                    opentelemetry::context::Context{});
   }
   for (int i = 0; i != 50; ++i) {
     {
