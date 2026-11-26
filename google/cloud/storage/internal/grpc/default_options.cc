@@ -17,7 +17,9 @@
 #include "google/cloud/storage/internal/grpc/channel_telemetry.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
@@ -29,6 +31,7 @@
 #include "absl/strings/str_cat.h"
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <thread>
@@ -63,6 +66,56 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
   auto constexpr kMinimumChannels = 4;
   auto const count = std::thread::hardware_concurrency();
   return (std::max)(kMinimumChannels, static_cast<int>(count));
+}
+
+// Regular DirectPath (`google-c2p:///storage.googleapis.com`) relies on ALTS.
+// With TLS-only channel credentials, handshakes to DirectPath backends fail and
+// gRPC falls back to the front-end cluster over the single `google-c2p`
+// channel. This visitor mirrors
+// `google::cloud::internal::CreateAuthenticationStrategy()` in
+// `google/cloud/internal/unified_grpc_credentials.cc`, where only
+// `GoogleDefaultCredentialsConfig` builds ALTS-capable channel credentials. A
+// caller-supplied `GrpcCredentialOption` without `UnifiedCredentialsOption` is
+// opaque and keeps existing behavior.
+bool MaySupportDirectPathAlts(Options const& options) {
+  if (!options.has<UnifiedCredentialsOption>()) return true;
+  std::shared_ptr<Credentials> const& credentials =
+      options.get<UnifiedCredentialsOption>();
+  if (!credentials) return false;
+
+  struct Visitor : public google::cloud::internal::CredentialsVisitor {
+    bool supported = false;
+    void visit(
+        google::cloud::internal::ErrorCredentialsConfig const&) override {}
+    void visit(
+        google::cloud::internal::InsecureCredentialsConfig const&) override {}
+    void visit(google::cloud::internal::GoogleDefaultCredentialsConfig const&)
+        override {
+      supported = true;
+    }
+    void visit(google::cloud::internal::AccessTokenConfig const&) override {}
+    void visit(google::cloud::internal::ImpersonateServiceAccountConfig const&)
+        override {}
+    void visit(google::cloud::internal::ServiceAccountConfig const&) override {}
+    void visit(google::cloud::internal::ExternalAccountConfig const&) override {
+    }
+    void visit(google::cloud::internal::ApiKeyConfig const&) override {}
+    void visit(google::cloud::internal::ComputeEngineCredentialsConfig const&)
+        override {}
+    void visit(google::cloud::internal::AuthorizedUserConfig const&) override {}
+    void visit(
+        google::cloud::internal::GDCHServiceAccountConfig const&) override {}
+  } visitor;
+  google::cloud::internal::CredentialsVisitor::dispatch(*credentials, visitor);
+  return visitor.supported;
+}
+
+bool ShouldDefaultToDirectPath(
+    Options const& options,
+    std::shared_ptr<internal::GcpDetector> const& gcp_detector) {
+  return MaySupportDirectPathAlts(options) &&
+         (gcp_detector->IsGoogleCloudBios() ||
+          gcp_detector->IsGoogleCloudServerless());
 }
 
 }  // namespace
@@ -158,14 +211,14 @@ Options DefaultOptionsGrpc(
 
   // Unless the application configured an endpoint or universe domain, default
   // to direct connectivity: the Interconnect target when that feature is
-  // enabled and supported, otherwise the standard target when running in GCP.
+  // enabled and supported (which uses TLS), otherwise the standard target when
+  // running in GCP and the configured credentials may support ALTS.
   if (!options.has<EndpointOption>() &&
       !options.has<internal::UniverseDomainOption>()) {
     if (direct_path_interconnect) {
       options.set<EndpointOption>(absl::StrCat(
           "google-c2p:///", kDirectPathInterconnectHost, "?force-xds"));
-    } else if (gcp_detector->IsGoogleCloudBios() ||
-               gcp_detector->IsGoogleCloudServerless()) {
+    } else if (ShouldDefaultToDirectPath(options, gcp_detector)) {
       options.set<EndpointOption>("google-c2p:///storage.googleapis.com");
     }
   }
