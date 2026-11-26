@@ -49,8 +49,8 @@ std::string ChannelCreationLatencyInstrument();
 inline constexpr std::array<std::string_view, 9>
     kStorageLatencyHistogramInstruments = {{
         kRequestDurationMetric,
-        "gcp.storage.client.ttfb",
-        "rpc.client.call.duration",
+        kTtfbMetric,
+        kRpcCallDurationMetric,
         "gcp.storage.client.stall.duration",
         "gcp.storage.client.server.duration",
         "gcp.storage.client.network.tls.handshake.duration",
