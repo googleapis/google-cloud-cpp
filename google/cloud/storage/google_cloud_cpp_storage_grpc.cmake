@@ -109,6 +109,8 @@ add_library(
     internal/async/default_options.h
     internal/async/handle_redirect_error.cc
     internal/async/handle_redirect_error.h
+    internal/async/hedged_open_stream.cc
+    internal/async/hedged_open_stream.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
     internal/async/multi_stream_manager.cc
@@ -426,6 +428,7 @@ set(storage_client_grpc_unit_tests
     internal/async/connection_tracing_test.cc
     internal/async/default_options_test.cc
     internal/async/handle_redirect_error_test.cc
+    internal/async/hedged_open_stream_test.cc
     internal/async/insert_object_test.cc
     internal/async/multi_stream_manager_test.cc
     internal/async/object_descriptor_connection_tracing_test.cc
