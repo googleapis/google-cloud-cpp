@@ -140,6 +140,7 @@ add_library(
     internal/metadata_parser.h
     internal/metrics_attributes.cc
     internal/metrics_attributes.h
+    internal/metrics_constants.h
     internal/metrics_error_type.cc
     internal/metrics_error_type.h
     internal/notification_metadata_parser.cc
@@ -160,6 +161,8 @@ add_library(
     internal/object_write_streambuf.cc
     internal/object_write_streambuf.h
     internal/openssl/hash_function_impl.cc
+    internal/operation_metrics.cc
+    internal/operation_metrics.h
     internal/patch_builder.cc
     internal/patch_builder.h
     internal/patch_builder_details.cc
@@ -475,6 +478,7 @@ if (BUILD_TESTING)
         internal/object_read_streambuf_test.cc
         internal/object_requests_test.cc
         internal/object_write_streambuf_test.cc
+        internal/operation_metrics_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/request_project_id_test.cc
