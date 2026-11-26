@@ -114,7 +114,6 @@ std::optional<bool> ParseIpv6(std::string_view ip) {
   if (!absl::StrContains(ip, ':')) return std::nullopt;
   if (absl::StrContains(ip, '.')) {
     std::size_t const last_colon = ip.rfind(':');
-    if (last_colon == std::string_view::npos) return std::nullopt;
     std::optional<bool> const ipv4_directpath =
         ParseIpv4(ip.substr(last_colon + 1));
     if (!ipv4_directpath.has_value()) return std::nullopt;
