@@ -35,7 +35,15 @@
 #include "absl/strings/match.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <atomic>
+#include <chrono>
+#include <cstddef>
+#include <cstdint>
+#include <functional>
 #include <map>
+#include <memory>
+#include <mutex>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -906,6 +914,348 @@ TEST(AsyncConnectionImplTest, OpenWithReadRanges) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+struct ParkedReadState {
+  using Response = google::storage::v2::BidiReadObjectResponse;
+  std::mutex mu;
+  bool cancelled = false;
+  bool waiting = false;
+  promise<std::optional<Response>> pending;
+
+  future<std::optional<Response>> Park() {
+    std::lock_guard<std::mutex> lock(mu);
+    if (cancelled || waiting) {
+      return make_ready_future(std::optional<Response>());
+    }
+    waiting = true;
+    return pending.get_future();
+  }
+
+  void Release() {
+    bool wake = false;
+    {
+      std::lock_guard<std::mutex> lock(mu);
+      if (std::exchange(cancelled, true)) return;
+      wake = waiting;
+    }
+    if (wake) pending.set_value(std::nullopt);
+  }
+};
+
+std::unique_ptr<BidiReadStream> MakeOpenStream(
+    std::function<future<bool>()> on_start,
+    std::function<
+        future<std::optional<google::storage::v2::BidiReadObjectResponse>>()>
+        after_first_read,
+    std::function<void()> on_cancel, std::int64_t generation) {
+  using Response = google::storage::v2::BidiReadObjectResponse;
+  auto stream = std::make_unique<NiceMock<MockStream>>();
+  EXPECT_CALL(*stream, Start).WillOnce(std::move(on_start));
+  ON_CALL(*stream, Write)
+      .WillByDefault(
+          [](google::storage::v2::BidiReadObjectRequest const&,
+             grpc::WriteOptions) { return make_ready_future(true); });
+  ON_CALL(*stream, Read)
+      .WillByDefault(
+          [generation, after = std::move(after_first_read), n = 0]() mutable {
+            if (n++ == 0) {
+              Response response;
+              response.mutable_metadata()->set_bucket(
+                  "projects/_/buckets/test-bucket");
+              response.mutable_metadata()->set_name("test-object");
+              response.mutable_metadata()->set_generation(generation);
+              response.mutable_read_handle()->set_handle("handle-123");
+              return make_ready_future(
+                  std::optional<Response>(std::move(response)));
+            }
+            return after();
+          });
+  ON_CALL(*stream, Cancel).WillByDefault(std::move(on_cancel));
+  ON_CALL(*stream, Finish).WillByDefault([] {
+    return make_ready_future(Status{});
+  });
+  return std::unique_ptr<BidiReadStream>(std::move(stream));
+}
+
+std::unique_ptr<BidiReadStream> MakeParkedStreamWithStart(
+    std::function<future<bool>()> on_start, std::int64_t generation) {
+  auto parked = std::make_shared<ParkedReadState>();
+  return MakeOpenStream(
+      std::move(on_start), [parked] { return parked->Park(); },
+      [parked] { parked->Release(); }, generation);
+}
+
+google::storage::v2::BidiReadObjectSpec MakeTestReadSpec() {
+  google::storage::v2::BidiReadObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket");
+  spec.set_object("test-object");
+  spec.set_generation(42);
+  return spec;
+}
+
+class OpenHedgingWiringTest : public ::testing::Test {
+ protected:
+  using OpenResult =
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>;
+  using OpenFuture = future<OpenResult>;
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+
+  void ExpectHedgeTimers(std::vector<std::string> names) {
+    if (names.empty()) {
+      EXPECT_CALL(*mock_cq_, MakeRelativeTimer).Times(0);
+      return;
+    }
+    int const count = static_cast<int>(names.size());
+    EXPECT_CALL(*mock_cq_, MakeRelativeTimer)
+        .Times(count)
+        .WillRepeatedly(
+            [this, names = std::move(names)](std::chrono::nanoseconds) {
+              std::size_t const idx = timer_count_++;
+              std::string const name =
+                  idx < names.size() ? names[idx] : std::string("ExtraTimer");
+              future<bool> step = sequencer_.PushBack(name);
+              auto timer_promise = std::make_shared<
+                  promise<StatusOr<std::chrono::system_clock::time_point>>>(
+                  [this] { ++cancelled_timers_; });
+              TimerFuture timer_future = timer_promise->get_future();
+              step.then([timer_promise](future<bool> f) mutable {
+                if (!f.get()) {
+                  return timer_promise->set_value(internal::CancelledError(
+                      "timer cancelled", GCP_ERROR_INFO()));
+                }
+                timer_promise->set_value(std::chrono::system_clock::now());
+              });
+              return timer_future;
+            });
+  }
+
+  promise<bool> PopStep(char const* expected) {
+    auto [p, name] = sequencer_.PopFrontWithName();
+    EXPECT_EQ(name, expected);
+    return std::move(p);
+  }
+
+  static std::unique_ptr<BidiReadStream> MakeImmediateStream(
+      std::int64_t generation) {
+    return MakeParkedStreamWithStart([] { return make_ready_future(true); },
+                                     generation);
+  }
+
+  std::unique_ptr<BidiReadStream> MakeSequencedStream(std::string step,
+                                                      std::int64_t generation) {
+    return MakeParkedStreamWithStart(
+        [this, s = std::move(step)] { return sequencer_.PushBack(s); },
+        generation);
+  }
+
+  std::unique_ptr<BidiReadStream> MakeClosingStream(std::string start_step,
+                                                    std::string end_step,
+                                                    std::int64_t generation) {
+    using Response = google::storage::v2::BidiReadObjectResponse;
+    return MakeOpenStream(
+        [this, s = std::move(start_step)] { return sequencer_.PushBack(s); },
+        [this, e = std::move(end_step)] {
+          return sequencer_.PushBack(e).then(
+              [](future<bool>) { return std::optional<Response>(); });
+        },
+        [] {}, generation);
+  }
+
+  std::unique_ptr<BidiReadStream> MakeStalledStream(
+      std::string start_step, std::string finish_step,
+      std::atomic<int>* cancel_count) {
+    auto stream = std::make_unique<NiceMock<MockStream>>();
+    EXPECT_CALL(*stream, Start).WillOnce([this, s = std::move(start_step)] {
+      return sequencer_.PushBack(s);
+    });
+    ON_CALL(*stream, Cancel).WillByDefault([cancel_count] {
+      if (cancel_count != nullptr) ++(*cancel_count);
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([this, f = std::move(finish_step)] {
+      return sequencer_.PushBack(f).then([](future<bool>) { return Status{}; });
+    });
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  }
+
+  std::shared_ptr<AsyncConnectionImpl> MakeConnection(Options opts) {
+    opts = internal::MergeOptions(
+        std::move(opts),
+        Options{}.set<storage::EnableMultiStreamOptimizationOption>(false));
+    return std::make_shared<AsyncConnectionImpl>(
+        CompletionQueue(mock_cq_), std::shared_ptr<GrpcChannelRefresh>(),
+        mock_stub_, TestOptions(std::move(opts)));
+  }
+
+  static OpenFuture Open(std::shared_ptr<AsyncConnectionImpl> const& conn,
+                         Options opts) {
+    return conn->Open({MakeTestReadSpec(), std::move(opts)});
+  }
+
+  static OpenFuture Open(std::shared_ptr<AsyncConnectionImpl> const& conn) {
+    return Open(conn, conn->options());
+  }
+
+  AsyncSequencer<bool> sequencer_;
+  std::size_t timer_count_ = 0;
+  std::atomic<int> cancelled_timers_{0};
+  std::shared_ptr<storage::testing::MockStorageStub> mock_stub_ =
+      std::make_shared<storage::testing::MockStorageStub>();
+  std::shared_ptr<MockCompletionQueueImpl> mock_cq_ =
+      std::make_shared<MockCompletionQueueImpl>();
+};
+
+TEST_F(OpenHedgingWiringTest, GatingAndPerCallOverrides) {
+  EXPECT_CALL(*mock_stub_, AsyncBidiReadObject).Times(4).WillRepeatedly([] {
+    return MakeImmediateStream(42);
+  });
+  ExpectHedgeTimers({});
+
+  // 1. Disabled by default; 2. Per-call opt-in without client-level opt-in is a
+  // no-op because `hedge_limiter_` is allocated only at connection creation.
+  std::shared_ptr<AsyncConnectionImpl> disabled_conn =
+      MakeConnection(Options{});
+  OpenResult res1 = Open(disabled_conn).get();
+  ASSERT_THAT(res1, IsOkAndHolds(NotNull()));
+  res1->reset();
+
+  Options per_call_enable = disabled_conn->options();
+  per_call_enable.set<storage_experimental::EnableReadHedgingOption>(true);
+  OpenResult res2 = Open(disabled_conn, std::move(per_call_enable)).get();
+  ASSERT_THAT(res2, IsOkAndHolds(NotNull()));
+  res2->reset();
+
+  // 3 & 4. Client enabled, suppressed per-call via `EnableReadHedgingOption`
+  // or `MaxReadHedgesOption(0)`.
+  std::shared_ptr<AsyncConnectionImpl> enabled_conn = MakeConnection(
+      Options{}.set<storage_experimental::EnableReadHedgingOption>(true));
+  Options disable_flag = enabled_conn->options();
+  disable_flag.set<storage_experimental::EnableReadHedgingOption>(false);
+  OpenResult res3 = Open(enabled_conn, std::move(disable_flag)).get();
+  ASSERT_THAT(res3, IsOkAndHolds(NotNull()));
+  res3->reset();
+
+  Options disable_zero = enabled_conn->options();
+  disable_zero.set<storage_experimental::MaxReadHedgesOption>(0);
+  OpenResult res4 = Open(enabled_conn, std::move(disable_zero)).get();
+  ASSERT_THAT(res4, IsOkAndHolds(NotNull()));
+  res4->reset();
+}
+
+TEST_F(OpenHedgingWiringTest, FeatureHeaderSetOnlyOnHedgedOpenAttempts) {
+  std::string const both_features =
+      EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd) |
+                        FeatureBit(TrackedFeature::kReadHedging));
+  std::string const mso_only =
+      EncodeFeatureMask(FeatureBit(TrackedFeature::kMultistreamInMrd));
+
+  ValidateMetadataFixture fixture;
+  std::vector<std::multimap<std::string, std::string>> metadata;
+  std::atomic<int> primary_cancel_count{0};
+  auto const capture_and = [&](auto make_stream) {
+    return [&, make = std::move(make_stream)](
+               CompletionQueue const&,
+               std::shared_ptr<grpc::ClientContext> const& context,
+               google::cloud::internal::ImmutableOptions const&) mutable {
+      metadata.push_back(fixture.GetMetadata(*context));
+      return make();
+    };
+  };
+
+  EXPECT_CALL(*mock_stub_, AsyncBidiReadObject)
+      .WillOnce(capture_and([this, &primary_cancel_count] {
+        return MakeStalledStream("PrimaryStart", "PrimaryFinish",
+                                 &primary_cancel_count);
+      }))
+      .WillOnce(capture_and(
+          [this] { return MakeSequencedStream("HedgeStart", 701); }))
+      // MSO standby stream — unhedged descriptor stream (MSO bit only).
+      .WillOnce(capture_and([] { return MakeImmediateStream(701); }))
+      // Call 2 after `MaxTotalHedgesOption(1)` is exhausted (MSO false).
+      .WillOnce(capture_and([] { return MakeImmediateStream(702); }));
+  ExpectHedgeTimers({"HedgeTimer1"});
+
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
+      Options{}
+          .set<storage::EnableMultiStreamOptimizationOption>(true)
+          .set<storage_experimental::EnableReadHedgingOption>(true)
+          .set<storage_experimental::MaxReadHedgesOption>(2)
+          .set<storage_experimental::MaxTotalHedgesOption>(1));
+
+  OpenFuture call1 = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
+  PopStep("HedgeTimer1").set_value(true);
+  PopStep("HedgeStart").set_value(true);
+
+  OpenResult res1 = call1.get();
+  ASSERT_THAT(res1, IsOkAndHolds(NotNull()));
+  primary_start.set_value(true);
+  PopStep("PrimaryFinish").set_value(true);
+  res1->reset();
+
+  Options no_mso = conn->options();
+  no_mso.set<storage::EnableMultiStreamOptimizationOption>(false);
+  OpenResult res2 = Open(conn, std::move(no_mso)).get();
+  ASSERT_THAT(res2, IsOkAndHolds(NotNull()));
+  res2->reset();
+
+  ASSERT_THAT(metadata, SizeIs(4));
+  EXPECT_THAT(metadata[0], Contains(Pair(kFeaturesHeader, both_features)));
+  EXPECT_THAT(metadata[1], Contains(Pair(kFeaturesHeader, both_features)));
+  EXPECT_THAT(metadata[2], Contains(Pair(kFeaturesHeader, mso_only)));
+  EXPECT_THAT(metadata[3], Not(Contains(Key(kFeaturesHeader))));
+}
+
+TEST_F(OpenHedgingWiringTest, SlowPrimaryHedgeWinsAndResumeIsUnhedged) {
+  ScopedLog log;
+  std::atomic<int> primary_cancel_count{0};
+
+  EXPECT_CALL(*mock_stub_, AsyncBidiReadObject)
+      .WillOnce([this, &primary_cancel_count] {
+        return MakeStalledStream("PrimaryStart", "PrimaryFinish",
+                                 &primary_cancel_count);
+      })
+      .WillOnce([this] {
+        return MakeClosingStream("HedgeStart", "HedgeStreamEnd", 202);
+      })
+      .WillOnce([this] { return MakeSequencedStream("ResumeStart", 202); });
+  // Only 2 timers for `max_hedges = 2`; background resume must not arm any.
+  ExpectHedgeTimers({"HedgeTimer1", "HedgeTimer2"});
+
+  std::shared_ptr<AsyncConnectionImpl> conn = MakeConnection(
+      Options{}
+          .set<storage::ResumePolicyOption>(
+              storage::LimitedErrorCountResumePolicy(1))
+          .set<storage_experimental::EnableReadHedgingOption>(true)
+          .set<storage_experimental::ReadHedgeDelayOption>(
+              std::chrono::milliseconds(100))
+          .set<storage_experimental::MaxReadHedgesOption>(2));
+
+  OpenFuture pending = Open(conn);
+  promise<bool> primary_start = PopStep("PrimaryStart");
+  PopStep("HedgeTimer1").set_value(true);
+  promise<bool> hedge_start = PopStep("HedgeStart");
+  promise<bool> timer2 = PopStep("HedgeTimer2");
+
+  hedge_start.set_value(true);
+  promise<bool> hedge_stream_end = PopStep("HedgeStreamEnd");
+
+  OpenResult result = pending.get();
+  ASSERT_THAT(result, IsOkAndHolds(NotNull()));
+  EXPECT_EQ((*result)->metadata()->generation(), 202);
+  EXPECT_EQ(primary_cancel_count.load(), 1);
+  EXPECT_EQ(cancelled_timers_.load(), 1);
+  timer2.set_value(false);
+
+  // Cancelled losing primary winds down silently without `[gcs-retry]` logs.
+  primary_start.set_value(true);
+  PopStep("PrimaryFinish").set_value(true);
+
+  hedge_stream_end.set_value(true);
+  PopStep("ResumeStart").set_value(true);
+
+  result->reset();
+  EXPECT_THAT(RetryRecords(log), IsEmpty());
 }
 
 }  // namespace

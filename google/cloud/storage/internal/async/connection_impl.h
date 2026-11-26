@@ -39,6 +39,15 @@
 
 namespace google {
 namespace cloud {
+namespace storage {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
+class HedgeLimiter;
+class HedgedReadMetrics;
+}  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage
+
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GrpcChannelRefresh;
@@ -148,6 +157,8 @@ class AsyncConnectionImpl
   std::shared_ptr<GrpcChannelRefresh> refresh_;
   std::shared_ptr<StorageStub> stub_;
   Options options_;
+  std::shared_ptr<storage::internal::HedgeLimiter> hedge_limiter_;
+  std::shared_ptr<storage::internal::HedgedReadMetrics> hedged_read_metrics_;
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
