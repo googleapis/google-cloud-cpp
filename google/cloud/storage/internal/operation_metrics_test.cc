@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/operation_metrics.h"
-#include "google/cloud/storage/internal/metrics_constants.h"
 #include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -104,11 +103,11 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
 
   opentelemetry::nostd::shared_ptr<MockMeter> meter =
       std::make_shared<MockMeter>();
-  EXPECT_CALL(*meter,
-              CreateUInt64Counter(Eq(kOperationsMetric), _, Eq("{operation}")))
+  EXPECT_CALL(*meter, CreateUInt64Counter(Eq("gcp.storage.client.operations"),
+                                          _, Eq("{operation}")))
       .WillOnce(Return(ByMove(CounterPtr(ops.release()))));
-  EXPECT_CALL(*meter,
-              CreateDoubleHistogram(Eq(kRequestDurationMetric), _, Eq("s")))
+  EXPECT_CALL(*meter, CreateDoubleHistogram(Eq("gcp.client.request.duration"),
+                                            _, Eq("s")))
       .WillOnce(Return(ByMove(HistPtr(dur.release()))));
 
   auto provider = std::make_shared<MockMeterProvider>();
@@ -123,7 +122,7 @@ TEST(OperationMetricsTest, RecordsOperationsAndDurationWithAttributes) {
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) {
 #endif
-        EXPECT_EQ(std::string(scope.data(), scope.size()), kStorageMeterName);
+        EXPECT_EQ(std::string(scope.data(), scope.size()), "gl-cpp");
         EXPECT_EQ(std::string(scope_version.data(), scope_version.size()),
                   google::cloud::version_string());
         return meter;
