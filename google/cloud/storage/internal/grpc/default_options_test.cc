@@ -18,9 +18,11 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -28,6 +30,8 @@
 #include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
+#include <chrono>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <set>
@@ -308,6 +312,361 @@ TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPath) {
   // Regular DirectPath relies on ALTS, which only Google Default credentials
   // select.
   EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+}
+
+struct DirectPathCredentialsTestCase {
+  std::string test_name;
+  std::function<Options()> make_options;
+  bool expected_direct_path;
+};
+
+class DefaultEndpointsDirectPathCredentialsTest
+    : public ::testing::TestWithParam<DirectPathCredentialsTestCase> {};
+
+/// @test Verify that on GCE, `DefaultOptionsGrpc()` defaults to the
+/// `google-c2p` DirectPath endpoint only when the configured credentials can
+/// use ALTS (Google Default credentials or an opaque `GrpcCredentialOption`).
+/// Non-ALTS credential types fall back to the multi-channel CloudPath default.
+TEST_P(DefaultEndpointsDirectPathCredentialsTest, GatesEndpointOnCredentials) {
+  DirectPathCredentialsTestCase const& test_case = GetParam();
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment interconnect(
+      "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", {});
+  ScopedEnvironment universe_domain("GOOGLE_CLOUD_UNIVERSE_DOMAIN", {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
+
+  Options const options =
+      DefaultOptionsGrpc(test_case.make_options(), mock_detector);
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+  if (test_case.expected_direct_path) {
+    EXPECT_EQ(options.get<EndpointOption>(),
+              "google-c2p:///storage.googleapis.com");
+    EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  } else {
+    EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
+    EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+  }
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    DefaultOptionsGrpc, DefaultEndpointsDirectPathCredentialsTest,
+    ::testing::Values(
+        DirectPathCredentialsTestCase{"DefaultCredentials",
+                                      [] { return Options{}; }, true},
+        DirectPathCredentialsTestCase{
+            "GoogleDefaultCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeGoogleDefaultCredentials());
+            },
+            true},
+        DirectPathCredentialsTestCase{
+            "ComputeEngineCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeComputeEngineCredentials());
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ComputeEngineCredentialsWithCaRoots",
+            [] {
+              return Options{}
+                  .set<UnifiedCredentialsOption>(MakeComputeEngineCredentials())
+                  .set<CARootsFilePathOption>("/path/to/roots.pem");
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ComputeEngineCredentialsWithOptionCaRoots",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeComputeEngineCredentials(
+                      Options{}.set<CARootsFilePathOption>(
+                          "/path/to/roots.pem")));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "AccessTokenCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeAccessTokenCredentials("test-token",
+                                             std::chrono::system_clock::now() +
+                                                 std::chrono::hours(1)));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ServiceAccountCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeServiceAccountCredentials("{}"));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ImpersonateServiceAccountCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeImpersonateServiceAccountCredentials(
+                      MakeGoogleDefaultCredentials(),
+                      "target@example.iam.gserviceaccount.com"));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ApiKeyCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeApiKeyCredentials("test-api-key"));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ExternalAccountCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeExternalAccountCredentials("{}"));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "GDCHServiceAccountCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeGDCHServiceAccountCredentials(
+                      "{}", "https://storage.googleapis.com"));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "InsecureCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  MakeInsecureCredentials());
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "ErrorCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  google::cloud::internal::MakeErrorCredentials(
+                      Status(StatusCode::kInternal, "test-error")));
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "UserAccountCredentials",
+            [] {
+              return Options{}.set<UnifiedCredentialsOption>(
+                  google::cloud::internal::MakeUserAccountCredentials("{}"));
+            },
+            false},
+        // `GrpcCredentialOption` cannot be inspected for ALTS capability and
+        // preserves existing `google-c2p` behavior.
+        DirectPathCredentialsTestCase{
+            "GrpcCredentialOptionOnly",
+            [] {
+              return Options{}.set<GrpcCredentialOption>(
+                  grpc::InsecureChannelCredentials());
+            },
+            true},
+        // `UnifiedCredentialsOption` takes precedence over
+        // `GrpcCredentialOption` when both are present.
+        DirectPathCredentialsTestCase{
+            "UnifiedNonAltsOverridesGrpcCredentialOption",
+            [] {
+              return Options{}
+                  .set<UnifiedCredentialsOption>(MakeComputeEngineCredentials())
+                  .set<GrpcCredentialOption>(
+                      grpc::InsecureChannelCredentials());
+            },
+            false},
+        DirectPathCredentialsTestCase{
+            "UnifiedGoogleDefaultOverridesGrpcCredentialOption",
+            [] {
+              return Options{}
+                  .set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials())
+                  .set<GrpcCredentialOption>(
+                      grpc::InsecureChannelCredentials());
+            },
+            true},
+        // A null `UnifiedCredentialsOption` pointer must not be dereferenced
+        // and does not qualify for ALTS, even when paired with
+        // `GrpcCredentialOption` (`UnifiedCredentialsOption` takes precedence).
+        DirectPathCredentialsTestCase{
+            "NullUnifiedCredentialsOption",
+            [] { return Options{}.set<UnifiedCredentialsOption>(nullptr); },
+            false},
+        DirectPathCredentialsTestCase{
+            "NullUnifiedOverridesGrpcCredentialOption",
+            [] {
+              return Options{}
+                  .set<UnifiedCredentialsOption>(nullptr)
+                  .set<GrpcCredentialOption>(
+                      grpc::InsecureChannelCredentials());
+            },
+            false}),
+    [](::testing::TestParamInfo<DirectPathCredentialsTestCase> const& info) {
+      return info.param.test_name;
+    });
+
+/// @test Verify serverless-only GCP detection applies the same ALTS credential
+/// gate as GCE BIOS detection.
+TEST(DefaultOptionsGrpc, DefaultEndpointsServerlessGatesOnCredentials) {
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment interconnect(
+      "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", {});
+  ScopedEnvironment universe_domain("GOOGLE_CLOUD_UNIVERSE_DOMAIN", {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(true));
+
+  Options const default_creds = DefaultOptionsGrpc(
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials()),
+      mock_detector);
+  EXPECT_EQ(default_creds.get<EndpointOption>(),
+            "google-c2p:///storage.googleapis.com");
+  EXPECT_EQ(default_creds.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_EQ(default_creds.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_FALSE(default_creds.get<GrpcGoogleDefaultTlsOnlyOption>());
+
+  Options const compute_creds = DefaultOptionsGrpc(
+      Options{}.set<UnifiedCredentialsOption>(MakeComputeEngineCredentials()),
+      mock_detector);
+  EXPECT_EQ(compute_creds.get<EndpointOption>(), "storage.googleapis.com");
+  EXPECT_EQ(compute_creds.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_GE(compute_creds.get<GrpcNumChannelsOption>(), 4);
+  EXPECT_FALSE(compute_creds.get<GrpcGoogleDefaultTlsOnlyOption>());
+}
+
+struct ExplicitDirectPathEndpointTestCase {
+  std::string test_name;
+  std::string endpoint;
+};
+
+class ExplicitDirectPathEndpointWithNonAltsCredsTest
+    : public ::testing::TestWithParam<ExplicitDirectPathEndpointTestCase> {};
+
+/// @test Verify explicit `google-c2p` endpoints are preserved even when paired
+/// with non-ALTS credentials, because the library only gates the default
+/// endpoint it selects.
+TEST_P(ExplicitDirectPathEndpointWithNonAltsCredsTest, PreservesEndpoint) {
+  ExplicitDirectPathEndpointTestCase const& test_case = GetParam();
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment interconnect(
+      "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", {});
+  ScopedEnvironment universe_domain("GOOGLE_CLOUD_UNIVERSE_DOMAIN", {});
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}
+          .set<EndpointOption>(test_case.endpoint)
+          .set<UnifiedCredentialsOption>(MakeComputeEngineCredentials()),
+      mock_detector);
+  EXPECT_EQ(options.get<EndpointOption>(), test_case.endpoint);
+  EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    DefaultOptionsGrpc, ExplicitDirectPathEndpointWithNonAltsCredsTest,
+    ::testing::Values(
+        ExplicitDirectPathEndpointTestCase{
+            "StandardScheme", "google-c2p:///storage.googleapis.com"},
+        ExplicitDirectPathEndpointTestCase{
+            "ExperimentalScheme",
+            "google-c2p-experimental:///storage.googleapis.com"},
+        ExplicitDirectPathEndpointTestCase{
+            "OtherHost", "google-c2p:///other-host.googleapis.com"}),
+    [](::testing::TestParamInfo<ExplicitDirectPathEndpointTestCase> const&
+           info) { return info.param.test_name; });
+
+/// @test Verify non-ALTS credentials remain on CloudPath off GCP.
+TEST(DefaultOptionsGrpc, DefaultEndpointsCloudPathWithNonAltsCredentials) {
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment interconnect(
+      "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", {});
+  ScopedEnvironment universe_domain("GOOGLE_CLOUD_UNIVERSE_DOMAIN", {});
+
+  Options const options = DefaultOptionsGrpc(
+      Options{}.set<UnifiedCredentialsOption>(MakeComputeEngineCredentials()),
+      MakeNotOnGcpDetector());
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+  EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+  EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+}
+
+/// @test Verify DirectPath over Interconnect uses TLS rather than ALTS and
+/// therefore still selects the Interconnect endpoint with non-ALTS credentials,
+/// while falling back to CloudPath on GCE when gRPC does not support
+/// `force-xds`.
+TEST(DefaultOptionsGrpc, DirectPathOverInterconnectWithNonAltsCredentials) {
+  ScopedEnvironment testbench(
+      "CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment universe_domain("GOOGLE_CLOUD_UNIVERSE_DOMAIN", {});
+  {
+    ScopedEnvironment interconnect(
+        "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", {});
+    auto mock_detector = std::make_shared<MockGcpDetector>();
+    EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+    EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+    Options const options = DefaultOptionsGrpc(
+        Options{}
+            .set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+                true)
+            .set<UnifiedCredentialsOption>(MakeComputeEngineCredentials()),
+        mock_detector, /*grpc_supports_force_xds=*/true);
+    EXPECT_EQ(options.get<EndpointOption>(),
+              "google-c2p:///storage-direct.googleapis.com?force-xds");
+    EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
+    EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+    EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+  }
+  {
+    ScopedEnvironment interconnect(
+        "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", "true");
+    auto mock_detector = std::make_shared<MockGcpDetector>();
+    EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).Times(0);
+    EXPECT_CALL(*mock_detector, IsGoogleCloudServerless()).Times(0);
+
+    Options const options = DefaultOptionsGrpc(
+        Options{}.set<UnifiedCredentialsOption>(MakeComputeEngineCredentials()),
+        mock_detector, /*grpc_supports_force_xds=*/true);
+    EXPECT_EQ(options.get<EndpointOption>(),
+              "google-c2p:///storage-direct.googleapis.com?force-xds");
+    EXPECT_EQ(options.get<AuthorityOption>(), "storage-direct.googleapis.com");
+    EXPECT_EQ(options.get<GrpcNumChannelsOption>(), 1);
+    EXPECT_TRUE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+  }
+  {
+    ScopedEnvironment interconnect(
+        "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", {});
+    auto mock_detector = std::make_shared<MockGcpDetector>();
+    EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+        .WillRepeatedly(Return(true));
+    EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+        .WillRepeatedly(Return(false));
+
+    Options const options = DefaultOptionsGrpc(
+        Options{}
+            .set<storage_experimental::DirectPathXdsOverInterconnectOption>(
+                true)
+            .set<UnifiedCredentialsOption>(MakeComputeEngineCredentials()),
+        mock_detector, /*grpc_supports_force_xds=*/false);
+    EXPECT_TRUE(
+        options
+            .get<storage_experimental::DirectPathXdsOverInterconnectOption>());
+    EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
+    EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
+    EXPECT_GE(options.get<GrpcNumChannelsOption>(), 4);
+    EXPECT_FALSE(options.get<GrpcGoogleDefaultTlsOnlyOption>());
+  }
 }
 
 /// @test Verify the option defaults to disabled, and that the resolved default
