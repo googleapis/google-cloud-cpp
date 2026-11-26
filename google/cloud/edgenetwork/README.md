@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) try {
   auto client =
       edgenetwork::EdgeNetworkClient(edgenetwork::MakeEdgeNetworkConnection());
 
-  for (auto r :
+  for (auto const& r :
        client.ListNetworks(location.FullName() + "/zones/" + argv[3])) {
-    if (!r) throw std::move(r).status();
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) try {
   auto client = cloudsecuritycompliance::ConfigClient(
       cloudsecuritycompliance::MakeConfigConnection());
 
-  for (auto r : client.ListFrameworks(parent)) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListFrameworks(parent)) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = geminidataanalytics::DataChatServiceClient(
       geminidataanalytics::MakeDataChatServiceConnection());
 
-  for (auto r : client.ListConversations(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListConversations(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

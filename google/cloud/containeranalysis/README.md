@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) try {
       containeranalysis::MakeGrafeasConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto n : client.ListNotes(project.FullName(), /*filter=*/"")) {
-    if (!n) throw std::move(n).status();
+  for (auto const& n : client.ListNotes(project.FullName(), /*filter=*/"")) {
+    if (!n) throw google::cloud::Status(n.status());
     std::cout << n->DebugString() << "\n";
   }
 

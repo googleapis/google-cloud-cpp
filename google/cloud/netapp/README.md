@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) try {
   namespace netapp = ::google::cloud::netapp_v1;
   auto client = netapp::NetAppClient(netapp::MakeNetAppConnection());
 
-  for (auto sp : client.ListStoragePools(location.FullName())) {
-    if (!sp) throw std::move(sp).status();
+  for (auto const& sp : client.ListStoragePools(location.FullName())) {
+    if (!sp) throw google::cloud::Status(sp.status());
     std::cout << sp->DebugString() << "\n";
   }
 

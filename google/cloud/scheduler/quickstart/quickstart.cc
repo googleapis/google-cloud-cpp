@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = scheduler::CloudSchedulerClient(
       scheduler::MakeCloudSchedulerConnection());
 
-  for (auto j : client.ListJobs(location.FullName())) {
-    if (!j) throw std::move(j).status();
+  for (auto const& j : client.ListJobs(location.FullName())) {
+    if (!j) throw google::cloud::Status(j.status());
     std::cout << j->DebugString() << "\n";
   }
 

@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto const project = google::cloud::Project(argv[1]);
   google::cloud::websecurityscanner::v1::ListScanConfigsRequest request;
   request.set_parent(project.FullName());
-  for (auto c : client.ListScanConfigs(request)) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListScanConfigs(request)) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

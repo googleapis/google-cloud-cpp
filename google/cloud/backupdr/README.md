@@ -32,8 +32,8 @@ int main(int argc, char* argv[]) try {
   namespace backupdr = ::google::cloud::backupdr_v1;
   auto client = backupdr::BackupDRClient(backupdr::MakeBackupDRConnection());
 
-  for (auto ms : client.ListManagementServers(location.FullName())) {
-    if (!ms) throw std::move(ms).status();
+  for (auto const& ms : client.ListManagementServers(location.FullName())) {
+    if (!ms) throw google::cloud::Status(ms.status());
     std::cout << ms->DebugString() << "\n";
   }
 

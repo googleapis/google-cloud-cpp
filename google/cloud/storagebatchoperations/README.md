@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) try {
   auto client = storagebatchoperations::StorageBatchOperationsClient(
       storagebatchoperations::MakeStorageBatchOperationsConnection());
 
-  for (auto r : client.ListJobs(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListJobs(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 

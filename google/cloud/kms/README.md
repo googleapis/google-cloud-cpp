@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) try {
   auto client = kms::KeyManagementServiceClient(
       kms::MakeKeyManagementServiceConnection());
 
-  for (auto kr : client.ListKeyRings(location.FullName())) {
-    if (!kr) throw std::move(kr).status();
+  for (auto const& kr : client.ListKeyRings(location.FullName())) {
+    if (!kr) throw google::cloud::Status(kr.status());
     std::cout << kr->DebugString() << "\n";
   }
 

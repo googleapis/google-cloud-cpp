@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) try {
       dataproc::MakeClusterControllerConnection(region == "global" ? ""
                                                                    : region));
 
-  for (auto c : client.ListClusters(project_id, region)) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListClusters(project_id, region)) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->cluster_name() << "\n";
   }
 

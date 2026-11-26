@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       retail::CatalogServiceClient(retail::MakeCatalogServiceConnection());
 
-  for (auto c : client.ListCatalogs(location.FullName())) {
-    if (!c) throw std::move(c).status();
+  for (auto const& c : client.ListCatalogs(location.FullName())) {
+    if (!c) throw google::cloud::Status(c.status());
     std::cout << c->DebugString() << "\n";
   }
 

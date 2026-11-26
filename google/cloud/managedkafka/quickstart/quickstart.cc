@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) try {
   auto client = managedkafka::ManagedKafkaClient(
       managedkafka::MakeManagedKafkaConnection());
 
-  for (auto r : client.ListClusters(location.FullName())) {
-    if (!r) throw std::move(r).status();
+  for (auto const& r : client.ListClusters(location.FullName())) {
+    if (!r) throw google::cloud::Status(r.status());
     std::cout << r->DebugString() << "\n";
   }
 
