@@ -21,9 +21,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "google/storage/v2/storage.pb.h"
-#include <atomic>
 #include <functional>
 #include <memory>
+#include <mutex>
 #include <optional>
 
 namespace google {
@@ -36,12 +36,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * gRPC imposes a number of restrictions on how to close bidi streaming RPCs.
  * This class automates most of these restrictions. In particular, it waits
- * (using background threads) until all pending `Read()` and `Write()` calls
- * complete before trying to `Finish()` and then delete the stream.
+ * (using background threads) until all pending `Start()`, `Read()`, and
+ * `Write()` calls complete before trying to `Finish()` and then delete the
+ * stream.
  *
  * gRPC will assert if one deletes a streaming read-write RPC before waiting for
  * the result of `Finish()` calls. It will also assert if one calls `Finish()`
- * while there are pending `Read()` or `Write()` calls.
+ * while there are pending `Start()`, `Read()`, or `Write()` calls.
  *
  * This class tracks what operations, if any, are pending. On cancel, it waits
  * until all pending operations complete, then calls `Finish()` and then deletes
@@ -62,21 +63,29 @@ class OpenStream : public std::enable_shared_from_this<OpenStream> {
 
   explicit OpenStream(std::unique_ptr<StreamingRpc> rpc);
 
+  /// Cancels the stream and calls `Finish()` once pending operations drain.
   void Cancel();
   future<bool> Start();
   future<bool> Write(google::storage::v2::BidiReadObjectRequest const& request);
   future<ReadType> Read();
+  /// Returns the stream's `Finish()` future; subsequent calls return `{}`.
   future<Status> Finish();
 
  private:
-  void OnWrite();
-  void OnRead();
-  void MaybeFinish();
+  bool BeginOp();
+  /// Decrements `pending_ops_`, starts any cancel-deferred `Finish()` at 0,
+  /// and returns whether `Cancel()` has been called.
+  bool EndOp();
 
-  std::atomic<bool> cancel_{false};
-  std::atomic<bool> pending_read_{false};
-  std::atomic<bool> pending_write_{false};
-  std::atomic<bool> finish_issued_{false};
+  std::mutex mu_;
+  /// Active `Start()`, `Write()`, `Read()`, and `Cancel()` calls blocking
+  /// cancel-deferred `rpc_->Finish()`.
+  int pending_ops_ = 0;
+  bool cancel_ = false;
+  bool finish_issued_ = false;
+  bool finish_deferred_ = false;
+  promise<Status> finish_promise_{null_promise_t{}};
+  future<Status> finish_;
   std::unique_ptr<StreamingRpc> rpc_;
 };
 
