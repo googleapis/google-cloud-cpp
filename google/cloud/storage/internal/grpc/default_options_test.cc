@@ -324,9 +324,10 @@ class DefaultEndpointsDirectPathCredentialsTest
     : public ::testing::TestWithParam<DirectPathCredentialsTestCase> {};
 
 /// @test Verify that on GCE, `DefaultOptionsGrpc()` defaults to the
-/// `google-c2p` DirectPath endpoint only when the configured credentials can
-/// use ALTS (Google Default credentials or an opaque `GrpcCredentialOption`).
-/// Non-ALTS credential types fall back to the multi-channel CloudPath default.
+/// `google-c2p` DirectPath endpoint only when the configured credentials are
+/// Google Default credentials or an opaque `GrpcCredentialOption`. Other
+/// `UnifiedCredentialsOption` types fall back to the multi-channel CloudPath
+/// default.
 TEST_P(DefaultEndpointsDirectPathCredentialsTest, GatesEndpointOnCredentials) {
   DirectPathCredentialsTestCase const& test_case = GetParam();
   ScopedEnvironment testbench(

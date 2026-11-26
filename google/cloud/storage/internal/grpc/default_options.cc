@@ -71,10 +71,13 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 // Regular DirectPath (`google-c2p:///storage.googleapis.com`) relies on ALTS.
 // With TLS-only channel credentials, handshakes to DirectPath backends fail and
 // gRPC falls back to the front-end cluster over the single `google-c2p`
-// channel. Only `GoogleDefaultCredentialsConfig` builds ALTS-capable channel
-// credentials; a caller-supplied `GrpcCredentialOption` without
-// `UnifiedCredentialsOption` is opaque and keeps existing behavior.
-bool SupportsDirectPathAlts(Options const& options) {
+// channel. This visitor mirrors
+// `google::cloud::internal::CreateAuthenticationStrategy()` in
+// `google/cloud/internal/unified_grpc_credentials.cc`, where only
+// `GoogleDefaultCredentialsConfig` builds ALTS-capable channel credentials. A
+// caller-supplied `GrpcCredentialOption` without `UnifiedCredentialsOption` is
+// opaque and keeps existing behavior.
+bool MaySupportDirectPathAlts(Options const& options) {
   if (!options.has<UnifiedCredentialsOption>()) return true;
   std::shared_ptr<Credentials> const& credentials =
       options.get<UnifiedCredentialsOption>();
@@ -110,7 +113,7 @@ bool SupportsDirectPathAlts(Options const& options) {
 bool ShouldDefaultToDirectPath(
     Options const& options,
     std::shared_ptr<internal::GcpDetector> const& gcp_detector) {
-  return SupportsDirectPathAlts(options) &&
+  return MaySupportDirectPathAlts(options) &&
          (gcp_detector->IsGoogleCloudBios() ||
           gcp_detector->IsGoogleCloudServerless());
 }
@@ -209,7 +212,7 @@ Options DefaultOptionsGrpc(
   // Unless the application configured an endpoint or universe domain, default
   // to direct connectivity: the Interconnect target when that feature is
   // enabled and supported (which uses TLS), otherwise the standard target when
-  // running in GCP with ALTS-capable credentials.
+  // running in GCP and the configured credentials may support ALTS.
   if (!options.has<EndpointOption>() &&
       !options.has<internal::UniverseDomainOption>()) {
     if (direct_path_interconnect) {
