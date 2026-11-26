@@ -65,6 +65,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * CPU (a single RPC every few minutes) or memory (a few KiB to batch the
  * telemetry).
  *
+ * The exporter connects to Cloud Monitoring using the client's credentials, CA
+ * certificates file, and proxy configuration. Telemetry is exported only when
+ * the client's endpoint host belongs to the client's universe domain, the
+ * client does not use `google::cloud::MakeInsecureCredentials()`,
+ * `google::cloud::MakeApiKeyCredentials()`, or
+ * `google::cloud::MakeGDCHServiceAccountCredentials()`, and any credentials
+ * file's universe domain matches the client's universe domain. A credentials
+ * file without a `universe_domain` field defaults to `googleapis.com`; export
+ * is disabled if the file's universe domain cannot be determined. Credential
+ * types without a file (such as access tokens, metadata-server credentials, or
+ * `google::cloud::GrpcCredentialOption`) skip the universe-domain check. These
+ * requirements apply to `EnableGrpcMetricsOption`, `EnableOTelMetricsOption`,
+ * and `EnableOTelDebugMetricsOption`; setting any of those options to `true`
+ * does not override them.
+ *
+ * Clients with the same `google::cloud::AuthorityOption` (by default,
+ * `storage.` followed by the universe domain) share one Cloud Monitoring
+ * exporter for the life of the process. The first qualifying client creates
+ * the exporter, and subsequent clients sharing that authority reuse it without
+ * re-checking these requirements.
+ *
+ * Monitored resource attributes from the host (project, zone, and instance)
+ * are used when the client authenticates through the host's metadata server.
+ * For other credential types, the monitoring project comes from
+ * `google::cloud::storage::ProjectIdOption` or the credentials, and metrics
+ * export is skipped when neither specifies a project.
+ *
  * [gRFC/66]: https://github.com/grpc/proposal/blob/master/A66-otel-stats.md
  * [gRFC/78]:
  * https://github.com/grpc/proposal/blob/master/A78-grpc-metrics-wrr-pf-xds.md
