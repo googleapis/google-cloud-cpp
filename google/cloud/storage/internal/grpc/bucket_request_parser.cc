@@ -418,6 +418,10 @@ google::storage::v2::CreateBucketRequest ToProto(
     result.set_predefined_default_object_acl(
         request.GetOption<storage::PredefinedDefaultObjectAcl>().value());
   }
+  if (request.HasOption<storage::EnableObjectRetention>()) {
+    result.set_enable_object_retention(
+        request.GetOption<storage::EnableObjectRetention>().value());
+  }
   *result.mutable_bucket() = storage_internal::ToProto(request.metadata());
   result.mutable_bucket()->set_project("projects/" + request.project_id());
   // Ignore fields commonly set by ToProto().
@@ -425,6 +429,8 @@ google::storage::v2::CreateBucketRequest ToProto(
   result.mutable_bucket()->set_bucket_id("");
   result.mutable_bucket()->clear_create_time();
   result.mutable_bucket()->clear_update_time();
+  // REST uses only the enableObjectRetention query parameter.
+  result.mutable_bucket()->clear_object_retention();
   return result;
 }
 

@@ -129,6 +129,7 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
         }
         predefined_acl: "projectPrivate"
         predefined_default_object_acl: "private"
+        enable_object_retention: true
       )pb",
       &expected));
 
@@ -167,8 +168,10 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
               storage::LifecycleRule::Delete())}})
           .set_logging(storage::BucketLogging{
               /*.log_bucket=*/"test-log-bucket",
-              /*.log_object_prefix=*/"test-log-object-prefix"}));
+              /*.log_object_prefix=*/"test-log-object-prefix"})
+          .set_object_retention(storage::BucketObjectRetention{true}));
   req.set_multiple_options(
+      storage::EnableObjectRetention(true),
       storage::PredefinedAcl::ProjectPrivate(),
       storage::PredefinedDefaultObjectAcl::Private(),
       storage::Projection("full"), storage::UserProject("test-user-project"),

@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/grpc/bucket_name.h"
 #include "google/cloud/storage/internal/grpc/object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/internal/invoke_result.h"
@@ -116,6 +117,13 @@ void SetResourceOptions(google::storage::v2::Object& resource,
   }
 }
 
+Status SetRetention(Object& object, storage::ObjectRetention const& retention) {
+  StatusOr<Object::Retention> proto = storage_internal::ToProto(retention);
+  if (!proto) return std::move(proto).status();
+  *object.mutable_retention() = *std::move(proto);
+  return Status{};
+}
+
 template <typename StorageRequest>
 Status SetObjectMetadata(google::storage::v2::Object& resource,
                          StorageRequest const& req) {
@@ -163,6 +171,9 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
       // hence there is no need to parse them.
       custom_map[kv.first].set_value(kv.second.value);
     }
+  }
+  if (metadata.has_retention()) {
+    return SetRetention(resource, metadata.retention());
   }
 
   return Status{};
@@ -219,6 +230,18 @@ Status PatchTemporaryHold(Object& o, nlohmann::json const& p) {
     o.set_temporary_hold(p.get<bool>());
   }
   return Status{};
+}
+
+Status PatchRetention(Object& o, nlohmann::json const& p) {
+  if (p.is_null()) {
+    o.clear_retention();
+    return Status{};
+  }
+  StatusOr<std::chrono::system_clock::time_point> ts =
+      storage::internal::ParseTimestampField(p, "retainUntilTime");
+  if (!ts) return std::move(ts).status();
+  return SetRetention(
+      o, storage::ObjectRetention{p.value("mode", std::string{}), *ts});
 }
 
 template <typename Request>
@@ -346,6 +369,10 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
     if (metadata.has_custom_time()) {
       *destination.mutable_custom_time() =
           google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
+    }
+    if (metadata.has_retention()) {
+      status = SetRetention(destination, metadata.retention());
+      if (!status.ok()) return status;
     }
   }
   for (auto const& s : request.source_objects()) {
@@ -480,6 +507,10 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
   SetPredefinedAcl(result, request);
+  if (request.HasOption<storage::OverrideUnlockedRetention>()) {
+    result.set_override_unlocked_retention(
+        request.GetOption<storage::OverrideUnlockedRetention>().value());
+  }
 
   auto& object = *result.mutable_object();
   object.set_bucket(GrpcBucketIdToName(request.bucket_name()));
@@ -497,6 +528,7 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
       {"customTime", "custom_time", PatchCustomTime},
       {"eventBasedHold", "event_based_hold", PatchEventBasedHold},
       {"temporaryHold", "temporary_hold", PatchTemporaryHold},
+      {"retention", "retention", PatchRetention},
   };
 
   for (auto const& field : fields) {
@@ -546,6 +578,10 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
   SetPredefinedAcl(result, request);
+  if (request.HasOption<storage::OverrideUnlockedRetention>()) {
+    result.set_override_unlocked_retention(
+        request.GetOption<storage::OverrideUnlockedRetention>().value());
+  }
 
   auto& object = *result.mutable_object();
   object.set_bucket(GrpcBucketIdToName(request.bucket_name()));
@@ -580,6 +616,16 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     result.mutable_update_mask()->add_paths("custom_time");
     *object.mutable_custom_time() = google::cloud::internal::ToProtoTimestamp(
         request.metadata().custom_time());
+  }
+  if (request.metadata().has_retention()) {
+    status = SetRetention(object, request.metadata().retention());
+    if (!status.ok()) return status;
+    result.mutable_update_mask()->add_paths("retention");
+  } else if (request.GetOption<storage::OverrideUnlockedRetention>().value_or(
+                 false)) {
+    // Like a REST PUT without "retention", clear the field only when the
+    // caller explicitly allows unlocked retention changes.
+    result.mutable_update_mask()->add_paths("retention");
   }
 
   // We need to check each modifiable field.

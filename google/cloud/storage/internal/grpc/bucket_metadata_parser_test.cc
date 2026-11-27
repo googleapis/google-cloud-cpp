@@ -133,6 +133,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       effective_time { seconds: 1708000496 nanos: 700000000 }
       retention_duration { seconds: 864000 }
     }
+    object_retention { enabled: true }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
 
@@ -254,6 +255,9 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "softDeletePolicy": {
       "effectiveTime": "2024-02-15T12:34:56.700Z",
       "retentionDurationSeconds": "864000"
+    },
+    "objectRetention": {
+      "mode": "Enabled"
     }
   })""");
   ASSERT_THAT(expected, IsOk());
@@ -575,6 +579,23 @@ TEST(GrpcBucketMetadataParser, BucketCustomPlacementConfigRoundtrip) {
   EXPECT_EQ(middle, expected);
   auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcBucketMetadataParser, BucketObjectRetentionRoundtrip) {
+  google::storage::v2::Bucket input;
+  storage::BucketMetadata const empty_metadata = FromProto(input, Options{});
+  EXPECT_FALSE(empty_metadata.has_object_retention());
+  google::storage::v2::Bucket const empty_roundtrip = ToProto(empty_metadata);
+  EXPECT_FALSE(empty_roundtrip.has_object_retention());
+
+  input.mutable_object_retention()->set_enabled(false);
+  storage::BucketMetadata const metadata = FromProto(input, Options{});
+  ASSERT_TRUE(metadata.has_object_retention());
+  EXPECT_EQ(metadata.object_retention(), storage::BucketObjectRetention{false});
+
+  google::storage::v2::Bucket const roundtrip = ToProto(metadata);
+  ASSERT_TRUE(roundtrip.has_object_retention());
+  EXPECT_FALSE(roundtrip.object_retention().enabled());
 }
 
 }  // namespace

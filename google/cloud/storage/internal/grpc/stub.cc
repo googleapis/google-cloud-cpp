@@ -407,7 +407,8 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
 StatusOr<storage::ObjectMetadata> GrpcStub::CopyObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::CopyObjectRequest const& request) {
-  auto proto = ToProto(request);
+  StatusOr<google::storage::v2::RewriteObjectRequest> proto = ToProto(request);
+  if (!proto) return std::move(proto).status();
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   ApplyRestContextHeaders(ctx, context);

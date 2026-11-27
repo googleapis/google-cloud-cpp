@@ -20,7 +20,10 @@
 #include "google/cloud/storage/internal/md5hash.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
+#include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {
@@ -43,6 +46,51 @@ StatusOr<google::storage::v2::CustomerEncryption> ToProto(
   result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
   result.set_key_sha256_bytes(
       std::string(key_sha256->begin(), key_sha256->end()));
+  return result;
+}
+
+StatusOr<google::storage::v2::Object::Retention> ToProto(
+    storage::ObjectRetention const& rhs) {
+  google::storage::v2::Object::Retention result;
+  // Accept canonical TitleCase ("Unlocked"/"Locked") and uppercase proto enum
+  // names.
+  if (rhs.mode.empty()) {
+    result.set_mode(google::storage::v2::Object::Retention::MODE_UNSPECIFIED);
+  } else if (absl::EqualsIgnoreCase(rhs.mode,
+                                    storage::ObjectRetentionUnlocked())) {
+    result.set_mode(google::storage::v2::Object::Retention::UNLOCKED);
+  } else if (absl::EqualsIgnoreCase(rhs.mode,
+                                    storage::ObjectRetentionLocked())) {
+    result.set_mode(google::storage::v2::Object::Retention::LOCKED);
+  } else {
+    return google::cloud::internal::InvalidArgumentError(
+        absl::StrCat("unrecognized object retention mode: ", rhs.mode),
+        GCP_ERROR_INFO());
+  }
+  if (rhs.retain_until_time != std::chrono::system_clock::time_point{}) {
+    *result.mutable_retain_until_time() =
+        google::cloud::internal::ToProtoTimestamp(rhs.retain_until_time);
+  }
+  return result;
+}
+
+storage::ObjectRetention FromProto(
+    google::storage::v2::Object::Retention const& rhs) {
+  storage::ObjectRetention result;
+  switch (rhs.mode()) {
+    case google::storage::v2::Object::Retention::UNLOCKED:
+      result.mode = storage::ObjectRetentionUnlocked();
+      break;
+    case google::storage::v2::Object::Retention::LOCKED:
+      result.mode = storage::ObjectRetentionLocked();
+      break;
+    default:
+      break;
+  }
+  if (rhs.has_retain_until_time()) {
+    result.retain_until_time =
+        google::cloud::internal::ToChronoTimePoint(rhs.retain_until_time());
+  }
   return result;
 }
 
@@ -147,6 +195,9 @@ storage::ObjectMetadata FromProto(google::storage::v2::Object object,
     metadata.set_retention_expiration_time(
         google::cloud::internal::ToChronoTimePoint(
             object.retention_expire_time()));
+  }
+  if (object.has_retention()) {
+    metadata.set_retention(FromProto(object.retention()));
   }
   metadata.set_size(static_cast<std::uint64_t>(object.size()));
   metadata.set_temporary_hold(object.temporary_hold());

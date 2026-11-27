@@ -31,6 +31,11 @@ StatusOr<google::storage::v2::CustomerEncryption> ToProto(
 storage::CustomerEncryption FromProto(
     google::storage::v2::CustomerEncryption rhs);
 
+StatusOr<google::storage::v2::Object::Retention> ToProto(
+    storage::ObjectRetention const& rhs);
+storage::ObjectRetention FromProto(
+    google::storage::v2::Object::Retention const& rhs);
+
 std::string Crc32cFromProto(std::uint32_t);
 StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
 std::string MD5FromProto(std::string const&);

@@ -113,6 +113,10 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   if (rhs.has_soft_delete_policy()) {
     *result.mutable_soft_delete_policy() = ToProto(rhs.soft_delete_policy());
   }
+  if (rhs.has_object_retention()) {
+    result.mutable_object_retention()->set_enabled(
+        rhs.object_retention().enabled);
+  }
   return result;
 }
 
@@ -161,6 +165,10 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs,
   if (rhs.has_logging()) metadata.set_logging(FromProto(rhs.logging()));
   metadata.set_metageneration(rhs.metageneration());
   metadata.set_name(GrpcBucketNameToId(rhs.name()));
+  if (rhs.has_object_retention()) {
+    metadata.set_object_retention(
+        storage::BucketObjectRetention{rhs.object_retention().enabled()});
+  }
   if (rhs.has_owner()) {
     metadata.set_owner(storage_internal::FromProto(rhs.owner()));
   }
