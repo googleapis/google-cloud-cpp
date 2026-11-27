@@ -146,6 +146,9 @@ class LifecycleRule {
   static LifecycleRuleAction SetStorageClassColdline();
   static LifecycleRuleAction SetStorageClassDurableReducedAvailability();
   static LifecycleRuleAction SetStorageClassArchive();
+  static LifecycleRuleAction SetStorageClassStandardEnterprise();
+  static LifecycleRuleAction SetStorageClassLrStandardEnterprise();
+  static LifecycleRuleAction SetStorageClassStandardFlexbackupEnterprise();
   static LifecycleRuleAction SetStorageClass(std::string storage_class);
   ///@}
 
@@ -223,6 +226,19 @@ class LifecycleRule {
 
   static LifecycleRuleCondition MatchesStorageClassArchive() {
     return MatchesStorageClass(storage_class::Archive());
+  }
+
+  static LifecycleRuleCondition MatchesStorageClassStandardEnterprise() {
+    return MatchesStorageClass(storage_class::StandardEnterprise());
+  }
+
+  static LifecycleRuleCondition MatchesStorageClassLrStandardEnterprise() {
+    return MatchesStorageClass(storage_class::LrStandardEnterprise());
+  }
+
+  static LifecycleRuleCondition
+  MatchesStorageClassStandardFlexbackupEnterprise() {
+    return MatchesStorageClass(storage_class::StandardFlexbackupEnterprise());
   }
 
   static LifecycleRuleCondition NumNewerVersions(std::int32_t days) {

@@ -89,6 +89,14 @@ TEST(LifecycleRuleTest, SetStorageClass) {
             LifecycleRule::SetStorageClassDurableReducedAvailability());
   EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::Archive()),
             LifecycleRule::SetStorageClassArchive());
+  EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::StandardEnterprise()),
+            LifecycleRule::SetStorageClassStandardEnterprise());
+  EXPECT_EQ(
+      LifecycleRule::SetStorageClass(storage_class::LrStandardEnterprise()),
+      LifecycleRule::SetStorageClassLrStandardEnterprise());
+  EXPECT_EQ(LifecycleRule::SetStorageClass(
+                storage_class::StandardFlexbackupEnterprise()),
+            LifecycleRule::SetStorageClassStandardFlexbackupEnterprise());
 }
 
 /// @test Verify that LifecycleRuleCondition comparisons work as expected.
@@ -244,6 +252,33 @@ TEST(LifecycleRuleTest, MatchesStorageClassArchive) {
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   ASSERT_FALSE(condition.matches_storage_class->empty());
   EXPECT_EQ(storage_class::Archive(), condition.matches_storage_class->front());
+}
+
+/// @test LifecycleRule::MatchesStorageClassStandardEnterprise.
+TEST(LifecycleRuleTest, MatchesStorageClassStandardEnterprise) {
+  LifecycleRuleCondition const condition =
+      LifecycleRule::MatchesStorageClassStandardEnterprise();
+  ASSERT_TRUE(condition.matches_storage_class.has_value());
+  EXPECT_THAT(*condition.matches_storage_class,
+              ElementsAre(storage_class::StandardEnterprise()));
+}
+
+/// @test LifecycleRule::MatchesStorageClassLrStandardEnterprise.
+TEST(LifecycleRuleTest, MatchesStorageClassLrStandardEnterprise) {
+  LifecycleRuleCondition const condition =
+      LifecycleRule::MatchesStorageClassLrStandardEnterprise();
+  ASSERT_TRUE(condition.matches_storage_class.has_value());
+  EXPECT_THAT(*condition.matches_storage_class,
+              ElementsAre(storage_class::LrStandardEnterprise()));
+}
+
+/// @test LifecycleRule::MatchesStorageClassStandardFlexbackupEnterprise.
+TEST(LifecycleRuleTest, MatchesStorageClassStandardFlexbackupEnterprise) {
+  LifecycleRuleCondition const condition =
+      LifecycleRule::MatchesStorageClassStandardFlexbackupEnterprise();
+  ASSERT_TRUE(condition.matches_storage_class.has_value());
+  EXPECT_THAT(*condition.matches_storage_class,
+              ElementsAre(storage_class::StandardFlexbackupEnterprise()));
 }
 
 /// @test Verify that LifecycleRule::NumNewerVersions() works as expected.

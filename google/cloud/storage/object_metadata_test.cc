@@ -15,12 +15,14 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
+#include "google/cloud/storage/storage_class.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -28,7 +30,9 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Eq;
 
 TEST(ComposeSourceObject, IOStream) {
   auto to_string = [](ComposeSourceObject const& r) {
@@ -1005,6 +1009,44 @@ TEST(ObjectMetadataPatchBuilder, ResetRetention) {
   auto actual_as_json = nlohmann::json::parse(actual);
   nlohmann::json expected{{"retention", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataTest, EnterpriseStorageClassJsonRoundtrip) {
+  std::vector<std::string> const enterprise_classes = {
+      storage_class::StandardEnterprise(),
+      storage_class::LrStandardEnterprise(),
+      storage_class::StandardFlexbackupEnterprise(),
+  };
+
+  for (std::string const& sc : enterprise_classes) {
+    SCOPED_TRACE("Testing storage class: " + sc);
+    ObjectMetadata input;
+    input.set_storage_class(sc);
+
+    nlohmann::json const insert_json =
+        internal::ObjectMetadataJsonForInsert(input);
+    EXPECT_THAT(insert_json.value("storageClass", ""), Eq(sc));
+    StatusOr<ObjectMetadata> parsed_insert =
+        internal::ObjectMetadataParser::FromJson(insert_json);
+    ASSERT_THAT(parsed_insert, IsOk());
+    EXPECT_THAT(parsed_insert->storage_class(), Eq(sc));
+
+    nlohmann::json const compose_json =
+        internal::ObjectMetadataJsonForCompose(input);
+    EXPECT_THAT(compose_json.value("storageClass", ""), Eq(sc));
+    StatusOr<ObjectMetadata> parsed_compose =
+        internal::ObjectMetadataParser::FromJson(compose_json);
+    ASSERT_THAT(parsed_compose, IsOk());
+    EXPECT_THAT(parsed_compose->storage_class(), Eq(sc));
+
+    nlohmann::json const rewrite_json =
+        internal::ObjectMetadataJsonForRewrite(input);
+    EXPECT_THAT(rewrite_json.value("storageClass", ""), Eq(sc));
+    StatusOr<ObjectMetadata> parsed_rewrite =
+        internal::ObjectMetadataParser::FromJson(rewrite_json);
+    ASSERT_THAT(parsed_rewrite, IsOk());
+    EXPECT_THAT(parsed_rewrite->storage_class(), Eq(sc));
+  }
 }
 
 }  // namespace

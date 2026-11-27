@@ -57,6 +57,7 @@ production_only_targets=(
 )
 readonly PRODUCTION_ONLY_BASE=(
   "//google/cloud/storage/tests:alternative_endpoint_integration_test"
+  "//google/cloud/storage/tests:enterprise_storage_class_integration_test"
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
   "//google/cloud/storage/tests:unified_credentials_integration_test"

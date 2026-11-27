@@ -26,6 +26,7 @@ storage_client_integration_tests = [
     "curl_sign_blob_integration_test.cc",
     "decompressive_transcoding_integration_test.cc",
     "default_object_acl_integration_test.cc",
+    "enterprise_storage_class_integration_test.cc",
     "error_injection_integration_test.cc",
     "error_parsing_integration_test.cc",
     "grpc_bucket_metadata_integration_test.cc",
@@ -80,6 +81,7 @@ storage_client_integration_tests = [
 
 storage_client_integration_tests_production = [
     "alternative_endpoint_integration_test.cc",
+    "enterprise_storage_class_integration_test.cc",
     "key_file_integration_test.cc",
     "mtls_object_basic_crud_integration_test.cc",
     "signed_url_integration_test.cc",

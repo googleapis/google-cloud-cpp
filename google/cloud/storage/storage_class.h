@@ -58,6 +58,24 @@ inline char const* Archive() {
   return kStorageClass;
 }
 
+/// Returns the Standard Enterprise storage class name.
+inline char const* StandardEnterprise() {
+  static constexpr char kStorageClass[] = "STANDARD_ENTERPRISE";
+  return kStorageClass;
+}
+
+/// Returns the Locally Redundant Standard Enterprise storage class name.
+inline char const* LrStandardEnterprise() {
+  static constexpr char kStorageClass[] = "LR_STANDARD_ENTERPRISE";
+  return kStorageClass;
+}
+
+/// Returns the Standard Flexbackup Enterprise storage class name.
+inline char const* StandardFlexbackupEnterprise() {
+  static constexpr char kStorageClass[] = "STANDARD_FLEXBACKUP_ENTERPRISE";
+  return kStorageClass;
+}
+
 }  // namespace storage_class
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
