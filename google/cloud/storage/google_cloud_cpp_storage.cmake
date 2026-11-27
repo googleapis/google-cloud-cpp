@@ -167,6 +167,8 @@ add_library(
     internal/patch_builder.h
     internal/patch_builder_details.cc
     internal/patch_builder_details.h
+    internal/payload_metrics.cc
+    internal/payload_metrics.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
     internal/request_project_id.cc
@@ -480,6 +482,7 @@ if (BUILD_TESTING)
         internal/object_write_streambuf_test.cc
         internal/operation_metrics_test.cc
         internal/patch_builder_test.cc
+        internal/payload_metrics_test.cc
         internal/policy_document_request_test.cc
         internal/request_project_id_test.cc
         internal/rest/object_read_source_test.cc
