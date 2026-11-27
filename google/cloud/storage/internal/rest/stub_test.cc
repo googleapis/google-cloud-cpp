@@ -17,8 +17,10 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <optional>
 #include <string_view>
 
 namespace google {
@@ -1027,6 +1029,206 @@ TEST(RestStubTest, UploadChunkIntermediate) {
                          std::make_shared<NoOpHashFunction>()));
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, QueryResumableUploadRejectsMismatchedSessionUrlOrigin) {
+  testing_util::ScopedEnvironment emulator_env(
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", std::nullopt);
+  testing_util::ScopedEnvironment testbench_env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", std::nullopt);
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock, Put).Times(0);
+  Options const stub_options =
+      Options{}.set<RestEndpointOption>("https://storage.googleapis.com");
+  auto tested = std::make_unique<RestStub>(stub_options, mock, mock);
+  static constexpr char kNulUrl[] =
+      "https://storage.googleapis.com/upload\0extra";
+  std::string const invalid_urls[] = {
+      "https://other.example/upload/storage/v1/b/bucket/o?upload_id=abc",
+      "http://storage.googleapis.com/upload/storage/v1/b/bucket/o?upload_id=1",
+      "HTTP://storage.googleapis.com/upload/storage/v1/b/bucket/o?upload_id=1",
+      "https://storage.googleapis.com:8443/upload/storage/v1/b/bucket/o",
+      "https://storage.googleapis.com:0/upload",
+      "https://storage.googleapis.com:65536/upload",
+      "https://storage.googleapis.com:abc/upload",
+      "https://:443/upload",
+      "https://storage.googleapis.com@other.example/upload",
+      "https://storage.googleapis.com.other.example/upload",
+      R"(https://storage.googleapis.com\@other.example/upload)",
+      "//other.example/upload",
+      "ftp://other.example/upload",
+      "https://storage.googleapis.com/upload\r\n",
+      std::string(kNulUrl, sizeof(kNulUrl) - 1),
+      "https://storage.googleapis.com:/upload",
+      "https://[::1:8080/upload",
+  };
+  for (std::string const& url : invalid_urls) {
+    SCOPED_TRACE("Testing URL: " + url);
+    RestContext context = TestContext();
+    EXPECT_THAT(tested->QueryResumableUpload(context, TestOptions(),
+                                             QueryResumableUploadRequest(url)),
+                StatusIs(StatusCode::kInvalidArgument));
+  }
+
+  // Absolute URLs are rejected when no REST endpoint is configured.
+  auto unconfigured = std::make_unique<RestStub>(Options{}, mock, mock);
+  RestContext context = TestContext();
+  EXPECT_THAT(
+      unconfigured->QueryResumableUpload(
+          context, TestOptions(),
+          QueryResumableUploadRequest(
+              "https://storage.googleapis.com/upload/storage/v1/b/bucket/o")),
+      StatusIs(StatusCode::kInvalidArgument));
+
+  // Alternative endpoint still rejects mismatched schemes and hosts.
+  auto restricted_stub = std::make_unique<RestStub>(
+      Options{}.set<RestEndpointOption>("https://restricted.googleapis.com"),
+      mock, mock);
+  EXPECT_THAT(
+      restricted_stub->QueryResumableUpload(
+          context, TestOptions(),
+          QueryResumableUploadRequest("http://storage.googleapis.com/upload")),
+      StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(restricted_stub->QueryResumableUpload(
+                  context, TestOptions(),
+                  QueryResumableUploadRequest("https://other.example/upload")),
+              StatusIs(StatusCode::kInvalidArgument));
+
+  // Explicit AuthorityOption still rejects mismatched schemes and hosts.
+  auto authority_stub = std::make_unique<RestStub>(
+      Options{}
+          .set<RestEndpointOption>("https://proxy.example")
+          .set<AuthorityOption>("storage.example"),
+      mock, mock);
+  EXPECT_THAT(authority_stub->QueryResumableUpload(
+                  context, TestOptions(),
+                  QueryResumableUploadRequest("http://storage.example/upload")),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(authority_stub->QueryResumableUpload(
+                  context, TestOptions(),
+                  QueryResumableUploadRequest("https://other.example/upload")),
+              StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST(RestStubTest, DeleteResumableUploadRejectsMismatchedSessionUrlOrigin) {
+  testing_util::ScopedEnvironment emulator_env(
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", std::nullopt);
+  testing_util::ScopedEnvironment testbench_env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", std::nullopt);
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock, Delete).Times(0);
+  Options const stub_options =
+      Options{}.set<RestEndpointOption>("https://storage.googleapis.com");
+  auto tested = std::make_unique<RestStub>(stub_options, mock, mock);
+  std::string const invalid_urls[] = {
+      "https://other.example/upload/storage/v1/b/bucket/o?upload_id=abc",
+      "http://storage.googleapis.com/upload/storage/v1/b/bucket/o",
+  };
+  for (std::string const& url : invalid_urls) {
+    SCOPED_TRACE("Testing URL: " + url);
+    RestContext context = TestContext();
+    EXPECT_THAT(tested->DeleteResumableUpload(
+                    context, TestOptions(), DeleteResumableUploadRequest(url)),
+                StatusIs(StatusCode::kInvalidArgument));
+  }
+}
+
+TEST(RestStubTest, UploadChunkRejectsMismatchedSessionUrlOrigin) {
+  testing_util::ScopedEnvironment emulator_env(
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", std::nullopt);
+  testing_util::ScopedEnvironment testbench_env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", std::nullopt);
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock, Put).Times(0);
+  Options const stub_options =
+      Options{}.set<RestEndpointOption>("https://storage.googleapis.com");
+  auto tested = std::make_unique<RestStub>(stub_options, mock, mock);
+  std::string const invalid_urls[] = {
+      "https://other.example/upload/storage/v1/b/bucket/o?upload_id=abc",
+      "http://storage.googleapis.com/upload/storage/v1/b/bucket/o",
+  };
+  for (std::string const& url : invalid_urls) {
+    SCOPED_TRACE("Testing URL: " + url);
+    RestContext context = TestContext();
+    EXPECT_THAT(tested->UploadChunk(
+                    context, TestOptions(),
+                    UploadChunkRequest(url, 0, {},
+                                       std::make_shared<NoOpHashFunction>())),
+                StatusIs(StatusCode::kInvalidArgument));
+  }
+}
+
+TEST(RestStubTest, ResumableUploadAcceptsMatchingSessionUrlOrigins) {
+  testing_util::ScopedEnvironment emulator_env(
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", std::nullopt);
+  testing_util::ScopedEnvironment testbench_env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", std::nullopt);
+  struct TestCase {
+    Options options;
+    std::string endpoint_label;
+    std::string session_url;
+  };
+  TestCase const cases[] = {
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com"),
+       "https://storage.googleapis.com",
+       "https://storage.googleapis.com/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com"),
+       "https://storage.googleapis.com",
+       "HTTPS://STORAGE.GOOGLEAPIS.COM/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com"),
+       "https://storage.googleapis.com",
+       "https://storage.googleapis.com:443/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com:443"),
+       "https://storage.googleapis.com:443",
+       "https://storage.googleapis.com/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("http://localhost:8080"),
+       "http://localhost:8080",
+       "http://localhost:8080/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("http://[::1]:8080"),
+       "http://[::1]:8080", "http://[::1]:8080/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://storage.my-ud.net"),
+       "https://storage.my-ud.net",
+       "https://storage.my-ud.net/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://restricted.googleapis.com"),
+       "https://restricted.googleapis.com",
+       "https://storage.googleapis.com/upload/storage/v1/b/bucket/o"},
+      {Options{}
+           .set<RestEndpointOption>("https://proxy.example")
+           .set<AuthorityOption>("storage.example"),
+       "https://proxy.example (authority=storage.example)",
+       "https://storage.example/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com"),
+       "https://storage.googleapis.com", "/upload/storage/v1/b/bucket/o"},
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com"),
+       "https://storage.googleapis.com", "test-url"},
+      {Options{}.set<RestEndpointOption>("https://storage.googleapis.com"),
+       "https://storage.googleapis.com", ""},
+  };
+  for (TestCase const& test_case : cases) {
+    SCOPED_TRACE("Endpoint: " + test_case.endpoint_label +
+                 ", URL: " + test_case.session_url);
+    auto mock = std::make_shared<MockRestClient>();
+    EXPECT_CALL(*mock, Put(ExpectedContext(), _, _))
+        .WillOnce(Return(PermanentError()))
+        .WillOnce(Return(PermanentError()));
+    EXPECT_CALL(*mock, Delete(ExpectedContext(), _))
+        .WillOnce(Return(PermanentError()));
+    auto tested = std::make_unique<RestStub>(test_case.options, mock, mock);
+    RestContext context = TestContext();
+    EXPECT_THAT(tested->QueryResumableUpload(
+                    context, TestOptions(),
+                    QueryResumableUploadRequest(test_case.session_url)),
+                StatusIs(PermanentError().code(), PermanentError().message()));
+    EXPECT_THAT(tested->UploadChunk(
+                    context, TestOptions(),
+                    UploadChunkRequest(test_case.session_url, 0, {},
+                                       std::make_shared<NoOpHashFunction>())),
+                StatusIs(PermanentError().code(), PermanentError().message()));
+    EXPECT_THAT(tested->DeleteResumableUpload(
+                    context, TestOptions(),
+                    DeleteResumableUploadRequest(test_case.session_url)),
+                StatusIs(PermanentError().code(), PermanentError().message()));
+  }
 }
 
 }  // namespace

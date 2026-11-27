@@ -34,10 +34,14 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/url_encode.h"
+#include "absl/strings/ascii.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
+#include <cstdint>
+#include <optional>
 #include <sstream>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -135,6 +139,168 @@ std::string IamEndpoint(Options const& options) {
   auto emulator = GetEmulator();
   if (emulator) return *emulator + "/iamapi";
   return options.get<IamEndpointOption>();
+}
+
+struct ParsedOrigin {
+  std::string_view scheme;
+  std::string host;
+  std::uint16_t port = 0;
+
+  friend bool operator==(ParsedOrigin const& lhs, ParsedOrigin const& rhs) {
+    return lhs.scheme == rhs.scheme && lhs.host == rhs.host &&
+           lhs.port == rhs.port;
+  }
+};
+
+std::optional<std::uint16_t> ParsePort(std::string_view port_str) {
+  if (port_str.empty()) return std::nullopt;
+  std::uint32_t value = 0;
+  for (char const ch : port_str) {
+    if (ch < '0' || ch > '9') return std::nullopt;
+    value = value * 10 + static_cast<std::uint32_t>(ch - '0');
+    if (value > 65535) return std::nullopt;
+  }
+  if (value == 0) return std::nullopt;
+  return static_cast<std::uint16_t>(value);
+}
+
+// Parses an http:// or https:// URL into its normalized (scheme, host, port).
+std::optional<ParsedOrigin> ParseOrigin(std::string_view url) {
+  std::string_view scheme;
+  std::uint16_t port = 0;
+  std::string_view rest;
+  if (absl::StartsWithIgnoreCase(url, "https://")) {
+    scheme = "https";
+    port = 443;
+    rest = url.substr(8);
+  } else if (absl::StartsWithIgnoreCase(url, "http://")) {
+    scheme = "http";
+    port = 80;
+    rest = url.substr(7);
+  } else {
+    return std::nullopt;
+  }
+
+  std::size_t const authority_end = rest.find_first_of("/?#");
+  std::string_view const authority = rest.substr(0, authority_end);
+  if (authority.empty()) return std::nullopt;
+
+  for (unsigned char const ch : authority) {
+    if (ch <= 0x20 || ch == 0x7f || ch == '@' || ch == '\\') {
+      return std::nullopt;
+    }
+  }
+
+  if (authority.front() == '[') {
+    std::size_t const close_bracket = authority.find(']');
+    if (close_bracket == std::string_view::npos || close_bracket <= 1) {
+      return std::nullopt;
+    }
+    std::string_view const host_view = authority.substr(0, close_bracket + 1);
+    if (host_view.substr(1, host_view.size() - 2).find('[') !=
+        std::string_view::npos) {
+      return std::nullopt;
+    }
+    std::string_view const suffix = authority.substr(close_bracket + 1);
+    if (!suffix.empty()) {
+      if (suffix.front() != ':') return std::nullopt;
+      std::optional<std::uint16_t> parsed_port = ParsePort(suffix.substr(1));
+      if (!parsed_port) return std::nullopt;
+      port = *parsed_port;
+    }
+    return ParsedOrigin{scheme, absl::AsciiStrToLower(host_view), port};
+  }
+
+  if (authority.find('[') != std::string_view::npos ||
+      authority.find(']') != std::string_view::npos) {
+    return std::nullopt;
+  }
+  std::size_t const colon = authority.find(':');
+  std::string_view host_view = authority;
+  if (colon != std::string_view::npos) {
+    if (authority.find(':', colon + 1) != std::string_view::npos) {
+      return std::nullopt;
+    }
+    host_view = authority.substr(0, colon);
+    std::optional<std::uint16_t> parsed_port =
+        ParsePort(authority.substr(colon + 1));
+    if (!parsed_port) return std::nullopt;
+    port = *parsed_port;
+  }
+  if (host_view.empty()) return std::nullopt;
+  return ParsedOrigin{scheme, absl::AsciiStrToLower(host_view), port};
+}
+
+bool HasLineBreakOrNul(std::string_view url) {
+  for (unsigned char const ch : url) {
+    if (ch == '\r' || ch == '\n' || ch == '\0') return true;
+  }
+  return false;
+}
+
+// Validates that an absolute resumable upload session URL matches the
+// configured REST endpoint origin (or resolved storage authority with matching
+// scheme). Relative session paths remain permitted.
+Status ValidateUploadSessionUrl(std::string_view upload_session_url,
+                                Options const& options) {
+  if (HasLineBreakOrNul(upload_session_url)) {
+    return google::cloud::internal::InvalidArgumentError(
+        "upload session URL contains invalid line break or NUL characters",
+        GCP_ERROR_INFO());
+  }
+  if (absl::StartsWith(upload_session_url, "//")) {
+    return google::cloud::internal::InvalidArgumentError(
+        "upload session URL must not use a protocol-relative authority",
+        GCP_ERROR_INFO());
+  }
+  if (!absl::StartsWithIgnoreCase(upload_session_url, "http://") &&
+      !absl::StartsWithIgnoreCase(upload_session_url, "https://")) {
+    std::size_t const scheme_sep = upload_session_url.find("://");
+    std::size_t const delim = upload_session_url.find_first_of("/?#");
+    if (scheme_sep != std::string_view::npos &&
+        (delim == std::string_view::npos || scheme_sep < delim)) {
+      return google::cloud::internal::InvalidArgumentError(
+          "upload session URL uses an unsupported scheme", GCP_ERROR_INFO());
+    }
+    return Status{};
+  }
+
+  std::optional<ParsedOrigin> session_origin = ParseOrigin(upload_session_url);
+  if (!session_origin) {
+    return google::cloud::internal::InvalidArgumentError(
+        "malformed upload session URL", GCP_ERROR_INFO());
+  }
+
+  std::string const endpoint = RestEndpoint(options);
+  std::optional<ParsedOrigin> endpoint_origin = ParseOrigin(endpoint);
+  if (!endpoint_origin) {
+    return google::cloud::internal::InvalidArgumentError(
+        "upload session URL cannot be validated without a valid REST endpoint",
+        GCP_ERROR_INFO());
+  }
+  if (*session_origin == *endpoint_origin) return Status{};
+
+  std::string authority;
+  if (options.has<AuthorityOption>()) {
+    authority = options.get<AuthorityOption>();
+  } else {
+    Options const resolved_options = RestStub::ResolveStorageAuthority(
+        Options{}.set<RestEndpointOption>(endpoint));
+    if (resolved_options.has<AuthorityOption>()) {
+      authority = resolved_options.get<AuthorityOption>();
+    }
+  }
+  if (!authority.empty()) {
+    std::optional<ParsedOrigin> authority_origin =
+        ParseOrigin(absl::StrCat(endpoint_origin->scheme, "://", authority));
+    if (authority_origin && *session_origin == *authority_origin) {
+      return Status{};
+    }
+  }
+
+  return google::cloud::internal::InvalidArgumentError(
+      "upload session URL origin does not match configured endpoint",
+      GCP_ERROR_INFO());
 }
 
 }  // namespace
@@ -747,6 +913,9 @@ StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
 StatusOr<QueryResumableUploadResponse> RestStub::QueryResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     QueryResumableUploadRequest const& request) {
+  Status valid =
+      ValidateUploadSessionUrl(request.upload_session_url(), options_);
+  if (!valid.ok()) return valid;
   RestRequestBuilder builder(request.upload_session_url());
   auto headers = AddHeaders(options, builder);
   if (!headers.ok()) return headers;
@@ -767,6 +936,9 @@ StatusOr<QueryResumableUploadResponse> RestStub::QueryResumableUpload(
 StatusOr<EmptyResponse> RestStub::DeleteResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     DeleteResumableUploadRequest const& request) {
+  Status valid =
+      ValidateUploadSessionUrl(request.upload_session_url(), options_);
+  if (!valid.ok()) return valid;
   RestRequestBuilder builder(request.upload_session_url());
   auto headers = AddHeaders(options, builder);
   if (!headers.ok()) return headers;
@@ -785,6 +957,9 @@ StatusOr<EmptyResponse> RestStub::DeleteResumableUpload(
 StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
     rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
+  Status valid =
+      ValidateUploadSessionUrl(request.upload_session_url(), options_);
+  if (!valid.ok()) return valid;
   RestRequestBuilder builder(request.upload_session_url());
   auto headers = AddHeaders(options, builder);
   if (!headers.ok()) return headers;
@@ -1289,4 +1464,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include "google/cloud/internal/diagnostics_pop.inc"
-#include <string_view>
