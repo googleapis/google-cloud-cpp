@@ -96,10 +96,27 @@ TEST(MakeDataConnection, WithInstances) {
       << "Options are not defaulted in MakeDataConnection()";
   EXPECT_EQ(options.get<AppProfileIdOption>(), "user-supplied")
       << "User supplied Options are overridden in MakeDataConnection()";
+  EXPECT_TRUE(
+      options.get<experimental::EnableClientConfigurationPollingOption>());
+  EXPECT_TRUE(
+      options.get<bigtable_internal::EnableClientConfigurationManagerOption>());
   ASSERT_TRUE(options.has<bigtable_internal::InstanceChannelAffinityOption>());
   EXPECT_THAT(
       options.get<bigtable_internal::InstanceChannelAffinityOption>().size(),
       Eq(2));
+}
+
+TEST(MakeDataConnection, ClientConfigurationPollingDisabledOnEmulator) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           "localhost:8086");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  std::shared_ptr<DataConnection> conn =
+      MakeDataConnection({instance_a}, TestOptions());
+  Options options = conn->options();
+  EXPECT_FALSE(
+      options.get<experimental::EnableClientConfigurationPollingOption>());
+  EXPECT_FALSE(
+      options.get<bigtable_internal::EnableClientConfigurationManagerOption>());
 }
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

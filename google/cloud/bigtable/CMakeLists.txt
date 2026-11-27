@@ -168,6 +168,8 @@ add_library(
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/channel_usage.h
+    internal/client_configuration_manager.cc
+    internal/client_configuration_manager.h
     internal/client_options_defaults.h
     internal/client_schema_metrics.cc
     internal/client_schema_metrics.h
@@ -471,6 +473,7 @@ if (BUILD_TESTING)
         internal/bigtable_stub_factory_test.cc
         internal/bulk_mutator_test.cc
         internal/channel_usage_test.cc
+        internal/client_configuration_manager_test.cc
         internal/client_schema_metrics_test.cc
         internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc

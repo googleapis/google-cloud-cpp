@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/client_configuration_manager.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
@@ -28,7 +29,15 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/container/flat_hash_map.h"
+#include "absl/hash/hash.h"
+#include <cstddef>
 #include <memory>
+#include <mutex>
+#include <shared_mutex>
+#include <string>
+#include <string_view>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -45,6 +54,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // store the instances.
 struct InstanceChannelAffinityOption {
   using Type = std::vector<bigtable::InstanceResource>;
+};
+
+struct EnableClientConfigurationManagerOption {
+  using Type = bool;
 };
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -124,7 +137,15 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::PrepareQueryParams const& p) override;
   bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
 
+  std::shared_ptr<ClientConfigurationManager> GetClientConfigurationManager(
+      std::string_view instance_name, std::string_view app_profile_id) const;
+
  private:
+  std::shared_ptr<ClientConfigurationManager> EnsureClientConfigurationManager(
+      std::string_view instance_name, std::string_view app_profile_id);
+  std::shared_ptr<BigtableStub> ResolveStubForOperation(
+      std::string_view instance_name, std::string_view app_profile_id);
+
   void AsyncReadRowsHelper(std::string const& table_name,
                            std::function<future<bool>(bigtable::Row)> on_row,
                            std::function<void(Status)> on_finish,
@@ -133,6 +154,41 @@ class DataConnectionImpl : public bigtable::DataConnection {
                            internal::ImmutableOptions const& current,
                            std::shared_ptr<OperationContext> operation_context);
 
+  struct ConfigManagerKey {
+    std::string instance_id;
+    std::string app_profile_id;
+
+    struct Hash {
+      using is_transparent = void;
+      std::size_t operator()(ConfigManagerKey const& key) const {
+        return absl::Hash<std::pair<std::string_view, std::string_view>>()(
+            {key.instance_id, key.app_profile_id});
+      }
+      std::size_t operator()(
+          std::pair<std::string_view, std::string_view> const& p) const {
+        return absl::Hash<std::pair<std::string_view, std::string_view>>()(p);
+      }
+    };
+
+    struct Equal {
+      using is_transparent = void;
+      bool operator()(ConfigManagerKey const& lhs,
+                      ConfigManagerKey const& rhs) const {
+        return lhs.instance_id == rhs.instance_id &&
+               lhs.app_profile_id == rhs.app_profile_id;
+      }
+      bool operator()(
+          ConfigManagerKey const& lhs,
+          std::pair<std::string_view, std::string_view> const& rhs) const {
+        return lhs.instance_id == rhs.first && lhs.app_profile_id == rhs.second;
+      }
+      bool operator()(std::pair<std::string_view, std::string_view> const& lhs,
+                      ConfigManagerKey const& rhs) const {
+        return lhs.first == rhs.instance_id && lhs.second == rhs.app_profile_id;
+      }
+    };
+  };
+
   std::unique_ptr<BackgroundThreads> background_;
   std::unique_ptr<StubManager> stub_manager_;
   std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
@@ -140,6 +196,13 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
+  bool enable_config_polling_ = false;
+  mutable std::shared_mutex config_managers_mu_;
+  bool shutting_down_ = false;
+  absl::flat_hash_map<ConfigManagerKey,
+                      std::shared_ptr<ClientConfigurationManager>,
+                      ConfigManagerKey::Hash, ConfigManagerKey::Equal>
+      config_managers_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

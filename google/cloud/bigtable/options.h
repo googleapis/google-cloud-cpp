@@ -290,6 +290,18 @@ struct DirectPathInitializationModeOption {
   using Type = DirectPathInitializationMode;
 };
 
+/**
+ * Option to control whether `DataConnection` polls `GetClientConfiguration`
+ * in the background per `(instance, app_profile_id)` pair.
+ *
+ * Enabled by default unless connecting to the Cloud Bigtable emulator.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct EnableClientConfigurationPollingOption {
+  using Type = bool;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
@@ -381,7 +393,8 @@ using DataPolicyOptionList =
                IdempotentMutationPolicyOption, EnableMetricsOption,
                MetricsPeriodOption,
                experimental::DynamicChannelPoolSizingPolicyOption,
-               experimental::DirectPathInitializationModeOption>;
+               experimental::DirectPathInitializationModeOption,
+               experimental::EnableClientConfigurationPollingOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
