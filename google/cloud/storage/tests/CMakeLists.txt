@@ -73,6 +73,7 @@ set(storage_client_integration_tests
 set(storage_client_integration_tests_production
     # cmake-format: sort
     alternative_endpoint_integration_test.cc
+    enterprise_storage_class_integration_test.cc
     key_file_integration_test.cc
     mtls_object_basic_crud_integration_test.cc
     signed_url_integration_test.cc

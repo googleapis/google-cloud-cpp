@@ -16,11 +16,14 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/storage/storage_class.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -31,6 +34,7 @@ namespace {
 namespace storage_proto = ::google::storage::v2;
 using ::google::cloud::internal::HexDecode;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::Eq;
 
 TEST(GrpcClientFromProto, ObjectSimple) {
   storage_proto::Object input;
@@ -272,6 +276,25 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
     auto const p = std::string{test.proto.begin(), test.proto.end()};
     EXPECT_EQ(MD5FromProto(p), test.rest);
     EXPECT_THAT(MD5ToProto(test.rest).value(), testing::ElementsAreArray(p));
+  }
+}
+
+TEST(GrpcClientFromProto, EnterpriseStorageClass) {
+  std::vector<std::string> const enterprise_classes = {
+      storage::storage_class::StandardEnterprise(),
+      storage::storage_class::LrStandardEnterprise(),
+      storage::storage_class::StandardFlexbackupEnterprise(),
+  };
+
+  for (std::string const& sc : enterprise_classes) {
+    SCOPED_TRACE("Testing storage class: " + sc);
+    storage_proto::Object input;
+    input.set_bucket("projects/_/buckets/enterprise-bucket");
+    input.set_name("enterprise-object");
+    input.set_storage_class(sc);
+
+    storage::ObjectMetadata const decoded = FromProto(input, Options{});
+    EXPECT_THAT(decoded.storage_class(), Eq(sc));
   }
 }
 

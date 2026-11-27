@@ -33,6 +33,10 @@ TEST(StorageClassTest, Values) {
   EXPECT_EQ(std::string("DURABLE_REDUCED_AVAILABILITY"),
             DurableReducedAvailability());
   EXPECT_EQ(std::string("ARCHIVE"), Archive());
+  EXPECT_EQ(std::string("STANDARD_ENTERPRISE"), StandardEnterprise());
+  EXPECT_EQ(std::string("LR_STANDARD_ENTERPRISE"), LrStandardEnterprise());
+  EXPECT_EQ(std::string("STANDARD_FLEXBACKUP_ENTERPRISE"),
+            StandardFlexbackupEnterprise());
 }
 
 }  // namespace

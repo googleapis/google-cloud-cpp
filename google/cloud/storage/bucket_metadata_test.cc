@@ -31,10 +31,13 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Optional;
+using ::testing::SizeIs;
 
 BucketMetadata CreateBucketMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
@@ -1664,6 +1667,41 @@ TEST(BucketMetadataPatchBuilder, ResetWebsite) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("website")) << json;
   ASSERT_TRUE(json["website"].is_null()) << json;
+}
+
+TEST(BucketMetadataTest, EnterpriseStorageClassJsonRoundtrip) {
+  std::vector<std::string> const enterprise_classes = {
+      storage_class::StandardEnterprise(),
+      storage_class::LrStandardEnterprise(),
+      storage_class::StandardFlexbackupEnterprise(),
+  };
+
+  for (std::string const& sc : enterprise_classes) {
+    SCOPED_TRACE("Testing storage class: " + sc);
+    BucketMetadata input;
+    input.set_storage_class(sc).set_lifecycle(BucketLifecycle{{LifecycleRule(
+        LifecycleRule::ConditionConjunction(
+            LifecycleRule::MaxAge(10), LifecycleRule::MatchesStorageClasses(
+                                           {storage_class::Standard(), sc})),
+        LifecycleRule::SetStorageClass(sc))}});
+
+    std::string const serialized = internal::BucketMetadataToJsonString(input);
+    StatusOr<BucketMetadata> parsed =
+        internal::BucketMetadataParser::FromString(serialized);
+    ASSERT_THAT(parsed, IsOk());
+    EXPECT_THAT(parsed->storage_class(), Eq(sc));
+    ASSERT_TRUE(parsed->has_lifecycle());
+    ASSERT_THAT(parsed->lifecycle().rule, SizeIs(1));
+    LifecycleRule const& rule = parsed->lifecycle().rule.front();
+    EXPECT_THAT(rule.action(), Eq(LifecycleRule::SetStorageClass(sc)));
+    EXPECT_THAT(rule.condition().matches_storage_class,
+                Optional(ElementsAre(storage_class::Standard(), sc)));
+
+    BucketMetadataPatchBuilder builder;
+    builder.SetStorageClass(sc);
+    nlohmann::json const patch = nlohmann::json::parse(builder.BuildPatch());
+    EXPECT_THAT(patch.value("storageClass", ""), Eq(sc));
+  }
 }
 
 }  // namespace

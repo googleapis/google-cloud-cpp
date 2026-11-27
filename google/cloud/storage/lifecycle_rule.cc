@@ -206,6 +206,19 @@ LifecycleRuleAction LifecycleRule::SetStorageClassArchive() {
   return SetStorageClass(storage_class::Archive());
 }
 
+LifecycleRuleAction LifecycleRule::SetStorageClassStandardEnterprise() {
+  return SetStorageClass(storage_class::StandardEnterprise());
+}
+
+LifecycleRuleAction LifecycleRule::SetStorageClassLrStandardEnterprise() {
+  return SetStorageClass(storage_class::LrStandardEnterprise());
+}
+
+LifecycleRuleAction
+LifecycleRule::SetStorageClassStandardFlexbackupEnterprise() {
+  return SetStorageClass(storage_class::StandardFlexbackupEnterprise());
+}
+
 LifecycleRuleAction LifecycleRule::SetStorageClass(std::string storage_class) {
   return LifecycleRuleAction{"SetStorageClass", std::move(storage_class)};
 }

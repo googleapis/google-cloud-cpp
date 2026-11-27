@@ -14,10 +14,13 @@
 
 #include "google/cloud/storage/internal/grpc/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/storage_class.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -27,7 +30,11 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
+using ::testing::Eq;
+using ::testing::Optional;
+using ::testing::SizeIs;
 
 TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   google::storage::v2::Bucket input;
@@ -575,6 +582,43 @@ TEST(GrpcBucketMetadataParser, BucketCustomPlacementConfigRoundtrip) {
   EXPECT_EQ(middle, expected);
   auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcBucketMetadataParser, EnterpriseStorageClassRoundtrip) {
+  std::vector<std::string> const enterprise_classes = {
+      storage::storage_class::StandardEnterprise(),
+      storage::storage_class::LrStandardEnterprise(),
+      storage::storage_class::StandardFlexbackupEnterprise(),
+  };
+
+  for (std::string const& sc : enterprise_classes) {
+    SCOPED_TRACE("Testing storage class: " + sc);
+    storage::BucketMetadata input;
+    input.set_name("enterprise-bucket")
+        .set_storage_class(sc)
+        .set_lifecycle(storage::BucketLifecycle{{storage::LifecycleRule(
+            storage::LifecycleRule::ConditionConjunction(
+                storage::LifecycleRule::MaxAge(10),
+                storage::LifecycleRule::MatchesStorageClasses(
+                    {storage::storage_class::Standard(), sc})),
+            storage::LifecycleRule::SetStorageClass(sc))}});
+
+    google::storage::v2::Bucket const proto = ToProto(input);
+    EXPECT_THAT(proto.storage_class(), Eq(sc));
+    ASSERT_THAT(proto.lifecycle().rule(), SizeIs(1));
+    EXPECT_THAT(proto.lifecycle().rule(0).action().storage_class(), Eq(sc));
+    EXPECT_THAT(proto.lifecycle().rule(0).condition().matches_storage_class(),
+                ElementsAre(storage::storage_class::Standard(), sc));
+
+    storage::BucketMetadata const decoded = FromProto(proto, Options{});
+    EXPECT_THAT(decoded.storage_class(), Eq(sc));
+    ASSERT_TRUE(decoded.has_lifecycle());
+    ASSERT_THAT(decoded.lifecycle().rule, SizeIs(1));
+    storage::LifecycleRule const& rule = decoded.lifecycle().rule.front();
+    EXPECT_THAT(rule.action(), Eq(storage::LifecycleRule::SetStorageClass(sc)));
+    EXPECT_THAT(rule.condition().matches_storage_class,
+                Optional(ElementsAre(storage::storage_class::Standard(), sc)));
+  }
 }
 
 }  // namespace

@@ -105,6 +105,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=/dev/shm/roots.pem"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ENTERPRISE=${GOOGLE_CLOUD_CPP_STORAGE_TEST_ENTERPRISE:-}"
     # We only set these environment variables on GCB-based builds, as the
     # corresponding endpoints (e.g., https://private.googleapis.com) are not
     # always available in Kokoro.
