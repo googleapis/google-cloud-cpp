@@ -38,6 +38,9 @@ inline constexpr std::string_view kOperationsMetric =
     "gcp.storage.client.operations";
 inline constexpr std::string_view kRequestDurationMetric =
     "gcp.client.request.duration";
+inline constexpr std::string_view kTtfbMetric = "gcp.storage.client.ttfb";
+inline constexpr std::string_view kRpcCallDurationMetric =
+    "rpc.client.call.duration";
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
