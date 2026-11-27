@@ -19,6 +19,7 @@
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -31,6 +32,7 @@ namespace {
 namespace storage_proto = ::google::storage::v2;
 using ::google::cloud::internal::HexDecode;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(GrpcClientFromProto, ObjectSimple) {
   storage_proto::Object input;
@@ -130,6 +132,13 @@ TEST(GrpcClientFromProto, ObjectSimple) {
       seconds: 1714979289
       nanos: 123456789
     }
+    retention {
+      mode: UNLOCKED
+      retain_until_time {
+        seconds: 1714979289
+        nanos: 123456789
+      }
+    }
 )""",
                                                             &input));
 
@@ -204,7 +213,11 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     "etag": "test-etag",
     "softDeleteTime": "2024-03-04T12:34:56.987654321Z",
     "hardDeleteTime": "2024-03-11T12:34:56.987654321Z",
-    "timeFinalized": "2024-05-06T07:08:09.123456789Z"
+    "timeFinalized": "2024-05-06T07:08:09.123456789Z",
+    "retention": {
+      "mode": "Unlocked",
+      "retainUntilTime": "2024-05-06T07:08:09.123456789Z"
+    }
 })""");
   ASSERT_STATUS_OK(expected);
 
@@ -222,6 +235,7 @@ TEST(GrpcClientFromProto, ObjectWithoutFinalizeTime) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
   storage::ObjectMetadata const actual = FromProto(input, Options{});
   EXPECT_FALSE(actual.has_finalize_time());
+  EXPECT_FALSE(actual.has_retention());
 }
 
 TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
@@ -273,6 +287,59 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
     EXPECT_EQ(MD5FromProto(p), test.rest);
     EXPECT_THAT(MD5ToProto(test.rest).value(), testing::ElementsAreArray(p));
   }
+}
+
+TEST(GrpcClientFromProto, ObjectRetentionRoundtrip) {
+  std::chrono::system_clock::time_point const tp =
+      std::chrono::system_clock::time_point{} +
+      std::chrono::seconds(1714979289) + std::chrono::microseconds(123456);
+  struct TestCase {
+    std::string text_proto;
+    storage::ObjectRetention expected;
+  } cases[] = {
+      {R"pb(
+         mode: UNLOCKED
+         retain_until_time { seconds: 1714979289 nanos: 123456000 }
+       )pb",
+       storage::ObjectRetention{storage::ObjectRetentionUnlocked(), tp}},
+      {R"pb(
+         mode: LOCKED
+         retain_until_time { seconds: 1714979289 nanos: 123456000 }
+       )pb",
+       storage::ObjectRetention{storage::ObjectRetentionLocked(), tp}},
+      {R"pb(
+         mode: MODE_UNSPECIFIED
+       )pb",
+       storage::ObjectRetention{}},
+  };
+  for (auto const& test : cases) {
+    SCOPED_TRACE(absl::StrCat("Testing with text_proto=", test.text_proto));
+    google::storage::v2::Object::Retention start;
+    ASSERT_TRUE(
+        google::protobuf::TextFormat::ParseFromString(test.text_proto, &start));
+    storage::ObjectRetention const middle = FromProto(start);
+    EXPECT_EQ(middle, test.expected);
+    StatusOr<google::storage::v2::Object::Retention> const end =
+        ToProto(middle);
+    ASSERT_STATUS_OK(end);
+    EXPECT_THAT(*end, IsProtoEqual(start));
+  }
+
+  // Verify uppercase and lowercase mode strings match.
+  StatusOr<google::storage::v2::Object::Retention> const unlocked_upper =
+      ToProto(storage::ObjectRetention{"UNLOCKED", tp});
+  ASSERT_STATUS_OK(unlocked_upper);
+  EXPECT_EQ(unlocked_upper->mode(),
+            google::storage::v2::Object::Retention::UNLOCKED);
+
+  StatusOr<google::storage::v2::Object::Retention> const locked_lower =
+      ToProto(storage::ObjectRetention{"locked", tp});
+  ASSERT_STATUS_OK(locked_lower);
+  EXPECT_EQ(locked_lower->mode(),
+            google::storage::v2::Object::Retention::LOCKED);
+
+  EXPECT_THAT(ToProto(storage::ObjectRetention{"test-only-invalid", tp}),
+              StatusIs(StatusCode::kInvalidArgument));
 }
 
 }  // namespace

@@ -557,6 +557,24 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
   EXPECT_THAT(response.status(), StatusIs(StatusCode::kOutOfRange));
 }
 
+TEST_F(GrpcClientTest, CopyObjectInvalidRetentionMode) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, RewriteObject).Times(0);
+  std::unique_ptr<GrpcStub> client = CreateTestClient(mock);
+  rest_internal::RestContext context = TestContext();
+  storage::ObjectMetadata const invalid_metadata =
+      storage::ObjectMetadata{}.set_retention(storage::ObjectRetention{
+          "test-only-invalid", std::chrono::system_clock::time_point{} +
+                                   std::chrono::seconds(1643126687)});
+  StatusOr<ObjectMetadata> response = client->CopyObject(
+      context, TestOptions(),
+      storage::internal::CopyObjectRequest("test-source-bucket",
+                                           "test-source-object", "test-bucket",
+                                           "test-object")
+          .set_multiple_options(storage::WithObjectMetadata(invalid_metadata)));
+  EXPECT_THAT(response.status(), StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST_F(GrpcClientTest, GetObjectMetadata) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)

@@ -97,6 +97,10 @@ google::storage::v2::Object ExpectedFullObjectMetadata() {
     }
     event_based_hold: true
     custom_time { seconds: 1643126687 nanos: 123000000 }
+    retention {
+      mode: UNLOCKED
+      retain_until_time { seconds: 1643126687 nanos: 123000000 }
+    }
   )pb";
   google::storage::v2::Object proto;
   if (TextFormat::ParseFromString(kProto, &proto)) return proto;
@@ -125,7 +129,12 @@ storage::ObjectMetadata FullObjectMetadata() {
       .set_event_based_hold(true)
       .set_custom_time(std::chrono::system_clock::time_point{} +
                        std::chrono::seconds(1643126687) +
-                       std::chrono::milliseconds(123));
+                       std::chrono::milliseconds(123))
+      .set_retention(
+          storage::ObjectRetention{storage::ObjectRetentionUnlocked(),
+                                   std::chrono::system_clock::time_point{} +
+                                       std::chrono::seconds(1643126687) +
+                                       std::chrono::milliseconds(123)});
 }
 
 google::storage::v2::CommonObjectRequestParams
@@ -466,6 +475,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
     if_generation_not_match: 2
     if_metageneration_match: 3
     if_metageneration_not_match: 4
+    override_unlocked_retention: true
     update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
@@ -501,11 +511,17 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
           .SetEventBasedHold(true)
           .SetCustomTime(std::chrono::system_clock::time_point{} +
                          std::chrono::seconds(1643126687) +
-                         std::chrono::milliseconds(123)));
+                         std::chrono::milliseconds(123))
+          .SetRetention(
+              storage::ObjectRetention{storage::ObjectRetentionUnlocked(),
+                                       std::chrono::system_clock::time_point{} +
+                                           std::chrono::seconds(1643126687) +
+                                           std::chrono::milliseconds(123)}));
   req.set_multiple_options(
       storage::Generation(7), storage::IfGenerationMatch(1),
       storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
       storage::IfMetagenerationNotMatch(4),
+      storage::OverrideUnlockedRetention(true),
       storage::PredefinedAcl("projectPrivate"),
       storage::EncryptionKey::FromBinaryKey("01234567"),
       storage::Projection("full"), storage::UserProject("test-user-project"),
@@ -521,7 +537,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
           "acl", "content_encoding", "content_disposition", "cache_control",
           "content_language", "content_type", "metadata.test-metadata-key1",
           "metadata.test-metadata-key2", "temporary_hold", "event_based_hold",
-          "custom_time", "contexts.custom.custom-key-1"));
+          "custom_time", "contexts.custom.custom-key-1", "retention"));
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -548,7 +564,8 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
           .ResetMetadata()
           .ResetContexts()
           .ResetTemporaryHold()
-          .ResetCustomTime());
+          .ResetCustomTime()
+          .ResetRetention());
 
   auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
@@ -559,7 +576,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
       UnorderedElementsAre("acl", "content_encoding", "content_disposition",
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
-                           "custom_time", "contexts.custom"));
+                           "custom_time", "contexts.custom", "retention"));
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -681,6 +698,7 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
     if_generation_not_match: 2
     if_metageneration_match: 3
     if_metageneration_not_match: 4
+    override_unlocked_retention: true
     update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
@@ -699,6 +717,7 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
       storage::Generation(7), storage::IfGenerationMatch(1),
       storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
       storage::IfMetagenerationNotMatch(4),
+      storage::OverrideUnlockedRetention(true),
       storage::PredefinedAcl("projectPrivate"),
       storage::EncryptionKey::FromBinaryKey("01234567"),
       storage::Projection("full"), storage::UserProject("test-user-project"),
@@ -713,7 +732,7 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
       UnorderedElementsAre("acl", "content_encoding", "content_disposition",
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
-                           "custom_time", "contexts"));
+                           "custom_time", "contexts", "retention"));
   // Clear the paths, which we already compared, and test the rest
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -1461,6 +1480,88 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeUploadChunkRequest) {
     EXPECT_TRUE(write_options.is_last_message());
     EXPECT_THAT(write_request.object_checksums(), IsProtoEqual(expected));
   }
+}
+
+TEST(GrpcObjectRequestParser, UpdateObjectRequestRetentionMask) {
+  struct TestCase {
+    std::optional<bool> override_unlocked;
+    bool expected_override;
+    bool expect_retention_path;
+  } const cases[] = {
+      {std::nullopt, false, false},
+      {false, false, false},
+      {true, true, true},
+  };
+  for (TestCase const& test : cases) {
+    SCOPED_TRACE(
+        test.override_unlocked.has_value()
+            ? (*test.override_unlocked ? "override=true" : "override=false")
+            : "override=unset");
+    storage::internal::UpdateObjectRequest req("bucket-name", "object-name",
+                                               storage::ObjectMetadata{});
+    if (test.override_unlocked.has_value()) {
+      req.set_multiple_options(
+          storage::OverrideUnlockedRetention(*test.override_unlocked));
+    }
+    StatusOr<google::storage::v2::UpdateObjectRequest> actual = ToProto(req);
+    ASSERT_STATUS_OK(actual);
+    EXPECT_EQ(actual->override_unlocked_retention(), test.expected_override);
+    EXPECT_FALSE(actual->object().has_retention());
+    if (test.expect_retention_path) {
+      EXPECT_THAT(actual->update_mask().paths(),
+                  testing::Contains("retention"));
+    } else {
+      EXPECT_THAT(actual->update_mask().paths(),
+                  testing::Not(testing::Contains("retention")));
+    }
+  }
+}
+
+TEST(GrpcObjectRequestParser, ObjectRequestInvalidRetentionMode) {
+  storage::ObjectMetadata const invalid_metadata =
+      storage::ObjectMetadata{}.set_retention(storage::ObjectRetention{
+          "test-only-invalid", std::chrono::system_clock::time_point{} +
+                                   std::chrono::seconds(1643126687)});
+
+  storage::internal::InsertObjectMediaRequest insert_req("bucket-name",
+                                                         "object-name", kText);
+  insert_req.set_multiple_options(
+      storage::WithObjectMetadata(invalid_metadata));
+  EXPECT_THAT(ToProto(insert_req), StatusIs(StatusCode::kInvalidArgument));
+
+  storage::internal::ResumableUploadRequest resumable_req("bucket-name",
+                                                          "object-name");
+  resumable_req.set_multiple_options(
+      storage::WithObjectMetadata(invalid_metadata));
+  EXPECT_THAT(ToProto(resumable_req), StatusIs(StatusCode::kInvalidArgument));
+
+  storage::internal::CopyObjectRequest copy_req(
+      "source-bucket", "source-object", "bucket-name", "object-name");
+  copy_req.set_multiple_options(storage::WithObjectMetadata(invalid_metadata));
+  EXPECT_THAT(ToProto(copy_req), StatusIs(StatusCode::kInvalidArgument));
+
+  storage::internal::RewriteObjectRequest rewrite_req(
+      "source-bucket", "source-object", "bucket-name", "object-name",
+      "test-rewrite-token");
+  rewrite_req.set_multiple_options(
+      storage::WithObjectMetadata(invalid_metadata));
+  EXPECT_THAT(ToProto(rewrite_req), StatusIs(StatusCode::kInvalidArgument));
+
+  storage::internal::ComposeObjectRequest compose_req("bucket-name", {},
+                                                      "object-name");
+  compose_req.set_multiple_options(
+      storage::WithObjectMetadata(invalid_metadata));
+  EXPECT_THAT(ToProto(compose_req), StatusIs(StatusCode::kInvalidArgument));
+
+  storage::internal::UpdateObjectRequest update_req(
+      "bucket-name", "object-name", invalid_metadata);
+  EXPECT_THAT(ToProto(update_req), StatusIs(StatusCode::kInvalidArgument));
+
+  storage::internal::PatchObjectRequest patch_req(
+      "bucket-name", "object-name",
+      storage::ObjectMetadataPatchBuilder{}.SetRetention(
+          invalid_metadata.retention()));
+  EXPECT_THAT(ToProto(patch_req), StatusIs(StatusCode::kInvalidArgument));
 }
 
 }  // namespace
