@@ -181,6 +181,8 @@ add_library(
     internal/retry_logging.h
     internal/retry_object_read_source.cc
     internal/retry_object_read_source.h
+    internal/server_unreached_metrics.cc
+    internal/server_unreached_metrics.h
     internal/service_account_parser.cc
     internal/service_account_parser.h
     internal/service_account_requests.cc
@@ -487,6 +489,7 @@ if (BUILD_TESTING)
         internal/rest/stub_test.cc
         internal/retry_logging_test.cc
         internal/retry_object_read_source_test.cc
+        internal/server_unreached_metrics_test.cc
         internal/service_account_requests_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
